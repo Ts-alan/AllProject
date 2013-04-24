@@ -1,0 +1,27 @@
+REGEDIT4
+
+[HKEY_CLASSES_ROOT\Vba32CC.PacketParser]
+@="Vba32CC.PacketParser"
+
+[HKEY_CLASSES_ROOT\Vba32CC.PacketParser\CLSID]
+@="{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}"
+
+[HKEY_CLASSES_ROOT\CLSID\{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}]
+@="Vba32CC.PacketParser"
+
+[HKEY_CLASSES_ROOT\CLSID\{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="Vba32CC.PacketParser"
+"Assembly"="packet_parser, Version=3.12.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v2.0.50727"
+
+[HKEY_CLASSES_ROOT\CLSID\{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}\InprocServer32\3.12.0.0]
+"Class"="Vba32CC.PacketParser"
+"Assembly"="packet_parser, Version=3.12.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v2.0.50727"
+
+[HKEY_CLASSES_ROOT\CLSID\{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}\ProgId]
+@="Vba32CC.PacketParser"
+
+[HKEY_CLASSES_ROOT\CLSID\{3EBF8B39-01A5-3110-88A3-5CE588F96F2A}\Implemented Categories\{62C8FE65-4EBB-45E7-B440-6E39B2CDBF29}]
