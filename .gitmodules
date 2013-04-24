@@ -13,3 +13,6 @@
 [submodule "3rd/zlib"]
 	path = 3rd/zlib
 	url = git://git/arena/3rd/zlib
+[submodule "3rd/JetByteTools"]
+	path = 3rd/JetByteTools
+	url = git://git/arena/3rd/jet_byte_tools
