@@ -1,0 +1,9 @@
+[submodule "doc"]
+	path = doc
+	url = git://git/arena/doc/cc
+[submodule "deps/common"]
+	path = deps/common
+	url = git://git/arena/common
+[submodule "tools/version_util"]
+	path = tools/version_util
+	url = git://git/arena/tools/version_util
