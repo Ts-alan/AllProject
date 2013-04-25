@@ -1,0 +1,191 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,12,4,0
+ PRODUCTVERSION 3,12,4,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041904b0"
+        BEGIN
+            VALUE "Comments", "http://www.anti-virus.by/"
+            VALUE "CompanyName", "VirusBlokAda Ltd."
+            VALUE "FileDescription", "Vba32 Control Center Service"
+            VALUE "FileVersion", "3.12.4.0"
+            VALUE "InternalName", "Vba32 CCS"
+            VALUE "LegalCopyright", "Copyright © VirusBlokAda Ltd. 2007-2009"
+            VALUE "OriginalFilename", "Vba32CCS.exe"
+            VALUE "ProductName", "Vba32 Control Center"
+            VALUE "ProductVersion", "3.12.4"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x419, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_START           "Vba32 Control Center Service started"
+    IDS_LOG_SERVICE_STOP_ERROR "Failed to stop service, error code %d (%s)"
+    IDS_LOG_SERVICE_INSTALL_ERROR 
+                            "Service installation failed, error code %d (%s)"
+    IDS_LOG_SERVICE_INSTALL_SUCCESS "Service installed successfully"
+    IDS_LOG_SERVICE_UNINSTALL_ERROR 
+                            "Service uninstallation failed, error code %d (%s)"
+    IDS_LOG_SERVICE_UNINSTALL_SUCCESS "Service uninstalled successfully"
+    IDS_LOG_END             "Vba32 Control Center Service finished"
+    IDS_MESSAGE_USAGE       "Usage:\nVba32CCService.exe [help | install | uninstall | start | stop | restart]\nCommand line params:\ninstall\t - Installs the service\nuninstall\t - Uninstalls the service.\nstart\t - Starts the service.\nstop\t - Stops the service.\nrestart\t - Restarts the service"
+    IDS_APPTITLE            "Vba32 Control Center"
+    IDS_LOG_SERVICE_START_ERROR "Failed to start service, error code %d (%s)"
+    IDS_LOG_SERVICE_ALREADY_RUNNING 
+                            "Cannot start service - Vba32 Control Center Service already running"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_SOCKET_INIT_ERROR 
+                            "Error initializing Windows Sockets, error code %d (%s)"
+    IDS_LOG_DEBUG           "Service started in debugging mode"
+    IDS_LOG_SERVICE_RESTART_SUCCESS "Service restarted successfully"
+    IDS_LOG_SERVICE_OPEN_ERROR "Failed to open service, error code %d (%s)"
+    IDS_LOG_SERVICE_ALREADY_STOPPED 
+                            "Cannot stop service - Vba32 Control Center Service not running"
+    IDS_LOG_STATUS          "Current service status is %s"
+    IDS_LOG_DEBUG_END       "Debugging service finished"
+    IDS_LOG_EXCEPTION       "Unhandled exception, trying to create memory dump..."
+    IDS_LOG_DUMP_SUCCESS    "Process memory dumped successfully"
+    IDS_LOG_DUMP_ERROR      "Dumping process failed, error code %d (%s)"
+    IDS_LOG_KEY_LICENSE     "License #%d, valid till %04d.%02d.%02d"
+    IDS_LOG_KEY_USER        "Licensed to: %s"
+    IDS_LOG_KEY_ERROR       "License key file not valid (%s)"
+    IDS_LOG_KEY_ERROR_NOT_FOUND "keyfile not found"
+    IDS_LOG_KEY_ERROR_BAD_KEY "invalid signature"
+    IDS_LOG_KEY_ERROR_NO_SECTION "keyfile not valid for this product"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_KEY_ERROR_EXPIRED "license expired"
+    IDS_LOG_KEY_ERROR_INVALID_TIME "wrong time"
+    IDS_LOG_KEY_ERROR_ROLLED_BACK_TIME "rolled back time"
+    IDS_LOG_INTEGRITY_OK    "Program integrity checked successfully"
+    IDS_LOG_FATAL           "Unable to continue program execution due to above-listed problems"
+    IDS_LOG_INTEGRITY_FAILED "Failed to check program integrity"
+    IDS_LOG_INTEGRITY_CORRUPTED_FILE "File %s corrupted"
+    IDS_LOG_COM_INIT_ERROR  "Error initializing DCOM, error code 0x%X (%s)"
+    IDS_LOG_PARSER_INIT_ERROR 
+                            "Error starting up business logic, error code 0x%X (%s)"
+    IDS_LOG_PARSER_STARTED  "Business logic server started"
+    IDS_LOG_PARSER_SHUTDOWN "Shutting down business logic server..."
+    IDS_LOG_UPDATE_STARTED  "Update started from %s"
+    IDS_LOG_DB_CONNECT_OFF  "Database connection failed"
+    IDS_LOG_UPDATE_FAILED   "Program update failed"
+    IDS_LOG_UPDATE_COMPLETE "Program update complete"
+    IDS_LOG_UPDATE_INITIALIZED "%d files to update (%d bytes)"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LOG_UPDATE_FILELIST_DOWNLOAD_STARTED "Downloading file list..."
+    IDS_LOG_UPDATE_FILELIST_RECIEVED "File list recieved"
+    IDS_LOG_UPDATE_FILE_DOWNLOAD_STARTED "Downloading file %s"
+    IDS_LOG_UPDATE_FILE_RECIEVED "File %s downloaded"
+    IDS_LOG_UPDATE_FILE_DOWNLOAD_ERROR "Error downloading file %s (%s)"
+    IDS_LOG_UPDATE_FILELIST_DOWNLOAD_FAILED 
+                            "Error downloading file list, error code %d"
+    IDS_LOG_UPDATE_FILE_REPLACE_ERROR "Error replacing file %s"
+    IDS_LOG_UPDATE_CONNECTION_ERROR "Connection error, error code %d (%s)"
+    IDS_LOG_UPDATE_INIT_ERROR 
+                            "Error initializing update service (%s), error code 0x%X (%s)"
+    IDS_LOG_UPDATE_START_ERROR "Error starting update"
+    IDS_LOG_DB_CONNECT_ON   "Database connection successful"
+    IDS_LOG_XML_PARSING_ERROR "Error processing packet ""%s..."" from %s"
+    IDS_LOG_XML_PARSED_OK   "Packet ""%s..."" from %s processed successfully"
+    IDS_LOG_STARTING_NETWORK "Starting network..."
+    IDS_LOG_SHUTTING_NETWORK "Shutting down network..."
+END
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

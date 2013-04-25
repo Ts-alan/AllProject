@@ -1,0 +1,24 @@
+HKCR
+{
+	VbaTaskAssignment.Service.1 = s 'TaskService Class'
+	{
+		CLSID = s '{DE6C9F17-C542-4B66-B253-ABFB2B4DF397}'
+	}
+	VbaTaskAssignment.Service = s 'TaskService Class'
+	{
+		CLSID = s '{DE6C9F17-C542-4B66-B253-ABFB2B4DF397}'
+		CurVer = s 'VbaTaskAssignment.Service.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DE6C9F17-C542-4B66-B253-ABFB2B4DF397} = s 'TaskService Class'
+		{
+			ProgID = s 'VbaTaskAssignment.Service.1'
+			VersionIndependentProgID = s 'VbaTaskAssignment.Service'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{33BF6BEB-0C79-425F-8E65-90E9E5269F79}'
+		}
+	}
+}

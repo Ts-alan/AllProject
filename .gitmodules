@@ -1,0 +1,18 @@
+[submodule "doc"]
+	path = doc
+	url = git://git/arena/doc/cc
+[submodule "deps/common"]
+	path = deps/common
+	url = git://git/arena/common
+[submodule "tools/version_util"]
+	path = tools/version_util
+	url = git://git/arena/tools/version_util
+[submodule "3rd/curl"]
+	path = 3rd/curl
+	url = git://git/arena/3rd/curl
+[submodule "3rd/zlib"]
+	path = 3rd/zlib
+	url = git://git/arena/3rd/zlib
+[submodule "3rd/JetByteTools"]
+	path = 3rd/JetByteTools
+	url = git://git/arena/3rd/jet_byte_tools
