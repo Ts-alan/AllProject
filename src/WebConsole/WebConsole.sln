@@ -34,8 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "Projects\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "Projects\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
 EndProject
-Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Vba32CC_deploy", "..\..\Vba32CC_deploy\Vba32CC_deploy.wdproj", "{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxControlToolkitX", "Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj", "{4B1FCD41-E001-41BE-97B1-E67D79300466}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Projects\Common\Common.csproj", "{C8F6D412-C657-438C-BBE3-842FB4466440}"
@@ -122,16 +120,6 @@ Global
 		{C09A5B35-526F-4A85-9046-909E9D811BBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C09A5B35-526F-4A85-9046-909E9D811BBD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C09A5B35-526F-4A85-9046-909E9D811BBD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Release|.NET.ActiveCfg = Release|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{41F555F1-9FAF-4F9F-8D4A-1EDC2429B102}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4B1FCD41-E001-41BE-97B1-E67D79300466}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{4B1FCD41-E001-41BE-97B1-E67D79300466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B1FCD41-E001-41BE-97B1-E67D79300466}.Debug|Any CPU.Build.0 = Debug|Any CPU
