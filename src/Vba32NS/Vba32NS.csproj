@@ -1,0 +1,93 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C89D783D-01F8-4D52-A785-ABE9D3D18CD4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vba32.ControlCenter.NotificationService</RootNamespace>
+    <AssemblyName>Vba32NS</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <ApplicationIcon>NS.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="agsXMPP, Version=0.9.2.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
+    <Reference Include="JVlsXMPPClient, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="INotification.cs" />
+    <Compile Include="Network\AgsXMPPClient.cs" />
+    <Compile Include="Network\JabberClient.cs" />
+    <Compile Include="Network\NetSendMessage.cs" />
+    <Compile Include="Network\SMTPMessage.cs" />
+    <Compile Include="Network\JVlsXMPPClient.cs" />
+    <Compile Include="Notification\NotifyEvent.cs" />
+    <Compile Include="Notification\NotifyMessageBuilder.cs" />
+    <Compile Include="Notification\NotifyType.cs" />
+    <Compile Include="Notification\NotifyTypeAddrList.cs" />
+    <Compile Include="Vba32NS.Settings.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vba32NS.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vba32NS.Designer.cs">
+      <DependentUpon>Vba32NS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vba32NS.Send.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vba32NSImplementation.cs" />
+    <Compile Include="Vba32NSInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Vba32NSInstaller.Designer.cs">
+      <DependentUpon>Vba32NSInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xml\Logger.cs" />
+    <Compile Include="Xml\ObjectSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NS.ico" />
+    <Content Include="ToDO.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
