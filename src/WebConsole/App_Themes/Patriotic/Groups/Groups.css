@@ -1,0 +1,205 @@
+.folder .x-tree-node-icon{
+    background:transparent url(images/default/tree/folder.gif);
+}
+.x-tree-node-expanded .x-tree-node-icon{
+    background:transparent url(images/default/tree/folder-open.gif);
+}
+
+.computer .x-tree-node-icon{
+    background:transparent url(images/monitor.png);
+}
+
+.server .x-tree-node-icon{
+    background:transparent url(images/server.png);
+}
+
+.group .x-tree-node-icon{
+    background:transparent url(images/group.png);
+}
+
+.add-opt .x-btn-text {
+    background-image:url(images/add.png);
+}
+
+.remove .x-btn-text, .remove-mi .x-menu-item-icon {
+    background-image:url(images/delete.png);
+}
+
+.rename .x-btn-text, .rename-mi .x-menu-item-icon {
+    background-image:url(images/rename.png);
+}
+
+.comment .x-btn-text, .comment-mi .x-menu-item-icon {
+    background-image:url(images/comment.png);
+}
+
+.save .x-btn-text {
+    background-image:url(images/save.gif);
+}
+
+.reload .x-btn-text {
+    background-image:url(images/reload.png);
+}
+
+
+/*you need to change this attributes to change how page looks*/
+
+/*LSD look*/                                 
+
+
+.x-layout-container{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+	background-color:#ddffdd;
+}
+
+.x-layout-panel{
+    position:absolute;border:1px solid #ffa7a5;overflow:hidden;background-color:#ddffdd;
+}
+
+.x-layout-panel-hd{
+    background-image: url(images/default/layout/panel-title-light-bg.gif);
+    color: black;
+    border-bottom:1px solid white;
+    position:relative;
+}
+
+.x-toolbar{
+	border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    display: block;
+	padding:2px;
+    background:#d0def0 url(images/default/layout/panel-title-light-bg.gif) repeat-x;
+    position:relative;
+    zoom:1;
+}
+
+
+.x-toolbar .x-btn-over .x-btn-left{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) no-repeat 0 0;
+}
+.x-toolbar .x-btn-over .x-btn-right{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) no-repeat 0 -21px;
+}
+.x-toolbar .x-btn-over .x-btn-center{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) repeat-x 0 -42px;
+}
+
+.x-toolbar .x-btn-click .x-btn-left, .x-toolbar .x-btn-pressed .x-btn-left, .x-toolbar .x-btn-menu-active .x-btn-left{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) no-repeat 0 -63px;
+}
+.x-toolbar .x-btn-click .x-btn-right, .x-toolbar .x-btn-pressed .x-btn-right, .x-toolbar .x-btn-menu-active .x-btn-right{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) no-repeat 0 -84px;
+}
+.x-toolbar .x-btn-click .x-btn-center, .x-toolbar .x-btn-pressed .x-btn-center, .x-toolbar .x-btn-menu-active .x-btn-center{
+	background:url(images/default/toolbar/tb-btn-sprite.gif) repeat-x 0 -105px;
+}
+
+
+.x-layout-split{
+    position:absolute;
+    height:5px;
+    width:5px;
+    line-height:1px;
+    font-size:1px;
+    z-index:3;
+    background-color:#ffa7a5;
+}
+.x-layout-split-h{
+    background-image:url(images/default/sizer/e-handle.gif);
+    background-position: left;
+}
+
+/*
+dialog
+ */
+
+.x-dlg .x-dlg-hd {	
+	background: #ffa7a5 -82px;
+	
+	color:#FFF;
+	font:bold 12px "sans serif", tahoma, verdana, helvetica;
+	overflow:hidden;
+	padding:5px;
+    white-space: nowrap;
+}
+
+
+
+/*BigTree*/
+
+.computerRed .x-tree-node-icon{
+    background:transparent url(images/computerRed.png);
+    width: 20px;
+    height: 20px;
+}
+.computerGreen .x-tree-node-icon{
+    background:transparent url(images/computerGreen.png);
+    width: 20px;
+    height: 20px;
+}
+.computerGrey .x-tree-node-icon{
+    background:transparent url(images/computerGrey.png);
+    width: 20px;
+    height: 20px;
+}
+.computerYellow .x-tree-node-icon{
+    background:transparent url(images/computerYellow.png);
+    width: 20px;
+    height: 20px;
+}
+
+.bigTree .folder .x-tree-node-icon{
+    background:transparent url(images/default/tree/folder20.gif);
+    width: 20px;
+    height: 20px;
+}
+.bigTree .x-tree-node-expanded .x-tree-node-icon{
+    background:transparent url(images/default/tree/folder-open20.gif);
+    width: 20px;
+    height: 20px;
+}
+
+.bigTree .x-tree-node{
+	font-size: 14px;
+}
+/* checkboxes */
+.bigTree input.x-tree-node-cb {
+    margin-left:5px;
+    margin-top:3px;    
+}
+
+.bigTree input{
+vertical-align: text-bottom;
+}
+
+/*Elbow*/
+.bigTree .x-tree-lines .x-tree-elbow{
+	background-image:url(images/default/tree/elbow20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-plus{
+	background-image:url(images/default/tree/elbow-plus20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-minus{
+	background-image:url(images/default/tree/elbow-minus20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-end{
+	background-image:url(images/default/tree/elbow-end20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-end-plus{
+	background-image:url(images/default/tree/elbow-end-plus20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-end-minus{
+	background-image:url(images/default/tree/elbow-end-minus20.gif);
+	height: 22px;
+}
+.bigTree .x-tree-lines .x-tree-elbow-line{
+	background-image:url(images/default/tree/elbow-line20.gif);
+	height: 22px;
+}

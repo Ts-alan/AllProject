@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap enableLocalization="true">
+  <siteMapNode url="Root" title=""  description="">
+    <siteMapNode url="Default.aspx" title="$resources:Resource,Default"  description="$resources:Resource,Default" />
+    <siteMapNode  title="$resources:Resource,List" description="" roles="*">
+      <siteMapNode url="Computers.aspx" title="$resources:Resource,Computers"  description="$resources:Resource,PageComputersTitle"/>
+      <siteMapNode url="Groups.aspx" title="$resources:Resource,Groups"  description="$resources:Resource,PageGroupsTitle"/>
+      <siteMapNode url="MapComputers.aspx" title="$resources:Resource,Map"  description="$resources:Resource,ComputersMap"/>
+      <siteMapNode url="Events.aspx"  title="$resources:Resource,Events"  description="$resources:Resource,PageEventsTitle"/>
+      <siteMapNode url="Task.aspx" title="$resources:Resource,Tasks"  description="$resources:Resource,PageTaskTitle" />
+      <siteMapNode url="TasksInstall.aspx" title="$resources:Resource,InstallUninstallTasksPage"  description="$resources:Resource,InstallUninstallTasks" />
+      <siteMapNode url="Components.aspx" title="$resources:Resource,Components"  description="$resources:Resource,PageComponentsTitle" />
+      <siteMapNode url="Processes.aspx" title="$resources:Resource,Processes"  description="$resources:Resource,PageProcessTitle" />
+    </siteMapNode>
+    <siteMapNode  title="$resources:Resource,Settings"  description="$resources:Resource,Settings" roles="*">
+      <siteMapNode url="SettingsMain.aspx" title="$resources:Resource,Main"  description="$resources:Resource,Settings" />
+      <siteMapNode url="SettingsExtra.aspx" title="$resources:Resource,Extra"  description="$resources:Resource,Settings" />
+      <siteMapNode url="Portable.aspx" title="$resources:Resource,PagePortableTitle"  description="$resources:Resource,PagePortableTitle" />
+    </siteMapNode>
+    <siteMapNode  title="$resources:Resource,Statistics"  description="$resources:Resource,Statistics" roles="*">
+      <siteMapNode url="Statistic.aspx" title="$resources:Resource,Statistics"  description="$resources:Resource,Statistics" />
+     <siteMapNode url="Visual.aspx" title="$resources:Resource,Diagram"  description="$resources:Resource,Diagram" />
+    </siteMapNode>
+    <siteMapNode  title="$resources:Resource,Administration"  description="$resources:Resource,Administration" roles="Administrator">
+      <siteMapNode url="UserManager.aspx" title="$resources:Resource,UserManaging"  description="$resources:Resource,PageUserManaging" roles="Administrator" />
+      <siteMapNode url="ControlCenter.aspx" title="$resources:Resource,Maintenance"  description="$resources:Resource,SettingsForMaintenanceService" roles="Administrator" />
+      <siteMapNode url="Notification.aspx" title="$resources:Resource,Notification"  description="$resources:Resource,Vba32NSSettings" roles="Administrator" />
+      <siteMapNode url="AsynchLanScan.aspx" title="$resources:Resource,LanScan" description="$resources:Resource,PageLanScanTitle" roles="Administrator" />
+      <siteMapNode url="GroupsAdministrate.aspx" title="$resources:Resource,Groups" description="$resources:Resource,Groups" roles="Administrator" />
+      <siteMapNode url="PoliciesPage.aspx" title="$resources:Resource,Policies" description="$resources:Resource,Policies" roles="Administrator" />
+      <siteMapNode url="DevicesPolicy.aspx" title="$resources:Resource,Devices" description="$resources:Resource,Devices" roles="Administrator" />
+      <siteMapNode url="UpdateCC.aspx" title="$resources:Resource,UpdateCC" description="$resources:Resource,UpdateCC" roles="Administrator" />
+	  <!--<siteMapNode url="elmah.axd" title="Logging" description="Logging" roles="Administrator" />-->
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

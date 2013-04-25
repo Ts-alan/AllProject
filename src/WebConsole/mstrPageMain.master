@@ -1,0 +1,53 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="mstrPageMain.master.cs" Inherits="mstrPageMain" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+</head>
+<body >
+    <form id="form1" runat="server">
+    <asp:Image ID="imLogo" runat=server />
+     <div class="section" style="margin-top:2px">  
+        <table width="100%">
+        <tr>
+            <td align="left">
+                <asp:SiteMapPath ID="smpPath" runat="server" PathSeparator="  >  ">
+                </asp:SiteMapPath>
+                
+             </td>
+             <td align=right style="width: 10%">
+                 <asp:LoginStatus ID="LoginStatus1" runat="server" OnLoggingOut="LoginStatus1_LoggingOut" />
+             </td>
+        </tr>
+        </table>
+        </div>
+<div class="divSettings">  
+        <table width=100% class=area>
+        <tr>
+            <td valign="top" style="Width:160px">
+                <asp:Menu ID="mnLeft" Width="160px" runat="server" DataSourceID="smdsMenu" StaticDisplayLevels="3"  OnMenuItemDataBound="mnLeft_MenuItemDataBound" CssClass="tree">
+                <LevelMenuItemStyles>
+                    <asp:MenuItemStyle ForeColor="Black" Font-Bold="false" Font-Names="Arial" Font-Overline="false" Font-Size="14px" />                    
+                </LevelMenuItemStyles>
+                </asp:Menu>
+            </td>
+            <td valign="top" align=left>
+                <asp:contentplaceholder id="cphMainContainer" runat="server" />
+            </td>
+        </tr>
+        </table>
+        <asp:SiteMapDataSource ID="smdsMenu" runat="server" ShowStartingNode="false" />  
+</div>   
+    <div class="divSettings">
+         <table width=100% class=copyright>
+         <tr>
+            <td align=center><%=Resources.Resource.Vba32ControlCenterTitle%>, <%=Resources.Resource.Version%>&nbsp;<asp:Label ID="lblVersion" runat="server"></asp:Label></td>
+            </tr>
+            <tr>
+            <td align=center>Copyright (c) 2008-2013 VirusBlokAda Ltd.</td>
+        </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

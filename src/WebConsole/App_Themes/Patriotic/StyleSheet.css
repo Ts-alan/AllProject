@@ -1,0 +1,1072 @@
+﻿html, body { 	height: 100%;	margin: 0;	padding: 0;}html>body .all { 	height: auto;	min-height: 100%;}.all{	height: 100%;	width:100%;	position: relative;	margin:0 auto;}.empty, .footer {	 height: 30px; }.footer{ 	bottom: 0;	left: 0;	margin-bottom:10px;	position: absolute;	width: 100%;	min-width: 1024px;	display:block;	}
+.container
+{	
+}
+
+.Header
+{	
+	width:100%;
+	min-width: 1024px;	
+	height: 61px;
+	position: relative;	
+}
+
+.Logo
+{
+	background: #d1dbdc url(Images/Logo_Main.gif);
+	width: 350px;
+	height: 61px;
+	float: left; 
+	position: relative;
+}
+
+.TitleHeader
+{
+	background: Gray url(Images/Title_Main.gif);
+	width: 247px;
+	height: 61px;
+	float:left; 
+	position: relative;
+}
+
+.TitleContinue
+{
+	background: #afb3be url(Images/HeaderBackground_Main_2.gif) repeat-x;
+	height: 61px;	
+	position: relative;	
+	margin-left: 597px;	
+}
+
+.Logout
+{	
+	height: 40px;
+	position: absolute;
+	top: 6px;
+	right: 10px;
+	text-align: center;		
+}
+
+.Logout span
+{	
+	color: White;
+	font-family: Arial;
+	font-size: 14px;	
+	font-weight:bold;	
+}
+
+.Logout a
+{	
+	color: White;
+	font-family: Arial;
+	font-size: 12px;	
+	font-style:oblique;
+	font-weight:bold;	
+	text-decoration: none;
+}
+
+.Logout a:hover
+{
+	color: Red;
+}
+
+.HeaderMenu
+{
+	height: 27px;	
+	position: absolute;
+	top: 38px;
+	left: 410px;
+}
+
+.HeaderMenuStyle
+{
+	z-index: 1000; /*Fix for IE8*/
+}
+
+.HeaderMenuItem
+{
+	color: Black;
+	font-family: Myriad Pro;
+	font-size: 16px;
+	font-style:normal;
+	
+	cursor:default !important;
+	
+	padding-left: 5px;
+	padding-right: 5px;	
+}
+
+.HeaderMenuItemHover
+{	
+	cursor:default !important;
+	color: White;
+}
+
+.HeaderMenuSubItem
+{
+	cursor: default;	
+	padding: 2px 10px 2px 10px;
+	float:left;
+	background-color: #d1dbdc;	
+	border-color: White;
+	border-width: 1px;
+	border-style: dashed;
+	border-left-style:none;
+	border-right-style:none;
+	border-bottom-style:none;	
+	color: Black;	
+	font-family:Myriad Pro;
+	font-size: 14px;
+}
+
+.HeaderMenuSubItemHover
+{
+	cursor: default;
+	background-color: #afb3be;	
+	color: White;
+	width:100%;
+}
+
+.UnderHeader
+{
+	width: 100%;
+	min-width:1024px;
+	height:4px;
+	background: #686868 url(Images/UnderHeader.gif) repeat-x;
+}
+
+/*******************************************************************/
+
+body
+{
+    font-family: Verdana, Tahoma;
+    font-size: 9pt;
+    background-color: #ddffdd;
+    color: #125;
+}
+
+a
+{
+    color: #005500;
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: underline;
+}
+
+.main
+{
+    color: #125;
+}
+
+.area
+{
+    border: groove 1px #125;
+    width: 100%;
+}
+
+.copyright
+{
+    border: groove 1px #125;
+    font-size: 7pt;
+    color:Red;
+}
+
+.ListContrastTableMain
+{
+   border: solid 1px #3266CC;
+   background-color: #90cd98; /* #00ff22; */
+   width: 100%;
+   min-width: 864px;
+}
+
+.ListContrastTable
+{
+   border: solid 1px #3266CC;
+   background-color: #90cd98; /* #00ff22; */
+   width: 100%;
+}
+
+.area
+{
+   border: solid 1px #125;
+}
+
+.FilterActions
+{
+   margin-top: 5px;
+}
+
+.divSettings
+{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 0px;	
+}
+
+.title
+{
+    font: bold 10pt Verdana;
+    color: #fafaff;
+    text-align: center;
+	background: Green url(Images/titlebg.jpg) repeat-x;
+	padding: 2px;
+	margin-bottom:5px;
+	min-width: 864px;
+}
+
+.section
+{
+    color: #fafaff;
+    text-align: center;
+    background: Red url(Images/sectionbg.jpg) repeat-x;
+    
+}
+
+.subsection
+{
+    text-align: center;
+    background: Red url(Images/sectionbg.jpg) repeat-x;
+    margin-top:5px;
+    margin-bottom:2px;    
+    color:White;
+    min-width: 864px;
+}
+
+.tasksection
+{
+    text-align: center;
+    background: Red url(Images/sectionbg.jpg) repeat-x;
+    color:White;
+    width:100%;
+}
+
+.tabs
+{
+    text-align: center;
+    background: Red url(Images/sectionbg.jpg) repeat-x;
+    color:White;
+}
+
+#tabs ul
+{
+	min-width: 864px;
+}
+
+.SubSectionLabel
+{
+    color:inherit;
+    margin-left:20px;
+}
+
+.tree
+{
+    font-weight: bold;
+    line-height: 150%;
+}
+/*WebParts*/
+.WebpartsFontMenu
+{
+    font-family: Verdana, Tahoma;
+    font-size: 9pt;
+}
+
+.WebpartsBody
+{
+   background-color: #00ff22;
+   
+}
+
+.WebpartsTitle
+{
+   background: Red url(Images/sectionbg.jpg) repeat-x;
+   padding: 2px;
+   margin-bottom:5px; 
+   color:White;
+}
+
+.subWebParts
+{
+    margin-top:1px;
+    margin-bottom:5px;
+    border: groove 1px #125;
+    width: 100%;
+    min-width: 864px;
+}
+
+/****/
+.textbox
+{
+    border: groove 1px #00f;    
+}
+
+.dropdownlist
+{
+     border: groove 1px #00f;    
+}
+
+.linkbutton
+{
+    background: Red url(Images/sectionbg.jpg) repeat-x;
+    border: none 1px white;
+}
+
+.LeftLabel
+{
+    color:inherit;
+    width:200px;
+}
+
+/***Diagram***/
+.ItemStyle
+{
+	font-size: 8pt;
+	font-family: Verdana, Arial;
+}
+.HeaderStyle
+{
+	font-size: 9pt;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+	background-color: Red;
+	color: White;
+	text-transform: none;
+	border-bottom: thin solid #636363;
+}
+.FooterStyle
+{
+	border-top: thin solid #636363;
+	font-weight: bold;
+	background-color: Green;
+	color: #636363;
+	font-size: 8pt;
+}
+
+.HeaderStyleRight
+{
+	font-size: 9pt;
+	font-family: Verdana, Arial;
+	font-weight: bold;
+	background-color: Red;
+	color: White;
+	text-transform: none;
+	border-bottom: thin solid #636363;
+	text-align: right;
+}
+.FooterStyleRight
+{
+	border-top: thin solid #636363;
+	font-weight: bold;
+	background-color: Green;
+	color: #636363;
+	font-size: 8pt;
+	text-align: right;
+}
+.ItemStyleRight
+{
+	font-size: 8pt;
+	font-family: Verdana, Arial;
+	text-align: right;
+}
+
+.tdWhiteSpace
+{
+    white-space:pre-wrap;
+}
+
+/*Notify*/
+
+.NotifyControl
+{
+   border: solid 1px #3266CC;
+   background-color: #00ff22;
+   width:100%;
+}
+
+.GiveButton
+{
+    display:block;
+    text-decoration:none;
+    width:204px;
+    height:20px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: Red url(Images/sectionbg.jpg) repeat-x
+    
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.GiveButton1
+{
+    display:block;
+    text-decoration:none;
+    width:150px;
+    height:20px;
+    text-align:center;
+    color:#fafaff;
+    border:2px solid #fff;
+    
+    background: Green url(Images/titlebg.jpg) repeat-x;
+    
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.ButtonStyle
+{
+    display:block;
+    text-decoration:none;
+    width:100px;
+    height:30px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: #AAA url('Images/gridViewHeaderBG.jpg') repeat-x;
+    
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+/**/
+.menu{
+   width:212px;
+
+}
+.menu ul li a, .menu ul li a:visited{ /*Шрифт в шапке и др частях*/
+    display:block;
+    text-decoration:none;
+    color:#005500;
+    width:204px;
+    height:20px;
+    text-align:center;
+    border:2px solid #fff;
+    
+    background: Red url(Images/sectionbg.jpg) repeat-x
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+.menu ul{
+    padding:0;
+    margin:0;
+    list-style:none
+}
+.menu ul li{
+    float:left;
+    position:relative}
+.menu ul li ul{
+    display:none
+}
+.menu ul li:hover a{ /*Когда наводишь шапка меню*/
+    color:#005500;
+    background: Red url(Images/sectionbg.jpg) repeat-x
+}
+.menu ul li:hover ul{
+    display:block;
+    position:absolute;
+    top:21px;
+    left:0;
+    width:105px
+}
+.menu ul li:hover ul li a{ /*Подменю неактивное*/
+    display:block;
+    background:#ddd;
+    color:#005500
+}
+.menu ul li:hover ul li a:hover{ /*Подменю активное*/
+    background:#00ff22;
+    color:#005500
+}
+
+/**/
+.menuSelected{
+    width:212px;
+}
+.menuSelected ul li a, .menu ul li a:visited{ /*Шрифт в шапке и др частях*/
+    display:block;
+    text-decoration:none;
+    color:#ffffff;
+    width:204px;
+    height:20px;
+    text-align:center;
+    border:2px solid #fff;
+    
+    background: Green url(Images/titlebg.jpg) repeat-x;
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+.menuSelected ul{
+    padding:0;
+    margin:0;
+    list-style:none
+}
+.menuSelected ul li{
+    float:left;
+    position:relative}
+.menuSelected ul li ul{
+    display:none
+}
+.menuSelected ul li:hover a{ /*Когда наводишь шапка меню*/
+    color:#ffffff;
+    background: Green url(Images/titlebg.jpg) repeat-x;
+}
+.menuSelected ul li:hover ul{
+    display:block;
+    position:absolute;
+    top:21px;
+    left:0;
+    width:105px
+}
+.menuSelected ul li:hover ul li a{ /*Подменю неактивное*/
+    display:block;
+    background:#ddd;
+    color:#005500
+}
+.menuSelected ul li:hover ul li a:hover{ /*Подменю активное*/
+    background:#00ff22;
+    color:#005500
+}
+
+
+.stateKeySuccess
+{
+	background-color: #10cd0e;
+}
+.stateKeyBad
+{
+	background-color: Red;
+}
+.stateKeyPrecarious
+{
+	background-color: Yellow;
+}
+
+.listRulesItem
+{
+	background-color: White;
+	font-family: Times New Roman;
+	font-size: 12px;
+}
+
+.listRulesItemActive
+{
+	background-color: #10cd0e;
+	font-family: Times New Roman;
+	font-size: 12px;
+}
+
+.listRulesHeader
+{
+	background-color: Gainsboro;
+	font-family: Times New Roman;
+	font-size: 13px;
+}
+
+/* Accordion */
+.accordionHeader
+{   
+	font-family: Arial, Sans-Serif;
+	font-size: 12px;	
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+
+	border: 1px solid #d3d3d3;
+	background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #555555;
+	outline: none; 
+	min-width:864px;
+}
+
+.accordionHeader:hover
+{
+	border: 1px solid #999999;
+	background: #dadada url(images/ui-bg_glass_75_dadada_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #212121;
+	outline: none;
+	min-width:864px;
+}
+
+.accordionHeaderSelected
+{    
+	font-family: Arial, Sans-Serif;
+	font-size: 12px;
+    padding: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+
+	border: 1px solid #aaaaaa;
+	border-bottom-style: none;
+	background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #212121;
+	outline: none;
+	min-width:864px;
+}
+
+.accordionContent
+{
+    padding: 5px;
+    padding-top: 10px;
+    
+    border: 1px solid #aaaaaa;
+    border-top-style: none;
+	background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #212121;
+	outline: none;
+	min-width:864px;
+}
+
+/*Modal Popup*/
+.modalBackground {
+	background-color:Gray;
+	filter:alpha(opacity=70);
+	opacity:0.7;
+}
+
+.modalPopup {
+	background-color:#ffffdd;
+	border-width:3px;
+	border-style:solid;
+	border-color:Gray;
+	padding:3px;
+	width:300px;
+}
+
+.modalPopupRule {
+	background-color:#ffffdd;
+	border-width:3px;
+	border-style:solid;
+	border-color:Gray;
+	padding:3px;
+	width:390px;
+}
+
+.modalPopupScheduler
+{
+	background-color:#ffffdd;
+	border-width:3px;
+	border-style:solid;
+	border-color:Gray;
+	padding:3px;
+	width:600px;	
+}
+
+.modalPopupNotify {
+	background-color:#ffffff;
+	border-width:1px;
+	border-style:solid;
+	border-color:Gray;	
+	width:545px;
+	padding-left: 3px;
+}
+.modalPopupNotifyHeader
+{
+	padding-top: 7px;
+	width:540px;
+	background-color: #cccccc;
+	height: 25px;
+	margin: 3px 3px 3px 0px;
+	cursor: move;
+}
+
+.modalPopupMessage {
+	background-color:#ddffdd;
+	border-width:3px;
+	border-style:solid;
+	border-color:Gray;
+	padding:3px;
+	width:400px;
+	height:120px;
+}
+
+.ModalPopupPictureSuccess
+{
+	background-image: url(Images/success_icon.png);
+	position:relative;
+	float:left;
+	width: 50px;
+	height:50px;
+	background-repeat:no-repeat;
+	margin-top:20px;
+	margin-left:20px;
+}
+.ModalPopupPictureError
+{
+	background-image: url(Images/error_icon.png);
+	position:relative;
+	float:left;
+	width: 50px;
+	height:50px;
+	background-repeat:no-repeat;
+	margin-top:20px;
+	margin-left:20px;
+}
+#ModalPopupText
+{
+	position:relative;
+	float:left;
+	margin-top:20px;
+	padding-left:5px;
+	width:300px;
+}
+#ModalPopupButton
+{
+	position:relative;
+	float:left;	
+	width:400px;	
+}
+
+.modalPopupRegistration 
+{
+	background-color:#ffffff;
+	border-width:1px;
+	border-style:solid;
+	border-color:Gray;		
+	padding-left: 3px;
+	width:450px;	
+}
+
+.modalPopupRegistrationHeader
+{
+	padding-top: 7px;
+	width:445px;
+	background-color: #cccccc;
+	height: 25px;
+	margin: 3px 3px 3px 0px;
+	cursor: move;
+}
+
+.HeaderCell
+{   
+    text-decoration:none;
+    height:40px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: Red url(Images/sectionbg.jpg) repeat-x
+    
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+/*Map of computers*/
+div.contents {
+  background-color: #e0e4e8;
+  overflow: auto;
+  padding: 2px;
+  height:540px;
+  min-width: 864px;
+}
+
+div.item{
+  position : relative;
+  height : 80px;
+  width: 65px;
+  float: left;
+  color : #004488;
+  font-size: 18;
+  padding: 0px;
+  margin: 4px 6px 4px 6px;
+}
+
+div.item div.itemName{
+  margin-top: 60px;  
+  font: 10px verdana, arial, helvetica;
+  text-align: left;
+}
+
+div.vbagreen{
+  background: transparent url(Images/VBAGreen.png) top left no-repeat;  
+  cursor:pointer;
+}
+
+div.vbagrey{
+  background: transparent url(Images/VBAGrey.png) top left no-repeat;  
+  cursor:pointer;
+}
+
+div.vbared{
+  background: transparent url(Images/VBARed.png) top left no-repeat;  
+  cursor:pointer;
+}
+
+div.vbayellow{
+  background: transparent url(Images/VBAYellow.png) top left no-repeat;  
+  cursor:pointer;
+}
+
+/* Paging & GridView */
+.pagingNavigation
+{		
+	display:block;
+	float:left;
+    text-decoration:none;
+    width:40px;
+    height:24px;
+    text-align:center;
+    color:#fff;
+    border:1px solid #fff;
+    
+    background: #e1e2e4 url(Images/buttonbg.jpg) repeat-x;
+    
+    line-height:24px;
+    font-size:11px;
+    overflow:hidden;        
+	
+}
+
+.pagingNavigationHover
+{		
+	display:block;
+	float:left;
+    text-decoration:none;
+    width:40px;
+    height:24px;
+    text-align:center;
+    color:Navy;
+    border:1px solid #fff;
+    
+    background: #e1e2e4 url(Images/buttonbgHover.jpg) repeat-x;
+    
+    line-height:24px;
+    font-size:11px;
+    overflow:hidden;        
+	
+}
+
+.pagingDiv
+{
+	min-width: 864px;
+	width: 100%;
+	background:#e1e2e4 url('Images/pagingBG.jpg') repeat-x;
+}
+
+.gridViewHeader
+{
+	text-decoration:none;
+    height:40px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    background: Red url(Images/gridViewHeaderBG.jpg) repeat-x; 
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.gridViewHeader a
+{	
+    color:#fff;    
+}
+
+.gridViewHeader th
+{	
+    text-align: center;    
+}
+
+.gridViewRow
+{	
+	text-decoration:none;
+    height:20px;
+    text-align:center;
+    color:Black;
+    border:1px solid #fff;
+    background-color: #dcdcdc; 
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.gridViewRowAlternating
+{	
+	text-decoration:none;
+    height:20px;
+    text-align:center;
+    color:Black;
+    border:1px solid #fff;
+    background-color: #ffffff ; 
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.gridViewStyle
+{
+	border:2px Solid #dcdcdc;	
+	width: 100%;
+	min-width:864px;
+}
+
+/*GridView.Menu*/
+.gridViewMenu
+{
+	width: 38px;
+	height: 17px;	
+	background: #AAA url('Images/MenuHeader.jpg') no-repeat;
+	margin-left: 3px;
+}
+
+.gridViewMenuHover
+{
+	width: 38px;
+	height: 17px;	
+	background: #AAA url('Images/MenuHeaderHover.jpg') no-repeat;
+	margin-left: 3px;	
+}
+
+.gridViewMenuCbox
+{
+	margin-left: 5px;
+}
+
+/*Page Users*/
+.highlight
+{
+    background-color: #f66d6d;
+}
+
+.modalBackgroundTop
+{
+	background-color: Gray;
+	filter:alpha(opacity=20);
+	opacity:0.2;
+	z-index: 6010 !important;
+}
+
+.modalPopupTop
+{        
+    z-index: 6011 !important;
+}
+
+.modalBackgroundBottom
+{
+	background-color: Gray;
+	filter:alpha(opacity=20);
+	opacity:0.2;
+	z-index: 6000 !important;
+}
+
+
+.modalPopupUsers
+{
+	background-color:#ffffff;
+	border-width:1px;
+	border-style:solid;
+	border-color:Gray;		
+	padding-left: 3px;
+	width:400px;
+	z-index: 6001 !important;	
+}
+
+
+.modalPopupUsersHeader
+{
+	width:100%;
+	background: #AAA url('Images/gridViewHeaderBG.jpg') repeat-x;
+	height: 35px;
+	cursor: default;
+	margin: 1px 1px 0px -2px;
+	margin-bottom: 10px;
+}
+
+/*Filters*/
+.compositeFilter
+{
+	background-color: #659772;
+	min-width: 964px;
+}
+
+.primitiveFilterTemplate
+{
+	background-color: Transparent; 
+	min-width: 460px;
+	max-width: 512px;
+	width: 450px;
+	padding: 2px;
+	border-color: #386fcc;
+	border-style:dotted;
+	border-width: 1px;
+}
+
+.primitiveFilterTemplate .nameFilter
+{
+	float: left;	
+	min-width: 120px;
+	padding-top: 3px;
+}
+
+.primitiveFilterTemplate .logicFilter
+{
+	float: left;
+	width: 120px;
+	padding-top: 3px;
+}
+
+.primitiveFilterTemplate .contentFilter
+{
+	float: left;
+	max-width: 200px;
+}
+
+.primitiveFilterTemplate .selectedFilter
+{	
+	max-width: 20px;
+	float:right;
+	padding-top: 3px;
+}
+
+/*Images for buttons*/
+div.ImageComputer
+{
+	background: transparent url('Groups/Images/monitorAll.png') no-repeat 0px -19px;
+	width: 18px;
+	height: 19px;	
+}
+
+div.ImageComputer[disabled]
+{
+	background-position: 0px 0px;
+}
+
+div.ImageIPAddress
+{
+	background: transparent url('Images/ip.png') no-repeat 0px -19px;
+	width: 18px;
+	height: 19px;	
+}
+
+div.ImageIPAddress[disabled]
+{
+	background-position: 0px 0px;
+}
+
+div.ImageDropDownList
+{
+	background: transparent url('Images/DDImage.bmp') no-repeat 0px -17px;
+	width: 17px;
+	height: 17px;	
+}
+
+div.ImageDropDownList[disabled]
+{
+	background-position: 0px 0px;
+}
+
+.Button{    display:block;    text-decoration:none;    width:150px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;        background: #AAA url(Images/titlebg.jpg) repeat-x;            line-height:20px;    font-size:11px;    overflow:hidden}.ButtonDisabled{    display:block;    text-decoration:none;    width:204px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;            background: #AAA url(Images/sectionbg.jpg) repeat-x;        line-height:20px;    font-size:11px;    overflow:hidden    }.ButtonDisabled a{    cursor:default;    color: White;}.ButtonDisabled a:hover{    cursor:default;    text-decoration: none;}/*Images for buttons*/.hiddenButton{    border-style: none;    padding: 0px;    margin: 0px;    overflow: hidden;    background-color: transparent;}
+
+table.tableInfo{	border-collapse: collapse;		width: 100%;}table.tableInfo td{	border-width: 1px;	border-style: solid;	border-color: Black;	padding: 3px 5px;	font-size: 12px;}table.tableInfo td.r0{	background-color: #c2c2c2;}table.tableInfo td.r1{	background-color: #efefef;	}div.enabledImage{	background-image: url(Images/enabled.gif);	width: 16px;	height: 16px;}div.disabledImage{	background-image: url(Images/disabled.gif);	width: 16px;	height: 16px;}

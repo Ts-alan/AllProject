@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RemoteOperations</RootNamespace>
+    <AssemblyName>RemoteOperations</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncResult\AsyncResult.cs" />
+    <Compile Include="AsyncResult\AsyncResultNoResult.cs" />
+    <Compile Include="Common\Credentials.cs" />
+    <Compile Include="Common\FileUtility.cs" />
+    <Compile Include="Common\RemoteMethodsEnum.cs" />
+    <Compile Include="MsiInfo\Vba32MsiStorage.cs" />
+    <Compile Include="MsiInfo\Vba32VersionInfo.cs" />
+    <Compile Include="Net\IPAddressHelper.cs" />
+    <Compile Include="Net\IPRange.cs" />
+    <Compile Include="Net\NetworkUtility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteInstall\InstallationStatus.cs" />
+    <Compile Include="RemoteInstall\MsiexecHelper\CommandLine.cs" />
+    <Compile Include="RemoteInstall\MsiexecHelper\LogLevel.cs" />
+    <Compile Include="RemoteInstall\MsiexecHelper\LogParser.cs" />
+    <Compile Include="RemoteInstall\RemoteInstallEntity.cs" />
+    <Compile Include="RemoteInstall\RemoteInstaller.cs" />
+    <Compile Include="RemoteInstall\RemoteInstallHelper.cs" />
+    <Compile Include="RemoteScan\ProgressStateEnum.cs" />
+    <Compile Include="RemoteScan\RemoteInfo\RemoteInfoEntity.cs" />
+    <Compile Include="RemoteScan\RemoteInfo\RemoteInfoEntityScan.cs" />
+    <Compile Include="RemoteScan\RemoteInfo\RemoteInfoEntityShow.cs" />
+    <Compile Include="RemoteScan\RemoteInfo\RemoteInfoEntityWrap.cs" />
+    <Compile Include="RemoteScan\RemoteScanHelper.cs" />
+    <Compile Include="RemoteScan\RemoteScanner.cs" />
+    <Compile Include="RemoteScan\ScanResultDataSource.cs" />
+    <Compile Include="RemoteService\PipeUtility.cs" />
+    <Compile Include="RemoteService\RemoteClient.cs" />
+    <Compile Include="RemoteService\ServiceUtility.cs" />
+    <Compile Include="Threading\CappedPrioritizedThreadPool.cs" />
+    <Compile Include="Threading\WaitCallbackContainer.cs" />
+    <Compile Include="Wmi\WmiMethodsCallModeEnum.cs" />
+    <Compile Include="Wmi\WmiProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

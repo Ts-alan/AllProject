@@ -1,0 +1,65 @@
+<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/App_Themes/"+Profile.Theme+"/Images/image1.jpg" />
+--%>
+<asp:Label runat="server" cssclass="main" />
+<asp:Label runat="server" cssclass="main" SkinID="LeftLabel" width="200px" style="padding-left:5px" />
+<asp:Label runat="server" cssclass="SubSectionLabel" SkinID="SubSectionLabel" width="80px" />
+<asp:LinkButton runat="server" SkinID="FilterActions" width="100px" />
+<asp:LinkButton runat="server" SkinID="LeftLink" style="padding-left:5px" />
+<asp:LinkButton runat="server" SkinID="lnkButton" cssclass="linkbutton" width="100px" />
+<asp:Button runat="server" cssclass="control" />
+<asp:Button runat="server" cssclass="hiddenButton" SkinID="HiddenButton" TabIndex="-1" Width="1px" Height="1px"  />
+
+<asp:DropDownList runat="server" cssclass="dropdownlist" SkinID="ddlFilterList" width="300px" height="19px" />
+<asp:DropDownList runat="server" cssclass="dropdownlist" width="182px" height="19px" />
+<asp:DropDownList runat="server" cssclass="dropdownlist" SkinID="ddlEdit" height="19px" />
+<asp:DropDownList runat="server" cssclass="dropdownlist" SkinID="ddcControl" height="19px" />
+<asp:DropDownList runat="server" cssclass="dropdownlist" SkinID="ddlLogic" width="55px" height="19px"/>
+<asp:DropDownList runat="server" style="margin-left: 5px;" SkinID="ddlPageSize" width="55px" height="19px"/>
+<asp:TextBox runat="server" cssclass="textbox" width="180px" height="19px" />
+<asp:TextBox runat="server" cssclass="textbox" SkinID="EditBox" height="19px" />
+<asp:TextBox runat="server" cssclass="textbox" width="66px" SkinID="IntDiapasonValueBox" height="19px" />
+<asp:TextBox runat="server" cssclass="textbox" SkinID="TimerBox"  width="58px" height="19px"/>
+<asp:ListBox runat="server" cssclass="dropdownlist" />
+
+<asp:FileUpload runat=server  cssclass="main" width="220px"/>
+
+<asp:WebPartZone runat="server" BackColor="White" BorderColor="White" DragHighlightColor="White" />
+<asp:CheckBox runat=server  cssclass="checkbox" style="padding-left:2px"  />
+
+<%--Data list's styles: computers, components, tasks, processes --%>
+<asp:datalist runat=server SkinId="ComputersDataList" CssClass="main"> 
+  <ItemStyle BackColor="White" />
+  <AlternatingItemStyle BackColor="Gainsboro" />
+  <HeaderStyle BackColor="Gainsboro" />
+</asp:datalist>
+<asp:datalist runat=server SkinId="EventsDataList" CssClass="main"> 
+  <HeaderStyle BackColor="Gainsboro" />
+</asp:datalist>
+<asp:datalist runat=server SkinId="ComponentsDataList" CssClass="main"> 
+  <ItemStyle BackColor="White" />
+  <AlternatingItemStyle BackColor="Gainsboro" />
+  <HeaderStyle BackColor="Gainsboro" />
+</asp:datalist>
+<asp:datalist runat=server SkinId="TasksDataList" CssClass="main"> 
+  <ItemStyle BackColor="White" />
+  <AlternatingItemStyle BackColor="Gainsboro" />
+  <HeaderStyle BackColor="Gainsboro" />
+</asp:datalist>
+<asp:datalist runat=server SkinId="ProcessesDataList" CssClass="main" > 
+  <ItemStyle BackColor="White" />
+  <AlternatingItemStyle BackColor="Gainsboro" />
+  <HeaderStyle BackColor="Gainsboro" />
+</asp:datalist>

@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92AE384B-3F82-42AB-872F-98636FD00B12}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ARM2_dbcontrol</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ARM2_dbcontrol</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.0.3.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\InformationListTypes.cs" />
+    <Compile Include="Common\KeyFileSettings.cs" />
+    <Compile Include="DataBase\ComponentsManager.cs" />
+    <Compile Include="DataBase\ComponentsEntity.cs" />
+    <Compile Include="DataBase\ComponentsProvider.cs" />
+    <Compile Include="DataBase\ComputerColorOptionsEntity.cs" />
+    <Compile Include="DataBase\ComputersEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\ComputersEntityEx.cs" />
+    <Compile Include="DataBase\ComputersManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\DataBaseEntity.cs" />
+    <Compile Include="DataBase\DataBaseManager.cs" />
+    <Compile Include="DataBase\EventsEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\EventsManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\EventTypesEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\EventTypesManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\GenerationData.cs" />
+    <Compile Include="DataBase\InstallationTaskEntity.cs" />
+    <Compile Include="DataBase\InstallationTaskManager.cs" />
+    <Compile Include="DataBase\InstallationTaskProvider.cs" />
+    <Compile Include="DataBase\OSTypesEntity.cs" />
+    <Compile Include="DataBase\OSTypesManager.cs" />
+    <Compile Include="DataBase\ProcessesEntity.cs" />
+    <Compile Include="DataBase\ProcessesManager.cs" />
+    <Compile Include="DataBase\StatisticEntity.cs" />
+    <Compile Include="DataBase\TaskEntity.cs" />
+    <Compile Include="DataBase\TaskManager.cs" />
+    <Compile Include="DataBase\TemporaryGroupManager.cs" />
+    <Compile Include="DataBase\TemporaryGroupProvider.cs" />
+    <Compile Include="Diagram\BarGraph.cs" />
+    <Compile Include="Diagram\Chart.cs" />
+    <Compile Include="Diagram\ChartItem.cs" />
+    <Compile Include="Diagram\PieChart.cs" />
+    <Compile Include="Diagram\VisualReport.cs" />
+    <Compile Include="Diagram\VisualReportCollection.cs" />
+    <Compile Include="Filters\DeviceFilterEntity.cs" />
+    <Compile Include="Filters\GroupFilterCollection.cs" />
+    <Compile Include="Filters\GroupFilterEntity.cs" />
+    <Compile Include="Filters\UnknownDevicesFilterEntity.cs" />
+    <Compile Include="Generation\Logger.cs" />
+    <Compile Include="Generation\TranslateIPAddr.cs" />
+    <Compile Include="GroupEntities\BranchOfTree.cs" />
+    <Compile Include="GroupEntities\Group.cs" />
+    <Compile Include="GroupEntities\GroupCompEntity.cs" />
+    <Compile Include="GroupEntities\GroupEx.cs" />
+    <Compile Include="GroupEntities\GroupManager.cs" />
+    <Compile Include="GroupEntities\GroupProvider.cs" />
+    <Compile Include="GroupEntities\PolicyBranchOfTree.cs" />
+    <Compile Include="JSON\Entities\CompAdditionalInfo.cs" />
+    <Compile Include="JSON\Entities\ComponentJSONEntity.cs" />
+    <Compile Include="JSON\Entities\TreeNodeEntity.cs" />
+    <Compile Include="JSON\Entities\TreeNodeJSONEntity.cs" />
+    <Compile Include="JSON\TreeJSONEntityConverter.cs" />
+    <Compile Include="PolicyEntities\Devices\Device.cs" />
+    <Compile Include="PolicyEntities\Devices\DeviceManager.cs" />
+    <Compile Include="PolicyEntities\Devices\DeviceType.cs" />
+    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicy.cs" />
+    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicyManager.cs" />
+    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicyState.cs" />
+    <Compile Include="PolicyEntities\GeneralPolicy.cs" />
+    <Compile Include="PolicyEntities\General\Policy.cs" />
+    <Compile Include="PolicyEntities\General\PolicyManager.cs" />
+    <Compile Include="PolicyEntities\PolicyProvider.cs" />
+    <Compile Include="PolicyEntities\Xml\PolicyParser.cs" />
+    <Compile Include="Service\Vba32NS\IVba32Settings.cs" />
+    <Compile Include="Service\Vba32NS\NotifyEvent.cs" />
+    <Compile Include="Service\Vba32NS\NotifyType.cs" />
+    <Compile Include="Service\Vba32NS\NotifyTypeAddrList.cs" />
+    <Compile Include="Service\Vba32NS\ObjectSerializer.cs" />
+    <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
+    <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
+    <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
+    <Compile Include="Tasks\DefaultTaskBuild.cs" />
+    <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
+    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\ProactiveProtection\RuleTypeEnum.cs" />
+    <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
+    <Compile Include="Tasks\TaskTypeEnum.cs" />
+    <Compile Include="Tasks\TaskUserCollection.cs" />
+    <Compile Include="Tasks\TaskUserEntity.cs" />
+    <Compile Include="Generation\ColorGenerator.cs" />
+    <Compile Include="DataBase\SettingsEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataBase\VlslVConnection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\CompFilterCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\CompFilterEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\FilterEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\Validation.cs" />
+    <Compile Include="Generation\RandomGeneration.cs" />
+    <Compile Include="Service\TaskAssignment\PreServAction.cs" />
+    <Compile Include="Generation\XmlBuilder.cs" />
+    <Compile Include="Tasks\XmlTaskParser.cs" />
+    <Compile Include="Service\TaskAssignment\Vba32ControlCenterWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Service\TaskAssignment\VbaTaskAssignment.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

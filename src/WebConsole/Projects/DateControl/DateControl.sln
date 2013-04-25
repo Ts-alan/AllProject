@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateControl", "DateControl.csproj", "{523F3FD9-CEB7-48A0-843F-2BE730C90644}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "http://localhost/WebApplication1/WebApplication1.csproj", "{BE344FEA-7E92-4D6B-AFF4-9B3E9EBD4EC6}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{523F3FD9-CEB7-48A0-843F-2BE730C90644}.Debug.ActiveCfg = Debug|.NET
+		{523F3FD9-CEB7-48A0-843F-2BE730C90644}.Debug.Build.0 = Debug|.NET
+		{523F3FD9-CEB7-48A0-843F-2BE730C90644}.Release.ActiveCfg = Release|.NET
+		{523F3FD9-CEB7-48A0-843F-2BE730C90644}.Release.Build.0 = Release|.NET
+		{BE344FEA-7E92-4D6B-AFF4-9B3E9EBD4EC6}.Debug.ActiveCfg = Debug|.NET
+		{BE344FEA-7E92-4D6B-AFF4-9B3E9EBD4EC6}.Debug.Build.0 = Debug|.NET
+		{BE344FEA-7E92-4D6B-AFF4-9B3E9EBD4EC6}.Release.ActiveCfg = Release|.NET
+		{BE344FEA-7E92-4D6B-AFF4-9B3E9EBD4EC6}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
