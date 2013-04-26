@@ -32,6 +32,7 @@ namespace Vba32CC
     using System.Reflection;
 
     using System.Diagnostics;
+    using Vba32CC.TaskAssignment;
 
     /// <summary>
     /// Event sinks class
@@ -89,6 +90,9 @@ namespace Vba32CC
 
             m_server_name = ReadServerName();
             m_user_name = ReadUserName();
+
+            //Set ConnectionString into Automatically tasks
+            AutomaticallyTasks.ConnectionString = GetConnectionString();
 
             // start connection control thread
             Thread connection_control_thread = new Thread(new ThreadStart(ConnectionControlThread));
@@ -705,6 +709,9 @@ namespace Vba32CC
                 result = ExecuteStoredProcedure(command);
                 if (result)
                 {
+                    //Automatically tasks
+                    AutomaticallyTasks.GiveTask(new EventsEntity(name_value_map));
+
                     OnEventInsert(name_value_map);
                 }
             }
