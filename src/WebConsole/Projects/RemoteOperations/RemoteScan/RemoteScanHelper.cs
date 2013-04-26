@@ -16,7 +16,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
     {
         protected const int AgentPort = 17002;
         protected const int LoaderPort = 17003;
-        public static bool IsComputerOnline(IPAddress address, TimeSpan timeout)
+        public static bool IsComputerOnline(IPAddress address, TimeSpan timeout, Int32 pingCount)
         {
             int itimeout;
             if (timeout.TotalMilliseconds > int.MaxValue)
@@ -30,10 +30,15 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             Ping pingSender = new Ping();
             try
             {
-                PingReply reply = pingSender.Send(address, itimeout);
-                if (reply.Status == IPStatus.Success)
+                PingReply reply;
+                while (pingCount > 0)
                 {
-                    return true;
+                    reply = pingSender.Send(address, itimeout);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        return true;
+                    }
+                    pingCount--;
                 }
             }
             catch

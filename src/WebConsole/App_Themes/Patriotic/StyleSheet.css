@@ -1069,4 +1069,21 @@ div.ImageDropDownList[disabled]
 
 .Button{    display:block;    text-decoration:none;    width:150px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;        background: #AAA url(Images/titlebg.jpg) repeat-x;            line-height:20px;    font-size:11px;    overflow:hidden}.ButtonDisabled{    display:block;    text-decoration:none;    width:204px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;            background: #AAA url(Images/sectionbg.jpg) repeat-x;        line-height:20px;    font-size:11px;    overflow:hidden    }.ButtonDisabled a{    cursor:default;    color: White;}.ButtonDisabled a:hover{    cursor:default;    text-decoration: none;}/*Images for buttons*/.hiddenButton{    border-style: none;    padding: 0px;    margin: 0px;    overflow: hidden;    background-color: transparent;}
 
-table.tableInfo{	border-collapse: collapse;		width: 100%;}table.tableInfo td{	border-width: 1px;	border-style: solid;	border-color: Black;	padding: 3px 5px;	font-size: 12px;}table.tableInfo td.r0{	background-color: #c2c2c2;}table.tableInfo td.r1{	background-color: #efefef;	}div.enabledImage{	background-image: url(Images/enabled.gif);	width: 16px;	height: 16px;}div.disabledImage{	background-image: url(Images/disabled.gif);	width: 16px;	height: 16px;}
+table.tableInfo{	border-collapse: collapse;		width: 100%;}table.tableInfo td{	border-width: 1px;	border-style: solid;	border-color: Black;	padding: 3px 5px;	font-size: 12px;}table.tableInfo td.r0{	background-color: #c2c2c2;}table.tableInfo td.r1{	background-color: #efefef;	}div.enabledImage{	background-image: url(Images/enabled.gif);	width: 16px;	height: 16px;}div.disabledImage{	background-image: url(Images/disabled.gif);	width: 16px;	height: 16px;}
+
+div.EditComment
+{
+	background: transparent url('Images/document-edit.png') no-repeat;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+
+div.EditComment[disabled]
+{
+	background: transparent;
+	width: 1px;
+	height: 1px;
+	cursor: default;
+	display: none;	
+}

@@ -142,6 +142,13 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             get { return _pingTimeout; }
             set { _pingTimeout = value; }
         }
+
+        private Int32 _pingCount = 1;
+        public Int32 PingCount
+        {
+            get { return _pingCount; }
+            set { _pingCount = value; }
+        }
         #endregion
         #region IP Addresses
         private bool _excludeIPAddress = true;
@@ -437,7 +444,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
                     return;
                 }
                 IPAddress address = rie.IPAddress;
-                if (RemoteScanHelper.IsComputerOnline(address, _pingTimeout))
+                if (RemoteScanHelper.IsComputerOnline(address, _pingTimeout, _pingCount))
                 {
                     rie.IsOnline = true;
                     if (_testOs)

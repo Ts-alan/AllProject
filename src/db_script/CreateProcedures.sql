@@ -218,6 +218,24 @@ AS
 		[ComputerName] = @ComputerName
 GO
 
+---------------------------------------------
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetComputerIPAddressByID]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[GetComputerIPAddressByID]
+GO
+
+CREATE PROCEDURE [dbo].[GetComputerIPAddressByID]
+	@ID smallint
+WITH ENCRYPTION
+AS
+	SELECT
+		[IPAddress]
+	FROM
+		[dbo].[Computers]
+	WHERE
+		[ID] = @ID
+GO
+
 ------------------------------------------------
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[DeleteComputer]')
 					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)

@@ -2748,4 +2748,19 @@
   <data name="UpdateForRemoteConsoleScanner" xml:space="preserve">
     <value>Update before scanning (ONLY FOR REMOTE CONSOLE SCANNER)</value>
   </data>
+  <data name="RequestPacketCount" xml:space="preserve">
+    <value>Request packet count</value>
+  </data>
+  <data name="RequestPacketCountRequiredErrorMessage" xml:space="preserve">
+    <value>Request packet count required</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout (sec)</value>
+  </data>
+  <data name="TimeoutRequiredErrorMessage" xml:space="preserve">
+    <value>Timeout required</value>
+  </data>
+  <data name="AddOrEditComment" xml:space="preserve">
+    <value>Add/edit comment</value>
+  </data>
 </root>

@@ -15,7 +15,8 @@ using System.Web.UI.HtmlControls;
 using VirusBlokAda.RemoteOperations.MsiInfo;
 using VirusBlokAda.RemoteOperations.RemoteInstall;
 using System.Configuration;
-using ARM2_dbcontrol.DataBase; 
+using ARM2_dbcontrol.DataBase;
+using System.Web.Services; 
 
 public partial class AsynchLanScan : PageBase
 {
@@ -41,6 +42,8 @@ public partial class AsynchLanScan : PageBase
     {
         RegisterScript(@"js/jQuery/jquery-1.3.2.js");
         RegisterScript(@"js/jQuery/ui.core.js");
+        RegisterScript(@"js/jQuery/ui.draggable.js");        
+        RegisterScript(@"js/jQuery/ui.dialog.js");
         RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
 
@@ -104,6 +107,11 @@ public partial class AsynchLanScan : PageBase
         lblDomain.Text = Resources.Resource.DomainName;
         lblLogin.Text = Resources.Resource.Login;
         lblPass.Text = Resources.Resource.PasswordLabelText;
+
+        lblPingCount.Text = Resources.Resource.RequestPacketCount;
+        lblPingTimeout.Text = Resources.Resource.Timeout;
+        rangePingCount.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 10);
+        rangePingTimeout.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 100);
         
         lbtnInstall.Text = Resources.Resource.Install;
         cbRebootAfterInstall.Text = Resources.Resource.RebootAfterInstall;
@@ -147,6 +155,8 @@ public partial class AsynchLanScan : PageBase
         tboxLoginCr.Text = login;
         tboxDomainCr.Text = domain;
         rbtnlProviders.SelectedIndex = provider;
+        txtPingCount.Text = pingCount.ToString();
+        txtPingTimeout.Text = pingTimeout.ToString();
         if (scanComputerList != null)
         {
             foreach (string next in scanComputerList)
@@ -161,6 +171,8 @@ public partial class AsynchLanScan : PageBase
         login = tboxLoginCr.Text;
         domain = tboxDomainCr.Text;
         provider = rbtnlProviders.SelectedIndex;
+        pingCount = GetPingCount();
+        pingTimeout = GetPingTimeout();
         scanComputerList = new List<string>();
         foreach (ListItem next in lboxCompIncludeList.Items)
             scanComputerList.Add(next.Text);
@@ -326,7 +338,8 @@ public partial class AsynchLanScan : PageBase
     private void StartScan()
     {
         remoteScanner = new RemoteScanner(GetCredentials(), 40);
-        remoteScanner.PingTimeout = new TimeSpan(0, 0, 10);
+        remoteScanner.PingTimeout = new TimeSpan(0, 0, GetPingTimeout());
+        remoteScanner.PingCount = GetPingCount();
 
         remoteScanner.ScanIPRangeList.AddRange(GetIpRanges());
 
@@ -385,6 +398,24 @@ public partial class AsynchLanScan : PageBase
                 {
                     cboxIsSelected.Enabled = true;
                 }
+
+                if (String.IsNullOrEmpty(rie.OSVersion))
+                {
+                    String comment = ScanningObjectState.GetComment(rie.IPAddress.ToString());
+                    if (String.IsNullOrEmpty(comment))
+                        (e.Row.FindControl("lblInformation") as Label).Text = rie.ErrorInfo;
+                    else
+                    {
+                        (e.Row.FindControl("lblInformation") as Label).Text = comment;
+                        (e.Row.FindControl("imgComment") as HtmlGenericControl).Attributes.Add("comment", "true");
+                    }
+                }
+                else
+                {
+                    (e.Row.FindControl("lblInformation") as Label).Text = rie.OSVersion;
+                    (e.Row.FindControl("imgComment") as HtmlGenericControl).Attributes.Add("disabled", "true");
+                }
+
                 break;
             default:
                 break;
@@ -656,6 +687,60 @@ public partial class AsynchLanScan : PageBase
             SettingsStorageCollection[domainKey] = value;
         }
     }
+    private string pingCountKey = "PingCount";
+    protected Int32 pingCount
+    {
+        get
+        {
+            if (SettingsStorageCollection.ContainsKey(pingCountKey))
+            {
+                try
+                {
+                    return Convert.ToInt32(SettingsStorageCollection[pingCountKey]);
+                }
+                catch
+                {
+                    return 1;
+                }
+            }
+            return 1;
+        }
+        set
+        {
+            if (!SettingsStorageCollection.ContainsKey(pingCountKey))
+            {
+                SettingsStorageCollection.Add(pingCountKey, null);
+            }
+            SettingsStorageCollection[pingCountKey] = value;
+        }
+    }
+    private string pingTimeoutKey = "pingTimeoutKey";
+    protected Int32 pingTimeout
+    {
+        get
+        {
+            if (SettingsStorageCollection.ContainsKey(pingTimeoutKey))
+            {
+                try
+                {
+                    return Convert.ToInt32(SettingsStorageCollection[pingTimeoutKey]);
+                }
+                catch
+                {
+                    return 1;
+                }
+            }
+            return 10;
+        }
+        set
+        {
+            if (!SettingsStorageCollection.ContainsKey(pingTimeoutKey))
+            {
+                SettingsStorageCollection.Add(pingTimeoutKey, null);
+            }
+            SettingsStorageCollection[pingTimeoutKey] = value;
+        }
+    }
     private string providerKey = "Provider";
     protected int provider
     {
@@ -695,6 +780,21 @@ public partial class AsynchLanScan : PageBase
                 SettingsStorageCollection.Add(scanComputerListKey, null);
             }
             SettingsStorageCollection[scanComputerListKey] = value;
+        }
+    }
+
+    public static ScanningObjectProvider ScanningObjectState
+    {
+        get
+        {
+            ScanningObjectProvider provider = HttpContext.Current.Application["ScanningObjectState"] as ScanningObjectProvider;
+            if (provider == null)
+            {
+                provider = new ScanningObjectProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+                HttpContext.Current.Application["ScanningObjectState"] = provider;
+            }
+
+            return provider;
         }
     }
 
@@ -1241,6 +1341,28 @@ public partial class AsynchLanScan : PageBase
         return new Credentials(domain, login, pass);
     }
 
+    private Int32 GetPingCount()
+    {
+        Int32 count = 1;
+        try
+        {
+            count = Convert.ToInt32(txtPingCount.Text);
+        }
+        catch { }
+        return count;
+    }
+
+    private Int32 GetPingTimeout()
+    {
+        Int32 timeout = 10;
+        try
+        {
+            timeout = Convert.ToInt32(txtPingTimeout.Text);
+        }
+        catch { }
+        return timeout;
+    }
+
     private List<IPRange> GetIpRanges()
     {
         List<IPRange> list = new List<IPRange>();
@@ -1268,6 +1390,24 @@ public partial class AsynchLanScan : PageBase
             return RemoteMethodsEnum.RemoteService;
         }
         return RemoteMethodsEnum.Wmi;
+    }
+    #endregion
+
+    #region WebMethods
+    [WebMethod]
+    public static void SetComment(String ip, String text)
+    {
+        try
+        {
+            if (String.IsNullOrEmpty(text.Replace(" ", "")))
+                ScanningObjectState.DeleteComment(ip);
+            else
+                ScanningObjectState.AddComment(new ScanningObjectEntity(ip, text));
+        }
+        catch (Exception e)
+        {
+            throw new Exception(String.Format("SetComment() :: ", e.Message));
+        }
     }
     #endregion
 

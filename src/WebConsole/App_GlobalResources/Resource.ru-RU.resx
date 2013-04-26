@@ -2617,7 +2617,7 @@
     <value>чч.мм</value>
   </data>
   <data name="ValueBetween" xml:space="preserve">
-    <value>Значений должно быть между {0} и {1}</value>
+    <value>Значение должно быть между {0} и {1}</value>
   </data>
   <data name="RequestingDataFromServer" xml:space="preserve">
     <value>Получение данных с сервера</value>
@@ -2747,5 +2747,20 @@
   </data>
   <data name="UpdateForRemoteConsoleScanner" xml:space="preserve">
     <value>Произвести обновление перед сканированием (ТОЛЬКО ДЛЯ REMOTE CONSOLE SCANNER)</value>
+  </data>
+  <data name="RequestPacketCount" xml:space="preserve">
+    <value>Количество отправляемых пакетов</value>
+  </data>
+  <data name="RequestPacketCountRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется количество отправляемых пакетов</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Таймаут (сек)</value>
+  </data>
+  <data name="TimeoutRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется значение таймаута</value>
+  </data>
+  <data name="AddOrEditComment" xml:space="preserve">
+    <value>Добавить/редактировать комментарий</value>
   </data>
 </root>

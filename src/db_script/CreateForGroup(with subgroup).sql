@@ -274,9 +274,13 @@ AS
 		END
 		IF @NewParentID IS NOT NULL
 		BEGIN
+			IF @NewParentID = 0
+			BEGIN
+				SET @NewParentID = NULL
+			END
 			UPDATE [GroupTypes]
-			SET ParentID   = @NewParentID
-			WHERE GroupName = @GroupName
+				SET ParentID   = @NewParentID
+				WHERE GroupName = @GroupName
 		END
 	END
 GO

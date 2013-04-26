@@ -14,22 +14,99 @@
         $(document).ready(function () {
             $("#tabs").tabs({ cookie: { expires: 30} });
         });
+        function pageLoad () {
+            $("div[class=EditComment]").click(function () {
+                var ip = $(this).attr('IP');
+                var title = $(this).attr('titleDialog');
+                var saveTitle = $(this).attr('saveTitle');
+                var isComment = $(this).attr('comment');
+                var comment = '';
+                if (isComment == 'true')
+                    comment = $("span[IP=" + ip + "]").text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''); //trim start&end spaces
+
+                $("#divModalDialog").html('');
+                $("#divModalDialog").dialog('destroy');
+                var d = $("#divModalDialog");
+                d.html(GetHtmlByComment(comment));
+                var dOpt = {
+                    title: title + ' (' + ip + ')',
+                    width: 320,
+                    modal: true,
+                    resizable: false,
+                    buttons: {
+                        '<%=Resources.Resource.Save %>': function () {
+                            var newVal = $('#txtComment').val().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+                            if (comment != newVal) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "AsynchLanScan.aspx/SetComment",
+                                    data: "{ip:\"" + ip + "\", text:\"" + newVal + "\"}",
+                                    contentType: "application/json; charset=utf-8",
+                                    error: function (msg) {
+                                        ShowJSONMessage(msg);
+                                    },
+                                    success: function () {
+                                        comment = newVal;
+                                        $("span[IP=" + ip + "]").text(comment);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                };
+                d.dialog(dOpt);
+
+
+                function GetHtmlByComment(comment) {
+                    return "<textarea id='txtComment' rows='5' style='width: 280px;'>" + comment + "</textarea>";
+                }
+            });
+
+
+            function ShowJSONMessage(msg) {
+                var m = JSON.parse(msg.responseText, function (key, value) {
+                    var type;
+                    if (value && typeof value === 'object') {
+                        type = value.type;
+                        if (typeof type === 'string' && typeof window[type] === 'function') {
+                            return new (window[type])(value);
+                        }
+                    }
+                    return value;
+                });
+                alert(m.Message);
+            }
+        }
     </script>
     
     
         <div id='tabs'>
             <ul>
-                <li><a href='#3'><span>
+                <li>
+                    <a href='#3'><span>
                     <%=Resources.Resource.Provider%>
-                </span></a></li>
-                <li><a href='#0'><span>
+                    </span></a>
+                </li>
+                <li>
+                    <a href='#0'><span>
                     <%=Resources.Resource.IPRange + "/" + Resources.Resource.List%>
-                </span></a></li>
-                <li><a href='#1'><span>
+                    </span></a>
+                </li>
+                <li>
+                    <a href='#1'><span>
                     <%=Resources.Resource.Credentials%>
-                </span></a></li>
-                <li><a href='#2'><span>
-                    <%=Resources.Resource.MSIPathes %></span></a></li>                
+                    </span></a>
+                </li>
+                <li>
+                    <a href='#4'><span>
+                    <%=Resources.Resource.Settings%>
+                    </span></a>
+                </li>
+                <li>
+                    <a href='#2'><span>
+                    <%=Resources.Resource.MSIPathes %>
+                    </span></a>
+                </li>
             </ul>            
             <div id='0'>
             
@@ -166,6 +243,44 @@
                     <asp:RadioButtonList runat="server" ID="rbtnlProviders" AutoPostBack="false" ></asp:RadioButtonList>
                 </div>
             </div>
+            <div id='4'>
+                <div class="ListContrastTable" style="width: 700px">
+                    <table width="100%">
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblPingCount" runat="server" Width="250px" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtPingCount" runat="server" Style="width: 70px" />
+                        </td>
+                        <td>
+                            <asp:RequiredFieldValidator ID="requiredPingCount" ControlToValidate="txtPingCount" 
+                                runat="server" ErrorMessage='<%$ Resources:Resource, RequestPacketCountRequiredErrorMessage %>'
+                                ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
+                            <br />
+                            <asp:RangeValidator ID="rangePingCount" runat="server" ControlToValidate="txtPingCount"
+                                ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="10" Type="Integer" ></asp:RangeValidator>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <asp:Label ID="lblPingTimeout" runat="server" Width="250px" />
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtPingTimeout" runat="server" Style="width: 70px" />
+                        </td>
+                        <td>
+                            <asp:RequiredFieldValidator ID="requiredPingTimeout" ControlToValidate="txtPingTimeout" 
+                                runat="server" ErrorMessage='<%$ Resources:Resource, TimeoutRequiredErrorMessage %>'
+                                ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
+                            <br />
+                            <asp:RangeValidator ID="rangePingTimeout" runat="server" ControlToValidate="txtPingTimeout"
+                                ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="100" Type="Integer" ></asp:RangeValidator>
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
         </div>
         <custom:StorageControl ID="SettingsStorage" runat="server" StorageType="Session" />
     
@@ -251,8 +366,19 @@
                         SortExpression="Name" />
                     <asp:BoundField HeaderStyle-CssClass="gridViewHeader" DataField="IPAddress" HeaderText='<%$ Resources:Resource, IPAddress %>'
                         SortExpression="IPAddress" />
-                    <asp:BoundField DataField="Info" HeaderText='<%$ Resources:Resource, Information %>'
-                        SortExpression="Info" />
+                    <asp:TemplateField HeaderText='<%$ Resources:Resource, Information %>'>                        
+                        <ItemTemplate>
+                            <div style="padding-left: 20px;">
+                                <div style="word-wrap: break-word;float:left;">
+                                    <asp:Label ID="lblInformation" runat="server" IP=<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %> />    
+                                </div>
+                                <div id="imgComment" runat="server" style="float:right;" class="EditComment"
+                                    titleDialog=<%# Resources.Resource.Comment %> title='<%# Resources.Resource.AddOrEditComment %>' saveTitle='<%# Resources.Resource.Save %>'
+                                    IP=<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %> >
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
                 <PagerSettings Visible="true" Position="TopAndBottom" />
                 <PagerTemplate>
@@ -323,5 +449,7 @@
             </tr>
         </table>
     </div>
+
+    <div id="divModalDialog" style="display: none;"></div>
         
 </asp:Content>
