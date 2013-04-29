@@ -152,6 +152,9 @@
     <Compile Include="DataBase\OSTypesManager.cs" />
     <Compile Include="DataBase\ProcessesEntity.cs" />
     <Compile Include="DataBase\ProcessesManager.cs" />
+    <Compile Include="DataBase\ScanningObjectEntity.cs" />
+    <Compile Include="DataBase\ScanningObjectManager.cs" />
+    <Compile Include="DataBase\ScanningObjectProvider.cs" />
     <Compile Include="DataBase\StatisticEntity.cs" />
     <Compile Include="DataBase\TaskEntity.cs" />
     <Compile Include="DataBase\TaskManager.cs" />
