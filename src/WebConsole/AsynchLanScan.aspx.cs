@@ -116,37 +116,10 @@ public partial class AsynchLanScan : PageBase
         lbtnInstall.Text = Resources.Resource.Install;
         cbRebootAfterInstall.Text = Resources.Resource.RebootAfterInstall;
 
-        lblNTW.Text = Vba32VersionInfo.Vba32NTW;
-        lblNTS.Text = Vba32VersionInfo.Vba32NTS;
-        lblVISTA.Text = Vba32VersionInfo.Vba32Vista;
-        lblVIS.Text = Vba32VersionInfo.Vba32Vis;
-        lblRemoteConsoleScanner.Text = Resources.Resource.RemoteConsoleScanner;
-        lbtnNTW.Text = Resources.Resource.Load;
-        lbtnNTS.Text = Resources.Resource.Load;
-        lbtnVis.Text = Resources.Resource.Load;
-        lbtnVista.Text = Resources.Resource.Load;
-        lbtnRemoteConsoleScanner.Text = Resources.Resource.Load;
-
-        UpdateMSIPathes();
-
         rbtnlProviders.Items.Add(Resources.Resource.WMI);
         rbtnlProviders.Items.Add(Resources.Resource.RemoteService);
         rbtnlProviders.SelectedIndex = 0;
-
-        ddlInstallProduct.Items.Add(Resources.Resource.Antivirus);
-        ddlInstallProduct.Items.Add(Resources.Resource.RemoteConsoleScanner);
-    }
-
-    private void UpdateMSIPathes()
-    {
-        Vba32MsiStorage msiStorage = new Vba32MsiStorage();
-        msiStorage.Read();
-        lblNTW_MSI.Text = msiStorage.GetPathMSI(Vba32VersionInfo.Vba32NTW);
-        lblNTS_MSI.Text = msiStorage.GetPathMSI(Vba32VersionInfo.Vba32NTS);
-        lblVIS_MSI.Text = msiStorage.GetPathMSI(Vba32VersionInfo.Vba32Vis);
-        lblVISTA_MSI.Text = msiStorage.GetPathMSI(Vba32VersionInfo.Vba32Vista);
-        lblRemoteConsoleScanner_MSI.Text = msiStorage.GetPathMSI("RemoteConsoleScanner");
-    }
+    }        
     #endregion
 
     #region SettingsState
@@ -1133,94 +1106,6 @@ public partial class AsynchLanScan : PageBase
         }
     }
     #endregion
-
-    #region MSI Options
-    protected void lbtnNTW_Click(object sender, EventArgs e)
-    {
-        if (UploadFile(fuNTW, lblNTW_MSI))
-            RewriteXML();
-    }
-
-    protected void lbtnNTS_Click(object sender, EventArgs e)
-    {
-        if (UploadFile(fuNTS, lblNTS_MSI))
-            RewriteXML();
-    }
-
-    protected void lbtnVista_Click(object sender, EventArgs e)
-    {
-        if (UploadFile(fuVista, lblVISTA_MSI))
-            RewriteXML();
-    }
-
-    protected void lbtnVis_Click(object sender, EventArgs e)
-    {
-        if (UploadFile(fuVis, lblVIS_MSI))
-            RewriteXML();
-    }
-
-    protected void lbtnRemoteConsoleScanner_Click(object sender, EventArgs e)
-    {
-        if (UploadFile(fuRemoteConsoleScanner, lblRemoteConsoleScanner_MSI))
-            RewriteXML();
-    }
-
-    private bool UploadFile(FileUpload fu, Label lbl)
-    {
-        if (fu.HasFile == false)
-        {
-            return false;
-        }
-        else
-        {
-            if (!Vba32MsiStorage.IsMSI(fu.FileName))
-            {
-                //String csname1 = "PopupScriptMSIFail";
-                //Type cstype = this.GetType();
-                //// Get a ClientScriptManager reference from the Page class.
-                //ClientScriptManager cs = Page.ClientScript;
-                //// Check to see if the startup script is already registered.
-                //if (!cs.IsStartupScriptRegistered(cstype, csname1))
-                //{
-                //    String cstext1 = String.Format("alert('{0}.');", Resources.Resource.CorrectOnlyMSI);
-                //    cs.RegisterStartupScript(cstype, csname1, cstext1, true);
-                //}
-                string key = "LoadMSIErrorScript";
-                string script =
-                    @"$(document).ready(function () { 
-                    alert('" + Resources.Resource.LoadOnlyMSI + @"');
-                });";
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);
-
-                return false;
-            }
-            // Save the file
-            string fileName = fu.FileName;
-
-            string filePath = Server.MapPath("~/Downloads/" + fileName);
-            fu.SaveAs(filePath);
-
-            lbl.Text = fileName;
-
-            //Change xml file
-
-            return true;
-        }
-    }
-
-    private void RewriteXML()
-    {
-        Vba32MsiStorage msiStorage = new Vba32MsiStorage();
-        Dictionary<String, String> dict = new Dictionary<String, String>();
-        dict.Add(Vba32VersionInfo.Vba32NTW, !String.IsNullOrEmpty(lblNTW_MSI.Text) ? lblNTW_MSI.Text : String.Empty);
-        dict.Add(Vba32VersionInfo.Vba32NTS, !String.IsNullOrEmpty(lblNTS_MSI.Text) ? lblNTS_MSI.Text : String.Empty);
-        dict.Add(Vba32VersionInfo.Vba32Vista, !String.IsNullOrEmpty(lblVISTA_MSI.Text) ? lblVISTA_MSI.Text : String.Empty);
-        dict.Add(Vba32VersionInfo.Vba32Vis, !String.IsNullOrEmpty(lblVIS_MSI.Text) ? lblVIS_MSI.Text : String.Empty);
-        dict.Add("RemoteConsoleScanner", !String.IsNullOrEmpty(lblRemoteConsoleScanner_MSI.Text) ? lblRemoteConsoleScanner_MSI.Text : String.Empty);
-
-        msiStorage.Write(dict);
-    }
-    #endregion  
   
     #region Ip Ranges List Tab
 
@@ -1270,15 +1155,14 @@ public partial class AsynchLanScan : PageBase
     #endregion
 
     #region Install
-
-    protected void lbtnInstall_Click(object sender, EventArgs e)
+        
+    protected void lbtnInstall_Click(Object sender, EventArgs e)
     {
-        bool rebootAfterInstall = cbRebootAfterInstall.Checked;
-        string pathDir = Server.MapPath("~/Downloads/");
+        Boolean rebootAfterInstall = false;
+        String pathDir = Server.MapPath("~/Downloads/");
+        String pathConfig = System.IO.Directory.GetParent(Server.MapPath("~")).FullName + "\\VbaControlAgent.cfg";
+        
         List<RemoteInstallEntity> installEntities = new List<RemoteInstallEntity>();
-
-        Vba32MsiStorage msiStorage = new Vba32MsiStorage();
-        msiStorage.Read();
 
         foreach (RemoteInfoEntityShow next in  scanResultDict.Values)
         {
@@ -1288,8 +1172,9 @@ public partial class AsynchLanScan : PageBase
                 RemoteInstallEntity rie = new RemoteInstallEntity();
                 rie.IP = next.IPAddress.ToString();
                 rie.ComputerName = next.Name;
-                rie.VbaVersion = ddlInstallProduct.SelectedIndex == 0 ? Vba32MsiStorage.GetVba32VersionByOSVersion(next.OSVersion) : Vba32VersionInfo.Vba32RemoteConsoleScanner;
-                rie.SourceFullPath = pathDir + msiStorage.GetPathMSI(rie.VbaVersion);
+                rie.VbaVersion = Vba32VersionInfo.Vba32RemoteControlAgent;
+                rie.SourceFullPath = pathDir + Vba32MsiStorage.GetPathMSI(rie.VbaVersion);
+                rie.ConfigPath = pathConfig;
                 installEntities.Add(rie);
             }
         }

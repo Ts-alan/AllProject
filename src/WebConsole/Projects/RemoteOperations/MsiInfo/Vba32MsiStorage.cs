@@ -9,11 +9,30 @@ using System.Diagnostics;
 
 namespace VirusBlokAda.RemoteOperations.MsiInfo
 {
-    public class Vba32MsiStorage
+    public static class Vba32MsiStorage
     {
-        private Dictionary<string, string> dict = new Dictionary<string, string>();
+        private static Dictionary<String, String> dict = new Dictionary<String, String>();
+        private static readonly String DirPath;
+        private static readonly String XsdName = "Vba32Versions.xsd";
+        private static readonly String XmlName = "Vba32MSI.xml";
+        private static DateTime LastRead;
 
-        private void ValidationEventHandler(object sender, ValidationEventArgs e)
+        static Vba32MsiStorage()
+        {
+            DirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Settings\");
+            Read(); 
+        }
+
+        /// <summary>
+        /// Get actually data if it's need.
+        /// </summary>
+        private static void CheckRead()
+        {
+            if (DateTime.Now.Subtract(LastRead) > new TimeSpan(0, 30, 0))
+                Read();
+        }
+
+        private static void ValidationEventHandler(Object sender, ValidationEventArgs e)
         {
             switch (e.Severity)
             {
@@ -27,80 +46,95 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
 
         }
 
-        public void Read()
+        /// <summary>
+        /// Read MSI pathes from xml file.
+        /// </summary>
+        private static void Read()
         {
+            XmlReader reader = null;
             try
             {
                 XmlReaderSettings settings = new XmlReaderSettings();
                 XmlSchema schema = new XmlSchema();
-                schema.SourceUri = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Settings\Vba32Versions.xsd");
+                schema.SourceUri = Path.Combine(DirPath, XsdName);
                 settings.Schemas.Add(schema);
                 settings.ValidationType = ValidationType.Schema;
-                XmlReader reader = XmlReader.Create(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Settings\Vba32MSI.xml"), settings);
+                reader = XmlReader.Create(Path.Combine(DirPath, XmlName), settings);
                 XmlDocument document = new XmlDocument();
                 document.Load(reader);
                 ValidationEventHandler eventHandler = new ValidationEventHandler(ValidationEventHandler);
                 document.Validate(eventHandler);
                 XmlNodeList nodes = document.GetElementsByTagName("path");
+                dict.Clear();
                 foreach (XmlNode next in nodes)
                 {
-                    string path = next.InnerText;
-                    string version = next.Attributes["version"].Value;
+                    String path = next.InnerText;
+                    String version = next.Attributes["version"].Value;
                     dict.Add(version, path);
                 }
-
-                reader.Close();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Error loading or parsing Vba32MSI.xml " + ex.Message);
             }
+            finally
+            {
+                LastRead = DateTime.Now;
+                if (reader != null)
+                    reader.Close();
+            }
         }
 
-        public void Write(Dictionary<string, string> _dict)
-        {
-            Read();
-            try
-            {
-                XmlTextWriter writer = new XmlTextWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Settings\Vba32MSI.xml"), Encoding.UTF8);
+        //public void Write(Dictionary<String, String> _dict)
+        //{
+        //    Read();
+        //    try
+        //    {
+        //        XmlTextWriter writer = new XmlTextWriter(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Settings\Vba32MSI.xml"), Encoding.UTF8);
                 
-                writer.Formatting = Formatting.Indented;
-                writer.WriteStartDocument();
+        //        writer.Formatting = Formatting.Indented;
+        //        writer.WriteStartDocument();
 
-                writer.WriteStartElement("vba32msi", "Settings");
-                foreach (KeyValuePair<string, string> pair in _dict)
-                {
-                    writer.WriteStartElement("path");
-                    writer.WriteAttributeString("version", pair.Key);
-                    writer.WriteString(pair.Value);
-                    writer.WriteEndElement();
+        //        writer.WriteStartElement("vba32msi", "Settings");
+        //        foreach (KeyValuePair<String, String> pair in _dict)
+        //        {
+        //            writer.WriteStartElement("path");
+        //            writer.WriteAttributeString("version", pair.Key);
+        //            writer.WriteString(pair.Value);
+        //            writer.WriteEndElement();
 
-                    string val;
-                    if (dict.TryGetValue(pair.Key, out val))
-                    {
-                        if (!pair.Value.Equals(val))
-                        {
-                            DeleteFile(dict[pair.Key]);
-                        }
-                    }
-                }
-                writer.WriteEndElement();
+        //            String val;
+        //            if (dict.TryGetValue(pair.Key, out val))
+        //            {
+        //                if (!pair.Value.Equals(val))
+        //                {
+        //                    DeleteFile(dict[pair.Key]);
+        //                }
+        //            }
+        //        }
+        //        writer.WriteEndElement();
 
-                writer.WriteEndDocument();
-                writer.Close();
+        //        writer.WriteEndDocument();
+        //        writer.Close();
 
-                dict = _dict;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error writing Vba32MSI.xml " + ex.Message);
-            }
-        }
+        //        dict = _dict;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine("Error writing Vba32MSI.xml " + ex.Message);
+        //    }
+        //}
 
-        public string GetPathMSI(string version)
+        /// <summary>
+        /// Get MSI path by product name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static String GetPathMSI(String name)
         {
-            string path;
-            if (dict.TryGetValue(version, out path))
+            CheckRead();
+            String path;
+            if (dict.TryGetValue(name, out path))
             {
                 return path;
             }
@@ -111,10 +145,15 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
             }
         }
 
-        public static string GetVba32VersionByOSVersion(string osversion)
+        /// <summary>
+        /// Get anti-virus version by OS name
+        /// </summary>
+        /// <param name="osversion"></param>
+        /// <returns></returns>
+        public static String GetVba32VersionByOSVersion(String osversion)
         {
-            string version = String.Empty;
-            string osversionl = osversion.ToLower();
+            String version = String.Empty;
+            String osversionl = osversion.ToLower();
             if (osversionl.Contains("windows"))
             {
                 if (osversionl.Contains("server"))
@@ -134,10 +173,14 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
             return version;
         }
 
-        private void DeleteFile(string filename)
+        /// <summary>
+        /// Delete file.
+        /// </summary>
+        /// <param name="filename"></param>
+        private static void DeleteFile(String filename)
         {
             if (String.IsNullOrEmpty(filename)) return;
-            string fullname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Downloads\" + filename);
+            String fullname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Downloads\" + filename);
             try
             {
                 FileInfo TheFile = new FileInfo(fullname);
@@ -149,11 +192,17 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
             catch { }
         }
 
-        public static bool IsMSI(string filename)
+        /// <summary>
+        /// Indicates whether the specified file is MSI or not.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public static Boolean IsMSI(String filename)
         {
-            if (String.IsNullOrEmpty(filename)) return false;
+            if (String.IsNullOrEmpty(filename)) 
+                return false;
 
-            string extension = Path.GetExtension(filename);
+            String extension = Path.GetExtension(filename);
 
             if (".msi".Equals(extension.ToLower()))
             {

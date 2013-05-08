@@ -495,12 +495,12 @@ namespace VirusBlokAda.RemoteOperations.Wmi
         /// <param name="logFileName">File name to log to</param>
         /// <param name="pollingTime">Polling time for checking if msiexec completed</param>
         /// <param name="timeout">Timeout for checking if msiexec completed</param>
-        public void InstallProductWithMsiExec(WmiMethodsCallMode wmiMethodCallMode, string msiFileName,
+        public void InstallProductWithMsiExec(WmiMethodsCallMode wmiMethodCallMode, String msiFileName, String configFileName,
             string logFileName, TimeSpan pollingTime, TimeSpan timeout)
         {
             string windir = GetWindowsDirectory();
             string tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
-            string commandLine = CommandLine.Install(tmp, msiFileName, false,
+            string commandLine = CommandLine.Install(tmp, msiFileName, configFileName, false,
                 LogLevel.Verbose | LogLevel.AllExceptVerbose, logFileName);
             uint processId;
             bool result = CreateProcess(commandLine, out processId);

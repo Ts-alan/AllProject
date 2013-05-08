@@ -5,4 +5,5 @@
 <version guid="{E3820F79-2460-43F7-89BE-B037ABB8C172}">Vba32 WinNT Server</version>
 <version guid="{BA0657F9-03DB-4BE2-8D37-3F811FA792BB}">Vba32 for Windows Server 2008</version>
 <version guid="{BA0657F9-03DB-4BE2-8D37-3F811FA792BB}">Vba32 Remote Console Scanner</version>
+<version guid="{4AF0B5F9-D26F-44CE-9718-4663E6ABAB0E}">Vba32 Remote Control Agent</version>
 </vba32versions>

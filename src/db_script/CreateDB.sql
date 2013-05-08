@@ -427,6 +427,8 @@ INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 WinNT Workstati
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 WinNT Server');
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 for Windows Vista');
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 for Windows Server 2008');
+INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Remote Console Scanner');
+INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Remote Control Agent');
 
 INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Initializing');
 INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Connecting');

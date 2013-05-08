@@ -14,7 +14,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
     public class RemoteInstaller
     {
         #region Constructor
-        public RemoteInstaller(Credentials credentials, int maxThreads)
+        public RemoteInstaller(Credentials credentials, Int32 maxThreads)
         {
             _credentials = credentials;
             if (maxThreads <= 0)
@@ -25,7 +25,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             cappedPrioritizedThreadPool = new CappedPrioritizedThreadPool(_maxThreads, 0);
         }
 
-        public RemoteInstaller(Credentials credentials, int maxThreads, string connectionString)
+        public RemoteInstaller(Credentials credentials, Int32 maxThreads, String connectionString)
         {
             _credentials = credentials;
             if (maxThreads <= 0)
@@ -47,8 +47,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             set { _credentials = value;}
         }
 
-        private int _maxThreads;
-        public int MaxThreads
+        private Int32 _maxThreads;
+        public Int32 MaxThreads
         {
             get
             {
@@ -83,23 +83,23 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
         #endregion
 
         private CappedPrioritizedThreadPool cappedPrioritizedThreadPool;
-        public void InstallAll(List<RemoteInstallEntity> computers, bool doRestart)
+        public void InstallAll(List<RemoteInstallEntity> computers, Boolean doRestart)
         {
             foreach (RemoteInstallEntity rie in computers)
             {
-                cappedPrioritizedThreadPool.QueueUserWorkItem(delegate (object state)
+                cappedPrioritizedThreadPool.QueueUserWorkItem(delegate (Object state)
                 {
                     RemoteInstallEntity r = (RemoteInstallEntity)state;
-                    RemoteInstallHelper.Install(r, _credentials, doRestart, _methodType);
+                    RemoteInstallHelper.Install(r, _credentials, doRestart,_methodType);
                 }, rie);
             }
         }
 
-        public void UninstallAll(List<RemoteInstallEntity> computers, bool doRestart)
+        public void UninstallAll(List<RemoteInstallEntity> computers, Boolean doRestart)
         {
             foreach (RemoteInstallEntity rie in computers)
             {
-                cappedPrioritizedThreadPool.QueueUserWorkItem(delegate(object state)
+                cappedPrioritizedThreadPool.QueueUserWorkItem(delegate(Object state)
                 {
                     RemoteInstallEntity r = (RemoteInstallEntity)state;
                     RemoteInstallHelper.Uninstall(r, _credentials, doRestart, _methodType);

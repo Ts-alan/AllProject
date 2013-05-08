@@ -21,13 +21,20 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         /// <param name="logLevel">Logging level</param>
         /// <param name="logName">Name of log file</param>
         /// <returns>Generated command line</returns>
-        public static string Install(string installDirectory, string msiName, bool doRestart, LogLevel logLevel, string logName)
+        public static String Install(String installDirectory, String msiName, String configName, Boolean doRestart, LogLevel logLevel, String logName)
         {
             StringBuilder sb = new StringBuilder("msiexec.exe ");
             sb.Append("/i \"");
             sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
             sb.Append(msiName);
             sb.Append("\" /q");
+            if (!String.IsNullOrEmpty(configName))
+            {
+                sb.Append(" CC_CFG_FILEPATH=\"");
+                sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
+                sb.Append(configName);
+                sb.Append("\"");
+            }
             if (doRestart)
             {
                 sb.Append(" /forcerestart ");
@@ -37,6 +44,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
                 sb.Append(" /norestart ");
             }
             sb.Append(FormLogFileParameters(logLevel, FileUtility.AppendTerminalBackslash(installDirectory) + logName));
+                        
             return sb.ToString();
         }
         /// <summary>
@@ -48,7 +56,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         /// <param name="logLevel">Logging level</param>
         /// <param name="logName">Name of log file</param>
         /// <returns>Generated command line</returns>
-        public static string Uninstall(string installDirectory, string guid, bool doRestart, LogLevel logLevel, string logName)
+        public static String Uninstall(String installDirectory, String guid, Boolean doRestart, LogLevel logLevel, String logName)
         {
             StringBuilder sb = new StringBuilder("msiexec.exe ");
             sb.Append("/x \"");
@@ -72,16 +80,16 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         /// <param name="logLevel">Logging level</param>
         /// <param name="logPath">Path to log file</param>
         /// <returns>Generated part of command line</returns>
-        private static string FormLogFileParameters(LogLevel logLevel, string logPath)
+        private static String FormLogFileParameters(LogLevel logLevel, String logPath)
         {
-            if (string.IsNullOrEmpty(logPath))
+            if (String.IsNullOrEmpty(logPath))
             {
                 throw new ArgumentException("logPath can't be null or empty");
             }
 
             if (logLevel == LogLevel.None)
             {
-                return string.Empty;
+                return String.Empty;
             }
             StringBuilder sb = new StringBuilder();
             sb.Append("/l");

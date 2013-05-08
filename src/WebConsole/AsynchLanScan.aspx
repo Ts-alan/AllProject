@@ -102,11 +102,6 @@
                     <%=Resources.Resource.Settings%>
                     </span></a>
                 </li>
-                <li>
-                    <a href='#2'><span>
-                    <%=Resources.Resource.MSIPathes %>
-                    </span></a>
-                </li>
             </ul>            
             <div id='0'>
             
@@ -163,80 +158,6 @@
                          ShowSummary="False" ValidationGroup="SettingsValidation" 
                          HeaderText='<%$ Resources:Resource, CheckCredentials %>' />
                 </div>
-            </div>
-            <div id='2'>
-                <table class="ListContrastTable" style="width: 700px">
-                    <tr>
-                        <td>
-                            <asp:Label runat="server" ID="lblNTW"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label runat="server" ID="lblNTW_MSI"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" ID="lbtnNTW" OnClick="lbtnNTW_Click"></asp:LinkButton>
-                        </td>
-                        <td>
-                            <asp:FileUpload runat="server" ID="fuNTW" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label runat="server" ID="lblVISTA"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label runat="server" ID="lblVISTA_MSI"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" ID="lbtnVista" OnClick="lbtnVista_Click"></asp:LinkButton>
-                        </td>
-                        <td>
-                            <asp:FileUpload runat="server" ID="fuVista" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label runat="server" ID="lblNTS"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label runat="server" ID="lblNTS_MSI"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" ID="lbtnNTS" OnClick="lbtnNTS_Click"></asp:LinkButton>
-                        </td>
-                        <td>
-                            <asp:FileUpload runat="server" ID="fuNTS" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label runat="server" ID="lblVIS"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label runat="server" ID="lblVIS_MSI"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" ID="lbtnVis" OnClick="lbtnVis_Click"></asp:LinkButton>
-                        </td>
-                        <td>
-                            <asp:FileUpload runat="server" ID="fuVis" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label runat="server" ID="lblRemoteConsoleScanner"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:Label runat="server" ID="lblRemoteConsoleScanner_MSI"></asp:Label>
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" ID="lbtnRemoteConsoleScanner" OnClick="lbtnRemoteConsoleScanner_Click"></asp:LinkButton>
-                        </td>
-                        <td>
-                            <asp:FileUpload runat="server" ID="fuRemoteConsoleScanner" />
-                        </td>
-                    </tr>
-                </table>
             </div>
             <div id='3'>
                 <div class="ListContrastTable" style="width: 700px">
@@ -433,10 +354,7 @@
                 <td>
                     <asp:Label ID="lblSelectedTotalCountText" runat="server" Text="Totaly Selected: "></asp:Label>
                     <asp:Label ID="lblSelectedTotalCount" runat="server"></asp:Label>
-                </td>
-                <td style="padding-left: 25px; padding-right:5px;">
-                    <asp:DropDownList runat="server" ID="ddlInstallProduct"></asp:DropDownList>
-                </td>
+                </td>                
                 <td>
                     <div class="GiveButton1">
                         <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click" ForeColor="white"
@@ -444,7 +362,7 @@
                     </div>
                 </td>
                 <td>
-                    <asp:CheckBox ID="cbRebootAfterInstall" Checked="true" runat="server" />
+                    <asp:CheckBox ID="cbRebootAfterInstall" Checked="false" runat="server" Visible="false" />
                 </td>
             </tr>
         </table>

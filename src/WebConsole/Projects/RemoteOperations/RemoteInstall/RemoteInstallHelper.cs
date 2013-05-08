@@ -17,15 +17,15 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
 {
     class RemoteInstallHelper
     {
-        protected const string InstallLogFileName = "vba32install.log";
-        protected const string UninstallLogFileName = "vba32uninstall.log";
+        protected const String InstallLogFileName = "vba32install.log";
+        protected const String UninstallLogFileName = "vba32uninstall.log";
         protected const WmiMethodsCallMode MethodsCallMode = WmiMethodsCallMode.Synchronous;
         protected static TimeSpan PollingTime = new TimeSpan(0, 0, 10);
         protected static TimeSpan Timeout = new TimeSpan(0, 10, 0);
         
         protected static InstallationTaskProvider taskProvider = new InstallationTaskProvider(connectionString);
-        protected static string connectionString = "";
-        public static string ConnectionString
+        protected static String connectionString = "";
+        public static String ConnectionString
         {
             get { return connectionString; }
             set
@@ -36,7 +36,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
         }
         
         
-        protected static void SetError(RemoteInstallEntity rie, string errorInfo)
+        protected static void SetError(RemoteInstallEntity rie, String errorInfo)
         {  
             try
             {
@@ -52,7 +52,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static void SetStatus(RemoteInstallEntity rie, InstallationStatusEnum status, Nullable<int> exitCode)
+        protected static void SetStatus(RemoteInstallEntity rie, InstallationStatusEnum status, Nullable<Int32> exitCode)
         {
             try
             {
@@ -71,24 +71,29 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
         {
             SetStatus(rie, status, null);
         }
-        protected static void InsertIntoBase(ref RemoteInstallEntity rie, string taskType)
+        protected static void InsertIntoBase(ref RemoteInstallEntity rie, String taskType)
         {
             rie.ID = taskProvider.InsertTask(new InstallationTaskEntity(rie.ComputerName, rie.IP, taskType,
                 rie.VbaVersion, rie.Status.ToString(), null, ""));            
         }
 
-        protected static bool InstallWithWmi(RemoteInstallEntity rie, Credentials credentials, bool doRestart)
+        protected static Boolean InstallWithWmi(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)
         {
             InsertIntoBase(ref rie, "Install");
             SetStatus(rie, InstallationStatusEnum.Initializing);
-            bool usedComputerName;
+            Boolean usedComputerName;
             if (!ConnectToAdminShare(rie, credentials, out usedComputerName))
             {
                 return false;
             }
 
             WmiProvider provider = null;
-            bool noError = CopyInstallFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
+            Boolean noError = CopyInstallFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
+
+            if (noError && !String.IsNullOrEmpty(rie.ConfigPath))
+            {
+                noError = CopyConfigFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
+            }
 
             if (noError)
             {
@@ -117,18 +122,18 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             return noError;
         }
 
-        protected static bool UninstallWithWmi(RemoteInstallEntity rie, Credentials credentials, bool doRestart)
+        protected static Boolean UninstallWithWmi(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)
         {
             InsertIntoBase(ref rie, "Uninstall");
             SetStatus(rie, InstallationStatusEnum.Initializing);
-            bool usedComputerName;
+            Boolean usedComputerName;
             if (!ConnectToAdminShare(rie, credentials, out usedComputerName))
             {
                 return false;
             }
 
             WmiProvider provider = null;
-            bool noError = ConnectToRemoteComputerUsingWmi(rie, credentials, ref provider, usedComputerName);
+            Boolean noError = ConnectToRemoteComputerUsingWmi(rie, credentials, ref provider, usedComputerName);
 
             if (noError)
             {
@@ -151,23 +156,23 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 }
             }
             return noError;
-        }       
+        }
 
-        protected static bool InstallWithRemoteService(RemoteInstallEntity rie, Credentials credentials, bool doRestart)
+        protected static Boolean InstallWithRemoteService(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)
         {
             InsertIntoBase(ref rie, "Install");
             SetStatus(rie, InstallationStatusEnum.Initializing);
 
-            bool usedComputerName;
-            bool connectedToAdminShare = false;
-            bool connectedToIpcShare = false;
-            bool copiedInstallFile = false;
-            bool copiedServiceFile = false;
-            bool installedAndStartedService = false;
-            bool connectedToPipe = false;
-            bool noError = true;
-            bool gotWindir = false;
-            bool installedSuccessfully = false;
+            Boolean usedComputerName;
+            Boolean connectedToAdminShare = false;
+            Boolean connectedToIpcShare = false;
+            Boolean copiedInstallFile = false;
+            Boolean copiedServiceFile = false;
+            Boolean installedAndStartedService = false;
+            Boolean connectedToPipe = false;
+            Boolean noError = true;
+            Boolean gotWindir = false;
+            Boolean installedSuccessfully = false;
 
             connectedToAdminShare = ConnectToAdminShare(rie, credentials, out usedComputerName);
             if (connectedToAdminShare)
@@ -179,6 +184,11 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             {
                 copiedInstallFile = CopyInstallFileToRemoteComputerAdminTempFolder(rie, credentials,
                     usedComputerName);
+            }
+
+            if (copiedInstallFile && !String.IsNullOrEmpty(rie.ConfigPath))
+            {
+                copiedInstallFile = CopyConfigFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
             }
 
             if (copiedInstallFile)
@@ -198,7 +208,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             {
                 connectedToPipe = ConnectToRemoteClientPipe(rie, r, usedComputerName);
             }
-            string windir = String.Empty;
+            String windir = String.Empty;
             if (connectedToPipe)
             {
                 gotWindir = GetWindowsDirectoryWirhRemoteClient(rie, r, out windir);
@@ -240,20 +250,20 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             return noError;
         }
 
-        protected static bool UninstallWithRemoteService(RemoteInstallEntity rie, Credentials credentials, bool doRestart)
+        protected static Boolean UninstallWithRemoteService(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)
         {
             InsertIntoBase(ref rie, "Uninstall");
             SetStatus(rie, InstallationStatusEnum.Initializing);
 
-            bool connectedToAdminShare = false;
-            bool connectedToIpcShare = false;
-            bool copiedServiceFile = false;
-            bool installedAndStartedService = false;
-            bool connectedToPipe = false;
-            bool gotWindir = false;
-            bool noError = true;
-            bool uninstalledSuccessfully = false;
-            bool usedComputerName;
+            Boolean connectedToAdminShare = false;
+            Boolean connectedToIpcShare = false;
+            Boolean copiedServiceFile = false;
+            Boolean installedAndStartedService = false;
+            Boolean connectedToPipe = false;
+            Boolean gotWindir = false;
+            Boolean noError = true;
+            Boolean uninstalledSuccessfully = false;
+            Boolean usedComputerName;
 
 
             connectedToAdminShare = ConnectToAdminShare(rie, credentials, out usedComputerName);
@@ -280,7 +290,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 connectedToPipe = ConnectToRemoteClientPipe(rie, r, usedComputerName);
             }
 
-            string windir = String.Empty;
+            String windir = String.Empty;
             if (connectedToPipe)
             {
                 gotWindir = GetWindowsDirectoryWirhRemoteClient(rie, r, out windir);
@@ -325,7 +335,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
         }
 
 
-        protected static bool ConnectToAdminShare(RemoteInstallEntity rie, Credentials credentials, out bool usedComputerName)
+        protected static Boolean ConnectToAdminShare(RemoteInstallEntity rie, Credentials credentials, out Boolean usedComputerName)
         {
             try
             {
@@ -349,7 +359,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool ConnectToIPCShare(RemoteInstallEntity rie, Credentials credentials, bool usedComputerName)
+        protected static Boolean ConnectToIPCShare(RemoteInstallEntity rie, Credentials credentials, Boolean usedComputerName)
         {
             try
             {
@@ -364,8 +374,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool CopyInstallFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
-            Credentials credentials, bool usedComputerName)
+        protected static Boolean CopyInstallFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
+            Credentials credentials, Boolean usedComputerName)
         {
             try
             {
@@ -381,8 +391,25 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool ConnectToRemoteComputerUsingWmi(RemoteInstallEntity rie, Credentials credentials,
-            ref WmiProvider provider, bool usedComputerName)
+        protected static Boolean CopyConfigFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
+            Credentials credentials, Boolean usedComputerName)
+        {
+            try
+            {
+                SetStatus(rie, InstallationStatusEnum.Copying);
+                FileUtility.CopyFileToRemoteComputerAdminTempFolder(usedComputerName ? rie.ComputerName : rie.IP,
+                    rie.ConfigPath, Path.GetFileName(rie.ConfigPath));
+                return true;
+            }
+            catch (Exception)
+            {
+                SetError(rie, "Failed to copy config file to admin share");
+                return false;
+            }
+        }
+
+        protected static Boolean ConnectToRemoteComputerUsingWmi(RemoteInstallEntity rie, Credentials credentials,
+            ref WmiProvider provider, Boolean usedComputerName)
         {
             try
             {
@@ -406,13 +433,13 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             return false;
         }
 
-        protected static bool InstallProductUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
+        protected static Boolean InstallProductUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
         {
             try
             {
                 SetStatus(rie, InstallationStatusEnum.Processing);
-                provider.InstallProductWithMsiExec(MethodsCallMode, Path.GetFileName(rie.SourceFullPath),
-    InstallLogFileName, PollingTime, Timeout);
+                provider.InstallProductWithMsiExec(MethodsCallMode, Path.GetFileName(rie.SourceFullPath), String.IsNullOrEmpty(rie.ConfigPath) ? String.Empty : Path.GetFileName(rie.ConfigPath),
+                    InstallLogFileName, PollingTime, Timeout);
                 return true;
             }
             catch
@@ -422,7 +449,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool UninstallProductUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
+        protected static Boolean UninstallProductUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
         {
             try
             {
@@ -439,13 +466,13 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool ParseLogFile(RemoteInstallEntity rie, string logFileName, bool usedComputerName)
+        protected static Boolean ParseLogFile(RemoteInstallEntity rie, String logFileName, Boolean usedComputerName)
         {
             try
             {
                 SetStatus(rie, InstallationStatusEnum.Parsing);
-                int exitCode;
-                string path = String.Format(@"\\{0}\ADMIN$\temp\{1}",
+                Int32 exitCode;
+                String path = String.Format(@"\\{0}\ADMIN$\temp\{1}",
                     usedComputerName ? rie.ComputerName : rie.IP, logFileName);
                 if (LogParser.GetCompletionInfo(path, out exitCode))
                 {
@@ -464,8 +491,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool DisconnectFromAdminShare(RemoteInstallEntity rie, Credentials credentials,
-            bool usedComputerName)
+        protected static Boolean DisconnectFromAdminShare(RemoteInstallEntity rie, Credentials credentials,
+            Boolean usedComputerName)
         {
             try
             {
@@ -479,8 +506,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 return false;
             }
         }
-        protected static bool DisconnectFromIPCShare(RemoteInstallEntity rie, Credentials credentials,
-            bool usedComputerName)
+        protected static Boolean DisconnectFromIPCShare(RemoteInstallEntity rie, Credentials credentials,
+            Boolean usedComputerName)
         {
             try
             {
@@ -495,7 +522,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool RebootRemoteComputerUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
+        protected static Boolean RebootRemoteComputerUsingWmi(RemoteInstallEntity rie, WmiProvider provider)
         {
             try
             {
@@ -509,8 +536,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool CopyServiceFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
-            Credentials credentials, bool usedComputerName)
+        protected static Boolean CopyServiceFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
+            Credentials credentials, Boolean usedComputerName)
         {
 
             try
@@ -526,8 +553,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool InstallAndStartRemoteService(RemoteInstallEntity rie, Credentials credentials,
-            bool usedComputerName)
+        protected static Boolean InstallAndStartRemoteService(RemoteInstallEntity rie, Credentials credentials,
+            Boolean usedComputerName)
         {
             try
             {
@@ -544,7 +571,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
 
         }
 
-        protected static bool ConnectToRemoteClientPipe(RemoteInstallEntity rie, RemoteClient remoteClient, bool usedComputerName)
+        protected static Boolean ConnectToRemoteClientPipe(RemoteInstallEntity rie, RemoteClient remoteClient, Boolean usedComputerName)
         {
             if (remoteClient.ConnectToRemoteClientPipe(usedComputerName ? rie.ComputerName : rie.IP))
             {
@@ -557,8 +584,8 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        protected static bool GetWindowsDirectoryWirhRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient, 
-            out string windir)
+        protected static Boolean GetWindowsDirectoryWirhRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient, 
+            out String windir)
         {
             if (!remoteClient.GetWindowsDirectory(out windir))
             {
@@ -577,16 +604,16 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
         }
 
 
-        protected static bool InstallProductUsingRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient,
-            string windir)
+        protected static Boolean InstallProductUsingRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient,
+            String windir)
         {
             SetStatus(rie, InstallationStatusEnum.Processing);
-            string tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
-            string commandLine = CommandLine.Install(tmp,
-                Path.GetFileName(rie.SourceFullPath), false, LogLevel.Verbose | LogLevel.AllExceptVerbose,
-                InstallLogFileName);
+            String tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
+            String commandLine = CommandLine.Install(tmp,
+                Path.GetFileName(rie.SourceFullPath), String.IsNullOrEmpty(rie.ConfigPath) ? String.Empty : Path.GetFileName(rie.ConfigPath), false,
+                LogLevel.Verbose | LogLevel.AllExceptVerbose, InstallLogFileName);
 
-            uint errorCode, exitCode;
+            UInt32 errorCode, exitCode;
             if (!remoteClient.RunProcessCommand(commandLine, out errorCode, out exitCode))
             {
                 SetError(rie, "Failed to initiate install by remote service");
@@ -604,26 +631,26 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 {
                     if (exitCode == 3010 || exitCode == 0)
                     {
-                        SetStatus(rie, InstallationStatusEnum.Success, (int)exitCode);
+                        SetStatus(rie, InstallationStatusEnum.Success, (Int32)exitCode);
                     }
                     else
                     {
-                        SetStatus(rie, InstallationStatusEnum.Fail, (int)exitCode);
+                        SetStatus(rie, InstallationStatusEnum.Fail, (Int32)exitCode);
                     }
                     return true;
                 }
             }
         }
 
-        protected static bool UninstallProductUsingRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient,
-            string windir)
+        protected static Boolean UninstallProductUsingRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient,
+            String windir)
         {
             SetStatus(rie, InstallationStatusEnum.Processing);
-            string tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
-            string commandLine = CommandLine.Uninstall(tmp, rie.Guid, false,
+            String tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
+            String commandLine = CommandLine.Uninstall(tmp, rie.Guid, false,
                 LogLevel.Verbose | LogLevel.AllExceptVerbose, UninstallLogFileName);
 
-            uint errorCode, exitCode;
+            UInt32 errorCode, exitCode;
             if (!remoteClient.RunProcessCommand(commandLine, out errorCode, out exitCode))
             {
                 SetError(rie, "Failed to initiate uninstall by remote service");
@@ -640,18 +667,18 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 {
                     if (exitCode == 3010 || exitCode == 0)
                     {
-                        SetStatus(rie, InstallationStatusEnum.Success, (int)exitCode);
+                        SetStatus(rie, InstallationStatusEnum.Success, (Int32)exitCode);
                     }
                     else
                     {
-                        SetStatus(rie, InstallationStatusEnum.Fail, (int)exitCode);
+                        SetStatus(rie, InstallationStatusEnum.Fail, (Int32)exitCode);
                     }
                     return true;
                 }
             }
         }
 
-        protected static bool RebootRemoteComputerRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient)
+        protected static Boolean RebootRemoteComputerRemoteClient(RemoteInstallEntity rie, RemoteClient remoteClient)
         {
             if (!remoteClient.RebootCommand())
             {
@@ -660,7 +687,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
             return true;
         }
-        protected static bool CloseConnectionToRemoteClientPipe(RemoteInstallEntity rie, RemoteClient remoteClient)
+        protected static Boolean CloseConnectionToRemoteClientPipe(RemoteInstallEntity rie, RemoteClient remoteClient)
         {
             if (!remoteClient.CloseConnectionToPipe())
             {
@@ -670,7 +697,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             return true;
         }
 
-        public static bool Install(RemoteInstallEntity rie, Credentials credentials, bool doRestart,
+        public static Boolean Install(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart,
             RemoteMethodsEnum installMethod)
         {
             if (installMethod == RemoteMethodsEnum.Wmi)
@@ -683,7 +710,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             }
         }
 
-        public static bool Uninstall(RemoteInstallEntity rie, Credentials credentials, bool doRestart,
+        public static Boolean Uninstall(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart,
             RemoteMethodsEnum uninstallMethod)
         {
             if (uninstallMethod == RemoteMethodsEnum.Wmi)
