@@ -1411,7 +1411,7 @@
     <value>минут</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Режим:</value>
+    <value>Режим</value>
   </data>
   <data name="Monday" xml:space="preserve">
     <value>Понедельник</value>
@@ -2762,5 +2762,14 @@
   </data>
   <data name="AddOrEditComment" xml:space="preserve">
     <value>Добавить/редактировать комментарий</value>
+  </data>
+  <data name="HeaderDay" xml:space="preserve">
+    <value>День</value>
+  </data>
+  <data name="UseDailyProtect" xml:space="preserve">
+    <value>Использовать ежедневную защиту</value>
+  </data>
+  <data name="TaskDailyDeviceProtect" xml:space="preserve">
+    <value>Защита USB по расписанию</value>
   </data>
 </root>

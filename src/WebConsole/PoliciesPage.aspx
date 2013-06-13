@@ -6,6 +6,7 @@
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskConfigureQuarantine"    TagPrefix="uc" %>
 <%@ Register Src="Controls/TaskConfigureLoader.ascx" TagName="TaskConfigureLoader"    TagPrefix="uc" %>
 <%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskChangeDeviceProtect" TagPrefix="uc" %>
+<%@ Register Src="~/Controls/TaskDailyDeviceProtect.ascx" TagName="TaskDailyDeviceProtect" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 
@@ -499,6 +500,11 @@ Ext.onReady(function () {
                         <tr>
                             <td>
                                 <uc:TaskChangeDeviceProtect ID="deviceProtect" runat="server" HideHeader="true" HideBound="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <uc:TaskDailyDeviceProtect ID="dailyDeviceProtect" runat="server" HideHeader="true" HideBound="true" />
                             </td>
                         </tr>
                         </table>

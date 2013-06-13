@@ -23,6 +23,7 @@ namespace ARM2_dbcontrol.Tasks
             ProactiveProtection,
             Firewall,
             ChangeDeviceProtect,
+            DailyDeviceProtect,
             RequestPolicy,
             ConfigureSheduler,
             Uninstall

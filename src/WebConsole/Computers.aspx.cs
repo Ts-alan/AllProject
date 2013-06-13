@@ -1504,6 +1504,7 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
         taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
+        //taskName.Add(Resources.Resource.TaskDailyDeviceProtect);
         taskName.Add(Resources.Resource.TaskRequestPolicy);
    
         taskName.Add(Resources.Resource.TaskSeparator);
@@ -1955,7 +1956,21 @@ public partial class Computers : PageBase
 
                 control.PacketCustomAction(taskId, ipAddr, tskChangeDeviceProtect.BuildTask());
             }
-            
+
+            if (tskDailyDeviceProtect.Visible == true)
+            {
+                task = tskDailyDeviceProtect.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+
+                XmlTaskParser xml = new XmlTaskParser(task.Param);
+                for (int i = 0; i < compName.Length; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, ipAddr, tskDailyDeviceProtect.BuildTask());
+            }
+                        
             if (tskUninstall.Visible == true)
             {
                 tskUninstall.ValidateFields();
@@ -2374,35 +2389,44 @@ public partial class Computers : PageBase
                                                                                 lbtnSave.Visible = false;
                                                                             }
                                                                             else
-                                                                                if (name == Resources.Resource.TaskRequestPolicy)
+                                                                                if (name == Resources.Resource.TaskDailyDeviceProtect)
                                                                                 {
-                                                                                    task.Type = TaskType.RequestPolicy;
-                                                                                    task.Name = Resources.Resource.TaskRequestPolicy;
+                                                                                    task.Type = TaskType.DailyDeviceProtect;
+                                                                                    task.Name = Resources.Resource.TaskDailyDeviceProtect;
                                                                                     task.Param = xmlBuil.Result;
                                                                                     lbtnDelete.Visible = false;
                                                                                     lbtnSave.Visible = false;
                                                                                 }
                                                                                 else
-                                                                                    if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
+                                                                                    if (name == Resources.Resource.TaskRequestPolicy)
                                                                                     {
-                                                                                        task.Type = TaskType.RestoreFileFromQtn;
-                                                                                        task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
-
-
+                                                                                        task.Type = TaskType.RequestPolicy;
+                                                                                        task.Name = Resources.Resource.TaskRequestPolicy;
                                                                                         task.Param = xmlBuil.Result;
                                                                                         lbtnDelete.Visible = false;
+                                                                                        lbtnSave.Visible = false;
                                                                                     }
                                                                                     else
-                                                                                    {
-                                                                                        //User task
-                                                                                        collection = (TaskUserCollection)Session["TaskUser"];
-                                                                                        foreach (TaskUserEntity tsk in collection)
+                                                                                        if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
                                                                                         {
-                                                                                            if (tsk.Name == name)
-                                                                                                task = tsk;
+                                                                                            task.Type = TaskType.RestoreFileFromQtn;
+                                                                                            task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
+
+
+                                                                                            task.Param = xmlBuil.Result;
+                                                                                            lbtnDelete.Visible = false;
                                                                                         }
-                                                                                        lbtnDelete.Visible = true;
-                                                                                    }
+                                                                                        else
+                                                                                        {
+                                                                                            //User task
+                                                                                            collection = (TaskUserCollection)Session["TaskUser"];
+                                                                                            foreach (TaskUserEntity tsk in collection)
+                                                                                            {
+                                                                                                if (tsk.Name == name)
+                                                                                                    task = tsk;
+                                                                                            }
+                                                                                            lbtnDelete.Visible = true;
+                                                                                        }
 
         tskCreateProcess.Visible = false;
         tskSendFile.Visible = false;
@@ -2419,6 +2443,7 @@ public partial class Computers : PageBase
         tskProactiveProtection.Visible = false;
         tskFirewall.Visible = false;
         tskChangeDeviceProtect.Visible = false;
+        tskDailyDeviceProtect.Visible = false;
         tskRequestPolicy.Visible = false;
         tskConfigureScheduler.Visible = false;
         tskUninstall.Visible = false;
@@ -2521,6 +2546,10 @@ public partial class Computers : PageBase
 
                 tskChangeDeviceProtect.InitFields();
                 tskChangeDeviceProtect.Visible = true;
+                break;
+            case TaskType.DailyDeviceProtect:
+                tskDailyDeviceProtect.InitFields();
+                tskDailyDeviceProtect.Visible = true;
                 break;
             case TaskType.RequestPolicy:
 

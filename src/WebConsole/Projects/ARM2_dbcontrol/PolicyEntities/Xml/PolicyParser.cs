@@ -53,6 +53,11 @@ namespace VirusBlokAda.Vba32CC.Policies.Xml
             return GetTaskConfigureSettingsContentNodeCustomAction("SetRegistrySettings");
         }
 
+        public string GetParamToDailyDeviceProtect()
+        {
+            return GetTaskConfigureSettingsContentNodeCustomAction("DailyProtect");
+        }
+
         private string GetTaskConfigureSettingsContentNode(string name)
         {
             try

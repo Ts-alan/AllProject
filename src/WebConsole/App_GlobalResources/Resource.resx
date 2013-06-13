@@ -1411,7 +1411,7 @@
     <value>minutes</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Mode:</value>
+    <value>Mode</value>
   </data>
   <data name="Monday" xml:space="preserve">
     <value>Monday</value>
@@ -2762,5 +2762,14 @@
   </data>
   <data name="AddOrEditComment" xml:space="preserve">
     <value>Add/edit comment</value>
+  </data>
+  <data name="HeaderDay" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="UseDailyProtect" xml:space="preserve">
+    <value>Use daily protect</value>
+  </data>
+  <data name="TaskDailyDeviceProtect" xml:space="preserve">
+    <value>Daily device protect</value>
   </data>
 </root>
