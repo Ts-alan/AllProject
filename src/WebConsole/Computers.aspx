@@ -20,7 +20,7 @@
 <%@ Register Src="~/Controls/TaskProActivProtection.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
 <%@ Register Src="~/Controls/TaskFirewall.ascx" TagName="TaskUser" TagPrefix="tskFirewall" %>
 <%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
-<%@ Register Src="~/Controls/TaskDailyDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskDailyDeviceProtect" %>
+<%@ Register Src="~/Controls/TaskChangeDeviceProtectEx.ascx" TagName="TaskUser" TagPrefix="tskDailyDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
 <%@ Register Src="~/Controls/TaskUninstall.ascx" TagName="TaskUser" TagPrefix="tskUninstall" %>

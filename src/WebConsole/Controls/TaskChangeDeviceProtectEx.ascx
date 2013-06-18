@@ -1,9 +1,18 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TaskDailyDeviceProtect.ascx.cs" Inherits="Controls_TaskDailyDeviceProtect" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TaskChangeDeviceProtectEx.ascx.cs" Inherits="Controls_TaskChangeDeviceProtectEx" %>
 
-<div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.TaskDailyDeviceProtect%></div>
+<div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.TaskChangeDeviceProtect%></div>
 <div class="divSettings">
-    <asp:CheckBox runat="server" ID="cboxUseDailyProtect" Checked="false" />
     <table  class="ListContrastTable" style="width:560px" runat="server" id="tblProtect">
+    <tr>
+        <td>
+            <asp:Label runat="server" ID="lblMode"><%=Resources.Resource.Mode%></asp:Label>&nbsp;
+            <asp:DropDownList runat="server" ID="ddlMode"></asp:DropDownList>            
+        </td>
+    </tr>
+    </table>  
+
+    <asp:CheckBox runat="server" ID="cboxUseDailyProtect" Checked="false" />
+    <table  class="ListContrastTable" style="width:560px" runat="server" id="tblDailyProtect">
         <tr>
             <td class="gridViewHeader"><%=Resources.Resource.HeaderDay %></td>
             <td class="gridViewHeader"><%=Resources.Resource.Mode %></td>

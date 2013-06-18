@@ -47,7 +47,6 @@ public partial class _PoliciesPage : PageBase
             monitor.Enabled = true;
             quarantine.Enabled = true;
             deviceProtect.Enabled = true;
-            dailyDeviceProtect.Enabled = true;
             cboxRunLoader.Enabled = cboxRunMonitor.Enabled = true;
         }
         else
@@ -57,7 +56,6 @@ public partial class _PoliciesPage : PageBase
             monitor.Enabled = false;
             quarantine.Enabled = false;
             deviceProtect.Enabled = false;
-            dailyDeviceProtect.Enabled = false;
             cboxRunLoader.Enabled = cboxRunMonitor.Enabled = false;
         }
 
@@ -262,7 +260,7 @@ public partial class _PoliciesPage : PageBase
         //init Device Protect state
         TaskUserEntity protectTask = new TaskUserEntity();
         protectTask.Param = parser.GetParamToDeviceProtect();
-        protectTask.Type = TaskType.ChangeDeviceProtect;
+        protectTask.Type = TaskType.DailyDeviceProtect;
 
         deviceProtect.InitFields();
         if (!String.IsNullOrEmpty(protectTask.Param))
@@ -271,20 +269,6 @@ public partial class _PoliciesPage : PageBase
             deviceProtect.LoadState(protectTask);
             cblUsedTasks.Items[3].Selected = true;
         }
-
-        //init Daily Device Protect state
-        TaskUserEntity dailyProtectTask = new TaskUserEntity();
-        dailyProtectTask.Param = parser.GetParamToDailyDeviceProtect();
-        dailyProtectTask.Type = TaskType.DailyDeviceProtect;
-
-        dailyDeviceProtect.InitFields(); //???
-        if (!String.IsNullOrEmpty(dailyProtectTask.Param))
-        {
-            //we are using this setting
-            dailyDeviceProtect.LoadState(dailyProtectTask);
-            cblUsedTasks.Items[3].Selected = true;
-        }
-
     }
 
     private string GetPolicyString()
@@ -293,7 +277,6 @@ public partial class _PoliciesPage : PageBase
         TaskUserEntity taskMonitor = monitor.GetCurrentState();
         TaskUserEntity taskQtn = quarantine.GetCurrentState();
         String taskProtect = deviceProtect.BuildTask();
-        String taskDailyProtect = dailyDeviceProtect.BuildTask();
 
         ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder();
 
@@ -313,8 +296,6 @@ public partial class _PoliciesPage : PageBase
         {
             //Device Protect
             sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options>{0}</Options></TaskCustomAction></Content></Task>", taskProtect);
-            //Daily Device Protect            
-            sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options><DailyProtect>{0}</DailyProtect></Options></TaskCustomAction></Content></Task>", taskDailyProtect);
             //Loader
             string runLoader;
             string typeLoader;

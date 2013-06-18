@@ -7,7 +7,7 @@ using ARM2_dbcontrol.Tasks;
 using System.Text;
 using System.Web.UI.HtmlControls;
 
-public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl, ITask
+public partial class Controls_TaskChangeDeviceProtectEx : System.Web.UI.UserControl, ITask
 {
     private Boolean _hideHeader = false;
 
@@ -19,6 +19,9 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
 
     private void ChangeEnabledControl()
     {
+        lblMode.Enabled = _enabled;
+        ddlMode.Enabled = _enabled;
+
         cboxUseDailyProtect.Enabled = _enabled;
         Boolean enbl = false;
         if (_enabled && cboxUseDailyProtect.Checked)
@@ -48,8 +51,16 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
         set
         {
             _hideBound = value;
-            if (_hideBound) tblProtect.Attributes.Add("class", "");
-            else tblProtect.Attributes.Add("class", "ListContrastTable");
+            if (_hideBound)
+            {
+                tblProtect.Attributes.Add("class", "");
+                tblDailyProtect.Attributes.Add("class", "");                
+            }
+            else
+            {
+                tblProtect.Attributes.Add("class", "ListContrastTable");
+                tblDailyProtect.Attributes.Add("class", "ListContrastTable");
+            }
         }
     }
 
@@ -82,7 +93,10 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
         ddlSaturday.DataSource = source;
         ddlSaturday.DataBind();
         ddlSunday.DataSource = source;
-        ddlSunday.DataBind();        
+        ddlSunday.DataBind();
+
+        ddlMode.DataSource = source;
+        ddlMode.DataBind();
     }
 
     private List<String> GetDDLData()
@@ -161,6 +175,8 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
                     @"HKLM\SOFTWARE\Vba32\Loader\Devices");
         result.Append(@"<Settings>");
 
+        result.AppendFormat(@"<DEVICE_PROTECT>reg_dword:{0}</DEVICE_PROTECT>", ddlMode.SelectedIndex);
+
         result.AppendFormat(@"<USE_DAILY_PROTECT>reg_dword:{0}</USE_DAILY_PROTECT>", cboxUseDailyProtect.Checked ? 1 : 0);
         if (cboxUseDailyProtect.Checked)
         {
@@ -185,9 +201,23 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
 
         XmlTaskParser parser = new XmlTaskParser(task.Param);
 
-        String check = parser.GetXmlTagContent("USE_DAILY_PROTECT");
+        String check = parser.GetXmlTagContent("DEVICE_PROTECT");
         check = check.Replace("reg_dword:", "");
         Int32 mode = 0;
+        try
+        {
+            mode = Int32.Parse(check);
+        }
+        catch
+        {
+            mode = 0;
+        }
+        UnselectItems(ddlMode);
+        ddlMode.Items[mode].Selected = true;
+
+        check = parser.GetXmlTagContent("USE_DAILY_PROTECT");
+        check = check.Replace("reg_dword:", "");
+        mode = 0;
         try
         {
             mode = Int32.Parse(check);
@@ -201,6 +231,14 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
 
         if (cboxUseDailyProtect.Checked)
         {
+            UnselectItems(ddlMonday);
+            UnselectItems(ddlTuesday);
+            UnselectItems(ddlWednesday);
+            UnselectItems(ddlThursday);
+            UnselectItems(ddlFriday);
+            UnselectItems(ddlSaturday);
+            UnselectItems(ddlSunday);
+
             check = parser.GetXmlTagContent("MONDAY");
             check = check.Replace("reg_dword:", "");
             try { mode = Int32.Parse(check); }
@@ -243,7 +281,13 @@ public partial class Controls_TaskDailyDeviceProtect : System.Web.UI.UserControl
             catch { mode = 0; }
             ddlSunday.Items[mode].Selected = true;
         }
+    }
 
-            
+    private void UnselectItems(DropDownList ddl)
+    {
+        foreach (ListItem item in ddl.Items)
+        {
+            item.Selected = false;
+        }
     }
 }
