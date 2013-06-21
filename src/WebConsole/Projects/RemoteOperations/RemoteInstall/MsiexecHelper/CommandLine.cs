@@ -21,20 +21,13 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         /// <param name="logLevel">Logging level</param>
         /// <param name="logName">Name of log file</param>
         /// <returns>Generated command line</returns>
-        public static String Install(String installDirectory, String msiName, String configName, Boolean doRestart, LogLevel logLevel, String logName)
+        public static String Install(String installDirectory, String msiName, Boolean doRestart, LogLevel logLevel, String logName)
         {
             StringBuilder sb = new StringBuilder("msiexec.exe ");
             sb.Append("/i \"");
             sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
             sb.Append(msiName);
-            sb.Append("\" /q");
-            if (!String.IsNullOrEmpty(configName))
-            {
-                sb.Append(" CC_CFG_FILEPATH=\"");
-                sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
-                sb.Append(configName);
-                sb.Append("\"");
-            }
+            sb.Append("\" /q");            
             if (doRestart)
             {
                 sb.Append(" /forcerestart ");

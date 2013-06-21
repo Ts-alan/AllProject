@@ -90,11 +90,6 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             WmiProvider provider = null;
             Boolean noError = CopyInstallFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
 
-            if (noError && !String.IsNullOrEmpty(rie.ConfigPath))
-            {
-                noError = CopyConfigFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
-            }
-
             if (noError)
             {
                 noError = ConnectToRemoteComputerUsingWmi(rie, credentials, ref provider, usedComputerName);
@@ -185,12 +180,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 copiedInstallFile = CopyInstallFileToRemoteComputerAdminTempFolder(rie, credentials,
                     usedComputerName);
             }
-
-            if (copiedInstallFile && !String.IsNullOrEmpty(rie.ConfigPath))
-            {
-                copiedInstallFile = CopyConfigFileToRemoteComputerAdminTempFolder(rie, credentials, usedComputerName);
-            }
-
+            
             if (copiedInstallFile)
             {
                 copiedServiceFile = CopyServiceFileToRemoteComputerAdminTempFolder(rie, credentials, 
@@ -389,24 +379,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 SetError(rie, "Failed to copy installation msi file to admin share");
                 return false;
             }
-        }
-
-        protected static Boolean CopyConfigFileToRemoteComputerAdminTempFolder(RemoteInstallEntity rie,
-            Credentials credentials, Boolean usedComputerName)
-        {
-            try
-            {
-                SetStatus(rie, InstallationStatusEnum.Copying);
-                FileUtility.CopyFileToRemoteComputerAdminTempFolder(usedComputerName ? rie.ComputerName : rie.IP,
-                    rie.ConfigPath, Path.GetFileName(rie.ConfigPath));
-                return true;
-            }
-            catch (Exception)
-            {
-                SetError(rie, "Failed to copy config file to admin share");
-                return false;
-            }
-        }
+        }        
 
         protected static Boolean ConnectToRemoteComputerUsingWmi(RemoteInstallEntity rie, Credentials credentials,
             ref WmiProvider provider, Boolean usedComputerName)
@@ -438,7 +411,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             try
             {
                 SetStatus(rie, InstallationStatusEnum.Processing);
-                provider.InstallProductWithMsiExec(MethodsCallMode, Path.GetFileName(rie.SourceFullPath), String.IsNullOrEmpty(rie.ConfigPath) ? String.Empty : Path.GetFileName(rie.ConfigPath),
+                provider.InstallProductWithMsiExec(MethodsCallMode, Path.GetFileName(rie.SourceFullPath),
                     InstallLogFileName, PollingTime, Timeout);
                 return true;
             }
@@ -610,7 +583,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
             SetStatus(rie, InstallationStatusEnum.Processing);
             String tmp = FileUtility.AppendTerminalBackslash(windir) + "temp";
             String commandLine = CommandLine.Install(tmp,
-                Path.GetFileName(rie.SourceFullPath), String.IsNullOrEmpty(rie.ConfigPath) ? String.Empty : Path.GetFileName(rie.ConfigPath), false,
+                Path.GetFileName(rie.SourceFullPath), false,
                 LogLevel.Verbose | LogLevel.AllExceptVerbose, InstallLogFileName);
 
             UInt32 errorCode, exitCode;
@@ -630,8 +603,12 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                 else
                 {
                     if (exitCode == 3010 || exitCode == 0)
-                    {
+                    {                        
                         SetStatus(rie, InstallationStatusEnum.Success, (Int32)exitCode);
+                        //GIVE CONFIGURE TASK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
                     }
                     else
                     {
