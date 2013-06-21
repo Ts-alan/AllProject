@@ -116,8 +116,8 @@ public partial class AsynchLanScan : PageBase
         lbtnInstall.Text = Resources.Resource.Install;
         cbRebootAfterInstall.Text = Resources.Resource.RebootAfterInstall;
 
-        rbtnlProviders.Items.Add(Resources.Resource.WMI);
         rbtnlProviders.Items.Add(Resources.Resource.RemoteService);
+        rbtnlProviders.Items.Add(Resources.Resource.WMI);
         rbtnlProviders.SelectedIndex = 0;
     }        
     #endregion
