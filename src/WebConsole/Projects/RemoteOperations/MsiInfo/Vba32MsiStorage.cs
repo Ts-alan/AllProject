@@ -28,7 +28,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
         /// </summary>
         private static void CheckRead()
         {
-            if (DateTime.Now.Subtract(LastRead) > new TimeSpan(0, 30, 0))
+            if (DateTime.Now.Subtract(LastRead) > new TimeSpan(0, 5, 0))
                 Read();
         }
 
