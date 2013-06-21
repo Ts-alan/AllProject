@@ -1159,7 +1159,7 @@ public partial class AsynchLanScan : PageBase
     protected void lbtnInstall_Click(Object sender, EventArgs e)
     {
         Boolean rebootAfterInstall = false;
-        String pathDir = Server.MapPath("~/Downloads/");
+        String pathDir = Server.MapPath("~/Installs/");
         String pathConfig = System.IO.Directory.GetParent(Server.MapPath("~")).FullName + "\\VbaControlAgent.cfg";
         
         List<RemoteInstallEntity> installEntities = new List<RemoteInstallEntity>();
