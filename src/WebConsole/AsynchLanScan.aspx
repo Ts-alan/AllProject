@@ -82,11 +82,11 @@
     
         <div id='tabs'>
             <ul>
-                <li>
+                <%--<li>
                     <a href='#3'><span>
                     <%=Resources.Resource.Provider%>
                     </span></a>
-                </li>
+                </li>--%>
                 <li>
                     <a href='#0'><span>
                     <%=Resources.Resource.IPRange + "/" + Resources.Resource.List%>
@@ -159,7 +159,7 @@
                          HeaderText='<%$ Resources:Resource, CheckCredentials %>' />
                 </div>
             </div>
-            <div id='3'>
+            <div id='3' style="display: none;">
                 <div class="ListContrastTable" style="width: 700px">
                     <asp:RadioButtonList runat="server" ID="rbtnlProviders" AutoPostBack="false" ></asp:RadioButtonList>
                 </div>
