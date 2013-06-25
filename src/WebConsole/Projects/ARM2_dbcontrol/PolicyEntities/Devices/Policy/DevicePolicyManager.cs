@@ -210,7 +210,17 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices.Policy
                 policy.AppendFormat("<{0}>reg_sz:{1}</{0}>",s,item.Device.SerialNo);
             }
             policy.Append("</Settings>");
-            policy.AppendFormat("<Exclusion>{0}</Exclusion>", @"<DEVICE_PROTECT />");
+            policy.Append("<Exclusion>");
+            policy.Append(@"<DEVICE_PROTECT />");
+            policy.Append(@"<USE_DAILY_PROTECT />");
+            policy.Append(@"<MONDAY />");
+            policy.Append(@"<TUESDAY />");
+            policy.Append(@"<WEDNESDAY />");
+            policy.Append(@"<THURSDAY />");
+            policy.Append(@"<FRIDAY />");
+            policy.Append(@"<SATURDAY />");
+            policy.Append(@"<SUNDAY />");
+            policy.Append("</Exclusion>");
             policy.Append("</SetRegistrySettings>");
             policy.Append("</Options>");
             policy.Append("</TaskCustomAction>");
