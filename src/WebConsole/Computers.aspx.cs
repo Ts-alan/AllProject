@@ -1495,6 +1495,7 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameListProcesses);
         taskName.Add(Resources.Resource.TaskNameComponentState);
         taskName.Add(Resources.Resource.TaskUninstall);
+        taskName.Add(Resources.Resource.ConfigureAgent);
         taskName.Add(Resources.Resource.CongLdrConfigureLoader);
         taskName.Add(Resources.Resource.CongLdrConfigureMonitor);
         taskName.Add(Resources.Resource.TaskNameConfigureQuarantine);
@@ -1798,6 +1799,18 @@ public partial class Computers : PageBase
                 control.PacketComponentState(taskId, ipAddr);
             }
 
+            if (tskConfigureAgent.Visible == true)
+            {
+                task = tskConfigureAgent.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskConfigureAgent.ValidateFields();
+
+                for (int i = 0; i < compName.Length; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                }                
+                control.PacketCustomAction(taskId, ipAddr, tskConfigureAgent.BuildTask());
+            }
 
             if (tskConfigureLoader.Visible == true)
             {
@@ -2417,16 +2430,26 @@ public partial class Computers : PageBase
                                                                                             lbtnDelete.Visible = false;
                                                                                         }
                                                                                         else
-                                                                                        {
-                                                                                            //User task
-                                                                                            collection = (TaskUserCollection)Session["TaskUser"];
-                                                                                            foreach (TaskUserEntity tsk in collection)
+                                                                                            if (name == Resources.Resource.ConfigureAgent)
                                                                                             {
-                                                                                                if (tsk.Name == name)
-                                                                                                    task = tsk;
+                                                                                                task.Type = TaskType.ConfigureAgent;
+                                                                                                task.Name = name;
+                                                                                                task.Param = xmlBuil.Result;
+
+                                                                                                lbtnDelete.Visible = false;
+                                                                                                lbtnSave.Visible = false;                                                                                                    
                                                                                             }
-                                                                                            lbtnDelete.Visible = true;
-                                                                                        }
+                                                                                            else
+                                                                                            {
+                                                                                                //User task
+                                                                                                collection = (TaskUserCollection)Session["TaskUser"];
+                                                                                                foreach (TaskUserEntity tsk in collection)
+                                                                                                {
+                                                                                                    if (tsk.Name == name)
+                                                                                                        task = tsk;
+                                                                                                }
+                                                                                                lbtnDelete.Visible = true;
+                                                                                            }
 
         tskCreateProcess.Visible = false;
         tskSendFile.Visible = false;
@@ -2447,6 +2470,7 @@ public partial class Computers : PageBase
         tskRequestPolicy.Visible = false;
         tskConfigureScheduler.Visible = false;
         tskUninstall.Visible = false;
+        tskConfigureAgent.Visible = false;
 
         LoadStateTask(task);
     }
@@ -2558,6 +2582,10 @@ public partial class Computers : PageBase
                 break;
             case TaskType.Uninstall:
                 tskUninstall.Visible = true;
+                break;
+            case TaskType.ConfigureAgent:
+                tskConfigureAgent.InitFields();
+                tskConfigureAgent.Visible = true;
                 break;
             default:
                 break;

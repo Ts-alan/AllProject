@@ -24,6 +24,7 @@
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
 <%@ Register Src="~/Controls/TaskUninstall.ascx" TagName="TaskUser" TagPrefix="tskUninstall" %>
+<%@ Register Src="~/Controls/TaskConfigureAgent.ascx" TagName="TaskUser" TagPrefix="tskConfigureAgent" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" />
@@ -278,6 +279,7 @@
                           <tskRequestPolicy:TaskUser ID="tskRequestPolicy" runat="server" HideHeader="true" Visible="false"></tskRequestPolicy:TaskUser>
                           <tskConfigureScheduler:TaskUser ID="tskConfigureScheduler" runat="server" HideHeader="true" Visible="false"></tskConfigureScheduler:TaskUser>                    
                           <tskUninstall:TaskUser ID="tskUninstall" runat="server" HideHeader="true" Visible="false"></tskUninstall:TaskUser>  
+                          <tskConfigureAgent:TaskUser ID="tskConfigureAgent" runat="server" HideHeader="true" Visible="false" />
                     </asp:Panel>
                 </td>
             </tr>

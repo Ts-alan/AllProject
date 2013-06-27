@@ -26,6 +26,7 @@ namespace ARM2_dbcontrol.Tasks
             DailyDeviceProtect,
             RequestPolicy,
             ConfigureSheduler,
-            Uninstall
+            Uninstall,
+            ConfigureAgent
         }
 }

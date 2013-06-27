@@ -12,6 +12,7 @@ using VirusBlokAda.RemoteOperations.RemoteService;
 using ARM2_dbcontrol.DataBase;
 using System.Configuration;
 using System.Diagnostics;
+using ARM2_dbcontrol.Service.TaskAssignment;
 
 namespace VirusBlokAda.RemoteOperations.RemoteInstall
 {
@@ -605,9 +606,15 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall
                     if (exitCode == 3010 || exitCode == 0)
                     {                        
                         SetStatus(rie, InstallationStatusEnum.Success, (Int32)exitCode);
-                        //GIVE CONFIGURE TASK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
+                        try
+                        {
+                            Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper("VbaTaskAssignment.Service");
+                            control.DefaultConfigureAgent(rie.IP);
+                        }
+                        catch
+                        {
+                        }
 
                     }
                     else

@@ -202,6 +202,7 @@
     <Compile Include="Service\Vba32NS\ObjectSerializer.cs" />
     <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
     <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
+    <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
     <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
