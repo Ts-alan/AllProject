@@ -343,6 +343,28 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
 
         #endregion
 
+        #region Additional methods
+
+        /// <summary>
+        /// Default configure agent
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public Int32 DefaultConfigureAgent(String ip)
+        {            
+            ARM2_dbcontrol.Tasks.ConfigureAgent.TaskConfigureAgent task = new Tasks.ConfigureAgent.TaskConfigureAgent();
+            
+            //Get path current dll (ARM2_dbcontrol) (ex. "file:///C:/Program Files/Vba32 Control Center/Web Console/bin/ARM2_dbcontrol.dll")
+            //Format path in "C:\Program Files\Vba32 Control Center\Web Console\bin\ARM2_dbcontrol.dll"
+            String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
+            //Get full path directory "Vba32 Control Center"
+            AppPath = System.IO.Directory.GetParent(AppPath).Parent.Parent.FullName + @"\VbaControlAgent.cfg";
+            task.ConfigFile = AppPath;
+
+            return PacketCustomAction(new Int64[] { 0 }, new String[] { ip }, task.BuildTask());
+        }
+
+        #endregion
     }
 
 
