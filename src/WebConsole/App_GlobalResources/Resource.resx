@@ -2772,4 +2772,10 @@
   <data name="TaskDailyDeviceProtect" xml:space="preserve">
     <value>Daily device protect</value>
   </data>
+  <data name="FileUploaded" xml:space="preserve">
+    <value>File is uploaded.</value>
+  </data>
+  <data name="ConfigureAgent" xml:space="preserve">
+    <value>Configure agent</value>
+  </data>
 </root>

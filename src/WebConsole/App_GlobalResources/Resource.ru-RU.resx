@@ -2772,4 +2772,10 @@
   <data name="TaskDailyDeviceProtect" xml:space="preserve">
     <value>Защита USB по расписанию</value>
   </data>
+  <data name="FileUploaded" xml:space="preserve">
+    <value>Файл загружен.</value>
+  </data>
+  <data name="ConfigureAgent" xml:space="preserve">
+    <value>Сконфигурировать агент</value>
+  </data>
 </root>
