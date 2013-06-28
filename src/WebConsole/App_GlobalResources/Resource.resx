@@ -2778,4 +2778,10 @@
   <data name="ConfigureAgent" xml:space="preserve">
     <value>Configure agent</value>
   </data>
+  <data name="TaskStateInQueue" xml:space="preserve">
+    <value>In queue</value>
+  </data>
+  <data name="TaskStateSended" xml:space="preserve">
+    <value>Sended</value>
+  </data>
 </root>
