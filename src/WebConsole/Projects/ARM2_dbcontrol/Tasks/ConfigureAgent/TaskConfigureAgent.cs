@@ -37,7 +37,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureAgent
             result.Append("<ConfigureWithServer>");
             result.AppendFormat(@"<Server>{0}</Server>", args[0]);
             result.AppendFormat(@"<PublicKey>{0}</PublicKey>", args[1]);
-            result.AppendFormat(@"<ServerMask>{0}</ServerMask>", args[2]);
+            if (!String.IsNullOrEmpty(args[2]))
+                result.AppendFormat(@"<ServerMask>{0}</ServerMask>", args[2]);
             result.Append(@"</ConfigureWithServer>");
 
             return result.ToString();
