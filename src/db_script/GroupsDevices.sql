@@ -209,3 +209,34 @@ AS
 			)
 
 GO
+
+
+-- Add device policies to computer
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[AddDevicePolicyToComputer]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[AddDevicePolicyToComputer]
+GO
+
+CREATE PROCEDURE [dbo].[AddDevicePolicyToComputer]
+	@ComputerID smallint,
+	@SerialNo nvarchar(256),
+	@StateName nvarchar(64)
+WITH ENCRYPTION
+AS
+	DECLARE @StateID smallint
+	SET @StateID = (SELECT [ID] FROM DevicePolicyStates WHERE [StateName] = @StateName)
+
+	DECLARE @DeviceID smallint
+	SET @DeviceID = (SELECT [ID] FROM Devices WHERE [SerialNo] = @SerialNo)
+
+	IF @DeviceID IS NOT NULL
+	BEGIN
+		IF NOT EXISTS (SELECT [ID]FROM DevicesPolicies WHERE [ComputerID] = @ComputerID AND [DeviceID] = @DeviceID)
+		BEGIN
+			INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
+			VALUES    (@ComputerID, @DeviceID, @StateID)
+			
+			SELECT [ID],[SerialNo],[Comment] FROM Devices WHERE [ID]=@DeviceID
+		END
+	END
+GO
