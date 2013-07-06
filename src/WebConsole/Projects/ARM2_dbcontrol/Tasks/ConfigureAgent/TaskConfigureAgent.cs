@@ -76,6 +76,9 @@ namespace ARM2_dbcontrol.Tasks.ConfigureAgent
             IndexBegin = fileContent.IndexOf(publicKey) + publicKey.Length;
             IndexEnd = fileContent.IndexOf(EndLine, IndexBegin);
             args[1] = fileContent.Substring(IndexBegin, IndexEnd - IndexBegin);
+            if (args[1].Length < 264)
+                throw new Exception("PublicKey isn't valid.");
+            args[1] = args[1].Substring(0, 264);
 
             //Get ServerMask
             IndexBegin = fileContent.IndexOf(mask) + mask.Length;
