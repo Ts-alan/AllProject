@@ -10,7 +10,7 @@
         <td>
             <asp:LinkButton ID="lbtnUpload" runat="server" OnClick="lbtnUpload_Click" Width="80"><%=Resources.Resource.Upload%></asp:LinkButton>
             <asp:FileUpload ID="fuClient" runat="server" />
-            
+            <asp:TextBox runat="server" ID="tboxConfigPath" style="display: none;"></asp:TextBox>
         </td>  
     </tr>
     <tr>

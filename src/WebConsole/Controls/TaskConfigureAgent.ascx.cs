@@ -58,6 +58,10 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
     {
         if (task.Type != TaskType.ConfigureAgent)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
+
+        XmlTaskParser parser = new XmlTaskParser(task.Param);
+
+        tboxConfigPath.Text = parser.GetXmlTagContent("ConfigPath");
     }
 
     #endregion
@@ -72,7 +76,8 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ConfigureAgent");
-        xml.AddNode("Content", _task.BuildTask());
+        String path = String.Format(@"<{0}>{1}</{0}>", "ConfigPath", tboxConfigPath.Text);
+        xml.AddNode("Content", path + BuildTask());
         xml.Generate();
 
         return xml.Result;
@@ -80,6 +85,7 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
 
     public String BuildTask()
     {
+        _task.ConfigFile = tboxConfigPath.Text;
         return _task.BuildTask();
     }
     
@@ -105,8 +111,8 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
 
             String filePath = Server.MapPath("~/Downloads/" + fileName);
             fuClient.SaveAs(filePath);
-
-            _task.ConfigFile = filePath;            
+                        
+            tboxConfigPath.Text = filePath;
         }
     }   
 }
