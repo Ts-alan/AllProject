@@ -2784,4 +2784,7 @@
   <data name="TaskStateSended" xml:space="preserve">
     <value>Отправлена</value>
   </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Подключить</value>
+  </data>
 </root>

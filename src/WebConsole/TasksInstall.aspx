@@ -16,6 +16,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
+<script type="text/javascript" language="javascript">
+    function SelectAll() {
+        var gv = $get('<%=GridView1.ClientID%>');
+
+        var isChecked = gv.rows[1].cells[0].children[0].children[0].checked;
+
+        for (var i = 2; i < gv.rows.length - 1; i++) {
+            var rowElem = gv.rows[i];
+            var cell = rowElem.cells[0];
+
+            if (cell.children[0].children[0].disabled == false)
+                cell.children[0].children[0].checked = isChecked;
+        }
+    }
+</script>
 <div class="title"><%=Resources.Resource.InstallUninstallTasks %></div>
 
 <asp:UpdatePanel runat="server" ID="updatePanelComponentFilter">
@@ -55,10 +70,19 @@
          <asp:UpdatePanel ID="updatePanelTasksInstallGrid" runat="server">
          <ContentTemplate>
             <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
-                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
+                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" OnRowDataBound="GridView1_RowDataBound"
                     EnableModelValidation="True" CssClass="gridViewStyle"
                     StorageType="Session" StorageName="TasksInstall" EmptyDataText='<%$ Resources:Resource, EmptyMessage %>'>
-                <Columns>                    
+                <Columns>
+                    <asp:TemplateField>
+                            <HeaderStyle Width="60px" />
+                            <HeaderTemplate>
+                                <asp:CheckBox runat="server" ID="cboxSelectAll" onclick="SelectAll()" />
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <asp:CheckBox ID="cboxIsSelected" runat="server" />
+                            </ItemTemplate>
+                    </asp:TemplateField>                    
                     <asp:HyperLinkField DataTextField="ComputerName" SortExpression="ComputerName" 
                         HeaderText='<%$ Resources:Resource, ComputerName %>'>
                         <HeaderStyle Width="200px" />
@@ -92,6 +116,15 @@
                 <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
                 <RowStyle CssClass="gridViewRow" />
             </custom:GridViewExtended>
+            <div style="text-align: center;">
+                    <div class="GiveButton1" style="float: left;">
+                        <asp:LinkButton runat="server" ID="lbtnConfigure" OnClick="lbtnConfigure_Click" Width="100%"
+                            ForeColor="white"></asp:LinkButton>
+                    </div>
+                    <div style="min-width: 300px;">
+                        <asp:Label runat="server" ID="lblMessage"></asp:Label>
+                    </div>
+            </div>
          </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="AutoUpdateControl1" EventName="AutoUpdate"></asp:AsyncPostBackTrigger>

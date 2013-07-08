@@ -2784,4 +2784,7 @@
   <data name="TaskStateSended" xml:space="preserve">
     <value>Sended</value>
   </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Attach</value>
+  </data>
 </root>
