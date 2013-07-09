@@ -8,39 +8,43 @@ CREATE PROCEDURE [dbo].[GetDevicesPageForGroup]
 	@GroupID int
 WITH ENCRYPTION
 AS
-DECLARE @GroupPage TABLE(
+
+DECLARE @ComputerPage TABLE(
 			[RecID] int IDENTITY(1, 1) NOT NULL,									
-			[ID] int
+			[ID] smallint
 		);
 
 WITH TreeGroups AS
 (
-    SELECT [ID], [ParentID] FROM GroupTypes
-    WHERE [ID] = @GroupID
+	SELECT [ID], [ParentID] FROM GroupTypes
+	WHERE [ID] = @GroupID
 
-    UNION ALL
+	UNION ALL
 
-    SELECT gt.[ID], gt.[ParentID] FROM GroupTypes AS gt
-    INNER JOIN TreeGroups AS tg ON tg.[ID] = gt.[ParentID]
+	SELECT gt.[ID], gt.[ParentID] FROM GroupTypes AS gt
+	INNER JOIN TreeGroups AS tg ON tg.[ID] = gt.[ParentID]
 )
-INSERT INTO @GroupPage([ID])
-SELECT [ID] FROM TreeGroups
+INSERT INTO @ComputerPage([ID])
+SELECT g.[ComputerID] FROM Groups AS g
+INNER JOIN TreeGroups AS tg ON tg.[ID] = g.[GroupID]
 
+DECLARE @ComputerCount int
+SET @ComputerCount = (SELECT COUNT([ID]) FROM @ComputerPage)
+	
 DECLARE @DevicesPage TABLE(
 			[RecID] int IDENTITY(1, 1) NOT NULL,									
 			[D_ID] smallint,
 			[DP_LatestInsert] smalldatetime,
-			[CountStates] smallint
+			[CountStates] smallint,
+			[Count] int
 		)
-	
-INSERT INTO @DevicesPage([D_ID], [DP_LatestInsert], [CountStates])
 
+INSERT INTO @DevicesPage([D_ID], [DP_LatestInsert], [CountStates], [Count])
 SELECT
-	d.[ID], MAX(dp.[LatestInsert]), COUNT(DISTINCT(dp.[DevicePolicyStateID]))
-FROM @GroupPage AS gp
-INNER JOIN Groups AS g ON g.[GroupID] = gp.[ID]
-INNER JOIN DevicesPolicies AS dp ON dp.[ComputerID] = g.[ComputerID]
+	d.[ID], MAX(dp.[LatestInsert]), COUNT(DISTINCT(dp.[DevicePolicyStateID])), COUNT(dp.[DevicePolicyStateID])
+FROM DevicesPolicies AS dp
 INNER JOIN Devices AS d ON d.[ID] = dp.[DeviceID]
+WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
 GROUP BY d.[ID]
 
 SELECT 
@@ -48,7 +52,11 @@ SELECT
 	WHEN 1 THEN dps.[StateName]
 	ELSE 'Undefined'
     END,
-	d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert]
+	d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert],
+	[All] = CASE tmp.[Count]
+		WHEN @ComputerCount THEN '1'
+		ELSE '0'
+		END
 FROM @DevicesPage AS tmp
 INNER JOIN Devices AS d ON d.[ID] = tmp.[D_ID]
 LEFT JOIN DevicesPolicies AS dp ON dp.[DeviceID] = tmp.[D_ID] AND (dp.[LatestInsert] = tmp.[DP_LatestInsert] OR (dp.[LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
@@ -236,7 +244,30 @@ AS
 			INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 			VALUES    (@ComputerID, @DeviceID, @StateID)
 			
-			SELECT [ID],[SerialNo],[Comment] FROM Devices WHERE [ID]=@DeviceID
+			SELECT [ID],[SerialNo],[Comment], @@IDENTITY AS DevicePolicyID FROM Devices WHERE [ID]=@DeviceID
 		END
 	END
+GO
+
+
+
+-- Get device policies to computer
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetDeviceEntitiesFromComputer]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[GetDeviceEntitiesFromComputer]
+GO
+
+CREATE PROCEDURE [dbo].[GetDeviceEntitiesFromComputer]
+	@ComputerName nvarchar(64)
+WITH ENCRYPTION
+AS
+
+	 SELECT dp.[ID], dp.[ComputerID], c.[ComputerName], dp.[DeviceID], dps.[StateName],
+	 d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert]
+	 FROM DevicesPolicies as dp
+	 INNER JOIN Computers as c ON c.[ID] = dp.[ComputerID]
+	 INNER JOIN Devices as d ON dp.[DeviceID] = d.[ID]
+	 INNER JOIN DevicePolicyStates as dps ON dps.[ID] = dp.[DevicePolicyStateID]
+	 INNER JOIN DeviceTypes as dt ON dt.[ID] = d.[DeviceTypeID]
+	 WHERE c.[ComputerName] = @ComputerName
 GO
