@@ -5,4 +5,6 @@
 /src/VbaCC_Msg/MSG00001.bin
 /src/VbaCC_Msg/MSG00002.bin
 /src/VbaCC_Msg/Messages.h
+
+*.aps
 *.cache

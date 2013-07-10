@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Vba32CCService"
 	ProjectGUID="{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}"
 	RootNamespace="Vba32CCService"
@@ -171,240 +171,6 @@
 				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Control Center Service&quot;"
 			/>
 		</Configuration>
-		<Configuration
-			Name="Unicode Release|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;$(SolutionDir)../3rd"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;WIN32_WINNT=0x0500;_WIN32_DCOM"
-				MinimalRebuild="false"
-				UsePrecompiledHeader="0"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				GenerateMapFile="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				SetChecksum="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Control Center Service&quot;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Unicode Debug|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			CharacterSet="1"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;$(SolutionDir)../3rd"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG_LEVEL=3;_CRT_SECURE_NO_WARNINGS;WIN32_WINNT=0x0500;_WIN32_DCOM"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				DebugInformationFormat="4"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="LIBCMT"
-				GenerateDebugInformation="true"
-				GenerateMapFile="true"
-				MapFileName=""
-				SubSystem="2"
-				SetChecksum="false"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Control Center Service&quot;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="vba_debug|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			CharacterSet="2"
-			WholeProgramOptimization="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;$(SolutionDir)../3rd"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;DEBUG_LEVEL=3;_CRT_SECURE_NO_WARNINGS;WIN32_WINNT=0x0500;_WIN32_DCOM"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				DebugInformationFormat="4"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="LIBCMT"
-				GenerateDebugInformation="true"
-				GenerateMapFile="true"
-				MapFileName=""
-				SubSystem="2"
-				SetChecksum="false"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Control Center Service&quot;"
-			/>
-		</Configuration>
 	</Configurations>
 	<References>
 		<ProjectReference
@@ -441,30 +207,6 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Vba32CCService.cpp"
@@ -480,33 +222,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -556,30 +271,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -640,33 +331,6 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ThreadPoolWorkerThread.h"
@@ -689,30 +353,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -749,33 +389,6 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\BusinessLogic.h"
@@ -795,33 +408,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalOptions="/MP1"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -857,30 +443,6 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\update.h"
@@ -899,30 +461,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -951,30 +489,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
