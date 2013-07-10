@@ -59,7 +59,10 @@ SELECT
 		END
 FROM @DevicesPage AS tmp
 INNER JOIN Devices AS d ON d.[ID] = tmp.[D_ID]
-LEFT JOIN DevicesPolicies AS dp ON dp.[DeviceID] = tmp.[D_ID] AND (dp.[LatestInsert] = tmp.[DP_LatestInsert] OR (dp.[LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
+LEFT JOIN DevicesPolicies AS dp 
+	ON dp.[ID] = (SELECT TOP(1) [ID] FROM DevicesPolicies WHERE [DeviceID] = tmp.[D_ID] AND 
+		([LatestInsert] = tmp.[DP_LatestInsert] OR ([LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
+		AND [ComputerID] IN (SELECT [ID] FROM @ComputerPage))
 LEFT JOIN DevicePolicyStates AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
 LEFT JOIN DeviceTypes AS dt ON dt.[ID] = d.[DeviceTypeID]
 LEFT JOIN Computers AS c ON c.[ID] = dp.[ComputerID]
