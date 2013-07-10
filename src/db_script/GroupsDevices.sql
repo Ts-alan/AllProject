@@ -48,7 +48,7 @@ WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
 GROUP BY d.[ID]
 
 SELECT 
-	dp.[ID], c.[ID], c.[ComputerName], d.[ID], StateName=CASE tmp.[CountStates]
+	DISTINCT(dp.[ID]), c.[ID], c.[ComputerName], d.[ID], StateName=CASE tmp.[CountStates]
 	WHEN 1 THEN dps.[StateName]
 	ELSE 'Undefined'
     END,
@@ -59,7 +59,10 @@ SELECT
 		END
 FROM @DevicesPage AS tmp
 INNER JOIN Devices AS d ON d.[ID] = tmp.[D_ID]
-LEFT JOIN DevicesPolicies AS dp ON dp.[DeviceID] = tmp.[D_ID] AND (dp.[LatestInsert] = tmp.[DP_LatestInsert] OR (dp.[LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
+LEFT JOIN DevicesPolicies AS dp 
+	ON dp.[DeviceID] = tmp.[D_ID] AND 
+		(dp.[LatestInsert] = tmp.[DP_LatestInsert] OR (dp.[LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
+		AND dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
 LEFT JOIN DevicePolicyStates AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
 LEFT JOIN DeviceTypes AS dt ON dt.[ID] = d.[DeviceTypeID]
 LEFT JOIN Computers AS c ON c.[ID] = dp.[ComputerID]
