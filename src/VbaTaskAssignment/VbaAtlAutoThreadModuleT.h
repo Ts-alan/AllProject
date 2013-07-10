@@ -30,7 +30,7 @@ public:
 
     VbaAtlAutoThreadModuleT(int nThreads = T::GetDefaultThreads())
     {
-        mp_Allocator = cc::VbaSingleton<VbaComThreadAllocator>::Instance();
+        mp_Allocator = vba::AutoSingleton<VbaComThreadAllocator>::Instance();
 	    ATLASSERT(_pAtlAutoThreadModule == NULL);
 	    _pAtlAutoThreadModule = this;
 
@@ -38,7 +38,7 @@ public:
 
     ~VbaAtlAutoThreadModuleT()
     {
-        cc::VbaSingleton<VbaComThreadAllocator>::FreeInst();
+        vba::AutoSingleton<VbaComThreadAllocator>::FreeInst();
         mp_Allocator = NULL;
 
     }

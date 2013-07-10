@@ -1,39 +1,11 @@
 #include "stdafx.h"
 
 #include <winsock2.h>
-
 #include "task_sender.h"
 
-//#include "../dbg_msg/dbg_msg.h"
-//#include <TCHAR.H>
+#include "common/log.h"
 
-int SendPacket(SOCKET sck, const utf8_string& packet)
-{
-    WSABUF buffer;
-    buffer.len = packet.size();
-    buffer.buf = const_cast<CHAR*>(packet.c_str());
-
-    DWORD number_of_bytes;
-    
-    WSAOVERLAPPED overlapped;
-    ZeroMemory(&overlapped, sizeof(WSAOVERLAPPED));
-
-    DWORD flags = 0;
-
-	DEBUG_Message3((_T("WSASend start\n")));
-
-    if (WSASend(sck, &buffer, 1, &number_of_bytes, flags, &overlapped, NULL) == SOCKET_ERROR)
-    {
-		DEBUG_Message3((_T("WSASend failed\n")));
-        return WSAGetLastError();
-    }
-
-	DEBUG_Message3((_T("WSASend success\n")));
-
-    return 0;
-}
-
-VbaTaskSender::VbaTaskSender() : m_port(0), m_socket_pool(SOCKET_POOL_SIZE)
+VbaTaskSender::VbaTaskSender() : mp_container(0)
 {
 }
 
@@ -41,79 +13,95 @@ VbaTaskSender::~VbaTaskSender()
 {
 }
 
-bool VbaTaskSender::Initialize(unsigned short port)
+bool VbaTaskSender::_Initialize()
 {
-    WSADATA wsaData;
-    int res = WSAStartup(MAKEWORD(2,2), &wsaData);
+    m_action_q_init = vba::ActionQueue<TaskParam>::Initialize();
+	
+	mp_thread_pool = vba::AutoSingleton<SenderThreadPool>::Instance();
+	mp_tasks_report = vba::AutoSingleton<ReportTasks>::Instance();
 
-    m_port = port;
-
-    m_thread_pool.Initialize(THREADPOOL_SIZE, (void*)&m_socket_pool);
-
-    return true;
-}
-
-bool VbaTaskSender::Shutdown()
-{
-    m_thread_pool.Shutdown(1000);
-    m_socket_pool.Shutdown();
-
-    WSACleanup();
-
-    return true;
-}
-
-bool VbaTaskSender::AddTask(unsigned long address, const utf8_string& packet)
-{
-    DEBUG_Message3((_T("VbaTaskSender::AddTask\n")));
-
-    WaitForSingleObject(m_socket_pool.m_free_sockets_event, INFINITE);
-        
-    SOCKET sck = m_socket_pool.GetSocket(address, m_port); 
-
-    if (sck == INVALID_SOCKET)
-    {
-        DEBUG_Message3((_T("FAILED  Invalid socket address:%d port:%d\n"), address, m_port));
-        return false;
-    }
-            
-    m_thread_pool.AssignDeviceToPool((HANDLE)sck, (DWORD_PTR)sck);
-
-    int sending_result = SendPacket(sck, packet);
-
-    return (sending_result == 0) || (sending_result == WSA_IO_PENDING); 
-}
-
-DWORD  WINAPI  VbaTaskSender::AddThreadTask(LPVOID p_void)
-{       
-    DEBUG_Message3((_T("TID: %d VbaTaskSender::AddThreadTask   Start\n"), GetCurrentThreadId()));
-
-    TaskContainer* p_task_container = reinterpret_cast<TaskContainer*>(p_void);
-
-    WaitForSingleObject(p_task_container->mp_vba_task_sender->m_socket_pool.m_free_sockets_event, INFINITE);
-        
-    SOCKET sck = p_task_container->mp_vba_task_sender->m_socket_pool.GetSocket(p_task_container->m_address, p_task_container->mp_vba_task_sender->m_port);
-
-    if (sck == INVALID_SOCKET)
-    {
-		DEBUG_Message3((_T("FAILED  Invalid socket address:%d port:%d\n"), p_task_container->m_address, p_task_container->mp_vba_task_sender->m_port));
-
-        HeapFree(GetProcessHeap(), 0, p_void);
-
-        DEBUG_Message3((_T("TID: %d VbaTaskSender::AddThreadTask  Finsih Failed\n"), GetCurrentThreadId()));
-        
-        return false;
-    }
-            
-    p_task_container->mp_vba_task_sender->m_thread_pool.AssignDeviceToPool((HANDLE)sck, (DWORD_PTR)sck);
-
-    int sending_result = SendPacket(sck, p_task_container->m_packet);
-
-    HeapFree(GetProcessHeap(), 0, p_void);
-
-    DEBUG_Message3((_T("TID: %d VbaTaskSender::AddThreadTask  Finsih\n"), GetCurrentThreadId()));
+	mp_tasks_report->AddRef();	
+	mp_tasks_report->Initialize();
     
-    return (sending_result == 0) || (sending_result == WSA_IO_PENDING); 
+    return true;
 }
 
+bool VbaTaskSender::_Uninitialize()
+{
+	m_action_q_init = false;
+	vba::ActionQueue<TaskParam>::Uninitialize();
+	
+	mp_thread_pool->FreeInst();
+	mp_thread_pool = NULL;
 
+	if (mp_container)
+	{
+		mp_container->StopThread();
+		mp_container = NULL;
+	}
+
+	mp_tasks_report->Uninitialize();
+	mp_tasks_report->Release();
+
+	mp_tasks_report->FreeInst();
+	mp_tasks_report = NULL;
+
+	return true;
+}
+
+void VbaTaskSender::OnAction(TaskParam task_param)
+{
+	mp_container = NULL; 
+	if (!m_action_q_init)
+	{
+		mp_tasks_report->SaveTaskState(task_param.id, TASK_STATE_CANCELLED);
+		return ;
+	}
+
+	if (mp_thread_pool->getObjectThread(&mp_container))
+	{		
+		mp_container->m_address = task_param.address;
+		mp_container->m_port = task_param.port;
+		mp_container->m_packet = task_param.packet;
+		mp_container->m_id_task = task_param.id;
+		mp_container->StartThread();
+	}
+	return ;
+}
+
+bool VbaTaskSender::AddTask(TaskParam &task_param)
+{		
+    return AddAction(task_param);
+}
+
+unsigned VbaTaskSender::TaskContainer::ThreadFunction()
+{
+	typedef vba::AutoSingletonWrap<VbaTaskReporter> TaskRep;
+	TaskRep *mp_tasks_report = vba::AutoSingleton<TaskRep>::Instance();
+
+	VbaSocket socket;
+	socket.Initialize();
+
+    	
+	if (!socket.ConnectSocket(m_address, m_port))
+	{		
+		mp_tasks_report->SaveTaskState(m_id_task, TASK_STATE_ERROR);
+		mp_tasks_report->FreeInst();		
+		LOG_WARN() % L" socket.ConnectSocket (fail)" % m_id_task; 
+		
+        socket.Uninitialize();
+        this->Release();
+		return 0;
+	}
+	
+    bool sending_result = socket.Send(std::tstring(m_packet.c_str(), m_packet.size()));
+	
+    mp_tasks_report->SaveTaskState(m_id_task, (sending_result) ? TASK_STATE_SENDED : TASK_STATE_ERROR);
+	
+	mp_tasks_report->FreeInst();
+
+    socket.Uninitialize();
+	this->Release();
+
+	return 0;		
+}

@@ -204,6 +204,14 @@
 			ReferencedProjectIdentifier="{5A82DFD5-6E7E-4955-9E34-A25DA78CBA55}"
 			RelativePathToProject="..\deps\common\deprecated\make\deprecated.vcproj"
 		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{BE3BF7CA-E665-4CDA-B1FC-A61877373C01}"
+			RelativePathToProject="..\deps\common\make\common.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{04290386-D9EF-4B86-B3FA-55D72BEDBD4A}"
+			RelativePathToProject="..\deps\common\deprecated\libcrypt-devel\libcrypt.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -264,6 +272,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\task_reporter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\task_sender.cpp"
 				>
 				<FileConfiguration
@@ -277,6 +289,14 @@
 			</File>
 			<File
 				RelativePath=".\task_service.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\task_states.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vba_socket.cpp"
 				>
 			</File>
 			<File
@@ -326,6 +346,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\task_reporter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\task_sender.h"
 				>
 			</File>
@@ -334,7 +358,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\task_states.h"
+				>
+			</File>
+			<File
 				RelativePath=".\thread_pool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vba_socket.h"
 				>
 			</File>
 		</Filter>

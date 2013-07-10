@@ -4,10 +4,11 @@
 
 #include <atlsafe.h>
 
-#include "vba_common/vba_strings.h"
+#include "common/strings.h"
 
 #include "VbaTaskAssignment.h"
 #include "task_sender.h"
+#include "task_reporter.h"
 
 #include "VbaComThreadAllocator.h"
 
@@ -18,7 +19,7 @@
 #define LIBRARY_MAJOR 1
 #define LIBRARY_MINOR 0
 
-#define AGENT_PORT 17002
+#define AGENT_PORT			17002
 
 // TaskService
 
@@ -51,20 +52,21 @@ END_COM_MAP()
 
 	HRESULT FinalConstruct()
 	{
-        mp_allocator = cc::VbaSingleton<VbaComThreadAllocator>::Instance();
+        mp_allocator  = vba::AutoSingleton<VbaComThreadAllocator>::Instance();
         mp_allocator->Lock();
 
-        m_task_sender.Initialize(AGENT_PORT);
+		mp_task_sender = vba::AutoSingleton<TaskSender>::Instance();
         
         return S_OK;
 	}
 
 	void FinalRelease()
 	{
-        m_task_sender.Shutdown();
+		mp_task_sender->FreeInst();
+		mp_task_sender = NULL;
 
         mp_allocator->Free();
-        cc::VbaSingleton<VbaComThreadAllocator>::FreeInst();
+        vba::AutoSingleton<VbaComThreadAllocator>::FreeInst();
 	}
 
     VbaComThreadAllocator* mp_allocator;
@@ -80,9 +82,7 @@ public:
     STDMETHOD(PacketListProcesses)(SAFEARRAY** p_task_ids, SAFEARRAY** p_ip_addresses);
 
 private:
-
-    VbaTaskSender m_task_sender;
-
+	
     typedef enum
     {
 	    SystemInformation = 0,
@@ -97,8 +97,12 @@ private:
 
     bool BuildTask(TaskType task_type, SAFEARRAY** p_task_ids, SAFEARRAY **p_ip_addresses, BSTR param1 = NULL, BSTR param2 = NULL, DWORD param3 = 0);
     void ManageTasks(const CComSafeArray<DWORD>& p_task_ids, std::vector<utf8_string>& packets);
-    bool AddTask(const CComSafeArray<DWORD>& addresses, const std::vector<utf8_string>& packets);
-
+	
+	typedef vba::AutoSingletonWrap<VbaTaskReporter> ReportTasks;
+	typedef vba::AutoSingletonWrap<VbaTaskSender> TaskSender;
+    
+	ReportTasks *mp_tasks_report;
+	TaskSender* mp_task_sender;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(TaskService), TaskService)
