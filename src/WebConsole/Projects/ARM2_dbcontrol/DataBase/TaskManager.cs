@@ -71,6 +71,8 @@ namespace ARM2_dbcontrol.DataBase
                     tasks.TaskParams = reader.GetString(7);
                 if (reader.GetValue(8) != DBNull.Value)
                     tasks.TaskUser = reader.GetString(8);
+                if (reader.GetValue(9) != DBNull.Value)
+                    tasks.TaskDescription = reader.GetString(9);
 
                 list.Add(tasks);
             }

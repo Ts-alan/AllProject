@@ -501,15 +501,16 @@ AS
 			[DateComplete] datetime NULL,
 			[DateUpdated] datetime NOT NULL,
 			[TaskParams] ntext COLLATE Cyrillic_General_CI_AS NULL,
-			[TaskUser] nvarchar(128) COLLATE Cyrillic_General_CI_AS NOT NULL
+			[TaskUser] nvarchar(128) COLLATE Cyrillic_General_CI_AS NOT NULL,
+			[TaskDescription] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL
 		)
 	
 		INSERT INTO @TasksPage(
 			[ID], [TaskName], [ComputerName], [TaskState],
-			[DateIssued], [DateComplete], [DateUpdated], [TaskParams], [TaskUser])
+			[DateIssued], [DateComplete], [DateUpdated], [TaskParams], [TaskUser], [TaskDescription])
 		SELECT
 			t.[ID], tt.[TaskName], c.[ComputerName], ts.[TaskState],
-			t.[DateIssued], t.[DateComplete], t.[DateUpdated], t.[TaskParams], t.[TaskUser]
+			t.[DateIssued], t.[DateComplete], t.[DateUpdated], t.[TaskParams], t.[TaskUser], t.[TaskDescription]
 		FROM Tasks AS t
 		INNER JOIN Computers AS c ON t.[ComputerID] = c.[ID]
 		INNER JOIN TaskTypes AS tt ON t.[TaskID] = tt.[ID]
@@ -520,13 +521,12 @@ AS
 		SET @Query = @Query + N' ORDER BY ' + @OrderBy
 	SET @Query = @Query + N';
 		SELECT  [ID], [TaskName], [ComputerName], [TaskState],
-				[DateIssued], [DateComplete], [DateUpdated], [TaskParams], [TaskUser]
+				[DateIssued], [DateComplete], [DateUpdated], [TaskParams], [TaskUser], [TaskDescription]
 		FROM @TasksPage	WHERE [RecID] BETWEEN (' +
 			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
 			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'
 	EXEC sp_executesql @Query
 GO
-
 
 -- Returns count of components that match the criteria
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetComponentsCount]')

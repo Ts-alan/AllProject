@@ -18,6 +18,7 @@ namespace ARM2_dbcontrol.DataBase
         protected DateTime dateUpdated = DateTime.MinValue;
         protected String taskParams = String.Empty;
         protected String taskUser = String.Empty;
+        protected String taskDescription = String.Empty;
 
         //Default constructor
         public TaskEntity() { }
@@ -32,7 +33,8 @@ namespace ARM2_dbcontrol.DataBase
             DateTime dateComplete,
             DateTime dateUpdated,
             String taskParams,
-            String taskUser)
+            String taskUser,
+            String description)
         {
             this.iD = iD;
             this.taskName = taskName;
@@ -43,6 +45,7 @@ namespace ARM2_dbcontrol.DataBase
             this.dateUpdated = dateUpdated;
             this.taskParams = taskParams;
             this.taskUser = taskUser;
+            this.taskDescription = description;
         }
 
         #region Public Properties
@@ -100,6 +103,12 @@ namespace ARM2_dbcontrol.DataBase
             get { return taskUser; }
             set { taskUser = value; }
         }
+
+        public String TaskDescription
+        {
+            get { return taskDescription; }
+            set { taskDescription = value; }
+        }
         #endregion
 
         /// <summary>
@@ -117,7 +126,8 @@ namespace ARM2_dbcontrol.DataBase
                     this.dateComplete,
                     this.dateUpdated,
                     this.taskParams,
-                    this.taskUser);
+                    this.taskUser,
+                    this.taskDescription);
         }
 
     }

@@ -54,6 +54,7 @@ CREATE TABLE [dbo].[Tasks] (
 	[DateUpdated] datetime NOT NULL,
 	[TaskParams] ntext COLLATE Cyrillic_General_CI_AS NULL,
 	[TaskUser] nvarchar(128) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[TaskDescription] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
 	CONSTRAINT [PK_Tasks]
 		PRIMARY KEY NONCLUSTERED ([ID]),
 	CONSTRAINT [FK_Tasks_TaskTypes]

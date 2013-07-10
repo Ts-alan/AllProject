@@ -864,6 +864,9 @@ namespace Vba32CC
                 DateTime date = DateTime.Parse(name_value_map["Date"], format);
                 command.Parameters[2].Value = date;
 
+                command.Parameters.Add("@Description", SqlDbType.NVarChar, 256);
+                command.Parameters[3].Value = name_value_map["Description"];
+
                 result = ExecuteStoredProcedure(command);
             }
             catch (Exception e)

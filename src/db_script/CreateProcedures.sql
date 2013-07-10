@@ -814,7 +814,8 @@ GO
 CREATE PROCEDURE [UpdateTaskState]
 	@TaskID bigint,
 	@TaskState nvarchar(32),
-	@Date datetime
+	@Date datetime,
+	@Description nvarchar(256) = NULL
 WITH ENCRYPTION
 AS
 	-- Retrieving StateID
@@ -868,6 +869,13 @@ AS
 		SET	[StateID] = @StateID,
 			[DateUpdated] = @Date
 		WHERE [ID] = @TaskID
+
+		IF @Description IS NOT NULL
+		BEGIN
+			UPDATE [Tasks]
+				SET	[TaskDescription] = @Description
+				WHERE [ID] = @TaskID
+		END
 		
 		-- Checking particular states
 		IF @TaskState = N'Completed successfully'

@@ -50,6 +50,7 @@
                                 <flt:FilterText runat="server" ID="fltTaskName" NameFieldDB="TaskName" TextFilter='<%$ Resources:Resource, TaskName %>' />
                                 <flt:FilterList runat="server" ID="fltState" NameFieldDB="TaskState" TextFilter='<%$ Resources:Resource, TaskState %>' />
                                 <flt:FilterDate runat="server" ID="fltAssignmentDate" NameFieldDB="DateIssued" TextFilter='<%$ Resources:Resource, DateIssued %>' />
+                                <flt:FilterText runat="server" ID="fltDescription" NameFieldDB="TaskDescription" TextFilter='<%$ Resources:Resource, Description %>' />
                             </td>
                             <td valign="top" style="padding-left: 20px;">
                                 <flt:FilterDate runat="server" ID="fltCompletionDate" NameFieldDB="DateComplete"
@@ -95,6 +96,9 @@
                             <HeaderStyle Width="150px" />
                         </asp:HyperLinkField>
                         <asp:BoundField DataField="TaskState" SortExpression="TaskState" HeaderText='<%$ Resources:Resource, TaskState %>'>
+                            <HeaderStyle Width="100px" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="TaskDescription" SortExpression="TaskDescription" HeaderText='<%$ Resources:Resource, Description %>'>
                             <HeaderStyle Width="100px" />
                         </asp:BoundField>
                         <asp:BoundField DataField="AsDateIssued" SortExpression="DateIssued" HeaderText='<%$ Resources:Resource, DateIssued %>'>

@@ -28,7 +28,7 @@ public static class TasksDataContainer
             System.Reflection.PropertyInfo prop = typeof(TaskEntity).GetProperty(parts[0]);
             if (prop == null)
             {
-                throw new Exception("No property '" + parts[0] + "' in EventsEntity");
+                throw new Exception("No property '" + parts[0] + "' in TaskEntity");
             }
 
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
@@ -43,7 +43,7 @@ public static class TasksDataContainer
 
             foreach (TaskEntity ent in db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows))
             {
-                list.Add(new TaskEntityShow(ent.ID, ent.TaskName, ent.ComputerName, DatabaseNameLocalization.GetNameForCurrentCulture(ent.TaskState), ent.DateIssued, ent.DateComplete, ent.DateUpdated, ent.TaskParams, ent.TaskUser));
+                list.Add(new TaskEntityShow(ent.ID, ent.TaskName, ent.ComputerName, DatabaseNameLocalization.GetNameForCurrentCulture(ent.TaskState), ent.DateIssued, ent.DateComplete, ent.DateUpdated, ent.TaskParams, ent.TaskUser, ent.TaskDescription));
             }
 
             conn.CloseConnection();
@@ -104,8 +104,8 @@ public class TaskEntityShow : TaskEntity
 
     //Constructor
     public TaskEntityShow(Int64 iD, String taskName, String computerName, String taskState, DateTime dateIssued,
-        DateTime dateComplete, DateTime dateUpdated, String taskParams, String taskUser) :
-        base(iD, taskName, computerName, taskState, dateIssued, dateComplete, dateUpdated, taskParams, taskUser)
+        DateTime dateComplete, DateTime dateUpdated, String taskParams, String taskUser, String description) :
+        base(iD, taskName, computerName, taskState, dateIssued, dateComplete, dateUpdated, taskParams, taskUser, description)
     {
         this.asDateIssued = (dateIssued == DateTime.MinValue) ? "-" : dateIssued.ToString();
         this.asDateComplete = (dateComplete == DateTime.MinValue) ? "-" : dateComplete.ToString();
@@ -148,7 +148,8 @@ public class TaskEntityShow : TaskEntity
                 this.dateComplete,
                 this.dateUpdated,
                 this.taskParams,
-                this.taskUser);
+                this.taskUser, 
+                this.taskDescription);
     }
 
 }
