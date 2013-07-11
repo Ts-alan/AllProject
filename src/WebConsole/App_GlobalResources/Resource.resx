@@ -2787,4 +2787,7 @@
   <data name="Attach" xml:space="preserve">
     <value>Attach</value>
   </data>
+  <data name="DetachAgent" xml:space="preserve">
+    <value>Detach agent</value>
+  </data>
 </root>
