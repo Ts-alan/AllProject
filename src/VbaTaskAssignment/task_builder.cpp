@@ -3,14 +3,14 @@
 #include <tchar.h>
 #include <sstream> 
 
-#include "libcrypt/vbacrypt.h"
+#include "common/deprecated/libcrypt-devel/vba_crypto.h"
 #include "task_builder.h"
 
 CryptSecretKey	g_SD;
 
-bool VbaTaskBuilder::SignPacket(std::tostringstream& source, utf8_string& packet)
+bool VbaTaskBuilder::SignPacket(std::tostringstream& source, vba::utf8_string& packet)
 {	
-	utf8_string temp_packet = vsTStringToUtf8(source.str());
+    vba::utf8_string temp_packet = vba::ToUtf8String(source.str());
 
 	HKEY key = 0;
 	HKEY signature_= 0;
@@ -56,7 +56,7 @@ bool VbaTaskBuilder::SignPacket(std::tostringstream& source, utf8_string& packet
 
 	if (CryptSignDataBlock(temp_packet.c_str(), static_cast<long>(temp_packet.length()), &g_SD, &signature))
 	{		
-		packet = temp_packet + utf8_string(reinterpret_cast<CHAR*>(signature.data),sizeof(signature.data));
+        packet = temp_packet + vba::utf8_string(reinterpret_cast<CHAR*>(signature.data),sizeof(signature.data));
 		return true;
 	}
 	else
@@ -66,7 +66,7 @@ bool VbaTaskBuilder::SignPacket(std::tostringstream& source, utf8_string& packet
 	}
 }
 
-bool VbaTaskBuilder::BuildPacketSystemInfo(__int64 task_id, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketSystemInfo(__int64 task_id,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -77,7 +77,7 @@ bool VbaTaskBuilder::BuildPacketSystemInfo(__int64 task_id, utf8_string& packet)
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketListProcesses(__int64 task_id, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketListProcesses(__int64 task_id,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -88,7 +88,7 @@ bool VbaTaskBuilder::BuildPacketListProcesses(__int64 task_id, utf8_string& pack
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketComponentState(__int64 task_id, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketComponentState(__int64 task_id,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -99,7 +99,7 @@ bool VbaTaskBuilder::BuildPacketComponentState(__int64 task_id, utf8_string& pac
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketConfigureSettings(__int64 task_id, const std::tstring& settings, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketConfigureSettings(__int64 task_id, const std::tstring& settings,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -111,7 +111,7 @@ bool VbaTaskBuilder::BuildPacketConfigureSettings(__int64 task_id, const std::ts
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketSendFile(__int64 task_id, const std::tstring& source_path, const std::tstring& destination_path, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketSendFile(__int64 task_id, const std::tstring& source_path, const std::tstring& destination_path,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -124,7 +124,7 @@ bool VbaTaskBuilder::BuildPacketSendFile(__int64 task_id, const std::tstring& so
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketCreateProcess(__int64 task_id, const std::tstring& cmd_line, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketCreateProcess(__int64 task_id, const std::tstring& cmd_line,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -136,7 +136,7 @@ bool VbaTaskBuilder::BuildPacketCreateProcess(__int64 task_id, const std::tstrin
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketCustomAction(__int64 task_id, const std::tstring& options, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketCustomAction(__int64 task_id, const std::tstring& options,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	
@@ -148,7 +148,7 @@ bool VbaTaskBuilder::BuildPacketCustomAction(__int64 task_id, const std::tstring
     return SignPacket(temp, packet);
 }
 
-bool VbaTaskBuilder::BuildPacketCancelTask(__int64 task_id, utf8_string& packet)
+bool VbaTaskBuilder::BuildPacketCancelTask(__int64 task_id,vba::utf8_string& packet)
 {
 	std::tostringstream temp;
 	

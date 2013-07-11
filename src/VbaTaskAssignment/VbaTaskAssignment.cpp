@@ -3,19 +3,54 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "VbaTaskAssignment.h"
-
 #include <stdio.h>
 
 #include "VbaAtlAutoThreadModuleT.h"
 
+
+#include "task_sender.h"
+#include "common/log.h"
+
+
+#define THREADPOOL_SIZE	20
+#define THREADPOOL_SIZE_COM 20
+
+
 template <class ThreadAllocator = VbaComThreadAllocator, DWORD dwWait = INFINITE>
 class CVbaTaskAssignmentModule : public CAtlServiceModuleT< CVbaTaskAssignmentModule<>, IDS_SERVICENAME >,
                                  public VbaAtlAutoThreadModuleT<CVbaTaskAssignmentModule<>, ThreadAllocator, dwWait>
-{                       
+{   
+private:
+    typedef vba::AutoSingletonWrap<VbaTaskSender> TaskSender;
+	TaskSender* mp_task_sender;
+
 public:
 	DECLARE_LIBID(LIBID_VbaTaskAssignmentLib)
 	DECLARE_REGISTRY_APPID_RESOURCEID(IDR_VBATASKASSIGNMENT, "{335CFE6E-7408-466C-9A76-672479542D81}")
+
 	
+
+
+
+
+	HRESULT Run(int nShowCmd) throw()
+	{
+        LOG_FILE_ENABLE();
+        LOG_DEBUG_VIEW_ENABLE();
+        DLOG() % LOG_FUNC % L" Enable log.";
+		mp_task_sender = vba::AutoSingleton<TaskSender>::Instance();
+        mp_task_sender->_Initialize();		
+		return __super::Run(nShowCmd);
+	}
+
+	void OnStop()
+	{
+		mp_task_sender->m_action_q_init = false;
+		mp_task_sender->_Uninitialize();
+		return __super::OnStop();
+	}
+
+
     HRESULT InitializeSecurity() throw()
 	{
 	    CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
@@ -57,7 +92,7 @@ public:
 
     static DWORD GetDefaultThreads()
     {
-        return 100;
+        return THREADPOOL_SIZE_COM;
     }
 };
 
@@ -512,5 +547,18 @@ CVbaTaskAssignmentModule<> _AtlModule;
 extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-    return _AtlModule.WinMain(nShowCmd);
+    LOG_DEBUG_VIEW_ENABLE();
+
+    DLOG() % L"{" %GetCurrentThreadId() % L"}" % L"Task assigment test.";
+
+
+	VbaTaskSender::SenderThreadPool* p_thread_pool = vba::AutoSingleton<VbaTaskSender::SenderThreadPool>::Instance();
+	p_thread_pool->Init(THREADPOOL_SIZE);
+
+	int res = _AtlModule.WinMain(nShowCmd);
+
+	p_thread_pool->FreeInst();
+    int i = _AtlModule.WinMain(nShowCmd);
+    LOG_DEBUG_VIEW_DISABLE();
+    return i;
 }

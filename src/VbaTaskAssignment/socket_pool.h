@@ -4,6 +4,8 @@
 
 #include <list>
 
+#include "common/critical_section.h"
+
 class VbaSocketPool
 {
 private:
@@ -35,12 +37,12 @@ protected:
     bool Connect(SOCKET sck, unsigned long address, u_short port);
     bool FreeSockets();
 
-    SOCKET CreateNewSocket();
+    //SOCKET CreateNewSocket();
 
     std::list<SocketContext> m_free_sockets;
     std::list<SocketContext> m_busy_sockets;
 
-    CRITICAL_SECTION m_critical_section; 
+    vba::CriticalSection m_critical_section; 
 
     size_t m_max_sockets_count;
 };

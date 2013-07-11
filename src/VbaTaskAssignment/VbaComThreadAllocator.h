@@ -25,7 +25,7 @@
 #include <atlbase.h>
 #include <map>
 
-#include "vba_common/vba_singleton.h"
+#include "common/patterns.h"
 
 enum ThreadState
 {
@@ -49,9 +49,9 @@ struct ThreadInfo
 typedef std::map<DWORD,ThreadInfo*> ThreadsMap;
 typedef std::pair<DWORD,ThreadInfo*> ThreadsPair;
 
-class VbaComThreadAllocator : public cc::VbaSingleton<VbaComThreadAllocator>
+class VbaComThreadAllocator : public vba::AutoSingleton<VbaComThreadAllocator>
 {
-friend class cc::VbaSingleton<VbaComThreadAllocator>;
+friend class vba::AutoSingleton<VbaComThreadAllocator>;
     
 protected:
 

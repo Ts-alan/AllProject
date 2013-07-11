@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="VbaTaskAssignment"
 	ProjectGUID="{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}"
 	RootNamespace="VbaTaskAssignment"
@@ -198,284 +198,19 @@
 				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Task Assignment Service&quot;"
 			/>
 		</Configuration>
-		<Configuration
-			Name="Unicode Debug|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/VbaTaskAssignment.tlb"
-				HeaderFileName="VbaTaskAssignment.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="VbaTaskAssignment_i.c"
-				ProxyFileName="VbaTaskAssignment_p.c"
-				ValidateParameters="false"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_WIN32_DCOM;DEBUG_LEVEL=3"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="2"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="libcmt.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Task Assignment Service&quot;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Unicode Release|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/VbaTaskAssignment.tlb"
-				HeaderFileName="VbaTaskAssignment.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="VbaTaskAssignment_i.c"
-				ProxyFileName="VbaTaskAssignment_p.c"
-				ValidateParameters="false"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP"
-				Optimization="2"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_WIN32_DCOM;DEBUG_LEVEL=3"
-				MinimalRebuild="false"
-				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Task Assignment Service&quot;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="vba_debug|Win32"
-			ConfigurationType="1"
-			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
-			UseOfATL="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="1"
-				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/VbaTaskAssignment.tlb"
-				HeaderFileName="VbaTaskAssignment.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="VbaTaskAssignment_i.c"
-				ProxyFileName="VbaTaskAssignment_p.c"
-				ValidateParameters="false"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP"
-				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_WIN32_DCOM;DEBUG_LEVEL=3;"
-				MinimalRebuild="false"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				UsePrecompiledHeader="2"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="ws2_32.lib"
-				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="libcmt.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Task Assignment Service&quot;"
-			/>
-		</Configuration>
 	</Configurations>
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{5A82DFD5-6E7E-4955-9E34-A25DA78CBA55}"
 			RelativePathToProject="..\deps\common\deprecated\make\deprecated.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{BE3BF7CA-E665-4CDA-B1FC-A61877373C01}"
+			RelativePathToProject="..\deps\common\make\common.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{04290386-D9EF-4B86-B3FA-55D72BEDBD4A}"
+			RelativePathToProject="..\deps\common\deprecated\libcrypt-devel\libcrypt.vcproj"
 		/>
 	</References>
 	<Files>
@@ -503,30 +238,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -547,30 +258,6 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\task_builder.cpp"
@@ -583,22 +270,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\task_reporter.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\task_sender.cpp"
@@ -611,25 +286,17 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\task_service.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\task_states.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vba_socket.cpp"
 				>
 			</File>
 			<File
@@ -649,30 +316,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCMIDLTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCMIDLTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCMIDLTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -703,6 +346,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\task_reporter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\task_sender.h"
 				>
 			</File>
@@ -711,7 +358,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\task_states.h"
+				>
+			</File>
+			<File
 				RelativePath=".\thread_pool.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vba_socket.h"
 				>
 			</File>
 		</Filter>
@@ -756,30 +411,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\VbaTaskAssignment_i.c"
@@ -795,33 +426,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ForcedIncludeFiles="$(NOINHERIT)"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ForcedIncludeFiles="$(NOINHERIT)"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ForcedIncludeFiles="$(NOINHERIT)"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -851,14 +455,6 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="vba_debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

@@ -1,35 +1,53 @@
 #pragma once
 
-#include "vba_common/vba_strings.h"
+#include "common/strings.h"
+#include "common/patterns.h"
 
-#include "socket_pool.h"
+//#include "socket_pool.h"
 #include "thread_pool.h"
+#include "vba_socket.h"
+#include "task_reporter.h"
 
-#define THREADPOOL_SIZE	5
-#define SOCKET_POOL_SIZE 100
-
-class VbaTaskSender
+struct TaskParam
 {
-public:
-    bool Initialize(unsigned short port);
-    bool Shutdown();
-    bool AddTask(unsigned long address, const utf8_string& packet);
+	unsigned long address;
+	unsigned short port;
+    vba::utf8_string packet;
+	INT64 id;
+};
 
-    static DWORD  WINAPI  AddThreadTask(LPVOID p_void); 
+class VbaTaskSender : public vba::ActionQueue<TaskParam>
+{
+protected:
+    struct TaskContainer :	public vba::ThreadNonPaged
+	{		
+		unsigned long	m_address;
+		unsigned short	m_port;
+        vba::utf8_string		m_packet;
+		INT64			m_id_task;
+
+		virtual unsigned ThreadFunction();
+	};
+
+public:
+    bool _Initialize();
+	bool _Uninitialize();
+    bool AddTask(TaskParam &task_param);
+
+	virtual void OnAction(TaskParam task_param);
 
     VbaTaskSender();
     ~VbaTaskSender();
 
-private:
-    VbaSocketPool                  m_socket_pool;
-    VbaThreadPool<VbaSocketWorker> m_thread_pool;
-    
-    unsigned short m_port;
+    typedef vba::AutoSingletonWrap<VbaThreadPool<TaskContainer> > SenderThreadPool;
+	typedef vba::AutoSingletonWrap<VbaTaskReporter> ReportTasks;
+
+	bool				m_action_q_init;
+private:    
+	
+	SenderThreadPool*	mp_thread_pool;        
+	ReportTasks*		mp_tasks_report;
+    vba::CriticalSection	m_cs;	
+	TaskContainer*		mp_container;
 };
 
-struct TaskContainer
-{
-    VbaTaskSender* mp_vba_task_sender;
-    unsigned long  m_address;
-    utf8_string    m_packet;
-};

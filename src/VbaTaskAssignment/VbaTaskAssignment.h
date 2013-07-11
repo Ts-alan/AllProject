@@ -3,8 +3,8 @@
 /* this ALWAYS GENERATED file contains the definitions for the interfaces */
 
 
- /* File created by MIDL compiler version 7.00.0499 */
-/* at Fri Jul 18 14:47:40 2008
+ /* File created by MIDL compiler version 7.00.0500 */
+/* at Fri Jun 28 16:17:58 2013
  */
 /* Compiler settings for .\VbaTaskAssignment.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -136,7 +136,7 @@ EXTERN_C const IID IID_ITaskService;
             ITaskService * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ 
-            void **ppvObject);
+            __RPC__deref_out  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
             ITaskService * This);
