@@ -161,7 +161,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             {
                 Logger.Debug("Проверяем необходимость считывания настроек");
                 if (IsReRead())
-                    if(ReadSettingsFromRegistry())
+                    if (ReadSettingsFromRegistry())
                         SkipReRead();//Настройки успешно считаны, удаляем флаг
 
                 if (!isShutdown)
@@ -171,13 +171,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
                 if (maintenanceEnabled)
                 {
-                    Logger.Debug("2. Отправляем задачи на конфигурирование агента..");
-                    if (!isShutdown)
-                        ConfigureAgent(connectionString);
-                    else
-                        return false;
-
-                    Logger.Debug("3. Проверяем необходимость отсылки событий.. ");
+                    Logger.Debug("2. Проверяем необходимость отсылки событий.. ");
                     Logger.Debug("DateTime.Now=" + DateTime.Now + " nextSendDate=" + nextSendDate);
                     if (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
                     {
@@ -224,29 +218,35 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     }
                 }
 
-                    Logger.Debug("4. Чистим от старых событий.. ");
-                    if (!isShutdown)
-                        ClearOldEvents(connectionString);
-                    else
-                        return false;
+                Logger.Debug("3. Отправляем задачи на конфигурирование агента..");
+                if (!isShutdown)
+                    ConfigureAgent(connectionString);
+                else
+                    return false;
 
-                    Logger.Debug("5. Чистим от старых задач.. ");
-                    if (!isShutdown)
-                        ClearOldTasks(connectionString);
-                    else
-                        return false;
+                Logger.Debug("4. Чистим от старых событий.. ");
+                if (!isShutdown)
+                    ClearOldEvents(connectionString);
+                else
+                    return false;
+
+                Logger.Debug("5. Чистим от старых задач.. ");
+                if (!isShutdown)
+                    ClearOldTasks(connectionString);
+                else
+                    return false;
 
                 /*
                     Logger.Debug("6. Сжатие базы... ");
                     if (!isShutdown)
                         CompressDB(connectionString);
                  */
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error("Vba32PMS.Execute()::" + ex.Message);
-               return false;
+                return false;
             }
             return true;
         }

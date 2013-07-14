@@ -45,7 +45,6 @@
     <Compile Include="DataBase\VlslVConnection.cs" />
     <Compile Include="Network\EventsSender.cs" />
     <Compile Include="TaskAssignment\DataBase\TaskManager.cs" />
-    <Compile Include="TaskAssignment\Entities\ComputersEntity.cs" />
     <Compile Include="TaskAssignment\Entities\TaskEntity.cs" />
     <Compile Include="TaskAssignment\Entities\TaskInfo.cs" />
     <Compile Include="TaskAssignment\PreServAction.cs" />
