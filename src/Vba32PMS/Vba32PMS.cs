@@ -171,7 +171,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
                 if (maintenanceEnabled)
                 {
-                    //LogMessage("2. Проверяем необходимость отсылки событий.. ");
+                    Logger.Debug("2. Отправляем задачи на конфигурирование агента..");
+                    if (!isShutdown)
+                        ConfigureAgent(connectionString);
+                    else
+                        return false;
+
+                    Logger.Debug("3. Проверяем необходимость отсылки событий.. ");
                     Logger.Debug("DateTime.Now=" + DateTime.Now + " nextSendDate=" + nextSendDate);
                     if (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
                     {
@@ -218,20 +224,20 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     }
                 }
 
-                    Logger.Debug("3. Чистим от старых событий.. ");
+                    Logger.Debug("4. Чистим от старых событий.. ");
                     if (!isShutdown)
                         ClearOldEvents(connectionString);
                     else
                         return false;
 
-                    Logger.Debug("4. Чистим от старых задач.. ");
+                    Logger.Debug("5. Чистим от старых задач.. ");
                     if (!isShutdown)
                         ClearOldTasks(connectionString);
                     else
                         return false;
 
                 /*
-                    Logger.Debug("5. Сжатие базы... ");
+                    Logger.Debug("6. Сжатие базы... ");
                     if (!isShutdown)
                         CompressDB(connectionString);
                  */
@@ -244,6 +250,5 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             return true;
         }
-
     }
 }

@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
+using Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment;
+using Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment.DataBase;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {
@@ -220,6 +222,51 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 Logger.Error("Vba32PMS.CompressDB()::Ошибка при запросе к БД: " + ex.Message);
                 return false;
             }
+            return true;
+        }
+
+        /// <summary>
+        /// Отправка задач на конфигурирование агента
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        private Boolean ConfigureAgent(String connectionString)
+        {
+            Logger.Debug("Vba32PMS.ConfigureAgent():: Конфигурируем агентов");
+
+            Logger.Debug("Vba32PMS.ConfigureAgent():: Получаем список IP адресов");
+            List<String> list = null;
+            try
+            {
+                using (VlslVConnection conn = new VlslVConnection(connectionString))
+                {
+                    TaskManager db = new TaskManager(conn);
+                    conn.OpenConnection();
+                    conn.CheckConnectionState(true);
+
+                    list = db.GetIPAddressListForConfigure();
+
+                    conn.CloseConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Vba32PMS.ConfigureAgent()::Ошибка при запросе к БД: " + ex.Message);
+                return false;
+            }
+
+            if (list == null || list.Count == 0)
+            {
+                Logger.Debug("Vba32PMS.ConfigureAgent():: агенты для конфигурации не найдены");
+                return true;
+            }
+
+            Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper("VbaTaskAssignment.Service");
+            foreach (String ip in list)
+            {
+                control.DefaultConfigureAgent(ip);
+            }
+
             return true;
         }
 

@@ -44,6 +44,13 @@
     <Compile Include="DataBase\EventsManager.cs" />
     <Compile Include="DataBase\VlslVConnection.cs" />
     <Compile Include="Network\EventsSender.cs" />
+    <Compile Include="TaskAssignment\DataBase\TaskManager.cs" />
+    <Compile Include="TaskAssignment\Entities\ComputersEntity.cs" />
+    <Compile Include="TaskAssignment\Entities\TaskEntity.cs" />
+    <Compile Include="TaskAssignment\Entities\TaskInfo.cs" />
+    <Compile Include="TaskAssignment\PreServAction.cs" />
+    <Compile Include="TaskAssignment\Tasks\TaskConfigureAgent.cs" />
+    <Compile Include="TaskAssignment\Vba32ControlCenterWrapper.cs" />
     <Compile Include="Vba32PMS.DB.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PMS.ico" />
+    <Content Include="TaskAssignment\VbaTaskAssignment.idl" />
     <Content Include="WhatsNew.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
