@@ -883,8 +883,20 @@ AS
 			UPDATE [Tasks]
 			SET	[DateComplete] = @Date
 			WHERE [ID] = @TaskID
+
+			--костыль для удаления компа после успешного завершения задачи на отсоединение агента
+			IF (SELECT tt.[TaskName] FROM Tasks AS t
+				INNER JOIN TaskTypes AS tt ON t.[TaskID] = tt.[ID]
+				WHERE t.[ID] = @TaskID) IN ('Detach agent', 'Отсоединить агент')
+			BEGIN
+				DELETE FROM Computers
+				WHERE [ID] = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
+
+				RETURN
+			END
 		END	
 	END
+
 	-- Recent activity time
 	UPDATE [Computers]
 	SET [RecentActive] = GETDATE()
@@ -1097,13 +1109,14 @@ AS
 			[Vba32Version] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[Status] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[InstallationDate] smalldatetime NOT NULL,
-			[ExitCode] smallint
+			[ExitCode] smallint,
+			[Error] ntext
 		)
 	
 		INSERT INTO @TasksPage(
-			[ID], [ComputerName], [IPAddress], [TaskType], [Vba32Version], [Status], [InstallationDate], [ExitCode])
+			[ID], [ComputerName], [IPAddress], [TaskType], [Vba32Version], [Status], [InstallationDate], [ExitCode], [Error])
 		SELECT
-			t.[ID], t.[ComputerName], t.[IPAddress], tt.[TaskType], v.[Vba32Version], s.[Status], t.[InstallationDate], t.[ExitCode]
+			t.[ID], t.[ComputerName], t.[IPAddress], tt.[TaskType], v.[Vba32Version], s.[Status], t.[InstallationDate], t.[ExitCode], t.[Error]
 		FROM InstallationTasks AS t
 		INNER JOIN InstallationStatus AS s ON t.[StatusID] = s.[ID]
 		INNER JOIN Vba32Versions AS v ON t.[Vba32VersionID] = v.[ID]
@@ -1113,7 +1126,7 @@ AS
 	IF @OrderBy IS NOT NULL
 		SET @Query = @Query + N' ORDER BY ' + @OrderBy
 	SET @Query = @Query + N';
-		SELECT [ID], [ComputerName], [IPAddress], [TaskType], [Vba32Version], [Status], [InstallationDate], [ExitCode]
+		SELECT [ID], [ComputerName], [IPAddress], [TaskType], [Vba32Version], [Status], [InstallationDate], [ExitCode], [Error]
 		FROM @TasksPage WHERE [RecID] BETWEEN (' +
 			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
 			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'

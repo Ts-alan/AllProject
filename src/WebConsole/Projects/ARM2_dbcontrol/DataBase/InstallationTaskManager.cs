@@ -118,6 +118,8 @@ namespace ARM2_dbcontrol.DataBase
                     task.InstallationDate = reader.GetDateTime(6);
                 if (reader.GetValue(7) != DBNull.Value)
                     task.ExitCode = reader.GetInt16(7);
+                if (reader.GetValue(8) != DBNull.Value)
+                    task.Error = reader.GetString(8);
 
 				list.Add(task);		
 			}

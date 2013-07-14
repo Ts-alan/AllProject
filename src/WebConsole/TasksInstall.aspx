@@ -16,21 +16,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
-<script type="text/javascript" language="javascript">
-    function SelectAll() {
-        var gv = $get('<%=GridView1.ClientID%>');
-
-        var isChecked = gv.rows[1].cells[0].children[0].children[0].checked;
-
-        for (var i = 2; i < gv.rows.length - 1; i++) {
-            var rowElem = gv.rows[i];
-            var cell = rowElem.cells[0];
-
-            if (cell.children[0].children[0].disabled == false)
-                cell.children[0].children[0].checked = isChecked;
-        }
-    }
-</script>
 <div class="title"><%=Resources.Resource.InstallUninstallTasks %></div>
 
 <asp:UpdatePanel runat="server" ID="updatePanelComponentFilter">
@@ -48,7 +33,6 @@
                     </td>
                     <td valign="top" style="padding-left: 20px;">
                         <flt:FilterList runat="server" ID="fltStatus" NameFieldDB="Status" TextFilter="<%$ Resources:Resource, Status %>" />
-                        <flt:FilterList runat="server" ID="fltVBA32Version" NameFieldDB="Vba32Version" TextFilter="<%$ Resources:Resource, VBA32Version %>" />
                         <flt:FilterDate runat="server" ID="fltDate" NameFieldDB="InstallationDate" TextFilter="<%$ Resources:Resource, DateIssued %>" />
                     </td>
                 </tr>
@@ -70,34 +54,21 @@
          <asp:UpdatePanel ID="updatePanelTasksInstallGrid" runat="server">
          <ContentTemplate>
             <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
-                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" OnRowDataBound="GridView1_RowDataBound"
+                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1"
                     EnableModelValidation="True" CssClass="gridViewStyle"
                     StorageType="Session" StorageName="TasksInstall" EmptyDataText='<%$ Resources:Resource, EmptyMessage %>'>
                 <Columns>
-                    <asp:TemplateField>
-                            <HeaderStyle Width="60px" />
-                            <HeaderTemplate>
-                                <asp:CheckBox runat="server" ID="cboxSelectAll" onclick="SelectAll()" />
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <asp:CheckBox ID="cboxIsSelected" runat="server" />
-                            </ItemTemplate>
-                    </asp:TemplateField>                    
                     <asp:HyperLinkField DataTextField="ComputerName" SortExpression="ComputerName" 
                         HeaderText='<%$ Resources:Resource, ComputerName %>'>
                         <HeaderStyle Width="200px" />
                     </asp:HyperLinkField>                       
                     <asp:BoundField DataField="IPAddress" SortExpression="IPAddress" 
                         HeaderText='<%$ Resources:Resource, IPAddress %>'>
-                        <HeaderStyle Width="200px" />
+                        <HeaderStyle Width="150px" />
                     </asp:BoundField>
                     <asp:BoundField DataField="TaskType" SortExpression="TaskType" 
                         HeaderText='<%$ Resources:Resource, TaskType %>'>
                         <HeaderStyle Width="100px" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="Vba32Version" SortExpression="Vba32Version" 
-                        HeaderText='<%$ Resources:Resource, VBA32Version %>'>
-                        <HeaderStyle Width="130px" />
                     </asp:BoundField>
                     <asp:BoundField DataField="InstallationDate" SortExpression="InstallationDate" 
                         HeaderText='<%$ Resources:Resource, DateIssued %>'>
@@ -106,6 +77,11 @@
                     <asp:BoundField DataField="Status" SortExpression="Status" 
                         HeaderText='<%$ Resources:Resource, Status %>'>
                         <HeaderStyle Width="130px" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="Error"
+                        HeaderText='<%$ Resources:Resource, Description %>'>
+                        <HeaderStyle Width="200px" />
+                        <ItemStyle HorizontalAlign="Left" />
                     </asp:BoundField>
                 </Columns> 
                 <PagerSettings Position="TopAndBottom" Visible="true" />           
@@ -116,15 +92,6 @@
                 <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
                 <RowStyle CssClass="gridViewRow" />
             </custom:GridViewExtended>
-            <div style="text-align: center;">
-                    <div class="GiveButton1" style="float: left;">
-                        <asp:LinkButton runat="server" ID="lbtnConfigure" OnClick="lbtnConfigure_Click" Width="100%"
-                            ForeColor="white"></asp:LinkButton>
-                    </div>
-                    <div style="min-width: 300px;">
-                        <asp:Label runat="server" ID="lblMessage"></asp:Label>
-                    </div>
-            </div>
          </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="AutoUpdateControl1" EventName="AutoUpdate"></asp:AsyncPostBackTrigger>
