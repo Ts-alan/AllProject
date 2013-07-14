@@ -14,33 +14,23 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
     /// </summary>
     public class Vba32ControlCenterWrapper
     {
-        string service;
-        string m_last_error = "";
+        String service;
+        String m_last_error = "";
 
         /// <summary>
         /// Требует имя сервиса
         /// </summary>
         /// <param name="service">имя сервиса</param>
-        public Vba32ControlCenterWrapper(string service)
+        public Vba32ControlCenterWrapper(String service)
         {
             this.service = service;
-            //Проверим, доступен ли сервис
-            //try
-            //{
-            //  if(Type.GetTypeFromProgID(service)==null)
-            //    throw new Exception("Service not exist");
-            //}
-            //catch (Exception e)
-            //{
-            //    m_last_error = e.Message;
-            //}
         }
 
         /// <summary>
         /// Возвращает строку с описанием последней ошибки
         /// </summary>
         /// <returns></returns>
-        public string GetLastError()
+        public String GetLastError()
         {
             return m_last_error;
         }
@@ -50,7 +40,7 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// Обращается к COM-объекту и вызывает его метод
         /// </summary>
         /// <param name="taskInfo">объект типа TaskInfo</param>
-        void ThreadProc(object taskInfo)
+        void ThreadProc(Object taskInfo)
         {
             try
             {
@@ -61,12 +51,8 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
                 tsk.Serv = Activator.CreateInstance(tsk.ServType);
                 tsk.ServType.InvokeMember(tsk.Method, tsk.BindFlags, null, tsk.Serv, tsk.Arguments);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               // m_last_error = "Message: " + e.Message;
-               // EventLog.WriteEntry("Vba32 Control Center WebInterface",
-               //     "Vba32ControlCenterWrapper.ThreadProc(): " + ex.Message, EventLogEntryType.Error);
-                //!-OPTM Вот эту ошибку как-то надо донести до веб-консоли
                 Debug.Write("Vba32ControlCenterWrapper.ThreadProc(): " + ex.Message);
             }
         }
@@ -74,23 +60,18 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         #region Service methods
 
         /// <summary>
-        /// PacketSystemInfo
+        /// General
         /// </summary>
         /// <param name="taskID">task id</param>
         /// <param name="ipAddrs">array of ip addresses</param>
         /// <returns></returns>
-        public int PacketSystemInfo(Int64[] taskID, string[] ipAddrs) 
+        public Int32 PacketGeneral(Object[] args, String taskType)
         {
-            object[] args = new object[2]; //arguments
-            int retval = 0;         //return value
-          
-            args[0] = taskID;
-            args[1] = PreServAction.ToDWORDArray(ipAddrs);
-
+            Int32 retval = 0;         //return value
             //call COM-server method
             try
             {
-                TaskInfo ti = new TaskInfo(service, "PacketSystemInfo", BindingFlags.InvokeMethod, args);
+                TaskInfo ti = new TaskInfo(service, taskType, BindingFlags.InvokeMethod, args);
                 Thread thr = new Thread(ThreadProc);
                 thr.Start(ti);
                 //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
@@ -101,6 +82,20 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
                 retval = 1;
             }
             return retval;
+        }
+
+        /// <summary>
+        /// PacketSystemInfo
+        /// </summary>
+        /// <param name="taskID">task id</param>
+        /// <param name="ipAddrs">array of ip addresses</param>
+        /// <returns></returns>
+        public Int32 PacketSystemInfo(Int64[] taskID, String[] ipAddrs)
+        {
+            Object[] args = new Object[2]; //arguments
+            args[0] = taskID;
+            args[1] = PreServAction.ToDWORDArray(ipAddrs);
+            return PacketGeneral(args, "PacketSystemInfo");
         }
 
         /// <summary>
@@ -110,30 +105,13 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="ipAddrs">ip address</param>
         /// <param name="cmdLine">cmd line</param>
         /// <returns></returns>
-        public int PacketCreateProcess(Int64[] taskID, string[] ipAddrs, string cmdLine)
+        public Int32 PacketCreateProcess(Int64[] taskID, String[] ipAddrs, String cmdLine)
         {
-            object[] args = new object[3]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[3]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
             args[2] = cmdLine;
-
-            //call COM-server method
-            try
-            {
-                TaskInfo ti = new TaskInfo(service, "PacketCreateProcess", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketCreateProcess");
         }
 
         /// <summary>
@@ -144,33 +122,14 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="srcPath"></param>
         /// <param name="dstPath"></param>
         /// <returns></returns>
-        public int PacketSendFile(Int64[] taskID, string[] ipAddrs, string srcPath, string dstPath)
+        public Int32 PacketSendFile(Int64[] taskID, String[] ipAddrs, String srcPath, String dstPath)
         {
-            //PreServAction translate = new PreServAction();
-            object[] args = new object[4]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[4]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
             args[2] = srcPath;
             args[3] = dstPath;
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketSendFile", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketSendFile", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketSendFile");
         }
 
         /// <summary>
@@ -180,32 +139,13 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="ipAddrs"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public int PacketConfigureSettings(Int64[] taskID, string[] ipAddrs, string settings)
+        public Int32 PacketConfigureSettings(Int64[] taskID, String[] ipAddrs, String settings)
         {
-           // PreServAction translate = new PreServAction();
-            object[] args = new object[3]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[3]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
             args[2] = settings;
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketConfigureSettings", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketConfigureSettings", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketConfigureSettings");
         }
 
 
@@ -215,30 +155,12 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="taskID"></param>
         /// <param name="ipAddrs"></param>
         /// <returns></returns>
-        public int PacketComponentState(Int64[] taskID, string[] ipAddrs)
+        public Int32 PacketComponentState(Int64[] taskID, String[] ipAddrs)
         {
-            object[] args = new object[2]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[2]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketComponentState", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketComponentState", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketComponentState");
         }
 
         /// <summary>
@@ -248,32 +170,13 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="ipAddrs"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public int PacketCustomAction(Int64[] taskID, string[] ipAddrs, string options)
+        public Int32 PacketCustomAction(Int64[] taskID, String[] ipAddrs, String options)
         {
-            
-            object[] args = new object[3]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[3]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
             args[2] = options;
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketCustomAction", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketCustomAction", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketCustomAction");
         }
 
         /// <summary>
@@ -282,30 +185,12 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="taskID"></param>
         /// <param name="ipAddrs"></param>
         /// <returns></returns>
-        public int PacketCancelTask(Int64[] taskID, string[] ipAddrs)
+        public Int32 PacketCancelTask(Int64[] taskID, String[] ipAddrs)
         {
-            object[] args = new object[2]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[2]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketCancelTask", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketCancelTask", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketCancelTask");
         }
 
         /// <summary>
@@ -314,32 +199,13 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <param name="taskID"></param>
         /// <param name="ipAddrs"></param>
         /// <returns></returns>
-        public int PacketListProcesses(Int64[] taskID, string[] ipAddrs)
+        public Int32 PacketListProcesses(Int64[] taskID, String[] ipAddrs)
         {
-            object[] args = new object[2]; //arguments
-            int retval = 0;         //return value
-
+            Object[] args = new Object[2]; //arguments
             args[0] = taskID;
             args[1] = PreServAction.ToDWORDArray(ipAddrs);
-
-            //call COM-server method
-            try
-            {
-                //retval = vbaServ_type.InvokeMember("PacketListProcesses", BindingFlags.InvokeMethod, null, vbaServ, args);
-                TaskInfo ti = new TaskInfo(service, "PacketListProcesses", BindingFlags.InvokeMethod, args);
-                Thread thr = new Thread(ThreadProc);
-                thr.Start(ti);
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadProc), ti);
-            }
-            catch (Exception e)
-            {
-                m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                retval = 1;
-            }
-
-            return retval;
+            return PacketGeneral(args, "PacketListProcesses");
         }
-
 
         #endregion
 
