@@ -68,11 +68,15 @@ namespace ARM2_dbcontrol.Tasks.ConfigureAgent
             String EndLine = "\r\n";
 
             //Get Server
+            if (fileContent.IndexOf(server) < 0)
+                throw new Exception("Server isn't found.");
             IndexBegin = fileContent.IndexOf(server) + server.Length;
             IndexEnd = fileContent.IndexOf(EndLine, IndexBegin);
             args[0] = fileContent.Substring(IndexBegin, IndexEnd - IndexBegin);
 
             //Get PublicKey
+            if (fileContent.IndexOf(publicKey) < 0)
+                throw new Exception("PublicKey isn't found.");
             IndexBegin = fileContent.IndexOf(publicKey) + publicKey.Length;
             IndexEnd = fileContent.IndexOf(EndLine, IndexBegin);
             args[1] = fileContent.Substring(IndexBegin, IndexEnd - IndexBegin);
@@ -81,9 +85,12 @@ namespace ARM2_dbcontrol.Tasks.ConfigureAgent
             args[1] = args[1].Substring(0, 264);
 
             //Get ServerMask
-            IndexBegin = fileContent.IndexOf(mask) + mask.Length;
-            IndexEnd = fileContent.IndexOf(EndLine, IndexBegin);
-            args[2] = fileContent.Substring(IndexBegin, IndexEnd - IndexBegin);
+            if (fileContent.IndexOf(mask) > -1)
+            {
+                IndexBegin = fileContent.IndexOf(mask) + mask.Length;
+                IndexEnd = fileContent.IndexOf(EndLine, IndexBegin);
+                args[2] = fileContent.Substring(IndexBegin, IndexEnd - IndexBegin);
+            }
 
             if (args[0] == server || args[1] == publicKey)
                 return false;
