@@ -48,12 +48,12 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         }
 
-        private bool StartUpCreateRegistryKey()
+        private Boolean StartUpCreateRegistryKey()
         {
             Debug.WriteLine("Vba32PMS.StartUpCreateRegistryKey()::Создаем в реестре настройки по умолчанию");
             try
             {
-                string registryControlCenterKeyName;
+                String registryControlCenterKeyName;
                 if (Marshal.SizeOf(typeof(IntPtr)) == 8)
                     registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\PeriodicalMaintenance";
                 else
@@ -76,11 +76,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 key.SetValue("TaskDaysToDelete", 90, RegistryValueKind.DWord);
                 key.SetValue("MaintenanceEnabled", 0, RegistryValueKind.DWord);
                 key.SetValue("TaskDaysToDelete", 180, RegistryValueKind.DWord);
-
                 key.SetValue("HourIntervalToSend", 4, RegistryValueKind.DWord);
+                key.SetValue("AllowLog", 3, RegistryValueKind.DWord);
 
-                key.SetValue("AllowLog",0,RegistryValueKind.DWord);
-        
             }
             catch (Exception ex)
             {

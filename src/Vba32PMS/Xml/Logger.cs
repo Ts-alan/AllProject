@@ -3,61 +3,73 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.IO;
+using System.Diagnostics;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 {
     /// <summary>
     /// Логгирует в файл на диске.
     /// </summary>
-    public class Logger
+    internal static class Logger
     {
-        protected string path = String.Empty;
-        protected Encoding encoding = Encoding.Unicode;
-        protected bool append = true;
+        #region Fields
 
-        protected string user = String.Empty;
-        /// <summary>
-        /// File logger
-        /// </summary>
-        /// <param name="logFile">file name</param>
-        public Logger(string path)
+        private static String path = String.Empty;
+        private static Encoding encoding = Encoding.Default;
+        private static Boolean append = true;
+        private static String user = String.Empty;
+        private static LogLevel loggingLevel = LogLevel.Debug;
+
+        #endregion
+
+        #region Property
+
+        public static String Path
         {
-            this.path = path;
+            get { return path; }
+            set { path = value; }
         }
 
-        public Logger(string path, Encoding encoding)
+        public static Boolean Append
         {
-            this.path = path;
-            this.encoding = encoding;
+            get { return append; }
+            set { append = value; }
         }
 
-        public Logger(string path, Encoding encoding, bool append)
+        public static Encoding EncodingText
         {
-            this.path = path;
-            this.encoding = encoding;
-            this.append = append;
+            get { return encoding; }
+            set { encoding = value; }
         }
 
-        public Logger(string path, Encoding encoding, bool append, string user)
+        public static String User
         {
-            this.path = path;
-            this.encoding = encoding;
-            this.append = append;
-            this.user = user;
+            get { return user; }
+            set { user = value; }
         }
 
+        public static LogLevel LoggingLevel
+        {
+            get { return loggingLevel; }
+            set { loggingLevel = value; }
+        }
+
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Write text to logfile
         /// </summary>
         /// <param name="text">Text to write</param>
         /// <returns></returns>
-        public bool Write(string text)
+        private static Boolean Write(String text, LogLevel logLevel)
         {
+            if (logLevel > LoggingLevel) return false;
             StreamWriter writer = null;
             try
             {
                 writer = new StreamWriter(path, append, encoding);
-                writer.WriteLine("[{0:G}] {1} : {2}", DateTime.Now,user,  text);
+                writer.WriteLine("[{0:G}] {1} : {2}! {3}", DateTime.Now, user, logLevel, text);
                 writer.Close();
             }
             catch
@@ -70,30 +82,37 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
             return true;
         }
 
-        #region Property
-
-        public string Path
+        public static void Fatal(String errorMessage)
         {
-            get { return this.path; }
-            set { this.path = value; }
+            Write(errorMessage, LogLevel.Fatal);
+            EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, EventLogEntryType.Error);
         }
 
-        public bool Append
+        public static void Error(String errorMessage)
         {
-            get { return this.append; }
-            set { this.append = value; }
+            Write(errorMessage, LogLevel.Error);
+            EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, EventLogEntryType.Error);
         }
 
-        public Encoding EncodingText
+        public static void Warning(String errorMessage)
         {
-            get { return this.encoding; }
-            set { this.encoding = value; }
+            Write(errorMessage, LogLevel.Warning);
+            EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, EventLogEntryType.Warning);
         }
 
-        public string User
+        public static void Info(String errorMessage)
         {
-            get { return this.user; }
-            set { this.user = value; }
+            Write(errorMessage, LogLevel.Info);
+        }
+
+        public static void Debug(String errorMessage)
+        {
+            Write(errorMessage, LogLevel.Debug);
+        }
+
+        public static void Trace(String errorMessage)
+        {
+            Write(errorMessage, LogLevel.Trace);
         }
 
         #endregion

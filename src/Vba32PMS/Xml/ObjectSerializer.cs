@@ -19,9 +19,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
         /// <summary>    
         /// Сериализует объект в XML файл
         /// </summary>    
-        public static void ObjToXmlStr(string fileName, object obj)
+        public static void ObjToXmlStr(String fileName, Object obj)
         {
-            Debug.WriteLine("ObjectSerializer.ObjToXmlStr()::Сериализуем объект в xml файл");
+            Logger.Debug("ObjectSerializer.ObjToXmlStr()::Сериализуем объект в xml файл");
             if (obj == null)
                 return;
 
@@ -29,7 +29,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
             FileStream fs = new FileStream(fileName, FileMode.Create);
             try
             {
-                sr.Serialize(fs, obj, new XmlSerializerNamespaces(new XmlQualifiedName[] { new XmlQualifiedName(string.Empty) }));
+                sr.Serialize(fs, obj, new XmlSerializerNamespaces(new XmlQualifiedName[] { new XmlQualifiedName(String.Empty) }));
 
             }
             finally
@@ -41,9 +41,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
         /// <summary>    
         /// Десериализует XML файл в объект заданного типа    
         /// </summary>    
-        public static T XmlStrToObj<T>(string fileName)
+        public static T XmlStrToObj<T>(String fileName)
         {
-            Debug.WriteLine("ObjectSerializer.ObjToXmlStr()::Десериализуем объект из xml файла");
+            Logger.Debug("ObjectSerializer.ObjToXmlStr()::Десериализуем объект из xml файла");
             if (!File.Exists(fileName))
                 return default(T);
 

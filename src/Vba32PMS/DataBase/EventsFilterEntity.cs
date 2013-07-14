@@ -17,11 +17,11 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
         /// <param name="val1">дата "с"</param>
         /// <param name="val2">дата "по"</param>
         /// <returns></returns>
-        public static string DateValue(string name, DateTime val1, DateTime val2, string term)
+        public static String DateValue(String name, DateTime val1, DateTime val2, String term)
         {
             if ((val1 == DateTime.MinValue) || (val2 == DateTime.MinValue)) { return String.Empty; }
 
-            string final;
+            String final;
             if (term != "NOT")
             {
                 final = name + " > = CAST('" + val1.Year + '.' + val1.Month + '.' + val1.Day + ' ' + val1.Hour + ':' + val1.Minute + ':' + val1.Second + "' AS SMALLDATETIME) AND "

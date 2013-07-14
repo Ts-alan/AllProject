@@ -10,27 +10,27 @@ using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 {
     /// <summary>
-    /// Данный класс конвертирует события из базы данных в формат агента(+события дочернего арма)
+    /// Данный класс конвертирует события из базы данных в формат агента(+события дочернего ЦУ)
     /// </summary>
     public class EventsToControlAgentXml
     {
-        private const int maxSizePacket = 65530;            //максимальный размер пакета
-        private string childArmComputerName = String.Empty; //имя компа с дочерним армом
+        private const Int32 maxSizePacket = 65530;            //максимальный размер пакета
+        private String childArmComputerName = String.Empty; //имя компа с дочерним армом
         List<EventsEntity> list = null;                     //события, которые отсылать в формате базы данных
 
-        private string rootTag = "Events";                  //имя корневого элемента
+        private String rootTag = "Events";                  //имя корневого элемента
 
-        public EventsToControlAgentXml(List<EventsEntity> list, string childArmComputerName)
+        public EventsToControlAgentXml(List<EventsEntity> list, String childArmComputerName)
         {
             this.list = list;
             this.childArmComputerName = childArmComputerName;
         }
 
-        public string Convert()
+        public String Convert()
         {
-            Debug.WriteLine("EventsToControlAgentXml.Convert::Конвертируем в формат пакета агента");
+            Logger.Debug("EventsToControlAgentXml.Convert::Конвертируем в формат пакета агента");
             XmlBuilder xml = new XmlBuilder(rootTag);   //Коллекция событий
-            for (int i = 0; i < list.Count; i++)
+            for (Int32 i = 0; i < list.Count; i++)
             {
                 XmlBuilder childXml = new XmlBuilder();
                 childXml.AddNode("Computer", childArmComputerName);

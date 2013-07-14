@@ -4,23 +4,22 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 {
 	/// <summary>
 	/// Модифицированный класс, представляющий событие, отсылаемое 
-    /// на родительский АРМ
+    /// на родительский ЦУ
 	/// </summary>
 	public class EventsEntity : ICloneable
 	{
-
-        protected string computer = String.Empty;
-        protected string _event = String.Empty;
+        protected String computer = String.Empty;
+        protected String _event = String.Empty;
 		protected DateTime eventTime = DateTime.MinValue;
-        protected string component = String.Empty;
-		protected string _object = String.Empty;
-		protected string comment = String.Empty;
+        protected String component = String.Empty;
+		protected String _object = String.Empty;
+		protected String comment = String.Empty;
 
 		//Default constructor
 		public EventsEntity() {}
 
-        public EventsEntity(string computer, string _event, DateTime eventTime,
-            string component, string _object,string comment)
+        public EventsEntity(String computer, String _event, DateTime eventTime,
+            String component, String _object,String comment)
         {
             this.computer = computer;
             this._event = _event;
@@ -33,13 +32,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 
 		#region Public Properties
 		
-        public string Computer
+        public String Computer
         {
             get { return computer; }
             set { computer = value; }
         }
 
-        public string Event
+        public String Event
         {
             get { return _event; }
             set { _event = value; }
@@ -51,19 +50,19 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 			set {eventTime = value;}
 		}
 
-        public string Component
+        public String Component
         {
             get { return component; }
             set { component = value; }
         }
 
-		public string Object
+		public String Object
 		{
 			get {return _object;}
 			set {_object = value;}
 		}
 
-		public string Comment
+		public String Comment
 		{
 			get {return comment;}
 			set {comment = value;}
@@ -75,7 +74,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 		/// Create and return clone object
 		/// </summary>
 		/// <returns>Clone object</returns>
-        public virtual object Clone()
+        public virtual Object Clone()
         {
             return new EventsEntity(
                             this.computer,

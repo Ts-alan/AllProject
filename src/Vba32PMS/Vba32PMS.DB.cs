@@ -22,9 +22,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <param name="sortExpression">Выражение Where</param>
         /// <param name="count">количество возвращаемых значений</param>
         /// <returns></returns>
-        private List<EventsEntity> GetEventsFromDb(string connStr, string sortExpression, int count)
+        private List<EventsEntity> GetEventsFromDb(String connStr, String sortExpression, Int32 count)
         {
-            LogMessage("Vba32PMS.GetEventsFromDb()::Получаем события из базы данных");
+            Logger.Debug("Vba32PMS.GetEventsFromDb()::Получаем события из базы данных");
             List<EventsEntity> list = new List<EventsEntity>();
             try
             {
@@ -40,8 +40,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch(Exception ex)
             {
-                LogError("Vba32PMS.GetEventsFromDb()::Ошибка при попытке получить данные из БД: " + ex.Message,
-                    EventLogEntryType.Error);
+                Logger.Error("Vba32PMS.GetEventsFromDb()::Ошибка при попытке получить данные из БД: " + ex.Message);
                 return null;
             
             }
@@ -55,14 +54,11 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <param name="user">Пользователь БД</param>
         /// <param name="password">Пароль пользователя</param>
         /// <returns>Строка подключения</returns>
-        private string GenerateConnectionString(string server, string user, string password)
+        private String GenerateConnectionString(String server, String user, String password)
         {
-            string str = String.Empty;
+            String str = String.Empty;
             try
             {
-                //str =
-                //    String.Format("packet size=4096;user id={0};password={1};data source={2};persist security info=False;initial catalog=vbaControlCenterDB", user, password, server);
-
                 SqlConnectionStringBuilder connStr = new SqlConnectionStringBuilder();
                 connStr.UserID = user;
                 connStr.Password = password;
@@ -74,8 +70,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.GenerateConnectionString()::Ошибка при формировании строки подключения: " + ex.Message,
-                  EventLogEntryType.Error);
+                Logger.Error("Vba32PMS.GenerateConnectionString()::Ошибка при формировании строки подключения: " + ex.Message);
             }
             return str;
         }
@@ -85,9 +80,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// </summary>
         /// <param name="connStr">Строка подключения</param>
         /// <returns></returns>
-        private bool CheckDeliveryState(string connStr)
+        private Boolean CheckDeliveryState(String connStr)
         {
-            LogMessage("Vba32PMS.CheckDeliveryState()::Меняем статус зависших задач");
+            Logger.Debug("Vba32PMS.CheckDeliveryState()::Меняем статус зависших задач");
             DateTime dtTo = DateTime.Now;
             try
             {
@@ -95,8 +90,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.CheckDeliveryState()::Ошибка при формировании строки-фильтра: " + ex.Message,
-                    EventLogEntryType.Error);
+                Logger.Error("Vba32PMS.CheckDeliveryState()::Ошибка при формировании строки-фильтра: " + ex.Message);
                 return false;
             }
 
@@ -116,9 +110,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.CheckDeliveryState()::Ошибка при запросе к БД: " + ex.Message,
-                    EventLogEntryType.Error);
-
+                Logger.Error("Vba32PMS.CheckDeliveryState()::Ошибка при запросе к БД: " + ex.Message);
                 return false;
             }
             return true;
@@ -129,20 +121,18 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// </summary>
         /// <param name="connStr">Строка подключения</param>
         /// <returns></returns>
-        private bool ClearOldEvents(string connStr)
+        private Boolean ClearOldEvents(String connStr)
         {
-            LogMessage("Vba32PMS.ClearOldEvents()::Удаляем старые события");
+            Logger.Debug("Vba32PMS.ClearOldEvents()::Удаляем старые события");
             DateTime dtTo = DateTime.Now;
             try
             {
-                int tmp = 0 - daysToDelete;
+                Int32 tmp = 0 - daysToDelete;
                 dtTo = dtTo.AddDays(tmp);
             }
             catch (Exception ex)
             {
-
-                LogError("Vba32PMS.ClearOldEvents()::Ошибка при формировании строки-фильтра: " + ex.Message,
-                    EventLogEntryType.Error);
+                Logger.Error("Vba32PMS.ClearOldEvents()::Ошибка при формировании строки-фильтра: " + ex.Message);
                 return false;
             }
 
@@ -162,9 +152,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.ClearOldEvents()::Ошибка при запросе к БД: " + ex.Message,
-                     EventLogEntryType.Error);
-
+                Logger.Error("Vba32PMS.ClearOldEvents()::Ошибка при запросе к БД: " + ex.Message);
                 return false;
             }
             return true;
@@ -177,20 +165,18 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// </summary>
         /// <param name="connStr">Строка подключения</param>
         /// <returns></returns>
-        private bool ClearOldTasks(string connStr)
+        private Boolean ClearOldTasks(String connStr)
         {
-            LogMessage("Vba32PMS.ClearOldTasks()::Удаляем старые задачи");
+            Logger.Debug("Vba32PMS.ClearOldTasks()::Удаляем старые задачи");
             DateTime dtTo = DateTime.Now;
             try
             {
-                int tmp = 0 - taskDaysToDelete;
+                Int32 tmp = 0 - taskDaysToDelete;
                 dtTo = dtTo.AddDays(tmp);
             }
             catch (Exception ex)
             {
-
-                LogError("Vba32PMS.ClearOldTasks()::Ошибка при формировании строки-фильтра: " + ex.Message,
-                    EventLogEntryType.Error);
+                Logger.Error("Vba32PMS.ClearOldTasks()::Ошибка при формировании строки-фильтра: " + ex.Message);
                 return false;
             }
 
@@ -210,35 +196,28 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.ClearOldTasks()::Ошибка при запросе к БД: " + ex.Message,
-                     EventLogEntryType.Error);
-
+                Logger.Error("Vba32PMS.ClearOldTasks()::Ошибка при запросе к БД: " + ex.Message);
                 return false;
             }
             return true;
         }
-
-
-
 
         /// <summary>
         /// Сжатие базы данных
         /// </summary>
         /// <param name="connStr">Строка подключения</param>
         /// <returns></returns>
-        private bool CompressDB(string connStr)
+        private Boolean CompressDB(String connStr)
         {
-            LogMessage("Vba32PMS.CompressDB()::Сжатие базы данных");
+            Logger.Debug("Vba32PMS.CompressDB()::Сжатие базы данных");
            
             try
             {
-                //EventsManager.ShrinkDataBase(connStr, 10);
+                EventsManager.ShrinkDataBase(connStr, 10);
             }
             catch (Exception ex)
             {
-                LogError("Vba32PMS.CompressDB()::Ошибка при запросе к БД: " + ex.Message,
-                     EventLogEntryType.Error);
-
+                Logger.Error("Vba32PMS.CompressDB()::Ошибка при запросе к БД: " + ex.Message);
                 return false;
             }
             return true;

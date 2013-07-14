@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Diagnostics;
+using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
 {
@@ -17,9 +18,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
         /// <param name="server">Server</param>
         /// <param name="port">Port</param>
         /// <returns></returns>
-        private static Socket ConnectSocket(string server, int port)
+        private static Socket ConnectSocket(String server, Int32 port)
         {
-            Debug.WriteLine("EventsSender.ConnectSocket()::Коннектимся к удаленному серверу");
+            Logger.Debug("EventsSender.ConnectSocket()::Коннектимся к удаленному серверу");
             Socket s = null;
             try
             {
@@ -53,18 +54,18 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
         /// <param name="port">Port</param>
         /// <param name="message">Message to send</param>
         /// <returns></returns>
-        public static string SocketSendReceive(string server, int port, string message)
+        public static String SocketSendReceive(String server, Int32 port, String message)
         {
-            Debug.WriteLine("EventsSender.SocketSendReceive()::Посылаем пакет");
+            Logger.Debug("EventsSender.SocketSendReceive()::Посылаем пакет");
             //Если здесь поменяем кодировку, то необходимо внести соответствующие изменения
             //в EventsToControlAgentXml.Convert, т.к. иначе размер может здесь быть больше допустимого
             Byte[] mes = Encoding.UTF8.GetBytes(message);
-            Byte[] bytesSent = new byte[mes.Length+2];
-            Debug.WriteLine("Размер отсылаемого сообщения: "+mes.Length);
-            Debug.WriteLine("Размер отсылаемого пакета: "+bytesSent.Length);
+            Byte[] bytesSent = new Byte[mes.Length+2];
+            Logger.Debug("Размер отсылаемого сообщения: "+mes.Length);
+            Logger.Debug("Размер отсылаемого пакета: "+bytesSent.Length);
             bytesSent[1] = Convert.ToByte(bytesSent.Length >> 8);
             bytesSent[0] = Convert.ToByte(bytesSent.Length & 255);
-            for (int i = 0; i < mes.Length; i++)
+            for (Int32 i = 0; i < mes.Length; i++)
                 bytesSent[i + 2] = mes[i];
 
             // Create a socket connection with the specified server and port.
@@ -78,9 +79,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
                 return ex.Message;
             }
 
-            string retVal = "OK";
+            String retVal = "OK";
             if (s == null)
-                return ("Connection failed");
+                return "Connection failed";
 
             // Send request to the server.
             try

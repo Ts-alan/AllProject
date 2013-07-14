@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 {
@@ -14,7 +15,6 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 	/// </summary>
 	public class EventsManager
 	{
-	
 		VlslVConnection database; 
 		
 		#region Constructors
@@ -32,7 +32,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 		
 		#region Methods
 
-        public List<EventsEntity> List(string where, string order, int page, int size)
+        public List<EventsEntity> List(String where, String order, Int32 page, Int32 size)
 		{
 			IDbCommand command=database.CreateCommand("GetEventsPage",true);
 
@@ -80,17 +80,14 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
 		/// </summary>
 		/// <param name="where">where clause</param>
 		/// <returns></returns>
-		public int Count(string where)
+		public Int32 Count(String where)
 		{
-
             IDbCommand command = database.CreateCommand("GetEventsCount", true);
-
 			database.AddCommandParameter(command,"@where",
 				DbType.String,where,ParameterDirection.Input);
 
-			return (int)command.ExecuteScalar();
+			return (Int32)command.ExecuteScalar();
 		}
-
 
         /// <summary>
         /// Меняет статус задачи с Delivery на DelivetyTimeout
@@ -132,14 +129,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
         /// </summary>
         /// <param name="connectionString">Строка подключения к БД</param>
         /// <param name="targetPercent">Is the desired percentage of free space left in the database file after the database has been shrunk</param>
-        public static void ShrinkDataBase(string connectionString, int targetPercent)
+        public static void ShrinkDataBase(String connectionString, Int32 targetPercent)
         {
+            Logger.Warning("ShrinkDataBase():: непроверенный функционал!");
             System.Text.StringBuilder query = new System.Text.StringBuilder(64);
-            query.AppendFormat("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", 
-                targetPercent);
+            query.AppendFormat("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent);
 
-            using (SqlConnection connection = new SqlConnection(
-                       connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query.ToString(), connection);
                 connection.Open();
