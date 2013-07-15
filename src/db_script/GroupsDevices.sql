@@ -48,15 +48,21 @@ WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
 GROUP BY d.[ID]
 
 SELECT 
-	dp.[ID], c.[ID], c.[ComputerName], d.[ID], StateName=CASE tmp.[CountStates]
-	WHEN 1 THEN dps.[StateName]
-	ELSE 'Undefined'
+	dp.[ID], c.[ID],
+	[ComputerName] = CASE
+		WHEN tmp.[DP_LatestInsert] IS NULL THEN NULL
+		ELSE c.[ComputerName]
+	END, 
+	d.[ID],
+	StateName=CASE tmp.[CountStates]
+		WHEN 1 THEN dps.[StateName]
+		ELSE 'Undefined'
     END,
-	d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert],
+	d.[SerialNo], dt.[TypeName], d.[Comment], tmp.[DP_LatestInsert],
 	[All] = CASE tmp.[Count]
 		WHEN @ComputerCount THEN '1'
 		ELSE '0'
-		END
+	END
 FROM @DevicesPage AS tmp
 INNER JOIN Devices AS d ON d.[ID] = tmp.[D_ID]
 LEFT JOIN DevicesPolicies AS dp 
@@ -110,15 +116,21 @@ WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
 GROUP BY d.[ID]
 
 SELECT 
-	dp.[ID], c.[ID], c.[ComputerName], d.[ID], StateName=CASE tmp.[CountStates]
-	WHEN 1 THEN dps.[StateName]
-	ELSE 'Undefined'
+	dp.[ID], c.[ID], 
+	[ComputerName] = CASE
+		WHEN tmp.[DP_LatestInsert] IS NULL THEN NULL
+		ELSE c.[ComputerName]
+	END,
+	d.[ID], 
+	StateName=CASE tmp.[CountStates]
+		WHEN 1 THEN dps.[StateName]
+		ELSE 'Undefined'
     END,
-	d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert],
+	d.[SerialNo], dt.[TypeName], d.[Comment], tmp.[DP_LatestInsert],
 	[All] = CASE tmp.[Count]
 		WHEN @ComputerCount THEN '1'
 		ELSE '0'
-		END
+	END
 FROM @DevicesPage AS tmp
 INNER JOIN Devices AS d ON d.[ID] = tmp.[D_ID]
 LEFT JOIN DevicesPolicies AS dp 
@@ -370,6 +382,9 @@ AS
 		LEFT JOIN DevicesPolicies AS dp ON dp.[ComputerID] = g.[ComputerID] AND dp.[DeviceID] = @DeviceID
 		WHERE dp.[DeviceID] IS NULL
 
+		IF NOT EXISTS(SELECT [ID] FROM @ComputerPage)
+			RETURN
+
 		INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 		SELECT [ID], @DeviceID, @StateID FROM @ComputerPage
 		
@@ -408,9 +423,70 @@ AS
 		LEFT JOIN DevicesPolicies AS dp ON dp.[ComputerID] = c.[ID] AND dp.[DeviceID] = @DeviceID
 		WHERE g.[ID] IS NULL AND dp.[DeviceID] IS NULL
 
+		IF NOT EXISTS(SELECT [ID] FROM @ComputerPage)
+			RETURN
+
 		INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 		SELECT [ID], @DeviceID, @StateID FROM @ComputerPage
 		
 		SELECT [ID],[SerialNo],[Comment] AS DevicePolicyID FROM Devices WHERE [ID]=@DeviceID
 	END
+GO
+
+-- Remove device policies from group
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[RemoveDevicePolicyFromGroup]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[RemoveDevicePolicyFromGroup]
+GO
+
+CREATE PROCEDURE [dbo].[RemoveDevicePolicyFromGroup]
+	@GroupID int,
+	@DeviceID smallint
+WITH ENCRYPTION
+AS
+	DECLARE @ComputerPage TABLE(
+		[RecID] int IDENTITY(1, 1) NOT NULL,									
+		[ID] smallint
+	);
+
+	WITH TreeGroups AS
+	(
+		SELECT [ID], [ParentID] FROM GroupTypes
+		WHERE [ID] = @GroupID
+
+		UNION ALL
+
+		SELECT gt.[ID], gt.[ParentID] FROM GroupTypes AS gt
+		INNER JOIN TreeGroups AS tg ON tg.[ID] = gt.[ParentID]
+	)
+	INSERT INTO @ComputerPage([ID])
+	SELECT g.[ComputerID] FROM Groups AS g		
+	INNER JOIN TreeGroups AS tg ON tg.[ID] = g.[GroupID]
+
+	DELETE FROM DevicesPolicies 
+	WHERE [DeviceID] = @DeviceID AND ([ComputerID] IN (SELECT [ID] FROM @ComputerPage))
+GO
+
+-- Remove device policies from without group
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[RemoveDevicePolicyFromWithoutGroup]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[RemoveDevicePolicyFromWithoutGroup]
+GO
+
+CREATE PROCEDURE [dbo].[RemoveDevicePolicyFromWithoutGroup]	
+	@DeviceID smallint
+WITH ENCRYPTION
+AS
+	DECLARE @ComputerPage TABLE(
+		[RecID] int IDENTITY(1, 1) NOT NULL,									
+		[ID] smallint
+	)
+
+	INSERT INTO @ComputerPage([ID])
+	SELECT c.[ID] FROM Computers AS c
+	LEFT JOIN Groups AS g ON g.[ComputerID] = c.[ID]
+	WHERE g.[ID] IS NULL
+
+	DELETE FROM DevicesPolicies 
+	WHERE [DeviceID] = @DeviceID AND ([ComputerID] IN (SELECT [ID] FROM @ComputerPage))
 GO
