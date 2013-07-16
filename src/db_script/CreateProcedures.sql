@@ -889,8 +889,7 @@ AS
 				INNER JOIN TaskTypes AS tt ON t.[TaskID] = tt.[ID]
 				WHERE t.[ID] = @TaskID) IN ('Detach agent', 'Отсоединить агент')
 			BEGIN
-				DELETE FROM Computers
-				WHERE [ID] = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
+				-- установить статус "Неуправляемый"
 
 				RETURN
 			END

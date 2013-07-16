@@ -75,55 +75,6 @@ AS
 GO
 
 
--- Returns a page from Devices table
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetDevicesPage]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[GetDevicesPage]
-GO
-
-CREATE PROCEDURE [dbo].[GetDevicesPage]
-	@Page int,
-	@RowCount int,
-	@OrderBy nvarchar(64) = NULL,
-	@Where nvarchar(2000) = NULL
-WITH ENCRYPTION
-AS
-	DECLARE @Query nvarchar(4000)
-	SET @Query =  N'
-		-- Table variable - for paging
-		DECLARE @DevicesPage TABLE(
-			[RecID] int IDENTITY(1, 1) NOT NULL,
-			[ID] smallint,
-			[SerialNo] nvarchar(256) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[TypeName] nvarchar(256) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[Comment] nvarchar(128) COLLATE Cyrillic_General_CI_AS,
-			[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS,
-			[LatestInsert] smalldatetime
-		)
-	
-		INSERT INTO @DevicesPage(
-			[ID], [SerialNo], [TypeName], [Comment], [ComputerName], [LatestInsert])
-
-		SELECT
-			d.[ID], d.[SerialNo], dt.[TypeName], d.[Comment], c.[ComputerName], dp.[LatestInsert]
-		FROM Devices AS d
-		INNER JOIN DeviceTypes AS dt ON d.[DeviceTypeID] = dt.[ID]
-		LEFT JOIN DevicesPolicies AS dp ON d.[ID] = dp.[DeviceID]
-		LEFT JOIN Computers AS c ON dp.[ComputerID] = c.[ID]
-		WHERE (dp.[LatestInsert] = (SELECT MAX([LatestInsert]) FROM DevicesPolicies WHERE [DeviceID] = d.[ID]) OR (0 = (SELECT COUNT([ID]) FROM DevicesPolicies WHERE [DeviceID] = d.[ID])))'
-	IF @Where IS NOT NULL
-		SET @Query = @Query + ' AND ' + @Where
-	IF @OrderBy IS NOT NULL
-		SET @Query = @Query + N' ORDER BY ' + @OrderBy
-	SET @Query = @Query + N';
-		SELECT [ID], [SerialNo], [TypeName], [Comment], [ComputerName], [LatestInsert]
-		FROM @DevicesPage WHERE [RecID] BETWEEN (' +
-			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
-			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'	
-
-	EXEC sp_executesql @Query
-GO
-
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetDevicesPageCount]')
 					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
 DROP PROCEDURE [dbo].[GetDevicesPageCount]
