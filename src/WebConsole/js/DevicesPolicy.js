@@ -1,7 +1,7 @@
 ﻿$(document).ready(function() {
     $("#tabs").tabs({ cookie: { expires: 30 } });
 //-----------Devices--------------
-    $("button[dpc]").live("click", function() {
+    $("button[dpc]").bind("click", function() {
         var id = $(this).attr('dpc');
         var serial = $('input[dpc]').val();
         $.ajax({
@@ -19,7 +19,7 @@
         });
         return false;
     });
-    $("img[dp]").live("click", function() {
+    $("img[dp]").bind("click", function() {
         var id = $(this).attr('dp');
         $.ajax({
             type: "POST",
@@ -35,7 +35,7 @@
             }
         });
     });
-    $("select[dp]").live("click", function() {
+    $("select[dp]").bind("click", function() {
         //alert('run');
         var id = $(this).attr('dp');
         var state = $(this).attr('value');
@@ -103,7 +103,7 @@
         $('div[cp=' + id + ']').css('background-color', '');
     });
 //------------------Computers----------
-    $("button[ddpc]").live("click", function() {
+    $("button[ddpc]").bind("click", function() {
         var id = $(this).attr('ddpc');
         var name = $('input[ddpc]').val();
         $.ajax({
@@ -188,7 +188,7 @@
             }
         })
     });
-    $("button[dcdpc]").live("click", function() {
+    $("button[dcdpc]").bind("click", function() {
         var id = $(this).attr('dcdpc');
         var comment = $('input[dcdpc]').val();
         $.ajax({

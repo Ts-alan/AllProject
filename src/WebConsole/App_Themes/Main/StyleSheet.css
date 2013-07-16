@@ -1,4 +1,41 @@
-﻿html, body { 	height: 100%;	margin: 0;	padding: 0;}html>body .all { 	height: auto;	min-height: 100%;}.all{	height: 100%;	width:100%;	position: relative;	margin:0 auto;}.empty, .footer {	 height: 30px; }.footer{ 	bottom: 0;	left: 0;	margin-bottom:10px;	position: absolute;	width: 100%;	min-width: 1024px;	display:block;	}
+﻿html, body 
+{ 
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+html>body .all 
+{ 
+	height: auto;
+	min-height: 100%;
+}
+
+.all
+{
+	height: 100%;
+	width:100%;
+	position: relative;
+	margin:0 auto;
+}
+
+.empty, .footer 
+{
+	 height: 30px; 
+}
+
+.footer
+{ 
+	bottom: 0;
+	left: 0;
+	margin-bottom:10px;
+	position: absolute;
+	width: 100%;
+	min-width: 1024px;
+	display:block;	
+}
+
+
 .container
 {	
 }
@@ -195,7 +232,12 @@ a:hover
 .FilterActions
 {
    margin-top: 5px;
-}.TaskActions{   margin-top: 5px;}
+}
+
+.TaskActions
+{
+   margin-top: 5px;
+}
 
 .divSettings
 {
@@ -992,7 +1034,61 @@ div.vbayellow{
 	cursor: default;
 	margin: 1px 1px 0px -2px;
 	margin-bottom: 10px;
-}/*Tasks*/.taskPanel{	background-color: #7193db;}.simpleTask{	background-color: Transparent; 	min-width: 460px;	max-width: 512px;	width: 450px;	padding: 2px;	border-color: #386fcc;	border-style:dotted;	border-width: 1px;}.simpleTask .name{	float: left;		min-width: 120px;	padding-top: 3px;}.customizableTask{	background-color: Transparent; 	min-width: 460px;	max-width: 512px;	width: 450px;	padding: 2px;	border-color: #386fcc;	border-style:dotted;	border-width: 1px;}.customizableTask .name{	float: left;		min-width: 120px;	padding-top: 3px;}.customizableTask .dropdown{    float: left;}.customizableTask .action{}
+}
+
+/*Tasks*/
+.taskPanel
+{
+	background-color: #7193db;
+}
+
+.simpleTask
+{
+	background-color: Transparent; 
+	min-width: 460px;
+	max-width: 512px;
+	width: 450px;
+	padding: 2px;
+	border-color: #386fcc;
+	border-style:dotted;
+	border-width: 1px;
+}
+
+.simpleTask .name
+{
+	float: left;	
+	min-width: 120px;
+	padding-top: 3px;
+}
+
+.customizableTask
+{
+	background-color: Transparent; 
+	min-width: 460px;
+	max-width: 512px;
+	width: 450px;
+	padding: 2px;
+	border-color: #386fcc;
+	border-style:dotted;
+	border-width: 1px;
+}
+
+.customizableTask .name
+{
+	float: left;	
+	min-width: 120px;
+	padding-top: 3px;
+}
+
+.customizableTask .dropdown
+{
+    float: left;
+}
+
+.customizableTask .action
+{
+
+}
 
 /*Filters*/
 .compositeFilter
@@ -1075,7 +1171,103 @@ div.ImageDropDownList
 div.ImageDropDownList[disabled]
 {
 	background-position: 0px 0px;
-}.Button{    display:block;    text-decoration:none;    width:150px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;        background: #AAA url(Images/titlebg.jpg) repeat-x;            line-height:20px;    font-size:11px;    overflow:hidden}.ButtonDisabled{    display:block;    text-decoration:none;    width:204px;    height:20px;    text-align:center;    color:#fff;    border:2px solid #fff;            background: #AAA url(Images/sectionbg.jpg) repeat-x;        line-height:20px;    font-size:11px;    overflow:hidden    }.ButtonDisabled a{    cursor:default;    color: White;}.ButtonDisabled a:hover{    cursor:default;    text-decoration: none;}/*Images for buttons*/.hiddenButton{    border-style: none;    padding: 0px;    margin: 0px;    overflow: hidden;    background-color: transparent;}table.tableInfo{	border-collapse: collapse;		width: 100%;}table.tableInfo td{	border-width: 1px;	border-style: solid;	border-color: Black;	padding: 3px 5px;	font-size: 12px;}table.tableInfo td.r0{	background-color: #c2c2c2;}table.tableInfo td.r1{	background-color: #efefef;	}div.enabledImage{	background-image: url(Images/enabled.gif);	width: 16px;	height: 16px;}div.disabledImage{	background-image: url(Images/disabled.gif);	width: 16px;	height: 16px;}div.EditComment
+}
+
+.Button
+{
+    display:block;
+    text-decoration:none;
+    width:150px;
+    height:20px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: #AAA url(Images/titlebg.jpg) repeat-x;        
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden
+}
+
+.ButtonDisabled
+{
+    display:block;
+    text-decoration:none;
+    width:204px;
+    height:20px;
+    text-align:center;
+    color:#fff;
+    border:2px solid #fff;
+    
+    
+    background: #AAA url(Images/sectionbg.jpg) repeat-x;    
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden    
+}
+
+.ButtonDisabled a
+{
+    cursor:default;
+    color: White;
+}
+
+.ButtonDisabled a:hover
+{
+    cursor:default;
+    text-decoration: none;
+}
+
+/*Images for buttons*/
+.hiddenButton
+{
+    border-style: none;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+table.tableInfo
+{
+	border-collapse: collapse;	
+	width: 100%;
+}
+
+table.tableInfo td
+{
+	border-width: 1px;
+	border-style: solid;
+	border-color: Black;
+	padding: 3px 5px;
+	font-size: 12px;
+}
+
+table.tableInfo td.r0
+{
+	background-color: #c2c2c2;
+}
+
+table.tableInfo td.r1
+{
+	background-color: #efefef;	
+}
+
+div.enabledImage
+{
+	background-image: url(Images/enabled.gif);
+	width: 16px;
+	height: 16px;
+}
+
+div.disabledImage
+{
+	background-image: url(Images/disabled.gif);
+	width: 16px;
+	height: 16px;
+}
+
+div.EditComment
 {
 	background: transparent url('Images/document-edit.png') no-repeat;
 	width: 18px;
@@ -1090,4 +1282,38 @@ div.EditComment[disabled]
 	height: 1px;
 	cursor: default;
 	display: none;	
+}
+#UserInfo {
+    color: #333;
+    cursor: default;
+    font-size: 11px;
+    padding: 4px 25px 0 0;
+    position: absolute;
+    right:50px;
+    background-image: none;
+    border: 0 none;
+    direction: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    font-style: inherit;
+    font-weight: inherit;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+    top:20px;
+}
+.LogoutButton {
+    background-image: url("images/logout_sprite.png");
+    background-position:0px 0px;
+    width: 20px;
+    height: 18px;
+    position: absolute;
+}
+.LogoutButton:hover
+{
+    background-position:0px 18px;
+    color: #69BFCC;
+    text-decoration: none;
+    text-indent: -9999px;
 }

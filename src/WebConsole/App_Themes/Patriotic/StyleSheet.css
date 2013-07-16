@@ -1086,4 +1086,4 @@ div.EditComment[disabled]
 	height: 1px;
 	cursor: default;
 	display: none;	
-}
+}#UserInfo {    color: #333;    cursor: default;    font-size: 11px;    padding: 4px 25px 0 0;    position: absolute;    right:50px;    background-image: none;    border: 0 none;    direction: inherit;    font-family: inherit;    font-size: 100%;    font-style: inherit;    font-weight: inherit;    margin: 0;    outline: 0 none;    padding: 0;    vertical-align: baseline;    top:20px;}.LogoutButton {    background-image: url("images/logout_sprite.png");    background-position:0px 0px;    width: 20px;    height: 18px;    position: absolute;}.LogoutButton:hover{    background-position:0px 18px;    color: #69BFCC;    text-decoration: none;    text-indent: -9999px;}

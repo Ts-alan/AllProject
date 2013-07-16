@@ -13,7 +13,7 @@ USAGE:
 	$("#progressbar").progressBar({showText: false });			// percentage with config
 	$("#progressbar").progressBar(45, {showText: false });		// percentage with config
 */
-(function($) {
+(function(jQuery) {
 	$.extend({
 		progressBar: new function() {
 
