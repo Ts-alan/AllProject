@@ -40,7 +40,10 @@ public partial class Controls_TemporaryGroupFilter : System.Web.UI.UserControl
     private void RegisterScripts()
     {
         //register jQuery
-        Page.ClientScript.RegisterClientScriptInclude("JQuery", @"js/jQuery/jquery-1.3.2.js");
+	Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.10.2.min.js");
+
+
+
         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "TemporaryGroupFilterRegisterClickEvents",
             "TemporaryGroupFilter.RegisterClickEvents();", true);
     }

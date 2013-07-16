@@ -17,7 +17,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#<%= cboxUseFilter.ClientID%>').live('click', function () {
+        $('#<%= cboxUseFilter.ClientID%>').bind('click', function () {
             var activeValidators = new Array();
             $("[id^='<%= ClientID%>'][id!='<%= cboxUseFilter.ClientID%>'][id!='<%= divPrimitiveFilterTemplate.ClientID%>']").each(function () {
                 var enabled = $('#<%= cboxUseFilter.ClientID%>').is(':checked')

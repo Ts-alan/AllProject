@@ -105,7 +105,7 @@ public partial class Controls_MultipleSelectionDropDownList : System.Web.UI.User
     private void RegisterScripts()
     {
         //register jQuery
-        Page.ClientScript.RegisterClientScriptInclude("JQuery", @"js/jQuery/jquery-1.3.2.js");
+	Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.10.2.min.js");
         Page.ClientScript.RegisterClientScriptInclude("MultipleSelectionDropDownList", @"js/MultipleSelectionDropDownList.js");
         String key = "RegisterClickEvents_" + ClientID;
         String script = String.Format("MultipleSelectionDropDownList.RegisterClickEvents('{0}', '{1}', '{2}', '{3}');",
