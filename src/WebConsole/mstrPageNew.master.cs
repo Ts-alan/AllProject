@@ -4,6 +4,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using System.Web.UI.HtmlControls;
+using System.Web.Security;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
@@ -20,14 +22,22 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     }
 
-    private void InitFields()
+    protected void Page_Init(object sender, EventArgs e)
     {
-        lblLoginName.Text = Profile.UserName;
-        lblVersion.Text = ConfigurationManager.AppSettings["Version"];
+        LogoutButton.ServerClick += new EventHandler(tmp);
     }
 
-    protected void LoginStatus1_LoggingOut(object sender, LoginCancelEventArgs e)
+    private void InitFields()
+    {
+        
+        lblVersion.Text = ConfigurationManager.AppSettings["Version"];
+        
+    }
+
+    protected void tmp(object sender, EventArgs e)
     {
         Session.Abandon();
+        FormsAuthentication.SignOut();
+        FormsAuthentication.RedirectToLoginPage();
     }
 }

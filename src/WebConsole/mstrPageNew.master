@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta http-equiv="x-ua-compatible" content="IE=9">
     <title></title>    
 </head>
 <body>
@@ -11,13 +12,12 @@
             <div class="Logo"></div>        
             <div class="TitleHeader"></div>
             <div class="TitleContinue"></div>
-            <div class="Logout">
-                <asp:Label runat="server" ID="lblLoginName"></asp:Label> <br />
-                <asp:LoginStatus ID="LoginStatus1" runat="server" OnLoggingOut="LoginStatus1_LoggingOut" />
-            </div>        
+                <div id="UserInfo">
+                    <b><%=Resources.Resource.LoggedAs %>,<i> <%=Profile.UserName%></i>&nbsp;</b>
+                    <a title="Выход" runat="server" id="LogoutButton" class="LogoutButton"><div style="height:100%;width:100%" title="<%=Resources.Resource.Logout %>"></div></a>
+                </div>
         </div>
         <div class="UnderHeader"></div>
-
         <div class="HeaderMenu">
             <asp:Menu runat="server" ID="Menu1" DataSourceID="smdsMenu" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="2" 
             Orientation="Horizontal" StaticEnableDefaultPopOutImage="false" >
@@ -29,10 +29,12 @@
             </asp:Menu>
             <asp:SiteMapDataSource runat="server" ID="smdsMenu" ShowStartingNode="false" />
         </div>
-    
         <div class="container">
             <asp:ContentPlaceHolder id="cphMainContainer" runat="server"></asp:ContentPlaceHolder>        
-        </div>	    <br style="clear:both">	    <div class="empty">&nbsp;</div>	    <div class="footer">
+        </div>
+	    <br style="clear:both">
+	    <div class="empty">&nbsp;</div>
+	    <div class="footer">
 	        <table width="100%" class="copyright">
               <tr>
                 <td align="center"><%=Resources.Resource.Vba32ControlCenterTitle%>, <%=Resources.Resource.Version%>&nbsp;<asp:Label ID="lblVersion" runat="server"></asp:Label></td>

@@ -59,7 +59,6 @@ public partial class Logins : System.Web.UI.Page
         lgLogin.TitleText = Resources.Resource.Authentification;
         lgLogin.LoginButtonText = Resources.Resource.LoginButton;
         lgLogin.FailureText = Resources.Resource.LoginFailureText;
-        lblRus.Text = "Русский";
         
         CheckAdmin(); 
 
@@ -136,15 +135,7 @@ public partial class Logins : System.Web.UI.Page
         SiteSpecificUserLoggingMethod(lgLogin.UserName);
         
     }
-    protected void lblRus_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Logins.aspx?lang=ru");
-    }
-    protected void lblEng_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Logins.aspx?lang=en");
-        
-    }
+   
     private void CheckConnection()
     {
         lblError.Visible = false;

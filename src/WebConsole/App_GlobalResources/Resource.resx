@@ -2790,4 +2790,7 @@
   <data name="DetachAgent" xml:space="preserve">
     <value>Detach agent</value>
   </data>
+  <data name="LoggedAs" xml:space="preserve">
+    <value>You are logged as</value>
+  </data>
 </root>
