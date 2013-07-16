@@ -11,6 +11,12 @@ using System.Web.Services;
 public partial class UserManager : PageBase
 {
     #region page life cycle
+
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected new void Page_PreInit(object sender, EventArgs e)
     {
         Page.MasterPageFile = Profile.MasterPage;

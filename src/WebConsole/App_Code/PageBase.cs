@@ -39,13 +39,19 @@ public abstract class PageBase : PackViewState.Page
         include.Attributes.Add("src", src);
         this.Page.Header.Controls.Add(include);
     }
-
+    
     protected void Page_PreInit(object sender, EventArgs e)
     {
         Page.MasterPageFile = (string) HttpContext.Current.Profile.GetPropertyValue("MasterPage");
         Page.Theme = (string)HttpContext.Current.Profile.GetPropertyValue("Theme");
     }
-
+    protected void Page_Init(object sender, EventArgs e)
+    {
+         RegisterLink("~/App_Themes/" + (string)HttpContext.Current.Profile.GetPropertyValue("Theme") + @"/ui/jquery-ui-1.10.3.custom.min.css");
+        RegisterScript(@"js/jQuery/jquery-1.10.2.min.js");
+        RegisterScript(@"js/jQuery/jquery-ui-1.10.3.custom.min.js"); 
+    }
+   
     protected override void InitializeCulture()
     {
         CultureInfo culture = new CultureInfo((string)HttpContext.Current.Profile.GetPropertyValue("Culture"));

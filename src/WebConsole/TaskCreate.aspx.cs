@@ -19,6 +19,11 @@ using ARM2_dbcontrol.DataBase;
 /// </summary>
 public partial class TaskCreate : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_PreInit(object sender, EventArgs e)
     {
         Page.MasterPageFile = Profile.MasterPage;
@@ -34,7 +39,6 @@ public partial class TaskCreate : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
         if ((!Roles.IsUserInRole("Administrator")) && (!Roles.IsUserInRole("Operator")))
         {
             //throw new Exception(Resources.Resource.ErrorAccessDenied);

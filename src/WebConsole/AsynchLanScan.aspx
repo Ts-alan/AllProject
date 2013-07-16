@@ -14,7 +14,8 @@
         $(document).ready(function () {
             $("#tabs").tabs({ cookie: { expires: 30} });
         });
-        function pageLoad () {
+        function pageLoad() {
+            $("#divModalDialog").dialog({ autoOpen: false });
             $("div[class=EditComment]").click(function () {
                 var ip = $(this).attr('IP');
                 var title = $(this).attr('titleDialog');

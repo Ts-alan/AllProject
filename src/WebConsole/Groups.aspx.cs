@@ -39,10 +39,14 @@ using VirusBlokAda.Vba32CC.Groups;
 /// </summary>
 public partial class Groups : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PageGroupsTitle;
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
         if (!IsPostBack)
         {
             InitFields();

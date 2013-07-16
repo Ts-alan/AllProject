@@ -15,7 +15,12 @@ using VirusBlokAda.Vba32CC.Policies;
 /// Computers page
 /// </summary>
 public partial class Computers2 : PageBase
-{    
+{
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PageComputersTitle;

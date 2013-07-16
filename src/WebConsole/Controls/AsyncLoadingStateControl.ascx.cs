@@ -23,6 +23,6 @@ public partial class Controls_AsyncLoadingStateControl : System.Web.UI.UserContr
 
     private void RegisterScripts()
     {
-        Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.3.2.js");
+	Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.10.2.min.js");
     }
 }

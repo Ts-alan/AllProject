@@ -30,6 +30,11 @@ public partial class DevicesPolicy : PageBase
     private static string OrderByNameDevice;
     private static bool OrderByDirectionDevice;
 
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.DeviceManagment;
@@ -45,19 +50,10 @@ public partial class DevicesPolicy : PageBase
 
     private void RegisterHeader()
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.dialog.js");
-        RegisterScript(@"js/jQuery/ui.draggable.js");
-        RegisterScript(@"js/jQuery/ui.resizable.js");
-        RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
         RegisterScript(@"js/jQuery/jquery.contextMenu.js");
         RegisterScript(@"js/json2.js");
-
         RegisterScript(@"js/DevicesPolicy.js");
-
-        RegisterLink("~/App_Themes/" + Profile.Theme+@"\ui.all.css");
     }
 
     protected override void InitFields()

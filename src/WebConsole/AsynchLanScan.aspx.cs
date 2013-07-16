@@ -23,6 +23,7 @@ public partial class AsynchLanScan : PageBase
     #region Page Life Cycle
     protected void Page_Init(object sender, EventArgs e)
     {
+        base.Page_Init(sender, e);
         if (!Roles.IsUserInRole("Administrator"))
         {
             Response.Redirect("Default.aspx");
@@ -40,17 +41,11 @@ public partial class AsynchLanScan : PageBase
 
     private void RegisterScripts()
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.draggable.js");        
-        RegisterScript(@"js/jQuery/ui.dialog.js");
-        RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
-
         RegisterScript(@"js/Timer.js");
         RegisterScript(@"js/jQuery/jquery.progressbar.js");
         RegisterScript(@"js/jQuery/jquery.menu.js");
-    }
+    }  
 
     private void RegisterLinks()
     {

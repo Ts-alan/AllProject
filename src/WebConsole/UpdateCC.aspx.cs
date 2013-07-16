@@ -18,6 +18,11 @@ using ARM2_dbcontrol.Filters;
 
 public partial class UpdateCC : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_PreInit(object sender, EventArgs e)
     {
         Page.MasterPageFile = Profile.MasterPage;
@@ -38,13 +43,9 @@ public partial class UpdateCC : PageBase
             //throw new Exception(Resources.Resource.ErrorAccessDenied);
             Response.Redirect("Default.aspx");
         }
-
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
 
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
+        //RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
 
 
         Page.Title = Resources.Resource.PageUpdateTitle;

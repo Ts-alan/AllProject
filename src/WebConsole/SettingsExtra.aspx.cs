@@ -23,14 +23,15 @@ using System.Collections.Generic;
 /// </summary>
 public partial class SettingsExtra : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
-
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
+        //RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
         Page.Title = Resources.Resource.PageSettingsExtraTitle;
         
         if (!IsPostBack)

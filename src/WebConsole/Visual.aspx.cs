@@ -16,6 +16,10 @@ using Filters.Primitive;
 
 public partial class Visual : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
     // Visual.aspx
     // Страница Visual.aspx отображает продажи по категориям в трех различных представлениях: 
     // круговая диаграмма (Pie Chart), гистограмма (Bar Graph) и таблица (Tabular).

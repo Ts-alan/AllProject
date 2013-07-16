@@ -10,11 +10,13 @@
                     <table class="ListContrastTable" width="100%">
                         <tr>
                             <td align="center" colspan="2">
-                                </td>
+                            
+                            </td>
                         </tr>
                         <tr>
                             <td align="right">
-                                </td>
+                            
+                            </td>
                             <td>
                                 <asp:TextBox ID="UserName" runat="server" Width="145px"></asp:TextBox>&nbsp;&nbsp;
                                 <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName">User Name:</asp:Label>&nbsp;

@@ -37,6 +37,11 @@ using VirusBlokAda.RemoteOperations.Common;
 /// </summary>
 public partial class Computers : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_PreInit(object sender, EventArgs e)
     {
         Page.MasterPageFile = Profile.MasterPage;
@@ -55,7 +60,6 @@ public partial class Computers : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PageComputersTitle;
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
         if (!IsPostBack)
         {
             InitFields();

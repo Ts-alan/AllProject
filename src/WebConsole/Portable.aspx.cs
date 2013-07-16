@@ -24,6 +24,11 @@ using Filters.Composite;
 /// </summary>
 public partial class Portable : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PagePortableTitle;

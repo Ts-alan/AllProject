@@ -20,6 +20,11 @@ using Filters.Common;
 /// </summary>
 public partial class Processes : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         //ѕри смене состо€ни€ web-parts страница становитс€ Untitled

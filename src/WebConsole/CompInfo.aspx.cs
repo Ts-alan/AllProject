@@ -23,6 +23,7 @@ public partial class CompInfo : PageBase
 {
     protected override void InitFields()
     {
+
         if (Request.QueryString["CompName"] != null)
         {
             string computerName = Request.QueryString["CompName"];
@@ -45,18 +46,16 @@ public partial class CompInfo : PageBase
             throw new InvalidOperationException(Resources.Resource.ErrorAccessDenied);
         }
     }
-
+    
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/jquery-ui-1.7.2.custom.min.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.accordion.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
         RegisterScript(@"js/DevicesPolicy.js");
-
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
-
         //Validation
         if (!Page.IsPostBack)
         {

@@ -24,7 +24,11 @@ public partial class Notification : PageBase
     private const string  GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
     private const string LocalHearthEvent = "vba32.cc.LocalHearth";
 
-  
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Roles.IsUserInRole("Administrator"))
@@ -32,14 +36,7 @@ public partial class Notification : PageBase
             //throw new Exception(Resources.Resource.ErrorAccessDenied);
             Response.Redirect("Default.aspx");
         }
-
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
-        RegisterScript(@"js/jQuery/ui.core.js");
-        RegisterScript(@"js/jQuery/ui.tabs.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
-
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
-
         Page.Title = Resources.Resource.Vba32NSSettings;
         if (!IsPostBack)
         {

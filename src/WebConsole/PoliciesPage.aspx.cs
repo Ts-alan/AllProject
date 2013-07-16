@@ -24,6 +24,10 @@ using Microsoft.Win32;
 
 public partial class _PoliciesPage : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {

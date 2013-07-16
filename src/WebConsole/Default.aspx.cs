@@ -24,7 +24,7 @@ using System.Resources;
 /// <summary>
 /// Defaults page
 /// </summary>
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : PageBase
 {
     protected void Page_PreInit(object sender, EventArgs e)
     {
@@ -48,7 +48,7 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
-    private void InitFields()
+    protected override void InitFields()
     {
         if (Session["LoginVisit"] != null)
             lblLastVist.Text =

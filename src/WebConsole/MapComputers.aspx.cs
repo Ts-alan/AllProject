@@ -25,9 +25,13 @@ public partial class MapComputers : PageBase
         }
     }
 
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     private void RegisterHeader()
     {
-        RegisterScript(@"js/jQuery/jquery-1.3.2.js");
         RegisterScript(@"js/MapComputers.js");
     }
 

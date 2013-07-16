@@ -11,6 +11,11 @@ using ARM2_dbcontrol.Common;
 
 public partial class Events : PageBase
 {
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected override void OnInit(EventArgs e)
     {        
         base.OnInit(e);

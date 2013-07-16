@@ -17,7 +17,12 @@ using Filters.Primitive;
 /// Statistic page
 /// </summary>
 public partial class Statistic : PageBase
-{  
+{
+    protected void Page_Init(object sender, EventArgs e)
+    {
+        base.Page_Init(sender, e);
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
