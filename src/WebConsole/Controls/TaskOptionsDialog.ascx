@@ -53,7 +53,6 @@
     var TaskOptionsControlsArray = function () {
         //this object stores needed clientIDs for each CustomizableTask control
         var array;
-
         return {
             add: function (ibtnCustomizeClientID, divOptionsClientID, btnHiddenApplyClientID,
                 btnHiddenSaveClientID, btnHiddenSaveAsClientID, hfSaveAsNameClientID, hfUsedNamesClientID,
@@ -85,31 +84,27 @@
 
     var TaskOptionsDialog = function () {
         //TaskOptionsDialog javascript object
-        var dialog;
+        var dialog = false;
         var CurrentTaskOptionsControl;
 
         function onApply() {
             if (!validate()) {
-                return;
+                  return;
             }
-            dialog.hide();
-            var btnHiddenApply = document.getElementById(CurrentTaskOptionsControl.btnHiddenApplyClientID);
+            dialog.dialog("close");
+            var btnHiddenApply = $('#' + CurrentTaskOptionsControl.btnHiddenApplyClientID);
             btnHiddenApply.click();
         }
 
         function onSave() {
-            if (!validate()) {
-                return;
-            }
-            dialog.hide();
-            var btnHiddenSave = document.getElementById(CurrentTaskOptionsControl.btnHiddenSaveClientID);
+
+            dialog.dialog("close");
+            var btnHiddenSave = $('#' + CurrentTaskOptionsControl.btnHiddenSaveClientID);
             btnHiddenSave.click();
         }
 
         function onSaveAs() {
-            if (!validate()) {
-                return;
-            }
+
             //show save as dialog
             eval('<%= saveAsDialogTask.JavascriptObjectShow %>');
         }
@@ -125,15 +120,15 @@
 
         function initSaveAsDialog() {
             //init save as dialog restricted and used names
-            var restrictedNames = document.getElementById(CurrentTaskOptionsControl.hfRestrictedNamesClientID).value;
+            var restrictedNames = $('#' + CurrentTaskOptionsControl.hfRestrictedNamesClientID).val();
             eval('<%= saveAsDialogTask.JavascriptObject%>.setRestrictedNames(' + restrictedNames + ');');
-            var usedNames = document.getElementById(CurrentTaskOptionsControl.hfUsedNamesClientID).value;
+            var usedNames = $('#' + CurrentTaskOptionsControl.hfUsedNamesClientID).val();
             eval('<%= saveAsDialogTask.JavascriptObject%>.setUsedNames(' + usedNames + ');');
         }
         function showSaveButton() {
             //return false if temporary task value is selected
-            var hfTemporaryTaskKey = document.getElementById(CurrentTaskOptionsControl.hfTemporaryTaskKeyClientID).value;
-            var selectedValue = document.getElementById(CurrentTaskOptionsControl.ddlTasksClientID).value;
+            var hfTemporaryTaskKey = $('#' + CurrentTaskOptionsControl.hfTemporaryTaskKeyClientID).val();
+            var selectedValue = $('#' + CurrentTaskOptionsControl.ddlTasksClientID).val();
             return (hfTemporaryTaskKey != selectedValue);
         }
 
@@ -149,38 +144,41 @@
                 return TaskOptionsControlsArray.get(ibtnCustomizeClientID);
             },
             show: function (TaskOptionsControl) {
+
                 CurrentTaskOptionsControl = TaskOptionsControl;
-                dialog = new Ext.BasicDialog(TaskOptionsControl.divOptionsClientID, {
-                    collapsible: false,
-                    resizable: false,
+                dialog = $('div#' + TaskOptionsControl.divOptionsClientID).dialog({
+                    buttons: [
+                        { text: "<%= Resources.Resource.Apply  %>", click: onApply },
+                        { text: "<%= Resources.Resource.Save  %>", click: onSave },
+                        { text: "<%= Resources.Resource.SaveAs  %>", click: onSaveAs },
+                    ],
                     width: 600,
-                    height: 380,
-                    shadow: true,
-                    draggable: true,
-                    proxyDrag: true,
-                    modal: true
+                    draggable: false,
+                    modal: true,
+                    resizable: false,
+                    height: 400,
+                    close: function () {
+                        dialog.dialog("destroy");
+                        $('div#' + TaskOptionsControl.divOptionsClientID).hide();
+                    }
                 });
-                dialog.addKeyListener(27, dialog.hide, dialog);
-                dialog.addButton('<%= Resources.Resource.Apply  %>', onApply, dialog);
-                if (showSaveButton()) {
-                    dialog.addButton('<%= Resources.Resource.Save  %>', onSave, dialog);
-                }
-                dialog.addButton('<%= Resources.Resource.SaveAs  %>', onSaveAs, dialog);
+                //if (showSaveButton()) {
+                //    dialog.addButton('', onSave, dialog);
+                //}
+
                 initSaveAsDialog();
-                dialog.show();
+
             },
             saveCallback: function (name) {
                 //save callback function
-                dialog.hide();
-                var hfSaveAsName = document.getElementById(CurrentTaskOptionsControl.hfSaveAsNameClientID);
-                hfSaveAsName.value = name;
-                var btnHiddenSaveAs = document.getElementById(CurrentTaskOptionsControl.btnHiddenSaveAsClientID);
+                dialog.dialog("close");
+                var hfSaveAsName = $('#' + CurrentTaskOptionsControl.hfSaveAsNameClientID).val(name);
+                var btnHiddenSaveAs = $('#' + CurrentTaskOptionsControl.btnHiddenSaveAsClientID);
                 btnHiddenSaveAs.click();
             }
         };
     } ();
 </script>
-
 <cc1:SaveAsDialog ID="saveAsDialogTask" runat="server" NameEmptyErrorMessage="<%$ Resources:Resource, ErrorTaskNameEmpty %>"
     NameRestrictedErrorMessage="<%$ Resources:Resource, ErrorTaskNameRestricted %>" 
     NameExistsConfirmRewriteMessage="<%$ Resources:Resource, ConfirmRewriteTask %>" 

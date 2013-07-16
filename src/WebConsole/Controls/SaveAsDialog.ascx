@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="SaveAsDialog.ascx.cs" Inherits="Controls_SaveAsDialog" %>
 <script type="text/javascript" language="javascript">
     var SaveAsDialog_<%=ClientID %> = function () {
-        var dialog;
+        var dialog = false;
         var asyncPostBack = false;
         var restrictedNames = null;
         var usedNames = null;
@@ -25,17 +25,17 @@
             name = GetTrimmedName();
             if (CheckIfEmpty(name)) {
                 //name is empty
-                document.getElementById('<%= lblSaveAsError.ClientID %>').innerHTML = '<%= NameEmptyErrorMessage %>';
+                $('#<%= lblSaveAsError.ClientID %>').html('<%= NameEmptyErrorMessage %>')
                 return;
             }
             if (CheckIfRestricted(name)) {
                 //can't use this name
-                document.getElementById('<%= lblSaveAsError.ClientID %>').innerHTML = '<%= NameRestrictedErrorMessage %>';
+                $('#<%= lblSaveAsError.ClientID %>').html('<%= NameRestrictedErrorMessage %>')
                 return;
             }
             //hide dialog but still don't allow async postback
             hideDisabled = true;
-            dialog.hide();
+            dialog.dialog("close");
             hideDisabled = false;
             if (!CheckIfExists(name)) {
                 //name does not exist
@@ -47,20 +47,30 @@
             }
             else {
                 //name already exist ask to rewrite
-                Ext.MessageBox.buttonText.yes = '<%= Resources.Resource.Yes %>';
-                Ext.MessageBox.buttonText.no = '<%= Resources.Resource.No %>';
-                Ext.MessageBox.confirm('<%= Resources.Resource.Save %>', '<%= NameExistsConfirmRewriteMessage %>',
-                        function (btn) {
-                            if (btn == "yes") {
-                                onHide();
-                                if (typeof saveCallback == 'function') {
-                                    saveCallback(GetTrimmedName());
-                                }
+                $('body').append('<div id="confirm" style="display:none"><%= NameExistsConfirmRewriteMessage %></div>');
+                $('#confirm').dialog({
+                    resizable: false,
+                    height:140,
+                    modal: true,
+                    close:function()
+                    {
+                         $(this).dialog("destroy");
+                         $(this).remove();
+                    },
+                    buttons: {
+                        '<%= Resources.Resource.Yes %>': function() {
+                            onHide();
+                            if (typeof saveCallback == 'function') {
+                                saveCallback(GetTrimmedName());
                             }
-                            else {
-                                dialog.show();
-                            }
-                        });
+                            $( this ).dialog( "close" );
+                        },
+                        '<%= Resources.Resource.No %>': function() {
+                            $( this ).dialog( "close" );
+                            dialog.show();
+                        }
+                    }
+                });
             }
         }
 
@@ -69,7 +79,7 @@
         }
 
         function GetTrimmedName() {
-            return document.getElementById('<%= tboxSaveAsName.ClientID %>').value.trim();
+            return $('#<%= tboxSaveAsName.ClientID %>').val().trim();
         }
 
         function CheckIfEmpty(name) {
@@ -126,38 +136,31 @@
             },
             show: function () {
                 if (!dialog || asyncPostBack) {
-                    dialog = new Ext.BasicDialog('<%= dlgSaveAs.ClientID  %>', {
-                        collapsible: false,
-                        width: 205,
-                        height: 120,
-                        shadow: true,
+                    dialog =$('#<%= dlgSaveAs.ClientID  %>').dialog( {
                         resizable: false,
-                        draggable: true,
-                        proxyDrag: true,
-                        modal: true
+                        draggable: false,
+                        modal: true,
+                        buttons:{
+                            '<%= Resources.Resource.Save  %>':onSave
+                        },
+                        open:onShow,
+                        close:function(){
+                            onHide();
+                            $(this).dialog("destroy");
+                        }
                     });
-                    dialog.addKeyListener(27, dialog.hide, dialog);
-                    dialog.addButton('<%= Resources.Resource.Save  %>', onSave, dialog);
-                    dialog.on('show', onShow);
-                    dialog.on('hide', onHide);
-                    asyncPostBack = false;
                 }
-                document.getElementById('<%= tboxSaveAsName.ClientID %>').value = "";
-                document.getElementById('<%= lblSaveAsError.ClientID %>').innerHTML = "";
-                dialog.show();
+                $('#<%= tboxSaveAsName.ClientID %>').val("");
+                $('#<%= lblSaveAsError.ClientID %>').html("");
+                dialog.dialog("show");
             }
         };
     } ();
 </script>
-<div id="dlgSaveAs" runat="server" style="visibility: hidden; position: absolute;
-    top: 0px;">
-    <div class="x-dlg-hd">
-        <%=Resources.Resource.SaveAs %></div>
-    <div class="x-dlg-bd">
+<div id="dlgSaveAs" runat="server" style="display:none;" title='<%$Resources:Resource, SaveAs %>'>
         <asp:TextBox ID="tboxSaveAsName" runat="server"></asp:TextBox>
         <ajaxToolkit:FilteredTextBoxExtender ID="ftboxSaveAsName" TargetControlID="tboxSaveAsName" 
         runat="server" InvalidChars="'&quot;""" FilterMode="InvalidChars" />
         <br />
         <asp:Label ID="lblSaveAsError" runat="server"></asp:Label>
-    </div>
 </div>

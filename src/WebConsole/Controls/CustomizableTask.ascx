@@ -4,36 +4,36 @@
 <script type="text/javascript" language="javascript">
     //ddlTask OnChange event handler - generates function name depending on ClientID
     function ddlTasks_<%=ClientID %>_OnChange() {
-        var ddlTasks = document.getElementById('<%=ddlTasks.ClientID %>');
+        var ddlTasks = $('#<%=ddlTasks.ClientID %>');
         //value selected in dropdown
-        var selectedValue = ddlTasks.value;
-        var hfTemporaryTaskKey = document.getElementById('<%=hfTemporaryTaskKey.ClientID %>');
+        var selectedValue = ddlTasks.val();
+        var hfTemporaryTaskKey = $('#<%=hfTemporaryTaskKey.ClientID %>');
         //value corresponding to Temporary Task
-        var temporaryTaskValue = hfTemporaryTaskKey.value;
-        var hfTemporaryTaskIsClear = document.getElementById('<%=hfTemporaryTaskIsClear.ClientID %>');
+        var temporaryTaskValue = hfTemporaryTaskKey.val();
+        var hfTemporaryTaskIsClear = $('#<%=hfTemporaryTaskIsClear.ClientID %>');
         //value is true if options in temporary task are not set
-        var temporaryTaskIsClear = hfTemporaryTaskIsClear.value;
-        var ibtnCustomize = document.getElementById('<%=ibtnCustomize.ClientID %>');
-        var ibtnDelete = document.getElementById('<%=ibtnDelete.ClientID %>');
+        var temporaryTaskIsClear = hfTemporaryTaskIsClear.val();
+        var ibtnCustomize = $('#<%=ibtnCustomize.ClientID %>');
+        var ibtnDelete = $('#<%=ibtnDelete.ClientID %>');
         
-        var rbtnUseTask = document.getElementById('<%=rbtnUseTask.ClientID %>');
+        var rbtnUseTask = $('#<%=rbtnUseTask.ClientID %>');
         //set images on Delete and Customize image buttons according to selected item in dropdown
         if (temporaryTaskValue == selectedValue) {
             if (temporaryTaskIsClear == '1') {
-                ibtnCustomize.src = '<%=TaskIcons.OptionsDisabled %>';
-                ibtnDelete.src = '<%=TaskIcons.EraseDisabled %>';
-                ibtnDelete.onclick = function () { return false; };
+                ibtnCustomize.attr('src', '<%=TaskIcons.OptionsDisabled %>');
+                ibtnDelete.attr('src','<%=TaskIcons.EraseDisabled %>');
+                ibtnDelete.click( function () { return false; });
             }
             else {
-                ibtnCustomize.src = '<%=TaskIcons.OptionsEnabled %>';
-                ibtnDelete.src = '<%=TaskIcons.Erase %>';
-                ibtnDelete.onclick = null;
+                ibtnCustomize.attr('src','<%=TaskIcons.OptionsEnabled %>');
+                ibtnDelete.attr('src', '<%=TaskIcons.Erase %>');
+                ibtnDelete.unbind('click');
             }
         }
         else {
-            ibtnCustomize.src = '<%=TaskIcons.OptionsEnabled %>';
-            ibtnDelete.src = '<%=TaskIcons.Delete %>';
-            ibtnDelete.onclick = null;
+            ibtnCustomize.attr('src', '<%=TaskIcons.OptionsEnabled %>');
+            ibtnDelete.attr('src',  '<%=TaskIcons.Delete %>');
+            ibtnDelete.unbind('click');
         }
         //enabled/disables Task Panel action buttons depending on selected item in dropdown list
         if (rbtnUseTask.checked) {
@@ -48,15 +48,15 @@
 
     //rbtnUseTask OnClick event handler - generates function name depending on ClientID
     function rbtnUseTask_<%=ClientID %>_OnClick() {  
-        var ddlTasks = document.getElementById('<%=ddlTasks.ClientID %>');
+        var ddlTasks = $('#<%=ddlTasks.ClientID %>');
         //value selected in dropdown
-        var selectedValue = ddlTasks.value;
-        var hfTemporaryTaskKey = document.getElementById('<%=hfTemporaryTaskKey.ClientID %>');
+        var selectedValue = ddlTasks.val();
+        var hfTemporaryTaskKey =$('#<%=hfTemporaryTaskKey.ClientID %>');
         //value corresponding to Temporary Task
-        var temporaryTaskValue = hfTemporaryTaskKey.value;        
-        var hfTemporaryTaskIsClear = document.getElementById('<%=hfTemporaryTaskIsClear.ClientID %>');
+        var temporaryTaskValue = hfTemporaryTaskKey.val();
+        var hfTemporaryTaskIsClear = $('#<%=hfTemporaryTaskIsClear.ClientID %>');
         //value is true if options in temporary task are not set
-        var temporaryTaskIsClear = hfTemporaryTaskIsClear.value;
+        var temporaryTaskIsClear = hfTemporaryTaskIsClear.val();
 
         //enabled/disables Task Panel action buttons depending on selected item in dropdown list
         if ((temporaryTaskValue == selectedValue) && (temporaryTaskIsClear == '1')) {

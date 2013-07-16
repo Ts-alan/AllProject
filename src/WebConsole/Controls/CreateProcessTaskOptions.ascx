@@ -1,11 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CreateProcessTaskOptions.ascx.cs"
     Inherits="Controls_CreateProcessTaskOptions" %>
-<div id="tskCreateProcess" runat="server" style="visibility: hidden; position: absolute;
-    top: 0px;">
-    <div class="x-dlg-hd">
-        <%=Resources.Resource.CreateProcess %></div>
-    <div class="x-dlg-bd">
-        <table class="ListContrastTable" style="width: 560px">
+<div id="tskCreateProcess" runat="server" style="display:none;" title='<%$Resources:Resource, CreateProcess %>'>
+      <table class="ListContrastTable" style="width: 560px">
             <tr>
                 <td>
                     <%=Resources.Resource.CommandLine %>

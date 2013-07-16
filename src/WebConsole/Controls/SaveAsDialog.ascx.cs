@@ -15,8 +15,6 @@ public partial class Controls_SaveAsDialog : System.Web.UI.UserControl
     private void RegisterScripts()
     {
         //register needed scripts
-        Page.ClientScript.RegisterClientScriptInclude("Ext-Base", @"js/Groups/ext-1.1.1/adapter/ext/ext-base.js");
-        Page.ClientScript.RegisterClientScriptInclude("Ext-All", @"js/Groups/ext-1.1.1/ext-all.js");
         Page.ClientScript.RegisterClientScriptInclude("PageRequestManagerHelper", @"js/PageRequestManagerHelper.js");
     }
     #endregion

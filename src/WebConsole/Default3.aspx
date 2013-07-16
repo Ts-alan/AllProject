@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mstrPageNew.master" AutoEventWireup="true"
-    CodeFile="Default3.aspx.cs" Inherits="Default3" %>
+    CodeFile="Default3.aspx.cs" Inherits="Default3"  EnableEventValidation="false" %>
 
 <%@ Register Src="~/Controls/TaskPanel.ascx" TagName="TaskPanel" TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/SimpleTask.ascx" TagName="SimpleTask" TagPrefix="tsk" %>
@@ -16,7 +16,6 @@
         <asp:ScriptReference Path="~/js/Safari3AjaxHack.js" />
     </Scripts>
     </asp:ScriptManager>
-
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <tsk:TaskPanel ID="TaskPanel" runat="server" OnTaskAssign="CompositeTaskPanel_TaskAssign">

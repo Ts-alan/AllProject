@@ -1,9 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TestTaskOptions.ascx.cs"
     Inherits="Controls_TestTaskOptions" %>
-<div id="tskTest" runat="server" style="visibility: hidden; position: absolute; top: 0px;">
-    <div class="x-dlg-hd">
-        Test</div>
-    <div class="x-dlg-bd">
+<div id="tskTest" runat="server" style="display:none;">
         <asp:TextBox ID="TextBox1" runat="server" Style="width: 300px"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="TextBox1"
             runat="server" ErrorMessage="RequiredFieldValidator1" ValidationGroup="TaskValidation"
@@ -18,5 +15,4 @@
         <ajaxToolkit:ValidatorCalloutExtender2 PopupPosition="BottomLeft" ID="ValidatorCalloutExtender2"
             runat="server" TargetControlID="RequiredFieldValidator2" HighlightCssClass="highlight"
             Width="300" />
-    </div>
 </div>

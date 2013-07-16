@@ -11,8 +11,8 @@
                 $('#<%= divAssignTask.ClientID %>').addClass("Button");
                 $('#<%= divAssignTaskToAll.ClientID %>').removeClass("ButtonDisabled");
                 $('#<%= divAssignTaskToAll.ClientID %>').addClass("Button");
-                document.getElementById('<%= lbtnAssignTask.ClientID %>').onclick = function () { };
-                document.getElementById('<%= lbtnAssignTaskToAll.ClientID %>').onclick = function () { };
+                $('#<%= lbtnAssignTask.ClientID %>').click( function () { });
+                $('#<%= lbtnAssignTaskToAll.ClientID %>').click(function () { });
             },
             //disable assigntask and assigntasktoall buttons
             DisableActionButtons: function () {
@@ -20,8 +20,8 @@
                 $('#<%= divAssignTask.ClientID %>').addClass("ButtonDisabled");
                 $('#<%= divAssignTaskToAll.ClientID %>').removeClass("Button");
                 $('#<%= divAssignTaskToAll.ClientID %>').addClass("ButtonDisabled");
-                document.getElementById('<%= lbtnAssignTask.ClientID %>').onclick = function () { return false; };
-                document.getElementById('<%= lbtnAssignTaskToAll.ClientID %>').onclick = function () { return false; };
+                $('#<%= lbtnAssignTask.ClientID %>').click(function(){ return false; });
+                $('#<%= lbtnAssignTaskToAll.ClientID %>').click(function(){ return false; });
             }
         };
     } ();
@@ -40,6 +40,8 @@
     <div id="divDetails" runat="server" style="visibility: visible;" enableviewstate="true">
         <div class="taskPanel">
             <asp:PlaceHolder runat="server" ID="TasksPlaceHolder" />
+
+  
         </div>
         <div>
             <div id="divAssignTask" runat="server" style="width: 100px; float: left">
