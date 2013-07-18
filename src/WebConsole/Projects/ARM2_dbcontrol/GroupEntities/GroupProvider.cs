@@ -173,6 +173,48 @@ namespace VirusBlokAda.Vba32CC.Groups
             return list;
         }
 
+        /// <summary>
+        /// Get Subgroup types
+        /// </summary>
+        /// <returns></returns>
+        public List<Group> GetSubgroups(Group? group)
+        {
+            List<Group> list = new List<Group>();
+            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            {
+                groupMngr = new GroupManager(conn);
+                conn.OpenConnection();
+
+                list = groupMngr.GetSubgroups(group);
+
+                conn.CloseConnection();
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// Get Subgroup types
+        /// </summary>
+        /// <returns></returns>
+        public List<Group> GetSubgroups(int groupId)
+        {
+            List<Group> list = new List<Group>();
+            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            {
+                groupMngr = new GroupManager(conn);
+                conn.OpenConnection();
+
+                list = groupMngr.GetSubgroups(groupId);
+
+                conn.CloseConnection();
+            }
+
+            return list;
+        }
+
+
 
         /// <summary>
         /// List

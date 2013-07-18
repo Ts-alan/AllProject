@@ -135,20 +135,13 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices
                 {
                     Device device = new Device();
 
-                    device.ID = reader.GetInt16(0);
-                    device.SerialNo = reader.GetString(1);
+                    if (reader.GetValue(0) != DBNull.Value)
+                        device.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        device.SerialNo = reader.GetString(1);
 
                     if (reader.GetValue(2) != DBNull.Value)
-                        device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                            reader.GetString(2));
-                    if (reader.GetValue(3) != DBNull.Value)
-                        device.Comment = reader.GetString(3);
-
-                    if (reader.GetValue(4) != DBNull.Value)
-                        device.LastComputer = reader.GetString(4);
-
-                    if (reader.GetValue(5) != DBNull.Value)
-                        device.LastInserted = reader.GetDateTime(5);
+                        device.Comment = reader.GetString(2);
 
                     devices.Add(device);
                 }
@@ -161,7 +154,28 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices
             return devices;
 
         }
+        internal Int32 GetDeviceCount(string where)
+        {
+            SqlCommand command = new SqlCommand("GetCountDevices", Connection);
+            command.CommandType = CommandType.StoredProcedure;
 
+            command.Parameters.AddWithValue("@Where", where);
+
+            SqlDataReader reader = command.ExecuteReader();
+            Int32 count = 0;
+            if (reader.Read())
+            {
+                try
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        count = reader.GetInt32(0);
+                }
+                catch {}
+            }
+            reader.Close();
+
+            return count;
+        }
        /* /// <summary>
         /// Get Device by its ID
         /// </summary>

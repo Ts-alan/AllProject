@@ -2793,4 +2793,13 @@
   <data name="LoggedAs" xml:space="preserve">
     <value>You are logged as</value>
   </data>
+  <data name="NullName" xml:space="preserve">
+    <value>The name can`t be null</value>
+  </data>
+  <data name="DeviceComment" xml:space="preserve">
+    <value>Comment for device</value>
+  </data>
+  <data name="DeviceCanNotAdded" xml:space="preserve">
+    <value>Device can not be added</value>
+  </data>
 </root>

@@ -468,6 +468,26 @@ namespace VirusBlokAda.Vba32CC.Policies
         }
 
 
+
+
+
+
+
+        public void ChangeDevicePolicyStatusForComputer(Int16 deviceID ,Int16 computerID ,string  state)
+        {
+            devicePolicyMng.Connection = Connection;
+            devicePolicyMng.ChangeDevicePolicyStatusForComputer(deviceID ,computerID ,state);
+            ChangeDevicePolicy(GetComputerByID(computerID).ComputerName);
+        }
+
+
+
+
+
+
+
+
+
         public DevicePolicy GetDevicePolicyByID(int id)
         {
              devicePolicyMng.Connection = Connection;
@@ -478,20 +498,50 @@ namespace VirusBlokAda.Vba32CC.Policies
         {
             devicePolicyMng.Connection = Connection;
             DevicePolicy dp = devicePolicyMng.GetDevicePolicyByID(id);
-            ChangeDevicePolicy(dp.Computer.ComputerName);
-
-            devicePolicyMng.DeleteDevicePolicyByID(id);
-
-            
+       /*     if (dp.ID != 0)*/
+            {
+                devicePolicyMng.DeleteDevicePolicyByID(id);
+                ChangeDevicePolicy(dp.Computer.ComputerName);
+            }
         }
-
+        public void RemoveDevicePolicyGroup(int devID,int groupID)
+        {
+            devicePolicyMng.Connection = Connection;
+            devicePolicyMng.RemoveDevicePolicyGroup(devID,groupID);
+         /*   ChangeDevicePolicy(dp.Computer.ComputerName);*/
+        }
+        public void RemoveDevicePolicyWithoutGroup(int devID)
+        {
+            devicePolicyMng.Connection = Connection;
+            devicePolicyMng.RemoveDevicePolicyWithoutGroup(devID);
+            /*   ChangeDevicePolicy(dp.Computer.ComputerName);*/
+        }
         public void AddDevicePolicy(DevicePolicy devicePolicy)
         {
             devicePolicyMng.Connection = Connection;
             devicePolicyMng.Add(devicePolicy);
             ChangeDevicePolicy(devicePolicy.Computer.ComputerName);
         }
-
+        public DevicePolicy AddDevicePolicyToComputer(DevicePolicy devicePolicy)
+        {
+            devicePolicyMng.Connection = Connection;
+            DevicePolicy dp = devicePolicyMng.AddToComputer(devicePolicy);
+            if (dp.Device.ID != 0)
+                ChangeDevicePolicy(devicePolicy.Computer.ComputerName);
+            return dp;
+        }
+        public Device AddDeviceToGroup(int groupID,Device device)
+        {
+            devicePolicyMng.Connection = Connection;
+            Device dev = devicePolicyMng.AddToGroup(groupID,device);
+            return dev;
+        }
+        public Device AddDeviceToWithoutGroup( Device device)
+        {
+            devicePolicyMng.Connection = Connection;
+            Device dev = devicePolicyMng.AddToWithoutGroup(device);
+            return dev;
+        }
         #endregion
 
 
@@ -651,6 +701,40 @@ namespace VirusBlokAda.Vba32CC.Policies
             return policyMng.GetComputersByPolicy(policy);
         }
 
+
+        public List<DevicePolicy> GetDevicesPoliciesByGroup(Int32 groupID)
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetDeviceEntitiesFromGroup(groupID);
+        }
+        public List<DevicePolicy> GetDevicesPoliciesWithoutGroup()
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetDeviceEntitiesWithoutGroup();
+        }
+
+        public void ChangeDevicePolicyStatusForGroup(Int16 deviceID, Int32 groupID, string state)
+        {
+            devicePolicyMng.Connection = Connection;
+            devicePolicyMng.ChangeDevicePolicyStatusForGroup(deviceID,groupID,state);
+           /* ChangeDevicePolicy(devicePolicy.Computer.ComputerName);*/
+        }
+        public void ChangeDevicePolicyStatusWithoutGroup(Int16 deviceID, string state)
+        {
+            devicePolicyMng.Connection = Connection;
+            devicePolicyMng.ChangeDevicePolicyStatusToWithoutGroup(deviceID,state);
+           /* ChangeDevicePolicy(devicePolicy.Computer.ComputerName);*/
+        }
+        public List<string> GetPolicyStates()
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetPolicyStates();
+        }
+        public Int32 GetDeviceCount(string where)
+        {
+            deviceMng.Connection = Connection;
+            return deviceMng.GetDeviceCount(where);
+        }
         #endregion
 
     }

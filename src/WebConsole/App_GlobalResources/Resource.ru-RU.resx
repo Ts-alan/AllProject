@@ -2793,4 +2793,13 @@
   <data name="LoggedAs" xml:space="preserve">
     <value>Вы вошли как</value>
   </data>
+  <data name="NullName" xml:space="preserve">
+    <value>Имя папки не может быть пустым</value>
+  </data>
+  <data name="DeviceComment" xml:space="preserve">
+    <value>Комментарий для устройства</value>
+  </data>
+  <data name="DeviceCanNotAdded" xml:space="preserve">
+    <value>Устройство не может быть добавлено</value>
+  </data>
 </root>

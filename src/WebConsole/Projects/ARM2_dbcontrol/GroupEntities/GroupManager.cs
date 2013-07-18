@@ -342,6 +342,70 @@ namespace VirusBlokAda.Vba32CC.Groups
             return list;
         }
 
+
+        /// <summary>
+        /// Get subgroups types
+        /// </summary>
+        /// <returns></returns>
+        internal List<Group> GetSubgroups(int groupId)
+        {
+            List<Group> list = new List<Group>();
+
+            IDbCommand cmd = database.CreateCommand("GetSubgroupTypes", true);
+            if (groupId != 0)
+                database.AddCommandParameter(cmd, "@ParentID", DbType.Int32, groupId, ParameterDirection.Input);
+
+            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
+            Group gr;
+            while (reader.Read())
+            {
+                gr = new Group();
+                if (reader.GetValue(0) != DBNull.Value)
+                    gr.ID = reader.GetInt32(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    gr.Name = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    gr.Comment = reader.GetString(2);
+                if (reader.GetValue(3) != DBNull.Value)
+                    gr.ParentID = reader.GetInt32(3);
+                list.Add(gr);
+            }
+            reader.Close();
+            return list;
+        }
+
+
+
+        /// <summary>
+        /// Get subgroups types
+        /// </summary>
+        /// <returns></returns>
+        internal List<Group> GetSubgroups(Group? group)
+        {
+            List<Group> list = new List<Group>();
+
+            IDbCommand cmd = database.CreateCommand("GetSubgroupTypes", true);
+            if (group != null)
+                database.AddCommandParameter(cmd, "@ParentID", DbType.Int32, ((Group)group).ID, ParameterDirection.Input);
+
+            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
+            Group gr;
+            while (reader.Read())
+            {
+                gr = new Group();
+                if (reader.GetValue(0) != DBNull.Value)
+                    gr.ID = reader.GetInt32(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    gr.Name = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    gr.Comment = reader.GetString(2);
+                if (reader.GetValue(3) != DBNull.Value)
+                    gr.ParentID = reader.GetInt32(3);
+                list.Add(gr);
+            }
+            reader.Close();
+            return list;
+        }
         /// <summary>
         /// Get group types
         /// </summary>

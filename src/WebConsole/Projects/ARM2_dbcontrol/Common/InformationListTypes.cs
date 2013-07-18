@@ -13,6 +13,7 @@ namespace ARM2_dbcontrol.Common
         Components,
         Tasks,
         Processes,
-        TasksInstall
+        TasksInstall,
+        Devices
     }
 }
