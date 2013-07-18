@@ -112,6 +112,8 @@ html>body .all
 	position: absolute;
 	top: 38px;
 	left: 410px;
+	z-index:1000; /* fix for IE*/
+
 }
 
 .HeaderMenuStyle
