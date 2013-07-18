@@ -10,7 +10,7 @@ using VirusBlokAda.Vba32CC.Groups;
 using System.Configuration;
 using VirusBlokAda.Vba32CC.Policies;
 using VirusBlokAda.Vba32CC.Policies.General;
-
+using System.IO;
 public class GetTreeDataHandler : IHttpHandler
 {
 
@@ -25,7 +25,7 @@ public class GetTreeDataHandler : IHttpHandler
         }
         catch (Exception e)
         {
-            context.Response.Write("{\"success\":false,\"data\":{\"result\":\"" + e.Message + "\"}}"); //run fail
+            context.Response.Write("{\"success\":false,\"data\":{\"result\":\"" + e.Message +"\"}}"); //run fail
             return;
         }
 
@@ -46,19 +46,17 @@ public class GetTreeDataHandler : IHttpHandler
     private void SaveChanges(String groupTreeArray)
     {
         List<TreeNodeEntity> groupList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(groupTreeArray);
-
         GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         List<Group> groups = provider.GetGroups();
-
         #region Groups
         //Add and rename  groups
         for (Int32 i = groupList.Count - 1; i >= 0; i--)
         {
             Int32 parentID = 0;
             Int32.TryParse(groupList[i].ParentID.Substring(6), out parentID);
-            
             if (!groupList[i].IsLeaf)
             {
+
                 Int32 id;
                 if (groupList[i].NodeID.Contains("GroupNew_"))
                 {
@@ -82,6 +80,7 @@ public class GetTreeDataHandler : IHttpHandler
                         }
                         //New comment
                         String newComment = null;
+                       
                         if (!(String.IsNullOrEmpty(groups[index].Comment) &&
                                     String.IsNullOrEmpty(groupList[i].Comment)))
                         {
@@ -92,25 +91,23 @@ public class GetTreeDataHandler : IHttpHandler
                         }
                         //New parentID
                         Int32? newParentID = null;
-                        if (groups[index].ParentID != (parentID == 0 ? (Int32?)null : (Int32?)parentID))
-                        {
-                            newParentID = parentID == 0 ? (Int32?)null : (Int32?)parentID;
-                        }
-
+                        newParentID = parentID;
                         provider.Update(groups[index].Name, newGroupName, newComment, newParentID);
                     }
-                    else throw new Exception("Save on GroupAdministrate: No find group.");
+                    else
+                    {
+                        throw new Exception("Save on GroupAdministrate: No find group.");
+                    }
+                    
                 }
             }
         }
-
         //Delete old groups
         foreach (Group group in groups)
         {
             if (FindGroupIndexByID(groupList, group.ID) == -1)
                 provider.Delete(group);
         }
-
         #endregion
 
         #region Computers
@@ -146,10 +143,16 @@ public class GetTreeDataHandler : IHttpHandler
     private Int32? GetParentID(Int32 compID, List<TreeNodeEntity> groupList)
     {
         //with group
+        Int32 ParentId = 0;
         foreach (TreeNodeEntity node in groupList)
         {
             if (node.IsLeaf && node.NodeID == compID.ToString())
-                return Int32.Parse(node.ParentID.Substring(6));
+            {
+                if (Int32.TryParse(node.ParentID.Substring(6), out ParentId))
+                    return ParentId;
+                else return null;
+
+            }
         }
 
         //without group

@@ -29,6 +29,6 @@ public partial class GroupsAdministrate : PageBase
     protected override void InitFields()
     {
         RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/Groups.css");
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/css/ext-all.css");       
+        RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/resources/css/ext-all.css");      
     }
 }

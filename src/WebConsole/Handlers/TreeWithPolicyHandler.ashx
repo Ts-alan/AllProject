@@ -13,21 +13,44 @@ using VirusBlokAda.Vba32CC.JSON.Entities;
 
 public class TreeWithPolicyHandler : IHttpHandler
 {
-    
+    public int idCount = 0;
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
         GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         PolicyProvider providerPolicy = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         List<TreeNodeJSONEntity> tree = new List<TreeNodeJSONEntity>();
-
-        foreach (Policy policy in providerPolicy.GetPolicyTypes())
+        List<Policy> policyList = providerPolicy.GetPolicyTypes();
+        TreeNodeJSONEntity policyNode;
+        String policyId;
+        foreach (Policy policy in policyList)
         {
-            tree.Add(BuildPolicyNode(policy, providerPolicy.GetComputersByPolicyPage(policy, 1, Int16.MaxValue, null), provider));
+            policyId = policy.ID.ToString();
+            policyNode = BuildPolicyNode(policy, providerPolicy.GetComputersByPolicyPage(policy, 1, Int16.MaxValue, null), provider);
+            UpdateGroupId(policyNode.Children, policyId);
+            tree.Add(policyNode);
+  
         }
-
+        
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(tree));
     }
- 
+    private void UpdateGroupId(List<TreeNodeJSONEntity> tree, String policyId)
+    {
+        if (tree.Count == 0)
+        {
+            return;
+        }
+        else
+        {
+            foreach (TreeNodeJSONEntity node in tree)
+            {
+                if (node.Id.Contains("Group"))
+                {
+                    node.Id = node.Id +"__"+ policyId;
+                    UpdateGroupId(node.Children, policyId);
+                }
+            }
+        }
+    }
     public Boolean IsReusable {
         get {
             return false;
@@ -48,6 +71,7 @@ public class TreeWithPolicyHandler : IHttpHandler
             }
             else
             {
+               
                 policyBranch.AddBranch(BuildBranch(comp, list.Count - 1, list));
             }
         }

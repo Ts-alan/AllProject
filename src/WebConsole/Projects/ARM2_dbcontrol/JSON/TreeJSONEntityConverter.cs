@@ -19,11 +19,11 @@ namespace VirusBlokAda.Vba32CC.JSON
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
-            QtipJSONEntity qtip = null;
+            String qtip = String.Empty;
             if (isShortQTip)
-                qtip = new QtipJSONEntity(GenerateShortQTIP(group));
+                qtip = GenerateShortQTIP(group);
             else
-                qtip = new QtipJSONEntity(GenerateQTIP(group));
+                qtip = GenerateQTIP(group);
 
             return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "group", qtip, isChecked, isAllowDrag, isAllowDrop,
                                           isLeaf, isExpanded);
@@ -44,11 +44,11 @@ namespace VirusBlokAda.Vba32CC.JSON
             else
                 iconStyle = "computer";
 
-            QtipJSONEntity qtip = null;
+            String qtip = String.Empty;
             if (isShortQTip)
-                qtip = new QtipJSONEntity(GenerateShortQTIP(comp));
+                qtip = GenerateShortQTIP(comp);
             else
-                qtip = new QtipJSONEntity(GenerateQTIP(comp));
+                qtip = GenerateQTIP(comp);
 
             return new TreeNodeJSONEntity(comp.ComputerName, comp.ID.ToString(), iconStyle, qtip, isChecked, isAllowDrag, isAllowDrop,
                                           isLeaf, isExpanded, null);
@@ -63,11 +63,11 @@ namespace VirusBlokAda.Vba32CC.JSON
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
-            QtipJSONEntity qtip = null;
+            String qtip = String.Empty;
             if (isShortQTip)
-                qtip = new QtipJSONEntity(GenerateShortQTIP(compEx));
+                qtip = GenerateShortQTIP(compEx);
             else
-                qtip = new QtipJSONEntity(GenerateQTIP(compEx));
+                qtip = GenerateQTIP(compEx);
 
             return new TreeNodeJSONEntity(compEx.ComputerName, compEx.ID.ToString(), GetComputerState(compEx), qtip, isChecked, isAllowDrag, isAllowDrop,
                                           isLeaf, isExpanded, null, new CompAdditionalInfo(compEx));
@@ -82,11 +82,11 @@ namespace VirusBlokAda.Vba32CC.JSON
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
-            QtipJSONEntity qtip = null;
+            String qtip = String.Empty;
             if (isShortQTip)
-                qtip = new QtipJSONEntity(GenerateShortQTIP(policy));
+                qtip = GenerateShortQTIP(policy);
             else
-                qtip = new QtipJSONEntity(GenerateQTIP(policy));
+                qtip = GenerateQTIP(policy);
 
             return new TreeNodeJSONEntity(policy.Name, String.Format("Policy_{0}", policy.ID), "folder", qtip, isChecked, isAllowDrag, isAllowDrop,
                                           isLeaf, isExpanded);
@@ -107,7 +107,7 @@ namespace VirusBlokAda.Vba32CC.JSON
             else
                 iconStyle = "folder";
             
-            return new TreeNodeJSONEntity(Text, Text, iconStyle, new QtipJSONEntity(Text), isChecked, isAllowDrag, isAllowDrop,
+            return new TreeNodeJSONEntity(Text, Text, iconStyle, Text, isChecked, isAllowDrag, isAllowDrop,
                                           isLeaf, isExpanded);
         }
 

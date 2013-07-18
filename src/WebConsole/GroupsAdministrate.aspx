@@ -1,627 +1,597 @@
-<%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="GroupsAdministrate.aspx.cs" Inherits="GroupsAdministrate" Title="Untitled Page" %>
-    
-<asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
+<%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true"
+    CodeFile="GroupsAdministrate.aspx.cs" Inherits="GroupsAdministrate" Title="Untitled Page" %>
 
-<script type="text/javascript" src="js/Groups/ext-1.1.1/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="js/Groups/ext-1.1.1/ext-all.js"></script> 
+<asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
+    <script type="text/javascript" src="js/Groups/ext-4.1.1/ext-all.js"></script>
+    <script language="javascript" type="text/javascript">
 
-<script language="javascript" type="text/javascript">
-
-    Ext.onReady(function () {
-        /*  ***************************************************************************************************************
-        Container and layout generation
-        ***************************************************************************************************************  */
-        // turn on quick tips
-
-        Ext.QuickTips.init();
-
-        var view = Ext.DomHelper.append('mainContainer',
-        { cn: [{ id: 'groupToolBar' }, { id: 'groupTree'}] }
-    );
-        var bot = Ext.DomHelper.append('botContainer',
-        { cn: [{ id: 'bottomToolBar'}] }
-    );
-
-        // create the bottom toolbar
-        var bottomToolBar = new Ext.Toolbar('bottomToolBar');
-        bottomToolBar.add({
-            id: 'reload',
-            text: '<%=Resources.Resource.Reload %>',
-            handler: reload,
-            cls: 'x-btn-text-icon reload',
-            tooltip: '<%=Resources.Resource.ReloadInfoFromServer %>'
-        }, '->', {
-            id: 'save',
-            text: '<%=Resources.Resource.Save %>',
-            handler: save,
-            cls: 'x-btn-text-icon save',
-            tooltip: '<%=Resources.Resource.SaveInfoToServer %>'
-        });
-
-        // create the group toolbar
-        var groupToolBar = new Ext.Toolbar('groupToolBar');
-        groupToolBar.add({
-            id: 'add',
-            text: '<%=Resources.Resource.Add %>',
-            handler: addGroup,
-            cls: 'x-btn-text-icon add-opt',
-            tooltip: '<%=Resources.Resource.AddNewGroup %>'
-        }, '-', {
-            id: 'rename',
-            text: '<%=Resources.Resource.Rename %>',
-            handler: renameGroup,
-            disabled: true,
-            cls: 'x-btn-text-icon rename',
-            tooltip: '<%=Resources.Resource.RenameSelectedGroup %>'
-        }, {
-            id: 'remove',
-            text: '<%=Resources.Resource.Delete %>',
-            handler: removeGroup,
-            disabled: true,
-            cls: 'x-btn-text-icon remove',
-            tooltip: '<%=Resources.Resource.RemoveSelectedGroup %>'
-        }, {
-            id: 'comment',
-            text: '<%=Resources.Resource.Comment %>',
-            handler: commentGroup,
-            disabled: true,
-            cls: 'x-btn-text-icon comment',
-            tooltip: '<%=Resources.Resource.ChangeCommentSelectedGroup %>'
-        });
-
-        // variable for enabling and disabling toolbar items
-        var toolbarButtons = groupToolBar.items.map;
-
-        // create  layout
-        var layout = new Ext.BorderLayout('mainContainer', {
-            west: {
-                split: true,
-                initialSize: 350,
-                minSize: 200,
-                maxSize: 400,
-                titlebar: true,
-                margins: { left: 5, right: 0, bottom: 5, top: 5 }
-            },
-            center: {
-                title: '<%=Resources.Resource.ComputersWithGroups %>',
-                margins: { left: 0, right: 5, bottom: 5, top: 5 }
-            }
-        }, 'mainContainer');
-
-        layout.batchAdd({
-            west: {
-                id: 'noGroupTree',
-                autoCreate: true,
-                title: '<%=Resources.Resource.ComputersWithoutGroups %>',
-                autoScroll: true,
-                fitToFrame: true
-            },
-            center: {
-                el: view,
-                autoScroll: true,
-                fitToFrame: true,
-                toolbar: groupToolBar,
-                resizeEl: 'groupTree'
-            }
-        });
-
-        /*  ***************************************************************************************************************
-        Container and layout generation finished
-        ***************************************************************************************************************  */
-
-        /*  ***************************************************************************************************************
-        Save and reload realization
-        ***************************************************************************************************************  */
-
-        //reloading trees from server
-        function reload() {
-            noGroupTreeRoot.reload();
-            groupTreeRoot.reload();
-        }
-
-        //constructor to class containing info for nodes in tree
-        function myNode(text, id, parentId, comment, isLeaf) {
-            this.text = text;
-            this.id = id;
-            this.parentId = parentId;
-            this.comment = comment;
-            this.isLeaf = isLeaf;
-        }
-
-        //save edited groups to server
-        function save() {
-            layout.el.mask('<%=Resources.Resource.SendingDataToServer %>' + '...', 'x-mask-loading');
-            //generate arrays containing nodes info
-            var groupTreeArray = new Array();
-            RecursiveSaving(groupTreeRoot);
-            var noGroupTreeArray = new Array();
-            noGroupTreeRoot.eachChild(function (comp) {
-                noGroupTreeArray[noGroupTreeArray.length++] = new myNode(comp.text, comp.id, '0', '');
+        Ext.onReady(function () {
+            /*  ***************************************************************************************************************
+            Container and layout generation
+            ***************************************************************************************************************  */
+            // turn on quick tips
+            Ext.tip.QuickTipManager.init();
+            Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
+                maxWidth: 200,
+                minWidth: 100,
+                showDelay: 500    // Show 500ms after entering target
             });
 
-            function RecursiveSaving(root) {
-                var length = root.childNodes.length;
-                for (var i = 0; i < length; i++) {
-                    RecursiveSaving(root.childNodes[i]);
-                }
-                if (root.getDepth() == 0) return;
-                var comment = '';
-                if (!root.isLeaf()) comment = root.attributes.qtipCfg.text;
-                if (comment == 'No comment') {
-                    comment = '';
-                }
-                groupTreeArray[groupTreeArray.length++] = new myNode(root.text, root.id, root.parentNode.id, comment, root.isLeaf() ? "true" : "false");
-            }
+            /********************************************************************************************
+            groupStore and GroupTree generation
+            ************************************************************************************************/
 
-            //query .net handler with ajax
-            Ext.Ajax.request({
-                url: '<%=Request.ApplicationPath%>/Handlers/GetTreeDataHandler.ashx',                                                    //url
-                params: { groupTreeArray: Ext.util.JSON.encode(groupTreeArray),         //pass groupTreeArray as json
-                    noGroupTreeArray: Ext.util.JSON.encode(noGroupTreeArray)            //pass noGroupTreeArray as json
+            var groupStore = Ext.create('Ext.data.TreeStore', {
+                proxy: {
+                    type: 'ajax',
+                    url: '<%=Request.ApplicationPath%>/Handlers/TreeWithGroupsHandler.ashx'
                 },
-                method: 'POST',                                                         //method
-                callback: function (options, success, response) {                       //callback function
-                    if (success == false) {  //ajax request failed to complete
-                        Ext.Msg.show({
-                            title: '<%=Resources.Resource.SaveInfoToServer %>',
-                            msg: '<%=Resources.Resource.Error %>' + ': no answer from server',
-                            minWidth: 200,
-                            buttons: Ext.MessageBox.OK,
-                            multiline: false
-                        });
-                    }
-                    else {   //ajax request copmleted successfully
-                        var jsonData = Ext.util.JSON.decode(response.responseText); //decode response
-                        var resultMessage = jsonData.data.result;                   //passed result string
-                        var resultSuccess = jsonData.success;                       //passed query result
-                        if (resultSuccess == true) {  //added info to database successfully
+                root: {
+                    text: '<%=Resources.Resource.Groups %>',
+                    draggable: false,
+                    id: 'groupTreeRoot',
+                    root: true,
+                    leaf: false,
+                    expanded: true
+                },
+                listeners: {
+                    beforeappend: function (thisnode, addnode, options) {//max_depth test
+                        var j = 0;
+                        var node = null;
+                        if (addnode != null) {
+                            node = addnode;
+                            j = 0;
+                            while (node.firstChild != null) {
+                                j++;
+                                node = node.firstChild;
+                            }
+                        }
+                        node = null;
+                        if (thisnode != null) {
+                            if (thisnode.isRoot() && addnode.isLeaf())
+                                return false;
+                            j = j + thisnode.getDepth();
+                        }
+                        if (j >= MAX_DEPTH) {
                             Ext.Msg.show({
-                                title: '<%=Resources.Resource.SaveInfoToServer %>',
-                                msg: '<%=Resources.Resource.TaskStateCompletedSuccessfully %>',
+                                title: '<%=Resources.Resource.AddNewGroup %>',
+                                msg: '<%=Resources.Resource.ErrorOfNestingLavel %>' + ' (max:' + MAX_DEPTH + ')',
                                 minWidth: 200,
                                 buttons: Ext.MessageBox.OK,
                                 multiline: false
                             });
-                        }
-                        else {  //failed to add info to database
-                            Ext.Msg.show({  //show error message
-                                title: '<%=Resources.Resource.SaveInfoToServer %>',
-                                msg: '<%=Resources.Resource.Error %>' + ': ' + resultMessage,
-                                minWidth: 200,
-                                buttons: Ext.MessageBox.OK
-                            });
+                            return false;
                         }
                     }
-                    layout.el.unmask();
+                },
+                folderSort: true,
+                sorters: [{
+                    property: 'text',
+                    direction: 'ASC'
+                }]
+            });
+            Ext.override(Ext.data.AbstractStore, {
+                indexOf: Ext.emptyFn
+            });
+            var editPlugin = Ext.create('Ext.grid.plugin.CellEditing', {
+                clicksToEdit: 2,
+                listeners:
+            {
+                edit: function (editor, e, eOpts) {
+                    groupStore.sort();
+                    groupTree.getView().refresh();
+                }
+            }
+            });
+            var groupTree = Ext.create('Ext.tree.Panel', {
+                id: 'groupTree',
+                store: groupStore,
+                width: 500,
+                height: 500,
+                minWidth: 490,
+                hideHeaders: true,
+                border: 0,
+                plugins: [editPlugin],
+                columns: [{ xtype: 'treecolumn', dataIndex: 'text', width: 250, editor: { xtype: 'textfield'}}],
+                viewConfig:
+        {
+            markDirty: false,
+            listeners:
+            {
+                beforeitemcontextmenu: function (view, record, item, index, e) {
+                    e.stopEvent();
+                    contextMenu.showAt(e.getXY());
+                    return false;
+                },
+                itemdblclick: function (view, record, item, index, e) {
+                    editPlugin.cancelEdit();
+                    groupTree.getSelectionModel().select(record);
+
+                    renameGroup();
+                },
+                drop: function (node, data, model, dropposition, options) {
+                    groupStore.sort();
+                    this.refresh();
+                }
+            },
+            plugins:
+            {
+                ptype: 'treeviewdragdrop',
+                toggleOnDblClick: false,
+                appendOnly: true
+            }
+        }
+            });
+            var groupTreeRoot = groupTree.getRootNode();
+            /* ************************************************************************************************
+            groupTree and Store generation finished
+            ********************************************************************************* */
+            /*  ***************************************************************************************************************
+            editing groupTree events
+            ***************************************************************************************************************  */
+            var newGroupId = 0;
+            var MAX_DEPTH = 5;
+            var MAX_NAME_LENGTH = 64;
+            groupTree.getSelectionModel().on('selectionchange', function (selModel, records) {
+                if (records.length == 0)
+                    menuEnabling(false);
+                else {
+                    if (records[0].isRoot()) {
+                        menuEnabling(false);
+                        addAction.enable();
+                    }
+                    else
+                        menuEnabling(!records[0].get('leaf'));
                 }
             });
-        }
-        /*  ***************************************************************************************************************
-        Save and reload realization finished
-        ***************************************************************************************************************  */
-
-        /*  ***************************************************************************************************************
-        Group tree
-        group tree generation, set up and its root creation
-        ***************************************************************************************************************  */
-        //incrementing id for new groups created
-        var newGroupId = 0;
-
-        var MAX_DEPTH = 5;
-        var MAX_NAME_LENGTH = 64;
-
-        var groupTree = new Ext.tree.TreePanel('groupTree', {
-            animate: true,
-            enableDD: true,
-            rootVisible: true,
-            loader: new Ext.tree.TreeLoader({
-                dataUrl: '<%=Request.ApplicationPath%>/Handlers/TreeWithGroupsHandler.ashx',
-                requestMethod: 'GET'
-            }),
-            containerScroll: true,
-            dropConfig: { appendOnly: true }
-        });
-
-        groupTree.on('beforeappend', function (tree, parentNode, childNode, index) {
-            if (!childNode.isLeaf() && parentNode.getDepth() >= MAX_DEPTH) {
-                Ext.Msg.show({
-                    title: '<%=Resources.Resource.AddNewGroup %>',
-                    msg: '<%=Resources.Resource.ErrorOfNestingLavel %>' + ' (max:' + MAX_DEPTH + ')',
-                    minWidth: 200,
-                    buttons: Ext.MessageBox.OK,
-                    multiline: false
-                });
-                return false;
-            }
-        });
-
-        new Ext.tree.TreeSorter(groupTree, { folderSort: true });
-
-        var groupTreeRoot = new Ext.tree.AsyncTreeNode({
-            text: '<%=Resources.Resource.Groups %>',
-            draggable: false,
-            id: 'groupTreeRoot'
-        });
-        groupTree.setRootNode(groupTreeRoot);
-
-        groupTree.render();
-
-        groupTreeRoot.expand(false, false);
-
-        groupTreeRoot.on('beforeappend', function (tree, parentNode, childNode, index) {
-            if (childNode.isLeaf()) return false;
-        });
-
-        // group tree selection model
-        var sm = groupTree.getSelectionModel();
-
-        // when the group tree selection changes, enable/disable the toolbar buttons
-        sm.on('selectionchange', function () {
-            var n = sm.getSelectedNode();
-            if (!n) {
-                //no node selected - disable remove/rename
-                toolbarButtons.remove.disable();
-                toolbarButtons.rename.disable();
-                toolbarButtons.comment.disable();
-                return;
-            }
-            //if computer selected - disable remove/rename
-            //if group selected - enable remove/rename
-            toolbarButtons.remove.setDisabled(n.leaf || (n.getDepth() == 0));
-            toolbarButtons.rename.setDisabled(n.leaf || (n.getDepth() == 0));
-            toolbarButtons.comment.setDisabled(n.leaf || (n.getDepth() == 0));
-            toolbarButtons.add.setDisabled(n.leaf);
-        });
-
-        //set context menu to group tree
-        groupTree.on('contextmenu', prepareCtx);
-
-        //don't create context menu for group tree container
-        groupTree.el.swallowEvent('contextmenu', true);
-
-        //stop event on navigation key pressed
-        groupTree.el.on('keypress', function (e) {
-            if (e.isNavKeyPress()) {
-                e.stopEvent();
-            }
-        });
-
-        /*  ***************************************************************************************************************
-        Group tree finish
-        ***************************************************************************************************************  */
-
-        /*  ***************************************************************************************************************
-        No Group tree
-        no group tree generation, set up and its root creation
-        ***************************************************************************************************************  */
-        var noGroupTree = new Ext.tree.TreePanel('noGroupTree', {
-            animate: true,
-            enableDD: true,
-            containerScroll: true,
-            dropConfig: { appendOnly: true },
-            loader: new Ext.tree.TreeLoader({
-                dataUrl: '<%=Request.ApplicationPath%>/Handlers/TreeNoGroupsHandler.ashx',
-                requestMethod: 'GET'
-            })
-        });
-
-        var noGroupTreeRoot = new Ext.tree.AsyncTreeNode({
-            allowDrag: false,
-            allowDrop: true,
-            text: '<%=Resources.Resource.Computers %>',
-            id: 'noGroupTreeRoot'
-        });
-        noGroupTree.setRootNode(noGroupTreeRoot);
-
-        noGroupTree.render();
-
-        noGroupTreeRoot.expand(false, false);
-
-        new Ext.tree.TreeSorter(noGroupTree, { folderSort: true });
-
-        //Fires before a new child is appended, return false to cancel the append.        
-        noGroupTreeRoot.on('beforeappend', function (tree, parentNode, childNode) {
-            //Denied to append groups in noGroupTree
-            if (!childNode.isLeaf()) return false;
-            else return true;
-        });
-
-        /*  ***************************************************************************************************************
-        No Group tree finish
-        ***************************************************************************************************************  */
-
-        /*  ***************************************************************************************************************
-        Tree Editor
-        used to allow renaming of groups, and editing the name of newly created groups
-        ***************************************************************************************************************  */
-
-        // create the editor for the component tree
-        var groupTreeEditor = new Ext.tree.TreeEditor(groupTree, {
-            cancelOnEsc: true,
-            completeOnEnter: true,
-            ignoreNoChange: true,
-            revertInvalid: true,
-            allowBlank: false,
-            blankText: '<%=Resources.Resource.GroupNameRequired %>',
-            selectOnFocus: true
-        });
-
-        //triggered event before node rename start
-        groupTreeEditor.on('beforestartedit', function () {
-            if (groupTreeEditor.editNode.leaf || groupTreeEditor.editNode.getDepth() == 0) {
-                //computer is selected or root - exit
-                return false;
-            }
-            groupTreeEditor.setSize(groupTreeEditor.editNode.text.length * 7 + 10, 25);
-        });
-
-        //triggered event before rename completes
-        //will not rename if there is group with same name (trimmed)
-        groupTreeEditor.on('beforecomplete', function (editor, value, startValue) {
-            var v = trim(value);
-            if (v == "") {
-                //new name consists only from whitespaces
-                //change name to start value, cancel editing
-                this.cancelEdit(false);
-                return false;
-            }
-
-            if (value.length > MAX_NAME_LENGTH) {
-                Ext.Msg.show({
-                    title: '<%=Resources.Resource.ErrorRenamingGroup%>',
-                    msg: '<%=Resources.Resource.LimitedAllowLength%>' + " (max: " + MAX_NAME_LENGTH + ")",
-                    minWidth: 200,
-                    buttons: Ext.MessageBox.OK,
-                    multiline: false
-                });
-                this.cancelEdit(false);
-                return false;
-            }
-
-            var length = groupTreeRoot.childNodes.length;
-            for (var i = 0; i < length; i++) {
-                if (groupTreeRoot.childNodes[i].text == startValue) {
-                    continue;
+            function menuEnabling(b) {
+                if (b) {
+                    addAction.enable();
+                    renameAction.enable();
+                    removeAction.enable();
+                    commentAction.enable();
                 }
-                if (groupTreeRoot.childNodes[i].text == v) {
+                else {
+                    addAction.disable();
+                    renameAction.disable();
+                    removeAction.disable();
+                    commentAction.disable();
+                }
+            };
+            groupTree.on('beforeedit', function (editor, e) {//edit only folders
+                e.cancel = e.record.get('leaf');
+                if (e.record.isRoot())
+                    e.cancel = true;
+            });
+            //triggered event before rename completes
+            //will not rename if there is group with same name (trimmed)
+            groupTree.on('edit', function (editor, e) {
+                var val = trim(e.value);
+                var id = e.record.get("id");
+                var isSuccess = true;
+                if (val.length < 1) {
                     Ext.Msg.show({
                         title: '<%=Resources.Resource.ErrorRenamingGroup%>',
-                        msg: '<%=Resources.Resource.CanNotRename%>' + startValue +
+                        msg: '<%=Resources.Resource.CanNotRename%>' + e.originalValue +
+                        '<%=Resources.Resource.NullName%>',
+                        minWidth: 200,
+                        buttons: Ext.MessageBox.OK,
+                        multiline: false
+                    });
+                    e.record.data[e.field] = e.originalValue;
+                }
+                else if (val.length > MAX_NAME_LENGTH) {
+                    Ext.Msg.show({
+                        title: '<%=Resources.Resource.ErrorRenamingGroup%>',
+                        msg: '<%=Resources.Resource.LimitedAllowLength%>' + " (max: " + MAX_NAME_LENGTH + ")",
+                        minWidth: 200,
+                        buttons: Ext.MessageBox.OK,
+                        multiline: false
+                    });
+                    e.record.data[e.field] = e.originalValue;
+                }
+                else {   isSuccess = compareNames(groupTreeRoot, val, id) }
+                if (isSuccess == false) {
+                    Ext.Msg.show({
+                        title: '<%=Resources.Resource.ErrorRenamingGroup%>',
+                        msg: '<%=Resources.Resource.CanNotRename%>' + e.originalValue +
                         '<%=Resources.Resource.GroupAllreadyExists%>',
                         minWidth: 200,
                         buttons: Ext.MessageBox.OK,
                         multiline: false
                     });
-                    this.cancelEdit(true);
-                    return false;
+                    e.record.data[e.field] = e.originalValue;
                 }
-            }
-
-            //known bug of extjs: this.setValue(x) don't change the value
-            //work around: call to completeEdit will end on this event
-            //the end of function will emulate completeEdit ending
-            //we supose that remainVisible is false
-            remainVisible = false;
-
-            this.editing = false;
-            if (this.updateEl && this.boundEl) {
-                this.boundEl.update(v);
-            }
-            if (remainVisible !== true) {
-                this.hide();
-            }
-            this.fireEvent("complete", this, v, this.startValue);
-            return false;
-        });
-
-        function trim(stringToTrim) {
-            return stringToTrim.replace(/^\s+|\s+$/g, "");
-        }
-
-
-        //extjs bug: tree don't sort after renaming node
-        //work around: on successfull rename, triger beforechildrenrendered to resort tree
-        groupTreeEditor.on('complete', function () {
-            groupTree.fireEvent('beforechildrenrendered', groupTreeRoot);
-        });
-
-        /*  ***************************************************************************************************************
-        Tree Editor finish
-        ***************************************************************************************************************  */
-
-        /*  ***************************************************************************************************************
-        Remove, add, rename group methods realization        
-        ***************************************************************************************************************  */
-        // remove group handler
-        // computers from removed group are added to other tree          
-        function removeGroup() {
-            var n = sm.getSelectedNode();
-            if (!n) {
-                //no node selected
-                return;
-            }
-            if (!n.leaf) {
-                //group is selected - proceed                
-                RecursiveDeleting(n);
-            }
-        }
-
-        //add computers from selected group to groupless tree
-        //and remove from this group
-        function RecursiveDeleting(root) {
-            var length = root.childNodes.length;
-            for (var i = length - 1; i >= 0; i--) {
-                RecursiveDeleting(root.childNodes[i]);
-            }
-            root.parentNode.removeChild(root);
-            if (root.isLeaf()) {
-                noGroupTreeRoot.appendChild(root);
-            }
-        }
-
-        //rename group handler
-        function renameGroup() {
-            var n = sm.getSelectedNode();
-            if (!n) {
-                //no node selected
-                return;
-            }
-            if (!n.leaf) {
-                //group is selected - proceed
-
-                //start editing
-                groupTreeEditor.triggerEdit(n);
-            }
-        }
-
-        //comment group handler
-        function commentGroup() {
-            var n = sm.getSelectedNode();
-            if (!n) {
-                //no node selected
-                return;
-            }
-            if (!n.leaf) {
-                //group is selected - proceed
-
-                var msg = '<%=Resources.Resource.ChangeComment %>' + ' (' + n.text + '): ';
-                var comment = n.attributes.qtipCfg.text;
-                if (comment == 'No comment') {
-                    comment = '';
-                }
-                Ext.MessageBox.promptex('<%=Resources.Resource.Comment %>', msg, comment, function (btn, text) {
-                    if (btn == 'ok') {
-                        var newComment = trim(text);
-                        if (newComment == '') {
-                            newComment = 'No comment';
-                        }
-                        n.attributes.qtipCfg.text = newComment;
-                    }
-                });
-            }
-        }
-
-
-        // add group handler
-        function addGroup() {
-            //increace unique to client side new group id
-            newGroupId++;
-
-            //generate new group name to display
-            var success = false;
-            var length = groupTreeRoot.childNodes.length;
-            var newGroupNumber = 0;
-            var newGroupName;
-            while (!success) {
-                success = true;
-                if (newGroupNumber == 0) {
-                    newGroupName = 'New group';
-                }
-                else {
-                    newGroupName = 'New group' + '(' + (newGroupNumber) + ')';
-                }
-                success = !FindGroupName(groupTreeRoot, newGroupName);
-                newGroupNumber++;
-            }
-
-            function FindGroupName(root, groupName) {
-                if (root.isLeaf()) return false;
-                if (root.text == groupName) {
-                    return true;
-                }
-                var length = root.childNodes.length;
+                groupStore.sort();
+                groupTree.getView().refresh();
+            });
+            function compareNames(node, name, id) {
+                var length = node.childNodes.length;
                 for (var i = 0; i < length; i++) {
-                    if (FindGroupName(root.childNodes[i], groupName)) return true;
+                    if ((node.childNodes[i].get('text') == name && node.childNodes[i].get('id') != id)) {
+                        return false;
+                        break;
+                    }
+                    if (compareNames(node.childNodes[i], name, id) == false)
+                        return false;
                 }
-                return false;
+                return true;
             }
-
-            //create new group
-            var node = createGroup(newGroupId, newGroupName);
-
-            if (node.ownerTree != null) {
-                //extjs bug: tree don't sort after appending node programmicly
-                //work around: on successfull rename, triger beforechildrenrendered to resort tree
-                node.ownerTree.fireEvent('beforechildrenrendered', groupTreeRoot);
-                //select new node
-                node.select();
+            function trim(stringToTrim) {
+                return stringToTrim.replace(/^\s+|\s+$/g, "");
             }
-        }
+            /********************************************************************************************
+            noGroupStore and noGroupTree generation
+            ************************************************************************************************/
+            var noGroupStore = Ext.create('Ext.data.TreeStore', {
+                proxy: {
+                    type: 'ajax',
+                    url: '<%=Request.ApplicationPath%>/Handlers/TreeNoGroupsHandler.ashx'
+                },
+                root: {
+                    root: true,
+                    expanded: true,
+                    allowDrag: false,
+                    allowDrop: true,
+                    text: '<%=Resources.Resource.Computers %>',
+                    id: 'noGroupTreeRoot'
+                },
+                listeners: {},
 
-        //create new group in groupTree
-        function createGroup(_id, _text) {
-            var node = new Ext.tree.TreeNode({
-                text: _text,
-                cls: 'group',
-                allowDrag: true,
-                allowDrop: true,
-                id: 'GroupNew_' + (_id),
-                qtipCfg: {
-                    text: 'No comment',
-                    xtype: 'quicktip'
+                folderSort: true,
+                sorters: [{
+                    property: 'text',
+                    direction: 'ASC'
+                }]
+            });
+            var noGroupTree = Ext.create('Ext.tree.Panel', {
+                id: 'noGroupTree',
+                width: 300,
+                height: 300,
+                minWidth: 200,
+                region: 'center',
+                layout: 'fit',
+                store: noGroupStore,
+                split: true,
+                border: 1,
+                title: '<%=Resources.Resource.ComputersWithoutGroups %>',
+                viewConfig:
+                {
+                    listeners:
+                    {
+                        drop: function (node, data, model, dropposition, options) {
+                            noGroupStore.sort();
+                            this.refresh();
+                        }
+                    },
+                    markDirty: false,
+                    plugins:
+                    {
+                        ptype: 'treeviewdragdrop',
+                        appendOnly: true
+                    }
                 }
             });
-            //append new group
-            var n = sm.getSelectedNode();
-            if (n != null)
-                n.appendChild(node);
-            else
-                groupTreeRoot.appendChild(node);
+            var noGroupTreeRoot = noGroupTree.getRootNode();
+            noGroupTreeRoot.on('beforeappend', function (parentNode, childNode, eOpts) {
+                //Deny to append groups in noGroupTree
+                if (!childNode.isLeaf()) return false;
+                else return true;
+            });
+            /* ************************************************************************************************
+            noGroupTree and noGroupStore generation finished
+            ********************************************************************************* */
 
-            return node;
-        }
 
-        /*  ***************************************************************************************************************
-        Remove, add, rename group methods realization finish       
-        ***************************************************************************************************************  */
 
-        /*  ***************************************************************************************************************
-        Context menu
-        context menu in group tree, with rename/remove group items
-        ***************************************************************************************************************  */
 
-        //generate context menu
-        var ctxMenu = new Ext.menu.Menu({
-            id: 'ctxMenu',
-            items: [{
-                id: 'rename',
-                handler: renameGroup,
-                cls: 'rename-mi',
-                text: '<%=Resources.Resource.Rename %>'
-            }, {
-                id: 'remove',
+            // create the bottom toolbar
+            var bottomToolBar = Ext.create('Ext.toolbar.Toolbar');
+            bottomToolBar.suspendLayouts();
+
+            bottomToolBar.add({
+                id: 'reload',
+                text: '<%=Resources.Resource.Reload %>',
+                iconCls: 'reload',  // <-- icon
+                tooltip: '<%=Resources.Resource.ReloadInfoFromServer %>',
+                handler: reload
+            }, '->', {
+                id: 'save',
+                text: '<%=Resources.Resource.Save %>',
+                handler: save,
+                iconCls: 'save',
+                tooltip: '<%=Resources.Resource.SaveInfoToServer %>'
+            });
+            bottomToolBar.resumeLayouts(true);
+            bottomToolBar.setBorder('1');
+            /***********************************************************************************************************
+            actions
+            *************************************************************************************************************/
+            var addAction = Ext.create('Ext.Action', {
+                text: '<%=Resources.Resource.Add %>',
+                handler: addGroup,
+                iconCls: 'add-opt',
+                tooltip: '<%=Resources.Resource.AddNewGroup %>'
+            });
+            var removeAction = Ext.create('Ext.Action', {
+                text: '<%=Resources.Resource.Delete %>',
                 handler: removeGroup,
-                cls: 'remove-mi',
-                text: '<%=Resources.Resource.Delete %>'
-            }, {
-                id: 'comment',
+                disabled: true,
+                iconCls: 'remove',
+                tooltip: '<%=Resources.Resource.RemoveSelectedGroup %>'
+            });
+            var renameAction = Ext.create('Ext.Action', {
+                text: '<%=Resources.Resource.Rename %>',
+                handler: renameGroup,
+                disabled: true,
+                iconCls: 'rename',
+                tooltip: '<%=Resources.Resource.RenameSelectedGroup %>'
+            });
+            var commentAction = Ext.create('Ext.Action', {
+                text: '<%=Resources.Resource.Comment %>',
                 handler: commentGroup,
-                cls: 'comment-mi',
-                text: '<%=Resources.Resource.Comment %>'
-            }]
+                disabled: true,
+                iconCls: 'comment',
+                tooltip: '<%=Resources.Resource.ChangeCommentSelectedGroup %>'
+            });
+            /*  ***************************************************************************************************************
+            contextmenu
+            ***************************************************************************************************************  */
+            var contextMenu = Ext.create('Ext.menu.Menu', {
+                items: [
+            renameAction,
+            removeAction,
+            commentAction
+        ]
+
+            });
+            /*  ***************************************************************************************************************
+            groupToolbar
+            ***************************************************************************************************************  */
+            var groupToolBar = Ext.create('Ext.toolbar.Toolbar');
+            groupToolBar.suspendLayouts();
+            groupToolBar.add(addAction, '-', renameAction, removeAction, commentAction);
+            groupToolBar.resumeLayouts(true);
+
+            var groupTreePanel = new Ext.Panel({
+                region: 'east',
+                layout: 'fit',
+                items: [groupTree],
+                split: true,
+                title: '<%=Resources.Resource.ComputersWithGroups %>',
+                tbar: groupToolBar,
+                width: 500,
+                minWidth: 400,
+                border: 1
+            });
+
+
+
+
+            /*  ***************************************************************************************************************
+            Container and layout generation finished
+            ***************************************************************************************************************  */
+
+            /*  ***************************************************************************************************************
+            Save and reload realization
+            ***************************************************************************************************************  */
+
+            //reloading trees from server
+            function reload() {
+                noGroupStore.reload();
+                groupStore.reload();
+            }
+            /*********************************************************************************************************************
+            groupMenu handlers
+            *********************************************************************************************************************/
+            // remove group
+            function removeGroup() {
+                sm = groupTree.getSelectionModel();
+                var n = sm.getLastSelected();
+                if (n == groupTree.getRootNode())
+                    return;
+                if (!n) {
+                    //no node selected
+                    return;
+                }
+                //group is selected - proceed
+
+                //add computers from selected group to groupless tree
+                //and remove from this group
+                var s = n.firstChild;
+                while (s != null) {
+                    if (s.get('leaf')) {
+                        noGroupTreeRoot.appendChild(s);
+                    }
+                    else groupTreeRoot.appendChild(s);
+                    n.removeChild(s);
+                    s = n.firstChild;
+
+                } if (!n.parentNode) return;
+                n.parentNode.removeChild(n);
+                groupStore.sort();
+                noGroupStore.sort();
+                groupTree.getView().refresh();
+                groupTree.getSelectionModel().deselectAll();
+
+            }
+            //renamegroup
+            function renameGroup() {
+                var node = groupTree.getSelectionModel().getLastSelected();  // get selected node
+                editPlugin.startEdit(node, 0);
+            }
+
+            //    add group
+            function addGroup() {
+                var root = groupTree.getRootNode();
+                var thisnode = groupTree.getSelectionModel().getLastSelected();
+
+                if (thisnode == null || thisnode.get('leaf') == true) {
+                    thisnode = groupTreeRoot;
+                    groupTree.getSelectionModel().select(root);
+                }
+                newGroupId++;
+                var success = false;
+                var length = groupTreeRoot.childNodes.length;
+                var newGroupNumber = 0;
+                var newGroupName;
+                while (!success) {
+                    success = true;
+                    if (newGroupNumber == 0) {
+                        newGroupName = 'New group';
+                    }
+                    else {
+                        newGroupName = 'New group' + '(' + (newGroupNumber) + ')';
+                    }
+                    for (var i = 0; i < length; i++) {
+                        if (compareNames(groupTreeRoot, newGroupName, newGroupId) == false) {
+                            success = false;
+                            break;
+                        }
+                    }
+                    newGroupNumber++;
+                }
+                var newNode = thisnode.createNode({ text: newGroupName, id: 'GroupNew_' + (newGroupId), allowDrag: true, children: [], cls: 'group', qtip: 'No comment' });
+                thisnode.expand();
+                thisnode.appendChild(newNode);
+                groupStore.sort();
+                groupTree.getView().refresh();
+                groupTree.getSelectionModel().select(newNode);
+                renameGroup();
+            }
+
+            //comment group
+            function commentGroup() {
+                sm = groupTree.getSelectionModel();
+                var n = sm.getSelection()[0];
+                if (!n) {
+                    return;
+                }
+                if (!n.leaf) {
+                    //group is selected - proceed
+
+                    var msg = '<%=Resources.Resource.ChangeComment %>' + ' (' + n.get('text') + '): ';
+                    var comment = n.get('qtip');
+                    if (comment == 'No comment') {
+                        comment = '';
+                    }
+                    Ext.Msg.prompt('<%=Resources.Resource.Comment %>', msg, function (btn, text) {
+                        if (btn == 'ok') {
+                            var newComment = trim(text);
+                            if (newComment == '') {
+                                newComment = 'No comment';
+                            }
+                            n.set('qtip', newComment);
+                        }
+                    }, 'window', false, comment);
+                }
+            }
+            function myNode(text, id, parentId, comment, isLeaf) {
+                this.text = text;
+                this.id = id;
+                this.parentId = parentId;
+                this.comment = comment;
+                this.isLeaf = isLeaf;
+            }
+
+            function save() {
+                MainPanel.setLoading('<%=Resources.Resource.SendingDataToServer %>' + '...');
+                //generate arrays containing nodes info
+                var groupTreeArray = new Array();
+                RecursiveSaving(groupTreeRoot);
+                var noGroupTreeArray = new Array();
+                noGroupTreeRoot.eachChild(function (comp) {
+                    noGroupTreeArray[noGroupTreeArray.length++] = new myNode(comp.text, comp.id, '0', '');
+                });
+                function RecursiveSaving(root) {
+                    var length = root.childNodes.length;
+                    for (var i = 0; i < length; i++) {
+                        RecursiveSaving(root.childNodes[i]);
+                    }
+                    if (root.getDepth() == 0) return;
+                    var comment = '';
+                    if (!root.isLeaf()) comment = root.get('qtip');
+                    if (comment == 'No comment') {
+                        comment = '';
+                    }
+                    groupTreeArray[groupTreeArray.length++] = new myNode(root.get('text'), root.get('id'), root.parentNode.get('id'), comment, root.isLeaf() ? "true" : "false");
+                }
+                //query .net handler with ajax
+                Ext.Ajax.request({
+                    url: '<%=Request.ApplicationPath%>/Handlers/GetTreeDataHandler.ashx',
+
+                    params: {
+                        groupTreeArray: Ext.JSON.encode(groupTreeArray),         //pass groupTreeArray as json
+                        noGroupTreeArray: Ext.JSON.encode(noGroupTreeArray)            //pass noGroupTreeArray as json
+                    },
+                    method: 'POST',                                                         //method
+                    callback: postcallback
+                });
+                MainPanel.setLoading(false);
+            }
+            function postcallback(options, success, response) {                     //callback function
+                if (success == false) {  //ajax request failed to complete
+                    Ext.Msg.show({
+                        title: '<%=Resources.Resource.SaveInfoToServer %>',
+                        msg: '<%=Resources.Resource.Error %>' + ': no answer from server',
+                        minWidth: 200,
+                        buttons: Ext.MessageBox.OK,
+                        multiline: false
+                    });
+                }
+                else {   //ajax request copmleted successfully
+                    var jsonData = Ext.JSON.decode(response.responseText); //decode response
+                    var resultMessage = jsonData.data.result;                   //passed result string
+                    var resultSuccess = jsonData.success;                       //passed query result
+                    if (resultSuccess == true) {  //added info to database successfully
+                        Ext.Msg.show({
+                            title: '<%=Resources.Resource.SaveInfoToServer %>',
+                            msg: '<%=Resources.Resource.TaskStateCompletedSuccessfully %>',
+                            minWidth: 200,
+                            buttons: Ext.MessageBox.OK,
+                            multiline: false
+                        });
+                    }
+                    else {  //failed to add info to database
+                        Ext.Msg.show({  //show error message
+                            title: '<%=Resources.Resource.SaveInfoToServer %>',
+                            msg: '<%=Resources.Resource.Error %>' + ': ' + resultMessage,
+                            minWidth: 200,
+                            buttons: Ext.MessageBox.OK
+                        });
+                    }
+                }
+            }
+
+            /*  ***************************************************************************************************************
+            Save and reload realization finished
+            ***************************************************************************************************************  */
+            // create  mainPanel
+            /********************************************************************************************
+            Panel
+            ************************************************************************************************/
+
+            var MainPanel = new Ext.Panel({
+                renderTo: 'mainContainer',
+                layout: 'border',
+                width: 800,
+                height: 500,
+                border: 1,
+                bodyStyle: {    'z-index': 0
+                },
+                items:[
+                groupTreePanel, noGroupTree,
+                {
+                    region: 'south',
+                    //   layout: 'fit',
+                    tbar: bottomToolBar,
+                    border: 1
+                }
+             ]
+            });
         });
-
-        //prepare context menu
-        function prepareCtx(node, e) {
-            //select node calling context menu
-            node.select();
-            var isShow = !node.leaf && (node.getDepth() != 0);
-            //enable remove/rename if group is selected
-            ctxMenu.items.get('remove')[isShow ? 'enable' : 'disable']();
-            ctxMenu.items.get('rename')[isShow ? 'enable' : 'disable']();
-            ctxMenu.items.get('comment')[isShow ? 'enable' : 'disable']();
-            //showmenu on clicked point
-            ctxMenu.showAt(e.getXY());
-        }
-        /*  ***************************************************************************************************************
-        Context menu finish
-        ***************************************************************************************************************  */
-
-    });
-
-</script>
-       
-   <!-- <script type="text/javascript" src="js/Groups/Groups.js"></script> -->
-    <div id="mainContainer" style="width:800px;height:500px;"></div>
-    <div id="botContainer" style="width:800px;height:40px;"></div>    
+    </script>
+    <div id="mainContainer" 
+        style="width: 800px; height: 500px;">
+    </div>
 </asp:Content>

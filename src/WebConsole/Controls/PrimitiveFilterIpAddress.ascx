@@ -62,7 +62,6 @@
     } ();
 
     var IpAddressListBox = function () {
-
         function clear() {
             lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
             for (var i = lboxIpAddress.options.length - 1; i >= 0; i--) {
@@ -106,9 +105,22 @@
                 lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
 
                 if (!validateText()) {
+                    var tooltip = new Ext.tip.ToolTip({
+                        html: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>',
+                        autoHide: true,
+                        target: document.getElementById('<%= tboxNewIpAddress.ClientID %>'),
+                        anchor: 'top',
+                        closable: false,
+                        anchorOffset: 100,
+                        listeners: {
+                            hide: function (panel, eOpts) {
+                                this.setDisabled(true);
+                            }
+                        }
+                    });
+                    tooltip.show();
                     return;
                 }
-
                 var newOpt = new Option();
                 newOpt.text = NewIpAddressTextBox.getText();
                 newOpt.value = NewIpAddressTextBox.getText();
@@ -153,6 +165,20 @@
                 if (lboxIpAddress.selectedIndex == -1) return;
 
                 if (!validateText()) {
+                    var tooltip = new Ext.tip.ToolTip({
+                        html: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>',
+                        autoHide: true,
+                        target: document.getElementById('<%= tboxNewIpAddress.ClientID %>'),
+                        anchor: 'top',
+                        closable: false,
+                        anchorOffset: 100,
+                        listeners: {
+                            hide: function (panel, eOpts) {
+                                this.setDisabled(true);
+                            }
+                        }
+                    });
+                    tooltip.show();
                     return;
                 }
 
@@ -252,8 +278,8 @@
     var NewIpAddressValidator = function () {
         return {
             disable: function (text) {
-                reqNewIpAddressExt = $find('<%= reqNewIpAddressExt.ClientID %>');
-                regexNewIpAddressExt = $find('<%= regexNewIpAddressExt.ClientID %>');
+              /*  reqNewIpAddressExt = $find('<= reqNewIpAddressExt.ClientID %>');
+                regexNewIpAddressExt = $find('<= regexNewIpAddressExt.ClientID %>');
                 if ((AjaxControlToolkit.ValidatorCalloutBehavior._currentCallout === regexFilterExt) ||
                     (AjaxControlToolkit.ValidatorCalloutBehavior._currentCallout === regexNewIpAddressExt)) {
                     //control is currently active, hide it
@@ -265,7 +291,7 @@
                 }
                 if (reqNewIpAddressExt._highlightCssClass && reqNewIpAddressExt._invalid) {
                     Sys.UI.DomElement.removeCssClass(reqNewIpAddressExt._elementToValidate, reqNewIpAddressExt._highlightCssClass)
-                }
+                }*/
             }
         };
     } ();
@@ -285,11 +311,12 @@
             IpAddressValidator.enable();
             NewIpAddressValidator.disable();
             PageRequestManagerHelper.enableAsyncPostBack();
+            document.getElementById('<%= dlgIpAddress.ClientID  %>').style.display = "none";
         }
 
         function onShow() {
             PageRequestManagerHelper.abortAsyncPostBack();
-            PageRequestManagerHelper.disableAsyncPostBack();   
+            PageRequestManagerHelper.disableAsyncPostBack();
         }
 
         return {
@@ -299,24 +326,43 @@
             show: function () {
                 if ($('#<%= imgHelper.ClientID%>').attr("disabled") === "disabled") { return; }
                 if (!dialog || asyncPostBack) {
-                    dialog = new Ext.BasicDialog('<%= dlgIpAddress.ClientID  %>', {
+                    dialog = new Ext.window.Window({
+                        contentEl: document.getElementById('<%= dlgIpAddress.ClientID  %>'),
                         collapsible: false,
-                        resizable: false,
+                        title: '<%=Resources.Resource.IPAddress %>',
                         width: 340,
                         height: 380,
                         shadow: true,
+                        minWidth: 340,
+                        minHeight: 380,
                         draggable: true,
-                        proxyDrag: true,
-                        modal: true
+                        modal: true,
+                        layout: 'fit',
+                        listeners: {
+                            beforeclose: function (panel, eOpts) {
+                                this.hide();
+                                return false;
+                            }
+                        },
+                        onEsc: function () {
+                            var me = this;
+                            me.hide();
+                        },
+                        buttons: [
+                        {
+                            text: '<%= Resources.Resource.Apply  %>',
+                            handler: onApply
+                        }]
                     });
-                    dialog.addKeyListener(27, dialog.hide, dialog);
-                    dialog.addButton('<%= Resources.Resource.Apply  %>', onApply, dialog);
                     dialog.on('hide', onHide);
                     dialog.on('show', onShow);
+
                     asyncPostBack = false;
                 }
                 IpAddressValidator.disable();
                 IpAddressListBox.populate(IpAddressTextBox.getText());
+                document.getElementById('<%= dlgIpAddress.ClientID  %>').style.display = "inline";
+                
                 dialog.show();
 
             }
@@ -343,10 +389,8 @@
         </div>
     </FilterTemplate>
 </flt:PrimitiveFilterTemplate>
-<div id="dlgIpAddress" runat="server" style="visibility: hidden; position: absolute;
+<div id="dlgIpAddress" runat="server" style="display:none; position: absolute;
     top: 0px;">
-    <div class="x-dlg-hd">
-        <%=Resources.Resource.IPAddress %></div>
     <div class="x-dlg-bd">
                     <asp:LinkButton ID="lbtnAddIpAddress" OnClientClick="IpAddressListBox.add(); return false;"
                         runat="server"><%=Resources.Resource.Add%></asp:LinkButton>
@@ -359,23 +403,17 @@
                         &nbsp;&nbsp;
                         <br />
 
-        <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px; margin-bottom: 10px;"></asp:TextBox>
-        <ajaxToolkit:FilteredTextBoxExtender runat="server" ID="ftboxNewIpAddress" FilterType="Custom, Numbers"
-            TargetControlID="tboxNewIpAddress" ValidChars=".*-">
-        </ajaxToolkit:FilteredTextBoxExtender>
+        <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>
+
         <asp:RequiredFieldValidator ID="reqNewIpAddress" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
             ControlToValidate="tboxNewIpAddress" Display="None" ValidationGroup="NewIpAddressValidation">
         </asp:RequiredFieldValidator>
-        <ajaxToolkit:ValidatorCalloutExtender2 PopupPosition="BottomLeft" ID="reqNewIpAddressExt" runat="server" TargetControlID="reqNewIpAddress"
-            HighlightCssClass="highlight"  Width="300">
-        </ajaxToolkit:ValidatorCalloutExtender2>
+
         <asp:RegularExpressionValidator ControlToValidate="tboxNewIpAddress" ID="regexNewIpAddress"
             runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressInIncorrectFormat %>' ValidationGroup="NewIpAddressValidation"
             ValidationExpression="^\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$"
             Display="None"></asp:RegularExpressionValidator>
-        <ajaxToolkit:ValidatorCalloutExtender2 PopupPosition="BottomLeft" ID="regexNewIpAddressExt" runat="server" TargetControlID="regexNewIpAddress"
-            HighlightCssClass="highlight"  Width="300">
-        </ajaxToolkit:ValidatorCalloutExtender2>
+
         <asp:Literal ID="litIpAddressExamples" Text='<%$ Resources:Resource, IpAddressExamplesLiteral %>' runat="server"></asp:Literal>
         <select size="4"   ID="lboxIpAddress" runat="server" class="dropdownlist" onchange="IpAddressListBox.onChange()" style="height:180px;width:300px; margin-top: 8px; margin-left: 1px;">
         </select>

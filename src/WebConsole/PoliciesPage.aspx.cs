@@ -37,8 +37,8 @@ public partial class _PoliciesPage : PageBase
             Response.Redirect("Default.aspx");
         }
 
-        //RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/css/ext-all.css");
-        //RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/Groups.css");
+        RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/resources/css/ext-all.css");
+        RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/Groups.css");
         
 
         Page.Title = Resources.Resource.PolicySettings;

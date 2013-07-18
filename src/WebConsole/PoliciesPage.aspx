@@ -36,365 +36,437 @@
         
 </script>
 
-<script type="text/javascript" src="js/Groups/ext-1.1.1/adapter/ext/ext-base.js"></script>
-<script type="text/javascript" src="js/Groups/ext-1.1.1/ext-all.js"></script> 
-<script type="text/javascript" src="js/Groups/ext-1.1.1/ext-core.js"></script> 
+<script type="text/javascript" src="js/Groups/ext-4.1.1/ext-all.js"></script>
 
-<script language="javascript" type="text/javascript">
+  <script language="javascript" type="text/javascript">
+        Ext.require(['*']);
+        Ext.onReady(function () {
+            var TabsExample = {
+                init: function () {
+                    var tabs = Ext.widget('tabpanel',
+                 {
+                     renderTo: 'tabs1',
+                     height: '600px',
+                     plain: true,
+                     activeTab: 1,
+                     defaults: {
+                         bodyPadding: 10
+                     },
+                     items: []
+                 });
+                    tabs.add({
+                        id: 'paneltab1',
 
-var TabsExample = {
-            init: function () {
-                var tabs = new Ext.TabPanel('tabs1');
-                tabs.addTab('tab1', "<%=Resources.Resource.Management %>");
-                tabs.addTab('tab2', "<%=Resources.Resource.AppointmentPolicy %>");
-                tabs.activate('tab1');                     
-            }
-        }
-        Ext.EventManager.onDocumentReady(TabsExample.init, TabsExample, true);
-        
+                        title: "<%=Resources.Resource.Management %>",
+                        contentEl: 'tab1'
+                    }, {
+                        id: 'paneltab2',
 
-Ext.onReady(function () {    
-    /*  ***************************************************************************************************************
-    Container and layout generation
-    ***************************************************************************************************************  */
-    // turn on quick tips
-        
-    Ext.QuickTips.init();
-
-    var view = Ext.DomHelper.append('mainContainer',
-        { cn: [{ id: 'policyToolBar' }, { id: 'policyTree'}] }
-    );
-    var bot = Ext.DomHelper.append('botContainer',
-        { cn: [{ id: 'bottomToolBar'}] }
-    );
-
-    // create the bottom toolbar
-    var bottomToolBar = new Ext.Toolbar('bottomToolBar');
-    bottomToolBar.add({
-        id: 'reload',
-        text: '<%=Resources.Resource.Reload %>',
-        handler: reload,
-        cls: 'x-btn-text-icon reload',
-        tooltip: '<%=Resources.Resource.ReloadInfoFromServer %>'
-    }, '->', {
-        id: 'save',
-        text: '<%=Resources.Resource.Save %>',
-        handler: save,
-        cls: 'x-btn-text-icon save',
-        tooltip: '<%=Resources.Resource.SaveInfoToServer %>'
-    });
-
-    // create  layout
-    var layout = new Ext.BorderLayout('mainContainer', {
-        west: {
-            split: true,
-            initialSize: 350,
-            minSize: 200,
-            maxSize: 500,
-            titlebar: true,
-            margins: { left: 5, right: 0, bottom: 5, top: 5 }
-        },
-        center: {
-            title: '<%=Resources.Resource.Policies %>',
-            margins: { left: 0, right: 5, bottom: 5, top: 5 }
-        }
-    }, 'mainContainer');
-
-    layout.batchAdd({
-        west: {
-            id: 'noPolicyTree',
-            autoCreate: true,
-            title: '<%=Resources.Resource.NotAssignedExplicitly %>',
-            autoScroll: true,
-            fitToFrame: true
-        },
-        center: {
-            el: view,
-            autoScroll: true,
-            fitToFrame: true,
-            resizeEl: 'policyTree'
-        }
-    });
-
-    /*  ***************************************************************************************************************
-    Container and layout generation finished
-    ***************************************************************************************************************  */
-
-    /*  ***************************************************************************************************************
-    Save and reload realization
-    ***************************************************************************************************************  */
-
-    //reloading trees from server
-    function reload() {
-        noPolicyTreeRoot.reload();
-        policyTreeRoot.reload();
-    }
-
-    //constructor to class containing info for nodes in tree
-    function myNode(text, id, parentId, comment, isLeaf) {
-        this.text = text;
-        this.id = id;
-        this.parentId = parentId;
-        this.comment = comment;
-        this.isLeaf = isLeaf;
-    }
-
-    //save edited groups to server
-    function save() {
-        layout.el.mask('<%=Resources.Resource.SendingDataToServer %>' + '...', 'x-mask-loading');
-        //generate arrays containing nodes info
-        var policyTreeArray = new Array();
-        policyTreeRoot.eachChild(function (root) {
-            RecursiveSaving(root, root.id);
-        });
-
-        function RecursiveSaving(root, policyID) {
-            var length = root.childNodes.length;
-            for (var i = 0; i < length; i++) {
-                RecursiveSaving(root.childNodes[i], policyID);
-            }
-            if (root.getDepth() == 0) return;
-
-            if (root.isLeaf()) {
-                policyTreeArray[policyTreeArray.length++] = new myNode(root.text, root.id, policyID, "", root.isLeaf() ? "true" : "false");
-            }
-        }
-        //query .net handler with ajax
-        Ext.Ajax.request({
-            url: '<%=Request.ApplicationPath%>/Handlers/GetTreePoliciesDataHandler.ashx',                                                    //url
-            params: { policyTreeArray: Ext.util.JSON.encode(policyTreeArray) },
-            method: 'POST',                                                         //method
-            callback: function (options, success, response) {                       //callback function
-                if (success == false) {  //ajax request failed to complete
-                    Ext.Msg.show({
-                        title: '<%=Resources.Resource.SaveInfoToServer %>',
-                        msg: '<%=Resources.Resource.Error %>' + ': no answer from server',
-                        minWidth: 200,
-                        buttons: Ext.MessageBox.OK,
-                        multiline: false
+                        title: "<%=Resources.Resource.AppointmentPolicy %>",
+                        contentEl: 'tab2'
                     });
+                    tabs.setActiveTab('paneltab2');
+                    tabs.setActiveTab('paneltab1');
                 }
-                else {   //ajax request copmleted successfully
-                    var jsonData = Ext.util.JSON.decode(response.responseText); //decode response
-                    var resultMessage = jsonData.data.result;                   //passed result string
-                    var resultSuccess = jsonData.success;                       //passed query result
-                    if (resultSuccess == true) {  //added info to database successfully
-                        Ext.Msg.show({
-                            title: '<%=Resources.Resource.SaveInfoToServer %>',
-                            msg: '<%=Resources.Resource.TaskStateCompletedSuccessfully %>',
-                            minWidth: 200,
-                            buttons: Ext.MessageBox.OK,
-                            multiline: false
-                        });
-                    }
-                    else {  //failed to add info to database
-                        Ext.Msg.show({  //show error message
-                            title: '<%=Resources.Resource.SaveInfoToServer %>',
-                            msg: '<%=Resources.Resource.Error %>' + ': ' + resultMessage,
-                            minWidth: 200,
-                            buttons: Ext.MessageBox.OK
-                        });
-                    }
-                }
-                layout.el.unmask();
             }
+            Ext.EventManager.onDocumentReady(TabsExample.init);
+
+
+            /*  ***************************************************************************************************************
+            Container and layout generation
+            ***************************************************************************************************************  */
+            // turn on quick tips
+
+            Ext.tip.QuickTipManager.init();
+            Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
+                maxWidth: 200,
+                minWidth: 100,
+                showDelay: 500    // Show 500ms after entering target
+            });
+
+
+
+
+
+            /*  ***************************************************************************************************************
+            Container and layout generation finished
+            ***************************************************************************************************************  */
+
+            /*  ***************************************************************************************************************
+            Save and reload realization
+            ***************************************************************************************************************  */
+
+            //reloading trees from server
+            function reload() {
+                noPolicyStore.reload();
+                policyStore.reload();
+            }
+
+            //constructor to class containing info for nodes in tree
+            function myNode(text, id, parentId, comment, isLeaf) {
+                this.text = text;
+                this.id = id;
+                this.parentId = parentId;
+                this.comment = comment;
+                this.isLeaf = isLeaf;
+            }
+
+            //save edited groups to server
+            function save() {
+                MainPanel.setLoading('<%=Resources.Resource.SendingDataToServer %>' + '...');
+                //generate arrays containing nodes info
+                var policyTreeArray = new Array();
+                policyTreeRoot.eachChild(function (root) {
+                    RecursiveSaving(root, root.get("id"));
+                });
+
+                function RecursiveSaving(root, policyID) {
+                    var length = root.childNodes.length;
+                    for (var i = 0; i < length; i++) {
+                        RecursiveSaving(root.childNodes[i], policyID);
+                    }
+                    if (root.getDepth() == 0) return;
+
+                    if (root.isLeaf()) {
+                        policyTreeArray[policyTreeArray.length++] = new myNode(root.get("text"), root.get("id"), policyID, "", root.isLeaf() ? "true" : "false");
+                    }
+                }
+                //query .net handler with ajax
+                Ext.Ajax.request({
+                    url: '<%=Request.ApplicationPath%>/Handlers/GetTreePoliciesDataHandler.ashx',                                                    //url
+                    params: { policyTreeArray: Ext.JSON.encode(policyTreeArray) },
+                    method: 'POST',                                                         //method
+                    callback: function (options, success, response) {                       //callback function
+                        if (success == false) {  //ajax request failed to complete
+                            Ext.Msg.show({
+                                title: '<%=Resources.Resource.SaveInfoToServer %>',
+                                msg: '<%=Resources.Resource.Error %>' + ': no answer from server',
+                                minWidth: 200,
+                                buttons: Ext.MessageBox.OK,
+                                multiline: false
+                            });
+                        }
+                        else {   //ajax request copmleted successfully
+                            var jsonData = Ext.JSON.decode(response.responseText); //decode response
+                            var resultMessage = jsonData.data.result;                   //passed result string
+                            var resultSuccess = jsonData.success;                       //passed query result
+                            if (resultSuccess == true) {  //added info to database successfully
+                                Ext.Msg.show({
+                                    title: '<%=Resources.Resource.SaveInfoToServer %>',
+                                    msg: '<%=Resources.Resource.TaskStateCompletedSuccessfully %>',
+                                    minWidth: 200,
+                                    buttons: Ext.MessageBox.OK,
+                                    multiline: false
+                                });
+                            }
+                            else {  //failed to add info to database
+                                Ext.Msg.show({  //show error message
+                                    title: '<%=Resources.Resource.SaveInfoToServer %>',
+                                    msg: '<%=Resources.Resource.Error %>' + ': ' + resultMessage,
+                                    minWidth: 200,
+                                    buttons: Ext.MessageBox.OK
+                                });
+                            }
+                        }
+                        MainPanel.setLoading(false);
+                    }
+                });
+            }
+
+            /*  ***************************************************************************************************************
+            Save and reload realization finished
+            ***************************************************************************************************************  */
+
+            /*  ***************************************************************************************************************
+            Policy tree
+            policy tree generation, set up and its root creation
+            ***************************************************************************************************************  */
+            var policyStore = Ext.create('Ext.data.TreeStore', {
+                proxy: {
+                    type: 'ajax',
+                    url: '<%=Request.ApplicationPath%>/Handlers/TreeWithPolicyHandler.ashx'
+                },
+                root: {
+                    text: 'Policies Root',
+                    draggable: false,
+                    id: 'policyTreeRoot',
+                    root: true,
+                    leaf: false,
+                    expanded: true
+                },
+                listeners:
+                {
+                    move: function (node, parentOld, parentNew, index) {
+                        parentNew.removeChild(node, true);
+                        RecursiveDeleteGroups(parentOld);
+
+                    }
+                },
+                folderSort: true,
+                sorters: [{
+                    property: 'text',
+                    direction: 'ASC'
+                }]
+            });
+            var newGroupId = 0;
+            var policyTree = Ext.create('Ext.tree.Panel', {
+                id: 'policyTree',
+                store: policyStore,
+                rootVisible: false,
+                region: 'east',
+                layout: 'fit',
+                width: 400,
+                minWidth: 300,
+                hideHeaders: true,
+                border: 1,
+                split: true,
+                viewConfig:
+        {
+            markDirty: false,
+            listeners:
+            {
+            },
+            plugins:
+            {
+                ptype: 'treeviewdragdrop',
+                toggleOnDblClick: false,
+                appendOnly: true
+            }
+        }
+            });
+            var policyTreeRoot = policyTree.getRootNode();
+            policyTreeRoot.data.allowDrop = false;
+            function RecursiveDeleteGroups(root) {
+                if (root.childNodes.length == 0 && root.get("id").search('Group') != -1) {
+                    var parentNode = root.parentNode;
+                    root.remove(true);
+                    RecursiveDeleteGroups(parentNode);
+                }
+            }
+
+
+
+
+            policyTreeRoot.expand(false, false);
+
+            // policy tree selection model
+            var sm = policyTree.getSelectionModel();
+
+            //stop event on navigation key pressed
+
+            policyTree.on('keypress', function (e) {
+                if (e.isNavKeyPress()) {
+                    e.stopEvent();
+                }
+            });
+
+            //Fires before a new child is appended, return false to cancel the append.        
+            policyTree.on('beforeitemmove', function (childNode, parentNodeOld, parentNodeNew, index) {
+                onBeforeMove(childNode, parentNodeOld, parentNodeNew, index);
+                return true;
+            });
+
+            /*  ***************************************************************************************************************
+            Policy tree finish
+            ***************************************************************************************************************  */
+
+            /*  ***************************************************************************************************************
+            No Policy tree
+            no policy tree generation, set up and its root creation
+            ***************************************************************************************************************  */
+            var noPolicyStore = Ext.create('Ext.data.TreeStore', {
+                proxy: {
+                    type: 'ajax',
+                    url: '<%=Request.ApplicationPath%>/Handlers/TreeNoPolicyHandler.ashx'
+                },
+                root: {
+                    text: '<%=Resources.Resource.NotAssignedExplicitly %>',
+                    id: 'noPolicyTreeRoot',
+                    root: true,
+                    expanded: true,
+                    allowDrag: false,
+                    allowDrop: true
+                },
+                listeners: {
+                    move: function (node, parentOld, parentNew, index) {
+                        parentNew.removeChild(node, true);
+                        RecursiveDeleteGroups(parentOld);
+                    }
+                },
+
+
+                folderSort: true,
+                sorters: [{
+                    property: 'text',
+                    direction: 'ASC'
+                }]
+            });
+            var noPolicyTree = Ext.create('Ext.tree.Panel', {
+                id: 'noPolicyTree',
+                width: 300,
+                height: 400,
+                minWidth: 200,
+                region: 'center',
+                layout: 'fit',
+                store: noPolicyStore,
+                split: true,
+                border: 1,
+                viewConfig:
+                {
+                    markDirty: false,
+                    plugins:
+                    {
+                        ptype: 'treeviewdragdrop',
+                        appendOnly: true
+                    }
+                }
+            });
+            var noPolicyTreeRoot = noPolicyTree.getRootNode();
+            /* ************************************************************************************************
+            noPolicyTree and noPolicyStore generation finished
+            ********************************************************************************* */
+
+            noPolicyTreeRoot.expand(false, false);
+
+            //Fires before a new child is appended, return false to cancel the append.        
+            noPolicyTree.on('beforeitemmove', function (childNode, parentNodeOld, parentNodeNew, index) {
+                if (parentNodeNew.id == noPolicyTreeRoot.id) return false;
+                onBeforeMove(childNode, parentNodeOld, parentNodeNew, index);
+                return true;
+            });
+
+
+            /* Moving nodes*/
+            function getId(id) {
+                var index = id.indexOf("!");
+                var newId;
+                if (index == -1) {
+                    newId = id;
+                }
+                else {
+                    var newId = id.substring(0, index);
+                }
+                return newId;
+            }
+            function changeId(id, parentId) {
+                var newId = getId(id);
+                newId = newId.concat("!", parentId);
+                return newId;
+            }
+
+            function onBeforeMove(childNode, parentNodeOld, parentNodeNew, index) {
+
+                var parent = parentNodeOld;
+                var arrayNodes = new Array();
+
+                if (!childNode.isLeaf()) //if not LEAF
+                    arrayNodes.push(childNode);
+                while (parent.data.id.search("Group") != -1) {//no group
+                    arrayNodes.push(parent);
+                    parent = parent.parentNode;
+                }
+                parent = parentNodeNew;
+                var tmp = new Object();
+                var indexNode = -1;
+                for (var i = arrayNodes.length - 1; i > -1; i--) {
+                    tmp = arrayNodes[i].copy(null, false);
+                    tmp.data.id = changeId(arrayNodes[i].get("id"), parent.get("id"));
+
+                    indexNode = FindIndexOfChild(parent, tmp);
+
+                    if (indexNode == -1) {
+                        parent.appendChild(tmp);
+                        parent = tmp;
+                    }
+
+                    else parent = parent.childNodes[indexNode];
+                }
+
+                if (childNode.isLeaf()) {
+                    if (FindIndexOfChild(parent, childNode) == -1) {
+                        var newNode = childNode.copy(null, false)
+                        parent.appendChild(newNode);
+                    }
+                }
+                else {
+                    RecursiveAppending(parent, childNode.childNodes);
+                }
+            }
+
+            function RecursiveAppending(root, arrayNodes) {
+
+                for (var i = 0; i < arrayNodes.length; i++) {
+                    var index = FindIndexOfChild(root, arrayNodes[i]);
+                    var newNode;
+                    if (index == -1) {
+                        var newId = changeId(arrayNodes[i].data.id, root.data.id);
+                        newNode = arrayNodes[i].copy(null, false);
+                        newNode.data.id = newId;
+                        root.appendChild(newNode);
+                    }
+                    else {
+                        newNode = root.childNodes[index];
+                    }
+                    RecursiveAppending(newNode, arrayNodes[i].childNodes);
+                }
+            }
+
+            function FindIndexOfChild(root, node) {
+                for (var index = 0; index < root.childNodes.length; index++) {
+                    var rootChildName = root.childNodes[index].get("text");
+                    var nodeName = node.get("text");
+                    if (rootChildName == nodeName) return index;
+                }
+                return -1;
+            }
+
+            // create the bottom toolbar
+            var bottomToolBar = Ext.create('Ext.toolbar.Toolbar');
+            bottomToolBar.suspendLayouts();
+            bottomToolBar.add(
+            {
+                id: 'reload',
+                text: '<%=Resources.Resource.Reload %>',
+                iconCls: 'reload',  // <-- icon
+                tooltip: '<%=Resources.Resource.ReloadInfoFromServer %>',
+                handler: reload
+
+            }, '->', {
+                id: 'save',
+                text: '<%=Resources.Resource.Save %>',
+                handler: save,
+                iconCls: 'save',
+                tooltip: '<%=Resources.Resource.SaveInfoToServer %>'
+            }
+            );
+            bottomToolBar.resumeLayouts(true);
+
+
+            /*  ***************************************************************************************************************
+            No Policy tree finish
+            ***************************************************************************************************************  */
+            var MainPanel = new Ext.Panel({
+                renderTo: 'mainContainer',
+                layout: 'border',
+                width: 700,
+                height: 500,
+                border: 1,
+                bodyStyle: { 'z-index': 0
+                },
+                items: [
+                policyTree, noPolicyTree,
+                {
+                    region: 'south',
+                    //   layout: 'fit',
+                    tbar: bottomToolBar,
+                    border: 1
+                }]
+                /*  bbar: bottomToolBar*/
+            });
+            bottomToolBar.setBorder('1');
         });
-    }
-    /*  ***************************************************************************************************************
-    Save and reload realization finished
-    ***************************************************************************************************************  */
 
-    /*  ***************************************************************************************************************
-    Policy tree
-    policy tree generation, set up and its root creation
-    ***************************************************************************************************************  */
-
-
-    var policyTree = new Ext.tree.TreePanel('policyTree', {
-        animate: true,
-        enableDD: true,
-        rootVisible: false,
-        loader: new Ext.tree.TreeLoader({
-            dataUrl: '<%=Request.ApplicationPath%>/Handlers/TreeWithPolicyHandler.ashx',
-            requestMethod: 'GET'
-        }),
-        containerScroll: true,
-        dropConfig: { appendOnly: true },
-        listeners: {
-            'aftermove': {
-                fn: function (tree, parentOld, parentNew, node) {
-                    parentNew.removeChild(node);
-                    RecursiveDeleteGroups(parentOld);
-                },
-                delay: 10
-            }
-        }
-    });
-
-    function RecursiveDeleteGroups(root) {
-        if (root.childNodes.length == 0 && root.id.search('Group') != -1) {
-            var parentNode = root.parentNode;
-            parentNode.removeChild(root);
-            RecursiveDeleteGroups(parentNode);
-        }
-    }
-
-    new Ext.tree.TreeSorter(policyTree, { folderSort: true });
-
-    var policyTreeRoot = new Ext.tree.AsyncTreeNode({
-        text: 'Policies Root',
-        draggable: false,
-        id: 'policyTreeRoot'
-    });
-    policyTree.setRootNode(policyTreeRoot);
-
-    policyTree.render();
-
-    policyTreeRoot.expand(false, false);
-
-    // policy tree selection model
-    var sm = policyTree.getSelectionModel();
-
-    //stop event on navigation key pressed
-    policyTree.el.on('keypress', function (e) {
-        if (e.isNavKeyPress()) {
-            e.stopEvent();
-        }
-    });
-
-    policyTree.on('move', function (tree, childNode, parentNodeOld, parentNodeNew, index) {
-        this.fireEvent("aftermove", tree, parentNodeOld, parentNodeNew, childNode);
-    });
-
-    //Fires before a new child is appended, return false to cancel the append.        
-    policyTree.on('beforemove', function (tree, childNode, parentNodeOld, parentNodeNew, index) {
-        onBeforeMove(tree, childNode, parentNodeOld, parentNodeNew, index);
-        return true;
-    });
-
-    /*  ***************************************************************************************************************
-    Policy tree finish
-    ***************************************************************************************************************  */
-
-    /*  ***************************************************************************************************************
-    No Policy tree
-    no policy tree generation, set up and its root creation
-    ***************************************************************************************************************  */
-    var noPolicyTree = new Ext.tree.TreePanel('noPolicyTree', {
-        animate: true,
-        enableDD: true,
-        containerScroll: true,
-        dropConfig: { appendOnly: true },
-        loader: new Ext.tree.TreeLoader({
-            dataUrl: '<%=Request.ApplicationPath%>/Handlers/TreeNoPolicyHandler.ashx',
-            requestMethod: 'GET'
-        }),
-        listeners: {
-            'aftermove': {
-                fn: function (tree, parentOld, parentNew, node) {
-                    parentNew.removeChild(node);
-                    RecursiveDeleteGroups(parentOld);
-                },
-                delay: 10
-            }
-        }
-    });
-
-    noPolicyTree.on('move', function (tree, childNode, parentNodeOld, parentNodeNew, index) {
-        this.fireEvent("aftermove", tree, parentNodeOld, parentNodeNew, childNode);
-    });
-
-    var noPolicyTreeRoot = new Ext.tree.AsyncTreeNode({
-        allowDrag: false,
-        allowDrop: true,
-        text: '<%=Resources.Resource.NotAssignedExplicitly %>',
-        id: 'noPolicyTreeRoot'
-    });
-    noPolicyTree.setRootNode(noPolicyTreeRoot);
-
-    noPolicyTree.render();
-
-    noPolicyTreeRoot.expand(false, false);
-
-    //Fires before a new child is appended, return false to cancel the append.        
-    noPolicyTree.on('beforemove', function (tree, childNode, parentNodeOld, parentNodeNew, index) {
-        if (parentNodeNew.id == noPolicyTreeRoot.id) return false;
-        onBeforeMove(tree, childNode, parentNodeOld, parentNodeNew, index);
-        return true;
-    });
-
-    function onBeforeMove(tree, childNode, parentNodeOld, parentNodeNew, index) {
-        var parent = parentNodeOld;
-        var arrayNodes = new Array();
-        if (!childNode.isLeaf()) //if not LEAF
-            arrayNodes.push(childNode);
-        while (parent.id.search("Group") != -1) {//no group
-            arrayNodes.push(parent);
-            parent = parent.parentNode;
-        }
-
-        parent = parentNodeNew;
-        var tmp;
-        var indexNode = -1;
-        for (var i = arrayNodes.length - 1; i > -1; i--) {
-            //create copy of node
-            tmp = new Ext.tree.TreeNode(arrayNodes[i]);
-            tmp.attributes = arrayNodes[i].attributes;
-
-            indexNode = FindIndexOfChild(parent, tmp);
-            if (indexNode == -1) {
-                parent.appendChild(tmp);
-                parent = tmp;
-            }
-            else parent = parent.childNodes[indexNode];
-        }
-
-        if (childNode.isLeaf()) {
-            if (FindIndexOfChild(parent, childNode) == -1) {
-                var newNode = new Ext.tree.TreeNode(childNode);
-                newNode.attributes = childNode.attributes;
-                parent.appendChild(newNode);
-            }
-        }
-        else {
-            RecursiveAppending(parent, childNode.childNodes);
-        }
-    }
-
-    function RecursiveAppending(root, arrayNodes) {
-        for (var i = 0; i < arrayNodes.length; i++) {
-            var index = FindIndexOfChild(root, arrayNodes[i]);
-            var newNode;
-            if (index == -1) {
-                newNode = new Ext.tree.TreeNode(arrayNodes[i]);
-                newNode.attributes = arrayNodes[i].attributes;
-                root.appendChild(newNode);
-            }
-            else {
-                newNode = root.childNodes[index];
-            }
-
-            RecursiveAppending(newNode, arrayNodes[i].childNodes);
-        }
-    }
-
-    function FindIndexOfChild(root, node) {
-        for (var index = 0; index < root.childNodes.length; index++) {
-            if (root.childNodes[index].id == node.id) return index;
-        }
-
-        return -1;
-    }
-
-    new Ext.tree.TreeSorter(noPolicyTree, { folderSort: true });
-
-    /*  ***************************************************************************************************************
-    No Policy tree finish
-    ***************************************************************************************************************  */
-
-});
-
-</script>
+    </script>
 
 <div class="title"><%=Resources.Resource.PolicySettings%></div>
 <div id='tabs1'>      
@@ -517,8 +589,8 @@ Ext.onReady(function () {
          </div>
       </div>
       <div id='tab2' class="tab-content">
-            <div id="mainContainer" style="width:700px;height:500px;"></div>
-            <div id="botContainer" style="width:700px;height:40px;"></div>        
+            <div id="mainContainer">
+            </div>
       </div>
 </div>
 

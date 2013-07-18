@@ -32,9 +32,9 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             set { _iconClassStyle = value; }
         }
 
-        private QtipJSONEntity _qtip = null;
-        [JsonProperty("qtipCfg", NullValueHandling = NullValueHandling.Ignore)]
-        public QtipJSONEntity Qtip
+        private String _qtip = String.Empty;
+        [JsonProperty("qtip", NullValueHandling = NullValueHandling.Ignore)]
+        public String Qtip
         {
             get { return _qtip; }
             set { _qtip = value; }
@@ -100,17 +100,16 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
         #region Constructors
         public TreeNodeJSONEntity()
         {
-            _qtip = new QtipJSONEntity();
             _children = new List<TreeNodeJSONEntity>();
         }
-        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, QtipJSONEntity qtip,
+        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
             Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded, List<TreeNodeJSONEntity> children)
             : this(text, id, iconClassStyle, qtip, isChecked, allowDrag, allowDrop, isLeaf, isExpanded)
         {
             this._children = children;
         }
 
-        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, QtipJSONEntity qtip,
+        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
             Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded,
             List<TreeNodeJSONEntity> children, CompAdditionalInfo info)
             : this(text, id, iconClassStyle, qtip, isChecked, allowDrag, allowDrop, isLeaf, isExpanded, children)
@@ -118,7 +117,7 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             this._compAdditionalInfo = info;
         }
 
-        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, QtipJSONEntity qtip,
+        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
             Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded)
         {
             this._text = text;
@@ -136,32 +135,4 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
         #endregion
     }
 
-    [JsonObject(MemberSerialization.OptIn)]
-    public class QtipJSONEntity
-    {
-        #region Properties
-        private String _xtype = "quicktip";
-        [JsonProperty("xtype")]
-        public String Xtype
-        {
-            get { return _xtype; }
-        }
-
-        private String _text = String.Empty;
-        [JsonProperty("text")]
-        public String Text
-        {
-            get { return _text; }
-            set { _text = value; }
-        }
-        #endregion
-
-        #region Constructors
-        public QtipJSONEntity() { }
-        public QtipJSONEntity(String text)
-        {
-            this._text = text;
-        }
-        #endregion
-    }
 }
