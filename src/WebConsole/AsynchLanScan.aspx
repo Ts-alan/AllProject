@@ -16,14 +16,14 @@
         });
         function pageLoad() {
             $("#divModalDialog").dialog({ autoOpen: false });
-            $("div[class=EditComment]").click(function () {
+            $(document).on("click", 'div[class=EditComment]', function () {
                 var ip = $(this).attr('IP');
                 var title = $(this).attr('titleDialog');
                 var saveTitle = $(this).attr('saveTitle');
                 var isComment = $(this).attr('comment');
                 var comment = '';
                 if (isComment == 'true')
-                    comment = $("span[IP=" + ip + "]").text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''); //trim start&end spaces
+                    comment = $("span[IP='" + ip + "']").text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''); //trim start&end spaces
 
                 $("#divModalDialog").html('');
                 $("#divModalDialog").dialog('destroy');
@@ -48,10 +48,11 @@
                                     },
                                     success: function () {
                                         comment = newVal;
-                                        $("span[IP=" + ip + "]").text(comment);
+                                        $("span[IP='" + ip + "']").text(comment);
                                     }
                                 });
                             }
+                            d.dialog('close');
                         }
                     }
                 };
@@ -288,13 +289,14 @@
                         SortExpression="Name" />
                     <asp:BoundField HeaderStyle-CssClass="gridViewHeader" DataField="IPAddress" HeaderText='<%$ Resources:Resource, IPAddress %>'
                         SortExpression="IPAddress" />
-                    <asp:TemplateField HeaderText='<%$ Resources:Resource, Information %>'>                        
+                    <asp:TemplateField HeaderText='<%$ Resources:Resource, Information %>'> 
+                        <HeaderStyle Width="500px" />                       
                         <ItemTemplate>
-                            <div style="padding-left: 20px;">
-                                <div style="word-wrap: break-word;float:left;">
-                                    <asp:Label ID="lblInformation" runat="server" IP=<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %> />    
+                            <div style="padding-left: 20px; width: 90%;">
+                                <div style="word-wrap: break-word;float:left;width: 90%;">
+                                    <asp:Label ID="lblInformation" runat="server" Width="100%" IP=<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %> />    
                                 </div>
-                                <div id="imgComment" runat="server" style="float:right;" class="EditComment"
+                                <div id="imgComment" runat="server" style="float:right; max-width: 20px;" class="EditComment"
                                     titleDialog=<%# Resources.Resource.Comment %> title='<%# Resources.Resource.AddOrEditComment %>' saveTitle='<%# Resources.Resource.Save %>'
                                     IP=<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %> >
                                 </div>
