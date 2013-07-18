@@ -109,8 +109,7 @@ public partial class Controls_PrimitiveFilterTemplate : System.Web.UI.UserContro
     #region LifeCycle
 
     protected void Page_Load(object sender, EventArgs e)
-    {
-        RegisterScripts();
+    {        
     }
 
     protected override void OnInit(EventArgs e)
@@ -210,12 +209,6 @@ public partial class Controls_PrimitiveFilterTemplate : System.Web.UI.UserContro
         ddlNot.Items.Add(Resources.Resource.NOT);
         divPrimitiveFilterTemplate.Style.Remove(HtmlTextWriterStyle.Height);
         divPrimitiveFilterTemplate.Style.Add(HtmlTextWriterStyle.Height, _height);
-    }
-
-    private void RegisterScripts()
-    {
-        //register jQuery
-	Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.10.2.min.js");    
     }
 
     #endregion

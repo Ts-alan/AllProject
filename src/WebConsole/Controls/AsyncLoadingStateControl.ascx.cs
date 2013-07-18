@@ -11,7 +11,6 @@ public partial class Controls_AsyncLoadingStateControl : System.Web.UI.UserContr
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterScripts();
         //can be used only on pages with registered ScriptManager
         if (ScriptManager.GetCurrent(Page) == null)
         {
@@ -19,10 +18,5 @@ public partial class Controls_AsyncLoadingStateControl : System.Web.UI.UserContr
                 @"The control with ID '{0}' requires a ScriptManager on the page. The ScriptManager must appear
                     before any controls that need it.", ID));
         }
-    }
-
-    private void RegisterScripts()
-    {
-	Page.ClientScript.RegisterClientScriptInclude("jQuery", @"js/jQuery/jquery-1.10.2.min.js");
     }
 }
