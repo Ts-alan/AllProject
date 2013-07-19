@@ -7,11 +7,10 @@
             RegExp.escape = function (text) {
                 return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
             }
-            
             return {
                 getRegex: function () {
-                    tboxComputer = document.getElementById('<%= tboxFilter.ClientID %>');
-                    str = tboxComputer.value;
+                    tboxComputer = $('#<%= tboxFilter.ClientID %>');
+                    str = tboxComputer.val();
                     if (str == "") return null;
                     strEsc = RegExp.escape(str);
                     strQuantifier = strEsc.replace(/\\\*/g, '.*');
@@ -25,8 +24,7 @@
                 },
 
                 setText: function (text) {
-                    tboxComputer = document.getElementById('<%= tboxFilter.ClientID %>');
-                    tboxComputer.value = text;
+                    $('#<%= tboxFilter.ClientID %>').val(text); ;
                 }
             };
         } ();
@@ -38,11 +36,6 @@
             function onTreeLoad(This, node) {
                 SetOnCheckChanged();
                 SetCheckedAccordingToText();
-                ComputersDialog.unmask();
-            }
-
-            function onTreeBeforeLoad(This, node) {
-               ComputersDialog.mask();
             }
 
             function SetOnCheckChanged() {
@@ -111,9 +104,6 @@
                     node = node.parentNode;
                 }
             }
-
-
-
             return {
                 init: function (dialog) {
                     Ext.tip.QuickTipManager.init();
@@ -142,35 +132,31 @@
                         }],
                         listeners: {
                             load: function (thisStore, records, successful, eOpts) {
-
                                 if (!successful) {
                                     if (response.responseText.indexOf("Logins.aspx?ReturnUrl=") > -1) {
-                                        // session expired
                                         location.reload(true);
                                     }
                                     else {
-                                        dialog.hide();
+                                        dialog.dialog('close');
                                         Ext.Msg.alert('<%= Resources.Resource.Error  %>', '<%= Resources.Resource.ErrorRequestingDataFromServer%>');
                                     }
                                 } else onTreeLoad(this, root);
                             }
                         }
                     });
-                    treeStore.on("beforeload", onTreeBeforeLoad);
+                  
                     var tree = Ext.create('Ext.tree.Panel', {
                         id: "treeComputers",
                         animate: true,
                         store: treeStore,
                         autoScroll: true,
-                        rootVisible: false
+                        rootVisible: false,
+                        renderTo: 'dialog_div'
                     });
                     tree.on("checkchange", function (node, checked, eOpts) {
                         toggleCheck(node, checked);
                     });
-                    dialog.add(tree);
                     root = tree.getRootNode();
-
-
                     root.expand(false);
                 },
                 reload: function () {
@@ -185,7 +171,6 @@
                             for (var i = 0; i < rootNode.childNodes.length; i++) {
                                 RecursiveAdd(rootNode.childNodes[i]);
                             }
-
                             if (rootNode.isLeaf() && rootNode.get('checked'))
                                 computers.push(rootNode.get("text").toLowerCase());
                         }
@@ -202,7 +187,6 @@
 
             function onApply() {
                 ComputersTextBox.setText(ComputersTree.generateText());
-                dialog.hide();
             }
 
             function onHide() {
@@ -218,66 +202,35 @@
                 setAsyncPostBack: function () {
                     asyncPostBack = true;
                 },
-
-                show: function () {
-
+                    show: function () {
                     if ($('#<%= imgHelper.ClientID%>').attr("disabled") === "disabled") { return; }
                     if (!dialog || asyncPostBack) {
-                        dialog = new Ext.window.Window({
-                            collapsible: false,
+                        $('body').append('<div id="dialog_div"></div>');
+                        dialog = $('#dialog_div').dialog({
                             title: '<%=Resources.Resource.Computers %>',
                             width: 500,
                             height: 300,
-                            shadow: true,
-                            minWidth: 500,
-                            minHeight: 250,
-                            draggable: true,
                             modal: true,
-                            layout: 'fit',
-                            listeners: {
-                                beforeclose: function (panel, eOpts) {
-                                    this.hide();
-                                    return false;
-                                }
+                            draggable: false,
+                            close: function () {
+                                onHide();
+                                $(this).dialog("destroy");
+                                dialog = false;
+                                $('#dialog_div').remove();
                             },
-                            onEsc: function () {
-                                var me = this;
-                                me.hide();
-                            },
-                            buttons: [
-                        {
-                            text: '<%= Resources.Resource.Apply  %>',
-                            handler: onApply
-                        }]
+                            open: onShow,
+                            buttons: { '<%= Resources.Resource.Apply  %>': function () {onApply();dialog.dialog("close");}}
                         });
-                        dialog.on('hide', onHide);
-                        dialog.on('show', onShow);
                         ComputersTree.init(dialog);
                         asyncPostBack = false;
                     }
                     else {
                         ComputersTree.reload();
                     }
-                    dialog.show();
-                },
-                mask: function () {
-                    if (dialog.buttons != null) {
-                        for (i = 0; i < dialog.buttons.length; i++) {
-                            dialog.buttons[i].disable();
-                        }
-                    }
-                    dialog.setLoading('<%=Resources.Resource.RequestingDataFromServer %>', true);
-                },
-                unmask: function () {
-                    if (dialog.buttons != null) {
-                        for (i = 0; i < dialog.buttons.length; i++) {
-                            dialog.buttons[i].enable();
-                        }
-                    }
-                    dialog.setLoading(false);
                 }
             };
         } ();
+
     </script>
 <flt:PrimitiveFilterTemplate runat="server" ID="fltTemplate" TextFilter="Name">
     <FilterTemplate>

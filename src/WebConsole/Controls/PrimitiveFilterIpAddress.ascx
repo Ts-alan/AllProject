@@ -6,42 +6,42 @@
     var IpAddressActionButtons = function () {
         return {
             disable: function () {
-                lbtnDeleteIpAddress = document.getElementById('<%= lbtnDeleteIpAddress.ClientID %>');
-                lbtnEditIpAddress = document.getElementById('<%= lbtnEditIpAddress.ClientID %>');
+                lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
+                lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
                 if (navigator.appName == 'Microsoft Internet Explorer') {
-                    lbtnDeleteIpAddress.disabled = true;
-                    lbtnEditIpAddress.disabled = true;
+                    lbtnDeleteIpAddress.attr('disabled', true);
+                    lbtnEditIpAddress.attr('disabled', true);
                 }
                 else {
-                    lbtnDeleteIpAddress.onclick = function () {
+                    lbtnDeleteIpAddress.click(function () {
                         return false;
-                    }
-                    lbtnDeleteIpAddress.style.color = "gray";
-                    lbtnEditIpAddress.onclick = function () {
+                    })
+                    lbtnDeleteIpAddress.css('color', 'gray');
+                    lbtnEditIpAddress.click(function () {
                         return false;
-                    }
-                    lbtnEditIpAddress.style.color = "gray";
+                    })
+                    lbtnEditIpAddress.css('color','gray');
                 }
             },
 
             enable: function () {
-                lbtnDeleteIpAddress = document.getElementById('<%= lbtnDeleteIpAddress.ClientID %>');
-                lbtnEditIpAddress = document.getElementById('<%= lbtnEditIpAddress.ClientID %>');
+                lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
+                lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
                 if (navigator.appName == 'Microsoft Internet Explorer') {
-                    lbtnDeleteIpAddress.disabled = false;
-                    lbtnEditIpAddress.disabled = false;
+                    lbtnDeleteIpAddress.attr('disabled',false);
+                    lbtnEditIpAddress.attr('disabled', false);
                 }
                 else {
-                    lbtnDeleteIpAddress.onclick = function () {
+                    lbtnDeleteIpAddress.click(function () {
                         IpAddressListBox.remove();
                         return false;
-                    }
-                    lbtnDeleteIpAddress.style.color = "blue";
-                    lbtnEditIpAddress.onclick = function () {
+                    })
+                    lbtnDeleteIpAddress.css('color','blue');
+                    lbtnEditIpAddress.click(function () {
                         IpAddressListBox.edit();
                         return false;
-                    }
-                    lbtnEditIpAddress.style.color = "blue";
+                    })
+                    lbtnEditIpAddress.css('color',"blue");
                 }
             }
         };
@@ -50,13 +50,13 @@
     var NewIpAddressTextBox = function () {
         return {
             getText: function () {
-                tboxNewIpAddress = document.getElementById('<%= tboxNewIpAddress.ClientID %>');
-                return tboxNewIpAddress.value;
+                tboxNewIpAddress = $('#<%= tboxNewIpAddress.ClientID %>');
+                return tboxNewIpAddress.val();
             },
 
             setText: function (text) {
-                tboxNewIpAddress = document.getElementById('<%= tboxNewIpAddress.ClientID %>');
-                tboxNewIpAddress.value = text;
+                tboxNewIpAddress = $('#<%= tboxNewIpAddress.ClientID %>');
+                tboxNewIpAddress.val(text);
             }
         };
     } ();
@@ -64,6 +64,7 @@
     var IpAddressListBox = function () {
         function clear() {
             lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
+
             for (var i = lboxIpAddress.options.length - 1; i >= 0; i--) {
                 lboxIpAddress.options[i] = null;
             }
@@ -102,23 +103,12 @@
             },
 
             add: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
+                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
 
                 if (!validateText()) {
-                    var tooltip = new Ext.tip.ToolTip({
-                        html: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>',
-                        autoHide: true,
-                        target: document.getElementById('<%= tboxNewIpAddress.ClientID %>'),
-                        anchor: 'top',
-                        closable: false,
-                        anchorOffset: 100,
-                        listeners: {
-                            hide: function (panel, eOpts) {
-                                this.setDisabled(true);
-                            }
-                        }
-                    });
-                    tooltip.show();
+
+                    var tooltip = $('#<%= tboxNewIpAddress.ClientID %>').attr('title',"ip field").tooltip({close:function(){$(this).tooltip("destroy").removeAttr("title")},tooltipClass:"highlight", content: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>' }).tooltip("open");
+                   
                     return;
                 }
                 var newOpt = new Option();
@@ -165,6 +155,7 @@
                 if (lboxIpAddress.selectedIndex == -1) return;
 
                 if (!validateText()) {
+                    $
                     var tooltip = new Ext.tip.ToolTip({
                         html: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>',
                         autoHide: true,
@@ -326,45 +317,30 @@
             show: function () {
                 if ($('#<%= imgHelper.ClientID%>').attr("disabled") === "disabled") { return; }
                 if (!dialog || asyncPostBack) {
-                    dialog = new Ext.window.Window({
-                        contentEl: document.getElementById('<%= dlgIpAddress.ClientID  %>'),
-                        collapsible: false,
+                dialog =  $('#<%= dlgIpAddress.ClientID  %>').dialog({
                         title: '<%=Resources.Resource.IPAddress %>',
                         width: 340,
-                        height: 380,
-                        shadow: true,
-                        minWidth: 340,
-                        minHeight: 380,
-                        draggable: true,
+                        draggable:false,
                         modal: true,
-                        layout: 'fit',
-                        listeners: {
-                            beforeclose: function (panel, eOpts) {
-                                this.hide();
-                                return false;
-                            }
+                        open:function(){
+                            $(this).find('a').button();
+                            
                         },
-                        onEsc: function () {
-                            var me = this;
-                            me.hide();
+                        close:function(){
+                            onHide();
+                            dialog = false;
+                            $(this).dialog("destroy");
                         },
-                        buttons: [
-                        {
-                            text: '<%= Resources.Resource.Apply  %>',
-                            handler: onApply
-                        }]
-                    });
-                    dialog.on('hide', onHide);
-                    dialog.on('show', onShow);
+                        buttons: {'<%= Resources.Resource.Apply  %>':function(){
+                            dialog.dialog("close");
+                            onApply();
+                        }},
 
+                    });
                     asyncPostBack = false;
                 }
                 IpAddressValidator.disable();
                 IpAddressListBox.populate(IpAddressTextBox.getText());
-                document.getElementById('<%= dlgIpAddress.ClientID  %>').style.display = "inline";
-                
-                dialog.show();
-
             }
         };
     } ();
@@ -389,33 +365,24 @@
         </div>
     </FilterTemplate>
 </flt:PrimitiveFilterTemplate>
-<div id="dlgIpAddress" runat="server" style="display:none; position: absolute;
-    top: 0px;">
-    <div class="x-dlg-bd">
+<div id="dlgIpAddress" runat="server" style="display:none" >
+    <p>
                     <asp:LinkButton ID="lbtnAddIpAddress" OnClientClick="IpAddressListBox.add(); return false;"
                         runat="server"><%=Resources.Resource.Add%></asp:LinkButton>
-                        &nbsp;&nbsp;
                     <asp:LinkButton ID="lbtnEditIpAddress" OnClientClick="IpAddressListBox.edit(); return false;"
                         runat="server"><%=Resources.Resource.Edit%></asp:LinkButton>
-                        &nbsp;&nbsp;
                     <asp:LinkButton ID="lbtnDeleteIpAddress" OnClientClick="IpAddressListBox.remove(); return false;"
                         runat="server"><%=Resources.Resource.Delete%></asp:LinkButton>
-                        &nbsp;&nbsp;
-                        <br />
-
         <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>
-
         <asp:RequiredFieldValidator ID="reqNewIpAddress" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
             ControlToValidate="tboxNewIpAddress" Display="None" ValidationGroup="NewIpAddressValidation">
         </asp:RequiredFieldValidator>
-
         <asp:RegularExpressionValidator ControlToValidate="tboxNewIpAddress" ID="regexNewIpAddress"
             runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressInIncorrectFormat %>' ValidationGroup="NewIpAddressValidation"
             ValidationExpression="^\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$"
             Display="None"></asp:RegularExpressionValidator>
-
         <asp:Literal ID="litIpAddressExamples" Text='<%$ Resources:Resource, IpAddressExamplesLiteral %>' runat="server"></asp:Literal>
         <select size="4"   ID="lboxIpAddress" runat="server" class="dropdownlist" onchange="IpAddressListBox.onChange()" style="height:180px;width:300px; margin-top: 8px; margin-left: 1px;">
         </select>
-    </div>
+ </p>
 </div>

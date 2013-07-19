@@ -67,7 +67,6 @@
                         },
                         '<%= Resources.Resource.No %>': function() {
                             $( this ).dialog( "close" );
-                            dialog.show();
                         }
                     }
                 });
