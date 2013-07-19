@@ -128,12 +128,15 @@ AS
 		UPDATE [Computers]
 		SET ControlCenter = @ControlCenter
 		WHERE [ID] = @ComputerID
+
+	-- Clear Installation tasks
+	EXEC dbo.[ClearInstallationTasks] @ComputerName, @IPAddress
+
 	-- Recent activity time
 	UPDATE [Computers]
 	SET [RecentActive] = GETDATE()
 	WHERE [ID] = @ComputerID
 GO
-
 --------------------------------------------------------------------------------------------------
 
 -- add devicepolicy to computer

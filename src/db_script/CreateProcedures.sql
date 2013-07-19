@@ -1291,3 +1291,17 @@ AS
 	WHERE [IPAddress] NOT IN (SELECT [IPAddress] FROM Computers) AND tt.[TaskType] = 'Install' AND s.[Status] = 'Success'
 GO
 ----------------------------------------------------------------------------
+-- Clear InstallationTasks table by IPAddress or ComputerName
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[ClearInstallationTasks]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[ClearInstallationTasks]
+GO
+
+CREATE PROCEDURE [ClearInstallationTasks]
+	@ComputerName nvarchar(64) = NULL,
+	@IPAddress nvarchar(16) = NULL
+WITH ENCRYPTION
+AS
+	DELETE FROM InstallationTasks
+	WHERE [ComputerName] = @ComputerName OR [IPAddress] = @IPAddress
+GO
