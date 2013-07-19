@@ -103,7 +103,7 @@
             },
 
             add: function () {
-                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
+                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
 
                 if (!validateText()) {
 
@@ -111,6 +111,7 @@
                    
                     return;
                 }
+
                 var newOpt = new Option();
                 newOpt.text = NewIpAddressTextBox.getText();
                 newOpt.value = NewIpAddressTextBox.getText();
