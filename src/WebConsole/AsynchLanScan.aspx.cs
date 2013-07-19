@@ -49,7 +49,6 @@ public partial class AsynchLanScan : PageBase
 
     private void RegisterLinks()
     {
-        //RegisterLink("~/App_Themes/" + Profile.Theme + @"/ui.all.css");
         RegisterLink("~/App_Themes/" + Profile.Theme + @"/jquery.menu.css");
     }
     
@@ -108,7 +107,6 @@ public partial class AsynchLanScan : PageBase
         rangePingCount.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 10);
         rangePingTimeout.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 100);
         
-        lbtnInstall.Text = Resources.Resource.Install;
         cbRebootAfterInstall.Text = Resources.Resource.RebootAfterInstall;
 
         rbtnlProviders.Items.Add(Resources.Resource.RemoteService);
@@ -122,6 +120,9 @@ public partial class AsynchLanScan : PageBase
     {
         tboxLoginCr.Text = login;
         tboxDomainCr.Text = domain;
+        cboxSavePassword.Checked = isSavePassword;
+        if (isSavePassword)
+            tboxPasswordCr.Attributes.Add("value", password);
         rbtnlProviders.SelectedIndex = provider;
         txtPingCount.Text = pingCount.ToString();
         txtPingTimeout.Text = pingTimeout.ToString();
@@ -138,6 +139,11 @@ public partial class AsynchLanScan : PageBase
     {
         login = tboxLoginCr.Text;
         domain = tboxDomainCr.Text;
+        isSavePassword = cboxSavePassword.Checked;
+        if (isSavePassword)
+            password = tboxPasswordCr.Text;
+        else
+            password = String.Empty;
         provider = rbtnlProviders.SelectedIndex;
         pingCount = GetPingCount();
         pingTimeout = GetPingTimeout();
@@ -349,9 +355,6 @@ public partial class AsynchLanScan : PageBase
                 break;
             case DataControlRowType.DataRow:
                 RemoteInfoEntityShow rie = e.Row.DataItem as RemoteInfoEntityShow;
-                Image imgLoader = e.Row.FindControl("imgLoader") as Image;
-                imgLoader.ImageUrl = String.Format("~/App_Themes/{0}/Images/{1}", Profile.Theme,
-                    rie.IsLoaderPortOpen ? "enabled.gif" : "disabled.gif");
                 Image imgAgent = e.Row.FindControl("imgAgent") as Image;
                 imgAgent.ImageUrl = String.Format("~/App_Themes/{0}/Images/{1}", Profile.Theme,
                     rie.IsLoaderPortOpen ? "enabled.gif" : "disabled.gif");
@@ -632,6 +635,51 @@ public partial class AsynchLanScan : PageBase
                 SettingsStorageCollection.Add(loginKey, null);
             }
             SettingsStorageCollection[loginKey] = value;
+        }
+    }
+
+    private string passwordKey = "Password";
+    protected string password
+    {
+        get
+        {
+            if (SettingsStorageCollection.ContainsKey(passwordKey))
+            {
+                return SettingsStorageCollection[passwordKey] as string;
+            }
+            return String.Empty;
+        }
+        set
+        {
+            if (!SettingsStorageCollection.ContainsKey(passwordKey))
+            {
+                SettingsStorageCollection.Add(passwordKey, null);
+            }
+            SettingsStorageCollection[passwordKey] = value;
+        }
+    }
+
+    private string isSavePasswordKey = "IsSavePassword";
+    protected Boolean isSavePassword
+    {
+        get
+        {
+            if (SettingsStorageCollection.ContainsKey(isSavePasswordKey))
+            {
+                if (SettingsStorageCollection[isSavePasswordKey] is Boolean)
+                    return (Boolean)SettingsStorageCollection[isSavePasswordKey];
+                else
+                    return false;
+            }
+            return false;
+        }
+        set
+        {
+            if (!SettingsStorageCollection.ContainsKey(isSavePasswordKey))
+            {
+                SettingsStorageCollection.Add(isSavePasswordKey, null);
+            }
+            SettingsStorageCollection[isSavePasswordKey] = value;
         }
     }
 
@@ -1177,7 +1225,7 @@ public partial class AsynchLanScan : PageBase
         RemoteInstaller installer = new RemoteInstaller(GetCredentials(), 40, ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         installer.MethodType = GetRemoteMethod();
         installer.InstallAll(installEntities, rebootAfterInstall);
-        Response.Redirect("~/TasksInstall.aspx");
+        //Response.Redirect("~/TasksInstall.aspx");
     }
 
     #endregion

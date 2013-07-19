@@ -117,7 +117,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             set { this._testAgentPort = value; }
         }
 
-        private bool _testLoaderPort = true;
+        private bool _testLoaderPort = false;
         public bool TestLoaderPort
         {
             get { return this._testLoaderPort; }

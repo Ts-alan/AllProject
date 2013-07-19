@@ -2802,4 +2802,7 @@
   <data name="DeviceCanNotAdded" xml:space="preserve">
     <value>Устройство не может быть добавлено</value>
   </data>
+  <data name="SavePasswordInformation" xml:space="preserve">
+    <value>запомнить пароль</value>
+  </data>
 </root>

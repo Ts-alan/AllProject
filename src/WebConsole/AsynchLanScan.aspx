@@ -144,21 +144,25 @@
                         ID="tboxDomainCr" runat="server" Style="width: 190px" />&nbsp;                        
                         <br />
                     &nbsp;<asp:Label ID="lblLogin" runat="server" Width="80px" />&nbsp;<asp:TextBox ID="tboxLoginCr"
-                        runat="server" Style="width: 190px" />&nbsp;
+                        runat="server" Style="width: 190px" autocomplete="off" />&nbsp;
                         <asp:RequiredFieldValidator ID="requiredLogin" ControlToValidate="tboxLoginCr" 
                         runat="server" ErrorMessage='<%$ Resources:Resource, LoginRequiredErrorMessage %>'
                         ValidationGroup="SettingsValidation">
                         </asp:RequiredFieldValidator>
                         <br />
                     &nbsp;<asp:Label ID="lblPass" runat="server" Width="80px" />&nbsp;<asp:TextBox ID="tboxPasswordCr"
-                        runat="server" Style="width: 190px" TextMode="Password" />&nbsp;
+                        runat="server" Style="width: 190px" TextMode="Password" autocomplete="off" />
+                        <asp:CheckBox runat="server" ID="cboxSavePassword" Checked="false" AutoPostBack="false" Text="*" ForeColor="Red" />
+                        &nbsp;
                         <asp:RequiredFieldValidator ID="requiredPassword" ControlToValidate="tboxPasswordCr" 
                         runat="server" ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>'
                         ValidationGroup="SettingsValidation">
                         </asp:RequiredFieldValidator>
                         <asp:ValidationSummary ID="SettingsValidationSummary"  runat="server" ShowMessageBox="True"
                          ShowSummary="False" ValidationGroup="SettingsValidation" 
-                         HeaderText='<%$ Resources:Resource, CheckCredentials %>' />
+                         HeaderText='<%$ Resources:Resource, CheckCredentials %>' />                         
+                         <br />
+                         <asp:Label runat="server" ID="Label1" style="color: Red;">* - <%=Resources.Resource.SavePasswordInformation %></asp:Label>
                 </div>
             </div>
             <div id='3' style="display: none;">
@@ -279,12 +283,7 @@
                         <ItemTemplate>
                             <asp:Image ID="imgAgent" runat="server" />
                         </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText='<%$ Resources:Resource, Loader %>'>                        
-                        <ItemTemplate>
-                            <asp:Image ID="imgLoader" runat="server" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>                    
                     <asp:BoundField DataField="Name" HeaderText='<%$ Resources:Resource, ComputerName %>'
                         SortExpression="Name" />
                     <asp:BoundField HeaderStyle-CssClass="gridViewHeader" DataField="IPAddress" HeaderText='<%$ Resources:Resource, IPAddress %>'
@@ -355,15 +354,15 @@
         <table>        
             <tr>
                 <td>
-                    <asp:Label ID="lblSelectedTotalCountText" runat="server" Text="Totaly Selected: "></asp:Label>
-                    <asp:Label ID="lblSelectedTotalCount" runat="server"></asp:Label>
-                </td>                
-                <td>
-                    <div class="GiveButton1">
+                    <div class="ButtonStyle">
                         <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click" ForeColor="white"
-                            Width="100%" />
+                            Width="100%" style="margin-top: 5px;" Text='<%$Resources:Resource, Attach %>' />
                     </div>
                 </td>
+                <td style="padding-left: 20px;">
+                    <asp:Label ID="lblSelectedTotalCountText" runat="server" Text="Totaly Selected: "></asp:Label>
+                    <asp:Label ID="lblSelectedTotalCount" runat="server"></asp:Label>
+                </td>                                
                 <td>
                     <asp:CheckBox ID="cbRebootAfterInstall" Checked="false" runat="server" Visible="false" />
                 </td>

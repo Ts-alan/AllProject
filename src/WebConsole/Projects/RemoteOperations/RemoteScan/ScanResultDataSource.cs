@@ -73,7 +73,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
                         rie.Info = rie.ErrorInfo;                        
                     }
 
-                    if (String.IsNullOrEmpty(rie.OSVersion) || rie.IsLoaderPortOpen)
+                    if (String.IsNullOrEmpty(rie.OSVersion))
                     {
                         rie.IsDisabled = true;
                     }
