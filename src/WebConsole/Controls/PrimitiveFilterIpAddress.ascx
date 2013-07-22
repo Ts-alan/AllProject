@@ -3,6 +3,12 @@
 <%@ Register Src="~/Controls/PrimitiveFilterTemplate.ascx" TagName="PrimitiveFilterTemplate"
     TagPrefix="flt" %>
 <script type="text/javascript">
+    $(document).ready(function(){
+        $('#<%= lbtnAddIpAddress.ClientID %>').click(function(){
+            IpAddressListBox.add(); 
+            return false;
+        });
+    })
     var IpAddressActionButtons = function () {
         return {
             disable: function () {
@@ -13,15 +19,13 @@
                     lbtnEditIpAddress.attr('disabled', true);
                 }
                 else {
-                    lbtnDeleteIpAddress.click(function () {
-                        return false;
-                    })
+                    
                     lbtnDeleteIpAddress.css('color', 'gray');
-                    lbtnEditIpAddress.click(function () {
-                        return false;
-                    })
                     lbtnEditIpAddress.css('color','gray');
+                    
                 }
+                lbtnEditIpAddress.unbind("click");
+                lbtnDeleteIpAddress.unbind("click");
             },
 
             enable: function () {
@@ -32,17 +36,19 @@
                     lbtnEditIpAddress.attr('disabled', false);
                 }
                 else {
-                    lbtnDeleteIpAddress.click(function () {
-                        IpAddressListBox.remove();
-                        return false;
-                    })
                     lbtnDeleteIpAddress.css('color','blue');
-                    lbtnEditIpAddress.click(function () {
-                        IpAddressListBox.edit();
-                        return false;
-                    })
                     lbtnEditIpAddress.css('color',"blue");
                 }
+                lbtnEditIpAddress.unbind("click");
+                lbtnDeleteIpAddress.unbind("click");
+                lbtnDeleteIpAddress.click(function () {
+                    IpAddressListBox.remove();
+                    return false;
+                })
+                lbtnEditIpAddress.click(function () {
+                    IpAddressListBox.edit();
+                    return false;
+                })
             }
         };
     } ();
@@ -50,25 +56,20 @@
     var NewIpAddressTextBox = function () {
         return {
             getText: function () {
-                tboxNewIpAddress = $('#<%= tboxNewIpAddress.ClientID %>');
-                return tboxNewIpAddress.val();
+                return $('#<%= tboxNewIpAddress.ClientID %>').val();
             },
 
             setText: function (text) {
-                tboxNewIpAddress = $('#<%= tboxNewIpAddress.ClientID %>');
-                tboxNewIpAddress.val(text);
+                $('#<%= tboxNewIpAddress.ClientID %>').val(text);
             }
         };
     } ();
 
-    var IpAddressListBox = function () {
-        function clear() {
-            lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
-            for (var i = lboxIpAddress.options.length - 1; i >= 0; i--) {
-                lboxIpAddress.options[i] = null;
-            }
-            lboxIpAddress.selectedIndex = -1;
+    var IpAddressListBox = function () 
+    {
+        function clear() 
+        {
+            $('#<%= lboxIpAddress.ClientID %>>option').remove();
         }
 
         function matchRegexp(text) {
@@ -77,13 +78,14 @@
         }
 
         function findInvalid() {
-            lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-            for (i = 0; i < lboxIpAddress.options.length; i++) {
-                if (!matchRegexp(lboxIpAddress.options[i].text)) {
-                    return i;
+           var ret = -1;
+            $('#<%= lboxIpAddress.ClientID %>>option').each(function(i){
+                if (!matchRegexp($(this).text()) || $(this).text() != $(this).val())
+                {
+                   ret = $(this).val();
                 }
-            }
-            return -1;
+              })
+            return ret;
         }
 
         function validateText() {
@@ -91,137 +93,100 @@
         }
         return {
             validateList: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
                 var invalid = findInvalid();
-                if (invalid != -1) {
-                    lboxIpAddress.selectedIndex = invalid;
-                    NewIpAddressTextBox.setText(lboxIpAddress.options[lboxIpAddress.selectedIndex].text);
+                if (invalid != -1) 
+                {
+                    $('#<%= lboxIpAddress.ClientID %>').val(invalid);
+                    NewIpAddressTextBox.setText(invalid);
                     validateText();
                     return false;
                 }
                 return true;
-            },
+             },
 
             add: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
+                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
                 if (!validateText()) {
-
                     var tooltip = $('#<%= tboxNewIpAddress.ClientID %>').attr('title',"ip field").tooltip({close:function(){$(this).tooltip("destroy").removeAttr("title")},tooltipClass:"highlight", content: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>' }).tooltip("open");
-                   
                     return;
                 }
-
-                var newOpt = new Option();
-                newOpt.text = NewIpAddressTextBox.getText();
-                newOpt.value = NewIpAddressTextBox.getText();
-
-                lboxIpAddress.options[lboxIpAddress.options.length] = newOpt;
-                lboxIpAddress.selectedIndex = lboxIpAddress.options.length - 1;
-                if (lboxIpAddress.options.length == 1) {
+                var data = NewIpAddressTextBox.getText();
+                $('#<%= lboxIpAddress.ClientID %>').append($('<option></option>').val(data).text(data).css('background-color',"#8CFF8C"));
+                lboxIpAddress.val(data)
+                if ( $('#<%= lboxIpAddress.ClientID %>>option').length == 1) 
+                {
                     IpAddressActionButtons.enable();
                 }
-                lboxIpAddress.options[lboxIpAddress.selectedIndex].style.backgroundColor = "#8CFF8C";
             },
 
             remove: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
-                if (lboxIpAddress.selectedIndex == -1) return;
-
-                prevIndex = lboxIpAddress.selectedIndex;
-
-                lboxIpAddress.options[lboxIpAddress.selectedIndex] = null;
-                if (prevIndex < lboxIpAddress.options.length) {
-                    lboxIpAddress.selectedIndex = prevIndex;
-                }
-                else {
-                    lboxIpAddress.selectedIndex = prevIndex - 1;
-                }
-
-                if (lboxIpAddress.options.length == 0) {
-                    NewIpAddressTextBox.setText('');
-                    NewIpAddressValidator.disable();
-                    IpAddressActionButtons.disable();
-                }
-                else {
-                    NewIpAddressTextBox.setText(lboxIpAddress.options[lboxIpAddress.selectedIndex].text);
+                var ipbox =  $("#<%= lboxIpAddress.ClientID %>");
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if(index == -1) return;
+                $.when( $("#<%= lboxIpAddress.ClientID %> option:selected").remove() ).then(function(){
+                    if( index < option.length)
+                    {
+                        index--;
+                        ipbox.val(option.eq(index).val())
+                    }
                     validateText();
-                }
+                    NewIpAddressTextBox.setText(ipbox.val());
+                });
             },
 
             edit: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
-                if (lboxIpAddress.selectedIndex == -1) return;
-
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if (index == -1) return;
                 if (!validateText()) {
-                    $
-                    var tooltip = new Ext.tip.ToolTip({
-                        html: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>',
-                        autoHide: true,
-                        target: document.getElementById('<%= tboxNewIpAddress.ClientID %>'),
-                        anchor: 'top',
-                        closable: false,
-                        anchorOffset: 100,
-                        listeners: {
-                            hide: function (panel, eOpts) {
-                                this.setDisabled(true);
-                            }
-                        }
-                    });
-                    tooltip.show();
+                    var tooltip = $('#<%= tboxNewIpAddress.ClientID %>').attr('title',"ip field").tooltip({close:function(){$(this).tooltip("destroy").removeAttr("title")},tooltipClass:"highlight", content: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>' }).tooltip("open");
                     return;
                 }
-
-                lboxIpAddress.options[lboxIpAddress.selectedIndex].text = NewIpAddressTextBox.getText(); ;
-                lboxIpAddress.options[lboxIpAddress.selectedIndex].value = NewIpAddressTextBox.getText(); ;
-                lboxIpAddress.options[lboxIpAddress.selectedIndex].style.backgroundColor = "#8CFF8C";
+                var data = NewIpAddressTextBox.getText();
+                option.eq(index).text(data).val(data).css('background-color',"#8CFF8C")
             },
 
             onChange: function () {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
-                if (lboxIpAddress.selectedIndex == -1) return;
-
-                NewIpAddressTextBox.setText(lboxIpAddress.options[lboxIpAddress.selectedIndex].text);
+                var lbox = $("#<%= lboxIpAddress.ClientID %>");
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if (index == -1) return;
+                NewIpAddressTextBox.setText(lbox.val());
                 validateText();
             },
 
             generate: function () {
                 var arr = new Array();
-                for (i = 0; i < lboxIpAddress.options.length; i++) {
-                    arr.push(lboxIpAddress.options[i].value);
-                }
+                $("#<%= lboxIpAddress.ClientID %> option").each(function(){
+                    arr.push($(this).val());
+                })
+               
                 return arr.join('&');
             },
-
             populate: function (text) {
-                lboxIpAddress = document.getElementById('<%= lboxIpAddress.ClientID %>');
-
+                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
+                var option = false;
                 clear();
 
                 var splited = text.split('&');
 
                 for (i = 0; i < splited.length; i++) {
+                    option = $("#<%= lboxIpAddress.ClientID %> option");
                     if (splited[i] == '') continue;
-                    var newOpt = new Option();
-                    newOpt.text = splited[i];
-                    newOpt.value = splited[i];
-                    lboxIpAddress.options[lboxIpAddress.options.length] = newOpt;
+                    
                     if (matchRegexp(splited[i])) {
-                        lboxIpAddress.options[lboxIpAddress.options.length - 1].style.backgroundColor = "#8CFF8C";
+                        lboxIpAddress.append($('<option></option>').text(splited[i]).val(splited[i]).css('background-color',"#8CFF8C"))
                     }
                     else {
-                        lboxIpAddress.options[lboxIpAddress.options.length - 1].style.backgroundColor = "#FF8C8C";
+                        lboxIpAddress.append($('<option></option>').text(splited[i]).val(splited[i]).css('background-color',"#FF8C8C"))
                     }
                 }
-
-                if (lboxIpAddress.options.length > 0) {
-                    lboxIpAddress.selectedIndex = 0;
-                    NewIpAddressTextBox.setText(lboxIpAddress.options[lboxIpAddress.selectedIndex].text);
+                option = $("#<%= lboxIpAddress.ClientID %> option");
+                if (option.length > 0) {
+                    lboxIpAddress.val(option.eq(0).val())
+                    NewIpAddressTextBox.setText(lboxIpAddress.val());
                     validateText();
-
                     IpAddressActionButtons.enable();
                 }
                 else {
@@ -235,13 +200,11 @@
     var IpAddressTextBox = function () {
         return {
             getText: function () {
-                tboxIpAddress = document.getElementById('<%= tboxFilter.ClientID %>');
-                return tboxIpAddress.value;
+                return $('#<%= tboxFilter.ClientID %>').val();
             },
 
             setText: function (text) {
-                tboxIpAddress = document.getElementById('<%= tboxFilter.ClientID %>');
-                tboxIpAddress.value = text;
+                $('#<%= tboxFilter.ClientID %>').val(text);
             }
         };
     } ();
@@ -259,7 +222,6 @@
                 regexFilterExt = $find('<%= regexFilterExt.ClientID %>');
                 if (AjaxControlToolkit.ValidatorCalloutBehavior._currentCallout ===
                             regexFilterExt) {
-                    //control is currently active, hide it
                     AjaxControlToolkit.ValidatorCalloutBehavior._currentCallout.hide();
                 }
 
@@ -295,15 +257,14 @@
         function onApply() {
             if (IpAddressListBox.validateList()) {
                 IpAddressTextBox.setText(IpAddressListBox.generate());
-                dialog.hide();
-            }
+             }
         }
 
         function onHide() {
             IpAddressValidator.enable();
             NewIpAddressValidator.disable();
             PageRequestManagerHelper.enableAsyncPostBack();
-            document.getElementById('<%= dlgIpAddress.ClientID  %>').style.display = "none";
+           $('#<%= dlgIpAddress.ClientID  %>').css('display', "none");
         }
 
         function onShow() {
@@ -368,12 +329,9 @@
 </flt:PrimitiveFilterTemplate>
 <div id="dlgIpAddress" runat="server" style="display:none" >
     <p>
-                    <asp:LinkButton ID="lbtnAddIpAddress" OnClientClick="IpAddressListBox.add(); return false;"
-                        runat="server"><%=Resources.Resource.Add%></asp:LinkButton>
-                    <asp:LinkButton ID="lbtnEditIpAddress" OnClientClick="IpAddressListBox.edit(); return false;"
-                        runat="server"><%=Resources.Resource.Edit%></asp:LinkButton>
-                    <asp:LinkButton ID="lbtnDeleteIpAddress" OnClientClick="IpAddressListBox.remove(); return false;"
-                        runat="server"><%=Resources.Resource.Delete%></asp:LinkButton>
+                    <asp:LinkButton ID="lbtnAddIpAddress" runat="server"><%=Resources.Resource.Add%></asp:LinkButton>
+                    <asp:LinkButton ID="lbtnEditIpAddress" runat="server"><%=Resources.Resource.Edit%></asp:LinkButton>
+                    <asp:LinkButton ID="lbtnDeleteIpAddress" runat="server"><%=Resources.Resource.Delete%></asp:LinkButton>
         <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>
         <asp:RequiredFieldValidator ID="reqNewIpAddress" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
             ControlToValidate="tboxNewIpAddress" Display="None" ValidationGroup="NewIpAddressValidation">
