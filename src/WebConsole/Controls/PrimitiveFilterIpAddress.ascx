@@ -3,12 +3,6 @@
 <%@ Register Src="~/Controls/PrimitiveFilterTemplate.ascx" TagName="PrimitiveFilterTemplate"
     TagPrefix="flt" %>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#<%= lbtnAddIpAddress.ClientID %>').click(function(){
-            IpAddressListBox.add(); 
-            return false;
-        });
-    })
     var IpAddressActionButtons = function () {
         return {
             disable: function () {
@@ -277,8 +271,10 @@
                 asyncPostBack = true;
             },
             show: function () {
+                
                 if ($('#<%= imgHelper.ClientID%>').attr("disabled") === "disabled") { return; }
                 if (!dialog || asyncPostBack) {
+                
                 dialog =  $('#<%= dlgIpAddress.ClientID  %>').dialog({
                         title: '<%=Resources.Resource.IPAddress %>',
                         width: 340,
@@ -300,6 +296,10 @@
 
                     });
                     asyncPostBack = false;
+                    $('#<%= lbtnAddIpAddress.ClientID %>').click(function(){
+                        IpAddressListBox.add(); 
+                        return false;
+                    });
                 }
                 IpAddressValidator.disable();
                 IpAddressListBox.populate(IpAddressTextBox.getText());
