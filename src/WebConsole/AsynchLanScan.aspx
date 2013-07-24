@@ -310,7 +310,7 @@
                 <td>
                     <div class="ui-accordion ui-widget ui-helper-reset" style="width: 370px;">
                         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
-                                    ui-accordion-header-active ui-state-active ui-corner-top" style="cursor: default !important;">
+                                    ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
                             <%=Resources.Resource.IPRange%>
                         </h3>                        
                         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
@@ -349,7 +349,7 @@
                 <td style="padding-left: 10px;">
                     <div class="ui-accordion ui-widget ui-helper-reset" style="width: 340px;">
                         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
-                                    ui-accordion-header-active ui-state-active ui-corner-top" style="cursor: default !important;">
+                                    ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
                             <%=Resources.Resource.Credentials%>
                         </h3>                        
                         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
