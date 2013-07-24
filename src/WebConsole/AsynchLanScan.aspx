@@ -440,16 +440,27 @@
             <td>
                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                     <ContentTemplate>
-                        <div class="ButtonStyle" style="float: left;">
-                            <asp:LinkButton ID="btnStart" ValidationGroup="SettingsValidation" runat="server" OnClick="btnStart_Click" ForeColor="white" Width="100%" style="margin-top: 5px;" ><%=Resources.Resource.Start%></asp:LinkButton>
-                        </div>
-                        <div class="ButtonStyle" style="float: left;">
-                            <asp:LinkButton ID="btnStop" runat="server" OnClick="btnStop_Click" ForeColor="white" Width="100%" style="margin-top: 5px;"><%=Resources.Resource.Stop%></asp:LinkButton>
-                        </div>
-                        <div class="ButtonStyle" style="float: left;">
-                            <asp:LinkButton ID="btnPause" runat="server" OnClick="btnPause_Click" ForeColor="white" Width="100%" style="margin-top: 5px;"><%=Resources.Resource.Pause%></asp:LinkButton>                        
-                            <asp:LinkButton ID="btnResume" runat="server" OnClick="btnResume_Click" ForeColor="white" Width="100%" style="margin-top: 5px;"><%=Resources.Resource.Resume%></asp:LinkButton>
-                        </div>                        
+                        <asp:LinkButton ID="btnStart" ValidationGroup="SettingsValidation" runat="server" OnClick="btnStart_Click" 
+                            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 100px;" >
+                                <%=Resources.Resource.Start%>
+                        </asp:LinkButton>
+                        <asp:LinkButton ID="btnStop" runat="server" OnClick="btnStop_Click" 
+                            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px; width: 100px;">
+                                <%=Resources.Resource.Stop%>
+                        </asp:LinkButton>
+                        
+                        <asp:LinkButton ID="btnPause" runat="server" OnClick="btnPause_Click" 
+                            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; width: 100px;">
+                                <%=Resources.Resource.Pause%>
+                        </asp:LinkButton>
+                        <asp:LinkButton ID="btnResume" runat="server" OnClick="btnResume_Click" 
+                            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; width: 100px;">
+                                <%=Resources.Resource.Resume%>
+                        </asp:LinkButton>                                                
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </td>
@@ -577,10 +588,11 @@
         <table>        
             <tr>
                 <td>
-                    <div class="ButtonStyle">
-                        <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click" ForeColor="white"
-                            Width="100%" style="margin-top: 5px;" Text='<%$Resources:Resource, Attach %>' />
-                    </div>
+                    <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click"
+                        CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                        style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 100px;">
+                            <%=Resources.Resource.Attach %>
+                    </asp:LinkButton>
                 </td>
                 <td style="padding-left: 20px;">
                     <asp:Label ID="lblSelectedTotalCountText" runat="server" Text="Totaly Selected: "></asp:Label>
