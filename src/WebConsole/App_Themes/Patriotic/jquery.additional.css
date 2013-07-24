@@ -1,0 +1,5 @@
+﻿.ui-button[disabled]
+{
+	color: Gray;
+	cursor: default;
+}
