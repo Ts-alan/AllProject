@@ -59,11 +59,10 @@ public partial class AsynchLanScan : PageBase
             AdjustSelection();
             SaveSelection();
         }
-
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
         if (!IsPostBack)
         {
-            SetUpServerTimer();
+            SetUpServerTimer();            
         }
 
         if (ScriptManager.GetCurrent(Page).IsInAsyncPostBack)
@@ -95,9 +94,6 @@ public partial class AsynchLanScan : PageBase
 
     protected override void InitFields()
     {
-        lbtnAddNew.Text = Resources.Resource.Add;
-        lbtnRemove.Text = Resources.Resource.Delete;
-
         lblDomain.Text = Resources.Resource.DomainName;
         lblLogin.Text = Resources.Resource.Login;
         lblPass.Text = Resources.Resource.PasswordLabelText;
@@ -106,32 +102,57 @@ public partial class AsynchLanScan : PageBase
         lblPingTimeout.Text = Resources.Resource.Timeout;
         rangePingCount.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 10);
         rangePingTimeout.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 100);
-        
-        cbRebootAfterInstall.Text = Resources.Resource.RebootAfterInstall;
-
-        rbtnlProviders.Items.Add(Resources.Resource.RemoteService);
-        rbtnlProviders.Items.Add(Resources.Resource.WMI);
-        rbtnlProviders.SelectedIndex = 0;
     }        
     #endregion
 
     #region SettingsState
     private void LoadSettingsState()
-    {
+    {        
         tboxLoginCr.Text = login;
         tboxDomainCr.Text = domain;
         cboxSavePassword.Checked = isSavePassword;
         if (isSavePassword)
             tboxPasswordCr.Attributes.Add("value", password);
-        rbtnlProviders.SelectedIndex = provider;
         txtPingCount.Text = pingCount.ToString();
         txtPingTimeout.Text = pingTimeout.ToString();
-        if (scanComputerList != null)
+        if (scanComputerList != null && scanComputerList.Count != 0)
         {
-            foreach (string next in scanComputerList)
+            String str = String.Empty;
+            foreach (String next in scanComputerList)
             {
-                lboxCompIncludeList.Items.Add(next);
+                lboxIpAddress.Items.Add(next);
+                str += next + ";";
             }
+            hdnIPAddress.Value = str;
+
+            if (Request.Browser.Browser == "IE")
+            {
+                lbtnEditIpAddress.Attributes.Remove("disabled");
+                lbtnDeleteIpAddress.Attributes.Remove("disabled");
+            }
+            else
+            {
+                lbtnEditIpAddress.Style["color"] = "";
+                lbtnDeleteIpAddress.Style["color"] = "";
+            }
+            
+            lbtnEditIpAddress.Style["cursor"] = "pointer";
+            lbtnDeleteIpAddress.Style["cursor"] = "pointer";
+        }
+        else
+        {
+            if (Request.Browser.Browser == "IE")
+            {
+                lbtnEditIpAddress.Attributes.Add("disabled", "true");
+                lbtnDeleteIpAddress.Attributes.Add("disabled", "true");
+            }
+            else
+            {
+                lbtnEditIpAddress.Style["color"] = "Gray";
+                lbtnDeleteIpAddress.Style["color"] = "Gray";
+            }
+            lbtnEditIpAddress.Style["cursor"] = "default";
+            lbtnDeleteIpAddress.Style["cursor"] = "default";
         }
     }
 
@@ -144,18 +165,27 @@ public partial class AsynchLanScan : PageBase
             password = tboxPasswordCr.Text;
         else
             password = String.Empty;
-        provider = rbtnlProviders.SelectedIndex;
         pingCount = GetPingCount();
         pingTimeout = GetPingTimeout();
-        scanComputerList = new List<string>();
-        foreach (ListItem next in lboxCompIncludeList.Items)
-            scanComputerList.Add(next.Text);
+        SaveIpRangesState();
+    }
+
+    private void FillIPAddressList()
+    {
+        lboxIpAddress.Items.Clear();
+        String[] list = hdnIPAddress.Value.Split(new char[] { ';' });
+        foreach (String str in list)
+        {
+            if (!String.IsNullOrEmpty(str))
+                lboxIpAddress.Items.Add(str);
+        }
     }
 
     private void SaveIpRangesState()
     {
         scanComputerList = new List<string>();
-        foreach (ListItem next in lboxCompIncludeList.Items)
+        FillIPAddressList();
+        foreach (ListItem next in lboxIpAddress.Items)
             scanComputerList.Add(next.Text);
     }
     #endregion
@@ -757,27 +787,7 @@ public partial class AsynchLanScan : PageBase
             SettingsStorageCollection[pingTimeoutKey] = value;
         }
     }
-    private string providerKey = "Provider";
-    protected int provider
-    {
-        get
-        {
-            if (SettingsStorageCollection.ContainsKey(providerKey))
-            {
-                int? result = SettingsStorageCollection[providerKey] as int?;
-                return result.GetValueOrDefault(0); 
-            }
-            return 0;
-        }
-        set
-        {
-            if (!SettingsStorageCollection.ContainsKey(providerKey))
-            {
-                SettingsStorageCollection.Add(providerKey, null);
-            }
-            SettingsStorageCollection[providerKey] = value;
-        }
-    }
+    
     private string scanComputerListKey = "ScanComputerList";
     protected List<string> scanComputerList
     {
@@ -1149,53 +1159,6 @@ public partial class AsynchLanScan : PageBase
         }
     }
     #endregion
-  
-    #region Ip Ranges List Tab
-
-    protected void lbtnImport_Click(object sender, EventArgs e)
-    {
-        ImportComputersList();
-    }
-
-    /// <summary>
-    /// Import any comps from file to list
-    /// </summary>
-    protected void ImportComputersList()
-    {
-        if (fuImport.HasFile)
-        {
-            HttpPostedFile file = fuImport.PostedFile;
-
-            System.IO.StreamReader reader =
-                new System.IO.StreamReader(file.InputStream);
-
-            while (!reader.EndOfStream)
-            {
-                string str = reader.ReadLine();
-                lboxCompIncludeList.Items.Add(str);
-            }
-
-        }
-    }
-
-    protected void lbtnAddNew_Click1(object sender, EventArgs e)
-    {
-        string newName = tboxNewComp.Text;
-        if (!String.IsNullOrEmpty(newName))
-        {
-            lboxCompIncludeList.Items.Add(newName);
-        }
-        tboxNewComp.Text = "";
-        SaveIpRangesState();
-    }
-
-    protected void lbtnRemove_Click(object sender, EventArgs e)
-    {
-        if (lboxCompIncludeList.SelectedIndex != -1)
-            lboxCompIncludeList.Items.RemoveAt(lboxCompIncludeList.SelectedIndex);
-        SaveIpRangesState();
-    }
-    #endregion
 
     #region Install
         
@@ -1294,14 +1257,45 @@ public partial class AsynchLanScan : PageBase
     private List<IPRange> GetIpRanges()
     {
         List<IPRange> list = new List<IPRange>();
-        foreach (ListItem item in lboxCompIncludeList.Items)
+        foreach (ListItem item in lboxIpAddress.Items)
         {
             try
             {
-                string[] ipadresses = item.Text.Split(new char[] { '-' });
+                String[] ipadresses = item.Text.Split(new Char[] { '-' });
                 if (ipadresses.Length > 1)
                     list.Add(new IPRange(IPAddress.Parse(ipadresses[0]), IPAddress.Parse(ipadresses[1])));
-                else list.Add(new IPRange(IPAddress.Parse(ipadresses[0]), IPAddress.Parse(ipadresses[0])));
+                else
+                {
+                    if (!ipadresses[0].Contains("*"))
+                        list.Add(new IPRange(IPAddress.Parse(ipadresses[0]), IPAddress.Parse(ipadresses[0])));
+                    else
+                    {//192.168.*
+                        String[] parts = ipadresses[0].Split(new Char[]{'.'});
+                        String[] ip1 = new String[4];
+                        String[] ip2 = new String[4];
+                        for (Int32 index = 0; index < parts.Length; index++)
+                        {
+                            if (parts[index] != "*")
+                            {
+                                ip1[index] = ip2[index] = parts[index]; 
+                            }
+                            else
+                            {
+                                ip1[index] = "0";
+                                ip2[index] = "255";
+                            }
+                        }
+                        for (Int32 index = parts.Length; index < 4; index++)
+                        {
+                            ip1[index] = "0";
+                            ip2[index] = "255"; 
+                        }
+                        list.Add(new IPRange(
+                            IPAddress.Parse(String.Format("{0}.{1}.{2}.{3}", ip1[0], ip1[1], ip1[2], ip1[3])), 
+                            IPAddress.Parse(String.Format("{0}.{1}.{2}.{3}", ip2[0], ip2[1], ip2[2], ip2[3])))
+                            );
+                    }
+                }
             }
             catch
             {
@@ -1313,11 +1307,7 @@ public partial class AsynchLanScan : PageBase
 
     private RemoteMethodsEnum GetRemoteMethod()
     {
-        if (rbtnlProviders.SelectedValue == Resources.Resource.RemoteService)
-        {
-            return RemoteMethodsEnum.RemoteService;
-        }
-        return RemoteMethodsEnum.Wmi;
+        return RemoteMethodsEnum.RemoteService;
     }
     #endregion
 

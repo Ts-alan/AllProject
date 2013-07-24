@@ -2805,4 +2805,7 @@
   <data name="SavePasswordInformation" xml:space="preserve">
     <value>remember password</value>
   </data>
+  <data name="AdditionalSettings" xml:space="preserve">
+    <value>Additional settings</value>
+  </data>
 </root>

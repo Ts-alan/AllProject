@@ -4,23 +4,19 @@
 <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
 <%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
-    <div class="title">
-        <%=Resources.Resource.PageLanScanTitle%>
-    </div>
+    
     <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </ajaxToolkit:ToolkitScriptManager>
     <script type="text/javascript" language="javascript" src="AsynchRequestErrorHandler.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#tabs").tabs({ cookie: { expires: 30} });
-        });
-        function pageLoad() {
             $("#divModalDialog").dialog({ autoOpen: false });
             $(document).on("click", 'div[class=EditComment]', function () {
-                var ip = $(this).attr('IP');
-                var title = $(this).attr('titleDialog');
-                var saveTitle = $(this).attr('saveTitle');
-                var isComment = $(this).attr('comment');
+                var sender = $(this);
+                var ip = sender.attr('IP');
+                var title = sender.attr('titleDialog');
+                var saveTitle = sender.attr('saveTitle');
+                var isComment = sender.attr('comment');
                 var comment = '';
                 if (isComment == 'true')
                     comment = $("span[IP='" + ip + "']").text().replace(/^\s\s*/, '').replace(/\s\s*$/, ''); //trim start&end spaces
@@ -49,6 +45,11 @@
                                     success: function () {
                                         comment = newVal;
                                         $("span[IP='" + ip + "']").text(comment);
+                                        if (comment != '') {
+                                            sender.attr('comment', 'true');
+                                        }
+                                        else
+                                            sender.removeAttr('comment');
                                     }
                                 });
                             }
@@ -78,135 +79,357 @@
                 });
                 alert(m.Message);
             }
-        }
+        });
     </script>
     
-    
-        <div id='tabs'>
-            <ul>
-                <%--<li>
-                    <a href='#3'><span>
-                    <%=Resources.Resource.Provider%>
-                    </span></a>
-                </li>--%>
-                <li>
-                    <a href='#0'><span>
-                    <%=Resources.Resource.IPRange + "/" + Resources.Resource.List%>
-                    </span></a>
-                </li>
-                <li>
-                    <a href='#1'><span>
-                    <%=Resources.Resource.Credentials%>
-                    </span></a>
-                </li>
-                <li>
-                    <a href='#4'><span>
-                    <%=Resources.Resource.Settings%>
-                    </span></a>
-                </li>
-            </ul>            
-            <div id='0'>
-            
-                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                        <ContentTemplate>
-                        
-                <table class="ListContrastTable" style="width: 700px">
-                    <tr>
-                        <td valign="top" style="width: 50%">
-                            <asp:ListBox ID="lboxCompIncludeList" Width="320px" Height="110px" runat="server" />
-                        </td>
-                        <td valign="top" align="left" style="width: 50%">
-                            <asp:TextBox ID="tboxNewComp" runat="server" Style="width: 250px" /><br />
-                            <asp:RequiredFieldValidator ID="requiredNewComp" ControlToValidate="tboxNewComp" 
-                            runat="server" ErrorMessage='<%$ Resources:Resource, NewCompRequiredErrorMessage %>'
-                            ValidationGroup="NewCompValidation"> <br />
-                        </asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ControlToValidate="tboxNewComp" ID="regexNewComp" runat="server" 
-                            ErrorMessage='<%$ Resources:Resource, IPRangeRegexErrorMessage %>' ValidationGroup="NewCompValidation"
-                            ValidationExpression="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$"
-                            ></asp:RegularExpressionValidator>
-                            <br />
-                            <asp:LinkButton ID="lbtnAddNew" ValidationGroup="NewCompValidation" runat="server" OnClick="lbtnAddNew_Click1" /><br />
-                            <asp:LinkButton ID="lbtnRemove" runat="server" OnClick="lbtnRemove_Click" /><br />
-                            <br />
-                            <asp:FileUpload ID="fuImport" runat="server" Visible="false" Width="120px" /><br />
-                            <asp:LinkButton ID="lbtnImport" runat="server" Visible="false" OnClick="lbtnImport_Click"
-                                Text="Import" />
-                        </td>
-                    </tr>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#<%= lbtnAddIpAddress.ClientID %>').click(function () {
+                IpAddressListBox.add();
+                return false;
+            });
+
+            $('#<%= lbtnEditIpAddress.ClientID %>').click(function () {
+                IpAddressListBox.edit();
+                return false;
+            });
+
+            $('#<%= lbtnDeleteIpAddress.ClientID %>').click(function () {
+                IpAddressListBox.remove();
+                return false;
+            });
+
+            $('#mainAccordion').accordion({ collapsible: true, active: 0 });
+            $('#divAccordion').accordion({collapsible: true, active: false});
+        })
+    var IpAddressActionButtons = function () {
+        return {
+            disable: function () {
+                lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
+                lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
+
+                if (navigator.appName == 'Microsoft Internet Explorer') {
+                    lbtnDeleteIpAddress.attr('disabled', true);
+                    lbtnEditIpAddress.attr('disabled', true);
+                }
+                else {
+                    lbtnDeleteIpAddress.css('color', 'gray');
+                    lbtnEditIpAddress.css('color', 'gray');
+                }
+                lbtnDeleteIpAddress.css('cursor', 'default');
+                lbtnEditIpAddress.css('cursor', 'default');
+            },
+
+            enable: function () {
+                lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
+                lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
+
+                if (navigator.appName == 'Microsoft Internet Explorer') {
+                    lbtnDeleteIpAddress.attr('disabled', false);
+                    lbtnEditIpAddress.attr('disabled', false);
+                }
+                else {
+                    lbtnDeleteIpAddress.css('color', '');
+                    lbtnEditIpAddress.css('color', '');
+                }
+                lbtnDeleteIpAddress.css('cursor', 'pointer');
+                lbtnEditIpAddress.css('cursor', 'pointer');
+                                
+            }
+        };
+    } ();
+
+    var NewIpAddressTextBox = function () {
+        return {
+            getText: function () {
+                return $('#<%= tboxNewIpAddress.ClientID %>').val();
+            },
+
+            setText: function (text) {
+                $('#<%= tboxNewIpAddress.ClientID %>').val(text);
+            }
+        };
+    } ();
+
+    var IpAddressListBox = function () {
+        function clear() {
+            $('#<%= lboxIpAddress.ClientID %>>option').remove();
+        }
+
+        function matchRegexp(text) {
+            var regexp = new RegExp('^\\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.\\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.\\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.\\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$');
+            return regexp.test(text);
+        }
+
+        function findInvalid() {
+            var ret = -1;
+            $('#<%= lboxIpAddress.ClientID %>>option').each(function (i) {
+                if (!matchRegexp($(this).text()) || $(this).text() != $(this).val()) {
+                    ret = $(this).val();
+                }
+            })
+            return ret;
+        }
+
+        function validateText() {
+            return Page_ClientValidate('NewIpAddressValidation');
+        }
+
+        function saveList() {
+            var value = "";
+            var intCount = $('#<%= lboxIpAddress.ClientID %>>option').length;
+            var option = $("#<%= lboxIpAddress.ClientID %> option");
+
+            for (i = 0; i < intCount; i++) {
+                value += option.eq(i).text() + ";";
+            }
+
+            var sel = "input[id=" + '<%= hdnIPAddress.ClientID %>' + "]";
+            $(sel).val(value);
+        }
+
+        return {
+            validateList: function () {
+                var invalid = findInvalid();
+                if (invalid != -1) {
+                    $('#<%= lboxIpAddress.ClientID %>').val(invalid);
+                    NewIpAddressTextBox.setText(invalid);
+                    validateText();
+                    return false;
+                }
+                return true;
+            },
+
+            add: function () {
+                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
+                if (!validateText()) {
+                    var tooltip = $('#<%= tboxNewIpAddress.ClientID %>').attr('title', "ip field").tooltip({ close: function () { $(this).tooltip("destroy").removeAttr("title") }, tooltipClass: "highlight", content: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>' }).tooltip("open");
+                    return;
+                }
+                var data = NewIpAddressTextBox.getText();
+                $('#<%= lboxIpAddress.ClientID %>').append($('<option></option>').val(data).text(data));
+                lboxIpAddress.val(data)
+                if ($('#<%= lboxIpAddress.ClientID %>>option').length == 1) {
+                    IpAddressActionButtons.enable();
+                }
+
+                saveList();
+            },
+
+            remove: function () {
+                var ipbox = $("#<%= lboxIpAddress.ClientID %>");
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if (index == -1) return;
+                $.when($("#<%= lboxIpAddress.ClientID %> option:selected").remove()).then(function () {
+                    if (index < option.length) {
+                        index--;
+                        ipbox.val(option.eq(index).val())
+                    }
+                    validateText();
+                    NewIpAddressTextBox.setText(ipbox.val());
+
+                    if (option.length == 1) {
+                        IpAddressActionButtons.disable();
+                    }
+
+                    saveList();
+                });
+            },
+
+            edit: function () {
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if (index == -1) return;
+                if (!validateText()) {
+                    var tooltip = $('#<%= tboxNewIpAddress.ClientID %>').attr('title', "ip field").tooltip({ close: function () { $(this).tooltip("destroy").removeAttr("title") }, tooltipClass: "highlight", content: '<%= Resources.Resource.IpAddressFilterInIncorrectFormat %>' }).tooltip("open");
+                    return;
+                }
+                var data = NewIpAddressTextBox.getText();
+                option.eq(index).text(data).val(data);
+
+                saveList();
+            },
+
+            onChange: function () {
+                var lbox = $("#<%= lboxIpAddress.ClientID %>");
+                var option = $("#<%= lboxIpAddress.ClientID %> option");
+                var index = option.index($("#<%= lboxIpAddress.ClientID %> option:selected"));
+                if (index == -1) return;
+                NewIpAddressTextBox.setText(lbox.val());
+                validateText();
+            },
+
+            generate: function () {
+                var arr = new Array();
+                $("#<%= lboxIpAddress.ClientID %> option").each(function () {
+                    arr.push($(this).val());
+                })
+
+                return arr.join('&');
+            },
+            populate: function (text) {
+                lboxIpAddress = $('#<%= lboxIpAddress.ClientID %>');
+                var option = false;
+                clear();
+
+                var splited = text.split('&');
+
+                for (i = 0; i < splited.length; i++) {
+                    option = $("#<%= lboxIpAddress.ClientID %> option");
+                    if (splited[i] == '') continue;
+
+                    if (matchRegexp(splited[i])) {
+                        lboxIpAddress.append($('<option></option>').text(splited[i]).val(splited[i]));
+                    }
+                    else {
+                        lboxIpAddress.append($('<option></option>').text(splited[i]).val(splited[i]));
+                    }
+                }
+                option = $("#<%= lboxIpAddress.ClientID %> option");
+                if (option.length > 0) {
+                    lboxIpAddress.val(option.eq(0).val())
+                    NewIpAddressTextBox.setText(lboxIpAddress.val());
+                    validateText();
+                    IpAddressActionButtons.enable();
+                }
+                else {
+                    NewIpAddressTextBox.setText('');
+                    IpAddressActionButtons.disable();
+                }
+            }
+        };
+    } ();
+</script>
+
+        <div id='mainAccordion'>
+            <h3><%=Resources.Resource.Settings%></h3>
+            <div>
+                <table>
+                <tr valign="top">
+                <td>
+                    <div class="ui-accordion ui-widget ui-helper-reset" style="width: 370px;">
+                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
+                                    ui-accordion-header-active ui-state-active ui-corner-top" style="cursor: default !important;">
+                            <%=Resources.Resource.IPRange%>
+                        </h3>                        
+                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
+                            <div>                                
+                                <a id="lbtnAddIpAddress" runat="server" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+                                    <span class="ui-button-text"><%=Resources.Resource.Add%></span>
+                                </a>
+                                <a id="lbtnEditIpAddress" runat="server" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+                                    <span class="ui-button-text"><%=Resources.Resource.Edit%></span>
+                                </a>
+                                <a id="lbtnDeleteIpAddress" runat="server" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+                                    <span class="ui-button-text"><%=Resources.Resource.Delete%></span>
+                                </a>                                
+                            </div>
+                            <div>
+                                <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 310px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="reqNewIpAddress" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
+                                ControlToValidate="tboxNewIpAddress" Display="None" ValidationGroup="NewIpAddressValidation">
+                            </asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ControlToValidate="tboxNewIpAddress" ID="regexNewIpAddress"
+                                runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressInIncorrectFormat %>' ValidationGroup="NewIpAddressValidation"
+                                ValidationExpression="^\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.\*$|^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$"
+                                Display="None"></asp:RegularExpressionValidator>
+                            </div>
+                            <div>
+                                <asp:Literal ID="litIpAddressExamples" Text='<%$ Resources:Resource, IpAddressExamplesLiteral %>' runat="server"></asp:Literal>
+                            </div>
+                            <div>
+                                <select size="4"   ID="lboxIpAddress" runat="server" class="dropdownlist" onchange="IpAddressListBox.onChange()" style="height:180px;width:310px; margin-top: 8px; margin-left: 1px;">
+                                </select>
+                                <asp:HiddenField runat="server" ID="hdnIPAddress" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td style="padding-left: 10px;">
+                    <div class="ui-accordion ui-widget ui-helper-reset" style="width: 340px;">
+                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
+                                    ui-accordion-header-active ui-state-active ui-corner-top" style="cursor: default !important;">
+                            <%=Resources.Resource.Credentials%>
+                        </h3>                        
+                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
+                            <div>
+                                <asp:Label ID="lblDomain" runat="server" Width="70px" />
+                                <asp:TextBox ID="tboxDomainCr" runat="server" Style="width: 180px" />
+                            </div>
+                            <div style="margin-top: 5px;margin-bottom: 5px;">
+                                <asp:Label ID="lblLogin" runat="server" Width="70px" />
+                                <asp:TextBox ID="tboxLoginCr" runat="server" Style="width: 180px" autocomplete="off" />
+                                <asp:RequiredFieldValidator ID="requiredLogin" ControlToValidate="tboxLoginCr" runat="server" Display="None"
+                                    ErrorMessage='<%$ Resources:Resource, LoginRequiredErrorMessage %>' ValidationGroup="SettingsValidation">
+                                </asp:RequiredFieldValidator>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="requiredLoginExt" runat="server" TargetControlID="requiredLogin"
+                                    HighlightCssClass="highlight">
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                            </div>
+                            <div>
+                                <asp:Label ID="lblPass" runat="server" Width="70px" />
+                                <asp:TextBox ID="tboxPasswordCr" runat="server" Style="width: 180px" TextMode="Password" autocomplete="off" />
+                                <asp:CheckBox runat="server" ID="cboxSavePassword" Checked="false" AutoPostBack="false" Text="*" ForeColor="Red" />
+                                <br />
+                                <asp:RequiredFieldValidator ID="requiredPassword" ControlToValidate="tboxPasswordCr" runat="server" Display="None" 
+                                    ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>' ValidationGroup="SettingsValidation">
+                                </asp:RequiredFieldValidator>
+                                <asp:ValidationSummary ID="SettingsValidationSummary"  runat="server" ShowMessageBox="True" ShowSummary="False"
+                                    ValidationGroup="SettingsValidation" HeaderText='<%$ Resources:Resource, CheckCredentials %>' />
+                                <ajaxToolkit:ValidatorCalloutExtender ID="requiredPasswordExt" runat="server" TargetControlID="requiredPassword"
+                                    HighlightCssClass="highlight">
+                                </ajaxToolkit:ValidatorCalloutExtender>                            
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <asp:Label runat="server" ID="Label1" style="color: Red;">* - <%=Resources.Resource.SavePasswordInformation %></asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <div id="divAccordion" style="width: 340px;">
+                            <h3><%=Resources.Resource.AdditionalSettings%></h3>
+                            <div>
+                                <div>
+                                    <asp:Label ID="lblPingCount" runat="server" Width="230px" />
+                                    <asp:TextBox ID="txtPingCount" runat="server" Style="width: 40px" />
+                                </div>
+                                <div>
+                                    <asp:RequiredFieldValidator ID="requiredPingCount" ControlToValidate="txtPingCount" Display="None" 
+                                        runat="server" ErrorMessage='<%$ Resources:Resource, RequestPacketCountRequiredErrorMessage %>'
+                                        ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="rangePingCount" runat="server" ControlToValidate="txtPingCount" Display="None"
+                                        ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="10" Type="Integer" ></asp:RangeValidator>
+                                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredPingCountExt" runat="server" TargetControlID="requiredPingCount"
+                                        HighlightCssClass="highlight">
+                                    </ajaxToolkit:ValidatorCalloutExtender>
+                                    <ajaxToolkit:ValidatorCalloutExtender ID="rangePingCountExt" runat="server" TargetControlID="rangePingCount"
+                                        HighlightCssClass="highlight">
+                                    </ajaxToolkit:ValidatorCalloutExtender>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <asp:Label ID="lblPingTimeout" runat="server" Width="230px" />
+                                    <asp:TextBox ID="txtPingTimeout" runat="server" Style="width: 40px" />
+                                </div>
+                                <div>
+                                    <asp:RequiredFieldValidator ID="requiredPingTimeout" ControlToValidate="txtPingTimeout" Display="None"
+                                        runat="server" ErrorMessage='<%$ Resources:Resource, TimeoutRequiredErrorMessage %>'
+                                        ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="rangePingTimeout" runat="server" ControlToValidate="txtPingTimeout" Display="None"
+                                        ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="100" Type="Integer" ></asp:RangeValidator>
+                                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredPingTimeoutExt" runat="server" TargetControlID="requiredPingTimeout"
+                                        HighlightCssClass="highlight">
+                                    </ajaxToolkit:ValidatorCalloutExtender>
+                                    <ajaxToolkit:ValidatorCalloutExtender ID="rangePingTimeoutExt" runat="server" TargetControlID="rangePingTimeout"
+                                        HighlightCssClass="highlight">
+                                    </ajaxToolkit:ValidatorCalloutExtender>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                </tr>
                 </table>
-                </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-            <div id='1'>
-                <div class="ListContrastTable" style="width: 700px">
-                    &nbsp;<asp:Label ID="lblDomain" runat="server" Width="80px" />&nbsp;<asp:TextBox
-                        ID="tboxDomainCr" runat="server" Style="width: 190px" />&nbsp;                        
-                        <br />
-                    &nbsp;<asp:Label ID="lblLogin" runat="server" Width="80px" />&nbsp;<asp:TextBox ID="tboxLoginCr"
-                        runat="server" Style="width: 190px" autocomplete="off" />&nbsp;
-                        <asp:RequiredFieldValidator ID="requiredLogin" ControlToValidate="tboxLoginCr" 
-                        runat="server" ErrorMessage='<%$ Resources:Resource, LoginRequiredErrorMessage %>'
-                        ValidationGroup="SettingsValidation">
-                        </asp:RequiredFieldValidator>
-                        <br />
-                    &nbsp;<asp:Label ID="lblPass" runat="server" Width="80px" />&nbsp;<asp:TextBox ID="tboxPasswordCr"
-                        runat="server" Style="width: 190px" TextMode="Password" autocomplete="off" />
-                        <asp:CheckBox runat="server" ID="cboxSavePassword" Checked="false" AutoPostBack="false" Text="*" ForeColor="Red" />
-                        &nbsp;
-                        <asp:RequiredFieldValidator ID="requiredPassword" ControlToValidate="tboxPasswordCr" 
-                        runat="server" ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>'
-                        ValidationGroup="SettingsValidation">
-                        </asp:RequiredFieldValidator>
-                        <asp:ValidationSummary ID="SettingsValidationSummary"  runat="server" ShowMessageBox="True"
-                         ShowSummary="False" ValidationGroup="SettingsValidation" 
-                         HeaderText='<%$ Resources:Resource, CheckCredentials %>' />                         
-                         <br />
-                         <asp:Label runat="server" ID="Label1" style="color: Red;">* - <%=Resources.Resource.SavePasswordInformation %></asp:Label>
-                </div>
-            </div>
-            <div id='3' style="display: none;">
-                <div class="ListContrastTable" style="width: 700px">
-                    <asp:RadioButtonList runat="server" ID="rbtnlProviders" AutoPostBack="false" ></asp:RadioButtonList>
-                </div>
-            </div>
-            <div id='4'>
-                <div class="ListContrastTable" style="width: 700px">
-                    <table width="100%">
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblPingCount" runat="server" Width="250px" />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtPingCount" runat="server" Style="width: 70px" />
-                        </td>
-                        <td>
-                            <asp:RequiredFieldValidator ID="requiredPingCount" ControlToValidate="txtPingCount" 
-                                runat="server" ErrorMessage='<%$ Resources:Resource, RequestPacketCountRequiredErrorMessage %>'
-                                ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
-                            <br />
-                            <asp:RangeValidator ID="rangePingCount" runat="server" ControlToValidate="txtPingCount"
-                                ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="10" Type="Integer" ></asp:RangeValidator>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="lblPingTimeout" runat="server" Width="250px" />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="txtPingTimeout" runat="server" Style="width: 70px" />
-                        </td>
-                        <td>
-                            <asp:RequiredFieldValidator ID="requiredPingTimeout" ControlToValidate="txtPingTimeout" 
-                                runat="server" ErrorMessage='<%$ Resources:Resource, TimeoutRequiredErrorMessage %>'
-                                ValidationGroup="SettingsValidation"></asp:RequiredFieldValidator>
-                            <br />
-                            <asp:RangeValidator ID="rangePingTimeout" runat="server" ControlToValidate="txtPingTimeout"
-                                ValidationGroup="SettingsValidation" MinimumValue="1" MaximumValue="100" Type="Integer" ></asp:RangeValidator>
-                        </td>
-                    </tr>
-                    </table>
-                </div>
             </div>
         </div>
         <custom:StorageControl ID="SettingsStorage" runat="server" StorageType="Session" />
@@ -226,7 +449,7 @@
                         <div class="ButtonStyle" style="float: left;">
                             <asp:LinkButton ID="btnPause" runat="server" OnClick="btnPause_Click" ForeColor="white" Width="100%" style="margin-top: 5px;"><%=Resources.Resource.Pause%></asp:LinkButton>                        
                             <asp:LinkButton ID="btnResume" runat="server" OnClick="btnResume_Click" ForeColor="white" Width="100%" style="margin-top: 5px;"><%=Resources.Resource.Resume%></asp:LinkButton>
-                        </div>
+                        </div>                        
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </td>
