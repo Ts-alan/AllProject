@@ -317,8 +317,7 @@ AjaxControlToolkit.ValidatorCalloutBehavior2.prototype = {
         return this.get_element().errormessage || AjaxControlToolkit.Resources.ValidatorCallout_DefaultErrorMessage;
     },
 
-    show: function (force) {
-        alert('Show ErrorMessage!');
+    show: function (force) {        
         if (force || !this.get_isOpen()) {
             if (force && AjaxControlToolkit.ValidatorCalloutBehavior2._currentCallout) {
                 AjaxControlToolkit.ValidatorCalloutBehavior2._currentCallout.hide();
