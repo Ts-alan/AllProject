@@ -480,6 +480,49 @@ a:hover
     overflow:hidden
 }
 
+div.Button
+{
+    display:block;
+    text-decoration:none;    
+    width:100px;
+    height:25px;
+    text-align:center;    
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: Blue url('Images/ButtonBG.png') repeat-x;
+    
+    padding-top: 3px;
+    line-height:20px;
+    font-size:11px;    
+    overflow:hidden;
+    cursor: pointer;
+}
+
+div.Button:hover
+{
+    text-decoration: underline;
+}
+
+div.Button[disabled]
+{
+    display:block;
+    text-decoration:none;
+    width:100px;
+    height:25px;
+    text-align:center;    
+    color:#fff;
+    border:2px solid #fff;
+    
+    background: Gray url('Images/ButtonBG_disabled.png') repeat-x;
+    
+    padding-top: 3px;
+    line-height:20px;
+    font-size:11px;
+    overflow:hidden;
+    cursor:default;
+}
+
 /**/
 .menu
 {
