@@ -74,8 +74,8 @@ public partial class MapComputers : PageBase
 
     private string GetClassName(ComputersEntity entity)
     {
-        TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);        
-        if(time.Days != 0 || time.Hours >= 2) return "vbagrey";
+        TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);
+        if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 3) return "vbagrey";
         List<ComponentsEntity> list;
         using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
         {
