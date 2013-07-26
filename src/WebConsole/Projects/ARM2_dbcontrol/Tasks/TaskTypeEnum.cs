@@ -28,6 +28,7 @@ namespace ARM2_dbcontrol.Tasks
             ConfigureSheduler,
             Uninstall,
             ConfigureAgent,
-            DetachAgent
+            DetachAgent,
+            Install
         }
 }

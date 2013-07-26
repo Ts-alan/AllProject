@@ -261,27 +261,27 @@ CREATE PROCEDURE [dbo].[GetComputer]
 WITH ENCRYPTION
 AS
 	SELECT
-		[ID],
-		[ComputerName],
-		[IPAddress],
-		[ControlCenter],
-		[DomainName],
-		[UserLogin],
-		[OSTypeID],
-		[RAM],
-		[CPUClock],
-		[RecentActive],
-		[LatestUpdate],
-		[Vba32Version],
-		[LatestInfected],
-		[LatestMalware],
-		[Vba32Integrity],
-		[Vba32KeyValid],
-		[Description]
-	FROM
-		[dbo].[Computers]
-	WHERE
-		[ID] = @ID
+		c.[ID],
+		c.[ComputerName],
+		c.[IPAddress],
+		c.[ControlCenter],
+		c.[DomainName],
+		c.[UserLogin],
+		c.[OSTypeID],
+		c.[RAM],
+		c.[CPUClock],
+		c.[RecentActive],
+		c.[LatestUpdate],
+		c.[Vba32Version],
+		c.[LatestInfected],
+		c.[LatestMalware],
+		c.[Vba32Integrity],
+		c.[Vba32KeyValid],
+		c.[Description],
+		o.[OSName]
+	FROM [dbo].[Computers] AS c
+	INNER JOIN OSTypes AS o ON o.[ID] = c.[OSTypeID]
+	WHERE c.[ID] = @ID
 GO
 
 -----------------------------------------

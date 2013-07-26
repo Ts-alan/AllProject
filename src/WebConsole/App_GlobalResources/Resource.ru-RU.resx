@@ -2808,4 +2808,10 @@
   <data name="AdditionalSettings" xml:space="preserve">
     <value>Дополнительные настройки</value>
   </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Аргументы</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
 </root>

@@ -26,6 +26,7 @@
 <%@ Register Src="~/Controls/TaskUninstall.ascx" TagName="TaskUser" TagPrefix="tskUninstall" %>
 <%@ Register Src="~/Controls/TaskConfigureAgent.ascx" TagName="TaskUser" TagPrefix="tskConfigureAgent" %>
 <%@ Register Src="~/Controls/TaskDetachAgent.ascx" TagName="TaskUser" TagPrefix="tskDetachAgent" %>
+<%@ Register Src="~/Controls/TaskProductInstall.ascx" TagName="TaskUser" TagPrefix="tskProductInstall" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" />
@@ -282,6 +283,7 @@
                           <tskUninstall:TaskUser ID="tskUninstall" runat="server" HideHeader="true" Visible="false"></tskUninstall:TaskUser>  
                           <tskConfigureAgent:TaskUser ID="tskConfigureAgent" runat="server" HideHeader="true" Visible="false" />
                           <tskDetachAgent:TaskUser ID="tskDetachAgent" runat="server" HideHeader="true" Visible="false" />
+                          <tskProductInstall:TaskUser ID="tskProductInstall" runat="server" HideHeader="true" Visible="false" />
                     </asp:Panel>
                 </td>
             </tr>

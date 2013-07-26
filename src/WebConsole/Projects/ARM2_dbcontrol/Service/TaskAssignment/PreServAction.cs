@@ -149,5 +149,19 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
             }
             return vbaVersion;
         }
+
+        /// <summary>
+        /// Returns OS version array in string
+        /// </summary>
+        /// <param name="list">id's</param>
+        /// <returns></returns>
+        public static string[] GetOSVersionArray(List<Int16> list, string connStr)
+        {
+            string[] strOS = new string[list.Count];
+            for (int i = 0; i < list.Count; i++)
+                strOS[i] = GetComputerById(list[i], connStr).OSName;
+
+            return strOS;
+        }
     }
 }

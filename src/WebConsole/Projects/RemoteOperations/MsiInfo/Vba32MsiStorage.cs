@@ -6,12 +6,13 @@ using System.IO;
 using System.Web;
 using System.Xml.Schema;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace VirusBlokAda.RemoteOperations.MsiInfo
 {
     public static class Vba32MsiStorage
     {
-        private static Dictionary<String, String> dict = new Dictionary<String, String>();
+        private static Dictionary<String, FileEntity> dict = new Dictionary<String, FileEntity>();
         private static readonly String DirPath;
         private static readonly String XsdName = "Vba32Versions.xsd";
         private static readonly String XmlName = "Vba32MSI.xml";
@@ -70,7 +71,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
                 {
                     String path = next.InnerText;
                     String version = next.Attributes["version"].Value;
-                    dict.Add(version, path);
+                    dict.Add(version, new FileEntity(path, CalculateHash(path)));
                 }
             }
             catch (Exception ex)
@@ -84,6 +85,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
                     reader.Close();
             }
         }
+
 
         //public void Write(Dictionary<String, String> _dict)
         //{
@@ -133,10 +135,10 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
         public static String GetPathMSI(String name)
         {
             CheckRead();
-            String path;
-            if (dict.TryGetValue(name, out path))
+            FileEntity fEnt;
+            if (dict.TryGetValue(name, out fEnt))
             {
-                return path;
+                return fEnt.FileName;
             }
 
             else
@@ -180,7 +182,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
         private static void DeleteFile(String filename)
         {
             if (String.IsNullOrEmpty(filename)) return;
-            String fullname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Downloads\" + filename);
+            String fullname = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Installs\" + filename);
             try
             {
                 FileInfo TheFile = new FileInfo(fullname);
@@ -211,5 +213,89 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
 
             return false;
         }
+
+        /// <summary>
+        /// Calculate hash by file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static String CalculateHash(String fileName)
+        {
+            if (String.IsNullOrEmpty(fileName))
+                return String.Empty;
+            String path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Installs\" + fileName);;
+            using (MD5 md5 = MD5.Create())
+            {
+                Byte[] hash;
+                using (FileStream stream = File.OpenRead(path))
+                {
+                    hash = md5.ComputeHash(stream);
+                }
+
+                if (hash == null) 
+                    return String.Empty;
+
+                StringBuilder sBuilder = new StringBuilder();
+                for (Int32 i = 0; i < hash.Length; i++)
+                    sBuilder.Append(hash[i].ToString("x2"));
+
+                return sBuilder.ToString().ToUpper();
+            }
+        }
+
+        /// <summary>
+        /// Get Hash of file by product name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static String GetHash(String name)
+        {
+            CheckRead();
+            FileEntity fEnt;
+            if (dict.TryGetValue(name, out fEnt))
+            {
+                return fEnt.Hash;
+            }
+
+            else
+            {
+                return String.Empty;
+            }            
+        }
+    }
+
+
+    internal class FileEntity
+    {
+        #region Properties
+
+        private String _fileName = String.Empty;
+        public String FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+
+        private String _hash = String.Empty;
+        public String Hash
+        {
+            get { return _hash; }
+            set { _hash = value; }
+        }
+
+        #endregion
+
+        #region Constructors
+        
+        public FileEntity()
+        { }
+
+        public FileEntity(String fileName, String hash)
+        {
+            this._fileName = fileName;
+            this._hash = hash;
+        }
+
+        #endregion
     }
 }
