@@ -6,7 +6,7 @@
     <title>Untitled Page</title>
 </head>
 <body >
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" autocomplete="off">
     <asp:Image ID="imLogo" runat=server />
      <div class="section" style="margin-top:2px">  
         <table width="100%">
