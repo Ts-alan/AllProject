@@ -32,7 +32,7 @@ public partial class accordion2 : PageBase
             return provider;
         }
     }
-
+    static Dictionary<int, Group> GroupDictionary;
     protected void Page_Init(object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
@@ -43,6 +43,15 @@ public partial class accordion2 : PageBase
         RegisterScript(@"js/accordion2.js");
         RegisterScript(@"js/json2.js");
         RegisterScript(@"js/jQuery/jquery.loadmask.js");
+
+
+        BranchOfTree tree = GetBranchOfTree(null);
+        GroupDictionary = new Dictionary<int, Group>();
+        Group WithoutGroup = new Group();
+        WithoutGroup.ID = -1;
+        GetDictionaryOfGroups(null);
+        GroupDictionary.Add(-1, WithoutGroup);
+        
 
         if (!IsPostBack)
         {
@@ -156,16 +165,20 @@ public partial class accordion2 : PageBase
         string groupData = "";
         if (group == null)
         {
-            groupData += "<h3 id=null acc=null load=false ><a style='font-size:10pt !important'>";
+            groupData += "<h3 id=null acc=null load=false >";
+            
+             groupData+=   "<a style='font-size:10pt !important; '>";
+            
             groupData += "<span id=null >";
-            groupData += Resources.Resource.ComputersWithoutGroups + "</span>";
+            groupData += Resources.Resource.ComputersWithoutGroups + "</span>";            
         }
         else
         {
             Group gr = (Group)group;
             groupData += "<h3  id=\'" + gr.ID.ToString() + "\' acc=null load=false><a style='font-size:10pt !important'>";
-            groupData += "<span  >";
+            groupData += "<span>";
             groupData += gr.Name.ToString() + "</span>";
+            
         }
         groupData += "</a></h3>";
         groupData += "<div><table width='100%' class='ListContrastTable'></table></div>";
@@ -244,8 +257,8 @@ public partial class accordion2 : PageBase
             row += "<td type='comment' dp=" + dp.Device.ID + " >" + comment + "</td>";
             //row += "<td>" + (dp.LatestInsert==DateTime.MinValue?"":dp.LatestInsert.ToString()) + "</td>";
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
-            
-            string select = "<img dp=" + dp.Device.ID + " cp="+ id+" state=";
+
+            string select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
                 int i = (int)dp.State;
                 switch (i)
                 {
@@ -260,7 +273,7 @@ public partial class accordion2 : PageBase
                         break;
                 }
             row += "<td>" + select + "</td>";
-            row += "<td><img title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /><img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' deldp=" + dp.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+            row += "<td><img  style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /><img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' deldp=" + dp.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             row += "</tr>";
             table += row;
         }
@@ -290,7 +303,7 @@ public partial class accordion2 : PageBase
         if (String.IsNullOrEmpty(device.Comment))
             device.Comment = Anchor.GetCommentFromSerial(device.SerialNo);
         string label = "<div>" + ResourceControl.GetStringForCurrentCulture("DeviceComment") + "</div>";
-        string text = "<input type=text dcdpc=" + id + " style='width:400px' value='" + device.Comment + "'></input>";
+        string text = "<input type=text dcdpc=" + id + " style='width:450px' value='" + device.Comment + "'></input>";
         string button = "<button dcdpc=" + id + ">" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "</button>";
 
         return label + text + button;
@@ -369,7 +382,7 @@ public partial class accordion2 : PageBase
             all = "";
             if (dp.Device.LastComputer == "0")
             {
-                all = "<img nfadp="+dp.Device.ID+" src=\'App_Themes/Main/Images/notForAll.gif \' />";
+                all = "<img nfadp=" + dp.Device.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' />";
             }
             string row = "<tr style='text-align:center'><td>"+all+"</td><td>"+ Anchor.FixString(dp.Device.SerialNo, 30) + "</td>";
             string comment = dp.Device.Comment;
@@ -381,7 +394,7 @@ public partial class accordion2 : PageBase
             //row += "<td>" + (dp.LatestInsert==DateTime.MinValue?"":dp.LatestInsert.ToString()) + "</td>";
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
-            string select = "<img dp= "+dp.Device.ID+" gdp=" + groupID + " state=";
+            string select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
             int i = (int)dp.State;
             switch (i)
             {
@@ -396,18 +409,17 @@ public partial class accordion2 : PageBase
                     break;
             }
             row += "<td>" + select + "</td>";
-            row += "<td><img title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' />";
-            if(groupID>=0)                   
-                row+="<img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delgroupid=" + groupID + " delgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
-            else row += "<img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delwithoutgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+            row += "<td><img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' />";
+            if(groupID>=0)
+                row += "<img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delgroupid=" + groupID + " delgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+            else row += "<img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delwithoutgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             row += "</tr>";
             table += row;
         }
         table += "</table>";
-        string text = "<div><input type=text dgr=" + groupID + " style='width:400px'></input>";
+        string text = "<div><input type=text dgr=" + groupID + " style='width:500px'></input>";
         string button = "<button style='width:auto' dgr=" + groupID + ">" + ResourceControl.GetStringForCurrentCulture("Add") + "</button></div>";
-        /*   if (list.Count == 0)
-               table = "";*/
+        
         return table + text + button;
     }
     [WebMethod]
@@ -485,7 +497,7 @@ public partial class accordion2 : PageBase
             row += "<td dp="+dev.ID+" type='comment'>" + comment + "</td>";
             row += "<td>" + dev.LastComputer + "</td>";
             row += "<td>" + dev.LastInserted + "</td>";
-            row += "<td style='text-align:center'><img title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dev.ID + " serialdp=" + dev.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /> <img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delete=true dcp="+dev.ID+" src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+            row += "<td style='text-align:center'><img  style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dev.ID + " serialdp=" + dev.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /> <img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delete=true dcp=" + dev.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
            
             row += "</tr>";
             table += row;
@@ -493,12 +505,188 @@ public partial class accordion2 : PageBase
         table += "</tbody></table>";
         return table;
     }
+
     [WebMethod]
-    public static string AddNewDevicePolicy(int id, string serial)
+    public static void DeleteDevice(int id)
     {
-        string row = "";
         
-        return row;
+        Device device = new Device();
+        device.ID = id;
+        PolicyState.DeleteDevice(device);
     }
     #endregion
+   
+    public static void GetDictionaryOfGroups(Group? root)
+    {
+        
+        
+        GroupProvider provider = GroupState;
+        List<Group> groupList = provider.GetSubgroups(root);
+        foreach (Group group in groupList)
+        {
+            GroupDictionary.Add(group.ID, group);
+            GetDictionaryOfGroups(group);            
+        }
+    }
+
+    public static BranchOfTree GetBranchOfTree(Group? root)
+    {
+        GroupProvider provider = GroupState;
+        BranchOfTree tree;
+        if (root == null) tree = new BranchOfTree();
+        else tree= new BranchOfTree((Group)root);
+        List<Group> groupList = provider.GetSubgroups(root);
+        
+        foreach (Group group in groupList)
+        {
+            BranchOfTree branch = GetBranchOfTree(group);
+            tree.AddBranch(branch);
+            
+        }  
+        return tree;              
+    }
+    public static BranchOfTree GetBranchOfTreeByDevice(List<DevicePolicy> compList)
+    {
+        
+        BranchOfTree tree = new BranchOfTree();
+        foreach (DevicePolicy dp in compList)
+        {
+            int GroupID = dp.Device.ID;
+            
+            Group group = GroupDictionary[GroupID];
+            string rootName = group.Name;
+            BranchOfTree branch = new BranchOfTree();            
+            branch.Root = group;
+            branch.AddComputer(dp.Computer);
+            while (!tree.IsRootExist(rootName))
+            {
+                
+                int? parentGroupID = group.ParentID;
+                if (parentGroupID != null)
+                {
+                    group = GroupDictionary[(int)parentGroupID];
+                    rootName = group.Name;
+                    BranchOfTree newBranch = new BranchOfTree();
+                    newBranch.Root = group;
+                    newBranch.AddBranch(branch);
+                    branch = newBranch;
+                }
+                else break;
+            }       
+            
+            tree.AddBranch(branch);
+
+        }
+        return tree;
+       
+    }
+    /* Дерево с компьютерами для устройства */
+    [WebMethod]
+    public static string GetDeviceTreeDialog(int id)
+    {
+        GroupProvider provider = GroupState;
+        Device device = new Device();
+        device.ID = id;
+        List<DevicePolicy> compList = PolicyState.GetComputerListByDeviceID(device);
+        BranchOfTree tree = GetBranchOfTreeByDevice(compList);
+        return ConvertDeviceTreeDialog(compList,tree,id);
+    }
+
+    private static string ConvertDeviceTreeDialog(List<DevicePolicy> compList, BranchOfTree tree,int DeviceID)
+    {
+        string treeDialog = "";
+        treeDialog = "<div id='treeAccordion' treeacc=true>";
+        foreach (BranchOfTree branch in tree.ChildrenBranchs)
+        {
+            treeDialog += ConvertDeviceBranchOfTree( compList, branch, DeviceID);
+        }
+        if(tree.Computers.Count>0)
+            treeDialog += ConvertComputersWithoutGroupBranch(compList, tree, DeviceID);
+        treeDialog += "</div>";
+        return treeDialog;
+    }
+
+    private static string ConvertComputersWithoutGroupBranch(List<DevicePolicy> compList, BranchOfTree tree, int DeviceID)
+    {
+        string branchString = "";
+        branchString += "<h3 treetabledevID=-1 treetableID="+DeviceID+">" + Resources.Resource.ComputersWithoutGroups + "</h3>";
+        branchString += "<div treetabledevID=-1>";
+        branchString += "<table treetabledevID=-1 width='100%' class='ListContrastTable'>";
+        foreach (ComputersEntity comp in tree.Computers)
+        {
+            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceID);
+        }
+       
+        branchString += "</table>";
+        branchString += " </div>";
+
+        return branchString;
+    }
+
+    private static string ConvertDeviceBranchOfTree(List<DevicePolicy> compList, BranchOfTree tree,int DeviceID)
+    {
+        string branchString = "";
+        branchString += "<h3 treetableID="+DeviceID+" treetabledevID=" + tree.Root.ID + ">" + tree.Root.Name + "</h3>";
+        branchString += "<div treetabledevID=" + tree.Root.ID + ">";
+        branchString += "<table width='100%' class='ListContrastTable' treetabledevID="+tree.Root.ID+">";
+      
+       
+        if (tree.ChildrenBranchs.Count > 0)
+        {
+            branchString += "<tr ><td colSpan=4 width='100%'>";
+            branchString += "<div  id='treeAccordion_" + tree.Root.ID + "' treeacc=true>";
+            foreach (BranchOfTree branch in tree.ChildrenBranchs)
+            {
+
+                branchString += ConvertDeviceBranchOfTree(compList, branch, DeviceID);
+
+               
+            }
+            branchString += "</div></td></tr>";
+        }
+        
+        foreach (ComputersEntity comp in tree.Computers)
+        {
+            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceID);
+        }
+        
+        branchString+="</table>";
+        branchString += " </div>";
+        
+        return branchString;
+
+    }
+
+    private static string ConvertDeviceCompOfTree(List<DevicePolicy> compList, ComputersEntity comp, int DeviceID)
+    {
+        DevicePolicy dp = compList.Find(
+            delegate(DevicePolicy dev)
+            {
+                return (dev.Computer.ID == comp.ID);
+            }
+        );
+        
+        string compString = "";
+        compString += "<tr treedp='"+dp.ID+"'>";
+        compString += "<td >"+comp.ComputerName+"</td>";
+        compString += "<td >" + dp.LatestInsert + "</td>";
+        string select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp="+ comp.ID+" state=";
+        int i = (int)dp.State;
+        switch (i)
+        {
+            case 0:
+                select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />" ;
+                break;
+            case 1:
+                select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
+                break;
+            case 2:
+                select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
+                break;
+        }
+        compString += "<td >" + select + "</td>";
+        compString += "<td><img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' treedeldev="+DeviceID+" treedeldp=" + dp.ID + " style='cursor:pointer' src=\'App_Themes/Main/Images/deleteicon.png\' />";
+        compString += "</tr>";
+        return compString;
+    }
 }

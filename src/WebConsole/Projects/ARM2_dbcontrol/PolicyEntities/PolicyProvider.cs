@@ -735,6 +735,11 @@ namespace VirusBlokAda.Vba32CC.Policies
             deviceMng.Connection = Connection;
             return deviceMng.GetDeviceCount(where);
         }
+        public List<DevicePolicy> GetComputerListByDeviceID(Device device)
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetComputerListByDeviceID(device);
+        }
         #endregion
 
     }

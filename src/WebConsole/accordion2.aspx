@@ -8,7 +8,21 @@
 <%@ Register Src="~/Controls/PrimitiveFilterDateTime.ascx" TagName="FilterDateTime" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterDropDownList.ascx" TagName="FilterDropDownList" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/AsyncLoadingStateControl.ascx" TagName="AsyncLoadingStateControl" TagPrefix="cc" %>
+  <script runat=server >
+      protected void DeleteDeviceFromPanel(object sender, EventArgs e)
+      {
+        
+          ImageButton button = (ImageButton)sender;
+          int id = Convert.ToInt32(button.Attributes["deldev"]);
+            DeleteDevice(id);
+          GridView1.DataBind();
+          updatePanelDevicesGrid.Update();
 
+
+      }
+     
+
+    </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
     <div class="title"><%=Resources.Resource.DeviceManagment %></div>  
@@ -17,7 +31,8 @@
             $("#tabs").tabs({ cookie: { expires: 30} });
         });
     </script>
-
+  
+    
 
 
     <div id="tabs">
@@ -52,9 +67,7 @@
         </flt:CompositeFilter>
          </ContentTemplate>
         </asp:UpdatePanel>--%>
-        
-      <div class="divSettings">
-                 
+      <div class="divSettings"> 
             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True"
                 SelectCountMethod="Count" SelectMethod="Get" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
                 <SelectParameters>
@@ -62,36 +75,28 @@
                 </SelectParameters>
             </asp:ObjectDataSource>
         
-            <asp:UpdatePanel runat="server" ID="updatePanelDevicesGrid">
+            <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid" UpdateMode='Conditional'  RenderMode='Block'  >
             <ContentTemplate>
                 <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
                     AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
                     EnableModelValidation="True" CssClass="gridViewStyle"
-                    StorageType="Session" StorageName="Devices" >
+                    StorageType="Session" StorageName="Devices"  >
                 <Columns>      
-                <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" >
-                    <HeaderTemplate> <asp:Label   runat='server' Text='<%$ Resources:Resource, SerialNo %>'></asp:Label>     </HeaderTemplate>
+                <asp:TemplateField  HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" >
+                    <HeaderTemplate> <asp:Label   runat='server' Text='<%$ Resources:Resource, SerialNo %>' ></asp:Label>     </HeaderTemplate>
                     <ItemTemplate >
-                        <asp:Label   runat='server' Text='<%# Eval("SerialNo") %>'></asp:Label> 
+                    <asp:LinkButton deviceID='<%# Eval("ID") %>' runat='server' Text='<%# Eval("SerialNo") %>' />
+                     <%--   <asp:Label   runat='server' Text='<%# Eval("SerialNo") %>' ></asp:Label> --%>
                     </ItemTemplate>
                 </asp:TemplateField > 
 
                  <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" >
                     <HeaderTemplate> <asp:Label ID="TextBox1" runat='server' Text='<%$ Resources:Resource, Comment %>'></asp:Label></HeaderTemplate>
-                    <ItemTemplate>
-                        <asp:Label   runat='server' Text='<%# Eval("Comment") %>'></asp:Label> 
+                    <ItemTemplate >
+                        <asp:Label   runat='server' Text='<%# Eval("Comment") %>' dp='<%# Eval("ID") %>' type='comment'></asp:Label> 
                     </ItemTemplate></asp:TemplateField>
 
-                <asp:TemplateField HeaderStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" >
-                    <HeaderTemplate> 
-                       <%-- <asp:Label ID="TextBox1" runat='server' Text='<%$ Resources:Resource, Actions %>'></asp:Label> --%>
-                       <asp:Literal runat='server' Text='<%$ Resources:Resource, Actions %>'  />
-                    </HeaderTemplate>
-                    <ItemTemplate>
-                        <asp:ImageButton ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' runat=server /> 
-                        <asp:ImageButton ImageUrl="~/App_Themes/Main/Images/delete.gif" ToolTip='<%$ Resources:Resource, Delete %>' runat=server /> 
-                    </ItemTemplate>
-               </asp:TemplateField>
+               
                                                                  
                    <%-- <asp:BoundField DataField="SerialNo" SortExpression="SerialNo" 
                         HeaderText='<%$ Resources:Resource, SerialNo %>'>
@@ -101,7 +106,18 @@
                         HeaderText='<%$ Resources:Resource, Comment %>'>
                         <HeaderStyle Width="200px" />
                     </asp:BoundField>--%>
-
+                     <asp:TemplateField  HeaderStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" >
+                    <HeaderTemplate> 
+                       <%-- <asp:Label ID="TextBox1" runat='server' Text='<%$ Resources:Resource, Actions %>'></asp:Label> --%>
+                       <asp:Literal ID="Literal1" runat='server' Text='<%$ Resources:Resource, Actions %>'  />
+                    </HeaderTemplate>
+                   <ItemTemplate>
+                    <asp:Image comdp='<%# Eval("ID") %>' serialdp='<%# Eval("SerialNo") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' runat=server /> 
+                       <%--  <asp:ImageButton ID="ImageButton1" comdp='<%# Eval("ID") %>' serialdp='<%# Eval("SerialNo") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' runat=server /> 
+                        <asp:Image ID="ImageButton2" deldev='<%# Eval("ID") %>' delete=true ImageUrl="~/App_Themes/Main/Images/delete.gif" ToolTip='<%$ Resources:Resource, Delete %>' runat=server /> --%>
+                        <asp:ImageButton deldev='<%# Eval("ID") %>' ImageUrl="~/App_Themes/Main/Images/deleteicon.png" ToolTip='<%$ Resources:Resource, Delete %>' runat=server onclick="DeleteDeviceFromPanel"  OnClientClick= " return confirm('Are you sure?');" />
+                    </ItemTemplate>
+               </asp:TemplateField>
                    
                 </Columns> 
                 <PagerSettings Position="TopAndBottom" Visible="true" />           
@@ -125,5 +141,6 @@
         
         <div id="divModalDialog" style="display:none"></div>
         <div id="commentDialog" style="display:none"></div>
+        <div id="deviceTreeDialog" style="display:none"/>
 </asp:Content>
 

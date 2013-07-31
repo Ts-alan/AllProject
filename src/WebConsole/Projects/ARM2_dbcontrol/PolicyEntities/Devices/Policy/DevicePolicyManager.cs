@@ -759,6 +759,58 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices.Policy
             }
             return policyStates;
         }
+        internal List<DevicePolicy> GetComputerListByDeviceID(Device device)
+        {
+
+            //query to db
+            SqlCommand command = new SqlCommand("GetComputerListByDeviceID", Connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@DeviceID", device.ID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
+            while (reader.Read())
+            {
+                DevicePolicy dp = new DevicePolicy();
+
+                ComputersEntity comp = new ComputersEntity();
+                device = new Device();
+
+                dp.ID = reader.GetInt32(0);
+
+                comp.ID = reader.GetInt16(1);
+                comp.ComputerName = reader.GetString(2);
+
+              
+
+                dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
+                    reader.GetString(3));
+
+
+
+                if (reader.GetValue(4) != DBNull.Value)
+                    dp.LatestInsert = reader.GetDateTime(4);
+                //return GroupID
+                if (reader.GetValue(5) == DBNull.Value)
+                    device.ID = -1;
+                else
+                {
+                    device.ID = reader.GetInt32(5);
+                }
+                
+
+                dp.Computer = comp;
+                dp.Device = device;
+
+                devicePolicies.Add(dp);
+
+            }
+            reader.Close();
+
+            return devicePolicies;
+
+        }
 #endregion
     }
 }

@@ -1,10 +1,11 @@
 ﻿
 $(document).ready(function () {
     function acc_activate(event, ui) {
-        $("#accordion").unmask();
+
         var acc = $(ui.newHeader).attr('acc');
         if (acc == "false") {
             var str = "#accordion" + $(ui.newHeader).attr('id');
+            HeaderFunction(ui.newPanel);
             $(str).accordion({ beforeActivate: function (event, ui) { acc_before_activate(event, ui); }, activate: function (event, ui) { acc_activate(event, ui); }, collapsible: true, heightStyle: "content", autoHeight: false, active: false });
             $(ui.newHeader).attr('acc', "true");
         }
@@ -38,30 +39,31 @@ $(document).ready(function () {
                         }
                     };
                     d.dialog(dOpt);
+                    d.find("button").button();
                 },
                 error: function (msg) { ShowJSONMessage(msg); }
             });
             $("#accordion").unmask();
         });
         /* смена фонового цвета при наведении */
-         comp.hover(function ()
-        {
-        var id = $(this).attr('cp');
-        $('div[cp=' + id + ']').css('background-color', 'yellow');
+        comp.hover(function () {
+            var id = $(this).attr('cp');
+            $('div[cp=' + id + ']').css('background-color', 'yellow');
         },
         function () {
-        var id = $(this).attr('cp');
-        $('div[cp=' + id + ']').css('background-color', '');
+            var id = $(this).attr('cp');
+            $('div[cp=' + id + ']').css('background-color', '');
         }
         );
-        
 
+        $("#accordion").unmask();
 
 
 
 
     }
     function acc_before_activate(event, ui) {
+
 
         var id = $(ui.newHeader).attr('id');
 
@@ -85,7 +87,7 @@ $(document).ready(function () {
                     if (acc == "false") {
                         $(ui.newHeader).attr('acc', "false");
                         $(ui.newHeader).attr('style', "font-size:1em");
-                        HeaderFunction(ui.newContent);
+
                     }
                 }
 
@@ -97,7 +99,7 @@ $(document).ready(function () {
 
     $(function () {
         /* $("#tabs").tabs({ cookie: { expires: 30} });*/
-        listRootlLoad();
+        listRootLoad();
         /* DevicesLoad();*/
         /*---------------------------------------------*/
         /*---------Вкладка Groups---------------------*/
@@ -119,9 +121,11 @@ $(document).ready(function () {
                     var dOpt = {
                         title: serial,
                         width: '700px',
+                        modal: true,
                         resizable: false
                     };
                     d.dialog(dOpt);
+                    d.find("button").button();
                 },
                 error: function (msg) {
                     alert(msg);
@@ -138,7 +142,9 @@ $(document).ready(function () {
                 data: "{id:" + id + ", comment:'" + comment + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function () {
+
                     $("td[dp=" + id + "][type='comment']").html(comment);
+                    $("span[dp=" + id + "][type='comment']").html(comment);
                     $("#commentDialog").dialog('close');
                 },
                 error: function (msg) {
@@ -170,14 +176,17 @@ $(document).ready(function () {
             var cp = $(this).attr('cp');
             var state = $(this).attr('state');
             //установка смены чекбоксов
+            changeState($(this), dp, cp, state);
+        });
+        function changeState(img, dp, cp, state) {
             if (state == "Enabled" || state == "Undefined") {
-                $(this).attr('state', "Disabled");
+                img.attr('state', "Disabled");
                 state = "Disabled";
-                $(this).attr('src', "App_Themes/Main/Images/disabled.gif");
+                img.attr('src', "App_Themes/Main/Images/disabled.gif");
             } else if (state == "Disabled") {
-                $(this).attr('state', "Enabled");
+                img.attr('state', "Enabled");
                 state = "Enabled";
-                $(this).attr('src', "App_Themes/Main/Images/enabled.gif");
+                img.attr('src', "App_Themes/Main/Images/enabled.gif");
             }
             $.ajax({
                 type: "POST",
@@ -188,6 +197,14 @@ $(document).ready(function () {
 
                 }
             });
+        };
+        /* change devicePolicy state for computer*/
+        $(document).on("click", "img[treestatecp]", function () {
+            var dp = $(this).attr('treestatedev');
+            var cp = $(this).attr('treestatecp');
+            var state = $(this).attr('state');
+            //установка смены чекбоксов
+            changeState($(this), dp, cp, state);
         });
         /* add new policy to computer */
         $(document).on("click", "button[dpc]", function () {
@@ -213,15 +230,16 @@ $(document).ready(function () {
 
                         row += "<td style='width:60px'>" + "</td>";
 
-                        var select = "<img dp=" + deviceID + " cp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
+                        var select = "<img style='cursor:pointer' dp=" + deviceID + " cp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                         row += "<td>" + select + "</td>";
-                        row += "<td><img title=" + change + " comdp=" + deviceID + " serialdp=" + serial + " src=\'App_Themes/Main/Images/table_edit.png\' /><img title='" + del + "' deldp=" + policyID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                        row += "<td><img style='cursor:pointer' title=" + change + " comdp=" + deviceID + " serialdp=" + serial + " src=\'App_Themes/Main/Images/table_edit.png\' /><img title='" + del + "' deldp=" + policyID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
                         /*  row += "</tr>";*/
                         $("table[cp=" + id + "] > tbody:last").append('<tr></tr>');
                         var lastLine = $("table[cp=" + id + "] tr:last");
 
                         lastLine.html(row);
                         lastLine.attr('style', 'text-align:center');
+
                     }
                     else {
 
@@ -252,6 +270,7 @@ $(document).ready(function () {
                     var deviceMsg = JSON.parse(msg);
                     var success = deviceMsg.success;
                     if (success == "true") {
+
                         var DevID = deviceMsg.id;
                         var img = $('img[dp=' + DevID + ']');
                         if (img.length != 0) {
@@ -262,15 +281,16 @@ $(document).ready(function () {
                             var row = "<td></td><td>" + deviceMsg.serial + "</td>";
                             row += "<td type='comment' dp=" + DevID + ">" + deviceMsg.comment + "</td><td></td>";
                             row += "<td style='width:60px'></td>";
-                            row += "<td><img dp= " + DevID + " gdp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' /></td>";
-                            row += "<td><img title='ChangeComment' comdp=" + DevID + " serialdp=" + deviceMsg.serial + " src=\'App_Themes/Main/Images/table_edit.png\' />";
+                            row += "<td><img style='cursor:pointer' dp= " + DevID + " gdp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' /></td>";
+                            row += "<td><img style='cursor:pointer' title='ChangeComment' comdp=" + DevID + " serialdp=" + deviceMsg.serial + " src=\'App_Themes/Main/Images/table_edit.png\' />";
                             if (id >= 0)
-                                row += "<img title='Delete' delgroupid=" + id + " delgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
-                            else row += "<img title='Delete' delwithoutgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                                row += "<img style='cursor:pointer' title='Delete' delgroupid=" + id + " delgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                            else row += "<img style='cursor:pointer' title='Delete' delwithoutgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
                             $("table[gdp=" + id + "] > tbody:last").append('<tr></tr>');
                             var lastLine = $("table[gdp=" + id + "] tr:last");
                             lastLine.html(row);
                             lastLine.attr('style', 'text-align:center');
+
                         }
                         $('img[nfadp=' + DevID + ']').remove();
                         /*  $("div[cp=" + id + "]").click();
@@ -281,8 +301,8 @@ $(document).ready(function () {
                         alert(error);
                     }
                 },
-                error: function () {
-                    alert('fail');
+                error: function (msg) {
+                    ShowJSONMessage(msg);
                 }
             });
 
@@ -369,42 +389,50 @@ $(document).ready(function () {
     /* запрет на раскрытие вкладок и загрузка данных об устройствах */
     function HeaderFunction(content) {
 
-        /*    var header = $(content).find('h3');
+        var header = $(content).find("h3");
+        header.append('<button class="stop" style="position:absolute; right: 5px; bottom:1px; top: 1px ">Devices</button>');
+        var button = $(header).find("button")
+        button.button();
+        button.on("click", function (event) {
+            var id = $(this).parent().attr('id');
+            var name = $(this).parent().find('a>span').text();
+            if (id == "null") id = -1;
+            event.stopImmediatePropagation();
+            event.preventDefault();
 
-        header.click(function (event) {
-        var id = $(this).attr('id');
-        var name = $(this).text();
-        if (id == "null") id = -1; 
-        $.ajax({
-        type: "POST",
-        url: "accordion2.aspx/GetGroupDeviceData",
-        dataType: "json",
-        data: "{id:\"" + id + "\"}",
-        contentType: "application/json; charset=utf-8",
-        success: function (msg) {
-        $("#divModalDialog").html('');
-        $("#divModalDialog").dialog('destroy');
-        var d = $("#divModalDialog");
-        d.html(msg);
-        var dOpt = {
-        title: name,
-        width: 650,
-        modal: true,
-        resizable: true,
-        buttons: {
-        Ok: function () {
-        $(this).dialog("close");
+            $.ajax({
+                type: "POST",
+                url: "accordion2.aspx/GetGroupDeviceData",
+                dataType: "json",
+                data: "{id:\"" + id + "\"}",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+
+                    $("#divModalDialog").html('');
+                    $("#divModalDialog").dialog("destroy");
+                    var d = $("#divModalDialog");
+                    d.html(msg);
+                    var dOpt = {
+                        title: name,
+                        width: 650,
+                        modal: true,
+                        resizable: true,
+                        buttons: {
+                            Ok: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    };
+                    d.dialog(dOpt);
+                    d.find("button").button();
+                },
+                error: function (msg) { ShowJSONMessage(msg); }
+            });
         }
-        }
-        };
-        d.dialog(dOpt);
-        },
-        error: function (msg) { ShowJSONMessage(msg); }
-        });
-        });*/
-    }
+        );
+    };
     /* загрузка начальных данных */
-    function listRootlLoad() {
+    function listRootLoad() {
         $.ajax({
             type: "POST",
             url: "accordion2.aspx/GetListRootGroup",
@@ -413,6 +441,7 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 $("#accordion").append(msg).accordion({ beforeActivate: function (event, ui) { acc_before_activate(event, ui); }, activate: function (event, ui) { acc_activate(event, ui); }, collapsible: true, heightStyle: "content", autoHeight: false, active: false });
+
                 HeaderFunction("#accordion");
             },
             error: function (msg) { alert("Error"); ShowJSONMessage(msg); }
@@ -434,23 +463,178 @@ $(document).ready(function () {
             error: function (msg) { ShowJSONMessage(msg); }
         });
     }
-    $("[delete=true]").bind("click", function () {
-        if (!confirm('Are you sure?'))
-            return;
-        var id = $(this).attr('dcp');
+
+    /*  $(document).on("click", '[deldev]', function () {
+
+    if (!confirm('Are you sure?'))
+    return;
+    var id = $(this).attr('deldev');
+    $.ajax({
+    type: "POST",
+    url: "accordion2.aspx/ DeleteDeviceFromPanel",
+    data: "{id:" + id + "}",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (msg) {
+    alert(msg);
+    $("[deldev=" + id + "]").parent().parent().remove();
+    ShowRefreshMessage();
+    }
+    })
+    });*/
+
+    $(document).on("click", "img[treedeldp]", function () {
+        var id = $(this).attr('treedeldp');
+        var devID = $(this).attr('treedeldev');
+        var del = $(this);
         $.ajax({
             type: "POST",
-            url: "DevicesPolicy.aspx/DeleteDevice",
+            url: "accordion2.aspx/RemoveDevicePolicy",
+            data: "{id:" + id + "}",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+
+                while (del.children().length == 0 || del.children() == null) {
+                    var tbody = del.parent().parent().parent();
+
+                    if (!del.parent().parent().hasClass("ui-dialog")) {
+                        del.parent().parent().remove();
+                    }
+                    var childCount = tbody.children().length;
+                    if (childCount == 0) {
+                        var devID = tbody.parent().attr("treetabledevID");
+                        del = tbody.parent().parent().parent();
+                        $("[treetabledevID=" + devID + "]").remove();
+                    } else break;
+                }
+
+            },
+            error: function (msg) {
+                ShowJSONMessage(msg);
+            }
+        });
+        return false;
+    });
+
+    $(document).on("click", 'input[comdp]', function () {
+        var id = $(this).attr('comdp');
+        var serial = $(this).attr('serialdp');
+        $.ajax({
+            type: "POST",
+            url: "accordion2.aspx/GetChangeCommentDialog",
             data: "{id:" + id + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function () {
-                $('[dev=' + id + ']').remove();
-                /*ShowRefreshMessage();*/
+            success: function (msg) {
+                $("#commentDialog").html('');
+                var d = $('#commentDialog');
+                d.html(msg);
+                var dOpt = {
+                    title: serial,
+                    width: '700px',
+                    modal: true,
+                    resizable: false
+                };
+                d.dialog(dOpt);
+                d.find("button").button();
+            },
+            error: function (msg) {
+                alert(msg);
             }
         })
     });
+    $(document).on("click", 'a[deviceID]', function () {
 
-});    
+        var id = $(this).attr('deviceID');
+        var serial = $(this).html();
 
-    
+        $.ajax({
+            type: "POST",
+            url: "accordion2.aspx/GetDeviceTreeDialog",
+            data: "{id:" + id + "}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var d = $('#deviceTreeDialog');
+                d.html(msg);
+                var dOpt = {
+                    title: serial,
+                    width: '700px',
+                    modal: true,
+                    resizable: false
+                };
+                d.dialog(dOpt);
+                d.find("button").button();
+                $(this).find('table').attr('class', 'ListContrastTable');
+                $('[treeacc]').accordion({ collapsible: true, heightStyle: "content", autoHeight: false, active: false });
+
+
+                /* удаление группы компьютеров*/
+
+                var header = $(d).find("h3");
+                header.append('<img class="deleteimg" style="position:absolute; right: 5px; " src="App_Themes/Main/Images/deleteicon.png"/>');
+                var deleteimg = $(header).find("[class='deleteimg']");
+
+                deleteimg.on("click", function (event) {
+
+                    var url, data;
+                    var devId = $(this).parent().attr('treetableID');
+                    var groupId = $(this).parent().attr('treetabledevID');
+                    if (groupId == -1) {
+                        url = "accordion2.aspx/RemoveDevicePolicyWithoutGroup";
+                        data = "{id:" + devId + "}";
+                    }
+                    else {
+                        url = "accordion2.aspx/RemoveDevicePolicyGroup";
+                        data = "{devid:" + devId + ",groupid:" + groupId + "}";
+                    }
+                    event.stopImmediatePropagation();
+                    event.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        success: function () {
+                            var del = $("h3[treetabledevID=" + groupId + "]").parent();
+                            $("h3[treetabledevID=" + groupId + "]").remove();
+                            $("div[treetabledevID=" + groupId + "]").remove();
+                            while (del.children().length == 0 || del.children() == null) {
+                                var tbody = del.parent().parent().parent();
+                                if (!del.parent().parent().hasClass("ui-dialog")) {
+                                    del.parent().parent().remove();
+                                }
+                                var childCount = tbody.children().length;
+                                if (childCount == 0) {
+                                    var devID = tbody.parent().attr("treetabledevID");
+                                    del = tbody.parent().parent().parent();
+                                    $("[treetabledevID=" + devID + "]").remove();
+                                } else break;
+                            }
+                        },
+                        error: function (msg) {
+                            ShowJSONMessage(msg);
+                        }
+                    });
+                    return false;
+                });
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        });
+    });
+    function ShowJSONMessage(msg) {
+        var m = JSON.parse(msg.responseText, function (key, value) {
+            var type;
+            if (value && typeof value === 'object') {
+                type = value.type;
+                if (typeof type === 'string' && typeof window[type] === 'function') {
+                    return new (window[type])(value);
+                }
+            }
+            return value;
+        });
+        alert(m.Message);
+    }
+});
