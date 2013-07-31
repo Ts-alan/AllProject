@@ -2814,4 +2814,7 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="AreYouSureDevice" xml:space="preserve">
+    <value>Are you sure you want to remove device?</value>
+  </data>
 </root>
