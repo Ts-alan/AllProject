@@ -308,7 +308,7 @@
                 <table>
                 <tr valign="top">
                 <td>
-                    <div class="ui-accordion ui-widget ui-helper-reset" style="width: 370px;">
+                    <div class="ui-accordion ui-widget ui-helper-reset" style="width: 380px;">
                         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
                                     ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
                             <%=Resources.Resource.IPRange%>
