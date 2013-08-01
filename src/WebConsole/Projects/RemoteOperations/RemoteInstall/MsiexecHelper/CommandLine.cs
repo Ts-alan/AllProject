@@ -23,20 +23,38 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         /// <returns>Generated command line</returns>
         public static String Install(String installDirectory, String msiName, Boolean doRestart, LogLevel logLevel, String logName)
         {
-            StringBuilder sb = new StringBuilder("msiexec.exe ");
-            sb.Append("/i \"");
-            sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
-            sb.Append(msiName);
-            sb.Append("\" /q");            
-            if (doRestart)
+            StringBuilder sb = new StringBuilder();
+            if (VirusBlokAda.RemoteOperations.MsiInfo.Vba32MsiStorage.IsMSI(msiName))
             {
-                sb.Append(" /forcerestart ");
+                sb.Append("msiexec.exe ");
+                sb.Append("/i \"");
+                sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
+                sb.Append(msiName);
+                sb.Append("\" /q");
+                if (doRestart)
+                {
+                    sb.Append(" /forcerestart ");
+                }
+                else
+                {
+                    sb.Append(" /norestart ");
+                }
+                sb.Append(FormLogFileParameters(logLevel, FileUtility.AppendTerminalBackslash(installDirectory) + logName));
             }
             else
             {
-                sb.Append(" /norestart ");
+                sb.Append(FileUtility.AppendTerminalBackslash(installDirectory));
+                sb.Append(msiName);
+                sb.Append(" /q");
+                if (doRestart)
+                {
+                    sb.Append(" /forcerestart ");
+                }
+                else
+                {
+                    sb.Append(" /norestart ");
+                }
             }
-            sb.Append(FormLogFileParameters(logLevel, FileUtility.AppendTerminalBackslash(installDirectory) + logName));
                         
             return sb.ToString();
         }
