@@ -838,6 +838,8 @@ namespace Vba32CC
                 command.Parameters[10].Value = name_value_map["ControlCenter"];
                 command.Parameters.Add("@LicenseCount", SqlDbType.SmallInt);
                 command.Parameters[11].Value = CompCount;
+                command.Parameters.Add("@MACAddress", SqlDbType.NVarChar, 64);
+                command.Parameters[12].Value = name_value_map["MACAddress"];
                 result = ExecuteStoredProcedure(command);
             }
             catch (Exception e)

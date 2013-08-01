@@ -53,6 +53,7 @@ CREATE TABLE [dbo].[OSTypes] (
 CREATE TABLE [dbo].[Computers] (
 	[ID] smallint IDENTITY(1, 1) NOT NULL,
 	[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[MACAddress] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 	[IPAddress] nvarchar(16) COLLATE Cyrillic_General_CI_AS NOT NULL,
 	[ControlCenter] bit NOT NULL,
 	[DomainName] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
@@ -72,8 +73,28 @@ CREATE TABLE [dbo].[Computers] (
 		PRIMARY KEY NONCLUSTERED ([ID]),
 	CONSTRAINT [FK_Computers_OSTypes]
 		FOREIGN KEY (OSTypeID) REFERENCES OSTypes([ID])
-			ON UPDATE CASCADE ON DELETE CASCADE
+			ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT [U_Computers_MACAddress]
+		UNIQUE NONCLUSTERED ([MACAddress])
 )
+GO
+
+CREATE TABLE [dbo].[ComputerAdditionalInfo] (
+	[ID] smallint IDENTITY(1, 1) NOT NULL ,
+	[ComputerID] smallint NOT NULL,
+	[IsControllable] bit NOT NULL,
+	[IsRenamed] bit NOT NULL,
+	[PreviousComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NULL,
+	
+	CONSTRAINT [PK_ComputerAdditionalInfo]
+		PRIMARY KEY NONCLUSTERED ([ID]),
+	CONSTRAINT [U_ComputerAdditionalInfo_ComputerID]
+		UNIQUE NONCLUSTERED ([ComputerID]),
+	CONSTRAINT [FK_ComputerAdditionalInfo_Computers]
+		FOREIGN KEY ([ComputerID]) REFERENCES Computers([ID])
+			ON UPDATE CASCADE ON DELETE CASCADE					
+) 
+GO
 
 -----------------------------------------
 -- Event-related tables
