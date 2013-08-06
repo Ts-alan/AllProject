@@ -589,7 +589,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
                     string osVersion;
                     bool isWorkstation;
                     string errorInfo;
-                    RemoteScanHelper.GetOS(hostname, _credentials, out osVersion, out isWorkstation,
+                    RemoteScanHelper.GetOS(rie, _credentials, out osVersion, out isWorkstation,
                         out errorInfo, _methodType);
                     rie.OSVersion = osVersion;
                     rie.IsWorkstation = isWorkstation;

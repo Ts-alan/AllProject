@@ -9,6 +9,7 @@ using VirusBlokAda.RemoteOperations.Wmi;
 using System.Runtime.InteropServices;
 using VirusBlokAda.RemoteOperations.RemoteService;
 using VirusBlokAda.RemoteOperations.Net;
+using VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo;
 
 namespace VirusBlokAda.RemoteOperations.RemoteScan
 {
@@ -88,7 +89,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             }
         }
 
-        public static bool GetOSWithWmi(string hostname, Credentials credentials,
+        public static bool GetOSWithWmi(RemoteInfoEntityScan rie, Credentials credentials,
             out string osVersion, out bool isWorkstation, out string errorInfo)
         {
             isWorkstation = true;
@@ -96,7 +97,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             osVersion = String.Empty;            
             try
             {                
-                WmiProvider provider = new WmiProvider(hostname, credentials);
+                WmiProvider provider = new WmiProvider(rie.Name, credentials);
                 provider.ConnectToRemoteComputer(TimeSpan.FromSeconds(10));
                 string osType = String.Empty;
                 provider.RemoteDetectWindowsOS(out osVersion, out osType);
@@ -125,7 +126,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             return false;        
         }
 
-        public static bool GetOSWithRemoteService(string hostname, Credentials credentials,
+        public static bool GetOSWithRemoteService(RemoteInfoEntityScan rie, Credentials credentials,
             out string osVersion, out bool isWorkstation, out string errorInfo)
         {
             bool connectedToAdminShare = false;
@@ -137,15 +138,26 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             errorInfo = String.Empty;
             osVersion = String.Empty;
             bool noError = true;
+
+            String hostname = rie.Name;
             try
             {
-                NetworkUtility.EstablishConnectionToAdminShare(credentials, hostname);
+                NetworkUtility.EstablishConnectionToAdminShare(credentials, rie.Name);
                 connectedToAdminShare = true;
             }
             catch (Exception)
             {
-                noError = false;
-                errorInfo= "Failed to connect to remote admin share";
+                try
+                {
+                    NetworkUtility.EstablishConnectionToAdminShare(credentials, rie.IPAddress.ToString());
+                    connectedToAdminShare = true;
+                    hostname = rie.IPAddress.ToString();
+                }
+                catch (Exception)
+                {
+                    noError = false;
+                    errorInfo = "Failed to connect to remote admin share";
+                }
             }
 
             if (connectedToAdminShare)
@@ -259,17 +271,17 @@ namespace VirusBlokAda.RemoteOperations.RemoteScan
             return noError;
         }
 
-        public static bool GetOS(string hostname, Credentials credentials, out string osVersion, 
+        public static bool GetOS(RemoteInfoEntityScan rie, Credentials credentials, out string osVersion, 
             out bool isWorkstation, out string errorInfo, RemoteMethodsEnum scanMethod)
         {
             if (scanMethod == RemoteMethodsEnum.Wmi)
             {
-                return GetOSWithWmi(hostname, credentials, out osVersion, out isWorkstation,
+                return GetOSWithWmi(rie, credentials, out osVersion, out isWorkstation,
                     out errorInfo);
             }
             else //scanMethod == RemoteScanMethodsEnum.RemoteService
             {
-                return GetOSWithRemoteService(hostname, credentials, out osVersion, out isWorkstation,
+                return GetOSWithRemoteService(rie, credentials, out osVersion, out isWorkstation,
                         out errorInfo);
             }
         }
