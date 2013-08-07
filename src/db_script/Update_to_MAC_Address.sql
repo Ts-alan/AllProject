@@ -206,6 +206,11 @@ AS
 		UPDATE [Computers]
 		SET OSTypeID = @OSTypeID
 		WHERE [ID] = @ComputerID
+		
+		-- Set isControlable in TRUE
+		UPDATE ComputerAdditionalInfo
+		SET IsControllable = 1
+		WHERE [ComputerID] = @ComputerID
 
 		-- Recent activity time
 		UPDATE [Computers]
@@ -344,6 +349,11 @@ AS
 					UPDATE [Computers]
 					SET OSTypeID = @OSTypeID
 					WHERE [ID] = @ComputerID
+
+					-- Set isControlable in TRUE
+					UPDATE ComputerAdditionalInfo
+					SET IsControllable = 1
+					WHERE [ComputerID] = @ComputerID
 
 					-- Recent activity time
 					UPDATE [Computers]

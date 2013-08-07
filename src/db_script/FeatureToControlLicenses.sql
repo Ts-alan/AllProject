@@ -130,6 +130,11 @@ AS
 		SET OSTypeID = @OSTypeID
 		WHERE [ID] = @ComputerID
 
+		-- Set isControlable in TRUE
+		UPDATE ComputerAdditionalInfo
+		SET IsControllable = 1
+		WHERE [ComputerID] = @ComputerID
+
 		-- Recent activity time
 		UPDATE [Computers]
 		SET [RecentActive] = GETDATE()

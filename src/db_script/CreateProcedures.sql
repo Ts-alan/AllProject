@@ -761,8 +761,9 @@ AS
 				WHERE t.[ID] = @TaskID) IN ('Detach agent', 'Отсоединить агент')
 			BEGIN
 				-- установить статус "Неуправляемый"
-
-				RETURN
+				UPDATE ComputerAdditionalInfo
+				SET [IsControllable] = 0
+				WHERE [ComputerID] = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
 			END
 		END	
 	END
