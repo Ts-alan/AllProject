@@ -57,7 +57,7 @@ public partial class accordion2 : PageBase
         WithoutGroup.ID = -1;
         GetDictionaryOfGroups(null);
         GroupDictionary.Add(-1, WithoutGroup);
-        
+
 
         if (!IsPostBack)
         {
@@ -66,14 +66,14 @@ public partial class accordion2 : PageBase
 
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView2, ObjectDataSource2);
-       
+
         //Validation
     }
 
     private string LoadResourceScript()
     {
         string resource = "var Resource={";
-        resource+="Loading:'"+ResourceControl.GetStringForCurrentCulture("Loading")+"',";
+        resource += "Loading:'" + ResourceControl.GetStringForCurrentCulture("Loading") + "',";
         resource += "ChangeComment:'" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "',";
         resource += "Delete:'" + ResourceControl.GetStringForCurrentCulture("Delete") + "',";
         resource += "Devices:'" + ResourceControl.GetStringForCurrentCulture("Devices") + "',";
@@ -111,7 +111,7 @@ public partial class accordion2 : PageBase
         string str = ConvertListRootGroup();
         str += ConvertGroupData(null);
         return str;
-      }
+    }
     /*конвертация начального списка*/
     [WebMethod]
     private static string ConvertListRootGroup()
@@ -190,11 +190,11 @@ public partial class accordion2 : PageBase
         if (group == null)
         {
             groupData += "<h3 id=null acc=null load=false >";
-            
-             groupData+=   "<a style='font-size:10pt !important; '>";
-            
+
+            groupData += "<a style='font-size:10pt !important; '>";
+
             groupData += "<span id=null >";
-            groupData += Resources.Resource.ComputersWithoutGroups + "</span>";            
+            groupData += Resources.Resource.ComputersWithoutGroups + "</span>";
         }
         else
         {
@@ -202,7 +202,7 @@ public partial class accordion2 : PageBase
             groupData += "<h3  id=\'" + gr.ID.ToString() + "\' acc=null load=false><a style='font-size:10pt !important'>";
             groupData += "<span>";
             groupData += gr.Name.ToString() + "</span>";
-            
+
         }
         groupData += "</a></h3>";
         groupData += "<div><table width='100%' class='ListContrastTable'></table></div>";
@@ -220,7 +220,7 @@ public partial class accordion2 : PageBase
         }
         for (int i = 0; i < compList.Count; i++)
         {
-            withoutGroupData += ConvertComputerData(compList[i]).ToString() ;
+            withoutGroupData += ConvertComputerData(compList[i]).ToString();
         }
         return withoutGroupData;
     }
@@ -243,7 +243,7 @@ public partial class accordion2 : PageBase
     {
         get
         {
-           PolicyProvider provider = HttpContext.Current.Application["PolicyState"] as PolicyProvider;
+            PolicyProvider provider = HttpContext.Current.Application["PolicyState"] as PolicyProvider;
             if (provider == null)
             {
                 provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
@@ -255,7 +255,7 @@ public partial class accordion2 : PageBase
     }
     /* получение данных о компьютере */
     [WebMethod]
-    public static  string GetComputersData(int id)
+    public static string GetComputersData(int id)
     {
         System.Diagnostics.Debug.Write("GetComputersData:" + id);
 
@@ -283,19 +283,19 @@ public partial class accordion2 : PageBase
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
             string select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
-                int i = (int)dp.State;
-                switch (i)
-                {
-                    case 0:
-                        select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />" ;
-                        break;
-                    case 1:
-                        select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
-                        break;
-                    case 2:
-                        select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
-                        break;
-                }
+            int i = (int)dp.State;
+            switch (i)
+            {
+                case 0:
+                    select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
+                    break;
+                case 1:
+                    select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
+                    break;
+                case 2:
+                    select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
+                    break;
+            }
             row += "<td>" + select + "</td>";
             row += "<td><img  style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /><img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' deldp=" + dp.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             row += "</tr>";
@@ -304,18 +304,18 @@ public partial class accordion2 : PageBase
         table += "</table>";
         string text = "<div><input type=text dpc=" + id + " style='width:400px'></input>";
         string button = "<button style='width:auto' dpc=" + id + ">" + ResourceControl.GetStringForCurrentCulture("Add") + "</button></div>";
-     /*   if (list.Count == 0)
-            table = "";*/
-        return table+text+button;
+        /*   if (list.Count == 0)
+               table = "";*/
+        return table + text + button;
     }
     /*изменение состояния */
     [WebMethod]
-    public static void ChangeDevicePolicyStateComputer(int dp,int cp, string state)// deviceId,compId,state
+    public static void ChangeDevicePolicyStateComputer(int dp, int cp, string state)// deviceId,compId,state
     {
         System.Diagnostics.Debug.Write("ChangeDevicePolicyState with id:" + dp + ", state:" + state);
 
 
-        PolicyState.ChangeDevicePolicyStatusForComputer((Int16)dp,(Int16)cp, state);
+        PolicyState.ChangeDevicePolicyStatusForComputer((Int16)dp, (Int16)cp, state);
 
 
     }
@@ -383,12 +383,12 @@ public partial class accordion2 : PageBase
     [WebMethod]
     public static /*List<DevicePolicy>*/ string GetGroupDeviceData(int id)
     {
-       
-        System.Diagnostics.Debug.Write("GetGroupDeviceData" + id); 
-        if(id<0) 
+
+        System.Diagnostics.Debug.Write("GetGroupDeviceData" + id);
+        if (id < 0)
             return ConvertGroupDataForClient(id, PolicyState.GetDevicesPoliciesWithoutGroup());
         else
-        return ConvertGroupDataForClient(id, PolicyState.GetDevicesPoliciesByGroup(id)); 
+            return ConvertGroupDataForClient(id, PolicyState.GetDevicesPoliciesByGroup(id));
     }
 
     private static string ConvertGroupDataForClient(int groupID, List<DevicePolicy> list)
@@ -408,7 +408,7 @@ public partial class accordion2 : PageBase
             {
                 all = "<img nfadp=" + dp.Device.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' />";
             }
-            string row = "<tr style='text-align:center'><td>"+all+"</td><td>"+ Anchor.FixString(dp.Device.SerialNo, 30) + "</td>";
+            string row = "<tr style='text-align:center'><td>" + all + "</td><td>" + Anchor.FixString(dp.Device.SerialNo, 30) + "</td>";
             string comment = dp.Device.Comment;
             if (String.IsNullOrEmpty(comment))
                 comment = Anchor.GetCommentFromSerial(dp.Device.SerialNo);
@@ -434,7 +434,7 @@ public partial class accordion2 : PageBase
             }
             row += "<td>" + select + "</td>";
             row += "<td><img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dp.Device.ID + " serialdp=" + dp.Device.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' />";
-            if(groupID>=0)
+            if (groupID >= 0)
                 row += "<img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delgroupid=" + groupID + " delgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             else row += "<img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delwithoutgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             row += "</tr>";
@@ -443,7 +443,7 @@ public partial class accordion2 : PageBase
         table += "</table>";
         string text = "<div><input type=text dgr=" + groupID + " style='width:500px'></input>";
         string button = "<button style='width:auto' dgr=" + groupID + ">" + ResourceControl.GetStringForCurrentCulture("Add") + "</button></div>";
-        
+
         return table + text + button;
     }
     [WebMethod]
@@ -452,7 +452,7 @@ public partial class accordion2 : PageBase
         System.Diagnostics.Debug.Write("ChangeDevicePolicyStateForGroup with Id:" + dp + ", state:" + state);
         if (gp <= 0) PolicyState.ChangeDevicePolicyStatusWithoutGroup((Int16)dp, state);
         else
-        PolicyState.ChangeDevicePolicyStatusForGroup((Int16)dp,gp,state);
+            PolicyState.ChangeDevicePolicyStatusForGroup((Int16)dp, gp, state);
     }
     //добавление устройства в группу
     [WebMethod]
@@ -483,9 +483,9 @@ public partial class accordion2 : PageBase
     }
     /* удаление устройства из группы*/
     [WebMethod]
-    public static void RemoveDevicePolicyGroup(int devid,int groupid)
+    public static void RemoveDevicePolicyGroup(int devid, int groupid)
     {
-        PolicyState.RemoveDevicePolicyGroup(devid,groupid);
+        PolicyState.RemoveDevicePolicyGroup(devid, groupid);
     }
     [WebMethod]
     public static void RemoveDevicePolicyWithoutGroup(int id)
@@ -500,8 +500,8 @@ public partial class accordion2 : PageBase
     [WebMethod]
     public static string GetAllDevices()
     {
-       List<Device>DevicesList= PolicyState.GetDevicesList();
-       return ConvertDevicesList(DevicesList);
+        List<Device> DevicesList = PolicyState.GetDevicesList();
+        return ConvertDevicesList(DevicesList);
     }
     private static string ConvertDevicesList(List<Device> list)
     {
@@ -513,16 +513,16 @@ public partial class accordion2 : PageBase
         ResourceControl.GetStringForCurrentCulture("Actions") + "</th></thead><tbody>";
         foreach (Device dev in list)
         {
-            string row = "<tr style='text-align:left' dev="+dev.ID+"><td>" + Anchor.FixString(dev.SerialNo, 30) + "</td>";
-            string comment=dev.Comment;
+            string row = "<tr style='text-align:left' dev=" + dev.ID + "><td>" + Anchor.FixString(dev.SerialNo, 30) + "</td>";
+            string comment = dev.Comment;
             if (String.IsNullOrEmpty(comment))
                 comment = Anchor.GetCommentFromSerial(dev.SerialNo);
 
-            row += "<td dp="+dev.ID+" type='comment'>" + comment + "</td>";
+            row += "<td dp=" + dev.ID + " type='comment'>" + comment + "</td>";
             row += "<td>" + dev.LastComputer + "</td>";
             row += "<td>" + dev.LastInserted + "</td>";
             row += "<td style='text-align:center'><img  style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "' comdp=" + dev.ID + " serialdp=" + dev.SerialNo + " src=\'App_Themes/Main/Images/table_edit.png\' /> <img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delete=true dcp=" + dev.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
-           
+
             row += "</tr>";
             table += row;
         }
@@ -533,23 +533,23 @@ public partial class accordion2 : PageBase
     [WebMethod]
     public static void DeleteDevice(int id)
     {
-        
+
         Device device = new Device();
         device.ID = id;
         PolicyState.DeleteDevice(device);
     }
     #endregion
-   
+
     public static void GetDictionaryOfGroups(Group? root)
     {
-        
-        
+
+
         GroupProvider provider = GroupState;
         List<Group> groupList = provider.GetSubgroups(root);
         foreach (Group group in groupList)
         {
             GroupDictionary.Add(group.ID, group);
-            GetDictionaryOfGroups(group);            
+            GetDictionaryOfGroups(group);
         }
     }
 
@@ -558,17 +558,17 @@ public partial class accordion2 : PageBase
         GroupProvider provider = GroupState;
         BranchOfTree tree;
         if (root == null) tree = new BranchOfTree();
-        else tree= new BranchOfTree((Group)root);
+        else tree = new BranchOfTree((Group)root);
         List<Group> groupList = provider.GetSubgroups(root);
-        
+
         foreach (Group group in groupList)
         {
             BranchOfTree branch = GetBranchOfTree(group);
             tree.AddBranch(branch);
-            
+
         }
-        
-        return tree;              
+
+        return tree;
     }
     private static int CompareChildrenBranchesByID(BranchOfTree br1, BranchOfTree br2)
     {
@@ -576,20 +576,20 @@ public partial class accordion2 : PageBase
     }
     public static BranchOfTree GetBranchOfTreeByDevice(List<DevicePolicy> compList)
     {
-        
+
         BranchOfTree tree = new BranchOfTree();
         foreach (DevicePolicy dp in compList)
         {
             int GroupID = dp.Device.ID;
-            
+
             Group group = GroupDictionary[GroupID];
             string rootName = group.Name;
-            BranchOfTree branch = new BranchOfTree();            
+            BranchOfTree branch = new BranchOfTree();
             branch.Root = group;
             branch.AddComputer(dp.Computer);
             while (!tree.IsRootExist(rootName))
             {
-                
+
                 int? parentGroupID = group.ParentID;
                 if (parentGroupID != null)
                 {
@@ -599,18 +599,18 @@ public partial class accordion2 : PageBase
                     newBranch.Root = group;
                     newBranch.AddBranch(branch);
                     branch = newBranch;
-                  /*  branch.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
+                    /*  branch.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
                 }
                 else break;
-                
+
             }
-            
+
             tree.AddBranch(branch);
 
         }
-      /*  tree.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
+        /*  tree.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
         return tree;
-       
+
     }
     /* Дерево с компьютерами для устройства */
     [WebMethod]
@@ -621,20 +621,20 @@ public partial class accordion2 : PageBase
         device.ID = id;
         List<DevicePolicy> compList = PolicyState.GetComputerListByDeviceID(device);
         BranchOfTree tree = GetBranchOfTreeByDevice(compList);
-        string treeDialog= ConvertDeviceTreeDialog(compList,tree,id);
-        string addButton = "<button addcompdev='"+serial+"'>"+Resources.Resource.Add+"</button>";
+        string treeDialog = ConvertDeviceTreeDialog(compList, tree, id);
+        string addButton = "<button addcompdev='" + serial + "'>" + Resources.Resource.Add + "</button>";
         return treeDialog + addButton;
     }
 
-    private static string ConvertDeviceTreeDialog(List<DevicePolicy> compList, BranchOfTree tree,int DeviceID)
+    private static string ConvertDeviceTreeDialog(List<DevicePolicy> compList, BranchOfTree tree, int DeviceID)
     {
         string treeDialog = "";
         treeDialog = "<div id='treeAccordion' treeacc=true>";
         foreach (BranchOfTree branch in tree.ChildrenBranchs)
         {
-            treeDialog += ConvertDeviceBranchOfTree( compList, branch, DeviceID);
+            treeDialog += ConvertDeviceBranchOfTree(compList, branch, DeviceID);
         }
-        if(tree.Computers.Count>0)
+        if (tree.Computers.Count > 0)
             treeDialog += ConvertComputersWithoutGroupBranch(compList, tree, DeviceID);
         treeDialog += "</div>";
         return treeDialog;
@@ -643,28 +643,28 @@ public partial class accordion2 : PageBase
     private static string ConvertComputersWithoutGroupBranch(List<DevicePolicy> compList, BranchOfTree tree, int DeviceID)
     {
         string branchString = "";
-        branchString += "<h3 treetabledevID=-1 treetableID="+DeviceID+">" + Resources.Resource.ComputersWithoutGroups + "</h3>";
+        branchString += "<h3 treetabledevID=-1 treetableID=" + DeviceID + ">" + Resources.Resource.ComputersWithoutGroups + "</h3>";
         branchString += "<div treetabledevID=-1>";
         branchString += "<table treetabledevID=-1 width='100%' class='ListContrastTable'>";
         foreach (ComputersEntity comp in tree.Computers)
         {
             branchString += ConvertDeviceCompOfTree(compList, comp, DeviceID);
         }
-       
+
         branchString += "</table>";
         branchString += " </div>";
 
         return branchString;
     }
 
-    private static string ConvertDeviceBranchOfTree(List<DevicePolicy> compList, BranchOfTree tree,int DeviceID)
+    private static string ConvertDeviceBranchOfTree(List<DevicePolicy> compList, BranchOfTree tree, int DeviceID)
     {
         string branchString = "";
-        branchString += "<h3 treetableID="+DeviceID+" treetabledevID=" + tree.Root.ID + ">" + tree.Root.Name + "</h3>";
+        branchString += "<h3 treetableID=" + DeviceID + " treetabledevID=" + tree.Root.ID + ">" + tree.Root.Name + "</h3>";
         branchString += "<div treetabledevID=" + tree.Root.ID + ">";
-        branchString += "<table width='100%' class='ListContrastTable' treetabledevID="+tree.Root.ID+">";
-      
-       
+        branchString += "<table width='100%' class='ListContrastTable' treetabledevID=" + tree.Root.ID + ">";
+
+
         if (tree.ChildrenBranchs.Count > 0)
         {
             branchString += "<tr ><td colSpan=4 width='100%'>";
@@ -674,24 +674,24 @@ public partial class accordion2 : PageBase
 
                 branchString += ConvertDeviceBranchOfTree(compList, branch, DeviceID);
 
-               
+
             }
             branchString += "</div></td></tr>";
         }
-        
+
         foreach (ComputersEntity comp in tree.Computers)
         {
             branchString += ConvertDeviceCompOfTree(compList, comp, DeviceID);
         }
-        
-        branchString+="</table>";
+
+        branchString += "</table>";
         branchString += " </div>";
-        
+
         return branchString;
 
     }
 
-    private static string ConvertDeviceCompOfTree(List<DevicePolicy> compList, ComputersEntity comp, int DeviceID)
+    private static string ConvertDeviceCompOfTree(List<DevicePolicy> compList, ComputersEntity comp, Int32 DeviceID)
     {
         DevicePolicy dp = compList.Find(
             delegate(DevicePolicy dev)
@@ -699,17 +699,17 @@ public partial class accordion2 : PageBase
                 return (dev.Computer.ID == comp.ID);
             }
         );
-        
+
         string compString = "";
-        compString += "<tr treedp='"+dp.ID+"'>";
-        compString += "<td >"+comp.ComputerName+"</td>";
+        compString += "<tr treedp='" + dp.ID + "'>";
+        compString += "<td >" + comp.ComputerName + "</td>";
         compString += "<td >" + dp.LatestInsert + "</td>";
-        string select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp="+ comp.ID+" state=";
+        string select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp=" + comp.ID + " state=";
         int i = (int)dp.State;
         switch (i)
         {
             case 0:
-                select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />" ;
+                select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                 break;
             case 1:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
@@ -719,10 +719,11 @@ public partial class accordion2 : PageBase
                 break;
         }
         compString += "<td >" + select + "</td>";
-        compString += "<td><img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' treedeldev="+DeviceID+" treedeldp=" + dp.ID + " style='cursor:pointer' src=\'App_Themes/Main/Images/deleteicon.png\' />";
+        compString += "<td><img title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' treedeldev=" + DeviceID + " treedeldp=" + dp.ID + " style='cursor:pointer' src=\'App_Themes/Main/Images/deleteicon.png\' />";
         compString += "</tr>";
         return compString;
     }
+
     [WebMethod]
     public static Boolean AddNewDevicePolicyByComputerList(string serial, string comps)
     {
@@ -740,7 +741,7 @@ public partial class accordion2 : PageBase
         /*   device = PoliciesState.AddDevice(device);*/
         Int16 id;
         ComputersEntity computer = new ComputersEntity();
-        Boolean isSuccess=false;
+        Boolean isSuccess = false;
         foreach (string c in compArray)
         {
             id = Convert.ToInt16(c);
@@ -748,16 +749,20 @@ public partial class accordion2 : PageBase
             DevicePolicy dp = new DevicePolicy(device, computer);
             dp.State = DevicePolicyState.Undefined;
             DevicePolicy policy = PolicyState.AddDevicePolicyToComputer(dp);
-            if (policy.Device.ID != 0) isSuccess=true;        
-            
+            if (policy.Device.ID != 0) isSuccess = true;
+
         }
         return isSuccess;
     }
-    
+
     [WebMethod]
-    public static void ActionDevice(DevicePolicy dp, string action)
+    public static void ActionDevice(Int32 id, String computerName, String action)
     {
-        
+        DevicePolicy dp = new DevicePolicy();
+        dp.ID = id;
+        dp.Computer = new ComputersEntity();
+        dp.Computer.ComputerName = computerName;
+
         if (action == "allow")
             dp.State = DevicePolicyState.Enabled;
         else
@@ -765,43 +770,29 @@ public partial class accordion2 : PageBase
 
         PolicyState.ChangeDevicePolicyStatusForComputer(dp);
     }
+
     [WebMethod]
-    public static void ActionDeviceAll(string action)
+    public static void ActionForAllDevices(String action, String devpolicies, String computerNames)
     {
-        List<DevicePolicy> list = PolicyState.GetUnknownDevicesPolicyPage(1, PolicyState.GetUnknownDevicesPolicyPageCount(""), "", "SerialNo ASC");
-        foreach (DevicePolicy device in list)
+        String[] comps = computerNames.Split(new Char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        String[] devices = devpolicies.Split(new Char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        for (Int32 index = 0; index < devices.Length; index++)
         {
-            ActionDevice(device, action);
+            ActionDevice(Convert.ToInt32(devices[index]), comps[index], action);
         }
     }
 
-     [WebMethod]
-    public static void ActionForAllDevices(string action,string devpolicies)
+    public void DeleteDeviceFromPanel(object sender, EventArgs e)
     {
-         DevicePolicy dp=new DevicePolicy();
-        foreach(string devPolicy in devpolicies.Split(';'))
-        {
-            int DevicePolicyID=Convert.ToInt32(devPolicy);
-            dp.ID=DevicePolicyID;
-            ActionDevice(dp, action);
-        }
-        
+        ImageButton button = (ImageButton)sender;
+        int id = Convert.ToInt32(button.Attributes["deldev"]);
+        DeleteDevice(id);
+        GridView1.DataBind();
+        updatePanelDevicesGrid.Update();
     }
-     public void DeleteDeviceFromPanel(object sender, EventArgs e)
-     {
-         ImageButton button = (ImageButton)sender;
-         int id = Convert.ToInt32(button.Attributes["deldev"]);
-         DeleteDevice(id);
-         GridView1.DataBind();
-         updatePanelDevicesGrid.Update();
-     }
 
-     public void UpdatePanelReload(object sender, EventArgs e)
-     {
-         StreamWriter sw = new StreamWriter("D:/1234gh.txt");
-         sw.Write(sender);
-         GridView2.DataBind();
-         updatePanelDevicesGrid2.Update();
-         sw.Close();
-     }
+    public void UpdatePanelReload(object sender, EventArgs e)
+    {
+        GridView2.DataBind();
+    }
 }

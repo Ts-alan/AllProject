@@ -420,9 +420,6 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices.Policy
             command.Parameters.AddWithValue("@StateName", devicePolicy.State.ToString());
 
             command.ExecuteNonQuery();
-
-            Console.WriteLine("Query to DB from devicePolicy.ChangeDeviceStatusForComputer() args: Comp={0}, ID={1} State={2} ",
-                devicePolicy.Computer.ComputerName, devicePolicy.Device.SerialNo, devicePolicy.State);
         }
 
 

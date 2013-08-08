@@ -95,85 +95,61 @@
                 </SelectParameters>
             </asp:ObjectDataSource>
             <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid2" UpdateMode='Conditional'  RenderMode='Block'  >
-            
-            <ContentTemplate>
-            <asp:Button ID='UpdatePanelButton' runat=server  OnClick="UpdatePanelReload" OnClientClick="UpdatePanelReload"/>
-                <custom:GridViewExtended ID="GridView2" runat="server" AllowPaging="True" AllowSorting="true"
-                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" 
-                    EnableModelValidation="True" CssClass="gridViewStyle"
-                    StorageType="Session" StorageName="Devices"  >
-               <Columns>    
-                <asp:TemplateField   HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, SerialNo %>' SortExpression="SerialNo">
-                    <ItemTemplate >
-                    <asp:Label runat=server dcp=<%#Eval("ID")%> class="wrapped"  no=true Text='<%#Eval("Device.SerialNo")%>'/>
-                    </ItemTemplate>
-                </asp:TemplateField > 
-
-                 <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, Comment %>' SortExpression="Comment">
-                    
-                    <ItemTemplate > <asp:Label runat='server' Text='<%# Eval("Device.Comment") %>' dp='<%# Eval("Device.ID") %>' type='comment'></asp:Label> 
-                    </ItemTemplate></asp:TemplateField>  
-                    <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, ComputerName %>' SortExpression="ComputerName">
-                    <ItemTemplate > <asp:Label  runat='server' Text='<%# Eval("Computer.computerName") %>' dp='<%# Eval("ID") %>' ></asp:Label> 
-                    </ItemTemplate></asp:TemplateField>  
-                    <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, DeviceInsertedDate %>' SortExpression="LatestInsert">
-                    <ItemTemplate > <asp:Label  runat='server' Text='<%# Eval("LatestInsert") %>' dp='<%# Eval("ID") %>' ></asp:Label> 
-                    </ItemTemplate></asp:TemplateField>   
-                 <asp:TemplateField  HeaderStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" >
-                    <HeaderTemplate> 
-                       <%-- <asp:Label ID="TextBox1" runat='server' Text='<%$ Resources:Resource, Actions %>'></asp:Label> --%>
-                       <asp:Literal  runat='server' ID="lblHeaderUDeviceAction" Text='<%$ Resources:Resource, Actions %>'  />
+                <ContentTemplate>
+                    <asp:Button ID="btnUpdateAsync" style="display:none" UpdatePanelButton="true" runat="server"  OnClick="UpdatePanelReload"/>
+                    <custom:GridViewExtended ID="GridView2" runat="server" AllowPaging="True" AllowSorting="true"
+                        AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" 
+                        EnableModelValidation="True" CssClass="gridViewStyle"
+                        StorageType="Session" StorageName="DevicesUnknown"  >
+                    <Columns>    
+                        <asp:TemplateField   HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, SerialNo %>' SortExpression="SerialNo">
+                            <ItemTemplate >
+                                <asp:Label runat='server' dcp=<%# Eval("ID" )%> class="wrapped"  no=true Text='<%#Eval("Device.SerialNo")%>'/>
+                            </ItemTemplate>
+                        </asp:TemplateField > 
+                         <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, Comment %>' SortExpression="Comment">
+                            <ItemTemplate > 
+                                <asp:Label runat='server' Text='<%# Eval("Device.Comment") %>' dp='<%# Eval("Device.ID") %>' type='comment'></asp:Label> 
+                            </ItemTemplate>
+                         </asp:TemplateField>  
+                         <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, ComputerName %>' SortExpression="ComputerName">
+                            <ItemTemplate > 
+                                <asp:Label  runat='server' Text='<%# Eval("Computer.computerName") %>' devcompdp='<%# Eval("ID") %>' ></asp:Label> 
+                            </ItemTemplate>
+                         </asp:TemplateField>  
+                         <asp:TemplateField  HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, DeviceInsertedDate %>' SortExpression="LatestInsert">
+                            <ItemTemplate > 
+                                <asp:Label  runat='server' Text='<%# Eval("LatestInsert") %>' ></asp:Label> 
+                            </ItemTemplate>
+                         </asp:TemplateField>   
+                         <asp:TemplateField  HeaderStyle-Width="80px" HeaderStyle-HorizontalAlign="Center" >
+                            <HeaderTemplate> 
+                               <%-- <asp:Label ID="TextBox1" runat='server' Text='<%$ Resources:Resource, Actions %>'></asp:Label> --%>
+                               <asp:Literal  runat='server' ID="lblHeaderUDeviceAction" Text='<%$ Resources:Resource, Actions %>'  />
                      
-                <br /><asp:ImageButton acpAll=allowAll action=allow runat=server ToolTip='<%$ Resources:Resource, EnableAll %> ' ImageUrl='~/App_Themes/Main/Images/enabled.gif' />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:ImageButton acpAll=banAll action=disable  runat=server ToolTip='<%$ Resources:Resource, DisableAll %>' ImageUrl='~/App_Themes/Main/Images/disabled.gif'  />
-                
-                    </HeaderTemplate>
-                   <ItemTemplate>                  
-                        <asp:ImageButton acp=<%#Eval("ID")%> action=allow runat=server ToolTip='<%$ Resources:Resource, Enable %>' ImageUrl='~/App_Themes/Main/Images/enabled.gif'  />
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <asp:ImageButton acp=<%#Eval("ID")%> action=disable runat=server ToolTip='<%$ Resources:Resource, Disable %>' ImageUrl='~/App_Themes/Main/Images/disabled.gif' />
-                    </ItemTemplate>
-               </asp:TemplateField>
-           <%--  <tr>
-               <td class="HeaderCell"><asp:LinkButton runat="server" ID="lbtnHeaderUDeviceSerialNo" OnClick="lbtnHeaderUDeviceSerialNo_Click" /></td>
-                <td class="HeaderCell"><asp:LinkButton runat="server" ID="lbtnHeaderUDeviceComment" OnClick="lbtnHeaderUDeviceComment_Click" /></td>
-                <td class="HeaderCell"><asp:LinkButton runat="server" ID="lbtnHeaderUDeviceComputerName" OnClick="lbtnHeaderUDeviceComputerName_Click" /></td>
-                <td class="HeaderCell"><asp:LinkButton runat="server" ID="lbtnHeaderUDeviceInsertedDate" OnClick="lbtnHeaderUDeviceInsertedDate_Click" /></td>
-                <td class="HeaderCell" width="70"><asp:Label runat="server" ID="lblHeaderUDeviceAction"><%=Resources.Resource.Action %></asp:Label>
-                <br /><img acpAll=allowAll action=allow style="cursor:pointer;" title='<%=Resources.Resource.EnableAll %>' src='<%=String.Format(HttpContext.Current.Request.ApplicationPath+"/App_Themes/" + Profile.Theme+ "/images/enabled.gif")%>' />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <img acpAll=banAll action=disable style="cursor:pointer;" title='<%=Resources.Resource.DisableAll %>' src='<%=String.Format(HttpContext.Current.Request.ApplicationPath+"/App_Themes/" + Profile.Theme+ "/images/disabled.gif")%>' />
-                </td>
-            </tr>
-            </HeaderTemplate>
-            <ItemTemplate>
-                <tr  rcp style="text-align:center">
-                    <td dcp=<%#Eval("ID")%> class="wrapped" no=true tbox=<%=tboxSerialNumberUDevice.ClientID%> cbox=<%=cboxSerialNumberUDevice.ClientID%>><%#Eval("Device.SerialNo")%></td>
-                    <td dcp=<%#Eval("ID")%> class="wrapped" no=true tbox=<%=tboxCommentUDevice.ClientID%> cbox=<%=cboxCommentUDevice.ClientID%>><%#Eval("Device.Comment")%></td>
-                    <td dcp=<%#Eval("ID")%> class="wrapped" no=true tbox=<%=tboxComputerNameUDevice.ClientID%> cbox=<%=cboxComputerNameUDevice.ClientID%>><%#Eval("Computer.ComputerName")%></td>
-                    <td dcp=<%#Eval("ID")%> no=true><%#Eval("LatestInsert")%>&nbsp;</td>
-                    <td dcp=<%#Eval("ID")%> no=true>
-                        <img acp=<%#Eval("ID")%> action=allow style="cursor:pointer;" title='<%=Resources.Resource.Enable %>' src='<%=String.Format(HttpContext.Current.Request.ApplicationPath+"/App_Themes/" + Profile.Theme+ "/images/enabled.gif")%>' />
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <img acp=<%#Eval("ID")%> action=disable style="cursor:pointer;" title='<%=Resources.Resource.Disable %>' src='<%=String.Format(HttpContext.Current.Request.ApplicationPath+"/App_Themes/" + Profile.Theme+ "/images/disabled.gif")%>' />
-                    </td>
-                </tr>
-            </ItemTemplate>
-            </asp:DataList>--%>
-           
-            
-            
-    </Columns> 
-                <PagerSettings Position="TopAndBottom" Visible="true" />           
-                <PagerTemplate>
-                        <paging:Paging runat="server" ID="Paging1" />
-                </PagerTemplate>
-                <HeaderStyle CssClass="gridViewHeader" />
-                <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
-                <RowStyle CssClass="gridViewRow" />
-                </custom:GridViewExtended>
-            </ContentTemplate>
+                                <br /><asp:ImageButton acpAll=allowAll action=allow runat=server ToolTip='<%$ Resources:Resource, EnableAll %> ' ImageUrl='~/App_Themes/Main/Images/enabled.gif' />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:ImageButton acpAll=banAll action=disable  runat=server ToolTip='<%$ Resources:Resource, DisableAll %>' ImageUrl='~/App_Themes/Main/Images/disabled.gif'  />
+                            </HeaderTemplate>
+                            <ItemTemplate>                  
+                                <asp:ImageButton acp=<%#Eval("ID")%> action=allow runat=server ToolTip='<%$ Resources:Resource, Enable %>' ImageUrl='~/App_Themes/Main/Images/enabled.gif'  />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:ImageButton acp=<%#Eval("ID")%> action=disable runat=server ToolTip='<%$ Resources:Resource, Disable %>' ImageUrl='~/App_Themes/Main/Images/disabled.gif' />
+                            </ItemTemplate>
+                         </asp:TemplateField>
+                    </Columns> 
+                    <PagerSettings Position="TopAndBottom" Visible="true" />           
+                    <PagerTemplate>
+                            <paging:Paging runat="server" ID="Paging1" />
+                    </PagerTemplate>
+                    <HeaderStyle CssClass="gridViewHeader" />
+                    <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
+                    <RowStyle CssClass="gridViewRow" />
+                    </custom:GridViewExtended>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnUpdateAsync" EventName="Click" />
+                </Triggers>
             </asp:UpdatePanel>
         </div>
    </div>

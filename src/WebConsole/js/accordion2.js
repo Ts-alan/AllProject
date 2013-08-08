@@ -634,15 +634,17 @@ $(document).ready(function () {
     $(document).on("click", 'input[acp]', function () {
         var id = $(this).attr('acp');
         var action = $(this).attr('action');
+        var comp = $('[devcompdp=' + id + ']').html();
+
         $.ajax({
             type: "POST",
             url: "DevicesPolicy.aspx/ActionDevice",
-            data: "{id:" + id + ", action:'" + action + "'}",
+            data: "{id:" + id + " ,computerName:'" + comp + "' ,action:'" + action + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function () {
-                
-                $("UpdatePanelButton").click();
+
+                $("input[UpdatePanelButton]").click();
             },
             error: function (msg) {
                 ShowJSONMessage(msg);
@@ -654,22 +656,25 @@ $(document).ready(function () {
 
         var action = $(this).attr('action');
         var devpolicies = "";
+        var computerNames = "";
         $("[dcp]").each(function () {
             devpolicies += $(this).attr("dcp") + ";";
+            computerNames += $('[devcompdp=' + $(this).attr("dcp") + ']').html() + ";";
         });
-        $.ajax({
-            type: "POST",
-            url: "accordion2.aspx/ActionForAllDevices",
-            data: "{action:'" + action + "',devpolicies:'" + devpolicies + "'}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function () {
+        
+         $.ajax({
+        type: "POST",
+        url: "accordion2.aspx/ActionForAllDevices",
+        data: "{action:'" + action + "',devpolicies:'" + devpolicies + "',computerNames:'"+computerNames+"'}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function () {
 
-                $("UpdatePanelButton").click();
-            },
-            error: function (msg) {
-                ShowJSONMessage(msg);
-            }
+        $("input[UpdatePanelButton]").click();
+        },
+        error: function (msg) {
+            ShowJSONMessage(msg);
+        }
         })
     });
     function ShowJSONMessage(msg) {
