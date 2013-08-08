@@ -44,6 +44,12 @@ public partial class accordion2 : PageBase
         RegisterScript(@"js/json2.js");
         RegisterScript(@"js/jQuery/jquery.loadmask.js");
 
+        RegisterScript(@"js/accordion2_tree.js");
+        RegisterScript(@"js/PageRequestManagerHelper.js");
+        RegisterScript(@"js/Groups/ext-4.1.1/ext-all-debug.js");
+
+        string scriptText = LoadResourceScript();
+        RegisterBlockScript(scriptText);
 
         BranchOfTree tree = GetBranchOfTree(null);
         GroupDictionary = new Dictionary<int, Group>();
@@ -59,8 +65,26 @@ public partial class accordion2 : PageBase
         }
 
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
+        Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView2, ObjectDataSource2);
        
         //Validation
+    }
+
+    private string LoadResourceScript()
+    {
+        string resource = "var Resource={";
+        resource+="Loading:'"+ResourceControl.GetStringForCurrentCulture("Loading")+"',";
+        resource += "ChangeComment:'" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "',";
+        resource += "Delete:'" + ResourceControl.GetStringForCurrentCulture("Delete") + "',";
+        resource += "Devices:'" + ResourceControl.GetStringForCurrentCulture("Devices") + "',";
+        resource += "Error:'" + ResourceControl.GetStringForCurrentCulture("Error") + "',";
+        resource += "ErrorRequestingDataFromServer:'" + ResourceControl.GetStringForCurrentCulture("ErrorRequestingDataFromServer") + "',";
+        resource += "Computers:'" + ResourceControl.GetStringForCurrentCulture("Computers") + "',";
+        resource += "Computers:'" + ResourceControl.GetStringForCurrentCulture("Computers") + "',";
+        resource += "Apply:'" + ResourceControl.GetStringForCurrentCulture("Apply") + "'";
+        resource += "}";
+        return resource;
+
     }
     protected override void InitFields()
     {
@@ -340,11 +364,11 @@ public partial class accordion2 : PageBase
         {
             return ConvertDevicePolicy(policy);
         }
-        else return "{\"success\":\"false\",\"error\":\""+ResourceControl.GetStringForCurrentCulture("DeviceCanNotAdded")+"\"}";
+        else return "{\"success\":\"false\"}";
     }
     private static string ConvertDevicePolicy(DevicePolicy dp)
     {
-        return "{\"success\":\"true\", \"deviceID\":\"" + dp.Device.ID + "\", \"comment\":\"" + dp.Device.Comment + "\",\"policyID\":\"" + dp.ID + "\",\"change\":\"" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "\",\"del\":\"" + ResourceControl.GetStringForCurrentCulture("Delete") + "\"}";
+        return "{\"success\":\"true\", \"deviceID\":\"" + dp.Device.ID + "\", \"comment\":\"" + dp.Device.Comment + "\",\"policyID\":\"" + dp.ID + "\"}";
     }
     /* удаление устройства из компьютера*/
     [WebMethod]
@@ -454,7 +478,7 @@ public partial class accordion2 : PageBase
     private static string ConvertDevice(Device device)
     {
         if (device.ID == 0)
-            return "{\"success\":\"false\",\"error\":\""+ResourceControl.GetStringForCurrentCulture("DeviceCanNotAdded")+  "\"}";
+            return "{\"success\":\"false\"}";
         return "{\"success\":\"true\",\"id\":\"" + device.ID + "\",\"serial\":\"" + device.SerialNo + "\",\"comment\":\"" + device.Comment + "\"}";
     }
     /* удаление устройства из группы*/
@@ -542,8 +566,13 @@ public partial class accordion2 : PageBase
             BranchOfTree branch = GetBranchOfTree(group);
             tree.AddBranch(branch);
             
-        }  
+        }
+        
         return tree;              
+    }
+    private static int CompareChildrenBranchesByID(BranchOfTree br1, BranchOfTree br2)
+    {
+        return br1.Root.ID.CompareTo(br2.Root.ID);
     }
     public static BranchOfTree GetBranchOfTreeByDevice(List<DevicePolicy> compList)
     {
@@ -570,26 +599,31 @@ public partial class accordion2 : PageBase
                     newBranch.Root = group;
                     newBranch.AddBranch(branch);
                     branch = newBranch;
+                  /*  branch.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
                 }
                 else break;
-            }       
+                
+            }
             
             tree.AddBranch(branch);
 
         }
+      /*  tree.ChildrenBranchs.Sort(CompareChildrenBranchesByID);*/
         return tree;
        
     }
     /* Дерево с компьютерами для устройства */
     [WebMethod]
-    public static string GetDeviceTreeDialog(int id)
+    public static string GetDeviceTreeDialog(int id, string serial)
     {
         GroupProvider provider = GroupState;
         Device device = new Device();
         device.ID = id;
         List<DevicePolicy> compList = PolicyState.GetComputerListByDeviceID(device);
         BranchOfTree tree = GetBranchOfTreeByDevice(compList);
-        return ConvertDeviceTreeDialog(compList,tree,id);
+        string treeDialog= ConvertDeviceTreeDialog(compList,tree,id);
+        string addButton = "<button addcompdev='"+serial+"'>"+Resources.Resource.Add+"</button>";
+        return treeDialog + addButton;
     }
 
     private static string ConvertDeviceTreeDialog(List<DevicePolicy> compList, BranchOfTree tree,int DeviceID)
@@ -689,4 +723,85 @@ public partial class accordion2 : PageBase
         compString += "</tr>";
         return compString;
     }
+    [WebMethod]
+    public static Boolean AddNewDevicePolicyByComputerList(string serial, string comps)
+    {
+        char[] sep = new char[1];
+        sep[0] = '&';
+        string[] compArray = comps.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+        serial = serial.Replace(" ", "");
+        System.Diagnostics.Debug.Write("AddNewDevicePolicyByComputerList serial:" + serial + ", comps:" + comps);
+
+        if (serial == null || serial == String.Empty)
+            throw new Exception("1");
+
+        Device device = new Device(serial, DeviceType.USB);
+
+        /*   device = PoliciesState.AddDevice(device);*/
+        Int16 id;
+        ComputersEntity computer = new ComputersEntity();
+        Boolean isSuccess=false;
+        foreach (string c in compArray)
+        {
+            id = Convert.ToInt16(c);
+            computer.ID = id;
+            DevicePolicy dp = new DevicePolicy(device, computer);
+            dp.State = DevicePolicyState.Undefined;
+            DevicePolicy policy = PolicyState.AddDevicePolicyToComputer(dp);
+            if (policy.Device.ID != 0) isSuccess=true;        
+            
+        }
+        return isSuccess;
+    }
+    
+    [WebMethod]
+    public static void ActionDevice(DevicePolicy dp, string action)
+    {
+        
+        if (action == "allow")
+            dp.State = DevicePolicyState.Enabled;
+        else
+            dp.State = DevicePolicyState.Disabled;
+
+        PolicyState.ChangeDevicePolicyStatusForComputer(dp);
+    }
+    [WebMethod]
+    public static void ActionDeviceAll(string action)
+    {
+        List<DevicePolicy> list = PolicyState.GetUnknownDevicesPolicyPage(1, PolicyState.GetUnknownDevicesPolicyPageCount(""), "", "SerialNo ASC");
+        foreach (DevicePolicy device in list)
+        {
+            ActionDevice(device, action);
+        }
+    }
+
+     [WebMethod]
+    public static void ActionForAllDevices(string action,string devpolicies)
+    {
+         DevicePolicy dp=new DevicePolicy();
+        foreach(string devPolicy in devpolicies.Split(';'))
+        {
+            int DevicePolicyID=Convert.ToInt32(devPolicy);
+            dp.ID=DevicePolicyID;
+            ActionDevice(dp, action);
+        }
+        
+    }
+     public void DeleteDeviceFromPanel(object sender, EventArgs e)
+     {
+         ImageButton button = (ImageButton)sender;
+         int id = Convert.ToInt32(button.Attributes["deldev"]);
+         DeleteDevice(id);
+         GridView1.DataBind();
+         updatePanelDevicesGrid.Update();
+     }
+
+     public void UpdatePanelReload(object sender, EventArgs e)
+     {
+         StreamWriter sw = new StreamWriter("D:/1234gh.txt");
+         sw.Write(sender);
+         GridView2.DataBind();
+         updatePanelDevicesGrid2.Update();
+         sw.Close();
+     }
 }

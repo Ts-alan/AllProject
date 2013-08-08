@@ -740,6 +740,34 @@ namespace VirusBlokAda.Vba32CC.Policies
             devicePolicyMng.Connection = Connection;
             return devicePolicyMng.GetComputerListByDeviceID(device);
         }
+        public List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount,
+    string where, string orderBy)
+        {
+            devicePolicyMng.Connection = Connection;
+            
+            return devicePolicyMng.GetUnknownDevicesList(index, pageCount,
+                where, orderBy);
+        }
+
+        public int GetUnknownDeviceCount(string where)
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetUnknownDeviceCount(where);
+        }
+
+        public List<DevicePolicy> GetUnknownDevicesList()
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetUnknownDevicesList(1, Int32.MaxValue,
+                null, null);
+        }
+
+        public List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount)
+        {
+            devicePolicyMng.Connection = Connection;
+            return devicePolicyMng.GetUnknownDevicesList(index, pageCount,
+                null, null);
+        }
         #endregion
 
     }

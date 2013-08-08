@@ -13,7 +13,7 @@ $(document).ready(function () {
         comp.attr('comp', true);
         /* загрузка данных об устройствах для компьютера */
         comp.click(function () {
-            $("#accordion").mask('Loading');
+            $("#accordion").mask(Resource.Loading);
             var id = $(this).attr('cp');
             var name = $(this).attr('name');
             $.ajax({
@@ -70,7 +70,7 @@ $(document).ready(function () {
         if ($(ui.newHeader).attr('load') == 'false') {
 
             if (id == null) return;
-            $("#accordion").mask('Loading');
+            $("#accordion").mask(Resource.Loading);
             $.ajax({
                 type: "POST",
                 url: "accordion2.aspx/GetData",
@@ -224,15 +224,14 @@ $(document).ready(function () {
                         var comment = deviceMsg.comment;
                         var deviceID = deviceMsg.deviceID;
                         var policyID = deviceMsg.policyID;
-                        var change = deviceMsg.change;
-                        var del = deviceMsg.del;
+
                         row += "<td type='comment' dp=" + deviceID + " >" + comment + "</td>";
 
                         row += "<td style='width:60px'>" + "</td>";
 
                         var select = "<img style='cursor:pointer' dp=" + deviceID + " cp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                         row += "<td>" + select + "</td>";
-                        row += "<td><img style='cursor:pointer' title=" + change + " comdp=" + deviceID + " serialdp=" + serial + " src=\'App_Themes/Main/Images/table_edit.png\' /><img title='" + del + "' deldp=" + policyID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                        row += "<td><img style='cursor:pointer' title=" + Resource.ChangeComment + " comdp=" + deviceID + " serialdp=" + serial + " src=\'App_Themes/Main/Images/table_edit.png\' /><img title='" + Resource.Delete + "' deldp=" + policyID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
                         /*  row += "</tr>";*/
                         $("table[cp=" + id + "] > tbody:last").append('<tr></tr>');
                         var lastLine = $("table[cp=" + id + "] tr:last");
@@ -243,7 +242,7 @@ $(document).ready(function () {
                     }
                     else {
 
-                        alert(deviceMsg.error);
+                        alert(Resource.Error);
                     }
                 },
                 error: function (msg) {
@@ -282,10 +281,10 @@ $(document).ready(function () {
                             row += "<td type='comment' dp=" + DevID + ">" + deviceMsg.comment + "</td><td></td>";
                             row += "<td style='width:60px'></td>";
                             row += "<td><img style='cursor:pointer' dp= " + DevID + " gdp=" + id + " state=Undefined src=\'App_Themes/Main/Images/undefined.gif\' /></td>";
-                            row += "<td><img style='cursor:pointer' title='ChangeComment' comdp=" + DevID + " serialdp=" + deviceMsg.serial + " src=\'App_Themes/Main/Images/table_edit.png\' />";
+                            row += "<td><img style='cursor:pointer' title='" + Resource.ChangeComment + "' comdp=" + DevID + " serialdp=" + deviceMsg.serial + " src=\'App_Themes/Main/Images/table_edit.png\' />";
                             if (id >= 0)
-                                row += "<img style='cursor:pointer' title='Delete' delgroupid=" + id + " delgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
-                            else row += "<img style='cursor:pointer' title='Delete' delwithoutgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                                row += "<img style='cursor:pointer' title='" + Resource.Delete + "' delgroupid=" + id + " delgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
+                            else row += "<img style='cursor:pointer' title='" + Resource.Delete + "' delwithoutgroupdevid=" + DevID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
                             $("table[gdp=" + id + "] > tbody:last").append('<tr></tr>');
                             var lastLine = $("table[gdp=" + id + "] tr:last");
                             lastLine.html(row);
@@ -297,8 +296,8 @@ $(document).ready(function () {
                         ShowRefreshMessage();*/
                     }
                     else {
-                        var error = deviceMsg.error;
-                        alert(error);
+
+                        alert(Resource.Error);
                     }
                 },
                 error: function (msg) {
@@ -390,7 +389,7 @@ $(document).ready(function () {
     function HeaderFunction(content) {
 
         var header = $(content).find("h3");
-        header.append('<button class="stop" style="position:absolute; right: 5px; bottom:1px; top: 1px ">Devices</button>');
+        header.append('<button class="stop" style="position:absolute; right: 5px; bottom:1px; top: 1px ">' + Resource.Devices + '</button>');
         var button = $(header).find("button")
         button.button();
         button.on("click", function (event) {
@@ -551,7 +550,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "accordion2.aspx/GetDeviceTreeDialog",
-            data: "{id:" + id + "}",
+            data: "{id:" + id + ",serial:'" + serial + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
@@ -623,6 +622,55 @@ $(document).ready(function () {
                 alert(msg);
             }
         });
+    });
+    $(document).on("click", 'button[addcompdev]', function () {
+        var serial = $(this).attr("addcompdev");
+
+
+        ComputersDialog.show(serial);
+        return false;
+    });
+    //-------------Unknown Policy---
+    $(document).on("click", 'input[acp]', function () {
+        var id = $(this).attr('acp');
+        var action = $(this).attr('action');
+        $.ajax({
+            type: "POST",
+            url: "DevicesPolicy.aspx/ActionDevice",
+            data: "{id:" + id + ", action:'" + action + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+                
+                $("UpdatePanelButton").click();
+            },
+            error: function (msg) {
+                ShowJSONMessage(msg);
+            }
+        })
+    });
+
+    $(document).on("click", 'input[acpAll]', function () {
+
+        var action = $(this).attr('action');
+        var devpolicies = "";
+        $("[dcp]").each(function () {
+            devpolicies += $(this).attr("dcp") + ";";
+        });
+        $.ajax({
+            type: "POST",
+            url: "accordion2.aspx/ActionForAllDevices",
+            data: "{action:'" + action + "',devpolicies:'" + devpolicies + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+
+                $("UpdatePanelButton").click();
+            },
+            error: function (msg) {
+                ShowJSONMessage(msg);
+            }
+        })
     });
     function ShowJSONMessage(msg) {
         var m = JSON.parse(msg.responseText, function (key, value) {

@@ -176,6 +176,8 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices
 
             return count;
         }
+
+       
        /* /// <summary>
         /// Get Device by its ID
         /// </summary>

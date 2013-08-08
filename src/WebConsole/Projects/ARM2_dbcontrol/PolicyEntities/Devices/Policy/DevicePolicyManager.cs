@@ -811,6 +811,79 @@ namespace VirusBlokAda.Vba32CC.Policies.Devices.Policy
             return devicePolicies;
 
         }
+        internal List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount,
+         string where, string orderBy)
+        {
+            //query to db
+            SqlCommand command = new SqlCommand("GetUnknownDevicesPage", Connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Page", index);
+            command.Parameters.AddWithValue("@RowCount", pageCount);
+            command.Parameters.AddWithValue("@OrderBy", orderBy);
+            command.Parameters.AddWithValue("@Where", where);
+
+
+            SqlDataReader reader = command.ExecuteReader();
+            List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
+            while (reader.Read())
+            {
+                try
+                {
+                    DevicePolicy dp = new DevicePolicy();
+                    Device device = new Device();
+                    ComputersEntity comp = new ComputersEntity();
+                    
+                    if (reader.GetValue(0) != DBNull.Value)
+                        dp.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        device.ID = reader.GetInt16(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        device.SerialNo = reader.GetString(2);
+
+                    if (reader.GetValue(3) != DBNull.Value)
+                        device.Comment = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)                    
+                        comp.ComputerName=reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+
+                        dp.LatestInsert = reader.GetDateTime(5);
+                    dp.Device = device;
+                    dp.Computer = comp;
+
+                    devicePolicies.Add(dp);
+                }
+                catch
+                {
+                }
+            }
+            reader.Close();
+
+            return devicePolicies;
+
+        }
+        internal Int32 GetUnknownDeviceCount(string where)
+        {
+            SqlCommand command = new SqlCommand("GetCountUnknownDevices", Connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@Where", where);
+
+            SqlDataReader reader = command.ExecuteReader();
+            Int32 count = 0;
+            if (reader.Read())
+            {
+                try
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        count = reader.GetInt32(0);
+                }
+                catch { }
+            }
+            reader.Close();
+
+            return count;
+        }
 #endregion
     }
 }

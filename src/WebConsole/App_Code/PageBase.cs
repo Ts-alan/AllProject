@@ -31,7 +31,14 @@ public abstract class PageBase : PackViewState.Page
         include.Attributes.Add("src", src);
         this.Page.Header.Controls.Add(include);
     }
-
+    protected void RegisterBlockScript(string scriptText)
+    {
+        HtmlGenericControl include = new HtmlGenericControl("script");
+        include.Attributes.Add("type", "text/javascript");
+        include.Attributes.Add("runat", "server");
+        include.InnerHtml = scriptText;        
+        this.Page.Header.Controls.Add(include);
+    }
     protected void RegisterLink(string src)
     {
         HtmlGenericControl include = new HtmlGenericControl("link");
