@@ -2817,4 +2817,7 @@
   <data name="AreYouSureDevice" xml:space="preserve">
     <value>Are you sure you want to remove device?</value>
   </data>
+  <data name="GroupHasNotComps" xml:space="preserve">
+    <value>Group hasn`t computers</value>
+  </data>
 </root>

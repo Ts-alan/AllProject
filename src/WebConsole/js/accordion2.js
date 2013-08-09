@@ -29,7 +29,7 @@ $(document).ready(function () {
                     d.html(msg);
                     var dOpt = {
                         title: name,
-                        width: 550,
+                        width: 700,
                         modal: true,
                         resizable: true,
                         buttons: {

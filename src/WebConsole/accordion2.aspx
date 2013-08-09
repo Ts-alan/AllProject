@@ -6,12 +6,10 @@
 <%@ Register Src="~/Controls/CompositeFilter.ascx" TagName="CompositeFilter" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterText.ascx" TagName="FilterText" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterDateTime.ascx" TagName="FilterDateTime" TagPrefix="flt" %>
+<%@ Register Src="~/Controls/PrimitiveFilterComputers.ascx" TagName="FilterComputers"  TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterDropDownList.ascx" TagName="FilterDropDownList" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/AsyncLoadingStateControl.ascx" TagName="AsyncLoadingStateControl" TagPrefix="cc" %>
-  <script runat=server >
 
-    
-    </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
     <div class="title"><%=Resources.Resource.DeviceManagment %></div>  
@@ -33,8 +31,7 @@
     <div id="tab1">
       <p><div id="accordion" style="font-size:1em !important"></div></p>
    </div>
-   <div id="tab2">
-
+   <div id="tab2">    
       <div class="divSettings"> 
             <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True"
                 SelectCountMethod="Count" SelectMethod="Get" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
@@ -45,6 +42,23 @@
         
             <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid" UpdateMode='Conditional'  RenderMode='Block'  >
             <ContentTemplate>
+                <flt:CompositeFilter ID="DeviceFilterContainer" UserFiltersTemproraryStorageName="DevicesFiltersTemp"
+                    InformationListType="Devices" UserFiltersProfileKey="DeviceFilters" runat="server"
+                    OnActiveFilterChange="DeviceFilterContainer_ActiveFilterChanged">
+                    <FiltersTemplate>
+                        <table>
+                            <tr>
+                                <td valign="top">                       
+                                    <flt:FilterText runat="server" ID="fltSerial" NameFieldDB="SerialNo" TextFilter='<%$ Resources:Resource, SerialNo %>' />
+                                </td>
+                                <td valign="top" style="padding-left: 20px;">                        
+                                    <flt:FilterText runat="server" ID="fltComment" NameFieldDB="Comment" TextFilter='<%$ Resources:Resource, Comment %>' />
+                                </td>
+                            </tr>
+                        </table>
+                    </FiltersTemplate>
+                </flt:CompositeFilter>
+
                 <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
                     EnableModelValidation="True" CssClass="gridViewStyle"
                     StorageType="Session" StorageName="Devices"  >
@@ -86,7 +100,7 @@
             </asp:UpdatePanel>
         </div>
    </div>
-    <div id='tab3'>
+    <div id='tab3'>       
      <div class="divSettings"> 
             <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" EnablePaging="True"
                 SelectCountMethod="CountUnknown" SelectMethod="GetUnknown" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
@@ -96,6 +110,25 @@
             </asp:ObjectDataSource>
             <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid2" UpdateMode='Conditional'  RenderMode='Block'  >
                 <ContentTemplate>
+                    <flt:CompositeFilter ID="UnknownDeviceFilterContainer" UserFiltersTemproraryStorageName="UnknownDevicesFiltersTemp"
+                        InformationListType="UnknownDevices" UserFiltersProfileKey="UnknownDeviceFilters" runat="server"
+                        OnActiveFilterChange="UnknownDeviceFilterContainer_ActiveFilterChanged">
+                        <FiltersTemplate>
+                            <table>
+                                <tr>
+                                    <td valign="top">
+                                            <flt:FilterText runat="server" ID="fltDevice2" NameFieldDB="SerialNo" TextFilter='<%$ Resources:Resource, SerialNo %>' />
+                                            <flt:FilterText runat="server" ID="FilterText2" NameFieldDB="Comment" TextFilter='<%$ Resources:Resource, Comment %>' />
+                                    </td>
+                                    <td valign="top" style="padding-left: 20px;">
+                                        <flt:FilterComputers runat="server" ID="fltComputers" NameFieldDB="ComputerName" TextFilter='<%$ Resources:Resource, ComputerName %>' />
+                                        <flt:FilterDateTime runat="server" ID="fltEventTime" NameFieldDB="LatestInsert" TextFilter="<%$ Resources:Resource, DeviceInsertedDate %>" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </FiltersTemplate>
+                    </flt:CompositeFilter>
+
                     <asp:Button ID="btnUpdateAsync" style="display:none" UpdatePanelButton="true" runat="server"  OnClick="UpdatePanelReload"/>
                     <custom:GridViewExtended ID="GridView2" runat="server" AllowPaging="True" AllowSorting="true"
                         AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" 
