@@ -122,6 +122,7 @@
     <Compile Include="DataBase\ComponentsManager.cs" />
     <Compile Include="DataBase\ComponentsEntity.cs" />
     <Compile Include="DataBase\ComponentsProvider.cs" />
+    <Compile Include="DataBase\ComputerAdditionalEntity.cs" />
     <Compile Include="DataBase\ComputerColorOptionsEntity.cs" />
     <Compile Include="DataBase\ComputersEntity.cs">
       <SubType>Code</SubType>
