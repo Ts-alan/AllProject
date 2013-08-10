@@ -760,10 +760,23 @@ AS
 				INNER JOIN TaskTypes AS tt ON t.[TaskID] = tt.[ID]
 				WHERE t.[ID] = @TaskID) IN ('Detach agent', 'Отсоединить агент')
 			BEGIN
+				DECLARE @ComputerID smallint
+				SET @ComputerID = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
+				
 				-- установить статус "Неуправляемый"
 				UPDATE ComputerAdditionalInfo
 				SET [IsControllable] = 0
-				WHERE [ComputerID] = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
+				WHERE [ComputerID] = @ComputerID
+
+				-- почистить таблицы
+				DELETE FROM DeviceClassPolicy
+				WHERE [ComputerID] = @ComputerID
+
+				DELETE FROM DevicesPolicies
+				WHERE [ComputerID] = @ComputerID
+
+				DELETE FROM Groups
+				WHERE [ComputerID] = @ComputerID
 			END
 		END	
 	END
