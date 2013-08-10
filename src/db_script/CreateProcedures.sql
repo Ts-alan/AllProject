@@ -769,9 +769,6 @@ AS
 				WHERE [ComputerID] = @ComputerID
 
 				-- почистить таблицы
-				DELETE FROM DeviceClassPolicy
-				WHERE [ComputerID] = @ComputerID
-
 				DELETE FROM DevicesPolicies
 				WHERE [ComputerID] = @ComputerID
 
