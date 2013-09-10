@@ -203,6 +203,11 @@
     <Compile Include="Service\Vba32NS\ObjectSerializer.cs" />
     <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
     <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
+    <Compile Include="Service\VSIS\Settings.cs" />
+    <Compile Include="Service\VSIS\UpdateEvents.cs" />
+    <Compile Include="Service\VSIS\UpdateProperties.cs" />
+    <Compile Include="Service\VSIS\UpdateService.cs" />
+    <Compile Include="Service\VSIS\VSISWrapper.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
     <Compile Include="Tasks\ConfigureLoader\TaskConfigureLoader.cs" />
     <Compile Include="Tasks\ConfigureMonitor\TaskConfigureMonitor.cs" />
@@ -258,6 +263,18 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="vsisLib">
+      <Guid>{B3EF5DD1-AD74-4187-89AC-944641FE17FB}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
