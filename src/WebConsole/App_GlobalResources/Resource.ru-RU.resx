@@ -2820,6 +2820,9 @@
   <data name="GroupHasNotComps" xml:space="preserve">
     <value>Группа не содержит компьютеров</value>
   </data>
+  <data name="LastSuccessUpdate" xml:space="preserve">
+    <value>Последнее успешное обновление</value>
+  </data>
   <data name="IPAddressRegexErrorMessage" xml:space="preserve">
     <value>IP-адрес должен быть в формате x.x.x.x (Пример: 10.172.25.3)</value>
   </data>

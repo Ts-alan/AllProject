@@ -12,13 +12,13 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         public OnApplyStartDelegate OnApplyStart;
         public OnApplyProgressDelegate OnApplyProgress;
         public OnApplyFinishDelegate OnApplyFinish;
-        //public OnErrorDelegate OnError;
+        public OnErrorDelegate OnError;
         public OnInfoMessageDelegate OnInfoMessage;
         public OnNeedStopDelegate OnNeedStop;
         public OnNeedStopReasonDelegate OnNeedStopReason;
-        //public OnReactionOnUpdateDelegate OnReactionOnUpdate;
-        //public OnReserveProgressDelegate OnReserveProgress;
-        //public OnTryRollbackDelegate OnTryRollback;
+        public OnReactionOnUpdateDelegate OnReactionOnUpdate;
+        public OnReserveProgressDelegate OnReserveProgress;
+        public OnTryRollbackDelegate OnTryRollback;
     }
 
     public delegate void OnDownloadStartDelegate();

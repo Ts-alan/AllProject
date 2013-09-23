@@ -8,55 +8,64 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
 using System.Text;
-
 using Microsoft.Win32;
-
 using Vba32.ControlCenter.SettingsService;
 using ARM2_dbcontrol.Filters;
+using VirusBlokAda.Vba32CC.Service.VSIS;
 
 public partial class UpdateCC : PageBase
 {
-    protected void Page_Init(object sender, EventArgs e)
+    protected void Page_Init(Object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
     }
 
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
+    protected void Page_Load(Object sender, EventArgs e)
     {
         if (!Roles.IsUserInRole("Administrator"))
         {
-            //throw new Exception(Resources.Resource.ErrorAccessDenied);
             Response.Redirect("Default.aspx");
         }
         RegisterScript(@"js/jQuery/jquery.cookie.js");
-
-        //RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
-
-
         Page.Title = Resources.Resource.PageUpdateTitle;
+
         if (!Page.IsPostBack)
             InitFields();
+
+        CheckUpdateProcess();
+    }
+
+    private void CheckUpdateProcess()
+    {
+        lblLastSuccessUpdate.Text = Resources.Resource.LastSuccessUpdate + ": " + (VSISWrapper.LastUpdate != DateTime.MinValue ? VSISWrapper.LastUpdate.ToString() : "-");
+        divLastUpdate.Visible = true;
+
+        if (VSISWrapper.IsUpdateAlive)
+        {
+            lbtnCancelUpdate.Enabled = true;
+            lbtnUpdate.Enabled = false;
+            lblLastUpdate.Text = Resources.Resource.UpdateCC + "..."
+                + (!String.IsNullOrEmpty(VSISWrapper.UpdateStopReason) ?
+                String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, VSISWrapper.UpdateStopReason) : "");
+        }
+        else
+        {
+            lbtnCancelUpdate.Enabled = false;
+            lbtnUpdate.Enabled = true;
+            if (!String.IsNullOrEmpty(VSISWrapper.UpdateStopReason))
+            {
+                lblLastUpdate.Text = Resources.Resource.LastUpdate + ": " + String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, VSISWrapper.UpdateStopReason);
+            }
+            else
+            {
+                divLastUpdate.Visible = false;
+            }
+        }
     }
 
     protected override void InitFields()
     {
-        cboxPeriodicalUpdateEnabled.Text = Resources.Resource.EnableAutoUpdate;
-        lblPeriodicalUpdate.Text = Resources.Resource.PeriodicalUpdateInterval;
         lblUpdateSource.Text = Resources.Resource.UpdatePath;
 
         cboxProxyEnabled.Text = Resources.Resource.UseProxy;
@@ -67,227 +76,152 @@ public partial class UpdateCC : PageBase
         lblAuthorizationUserName.Text = Resources.Resource.User;
         lblAuthorizationPassword.Text = Resources.Resource.PasswordLabelText;
 
-        cboxAuthorizationNTLMEnabled.Text = Resources.Resource.AuthorizationNTLMEnabled;
-
-        cboxImpersonationAccountEnabled.Text = Resources.Resource.Impersonation;
-        lblImpersonationAccountUsername.Text = Resources.Resource.User;
-        lblImpersonationAccountPassword.Text = Resources.Resource.PasswordLabelText;
+        cboxProxyAuthorizationEnabled.Text = Resources.Resource.UseAuthorization;
+        lblProxyAuthorizationUserName.Text = Resources.Resource.User;
+        lblProxyAuthorizationPassword.Text = Resources.Resource.PasswordLabelText;
 
         lbtnSave.Text = Resources.Resource.Save;
 
+        VSISWrapper.Initialize();
         InitState();
     }
 
-    private bool ValidateFields()
+    private Boolean ValidateFields(out String error)
     {
+        if (String.IsNullOrEmpty(tboxUpdateSource.Text))
+        {
+            error = Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.UpdatePath;
+            return false;
+        }
 
-        Validation vld = new Validation(tboxProxyPort.Text);
+        if (cboxAuthorizationEnabled.Checked)
+        {
+            if (String.IsNullOrEmpty(tboxAuthorizationUserName.Text))
+            {
+                error = Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.User;
+                return false;
+            }
+        }
 
         if (cboxProxyEnabled.Checked)
         {
-            if(String.IsNullOrEmpty(tboxProxyAddress.Text))
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                 + Resources.Resource.Server);
+            if (String.IsNullOrEmpty(tboxProxyAddress.Text))
+            {
+                error = Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.Server;
+                return false;
+            }
 
+            Validation vld = new Validation(tboxProxyPort.Text);
             if (!vld.CheckUInt32())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                 + Resources.Resource.Port);
+            {
+                error = Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.Port;
+                return false;
+            }
+
+            if (cboxProxyAuthorizationEnabled.Checked)
+            {
+                if (String.IsNullOrEmpty(tboxProxyAuthorizationUserName.Text))
+                {
+                    error = Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.Proxy + " - " + Resources.Resource.User;
+                    return false;
+                }
+            }
         }
 
+        error = String.Empty;
         return true;
     }
 
     private void InitState()
     {
-        RegistryKey key;
-        object tmp;
-        string registryControlCenterKeyName;
-        try
-        {
-            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-            else
-                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
+        UpdateProperties up = VSISWrapper.GetUpdateParameters();
 
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName+"Update"); ;
-        }
-        catch (Exception ex)
+        tboxUpdateSource.Text = up.UpdatePathes.Length > 0 ? up.UpdatePathes[0] : String.Empty;
+
+        if (!String.IsNullOrEmpty(up.AuthorityName))
         {
-            throw new ArgumentException("Registry open 'ControlCenter' key error: " + ex.Message);
+            cboxAuthorizationEnabled.Checked = true;
+            tboxAuthorizationUserName.Text = up.AuthorityName;
+            tboxAuthorizationPassword.Attributes.Add("value", up.AuthorityPassword);
+        }
+        else
+        {
+            tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = false;
         }
 
-        try
+        if (!String.IsNullOrEmpty(up.ProxyAddress))
         {
-            
-            tmp = key.GetValue("PeriodicalUpdateEnabled");
-            if (tmp != null)
-                cboxPeriodicalUpdateEnabled.Checked = Convert.ToInt32(tmp) == 1;
-
-            tmp = key.GetValue("PeriodicalUpdatePeriod");
-            if (tmp == null)
-                tboxPeriodicalUpdated.Text = Resources.Resource.NotAvailable;
-            else
-                tboxPeriodicalUpdated.Text = tmp.ToString();
-        }
-        catch
-        {
-        }
-
-        if (key != null)
-            key.Close();
-
-
-        try
-        {
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "Update\\Source00"); ;
-
-            tboxUpdateSource.Text = (string)key.GetValue("UPDATESOURCE");
-            if (cboxPeriodicalUpdateEnabled.Checked)
-            { tboxUpdateSource.Enabled = tboxPeriodicalUpdated.Enabled = true; }
-            else { tboxUpdateSource.Enabled = tboxPeriodicalUpdated.Enabled = false; }
-            //Обновление с прокси-сервера
-            tmp = key.GetValue("ProxyEnabled");
-            if (tmp != null)
-                cboxProxyEnabled.Checked = Convert.ToInt32(tmp) == 1;
-            if (cboxProxyEnabled.Checked)
+            cboxProxyEnabled.Checked = true;
+            tboxProxyAddress.Text = up.ProxyAddress;
+            tboxProxyPort.Text = up.ProxyPort.ToString();
+            if (!String.IsNullOrEmpty(up.ProxyAuthorityName))
             {
-                tboxProxyAddress.Text = (string)key.GetValue("PROXYADDRESS");
-
-                tmp = key.GetValue("PROXYPORT");
-                if (tmp == null)
-                    tboxProxyPort.Text = Resources.Resource.NotAvailable;
-                else
-                    tboxProxyPort.Text = tmp.ToString();
-                tboxProxyAddress.Enabled = tboxProxyPort.Enabled = true;
-            }
-            else { tboxProxyAddress.Enabled = tboxProxyPort.Enabled = false; }
-
-            //авторизация
-            tmp = key.GetValue("AuthorizationEnabled");
-            if (tmp != null)
-                cboxAuthorizationEnabled.Checked = Convert.ToInt32(tmp) == 1;
-            if (cboxAuthorizationEnabled.Checked)
-            {
-                tboxAuthorizationUserName.Text = (string)key.GetValue("AUTHORIZATIONUSERNAME");
-
-                tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = true;
-                trAuth.Disabled = false;
+                cboxProxyAuthorizationEnabled.Checked = true;                
+                tboxProxyAuthorizationUserName.Text = up.ProxyAuthorityName;
+                tboxProxyAuthorizationPassword.Attributes.Add("value", up.ProxyAuthorityPassword);
             }
             else
             {
-                tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = false;
-                trAuth.Disabled = true;
+                tboxProxyAuthorizationUserName.Enabled = tboxProxyAuthorizationPassword.Enabled = false;
             }
-
-            //NTLM
-            tmp = key.GetValue("AUTHORIZATIONNTLMENABLED");
-            if (tmp != null)
-                cboxAuthorizationNTLMEnabled.Checked = Convert.ToInt32(tmp) == 1;
-
-            //
-            tmp = key.GetValue("ImpersonationAccountEnabled");
-            if (tmp != null)
-                cboxImpersonationAccountEnabled.Checked = Convert.ToInt32(tmp) == 1;
-
-            if (cboxImpersonationAccountEnabled.Checked)
-            {
-                tboxImpersonationAccountUsername.Text =
-                    (string)key.GetValue("IMPERSONATIONACCOUNTUSERNAME");
-                tboxImpersonationAccountPassword.Enabled = tboxImpersonationAccountUsername.Enabled = true;
-            }
-            else { tboxImpersonationAccountPassword.Enabled = tboxImpersonationAccountUsername.Enabled = false; }
         }
-        catch
+        else
         {
+            tboxProxyAddress.Enabled = tboxProxyPort.Enabled = tboxProxyAuthorizationUserName.Enabled = tboxProxyAuthorizationPassword.Enabled = false;
+            cboxProxyAuthorizationEnabled.InputAttributes.Add("disabled", "true");
         }
+        
     }
 
-
-    protected void lbtnSave_Click(object sender, EventArgs e)
+    protected void lbtnSave_Click(Object sender, EventArgs e)
     {
-        ValidateFields();
-
-        bool retVal = false;
-        try
+        String error;
+        if (!ValidateFields(out error))
         {
-            StringBuilder builder = new StringBuilder(256);
-            builder.Append("<VbaSettings>");
-            builder.Append("<ControlCenter>");
-
-            builder.Append("<Update>");
-            builder.AppendFormat("<PeriodicalUpdateEnabled type=" + "\"reg_dword\">" +
-                 "{0}</PeriodicalUpdateEnabled><PeriodicalUpdatePeriod type=" + "\"reg_dword\">" +
-                "{1}</PeriodicalUpdatePeriod>", cboxPeriodicalUpdateEnabled.Checked ? "1" : "0",
-                tboxPeriodicalUpdated.Text);
-
-            if (cboxPeriodicalUpdateEnabled.Checked)
-            {
-                builder.Append("<Source00>");
-                builder.AppendFormat("<UPDATESOURCE type="+ "\"reg_sz\">" +
-                    "{0}</UPDATESOURCE><ProxyEnabled type="+ "\"reg_dword\">" +
-                    "{1}</ProxyEnabled>",tboxUpdateSource.Text.TrimEnd(' ').TrimStart(' '),cboxProxyEnabled.Checked?"1":"0");
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ValidationFalseScript", String.Format("alert('{0}');", error), true);
+            return;
+        }
                 
-                if (cboxProxyEnabled.Checked)
-                {
-                    builder.AppendFormat("<ProxyAddress type="+ "\"reg_sz\">" +"{0}</ProxyAddress>",
-                        tboxProxyAddress.Text);
-                    builder.AppendFormat("<ProxyPort type=" + "\"reg_dword\">" + "{0}</ProxyPort>",
-                        tboxProxyPort.Text);
-                }
-
-                builder.AppendFormat("<AuthorizationEnabled type=" + "\"reg_dword\">" + "{0}</AuthorizationEnabled>",
-                       cboxAuthorizationEnabled.Checked ? "1" : "0");
-                if (cboxAuthorizationEnabled.Checked)
-                {
-                    builder.AppendFormat("<AuthorizationUsername type=" + "\"reg_sz\">" + "{0}</AuthorizationUsername>",
-                        tboxAuthorizationUserName.Text);
-                    //!- преобразовать в то, что нужно
-                    byte[] bytes = Encoding.Default.GetBytes(tboxAuthorizationPassword.Text);
-                    builder.AppendFormat("<AuthorizationPassword type=" + "\"reg_binary\">" + "{0}</AuthorizationPassword>",
-                        Anchor.ConvertToDumpString(bytes));
-                }
-
-                builder.AppendFormat("<AuthorizationNTLMEnabled type=" + "\"reg_dword\">" + "{0}</AuthorizationNTLMEnabled>",
-                      cboxAuthorizationNTLMEnabled.Checked ? "1" : "0");
-
-                builder.AppendFormat("<ImpersonationAccountEnabled type=" + "\"reg_dword\">" + "{0}</ImpersonationAccountEnabled>",
-                     cboxImpersonationAccountEnabled.Checked ? "1" : "0");
-
-                if (cboxImpersonationAccountEnabled.Checked)
-                {
-                    builder.AppendFormat("<ImpersonationAccountUsername type=" + "\"reg_sz\">" + "{0}</ImpersonationAccountUsername>",
-                     tboxImpersonationAccountUsername.Text);
-                    //!- преобразовать в то, что нужно
-                    byte[] bytes = Encoding.Default.GetBytes(tboxImpersonationAccountPassword.Text);
-                    builder.AppendFormat("<ImpersonationAccountPassword type=" + "\"reg_binary\">" + "{0}</ImpersonationAccountPassword>",
-                        Anchor.ConvertToDumpString(bytes));
-                }
-
-                builder.Append("</Source00>");
-            }
-
-            builder.Append("</Update>");
-
-            builder.Append("</ControlCenter>");
-            builder.Append("</VbaSettings>");
-
-
-            IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                      typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
-                      ConfigurationManager.AppSettings["Vba32SS"]);
-
-            retVal = remoteObject.ChangeRegistry(builder.ToString());
-
-        }
-        catch (Exception ex)
+        UpdateProperties up = new UpdateProperties();
+        
+        up.UpdatePathes = new String[] { tboxUpdateSource.Text };
+        
+        if (cboxAuthorizationEnabled.Checked)
         {
-            throw new InvalidOperationException("SaveSettings: " +
-                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
+            up.AuthorityName = tboxAuthorizationUserName.Text;
+            up.AuthorityPassword = tboxAuthorizationPassword.Text;
         }
 
-        if (!retVal)
-            throw new ArgumentException("Reread: Vba32SS return false!");
-        InitState();
+        if (cboxProxyEnabled.Checked)
+        {
+            up.ProxyAddress = tboxProxyAddress.Text;
+            up.ProxyPort = Convert.ToUInt32(tboxProxyPort.Text);
+            if (cboxProxyAuthorizationEnabled.Checked)
+            {
+                up.ProxyAuthorityName = tboxProxyAuthorizationUserName.Text;
+                up.ProxyAuthorityPassword = tboxProxyAuthorizationPassword.Text;
+            }
+        }
 
+        VSISWrapper.SetUpdateParameters(up);
+        InitState();
+    }
+
+    protected void lbtnUpdate_Click(Object sender, EventArgs e)
+    {
+        VSISWrapper.Update();
+        lbtnCancelUpdate.Enabled = true;
+        lbtnUpdate.Enabled = false;
+    }
+
+    protected void lbtnCancelUpdate_Click(Object sender, EventArgs e)
+    {
+        VSISWrapper.UpdateAbort();
+        lbtnCancelUpdate.Enabled = false;
+        lbtnUpdate.Enabled = true;
+    }
+
+    protected void timer1_tick(Object sender, EventArgs e)
+    {
     }
 }

@@ -2832,6 +2832,9 @@ system administrator.</value>
   <data name="GroupHasNotComps" xml:space="preserve">
     <value>Group hasn`t computers</value>
   </data>
+  <data name="LastSuccessUpdate" xml:space="preserve">
+    <value>Last success update</value>
+  </data>
   <data name="IPAddressRegexErrorMessage" xml:space="preserve">
     <value>IP address must be in format x.x.x.x (Example: 10.172.25.3)</value>
   </data>

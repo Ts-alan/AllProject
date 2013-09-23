@@ -9,15 +9,17 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         #region Properties
 
         private vsisLib.Settings _settings;
+        internal vsisLib.Settings SettingsClass
+        {
+            get { return _settings; }
+            set { _settings = value; }
+        }
 
         #endregion
 
         #region Constructors
 
-        internal Settings(vsisLib.Settings settings)
-        {
-            _settings = settings;
-        }
+        internal Settings() { }
 
         #endregion
 
@@ -39,22 +41,41 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         {
             if (!String.IsNullOrEmpty(properties.AuthorityName))
                 _settings.SetParameter(module_id, "AuthorityName", properties.AuthorityName, settingsType);
+            else
+                _settings.SetParameter(module_id, "AuthorityName", "", settingsType);
+
             if (!String.IsNullOrEmpty(properties.AuthorityPassword))
                 _settings.SetParameter(module_id, "AuthorityPassword", properties.AuthorityPassword, settingsType);
+            else
+                _settings.SetParameter(module_id, "AuthorityPassword", "", settingsType);
+
 
             if (!String.IsNullOrEmpty(properties.ProxyAddress))
                 _settings.SetParameter(module_id, "ProxyAddress", properties.ProxyAddress, settingsType);
+            else
+                _settings.SetParameter(module_id, "ProxyAddress", "", settingsType);
+
             if (!String.IsNullOrEmpty(properties.ProxyAuthorityName))
                 _settings.SetParameter(module_id, "ProxyAuthorityName", properties.ProxyAuthorityName, settingsType);
+            else
+                _settings.SetParameter(module_id, "ProxyAuthorityName", "", settingsType);
+
             if (!String.IsNullOrEmpty(properties.ProxyAuthorityPassword))
                 _settings.SetParameter(module_id, "ProxyAuthorityPassword", properties.ProxyAuthorityPassword, settingsType);
-            if (properties.ProxyPort != 0)
+            else
+                _settings.SetParameter(module_id, "ProxyAuthorityPassword", "", settingsType);
+
+            if (properties.ProxyPort > 0)
                 _settings.SetParameter(module_id, "ProxyPort", properties.ProxyPort, settingsType);
-            if (properties.ProxyType != 0)
-                _settings.SetParameter(module_id, "ProxyType", properties.ProxyType, settingsType);
+            else
+                _settings.SetParameter(module_id, "ProxyPort", 0, settingsType);
+
+            _settings.SetParameter(module_id, "ProxyType", properties.ProxyType, settingsType);
+
 
             if (!String.IsNullOrEmpty(properties.TempFolder))
                 _settings.SetParameter(module_id, "TempFolder", properties.TempFolder, settingsType);
+
 
             if (properties.UpdatePathes != null && properties.UpdatePathes.Length > 0)
             {
@@ -70,6 +91,9 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                 }
                 _settings.SetParameter(module_id, "UpdatePathes", pathes.ToArray(), settingsType);
             }
+            //else
+            //    _settings.SetParameter(module_id, "UpdatePathes", new String[0], settingsType);
+
 
             if (properties.ExpandPathesList != null && properties.ExpandPathesList.Length > 0)
             {
@@ -87,6 +111,8 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                 }
                 _settings.SetParameter(module_id, "ExpandPathesList", list.ToArray(), settingsType);
             }
+            //else
+            //    _settings.SetParameter(module_id, "ExpandPathesList", new vsisLib.PairString[0], settingsType);
         }
 
         /// <summary>

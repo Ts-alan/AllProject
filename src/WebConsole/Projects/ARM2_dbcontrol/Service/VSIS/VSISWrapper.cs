@@ -5,13 +5,13 @@ using vsisLib;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
-    public class VSISWrapper
+    public static class VSISWrapper
     {
         #region Properties
 
-        protected ServiceClass _service;
-        private UpdateService _updateService;
-        private VSIS.Settings _settings;
+        private static ServiceClass _service;
+        private static UpdateService _updateService;
+        private static VSIS.Settings _settings;
 
         #region Guids
 
@@ -26,72 +26,70 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
         #region Constructors
 
-        public VSISWrapper()
+        static VSISWrapper()
         {
-            _service = new ServiceClass();
+            _updateService = new VSIS.UpdateService();
+            _settings = new VSIS.Settings();
+            Initialize();
         }
 
         #endregion
 
         #region Methods
 
+        public static void Initialize()
+        {
+            try
+            {
+                _service = new ServiceClass();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot create vsisLib.ServiceClass: " + e.Message);
+            }
+            
+            try
+            {
+                _updateService.UpdateClass = _service.GetInterface(GUID_UpdateClass, GUID_UpdateInterface) as vsisLib.Update;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot create VSIS.UpdateService: " + e.Message);
+            }
+
+            try
+            {
+                _settings.SettingsClass = _service.GetInterface(GUID_SettingClass, GUID_SettingInterface) as vsisLib.Settings;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot create VSIS.Settings: " + e.Message);
+            }
+        }
+
         #region Settings
 
-        public void SetUpdateParameters(UpdateProperties properties)
+        public static void SetUpdateParameters(UpdateProperties properties)
         {
-            CreateSettingsInstance();
-            _settings.SetUpdateParameters(GUID_UpdateClass, properties, 1, false);
+            properties.ProxyType = 0;
+            properties.ExpandPathesList = new PairString[1];
+            properties.ExpandPathesList[0].first = "WEBCONSOLE";
+            properties.ExpandPathesList[0].second = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\WebConsole"; //@"D:\Public\Vba32 Control Center\WebConsole\";
+
+            _settings.SetUpdateParameters(GUID_UpdateClass, properties, 1, true);
         }
 
-        public UpdateProperties GetUpdateParameters()
+        public static UpdateProperties GetUpdateParameters()
         {
-            CreateSettingsInstance();
             return _settings.GetUpdateParameters(GUID_UpdateClass);
-        }
-
-        /// <summary>
-        /// Create Settings class & vsisLib.Settings instance if no exists
-        /// </summary>
-        protected void CreateSettingsInstance()
-        {
-            if (_settings == null)
-            {
-                try
-                {
-                    _settings = new VSIS.Settings(_service.GetInterface(GUID_SettingClass, GUID_SettingInterface) as vsisLib.Settings);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Cannot create VSIS.Settings: " + e.Message);
-                }
-            }
         }
 
         #endregion
 
         #region Update
 
-        /// <summary>
-        /// Create UpdateService class & vsisLib.Update instance if no exists
-        /// </summary>
-        protected void CreateUpdateInstance()
+        public static void SetUpdateEvents(UpdateEvents events)
         {
-            if (_updateService == null)
-            {
-                try
-                {
-                    _updateService = new VSIS.UpdateService(_service.GetInterface(GUID_UpdateClass, GUID_UpdateInterface) as vsisLib.Update);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Cannot create VSIS.UpdateService: " + e.Message);
-                }
-            }
-        }
-
-        public void SetUpdateEvents(UpdateEvents events)
-        {
-            CreateUpdateInstance();
             _updateService.SetEvents(events);
         }
 
@@ -99,10 +97,46 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         /// Update Vba32ControlCenter
         /// </summary>
         /// <param name="properties">properties for update</param>
-        public void Update()
+        public static void Update()
         {
-            CreateUpdateInstance();
             _updateService.Update();
+        }
+
+        public static void UpdateAbort()
+        {
+            _updateService.IsAbort = true;
+        }
+
+        /// <summary>
+        /// Get update abort flag
+        /// </summary>
+        public static Boolean IsUpdateAbort
+        {
+            get { return _updateService.IsAbort; }
+        }
+
+        /// <summary>
+        /// Get update alive flag
+        /// </summary>
+        public static Boolean IsUpdateAlive
+        {
+            get { return _updateService.IsAlive; }
+        }
+
+        /// <summary>
+        /// Get last update date
+        /// </summary>
+        public static DateTime LastUpdate
+        {
+            get { return _updateService.LastUpdate; }
+        }
+
+        /// <summary>
+        /// Get update stop reason
+        /// </summary>
+        public static String UpdateStopReason
+        {
+            get { return _updateService.StopReason; }
         }
 
         #endregion
