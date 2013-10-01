@@ -16,24 +16,22 @@ using ARM2_dbcontrol.DataBase;
 using ARM2_dbcontrol.Filters;
 
 using Vba32.ControlCenter.SettingsService;
+using System.Text.RegularExpressions;
 
 public partial class Notification : PageBase
 {
-    //private string eventName = String.Empty;
+    private const String  GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
+    private const String LocalHearthEvent = "vba32.cc.LocalHearth";
 
-    private const string  GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
-    private const string LocalHearthEvent = "vba32.cc.LocalHearth";
-
-    protected void Page_Init(object sender, EventArgs e)
+    protected void Page_Init(Object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
     }
 
-    protected void Page_Load(object sender, EventArgs e)
+    protected void Page_Load(Object sender, EventArgs e)
     {
         if (!Roles.IsUserInRole("Administrator"))
         {
-            //throw new Exception(Resources.Resource.ErrorAccessDenied);
             Response.Redirect("Default.aspx");
         }
         RegisterScript(@"js/jQuery/jquery.cookie.js");
@@ -56,91 +54,124 @@ public partial class Notification : PageBase
         pcPaging.HomeText = Resources.Resource.HomePaging;
         pcPaging.LastText = Resources.Resource.LastPaging;
 
-        //pcPagingTop.CurrentPageIndex = 1;
-        //pcPagingTop.PageCount = 1;
-        //pcPagingTop.PageText = Resources.Resource.Page;
-        //pcPagingTop.OfText = Resources.Resource.Of;
-        //pcPagingTop.NextText = Resources.Resource.Next;
-        //pcPagingTop.PrevText = Resources.Resource.Prev;
-
-        //pcPagingTop.HomeText = Resources.Resource.HomePaging;
-        //pcPagingTop.LastText = Resources.Resource.LastPaging;
-
-
-        lblMailServer.Text = Resources.Resource.MailServer;
-        lblMailFrom.Text = Resources.Resource.MailFrom;
-        lblDisplayName.Text = Resources.Resource.MailDisplayName;
-
-        lblJabberSever.Text = Resources.Resource.JabberServer;
-        lblJabberFrom.Text = Resources.Resource.JabberFrom;
-        lblJabberPassword.Text = Resources.Resource.JabberPassword;
-
         lbtnSave.Text = Resources.Resource.Save;
-        //lbtnSaveRegistry.Text = Resources.Resource.Save;
-        //lbtnJabberSave.Text = Resources.Resource.Save;
 
+        cboxUseMail.Text = Resources.Resource.UseMail;
+        cboxUseJabber.Text = Resources.Resource.UseJabber;
         cboxUseFlowAnalysis.Text = Resources.Resource.UseFlowAnalysis;
-        //lbtnFlowSave.Text = Resources.Resource.Save;
-
-        lbtnSaveAll.Text = Resources.Resource.Save;
-
 
         lblSelectedEventName.Text = Resources.Resource.СhoiseEvent;
 
         lbtnSave.Text = Resources.Resource.Save;
         btnCancel.Text = Resources.Resource.Close;
-        
-        string registryControlCenterKeyName;
-        RegistryKey key;
+
+        regularMailServer.ValidationExpression = RegularExpressions.IPAddress;
+        regularMailFrom.ValidationExpression = RegularExpressions.Email;
+
+        rangeGlobalEpidemyCompCount.ErrorMessage = rangeGlobalEpidemyLimit.ErrorMessage = rangeGlobalEpidemyTimeLimit.ErrorMessage =
+            rangeLimit.ErrorMessage = rangeLocalHearthLimit.ErrorMessage = rangeLocalHearthTimeLimit.ErrorMessage =
+            rangeTimeLimit.ErrorMessage = String.Format(Resources.Resource.ValueBetween, "0", "1000");
+
+        RegistryKey key = GetRegisterKey();
+        InitMailFields(key);
+        InitJabberFields(key);
+        InitFlowAnalysisFields(key);
+
+        UpdateData();
+    }
+
+    private void InitJabberFields(RegistryKey key)
+    {
+        Boolean isChecked = true;
         try
         {
-            //!-OPTM Вынести такую проверку в App_Code и юзать один код
-            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-            else
-                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "Notification"); ;
-
-        }
-        catch(Exception ex)
-        {
-            throw new ArgumentException("Registry open 'Notification' key error: "+ex.Message);
-        }
-
-        try
-        {
-            //TextBoxes
-            tboxMailServer.Text = (string)key.GetValue("MailServer");
-            tboxMailFrom.Text = (string)key.GetValue("MailFrom");
-            tboxMailDisplayName.Text = (string)key.GetValue("MailDisplayName");
-
-            tboxJabberServer.Text = (string)key.GetValue("JabberServer");
-            tboxJabberFrom.Text = (string)key.GetValue("JabberFromJID");
-
-            //tboxJabberPassword.Text = (string)key.GetValue("JabberPassword");
-
+            tboxJabberServer.Text = (String)key.GetValue("JabberServer");
+            tboxJabberFrom.Text = (String)key.GetValue("JabberFromJID");
+            tboxJabberPassword.Attributes.Add("value", (String)key.GetValue("JabberPassword"));
         }
         catch
         {
+            tboxJabberServer.Text = tboxJabberFrom.Text = tboxJabberPassword.Text = String.Empty;
+            isChecked = false;
         }
-        finally
+
+        if (isChecked && String.IsNullOrEmpty(tboxJabberServer.Text))
+            isChecked = false;
+
+        cboxUseJabber.Checked = tboxJabberServer.Enabled = tboxJabberFrom.Enabled = tboxJabberPassword.Enabled = isChecked;
+    }
+
+    private void InitMailFields(RegistryKey key)
+    {
+        Boolean isChecked = true;
+        try
         {
-            //key.Close();
+            tboxMailServer.Text = (String)key.GetValue("MailServer");
+            tboxMailFrom.Text = (String)key.GetValue("MailFrom");
+            tboxMailDisplayName.Text = (String)key.GetValue("MailDisplayName");
+        }
+        catch
+        {            
+            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
+            isChecked = false;
         }
 
-        InitFlowAnalysisFields();
+        if (isChecked && String.IsNullOrEmpty(tboxMailServer.Text))
+            isChecked = false;
 
-        UpdateData();
-
+        cboxUseMail.Checked = tboxMailServer.Enabled = tboxMailFrom.Enabled = tboxMailDisplayName.Enabled = isChecked;
     }
 
     /// <summary>
     /// Инициализирует поля, связанные с обработкой потока уведомлений
     /// </summary>
-    private void InitFlowAnalysisFields()
+    private void InitFlowAnalysisFields(RegistryKey key)
     {
-        string registryControlCenterKeyName;
+        Boolean isChecked = true;
+        try
+        {
+            Int32? tmp = (Int32?)key.GetValue("GlobalEpidemyLimit");
+            tboxGlobalEpidemyLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("GlobalEpidemyTimeLimit");
+            tboxGlobalEpidemyTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("GlobalEpidemyCompCount");
+            tboxGlobalEpidemyCompCount.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("LocalHearthLimit");
+            tboxLocalHearthLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("LocalHearthTimeLimit");
+            tboxLocalHearthTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("Limit");
+            tboxLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("TimeLimit");
+            tboxTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
+
+            tmp = (Int32?)key.GetValue("UseFlowAnalysis");
+            cboxUseFlowAnalysis.Checked = tmp.HasValue ? tmp.Value > 0 : false;
+
+        }
+        catch
+        {
+            isChecked = false;
+            tboxGlobalEpidemyLimit.Text = tboxGlobalEpidemyTimeLimit.Text = tboxGlobalEpidemyCompCount.Text =
+                tboxLocalHearthLimit.Text = tboxLocalHearthTimeLimit.Text = tboxLimit.Text = tboxTimeLimit.Text = "10";
+        }
+
+        if (isChecked)
+            isChecked = cboxUseFlowAnalysis.Checked;
+
+        tboxGlobalEpidemyLimit.Enabled = tboxGlobalEpidemyTimeLimit.Enabled = tboxGlobalEpidemyCompCount.Enabled =
+                tboxLocalHearthLimit.Enabled = tboxLocalHearthTimeLimit.Enabled = tboxLimit.Enabled = tboxTimeLimit.Enabled = isChecked;
+    }
+
+    private RegistryKey GetRegisterKey()
+    {
+        String registryControlCenterKeyName;
         RegistryKey key;
         try
         {
@@ -158,75 +189,62 @@ public partial class Notification : PageBase
             throw new ArgumentException("Registry open 'Notification' key error: " + ex.Message);
         }
 
-        try
-        {
-            //TextBoxes
-            int? tmp = (int?) key.GetValue("GlobalEpidemyLimit");
-            tboxGlobalEpidemyLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("GlobalEpidemyTimeLimit");
-            tboxGlobalEpidemyTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("GlobalEpidemyCompCount");
-            tboxGlobalEpidemyCompCount.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("LocalHearthLimit");
-            tboxLocalHearthLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("LocalHearthTimeLimit");
-            tboxLocalHearthTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("Limit");
-            tboxLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (int?)key.GetValue("TimeLimit");
-            tboxTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString():"10";
-
-            tmp = (int?)key.GetValue("UseFlowAnalysis");
-            cboxUseFlowAnalysis.Checked = tmp.HasValue ? tmp.Value > 0 : false;
-
-            bool isEnabled;
-            if (cboxUseFlowAnalysis.Checked) isEnabled = true;
-            else isEnabled = false;
-            tboxGlobalEpidemyLimit.Enabled = tboxGlobalEpidemyTimeLimit.Enabled = tboxGlobalEpidemyCompCount.Enabled =
-                tboxLocalHearthLimit.Enabled = tboxLocalHearthTimeLimit.Enabled = tboxLimit.Enabled = tboxTimeLimit.Enabled = isEnabled;
-            
-        }
-        catch
-        {
-        }
-        finally
-        {
-            //key.Close();
-        }
+        return key;
     }
 
-
-    private bool ValidateMailFields()
+    private Boolean ValidateMailFields()
     {
-        Validation vld = new Validation(tboxMailServer.Text);
+        if (!cboxUseMail.Checked)
+        {
+            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
+            return true;
+        }
 
-        if (!vld.CheckIP())
+        Regex reg = new Regex(RegularExpressions.IPAddress);
+        if (!reg.IsMatch(tboxMailServer.Text))
             throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
               + Resources.Resource.MailServer);
 
-        try
-        {
-            System.Net.Mail.MailAddress ml =
-                new System.Net.Mail.MailAddress(tboxMailFrom.Text);
-        }
-        catch
-        {
+        reg = new Regex(RegularExpressions.Email);
+        if (!reg.IsMatch(tboxMailFrom.Text))
             throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
               + Resources.Resource.MailFrom);
-        }
 
         return true;
     }
 
-    private bool ValidateFlowAnalysisFields()
+    private Boolean ValidateJabberFields()
     {
-        if (!cboxUseFlowAnalysis.Checked) return true;
+        if (!cboxUseJabber.Checked)
+        {
+            tboxJabberServer.Text = tboxJabberPassword.Text = tboxJabberFrom.Text = String.Empty;
+            return true;
+        }
+
+        if (String.IsNullOrEmpty(tboxJabberServer.Text))
+            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+              + Resources.Resource.JabberServer);
+
+        if (String.IsNullOrEmpty(tboxJabberPassword.Text))
+            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+              + Resources.Resource.JabberPassword);
+
+        if (String.IsNullOrEmpty(tboxJabberFrom.Text))
+            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+              + Resources.Resource.JabberFrom);
+
+        return true;
+    }
+
+    private Boolean ValidateFlowAnalysisFields()
+    {
+        if (!cboxUseFlowAnalysis.Checked)
+        {
+            tboxGlobalEpidemyLimit.Text = tboxGlobalEpidemyTimeLimit.Text = tboxGlobalEpidemyCompCount.Text =
+                tboxLocalHearthLimit.Text = tboxLocalHearthTimeLimit.Text = tboxLimit.Text = tboxTimeLimit.Text = "10";
+            return true;
+        }
+        
         Validation vld = new Validation(tboxLocalHearthLimit.Text);
 
         if (!vld.CheckUInt32())
@@ -263,9 +281,7 @@ public partial class Notification : PageBase
             throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
                 + Resources.Resource.FlowAnalysis);
         
-        
-        
-        return true; //ни к черту здесь
+        return true;
     }
 
     private void InitializeSession()
@@ -277,23 +293,21 @@ public partial class Notification : PageBase
     private void UpdateData()
     {
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
         {
             EventTypesManager db = new EventTypesManager(conn);
 
             conn.OpenConnection();
             conn.CheckConnectionState(true);
 
-            string filter = "EventName like '%'";
-            string sort = (string)Session["NotifySortExp"];
+            String filter = "EventName like '%'";
+            String sort = (String)Session["NotifySortExp"];
 
-            int count = db.Count(filter);
-            int pageSize = 20;
-            int pageCount = (int)Math.Ceiling((double)count / pageSize);
+            Int32 count = db.Count(filter);
+            Int32 pageSize = 20;
+            Int32 pageCount = (Int32)Math.Ceiling((Double)count / pageSize);
 
             pcPaging.PageCount = pageCount;
-            //pcPagingTop.PageCount = pageCount;
 
             dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
 
@@ -302,18 +316,17 @@ public partial class Notification : PageBase
         }
     }
 
-    protected void dlEvents_ItemCommand(object source, DataListCommandEventArgs e)
+    protected void dlEvents_ItemCommand(Object source, DataListCommandEventArgs e)
     {
         switch (e.CommandName)
         {
             case "SelectCommand":
                 {
-                    if ((string)e.CommandArgument == "Notify")
+                    if ((String)e.CommandArgument == "Notify")
                     {
-                        bool notifyState = (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl.Contains("disabled.gif");
+                        Boolean notifyState = (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl.Contains("disabled.gif");
 
-                        using (VlslVConnection conn = new VlslVConnection(
-                        ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+                        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
                         {
                             EventTypesManager db = new EventTypesManager(conn);
 
@@ -329,9 +342,9 @@ public partial class Notification : PageBase
                         UpdateData();
                         break;
                     }
-                    if ((string)e.CommandArgument == "EventName")
+                    if ((String)e.CommandArgument == "EventName")
                     {
-                        string eventName = (e.Item.FindControl("lbtnEventName") as LinkButton).Text;
+                        String eventName = (e.Item.FindControl("lbtnEventName") as LinkButton).Text;
                         lblSelectedEventName.Text = eventName;
 
                         Session["NotifyEvent"] = eventName;
@@ -346,7 +359,7 @@ public partial class Notification : PageBase
                     Session["NotifySortExp"] = e.CommandArgument.ToString() + " ASC";
                 else
                 {
-                    if (((string)Session["NotifySortExp"]).Contains("ASC"))
+                    if (((String)Session["NotifySortExp"]).Contains("ASC"))
                         Session["NotifySortExp"] = e.CommandArgument.ToString() + " DESC";
                     else
                         Session["NotifySortExp"] = e.CommandArgument.ToString() + " ASC";
@@ -356,34 +369,21 @@ public partial class Notification : PageBase
         }
     }
 
-    protected void dlEvents_ItemDataBound(object sender, DataListItemEventArgs e)
+    protected void dlEvents_ItemDataBound(Object sender, DataListItemEventArgs e)
     {
         //Item
         if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
         {
             EventTypesEntity et = ((EventTypesEntity)e.Item.DataItem);
             Color clr = Color.FromName(et.Color);
-            Color clr2 = Color.FromArgb((byte)~clr.R, (byte)~clr.G, (byte)~clr.B);
+            Color clr2 = Color.FromArgb((Byte)~clr.R, (Byte)~clr.G, (Byte)~clr.B);
 
             (e.Item.FindControl("lbtnEventName") as LinkButton).Attributes.Add("style", "color:" + "#" + clr2.R.ToString()
                 + clr2.G.ToString() + clr2.B.ToString() + ";" + "background-color:" + clr.Name);
 
-            //if ((et.EventName != GlobalEpidemyEvent) 
-            //    && (et.EventName != LocalHearthEvent))
-            {
-                string strBool = "";
-                if (et.Notify)
-                    strBool = "enabled.gif";
-                else
-                    strBool = "disabled.gif";
+            String strBool = et.Notify ? "enabled.gif" : "disabled.gif";
 
-                (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl =
-                    Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + strBool;
-            }
-            //else
-            //{
-            //    (e.Item.FindControl("ibtnNotify") as ImageButton).Visible = false;
-            //}
+            (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + strBool;
         }
 
         //Header
@@ -392,50 +392,36 @@ public partial class Notification : PageBase
             (e.Item.FindControl("lbtnNotify") as LinkButton).Text = Resources.Resource.Notify;
             (e.Item.FindControl("lbtnEventName") as LinkButton).Text = Resources.Resource.EventName;
 
-            string currentSorting = (string)Session["NotifySortExp"];
-            string[] name = currentSorting.Split(' ');
-            if (name[1] == "ASC")
-            {
-                (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += " \u2193";
-            }
-            else
-            {
-                (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += " \u2191";
-            }
+            String[] name = ((String)Session["NotifySortExp"]).Split(' ');
+            (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += (name[1] == "ASC") ? " \u2193" : " \u2191";
         }
     }
 
     #region Paging
-    protected void pcPaging_NextPage(object sender, EventArgs e)
+    protected void pcPaging_NextPage(Object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
+        Int32 index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
         pcPaging.CurrentPageIndex = index;
-        //pcPagingTop.CurrentPageIndex = index;
         UpdateData();
 
     }
-    protected void pcPaging_PrevPage(object sender, EventArgs e)
+    protected void pcPaging_PrevPage(Object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
+        Int32 index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
         pcPaging.CurrentPageIndex = index;
-        //pcPagingTop.CurrentPageIndex = index;
         UpdateData();
     }
 
-    protected void pcPaging_HomePage(object sender, EventArgs e)
+    protected void pcPaging_HomePage(Object sender, EventArgs e)
     {
         pcPaging.CurrentPageIndex = 1;
-        //pcPagingTop.CurrentPageIndex = 1;
-
         UpdateData();
     }
 
-    protected void pcPaging_LastPage(object sender, EventArgs e)
+    protected void pcPaging_LastPage(Object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).PageCount;
+        Int32 index = ((PagingControls.PagingControl)sender).PageCount;
         pcPaging.CurrentPageIndex = index;
-        //pcPagingTop.CurrentPageIndex = index;
-
         UpdateData();
     }
     #endregion
@@ -445,14 +431,14 @@ public partial class Notification : PageBase
     /// </summary>
     private void RereadSet()
     {
-        bool retVal = true;
+        Boolean retVal = true;
         try
         {
             IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
                        typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-            string xml = "<VbaSettings><ControlCenter><Notification>" +
+            String xml = "<VbaSettings><ControlCenter><Notification>" +
                 "<Reread type=" + "\"reg_dword\"" + ">1</Reread>" +
                 "</Notification></ControlCenter></VbaSettings>";
 
@@ -466,19 +452,14 @@ public partial class Notification : PageBase
 
         if (!retVal)
             throw new ArgumentException("Reread: Vba32SS return false!");
-        
-
     }
 
-    protected void lbtnSave_Click(object sender, EventArgs e)
+    protected void lbtnSave_Click(Object sender, EventArgs e)
     {
-        string eventName = (string)Session["NotifyEvent"];
+        String eventName = (String)Session["NotifyEvent"];
         if (!String.IsNullOrEmpty(eventName))
         {
-            bool notifyState = true;
-            //if (Session["EventNameNotify"] != null)
-            //    notifyState = (bool)Session["EventNameNotify"];            
-            notify.SaveState(eventName, notifyState);
+            notify.SaveState(eventName, true);
             RereadSet();
         }
         else
@@ -486,11 +467,11 @@ public partial class Notification : PageBase
                 Resources.Resource.EventName);
     }
 
-    protected void lbtnSaveRegistry_Click(object sender, EventArgs e)
+    protected void lbtnSaveRegistry_Click(Object sender, EventArgs e)
     {
         if (ValidateMailFields())
         {
-            bool retVal = true;
+            Boolean retVal = true;
             try
             {
                 IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
@@ -519,104 +500,102 @@ public partial class Notification : PageBase
 
             if (!retVal)
                 throw new ArgumentException("SaveSettings: Vba32SS return false!");
-
         }
     }
-    protected void lbtnJabberSave_Click(object sender, EventArgs e)
+
+    protected void lbtnJabberSave_Click(Object sender, EventArgs e)
     {
-        bool retVal = true;
-        try
+        if (ValidateJabberFields())
         {
-            IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                   typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
-                   ConfigurationManager.AppSettings["Vba32SS"]);
-
-            System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
-
-            builder.Append("<VbaSettings><ControlCenter><Notification>");
-            builder.AppendFormat("<JabberServer type=" + "\"reg_sz\"" + ">{0}</JabberServer>" +
-                            "<JabberFromJID type=" + "\"reg_sz\"" + ">{1}</JabberFromJID>" +
-                            "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",
-                            tboxJabberServer.Text, tboxJabberFrom.Text);
-
-            if (!String.IsNullOrEmpty(tboxJabberPassword.Text))
+            Boolean retVal = true;
+            try
             {
-                string password = tboxJabberPassword.Text;
+                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
+                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                       ConfigurationManager.AppSettings["Vba32SS"]);
 
-                /*//Шифровка пароля по просьбе тестлаба
-                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(password);
-                for (int i = 0; i < bytes.Length; i++)
-                    bytes[i] != 0x01;
-                password = System.Text.Encoding.UTF8.GetString(bytes);
-                //*/
-                builder.AppendFormat("<JabberPassword type=" + "\"reg_sz\"" + ">{0}</JabberPassword>",
-                    password);
+                System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
+
+                builder.Append("<VbaSettings><ControlCenter><Notification>");
+                builder.AppendFormat("<JabberServer type=" + "\"reg_sz\"" + ">{0}</JabberServer>" +
+                                "<JabberFromJID type=" + "\"reg_sz\"" + ">{1}</JabberFromJID>" +
+                                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",
+                                tboxJabberServer.Text, tboxJabberFrom.Text);
+
+                if (!String.IsNullOrEmpty(tboxJabberPassword.Text))
+                {
+                    builder.AppendFormat("<JabberPassword type=" + "\"reg_sz\"" + ">{0}</JabberPassword>",
+                        tboxJabberPassword.Text);
+                }
+
+                builder.Append("</Notification></ControlCenter></VbaSettings>");
+
+                retVal = remoteObject.ChangeRegistry(builder.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("SaveSettings: " +
+                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
             }
 
-            builder.Append("</Notification></ControlCenter></VbaSettings>");
-
-            retVal = remoteObject.ChangeRegistry(builder.ToString());
+            if (!retVal)
+                throw new ArgumentException("SaveSettings: Vba32SS return false!");
         }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("SaveSettings: " +
-                ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
-        }
-
-        if (!retVal)
-            throw new ArgumentException("SaveSettings: Vba32SS return false!");
     }
-    protected void lbtnFlowSave_Click(object sender, EventArgs e)
+
+    protected void lbtnFlowSave_Click(Object sender, EventArgs e)
     {
-        ValidateFlowAnalysisFields();
-        bool retVal = true;
-        try
+        if (ValidateFlowAnalysisFields())
         {
-            IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                   typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
-                   ConfigurationManager.AppSettings["Vba32SS"]);
+            Boolean retVal = true;
+            try
+            {
+                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
+                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                       ConfigurationManager.AppSettings["Vba32SS"]);
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
+                System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
 
-            builder.Append("<VbaSettings><ControlCenter><Notification>");
-            builder.AppendFormat(
-                            "<LocalHearthTimeLimit type=" + "\"reg_dword\"" + ">{0}</LocalHearthTimeLimit>" +
-                            "<LocalHearthLimit type=" + "\"reg_dword\"" + ">{1}</LocalHearthLimit>" +
-                            "<GlobalEpidemyTimeLimit type=" + "\"reg_dword\"" + ">{2}</GlobalEpidemyTimeLimit>" +
-                            "<GlobalEpidemyLimit type=" + "\"reg_dword\"" + ">{3}</GlobalEpidemyLimit>" +
-                            "<Limit type=" + "\"reg_dword\"" + ">{4}</Limit>" +
-                            "<TimeLimit type=" + "\"reg_dword\"" + ">{5}</TimeLimit>" +
-                            "<UseFlowAnalysis type=" + "\"reg_dword\"" + ">{6}</UseFlowAnalysis>" +
-                            "<GlobalEpidemyCompCount type=" + "\"reg_dword\"" + ">{7}</GlobalEpidemyCompCount>" +
-                            "<ReRead type=" + "\"reg_dword\"" + ">1</ReRead>",
-                            cboxUseFlowAnalysis.Checked ? tboxLocalHearthTimeLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? tboxLocalHearthLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyTimeLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? tboxLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? tboxTimeLimit.Text : "10",
-                            cboxUseFlowAnalysis.Checked ? "1" : "0",
-                            cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyCompCount.Text : "10");
+                builder.Append("<VbaSettings><ControlCenter><Notification>");
+                builder.AppendFormat(
+                                "<LocalHearthTimeLimit type=" + "\"reg_dword\"" + ">{0}</LocalHearthTimeLimit>" +
+                                "<LocalHearthLimit type=" + "\"reg_dword\"" + ">{1}</LocalHearthLimit>" +
+                                "<GlobalEpidemyTimeLimit type=" + "\"reg_dword\"" + ">{2}</GlobalEpidemyTimeLimit>" +
+                                "<GlobalEpidemyLimit type=" + "\"reg_dword\"" + ">{3}</GlobalEpidemyLimit>" +
+                                "<Limit type=" + "\"reg_dword\"" + ">{4}</Limit>" +
+                                "<TimeLimit type=" + "\"reg_dword\"" + ">{5}</TimeLimit>" +
+                                "<UseFlowAnalysis type=" + "\"reg_dword\"" + ">{6}</UseFlowAnalysis>" +
+                                "<GlobalEpidemyCompCount type=" + "\"reg_dword\"" + ">{7}</GlobalEpidemyCompCount>" +
+                                "<ReRead type=" + "\"reg_dword\"" + ">1</ReRead>",
+                                cboxUseFlowAnalysis.Checked ? tboxLocalHearthTimeLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? tboxLocalHearthLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyTimeLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? tboxLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? tboxTimeLimit.Text : "10",
+                                cboxUseFlowAnalysis.Checked ? "1" : "0",
+                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyCompCount.Text : "10");
 
 
-            builder.Append("</Notification></ControlCenter></VbaSettings>");
+                builder.Append("</Notification></ControlCenter></VbaSettings>");
 
-            retVal = remoteObject.ChangeRegistry(builder.ToString());
+                retVal = remoteObject.ChangeRegistry(builder.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("FlowSave: " +
+                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
+            }
+
+            if (!retVal)
+                throw new ArgumentException("FlowSave: Vba32SS return false!");
         }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("FlowSave: " +
-                ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
-        }
-
-        if (!retVal)
-            throw new ArgumentException("FlowSave: Vba32SS return false!");
     }
-    protected void lbtnSaveAll_Click(object sender, EventArgs e)
+
+    protected void lbtnSaveAll_Click(Object sender, EventArgs e)
     {
         lbtnFlowSave_Click(sender, e);
         lbtnJabberSave_Click(sender, e);
         lbtnSaveRegistry_Click(sender, e);
-        InitFlowAnalysisFields();
     }
 }

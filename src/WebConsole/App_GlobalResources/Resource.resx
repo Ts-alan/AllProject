@@ -2820,4 +2820,16 @@
   <data name="GroupHasNotComps" xml:space="preserve">
     <value>Group hasn`t computers</value>
   </data>
+  <data name="IPAddressRegexErrorMessage" xml:space="preserve">
+    <value>IP address must be in format x.x.x.x (Example: 10.172.25.3)</value>
+  </data>
+  <data name="SenderRequired" xml:space="preserve">
+    <value>Sender is required</value>
+  </data>
+  <data name="ServerRequired" xml:space="preserve">
+    <value>Server is required</value>
+  </data>
+  <data name="ValueRequired" xml:space="preserve">
+    <value>Value is required</value>
+  </data>
 </root>
