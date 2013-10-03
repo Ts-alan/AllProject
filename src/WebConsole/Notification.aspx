@@ -1,6 +1,8 @@
 <%@ Page Language="C#" MaintainScrollPositionOnPostback="true" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Notification.aspx.cs" Inherits="Notification" Title="Untitled Page" %>
 <%@ Register Src="Controls/NotifyCnfg.ascx" TagName="Notify" TagPrefix="NotifyCnfg" %>
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
+<%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
+<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register Src="~/Controls/AsyncLoadingStateControl.ascx" TagName="AsyncLoadingStateControl" TagPrefix="cc" %>
 
 <%@ OutputCache Location="None" %>
 
@@ -14,7 +16,7 @@
 
     $(document).ready(function () {
         $("#tabs").tabs({ cookie: { expires: 30} });
-        
+
         $(document).on("click", cboxUseMail, function () {
             hideValidatorCallout("useMail");
             var enabled = $(this).is(":checked");
@@ -38,6 +40,41 @@
                 $(this).attr('disabled', !enabled);
             });
         });
+
+        $(document).on("click", "img[eid]", function () {
+            var img = $(this);
+            var id = img.attr("eid");
+            var isEnabled = (img.attr("state") == "Enabled");
+
+            $.ajax({
+                type: "POST",
+                url: "Notification.aspx/UpdateNotify",
+                dataType: "json",
+                data: "{id:" + id + ",isEnabled:" + isEnabled + "}",
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    var newState = isEnabled ? "Disabled" : "Enabled";
+                    img.attr("state", newState);
+                    img.attr("src", "App_Themes/Main/Images/" + newState + ".gif");
+                    img.attr("title", isEnabled ? Resource.Enable : Resource.Disable);
+                },
+                error: function (msg) { ShowJSONMessage(msg); }
+            });
+        });
+
+        function ShowJSONMessage(msg) {
+            var m = JSON.parse(msg.responseText, function (key, value) {
+                var type;
+                if (value && typeof value === 'object') {
+                    type = value.type;
+                    if (typeof type === 'string' && typeof window[type] === 'function') {
+                        return new (window[type])(value);
+                    }
+                }
+                return value;
+            });
+            alert(m.Message);
+        }
 
     });
 
@@ -366,52 +403,61 @@
     </div>
 
     <div id='3'>
-        <table class="ListContrastTableMain" style="width:700px">
+        <table class="ListContrastTable" style="width:500px">
             <tr>
 	            <td valign="top">
-		            <asp:datalist id="dlEvents" class="ListContrastTable" Border="0" runat="server" OnItemCommand="dlEvents_ItemCommand" OnItemDataBound="dlEvents_ItemDataBound">
-			            <HeaderTemplate>
-				            <tr class="subsection">
-				            <td align="center" style="width: 150px;">
-					            <asp:LinkButton ID="lbtnNotify" runat="server" CommandName="SortCommand" CommandArgument="Notify" />
-				            </td>
-				            <td>
-					            <asp:LinkButton ID="lbtnEventName" runat="server" CommandName="SortCommand" CommandArgument="EventName"></asp:LinkButton>
-				            </td>
-				            </tr>
-			            </HeaderTemplate>
-			            <ItemTemplate>
-				            <tr>
-				            <td align="center">
-					            <asp:ImageButton ID="ibtnNotify" runat="server" CommandName="SelectCommand" CommandArgument="Notify" />
-				            </td>
-				            <td>
-					            <asp:Label id="lblID" runat="server" Visible="False" Text='<%# DataBinder.Eval(Container.DataItem, "ID")%>'></asp:Label>						
-					            <asp:LinkButton id="lbtnEventName" CommandName="SelectCommand" CommandArgument="EventName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:LinkButton>
-				            </td>
-				            </tr>
-			            </ItemTemplate>
-		            </asp:datalist>  
-		            <cc1:PagingControl ID="pcPaging" runat="server" OnNextPage="pcPaging_NextPage" OnPrevPage="pcPaging_PrevPage" OnHomePage="pcPaging_HomePage" OnLastPage="pcPaging_LastPage"/>
+                    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True" SelectCountMethod="CountForNotification"
+                        SelectMethod="GetForNotification" TypeName="EventsDataContainer" SortParameterName="SortExpression">
+                    </asp:ObjectDataSource>
+
+                    <asp:UpdatePanel runat="server" ID="upnlEvents">
+                    <ContentTemplate>
+                        <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
+                            AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand"
+                            EnableModelValidation="True" CssClass="gridViewStyle" EmptyDataText='<%$ Resources:Resource, EmptyMessage %>'>
+                            <Columns>
+                                <asp:TemplateField HeaderText='<%$Resources:Resource, Notify %>' SortExpression="Notify">
+                                    <HeaderStyle Width="80px" />
+                                    <ItemTemplate>
+                                        <img id="ibtnNotify" runat="server" style="cursor: pointer;" alt="" src="" eid='<%# DataBinder.Eval(Container.DataItem, "ID")%>' />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText='<%$Resources:Resource, EventName %>' SortExpression="EventName">
+                                    <ItemTemplate>
+					                    <asp:LinkButton id="lbtnEventName" CommandName="SelectCommand" CommandArgument="EventName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <PagerSettings Position="TopAndBottom" Visible="true" />
+                            <PagerTemplate>
+                                <paging:Paging runat="server" ID="Paging1" />
+                            </PagerTemplate>
+                            <HeaderStyle CssClass="gridViewHeader" ForeColor="White" />
+                            <AlternatingRowStyle CssClass="gridViewRowAlternating" />
+                            <RowStyle CssClass="gridViewRow" />
+                        </custom:GridViewExtended>
+
+                        <asp:Panel runat="server" ID="pnlModalPopap" Style="display: none" CssClass="modalPopupNotify">
+                            <div runat="server" id="divPopupHeader" class="modalPopupNotifyHeader">
+                                <asp:Label ID="lblSelectedEventName" SkinID="SubSectionLabel" style="font-size: 14px; font-weight:bold" runat="server" />
+                            </div>    
+		                            <NotifyCnfg:Notify ID="notify" runat="server" />			    
+                            <div style="vertical-align:middle; height:30px">            
+                                    <div class="GiveButton1" style="float:left">
+                                        <asp:LinkButton runat="server" ID="lbtnSave" SkinID="LeftLink" OnClick="lbtnSave_Click" ForeColor="white" Width="100%" />
+                                    </div>  
+                                    <div class="GiveButton1" style="float:left">
+                                        <asp:LinkButton ID="btnCancel" runat="server" ForeColor="white" Width="100%"/>  
+                                    </div>                
+                                    <asp:Button ID="btnModalPopup" runat="server" Style="visibility:hidden" />            
+                            </div>
+                        </asp:Panel>
+                        <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" runat="server" TargetControlID="btnModalPopup" X="400" Y="200" PopupControlID="pnlModalPopap" CancelControlID="btnCancel" BackgroundCssClass="modalBackground" PopupDragHandleControlID="divPopupHeader" />
+                    </ContentTemplate>
+                    </asp:UpdatePanel>
                 </td>
             </tr>
         </table>
-
-        <asp:Panel runat="server" ID="pnlModalPopap" Style="display: none" CssClass="modalPopupNotify">
-            <div runat="server" id="divPopupHeader" class="modalPopupNotifyHeader"><asp:Label ID="lblSelectedEventName" SkinID="SubSectionLabel" style="font-size: 14px; font-weight:bold" runat="server" /></div>    
-		            <NotifyCnfg:Notify ID="notify" runat="server" />			    
-            <div style="vertical-align:middle; height:30px">            
-                    <div class="GiveButton1" style="float:left">
-                        <asp:LinkButton runat="server" ID="lbtnSave" SkinID="LeftLink" OnClick="lbtnSave_Click" ForeColor="white" Width="100%" />
-                    </div>  
-                    <div class="GiveButton1" style="float:left">
-                        <asp:LinkButton ID="btnCancel" runat="server" ForeColor="white" Width="100%"/>  
-                    </div>                
-                    <asp:Button ID="btnModalPopup" runat="server" Style="visibility:hidden" />            
-            </div>
-        </asp:Panel>
-
-        <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" runat="server" TargetControlID="btnModalPopup" X="400" Y="200" PopupControlID="pnlModalPopap" CancelControlID="btnCancel" BackgroundCssClass="modalBackground" PopupDragHandleControlID="divPopupHeader" />
     </div>
     
     <asp:LinkButton ID="lbtnSaveAll" runat="server" OnClientClick="return SaveAll();" OnClick="lbtnSaveAll_Click" 

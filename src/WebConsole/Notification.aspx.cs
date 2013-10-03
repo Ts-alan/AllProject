@@ -17,6 +17,8 @@ using ARM2_dbcontrol.Filters;
 
 using Vba32.ControlCenter.SettingsService;
 using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Collections.Generic;
 
 public partial class Notification : PageBase
 {
@@ -40,28 +42,27 @@ public partial class Notification : PageBase
         {
             InitFields();
         }
+
+        ResourceRegister(LoadResourcesList());
+        Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
+    }
+
+    private String[] LoadResourcesList()
+    {
+        List<String> list = new List<String>();
+        list.Add("Disable");
+        list.Add("Enable");
+
+        return list.ToArray();
     }
 
     protected override void InitFields()
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPaging.PageCount = 1;
-        pcPaging.PageText = Resources.Resource.Page;
-        pcPaging.OfText = Resources.Resource.Of;
-        pcPaging.NextText = Resources.Resource.Next;
-        pcPaging.PrevText = Resources.Resource.Prev;
-
-        pcPaging.HomeText = Resources.Resource.HomePaging;
-        pcPaging.LastText = Resources.Resource.LastPaging;
-
-        lbtnSave.Text = Resources.Resource.Save;
-
         cboxUseMail.Text = Resources.Resource.UseMail;
         cboxUseJabber.Text = Resources.Resource.UseJabber;
         cboxUseFlowAnalysis.Text = Resources.Resource.UseFlowAnalysis;
 
-        lblSelectedEventName.Text = Resources.Resource.СhoiseEvent;
-
+        //lblSelectedEventName.Text = Resources.Resource.СhoiseEvent;
         lbtnSave.Text = Resources.Resource.Save;
         btnCancel.Text = Resources.Resource.Close;
 
@@ -76,8 +77,6 @@ public partial class Notification : PageBase
         InitMailFields(key);
         InitJabberFields(key);
         InitFlowAnalysisFields(key);
-
-        UpdateData();
     }
 
     private void InitJabberFields(RegistryKey key)
@@ -284,147 +283,57 @@ public partial class Notification : PageBase
         return true;
     }
 
-    private void InitializeSession()
-    {
-        if (Session["NotifySortExp"] == null)
-            Session["NotifySortExp"] = "EventName ASC";
-    }
 
-    private void UpdateData()
-    {
-        InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventTypesManager db = new EventTypesManager(conn);
-
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            String filter = "EventName like '%'";
-            String sort = (String)Session["NotifySortExp"];
-
-            Int32 count = db.Count(filter);
-            Int32 pageSize = 20;
-            Int32 pageCount = (Int32)Math.Ceiling((Double)count / pageSize);
-
-            pcPaging.PageCount = pageCount;
-
-            dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
-
-            dlEvents.DataBind();
-            conn.CloseConnection();
-        }
-    }
-
-    protected void dlEvents_ItemCommand(Object source, DataListCommandEventArgs e)
+    // Вынести эту логику в WebMethod и диалог JQuery!!!!!!!!!!!!
+    protected void GridView1_RowCommand(Object source, GridViewCommandEventArgs e)
     {
         switch (e.CommandName)
         {
             case "SelectCommand":
                 {
-                    if ((String)e.CommandArgument == "Notify")
-                    {
-                        Boolean notifyState = (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl.Contains("disabled.gif");
-
-                        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                        {
-                            EventTypesManager db = new EventTypesManager(conn);
-
-                            conn.OpenConnection();
-                            conn.CheckConnectionState(true);
-                            
-                            EventTypesEntity event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                                    "", "", false, false, notifyState);
-                            db.UpdateNotify(event_);
-                            conn.CloseConnection();
-                        }
-                        //Session["EventNameNotify"] = notifyState;
-                        UpdateData();
-                        break;
-                    }
                     if ((String)e.CommandArgument == "EventName")
                     {
-                        String eventName = (e.Item.FindControl("lbtnEventName") as LinkButton).Text;
+                        String eventName = (e.CommandSource as LinkButton).Text;
                         lblSelectedEventName.Text = eventName;
 
-                        Session["NotifyEvent"] = eventName;
+                        Session["NotifyEvent"] = eventName;  // попробовать избавиться!!!
+                        
                         notify.LoadState(eventName);
 
-                        ModalPopupExtender.Show(); 
+                        ModalPopupExtender.Show();
                     }
                     break;
                 }
-            case "SortCommand":
-                if (Session["NotifySortExp"] == null)
-                    Session["NotifySortExp"] = e.CommandArgument.ToString() + " ASC";
-                else
-                {
-                    if (((String)Session["NotifySortExp"]).Contains("ASC"))
-                        Session["NotifySortExp"] = e.CommandArgument.ToString() + " DESC";
-                    else
-                        Session["NotifySortExp"] = e.CommandArgument.ToString() + " ASC";
-                }
-                UpdateData();
-                break;
         }
     }
 
-    protected void dlEvents_ItemDataBound(Object sender, DataListItemEventArgs e)
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //Item
-        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            EventTypesEntity et = ((EventTypesEntity)e.Item.DataItem);
-            Color clr = Color.FromName(et.Color);
+            EventTypesEntity _event = (EventTypesEntity)e.Row.DataItem;
+            Color clr = Color.FromName(_event.Color);
             Color clr2 = Color.FromArgb((Byte)~clr.R, (Byte)~clr.G, (Byte)~clr.B);
 
-            (e.Item.FindControl("lbtnEventName") as LinkButton).Attributes.Add("style", "color:" + "#" + clr2.R.ToString()
+            (e.Row.FindControl("lbtnEventName") as LinkButton).Attributes.Add("style", "color:" + "#" + clr2.R.ToString()
                 + clr2.G.ToString() + clr2.B.ToString() + ";" + "background-color:" + clr.Name);
 
-            String strBool = et.Notify ? "enabled.gif" : "disabled.gif";
+            String strBool = _event.Notify ? "enabled.gif" : "disabled.gif";
 
-            (e.Item.FindControl("ibtnNotify") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + strBool;
-        }
-
-        //Header
-        if (e.Item.ItemType == ListItemType.Header)
-        {
-            (e.Item.FindControl("lbtnNotify") as LinkButton).Text = Resources.Resource.Notify;
-            (e.Item.FindControl("lbtnEventName") as LinkButton).Text = Resources.Resource.EventName;
-
-            String[] name = ((String)Session["NotifySortExp"]).Split(' ');
-            (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += (name[1] == "ASC") ? " \u2193" : " \u2191";
+            (e.Row.FindControl("ibtnNotify") as HtmlImage).Src = "App_Themes/" + Profile.Theme + "/Images/" + strBool;
+            (e.Row.FindControl("ibtnNotify") as HtmlImage).Attributes.Add("title", _event.Notify ? Resources.Resource.Disable : Resources.Resource.Enable);
+            (e.Row.FindControl("ibtnNotify") as HtmlImage).Attributes.Add("state", _event.Notify ? "Enabled" : "Disabled");
         }
     }
 
-    #region Paging
-    protected void pcPaging_NextPage(Object sender, EventArgs e)
+    [WebMethod()]
+    public static void UpdateNotify(Int16 id, Boolean isEnabled)
     {
-        Int32 index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        UpdateData();
-
+        EventTypesEntity event_ = new EventTypesEntity(id, "", "", false, false, !isEnabled);
+        if (!EventsDataContainer.UpdateNotify(event_))
+            throw new Exception("Update notify is not success.");
     }
-    protected void pcPaging_PrevPage(Object sender, EventArgs e)
-    {
-        Int32 index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        UpdateData();
-    }
-
-    protected void pcPaging_HomePage(Object sender, EventArgs e)
-    {
-        pcPaging.CurrentPageIndex = 1;
-        UpdateData();
-    }
-
-    protected void pcPaging_LastPage(Object sender, EventArgs e)
-    {
-        Int32 index = ((PagingControls.PagingControl)sender).PageCount;
-        pcPaging.CurrentPageIndex = index;
-        UpdateData();
-    }
-    #endregion
 
     /// <summary>
     /// Устанавливает значение в реестре, сигнализирующее о необходимости сервису перечитать настройки.
