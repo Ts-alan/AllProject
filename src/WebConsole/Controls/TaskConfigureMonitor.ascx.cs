@@ -21,18 +21,17 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!Page.IsPostBack)
             InitFields();
 
         ChangeEnabledControl();
     }
 
-    private string defaultFilters = "COM.EXE.DLL.DRV.SYS.OV?.VXD.SCR.CPL.OCX.BPL.AX.PIF.DO?.XL?.HLP.RTF.WI?.WZ?.MSI.MSC.HT*.VB*.JS.JSE.ASP*.CGI.PHP*.?HTML.BAT.CMD.EML.NWS.MSG.XML.MSO.WPS.PPT.PUB.JPG.JPEG.ANI.INF.SWF.PDF";
+    private String defaultFilters = ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor.DefaultFilters;
 
-    private bool _hideHeader = false;
+    private Boolean _hideHeader = false;
 
-    public bool HideHeader
+    public Boolean HideHeader
     {
         get { return _hideHeader; }
         set { _hideHeader = value; }
@@ -43,9 +42,9 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         Tabs.Enabled = _enabled;        
     }
     
-    private bool _enabled = true;
+    private Boolean _enabled = true;
 
-    public bool Enabled
+    public Boolean Enabled
     {
         get { return _enabled; }
         set { _enabled = value; }
@@ -55,42 +54,29 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
     {
         if (HideHeader) HeaderName.Visible = false;
 
-        //if (ddlInfected.Items.Count == 0)
         LoadSource();
         tabPanel1.HeaderText = Resources.Resource.CongMonitorObjects;
         tabPanel2.HeaderText = Resources.Resource.BackgroundScanning;
         tabPanel3.HeaderText = Resources.Resource.Actions;
         tabPanel4.HeaderText = Resources.Resource.CongMonitorReport;
-        /*lbtnObjects.Text = Resources.Resource.CongMonitorObjects;
-        lbtnBackgroundScanning.Text = Resources.Resource.BackgroundScanning;
-        lbtnActions.Text = Resources.Resource.Actions;
-        lbtnReport.Text = Resources.Resource.CongMonitorReport;*/
-        
-
-        //tboxFilterDefined.Text = defaultFilters;
-
-
     }
 
-    public bool ValidateFields()
+    public Boolean ValidateFields()
     {
         Validation vld = new Validation(tboxLogFile.Text);
-        //if (cboxKeep.Checked)
-       // {
-            if (!vld.CheckFileName())
+        if (!vld.CheckFileName())
+            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+                + Resources.Resource.CongLdrKeep);
+
+        if (cboxMaximumSizeLog.Checked)
+        {
+            vld.Value = tboxMaximumSizeLog.Text;
+            if (!vld.CheckSize())
                 throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                    + Resources.Resource.CongLdrKeep);
+                    + Resources.Resource.CongLdrMaximumSizeLog);
+        }
 
-            if (cboxMaximumSizeLog.Checked)
-            {
-                vld.Value = tboxMaximumSizeLog.Text;
-                if (!vld.CheckSize())
-                    throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                        + Resources.Resource.CongLdrMaximumSizeLog);
-            }
-       // }
-
-        if(cboxMaximumCPUUsege.Checked)
+        if (cboxMaximumCPUUsege.Checked)
         {
             vld.Value = tboxMaximumCPUUsege.Text;
             if (!vld.CheckPercent())
@@ -122,10 +108,6 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
                 + Resources.Resource.CongMonitorMinimumBattery);
         }
 
-        //if ((ddlPrevInfected.SelectedIndex == 0) && (ddlInfected.SelectedIndex == 0))
-        //    throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " +
-        //        "Block and block action");
-
         return true;
     }
 
@@ -155,102 +137,77 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         ddlHeuristicAnalysis.Items.Add(Resources.Resource.Optimal);
         ddlHeuristicAnalysis.Items.Add(Resources.Resource.Maximum);
         ddlHeuristicAnalysis.Items.Add(Resources.Resource.Excessive);
-
-        tboxMaximumCPUUsege.Text = "20";
-        tboxMaximumDiskActivity.Text = "20";
-        tboxMaximumDisplacement.Text = "50";
-        tboxMinimumBattery.Text = "90";
-
-        tboxLogFile.Text = "Vba32mNt.log";
-        tboxMaximumSizeLog.Text = "256";
-
-
     }
 
     /// <summary>
     /// Build xml
     /// </summary>
     /// <returns></returns>
-    private string BuildXml()
+    private String BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("monitor");
-        ARM2_dbcontrol.Generation.XmlBuilder xmlExclusions = new ARM2_dbcontrol.Generation.XmlBuilder("exclusions");
-        ARM2_dbcontrol.Generation.XmlBuilder xmlIdlecheck = new ARM2_dbcontrol.Generation.XmlBuilder("idlecheck");
-        xml.Top = String.Empty;
-        xmlExclusions.Top = String.Empty;
-        xmlIdlecheck.Top = String.Empty;
-
+        ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor task = new ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor();
         //Набор файлов
         if (rbScanStandartSet.Checked)
-            xml.AddNode("CHECK_MODE", "reg_dword:0");
+            task.CHECK_MODE = 0;
         if (rbScanSelectedTypes.Checked)
         {
-            xml.AddNode("CHECK_MODE", "reg_dword:1");
-            
-            string filters = tboxFilterDefined.Text;
+            task.CHECK_MODE = 1;
+
+            String filters = tboxFilterDefined.Text;
             //Если пользователь не задал фильтры, используем набор по умолчанию
             if (String.IsNullOrEmpty(filters))
                 filters = defaultFilters;
 
-            xml.AddNode("FILTER_DEFINED", "reg_sz:" + filters);
+            task.FILTER_DEFINED = filters;
         }
         if (rbMonitorScanAllTypes.Checked)
         {
-            xml.AddNode("CHECK_MODE", "reg_dword:2");
-            xml.AddNode("FILTER_EXCLUDE", "reg_sz:" + tboxFilterExclude.Text);
+            task.CHECK_MODE = 2;
+            task.FILTER_EXCLUDE = tboxFilterExclude.Text;
         }
 
-        xml.AddNode("FAST_MODE", cboxScanOnlyNew.Checked ? "reg_dword:1" : "reg_dword:0");
-        xml.AddNode("DETECT_RISKWARE", cboxDetectWare.Checked ? "reg_dword:1" : "reg_dword:0");
-        
+        task.FAST_MODE = cboxScanOnlyNew.Checked ? 1 : 0;
+        task.DETECT_RISKWARE = cboxDetectWare.Checked ? 1 : 0;
+
         //фоновая проверка
-        xml.AddNode("IDLE_CHECK", cboxScanInBackGround.Checked ? "reg_dword:1" : "reg_dword:0");
+        task.IDLE_CHECK = cboxScanInBackGround.Checked ? 1 : 0;
         if (cboxScanInBackGround.Checked)
         {
-            //cbox
-            xml.AddNode("IDLE_PROCESSOR", cboxMaximumCPUUsege.Checked ? "reg_dword:1" : "reg_dword:0");
-            xml.AddNode("IDLE_DISK", cboxMaximumDiskActivity.Checked ? "reg_dword:1" : "reg_dword:0");
-            xml.AddNode("IDLE_MOUSE", cboxMaximumDisplacement.Checked ? "reg_dword:1" : "reg_dword:0");
-            xml.AddNode("IDLE_NOTEBOOK", cboxMinimumBattery.Checked ? "reg_dword:1" : "reg_dword:0");
-            //xml.AddNode("IDLE_AUTORUN", cboxScanStartupFiles.Checked ? "reg_dword:1" : "reg_dword:0");
-            xml.AddNode("IDLE_USERFILES", cboxScanFilesByUser.Checked ? "reg_dword:1" : "reg_dword:0");
+            task.IsScanInBackGround = true;
 
-            //tbox
-            if(cboxMaximumCPUUsege.Checked)
-                xml.AddNode("IDLE_PROCESSOR_VALUE", "reg_dword:" + tboxMaximumCPUUsege.Text);
-            if(cboxMaximumDiskActivity.Checked)
-                xml.AddNode("IDLE_DISK_VALUE", "reg_dword:" + tboxMaximumDiskActivity.Text);
-            if(cboxMaximumDisplacement.Checked)
-                xml.AddNode("IDLE_MOUSE_VALUE", "reg_dword:" + tboxMaximumDisplacement.Text);
-            if(cboxMinimumBattery.Checked)
-                xml.AddNode("IDLE_NOTEBOOK_VALUE", "reg_dword:" + tboxMinimumBattery.Text);
+            task.IDLE_PROCESSOR = cboxMaximumCPUUsege.Checked ? 1 : 0;
+            task.IDLE_DISK = cboxMaximumDiskActivity.Checked ? 1 : 0;
+            task.IDLE_MOUSE = cboxMaximumDisplacement.Checked ? 1 : 0;
+            task.IDLE_NOTEBOOK = cboxMinimumBattery.Checked ? 1 : 0;
+            task.IDLE_USERFILES = cboxScanFilesByUser.Checked ? 1 : 0;
+            task.IDLE_AUTORUN = cboxScanStartupFiles.Checked ? 1 : 0;
 
+            if (cboxMaximumCPUUsege.Checked)
+                task.IDLE_PROCESSOR_VALUE = Convert.ToInt32(tboxMaximumCPUUsege.Text);
+            if (cboxMaximumDiskActivity.Checked)
+                task.IDLE_DISK_VALUE = Convert.ToInt32(tboxMaximumDiskActivity.Text);
+            if (cboxMaximumDisplacement.Checked)
+                task.IDLE_MOUSE_VALUE = Convert.ToInt32(tboxMaximumDisplacement.Text);
+            if (cboxMinimumBattery.Checked)
+                task.IDLE_NOTEBOOK_VALUE = Convert.ToInt32(tboxMinimumBattery.Text);
         }
-        
-    
-        xml.AddNode("NOTIFY", cboxNotifyOfMonitor.Checked ? "reg_dword:1" : "reg_dword:0");
-        
+
+        task.NOTIFY = cboxNotifyOfMonitor.Checked ? 1 : 0;
+
         //лог-файл
-        //xml.AddNode("REPORT", cboxKeep.Checked ? "reg_dword:1" : "reg_dword:0");
-        //if (cboxKeep.Checked)
-        //{
-            xml.AddNode("REPORT_NAME", "reg_sz:" + tboxLogFile.Text);
-           // xml.AddNode("ADD_TO_REPORT", cboxAddLog.Checked ? "reg_dword:1" : "reg_dword:0");
-           
-            xml.AddNode("LIMIT_REPORT", cboxMaximumSizeLog.Checked ? "reg_dword:1" : "reg_dword:0");
-            if (cboxMaximumSizeLog.Checked)
-            {
-                xml.AddNode("LIMIT_REPORT_VALUE", "reg_dword:" + tboxMaximumSizeLog.Text);
-            }
-       // }
+        task.REPORT_NAME = tboxLogFile.Text;
 
-        xml.AddNode("SHOW_OK", cboxInformationAboutCleanFiles.Checked ? "reg_dword:1" : "reg_dword:0");
+        task.LIMIT_REPORT = cboxMaximumSizeLog.Checked ? 1 : 0;
+        if (cboxMaximumSizeLog.Checked)
+        {
+            task.LIMIT_REPORT_VALUE = Convert.ToInt32(tboxMaximumSizeLog.Text);
+        }
 
-
+        task.SHOW_OK = cboxInformationAboutCleanFiles.Checked ? 1 : 0;
 
         // Действия над инфицированными
-        xml.AddNode("InfectedAction1", "reg_dword:"+Convert.ToString(ddlInfected.SelectedIndex + 1));
-        int index;
+        task.InfectedAction1 = ddlInfected.SelectedIndex + 1;
+        Int32 index;
         if (ddlInfected.SelectedIndex < 2 && ddlPrevInfected.SelectedIndex == 0)
         {
             if (ddlInfected.SelectedIndex == 0) index = 2;
@@ -258,53 +215,43 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         }
         else index = ddlPrevInfected.SelectedIndex + 2;
 
-        xml.AddNode("InfectedAction2", "reg_dword:" + Convert.ToString(index));
-        xml.AddNode("InfectedAction3", "reg_dword:" + Convert.ToString(ddlPrevPrevInfected.SelectedIndex + 3));
+        task.InfectedAction2 = index;
+        task.InfectedAction3 = ddlPrevPrevInfected.SelectedIndex + 3;
 
-     
-        xml.AddNode("HEURISTIC", "reg_dword:" + Convert.ToString(ddlHeuristicAnalysis.SelectedIndex));
+        task.HEURISTIC = ddlHeuristicAnalysis.SelectedIndex;
 
         if (ddlHeuristicAnalysis.SelectedIndex > 0)
         {
-            xml.AddNode("BlockAutorunInf", "reg_dword:"+ (cboxBlockUSB.Checked ? "1" : "0"));
+            task.BlockAutorunInf = cboxBlockUSB.Checked ? 1 : 0;
         }
-        
+
         //Действия над подозрительными
-        xml.AddNode("SuspiciousAction1", (ddlSuspicious.SelectedIndex == 2) ? "reg_dword:3" : ("reg_dword:" + Convert.ToString(ddlSuspicious.SelectedIndex)));
-        xml.AddNode("SuspiciousAction2", (ddlPrePrevSuspicious.SelectedIndex == 0) ? "reg_dword:0" : "reg_dword:3");
+        task.SuspiciousAction1 = ddlSuspicious.SelectedIndex == 2 ? 3 : ddlSuspicious.SelectedIndex;
+        task.SuspiciousAction2 = ddlPrePrevSuspicious.SelectedIndex == 0 ? 0 : 3;
 
         //пути фоновой проверки и список необрабатываемых путей        
         if (ddlExcludingFoldersAndFilesDelete.Items.Count != 0)
         {
-            for (int i = 0; i < ddlExcludingFoldersAndFilesDelete.Items.Count; i++)
-                xmlExclusions.AddNode((ddlExcludingFoldersAndFilesDelete.Items[i].Text.ToCharArray(0, 1)[0] == '-' ? "N" : "S") + Anchor.GetMd5Hash(ddlExcludingFoldersAndFilesDelete.Items[i].Text.Substring(1)),
-                    "reg_sz:" + ddlExcludingFoldersAndFilesDelete.Items[i].Text.Substring(1));
+            for (Int32 i = 0; i < ddlExcludingFoldersAndFilesDelete.Items.Count; i++)
+                task.ExcludingFoldersAndFilesDelete.Add(ddlExcludingFoldersAndFilesDelete.Items[i].Text);
         }
-        xmlExclusions.Generate();
 
-        
         if (ddlListOfPathToScan.Items.Count != 0)
         {
-            for (int i = 0; i < ddlListOfPathToScan.Items.Count; i++)
-                xmlIdlecheck.AddNode((ddlListOfPathToScan.Items[i].Text.ToCharArray(0, 1)[0] == '-' ? "N" : "S") + Anchor.GetMd5Hash(ddlListOfPathToScan.Items[i].Text.Substring(1)),
-                    "reg_sz:" + ddlListOfPathToScan.Items[i].Text.Substring(1));                
+            for (Int32 i = 0; i < ddlListOfPathToScan.Items.Count; i++)
+                task.ListOfPathToScan.Add(ddlListOfPathToScan.Items[i].Text);
         }
-        xmlIdlecheck.Generate();
 
         //cbox to dll
-        xml.AddNode("InfectedCopy1", cboxInfectedQuarantine.Checked ? "reg_dword:1" : "reg_dword:0");
-        xml.AddNode("InfectedCopy2", cboxInfectedQua.Checked ? "reg_dword:1" : "reg_dword:0");
-        xml.AddNode("InfectedCopy3",  cboxInfectedQuaPrev.Checked ? "reg_dword:1" : "reg_dword:0");
-        xml.AddNode("SuspiciousCopy1",  cboxSuspiciousQua.Checked ? "reg_dword:1" : "reg_dword:0");
-        xml.AddNode("SuspiciousCopy2",  cboxSuspiciousQuaPrev.Checked ? "reg_dword:1" : "reg_dword:0");
+        task.InfectedCopy1 = cboxInfectedQuarantine.Checked ? 1 : 0;
+        task.InfectedCopy2 = cboxInfectedQua.Checked ? 1 : 0;
+        task.InfectedCopy3 = cboxInfectedQuaPrev.Checked ? 1 : 0;
+        task.SuspiciousCopy1 = cboxSuspiciousQua.Checked ? 1 : 0;
+        task.SuspiciousCopy2 = cboxSuspiciousQuaPrev.Checked ? 1 : 0;
 
-        xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
-        xml.AddNode("Type", "ConfigureMonitor");
+        task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
 
-        xml.Generate();
-
-        return xml.Result + xmlExclusions.Result + xmlIdlecheck.Result;
-
+        return task.SaveToXml();
     }
 
     public void LoadState(TaskUserEntity task)
@@ -312,59 +259,53 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         if (task.Type != TaskType.ConfigureMonitor)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Generation.XmlBuilder builder = new ARM2_dbcontrol.Generation.XmlBuilder();
-        XmlTaskParser pars = new XmlTaskParser("<TaskMonitor>" + task.Param + "</TaskMonitor>");
-                
+        ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor tsk = new ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor();
+        tsk.LoadFromXml(task.Param);
+
         //cbox
         //cboxAddLog.Checked = pars.GetValue("ADD_TO_REPORT","reg_dword:") == "1" ? true : false;
-        cboxScanOnlyNew.Checked = pars.GetValue("FAST_MODE", "reg_dword:") == "1" ? true : false;
-        cboxDetectWare.Checked = pars.GetValue("DETECT_RISKWARE", "reg_dword:") == "1" ? true : false;
+        cboxScanOnlyNew.Checked = tsk.FAST_MODE == 1;
+        cboxDetectWare.Checked = tsk.DETECT_RISKWARE == 1;
 
-        cboxScanInBackGround.Checked = pars.GetValue("IDLE_CHECK", "reg_dword:") == "1" ? true : false;
+        cboxScanInBackGround.Checked = tsk.IDLE_CHECK == 1;
         cboxScanInBackGround.Attributes.Add("onclick", "ChangeScanInBackGround();");
-        cboxMaximumCPUUsege.Checked = pars.GetValue("IDLE_PROCESSOR", "reg_dword:") == "1" ? true : false;
+        cboxMaximumCPUUsege.Checked = tsk.IDLE_PROCESSOR == 1;
         cboxMaximumCPUUsege.Attributes.Add("onclick", "ChangeMaximumCPUUsege();");
-        cboxMaximumDiskActivity.Checked = pars.GetValue("IDLE_DISK", "reg_dword:") == "1" ? true : false;
+        cboxMaximumDiskActivity.Checked = tsk.IDLE_DISK == 1;
         cboxMaximumDiskActivity.Attributes.Add("onclick", "ChangeMaximumDiskActivity();");
-        cboxMaximumDisplacement.Checked = pars.GetValue("IDLE_MOUSE", "reg_dword:") == "1" ? true : false;
+        cboxMaximumDisplacement.Checked = tsk.IDLE_MOUSE == 1;
         cboxMaximumDisplacement.Attributes.Add("onclick", "ChangeMaximumDisplacement();");
-        cboxMinimumBattery.Checked = pars.GetValue("IDLE_NOTEBOOK", "reg_dword:") == "1" ? true : false;
+        cboxMinimumBattery.Checked = tsk.IDLE_NOTEBOOK == 1;
         cboxMinimumBattery.Attributes.Add("onclick", "ChangeMinimumBattery();");
 
-        //cboxScanStartupFiles.Checked = pars.GetValue("IDLE_AUTORUN", "reg_dword:") == "1" ? true : false;
-        cboxScanFilesByUser.Checked = pars.GetValue("IDLE_USERFILES", "reg_dword:") == "1" ? true : false;
-        cboxNotifyOfMonitor.Checked = pars.GetValue("NOTIFY", "reg_dword:") == "1" ? true : false;
-        //cboxKeep.Checked = pars.GetValue("REPORT", "reg_dword:") == "1" ? true : false;
-        cboxMaximumSizeLog.Checked = pars.GetValue("LIMIT_REPORT", "reg_dword:") == "1" ? true : false;
-        cboxInformationAboutCleanFiles.Checked = pars.GetValue("SHOW_OK", "reg_dword:") == "1" ? true : false;
-        cboxInfectedQuarantine.Checked = pars.GetValue("InfectedCopy1", "reg_dword:") == "1" ? true : false;
-        cboxInfectedQua.Checked = pars.GetValue("InfectedCopy2", "reg_dword:") == "1" ? true : false;
-        cboxInfectedQuaPrev.Checked = pars.GetValue("InfectedCopy3", "reg_dword:") == "1" ? true : false;
-        cboxSuspiciousQua.Checked = pars.GetValue("SuspiciousCopy1", "reg_dword:") == "1" ? true : false;
-        cboxSuspiciousQuaPrev.Checked = pars.GetValue("SuspiciousCopy2", "reg_dword:") == "1" ? true : false;
-        cboxBlockUSB.Checked = pars.GetValue("BlockAutorunInf", "reg_dword:") == "1" ? true : false;
+        cboxScanFilesByUser.Checked = tsk.IDLE_USERFILES == 1;
+        cboxNotifyOfMonitor.Checked = tsk.NOTIFY == 1;
+        cboxMaximumSizeLog.Checked = tsk.LIMIT_REPORT == 1;
+        cboxInformationAboutCleanFiles.Checked = tsk.SHOW_OK == 1;
+        cboxInfectedQuarantine.Checked = tsk.InfectedCopy1 == 1;
+        cboxInfectedQua.Checked = tsk.InfectedCopy2 == 1;
+        cboxInfectedQuaPrev.Checked = tsk.InfectedCopy3 == 1;
+        cboxSuspiciousQua.Checked = tsk.SuspiciousCopy1 == 1;
+        cboxSuspiciousQuaPrev.Checked = tsk.SuspiciousCopy2 == 1;
+        cboxBlockUSB.Checked = tsk.BlockAutorunInf == 1;
 
         //tbox
-        if (pars.GetValue("IDLE_PROCESSOR_VALUE", "reg_dword:") != String.Empty)
-            tboxMaximumCPUUsege.Text = pars.GetValue("IDLE_PROCESSOR_VALUE", "reg_dword:");
-        if (pars.GetValue("IDLE_DISK_VALUE", "reg_dword:") != String.Empty)
-            tboxMaximumDiskActivity.Text = pars.GetValue("IDLE_DISK_VALUE", "reg_dword:");
-        if (pars.GetValue("IDLE_MOUSE_VALUE", "reg_dword:") != String.Empty)
-            tboxMaximumDisplacement.Text = pars.GetValue("IDLE_MOUSE_VALUE", "reg_dword:");
-        if (pars.GetValue("IDLE_NOTEBOOK_VALUE", "reg_dword:") != String.Empty)
-            tboxMinimumBattery.Text = pars.GetValue("IDLE_NOTEBOOK_VALUE", "reg_dword:");
-        if (pars.GetValue("REPORT_NAME", "reg_sz:") != String.Empty)
-            tboxLogFile.Text = pars.GetValue("REPORT_NAME", "reg_sz:");
-        if (pars.GetValue("LIMIT_REPORT_VALUE", "reg_dword:") != String.Empty)
-            tboxMaximumSizeLog.Text = pars.GetValue("LIMIT_REPORT_VALUE", "reg_dword:");
-        if (pars.GetValue("FILTER_DEFINED", "reg_sz:") != String.Empty)
-            tboxFilterDefined.Text = pars.GetValue("FILTER_DEFINED", "reg_sz:");
-        else tboxFilterDefined.Text = defaultFilters;
-        if (pars.GetValue("FILTER_EXCLUDE", "reg_sz:") != String.Empty)
-            tboxFilterExclude.Text = pars.GetValue("FILTER_EXCLUDE", "reg_sz:");
+        if (tsk.IDLE_PROCESSOR_VALUE > -1)
+            tboxMaximumCPUUsege.Text = tsk.IDLE_PROCESSOR_VALUE.ToString();
+        if (tsk.IDLE_DISK_VALUE > -1)
+            tboxMaximumDiskActivity.Text = tsk.IDLE_DISK_VALUE.ToString();
+        if (tsk.IDLE_MOUSE_VALUE > -1)
+            tboxMaximumDisplacement.Text = tsk.IDLE_MOUSE_VALUE.ToString();
+        if (tsk.IDLE_NOTEBOOK > -1)
+            tboxMinimumBattery.Text = tsk.IDLE_NOTEBOOK_VALUE.ToString();
+        tboxLogFile.Text = tsk.REPORT_NAME;
+        if (tsk.LIMIT_REPORT_VALUE > -1)
+            tboxMaximumSizeLog.Text = tsk.LIMIT_REPORT_VALUE.ToString();
+        tboxFilterDefined.Text = tsk.FILTER_DEFINED;
+        tboxFilterExclude.Text = tsk.FILTER_EXCLUDE;
 
         //enable disable textboxes checkboxes
-        
+
         if (!cboxScanInBackGround.Checked)
         {
             cboxMaximumCPUUsege.InputAttributes.Add("disabled", "true");
@@ -397,35 +338,29 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
                 tboxMinimumBattery.Attributes.Add("disabled", "true");
             }
         }
-         
+
 
         //ddl
-        int index = 0;
-        if (pars.GetValue("InfectedAction1", "reg_dword:") != String.Empty)
-        {
-            index = Convert.ToInt32(pars.GetValue("InfectedAction1", "reg_dword:"));
-            index--;
-        }
-        ddlInfected.SelectedIndex = index;                
-        
-        switch (index)
+        ddlInfected.SelectedIndex = tsk.InfectedAction1;
+
+        switch (tsk.InfectedAction1)
         {
             case 0:
                 ddlPrevInfected.Items.Clear();
-                for (int i = 1; i < ddlInfected.Items.Count; i++)
+                for (Int32 i = 1; i < ddlInfected.Items.Count; i++)
                 {
-                    ddlPrevInfected.Items.Add(ddlInfected.Items[i].Text);                    
+                    ddlPrevInfected.Items.Add(ddlInfected.Items[i].Text);
                 }
                 ddlPrevInfected.SelectedIndex = 0;
                 ddlPrevPrevInfected.SelectedIndex = 0;
                 break;
             case 1:
                 ddlPrevInfected.Items.Clear();
-                for (int i = 0; i < ddlInfected.Items.Count; i++)
+                for (Int32 i = 0; i < ddlInfected.Items.Count; i++)
                 {
                     if (i != 1)
                     {
-                        ddlPrevInfected.Items.Add(ddlInfected.Items[i].Text);                        
+                        ddlPrevInfected.Items.Add(ddlInfected.Items[i].Text);
                     }
                 }
                 ddlPrevInfected.SelectedIndex = 0;
@@ -452,89 +387,61 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
                 cboxInfectedQuarantine.InputAttributes.Add("disabled", "true");
                 break;
         }
-        
-        if (index < 2)
+
+        if (tsk.InfectedAction1 < 2)
         {
-            if (pars.GetValue("InfectedAction2", "reg_dword:") != String.Empty)
+            ddlPrevInfected.SelectedIndex = tsk.InfectedAction2;
+            switch (ddlPrevInfected.SelectedIndex)
             {
-                index = Convert.ToInt32(pars.GetValue("InfectedAction2", "reg_dword:"));
-                ddlPrevInfected.SelectedIndex = index == 1 ? 0 : (index - 2);
-                switch (ddlPrevInfected.SelectedIndex)
-                {
-                    case 0:
-                        ddlPrevPrevInfected.SelectedIndex = 0;
-                        break;
-                    case 1:
-                        ddlPrevPrevInfected.SelectedIndex = 0;
-                        ddlPrevPrevInfected.Enabled = false;
-                        cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
-                        break;
-                    case 2:
-                        ddlPrevPrevInfected.SelectedIndex = 1;
-                        ddlPrevPrevInfected.Enabled = false;
-                        cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
-                        cboxInfectedQua.InputAttributes.Add("disabled", "true");
-                        break;
-                }
+                case 0:
+                    ddlPrevPrevInfected.SelectedIndex = 0;
+                    break;
+                case 1:
+                    ddlPrevPrevInfected.SelectedIndex = 0;
+                    ddlPrevPrevInfected.Enabled = false;
+                    cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
+                    break;
+                case 2:
+                    ddlPrevPrevInfected.SelectedIndex = 1;
+                    ddlPrevPrevInfected.Enabled = false;
+                    cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
+                    cboxInfectedQua.InputAttributes.Add("disabled", "true");
+                    break;
             }
-            else
-                ddlPrevInfected.SelectedIndex = 0;
 
             if (ddlPrevInfected.SelectedIndex == 0)
             {
-                if (pars.GetValue("InfectedAction3", "reg_dword:") != String.Empty)
-                {
-                    index = Convert.ToInt32(pars.GetValue("InfectedAction3", "reg_dword:"));
-                    ddlPrevPrevInfected.SelectedIndex = index - 3;
-                    if (ddlPrevPrevInfected.SelectedIndex == 1) cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
-                }
-                else
-                    ddlPrevPrevInfected.SelectedIndex = 0;
+                ddlPrevPrevInfected.SelectedIndex = tsk.InfectedAction3;
+                if (ddlPrevPrevInfected.SelectedIndex == 1)
+                    cboxInfectedQuaPrev.InputAttributes.Add("disabled", "true");
             }
         }
 
 
-        if (pars.GetValue("SuspiciousAction1", "reg_dword:") != String.Empty)
-        {
-            index = Convert.ToInt32(pars.GetValue("SuspiciousAction1", "reg_dword:"));
-            ddlSuspicious.SelectedIndex = index == 3 ? 2 : index;
-        }
-        else
-            ddlSuspicious.SelectedIndex = 0;
+        ddlSuspicious.SelectedIndex = tsk.SuspiciousAction1;
 
         switch (ddlSuspicious.SelectedIndex)
         {
             case 0:
-                ddlPrePrevSuspicious.Enabled= false;
+                ddlPrePrevSuspicious.Enabled = false;
                 ddlPrePrevSuspicious.SelectedIndex = 0;
                 cboxSuspiciousQuaPrev.InputAttributes.Add("disabled", "true");
                 break;
             case 1:
-                ddlPrePrevSuspicious.Enabled= true;
+                ddlPrePrevSuspicious.Enabled = true;
                 ddlPrePrevSuspicious.SelectedIndex = 0;
                 cboxSuspiciousQuaPrev.InputAttributes.Add("disabled", "false");
                 break;
             case 2:
-                ddlPrePrevSuspicious.Enabled= false;
+                ddlPrePrevSuspicious.Enabled = false;
                 ddlPrePrevSuspicious.SelectedIndex = 1;
                 cboxSuspiciousQuaPrev.InputAttributes.Add("disabled", "true");
                 break;
         }
 
-        if (pars.GetValue("SuspiciousAction2", "reg_dword:") != String.Empty)
-        {
-            index = Convert.ToInt32(pars.GetValue("SuspiciousAction2", "reg_dword:"));
-            ddlPrePrevSuspicious.SelectedIndex = index == 3 ? 1 : 0;
-        }
-        else
-            ddlPrePrevSuspicious.SelectedIndex = 0;
+        ddlPrePrevSuspicious.SelectedIndex = tsk.SuspiciousAction2;
 
-        if (pars.GetValue("HEURISTIC", "reg_dword:") != String.Empty)
-        {
-            ddlHeuristicAnalysis.SelectedIndex = Convert.ToInt32(pars.GetValue("HEURISTIC", "reg_dword:"));
-        }
-        else
-            ddlHeuristicAnalysis.SelectedIndex = 0;
+        ddlHeuristicAnalysis.SelectedIndex = tsk.HEURISTIC;
 
         if (ddlHeuristicAnalysis.SelectedIndex == 0)
         {
@@ -546,132 +453,40 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         }
 
         //Folders and files excluded from Monitor scanning 
-        ddlExcludingFoldersAndFilesDelete.Items.Clear();
-        string str = pars.GetXmlTagContent("exclusions");
-        foreach (string item in ParseMD5Path(str))
-        {
-            ddlExcludingFoldersAndFilesDelete.Items.Add(item);
-        }
-        
+        ddlExcludingFoldersAndFilesDelete.DataSource = tsk.ExcludingFoldersAndFilesDelete;
+        ddlExcludingFoldersAndFilesDelete.DataBind();
+
         //List of paths to scan
-        ddlListOfPathToScan.Items.Clear();        
-        str = pars.GetXmlTagContent("idlecheck");
-        foreach (string item in ParseMD5Path(str))
-        {
-            ddlListOfPathToScan.Items.Add(item);
-        }
+        ddlListOfPathToScan.DataSource = tsk.ListOfPathToScan;
+        ddlListOfPathToScan.DataBind();
 
         //rb
-        if (pars.GetValue("CHECK_MODE", "reg_dword:") != String.Empty)
-            index = Convert.ToInt32(pars.GetValue("CHECK_MODE","reg_dword:"));
-        else
-            index = 0;
-
-        if (index == 0)
-            rbScanStandartSet.Checked = true;
-        if (index == 1)
-            rbScanSelectedTypes.Checked = true;
-        if (index == 2)
-            rbMonitorScanAllTypes.Checked = true;
-    }
-
-    private List<string> ParseMD5Path(string path)
-    {        
-        List<string> parsePath = new List<string>();
-        path = path.Replace("reg_sz:", "");
-        string tmp = String.Empty;
-
-        while (path.Length != 0)
+        switch (tsk.CHECK_MODE)
         {
-            path = path.Remove(0, path.IndexOf(">") + 1);
-            tmp = path.Substring(0, path.IndexOf("<"));
-            path = path.Remove(0, path.IndexOf("<") + 2);
-            tmp = (path.Substring(0, 1) == "N" ? "-" : "+") + tmp;
-            parsePath.Add(tmp);
-            path = path.Remove(0, path.IndexOf(">") + 1);
+            case 0:
+                rbScanStandartSet.Checked = true;
+                break;
+            case 1:
+                rbScanSelectedTypes.Checked = true;
+                break;
+            case 2:
+                rbMonitorScanAllTypes.Checked = true;
+                break;
         }
-
-        return parsePath;
     }
 
     public TaskUserEntity GetCurrentState()
     {
         TaskUserEntity task = new TaskUserEntity();
-
         task.Type = TaskType.ConfigureMonitor;
-
-        ARM2_dbcontrol.Generation.XmlBuilder xml =
-            new ARM2_dbcontrol.Generation.XmlBuilder("task");
 
         ValidateFields();
         task.Param = BuildXml();
 
         return task;
-
     }
 
-   /* protected void lbtnObjects_Click(object sender, EventArgs e)
-    {
-        tblObjects1.Visible = true;
-        tblObjects2.Visible = true;
-       // tblObjects3.Visible = true;
-
-        tblActions1.Visible = false;
-        tblReport1.Visible = false;
-        tblReport2.Visible = false;
-        tblScanning1.Visible = false;
-        tblScanning2.Visible = false;
-        tblScanning3.Visible = false;
-        //Anchor.ScrollToObj(lbtnObjects.ClientID, Page);
-
-    }
-
-    protected void lbtnBackgroundScanning_Click(object sender, EventArgs e)
-    {
-        tblObjects1.Visible = false;
-        tblObjects2.Visible = false;
-        tblObjects3.Visible = false;
-
-        tblActions1.Visible = false;
-        tblReport1.Visible = false;
-        tblReport2.Visible = false;
-        tblScanning1.Visible = true;
-        tblScanning2.Visible = true;
-      //  tblScanning3.Visible = true;
-        //Anchor.ScrollToObj(lbtnBackgroundScanning.ClientID, Page);
-    }
-
-    protected void lbtnActions_Click(object sender, EventArgs e)
-    {
-        tblObjects1.Visible = false;
-        tblObjects2.Visible = false;
-        tblObjects3.Visible = false;
-
-        tblActions1.Visible = true;
-        tblReport1.Visible = false;
-        tblReport2.Visible = false;
-        tblScanning1.Visible = false;
-        tblScanning2.Visible = false;
-        tblScanning3.Visible = false;
-        //Anchor.ScrollToObj(lbtnActions.ClientID, Page);
-    }
-
-    protected void lbtnReport_Click(object sender, EventArgs e)
-    {
-        tblObjects1.Visible = false;
-        tblObjects2.Visible = false;
-        tblObjects3.Visible = false;
-
-        tblActions1.Visible = false;
-        tblReport1.Visible = true;
-        tblReport2.Visible = true;
-        tblScanning1.Visible = false;
-        tblScanning2.Visible = false;
-        tblScanning3.Visible = false;
-        //Anchor.ScrollToObj(lbtnReport.ClientID, Page);
-    }*/
-
-    private void ScrollToObj(string controlId)
+    private void ScrollToObj(String controlId)
     {
         if (!Page.ClientScript.IsStartupScriptRegistered("close"))
             Page.ClientScript.RegisterStartupScript(typeof(Page), "close", "document.getElementById('" + controlId + "').scrollIntoView(true);", true);
@@ -680,7 +495,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
     protected void lbtnExcludingFoldersAndFilesAdd_Click(object sender, EventArgs e)
     {
         if (tboxExcludingFoldersAndFilesAdd.Text == String.Empty) return;
-        string path = tboxExcludingFoldersAndFilesAdd.Text.Trim();
+        String path = tboxExcludingFoldersAndFilesAdd.Text.Trim();
         if ((ddlExcludingFoldersAndFilesDelete.Items.FindByText("-" + path) != null) ||
             (ddlExcludingFoldersAndFilesDelete.Items.FindByText("+" + path) != null))
         {
@@ -690,20 +505,17 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
             ddlExcludingFoldersAndFilesDelete.Items.Add((cboxIncludingSubFolders.Checked ? "+" : "-") + path);
         }
         tboxExcludingFoldersAndFilesAdd.Text = String.Empty;
-        // ddlExcludingFoldersAndFilesDelete.DataBind();
-        //Anchor.ScrollToObj(tboxExcludingFoldersAndFilesAdd.ClientID, Page);
     }
 
     protected void lbntnExcludingFoldersAndFilesDelete_Click(object sender, EventArgs e)
     {
         ddlExcludingFoldersAndFilesDelete.Items.Remove(ddlExcludingFoldersAndFilesDelete.SelectedItem);
-        
-        //Anchor.ScrollToObj(ddlExcludingFoldersAndFilesDelete.ClientID, Page);
     }
+
     protected void lbtnListOfPathToScanAdd_Click(object sender, EventArgs e)
     {
         if (tboxListOfPathToScanAdd.Text == String.Empty) return;
-        string path = tboxListOfPathToScanAdd.Text.Trim();
+        String path = tboxListOfPathToScanAdd.Text.Trim();
         if ((ddlListOfPathToScan.Items.FindByText("-" + path) != null) ||
             (ddlListOfPathToScan.Items.FindByText("+" + path) != null))
         {
@@ -713,11 +525,10 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
             ddlListOfPathToScan.Items.Add((cboxListOfPathToScanIncludingSubFolders.Checked ? "+" : "-") + path);
         }
         tboxListOfPathToScanAdd.Text = String.Empty;
-        //Anchor.ScrollToObj(ddlListOfPathToScan.ClientID, Page);
     }
+
     protected void lbtnListOfPathToScanDelete_Click(object sender, EventArgs e)
     {
         ddlListOfPathToScan.Items.Remove(ddlListOfPathToScan.SelectedItem);
-        //Anchor.ScrollToObj(ddlListOfPathToScan.ClientID, Page);
     }
 }

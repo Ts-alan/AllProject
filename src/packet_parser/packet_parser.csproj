@@ -49,6 +49,11 @@
     <Compile Include="TaskAssignment\DataBase\TaskManager.cs" />
     <Compile Include="TaskAssignment\Tasks\AuxiliaryClasses\HeuristicAnalysisEnum.cs" />
     <Compile Include="TaskAssignment\Tasks\AuxiliaryClasses\ScanningModeEnum.cs" />
+    <Compile Include="TaskAssignment\Tasks\IConfigureTask.cs" />
+    <Compile Include="TaskAssignment\Tasks\TaskConfigureLoader.cs" />
+    <Compile Include="TaskAssignment\Tasks\TaskConfigureMonitor.cs" />
+    <Compile Include="TaskAssignment\Tasks\TaskConfigureQuarantine.cs" />
+    <Compile Include="TaskAssignment\Tasks\TaskHelper.cs" />
     <Compile Include="TaskAssignment\Tasks\TaskRunScanner.cs" />
     <Compile Include="TaskAssignment\Vba32ControlCenterWrapper.cs" />
     <Compile Include="TaskAssignment\DataBase\VlslVConnection.cs" />

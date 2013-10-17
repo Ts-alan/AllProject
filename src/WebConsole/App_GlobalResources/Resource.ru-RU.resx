@@ -2832,4 +2832,19 @@
   <data name="ValueRequired" xml:space="preserve">
     <value>Требуется значение</value>
   </data>
+  <data name="ErrorEmptySettings" xml:space="preserve">
+    <value>Настройки отсутствуют.</value>
+  </data>
+  <data name="ErrorGetSettings" xml:space="preserve">
+    <value>Невозможно получить настройки  {0} ({1}).</value>
+  </data>
+  <data name="ErrorIncorrectValue" xml:space="preserve">
+    <value>Неправильное значение {0}.</value>
+  </data>
+  <data name="ErrorLoad" xml:space="preserve">
+    <value>Невозможно загрузить {0} ({1}).</value>
+  </data>
+  <data name="ErrorTaskTypeConflict" xml:space="preserve">
+    <value>Тип не относится к ITask ({0}).</value>
+  </data>
 </root>

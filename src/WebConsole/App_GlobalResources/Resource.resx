@@ -2832,4 +2832,19 @@
   <data name="ValueRequired" xml:space="preserve">
     <value>Value is required</value>
   </data>
+  <data name="ErrorEmptySettings" xml:space="preserve">
+    <value>Settings are empty.</value>
+  </data>
+  <data name="ErrorGetSettings" xml:space="preserve">
+    <value>Can't get {0} setttings ({1}).</value>
+  </data>
+  <data name="ErrorIncorrectValue" xml:space="preserve">
+    <value>Incorrect {0}.</value>
+  </data>
+  <data name="ErrorLoad" xml:space="preserve">
+    <value>Can't load {0} ({1}).</value>
+  </data>
+  <data name="ErrorTaskTypeConflict" xml:space="preserve">
+    <value>Type isn't ITask ({0}).</value>
+  </data>
 </root>

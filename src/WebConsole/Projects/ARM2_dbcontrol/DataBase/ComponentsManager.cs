@@ -14,7 +14,6 @@ namespace ARM2_dbcontrol.DataBase
     /// </summary>
     public class ComponentsManager
     {
-
         VlslVConnection database;
 
         #region Constructors
@@ -29,7 +28,6 @@ namespace ARM2_dbcontrol.DataBase
             database = l_database;
         }
         #endregion
-
 
         #region Added methods(not generated! copy/past...)
 
@@ -81,7 +79,6 @@ namespace ARM2_dbcontrol.DataBase
             return list;
         }
 
-
         public List<ComponentsEntity> GetComponentsPageByComputerID(Int16 ID)
         {
             IDbCommand command = database.CreateCommand("GetComponentsPageByComputerID", true);
@@ -119,7 +116,6 @@ namespace ARM2_dbcontrol.DataBase
         /// <returns></returns>
         public Int32 Count(String where)
         {
-
             IDbCommand command = database.CreateCommand("GetComponentsCount", true);
 
             database.AddCommandParameter(command, "@where",
@@ -172,10 +168,22 @@ namespace ARM2_dbcontrol.DataBase
 
         }
 
+
+        public String GetCurrentSettings(Int16 compID, String componentName)
+        {
+            IDbCommand command = database.CreateCommand("GetComponentCurrentSettings", true);
+
+            database.AddCommandParameter(command, "@compId", DbType.Int16, compID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@name", DbType.String, componentName, ParameterDirection.Input);
+
+            SqlDataReader reader = (SqlDataReader)command.ExecuteReader();
+            if (reader.Read())
+                if (reader.GetValue(1) != DBNull.Value)
+                    return reader.GetString(1);
+
+            return "";
+        }
         #endregion
-		
-
-
     }
 }
 

@@ -33,6 +33,7 @@ namespace Vba32CC
 
     using System.Diagnostics;
     using Vba32CC.TaskAssignment;
+    using Vba32CC.TaskAssignment.Tasks;
 
     /// <summary>
     /// Event sinks class
@@ -318,6 +319,11 @@ namespace Vba32CC
                                 if (!result)
                                     return result;
                                 break;
+                            case "SettingsStates":
+                                result = ParseSettingsStates(xml_reader);
+                                if (!result)
+                                    return result;
+                                break;
                             default:
                                 result = false;
                                 break;
@@ -403,6 +409,70 @@ namespace Vba32CC
                     }
                 }
             }
+            return result;
+        }
+
+        private Boolean ParseSettingsStates(XmlTextReader xml_reader)
+        {
+            Boolean result = true;
+            xml_reader.MoveToContent();
+            String xml = xml_reader.ReadOuterXml();
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+
+            String computerName = String.Empty;
+            String macAddress = String.Empty;
+            foreach (XmlNode node in doc.GetElementsByTagName("SettingsState"))
+            {
+                if (node.Attributes["computerName"] != null && node.Attributes["mac"] != null)
+                {
+                    computerName = node.Attributes["computerName"].Value;
+                    macAddress = node.Attributes["mac"].Value;
+                    break;
+                }
+            }
+
+            if (String.IsNullOrEmpty(computerName) || String.IsNullOrEmpty(macAddress))
+            {
+                m_error_info = "ParseSettingsStates() :: ComputerName or MAC are empty.";
+                return false;
+            }
+
+
+            foreach (XmlNode node in doc.GetElementsByTagName("Key"))
+            {
+                if (node.Attributes["name"].Value == "Vba32")
+                {
+                    IConfigureTask task;
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        if (child.Name.ToLower() == "key")
+                        {
+                            switch (child.Attributes["name"].Value.ToLower())
+                            {
+                                case "loader":
+                                    task = new TaskConfigureLoader();
+                                    task.LoadFromRegistry(child.OuterXml);
+                                    result = InsertSettings(macAddress, "Vba32 Loader", task.SaveToXml());
+                                    break;
+                                case "monitor":
+                                    task = new TaskConfigureMonitor();
+                                    task.LoadFromRegistry(child.OuterXml);
+                                    result = InsertSettings(macAddress, "Vba32 Monitor", task.SaveToXml());
+                                    break;
+                                case "qtn":
+                                    task = new TaskConfigureQuarantine();
+                                    task.LoadFromRegistry(child.OuterXml);
+                                    result = InsertSettings(macAddress, "Vba32 Quarantine", task.SaveToXml());
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+
             return result;
         }
 
@@ -868,6 +938,29 @@ namespace Vba32CC
 
                 command.Parameters.Add("@Description", SqlDbType.NVarChar, 256);
                 command.Parameters[3].Value = name_value_map["Description"];
+
+                result = ExecuteStoredProcedure(command);
+            }
+            catch (Exception e)
+            {
+                m_error_info = e.Message;
+                result = false;
+            }
+            return result;
+        }
+
+        private Boolean InsertSettings(String macAddress, String componentName, String settings)
+        {
+            Boolean result = true;
+            try
+            {
+                SqlCommand command = new SqlCommand("InsertSettings");
+                command.Parameters.Add("@MAC", SqlDbType.NVarChar, 64);
+                command.Parameters[0].Value = macAddress;
+                command.Parameters.Add("@ComponentName", SqlDbType.NVarChar, 64);
+                command.Parameters[1].Value = componentName;
+                command.Parameters.Add("@Settings", SqlDbType.NText);
+                command.Parameters[2].Value = settings;
 
                 result = ExecuteStoredProcedure(command);
             }

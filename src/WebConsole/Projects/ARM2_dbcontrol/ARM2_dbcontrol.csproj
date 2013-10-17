@@ -204,12 +204,16 @@
     <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
     <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
+    <Compile Include="Tasks\ConfigureLoader\TaskConfigureLoader.cs" />
+    <Compile Include="Tasks\ConfigureMonitor\TaskConfigureMonitor.cs" />
+    <Compile Include="Tasks\ConfigureQuarantine\TaskConfigureQuarantine.cs" />
     <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\ProactiveProtection\RuleTypeEnum.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
+    <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\TaskTypeEnum.cs" />
     <Compile Include="Tasks\TaskUserCollection.cs" />
     <Compile Include="Tasks\TaskUserEntity.cs" />

@@ -100,6 +100,23 @@ namespace ARM2_dbcontrol.DataBase
 
             return list;
         }
+
+        public String GetCurrentSettings(Int16 compID, String componentName)
+        {
+            String param;
+            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            {
+                cmptMngr = new ComponentsManager(conn);
+                conn.OpenConnection();
+
+                param = cmptMngr.GetCurrentSettings(compID, componentName);
+
+                conn.CloseConnection();
+            }
+
+            return param;
+        }
+
         #endregion
     }
 }

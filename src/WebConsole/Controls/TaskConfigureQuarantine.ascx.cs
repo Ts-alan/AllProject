@@ -20,7 +20,6 @@ using ARM2_dbcontrol.Filters;
 /// </summary>
 public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserControl, ITask
 {
-    private string passPrefix = "HER!%&$";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -28,9 +27,9 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         ChangeEnabledControl();
     }
 
-    private bool _hideHeader = false;
+    private Boolean _hideHeader = false;
 
-    public bool HideHeader
+    public Boolean HideHeader
     {
         get { return _hideHeader; }
         set { _hideHeader = value; }
@@ -41,9 +40,9 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         Tabs.Enabled = _enabled;
     }
 
-    private bool _enabled = true;
+    private Boolean _enabled = true;
 
-    public bool Enabled
+    public Boolean Enabled
     {
         get { return _enabled; }
         set { _enabled = value; }
@@ -52,25 +51,17 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
-
         
         tabPanel1.HeaderText = Resources.Resource.CongQtnGeneral;
         tabPanel2.HeaderText = Resources.Resource.CongQtnMaintenance;
-
-        //lbtnGeneral.Text = Resources.Resource.CongQtnGeneral;
-        //lbtnMaintenance.Text = Resources.Resource.CongQtnMaintenance;
 
         lblCongLdrUserName.Text = Resources.Resource.CongLdrUserName;
         lblCongLdrPassword.Text = Resources.Resource.CongLdrPassword;
         lblCongLdrAddress.Text = Resources.Resource.CongLdrAddress;
         lblCongLdrPort.Text = Resources.Resource.CongLdrPort;
-
-        if (tboxRemote.Text == "")
-            tboxRemote.Text = "http://www.anti-virus.by/cgi-bin/vbar.cgi";
-        
     }
 
-    public bool ValidateFields()
+    public Boolean ValidateFields()
     {
         Validation vld = new Validation("");
         if (cboxUseProxyServer.Checked)
@@ -121,7 +112,6 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
     public TaskUserEntity GetCurrentState()
     {
         TaskUserEntity task = new TaskUserEntity();
-
         task.Type = TaskType.ConfigureQuarantine;
 
         task.Param = BuildXml();
@@ -133,73 +123,44 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
     /// Конструирует строку xml-файла
     /// </summary>
     /// <returns></returns>
-    private string BuildXml()
+    private String BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = 
-            new ARM2_dbcontrol.Generation.XmlBuilder("qtn");
+        ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine task = new ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine();
 
-        //Удаленное хранилище
-        if(tboxRemote.Text!=String.Empty)
-            xml.AddNode("WebServer", "reg_sz:" + tboxRemote.Text);
+        //Удаленное хранилище        
+        task.StoragePath = tboxRemote.Text;
 
         //Прокси-сервер и авторизация
-        xml.AddNode("UseProxy", cboxUseProxyServer.Checked ? "reg_dword:1" : "reg_dword:0");
+        task.UseProxy = cboxUseProxyServer.Checked ? 1 : 0;
         if (cboxUseProxyServer.Checked)
         {
-            xml.AddNode("UserName", "reg_sz:" + tboxUserName.Text);
+            task.UserName = tboxUserName.Text;
+            task.Password = tboxPassword.Text;
 
-
-            //Шифруем пароль
-            if (!tboxPassword.Text.Contains(passPrefix))
-            {
-                byte[] bytes = Encoding.Unicode.GetBytes(tboxPassword.Text);
-
-                byte xorValue = 0xAA;
-                byte delta = 0x1;
-
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    bytes[i] ^= xorValue;
-                    delta = Convert.ToByte(delta % 3 + 1);
-                    xorValue += delta;
-                }
-
-                xml.AddNode("Password", "reg_binary:" + Anchor.ConvertToDumpString(bytes));
-            }
-            else
-            {
-                string str = tboxPassword.Text.Replace(passPrefix,"");
-                xml.AddNode("Password", str);
-            }
-
-            xml.AddNode("Proxy", "reg_sz:" + tboxAddress.Text);
-            xml.AddNode("ProxyPort","reg_dword:"+ tboxPort.Text);
+            task.Proxy = tboxAddress.Text;
+            task.ProxyPort = Int32.Parse(tboxPort.Text);
         }
 
         //вкладка "Обслуживание"
-        xml.AddNode("TimeOutEx", cboxMaintenancePeriod.Checked ? "reg_dword:1" : "reg_dword:0");
+        task.TimeOutEx = cboxMaintenancePeriod.Checked ? 1 : 0;
         if (cboxMaintenancePeriod.Checked)
         {
-            xml.AddNode("TimeOut", "reg_dword:" + tboxServicePeriod.Text);
+            task.TimeOut = Int32.Parse(tboxServicePeriod.Text);
 
-            xml.AddNode("MaxSizeEx", cboxMaximumQuarantineSize.Checked ? "reg_dword:1" : "reg_dword:0");
+            task.MaxSizeEx = cboxMaximumQuarantineSize.Checked ? 1 : 0;
             if (cboxMaximumQuarantineSize.Checked)
-                xml.AddNode("MaxSize", "reg_dword:" + tboxMaxSize.Text);
+                task.MaxSize = Int32.Parse(tboxMaxSize.Text);
 
-            xml.AddNode("MaxTimeEx", cboxMaximumStorageTime.Checked ? "reg_dword:1" : "reg_dword:0");
-            if (cboxMaximumQuarantineSize.Checked)
-                xml.AddNode("MaxTime", "reg_dword:" + tboxMaximumStorageTime.Text);
+            task.MaxTimeEx = cboxMaximumStorageTime.Checked ? 1 : 0;
+            if (cboxMaximumStorageTime.Checked)
+                task.MaxTime = Int32.Parse(tboxMaximumStorageTime.Text);
 
-            xml.AddNode("AutoSend", cboxAutomaticallySendSuspiciousObject.Checked ? "reg_dword:1" : "reg_dword:0");
-            xml.AddNode("INARACTIVE_MAINT", cboxInteractive.Checked ? "reg_dword:1" : "reg_dword:0");
+            task.AutoSend = cboxAutomaticallySendSuspiciousObject.Checked ? 1 : 0;
+            task.INARACTIVE_MAINT = cboxInteractive.Checked ? 1 : 0;
         }
-        xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
-        xml.AddNode("Type", "ConfigureQuarantine");
+        task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
 
-        xml.Generate();
-
-        return xml.Result;
-
+        return task.SaveToXml();
     }
 
     /// <summary>
@@ -211,26 +172,25 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         if (task.Type != TaskType.ConfigureQuarantine)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+        ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine tsk = new ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine();
+        tsk.LoadFromXml(task.Param);
 
-        string str = pars.GetValue("WebServer", "reg_sz:");
-        if (str != String.Empty)
-            tboxRemote.Text = str;
+        tboxRemote.Text = tsk.StoragePath;
 
-        cboxUseProxyServer.Checked = pars.GetValue("UseProxy", "reg_dword:") == "1" ? true : false;
+        cboxUseProxyServer.Checked = tsk.UseProxy == 1 ? true : false;
         if (cboxUseProxyServer.Checked)
         {
-            tboxUserName.Text = pars.GetValue("UserName", "reg_sz:");
+            tboxUserName.Text = tsk.UserName;
 
-            tboxPassword.Text = pars.GetValue("Password", "reg_binary:");
-            tboxPassword.Attributes.Add("Value", passPrefix + tboxPassword.Text);
+            tboxPassword.Text = tsk.Password;
+            tboxPassword.Attributes.Add("Value", tboxPassword.Text);
 
-            tboxAddress.Text = pars.GetValue("Proxy", "reg_sz:");
-            tboxPort.Text = pars.GetValue("ProxyPort", "reg_dword:");
+            tboxAddress.Text = tsk.Proxy;
+            tboxPort.Text = tsk.ProxyPort.ToString();
         }
 
         //вкладка обслуживание
-        cboxMaintenancePeriod.Checked = pars.GetValue("TimeOutEx", "reg_dword:") == "1" ? true : false;
+        cboxMaintenancePeriod.Checked = tsk.TimeOutEx == 1 ? true : false;
         if (cboxMaintenancePeriod.Checked)
         {
             cboxMaximumQuarantineSize.InputAttributes.Remove("disabled");
@@ -241,18 +201,17 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
             cboxAutomaticallySendSuspiciousObject.InputAttributes.Remove("disabled");
             cboxInteractive.InputAttributes.Remove("disabled");
 
-            tboxServicePeriod.Text = pars.GetValue("TimeOut", "reg_dword:");
-            cboxMaximumQuarantineSize.Checked = pars.GetValue("MaxSizeEx", "reg_dword:") == "1" ? true : false;
+            tboxServicePeriod.Text = tsk.TimeOut.ToString();
+            cboxMaximumQuarantineSize.Checked = tsk.MaxSizeEx == 1 ? true : false;
             if (cboxMaximumQuarantineSize.Checked)
-                tboxMaxSize.Text = pars.GetValue("MaxSize", "reg_dword:");
+                tboxMaxSize.Text = tsk.MaxSize.ToString();
 
-            cboxMaximumStorageTime.Checked = pars.GetValue("MaxTimeEx", "reg_dword:") == "1" ? true : false;
+            cboxMaximumStorageTime.Checked = tsk.MaxTimeEx == 1 ? true : false;
             if (cboxMaximumStorageTime.Checked)
-                tboxMaximumStorageTime.Text = pars.GetValue("MaxTime", "reg_dword:");
+                tboxMaximumStorageTime.Text = tsk.MaxTime.ToString();
 
-            cboxAutomaticallySendSuspiciousObject.Checked = pars.GetValue("AutoSend", "reg_dword:") == "1" ? true : false;
-            cboxInteractive.Checked = pars.GetValue("INARACTIVE_MAINT", "reg_dword:") == "1" ? true : false;
-
+            cboxAutomaticallySendSuspiciousObject.Checked = tsk.AutoSend == 1 ? true : false;
+            cboxInteractive.Checked = tsk.INARACTIVE_MAINT == 1 ? true : false;
         }
         else
         {
@@ -264,18 +223,5 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
             cboxAutomaticallySendSuspiciousObject.InputAttributes.Add("disabled", "true");
             cboxInteractive.InputAttributes.Add("disabled", "true");
         }
-
     }
-
-    /*protected void lbtnCommon_Click(object sender, EventArgs e)
-    {
-        tblGeneral.Visible = true;
-        tblMaintenance.Visible = false;
-    }
-
-    protected void lbtnService_Click(object sender, EventArgs e)
-    {
-        tblGeneral.Visible = false;
-        tblMaintenance.Visible = true;
-    }*/
 }
