@@ -701,3 +701,19 @@ AS
 
 	EXEC sp_executesql @Query
 GO
+
+
+-- [GetSubgroupTypes]
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetSubgroupTypes]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[GetSubgroupTypes]
+GO
+
+CREATE PROCEDURE [dbo].[GetSubgroupTypes]
+	@ParentID int
+WITH ENCRYPTION
+AS
+	SELECT * FROM GroupTypes
+	WHERE [ParentID] = @ParentID
+	ORDER BY [GroupName]
+GO
