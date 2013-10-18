@@ -119,7 +119,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "accordion2.aspx/AddNewDevicePolicyByComputerList",
+                    url: "DevicesPolicy.aspx/AddNewDevicePolicyByComputerList",
                     dataType: "json",
 
                     data: "{serial:'" + serial + "',comps:'" + comps + "'}",
