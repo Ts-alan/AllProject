@@ -2847,4 +2847,13 @@
   <data name="ErrorTaskTypeConflict" xml:space="preserve">
     <value>Тип не относится к ITask ({0}).</value>
   </data>
+  <data name="NoDataChartDisplayed" xml:space="preserve">
+    <value>Данные пусты и не могут быть отображены</value>
+  </data>
+  <data name="SetDiagramCriteria" xml:space="preserve">
+    <value>Задайте критерии для диаграммы</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>График</value>
+  </data>
 </root>

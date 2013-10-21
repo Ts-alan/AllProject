@@ -88,65 +88,12 @@ namespace ARM2_dbcontrol.DataBase
 			return list;
 		}
 
-        /// <summary>
-        /// ¬озвращает статистику в виде "им€ вируса - количество"
-        /// </summary>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        public List<StatisticEntity> GetStatisticVirusList(DateTime fromDate, string eventName, string field)
+        public List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
-            string date = String.Format("CAST('{0:yyyy}-{0:MM}-{0:dd}T{0:HH}:{0:mm}:{0:ss}' AS SMALLDATETIME)", fromDate);            
+            IDbCommand command = database.CreateCommand("GetStatistics", true);
 
-            #region «апрос
-
-            //первоначальный запрос в стиле "говнокод"
-            /*string query = "SELECT [" + field + "] as [Field1],[" + field + @"] INTO #vba_temp   FROM events  AS e
-INNER JOIN EventTypes AS et ON e.[EventID]=et.[ID]
-WHERE EventName = '" + eventName + "' AND EventTime > " + date +
-@"SELECT DISTINCT [Field1], Count([" + field + @"]) AS [Count] FROM #vba_temp
-GROUP BY [Field1]
-ORDER BY [Count] DESC
-drop table #vba_temp";*/
-
-
-            string query = "SELECT ["+field+@"], Count(*) AS [Quantity]
-FROM [Events]
-INNER JOIN [EventTypes] ON Events.[EventID] = EventTypes.[ID]
-WHERE [EventName] = '"+eventName+"' AND EventTime >= " + date+
-@"GROUP BY [Comment]
-ORDER BY [Quantity] DESC";
-
-            #endregion
-
-            IDbCommand command = database.CreateCommand(query, false);
-            SqlDataReader reader = (SqlDataReader)command.ExecuteReader();
-
-            List<StatisticEntity> list = new List<StatisticEntity>();
-            int i = 0;
-            while (reader.Read())
-            {
-                i++;
-                StatisticEntity stat = new StatisticEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    stat.Name = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    stat.Count = reader.GetInt32(1);
-                list.Add(stat);
-                if (i == 10) break;
-            }
-            reader.Close();
-
-            return list;
-
-        }
-
-
-        public List<StatisticEntity> GetStatisticList(string field, string where, int size)
-        {
-            IDbCommand command = database.CreateCommand("GetEventStatistic", true);
-
-            database.AddCommandParameter(command, "@field",
-               DbType.String, field, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@OrderBy",
+               DbType.String, groupBy, ParameterDirection.Input);
 
             database.AddCommandParameter(command, "@where",
                 DbType.String, where, ParameterDirection.Input);

@@ -207,6 +207,7 @@ public partial class Controls_PrimitiveFilterTemplate : System.Web.UI.UserContro
         ddlAndOr.Items.Add(Resources.Resource.OR);
         ddlNot.Items.Add(String.Empty);
         ddlNot.Items.Add(Resources.Resource.NOT);
+        ddlAndOr.Visible = ddlNot.Visible = _isVisibleLogic;
         divPrimitiveFilterTemplate.Style.Remove(HtmlTextWriterStyle.Height);
         divPrimitiveFilterTemplate.Style.Add(HtmlTextWriterStyle.Height, _height);
     }
@@ -286,6 +287,12 @@ public partial class Controls_PrimitiveFilterTemplate : System.Web.UI.UserContro
         get { return ddlNot.SelectedIndex == 1; }
     }
 
+    private Boolean _isVisibleLogic = true;
+    public Boolean IsVisibleLogic
+    {
+        get { return _isVisibleLogic; }
+        set { _isVisibleLogic = value; }
+    }
     #endregion
 
 

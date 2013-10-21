@@ -112,10 +112,14 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, 
+
+PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, 
+
+PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AcountCreate" xml:space="preserve">
     <value>New account successfully created</value>
@@ -1894,7 +1898,9 @@
     <value>Send file</value>
   </data>
   <data name="SendFileUploadFileInfo" xml:space="preserve">
-    <value>Uploaded file:&lt;b&gt; {0}&lt;/b&gt;&lt;br /&gt;  File size (in bytes):&lt;b&gt; {1:N0}&lt;/b&gt;&lt;br /&gt;  Content-type:&lt;b&gt;{2}&lt;/b&gt;</value>
+    <value>Uploaded file:&lt;b&gt; {0}&lt;/b&gt;&lt;br /&gt;  File size (in bytes):&lt;b&gt; {1:N0}&lt;/b&gt;&lt;br /&gt;  Content-
+
+type:&lt;b&gt;{2}&lt;/b&gt;</value>
   </data>
   <data name="SendingDataToServer" xml:space="preserve">
     <value>Sending data to server</value>
@@ -2563,10 +2569,14 @@
     <value>Membership can't create user. </value>
   </data>
   <data name="ProviderError" xml:space="preserve">
-    <value>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+    <value>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact 
+
+your system administrator.</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
-    <value>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+    <value>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system 
+
+administrator.</value>
   </data>
   <data name="UserDeleteFail" xml:space="preserve">
     <value>Failed to delete user.</value>
@@ -2578,10 +2588,14 @@
     <value>The user deletion request has been canceled. If the problem persists, please contact your system administrator.</value>
   </data>
   <data name="UserEditionRejection" xml:space="preserve">
-    <value>The user edition request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+    <value>The user edition request has been canceled. Please verify your entry and try again. If the problem persists, please contact your 
+
+system administrator.</value>
   </data>
   <data name="UserRejected" xml:space="preserve">
-    <value>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+    <value>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your 
+
+system administrator.</value>
   </data>
   <data name="ChangeCommentSelectedGroup" xml:space="preserve">
     <value>Change comment of the selected group</value>
@@ -2671,7 +2685,9 @@
     <value>Loading...</value>
   </data>
   <data name="MessageBuyAdditionalFeatures" xml:space="preserve">
-    <value>This functionality is not included into current Control Center complete set. To purchase this functionality please call +375 17 2948429 or contact by e-mail: &lt;a href='mailto:info@anti-virus.by'&gt;info@anti-virus.by&lt;/a&gt;.</value>
+    <value>This functionality is not included into current Control Center complete set. To purchase this functionality please call +375 17 
+
+2948429 or contact by e-mail: &lt;a href='mailto:info@anti-virus.by'&gt;info@anti-virus.by&lt;/a&gt;.</value>
   </data>
   <data name="CPU_MHz" xml:space="preserve">
     <value>CPU (MHz)</value>
@@ -2846,5 +2862,14 @@
   </data>
   <data name="ErrorTaskTypeConflict" xml:space="preserve">
     <value>Type isn't ITask ({0}).</value>
+  </data>
+  <data name="NoDataChartDisplayed" xml:space="preserve">
+    <value>Data is null</value>
+  </data>
+  <data name="SetDiagramCriteria" xml:space="preserve">
+    <value>Set criteria for diagram</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
   </data>
 </root>

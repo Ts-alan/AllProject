@@ -15,82 +15,34 @@ namespace ARM2_dbcontrol.Diagram
     /// </summary>
     public class VisualReport
     {
-        private string _categoryName;
-        private decimal _sales;
-
-        public string CategoryName
+        private String _connectionString;
+        public String ConnectionString
         {
-            get { return _categoryName; }
-            set { _categoryName = value; }
+            get { return _connectionString; }
+            set { _connectionString = value; }
         }
 
-        public decimal Sales
+        public VisualReport(String connectionString)
         {
-            get { return _sales; }
-            set { _sales = value; }
+            _connectionString = connectionString;
         }
 
-        public static VisualReportCollection GetVirusStat(string connStr,
-            string virusFoundEventName, DateTime date)
+        public List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
-            VisualReportCollection items = new VisualReportCollection();
-
             List<StatisticEntity> list = new List<StatisticEntity>();
 
-            using (VlslVConnection conn = new VlslVConnection(connStr))
+            using (VlslVConnection conn = new VlslVConnection(_connectionString))
             {
                 EventsManager db = new EventsManager(conn);
                 conn.OpenConnection();
                 conn.CheckConnectionState(true);
 
-                list = db.GetStatisticVirusList(date, virusFoundEventName, "Comment");
+                list = db.GetStatistics(groupBy, where, size);
 
                 conn.CloseConnection();
-
             }
 
-            foreach (StatisticEntity stat in list)
-            {
-                VisualReport item = new VisualReport();
-                item.CategoryName = stat.Name;
-                item.Sales = stat.Count;
-                items.Add(item);
-            }
-
-            return items;
+            return list;
         }
-
-        // Метод GetCategorySales извлекает общее количество всех элементов в категории
-        // из базы данных и перед возвращением результата вызвавшей метод функции 
-        // преобразует его в пользовательский набор VisualReportCollection.
-        public static VisualReportCollection GetEvent(string connStr, string where)
-        {
-            VisualReportCollection items = new VisualReportCollection();
-
-            List<StatisticEntity> list = new List<StatisticEntity>();
-
-            using (VlslVConnection conn = new VlslVConnection(connStr))
-            {
-                EventsManager db = new EventsManager(conn);
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-
-                list = db.GetStatisticList("ComputerName", where, 10);
-
-                conn.CloseConnection();
-
-            }
-
-            foreach (StatisticEntity stat in list)
-            {
-                VisualReport item = new VisualReport();
-                item.CategoryName = stat.Name;
-                item.Sales = stat.Count;
-                items.Add(item);
-            }
-         
-            return items;
-        }
-
     }
 }
