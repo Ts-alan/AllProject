@@ -1293,3 +1293,24 @@ div.EditComment[disabled]
     text-decoration: none;
     text-indent: -9999px;
 }
+/* NEW */
+.PieButton
+{
+    background-image: url('Images/pie-chart.png');
+    content: url('Images/pie-chart.png');
+    width: 100px;
+    cursor: pointer;
+}
+.PieButtonDisabled
+{
+    background-image: url(Images/pie-chart-disabled.png);
+    width: 100px;
+    cursor: pointer;
+}
+
+.barButton
+{
+    background-image: url(Images/bar-chart.png);
+    width: 100px;
+    cursor: pointer;
+}
