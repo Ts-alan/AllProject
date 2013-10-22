@@ -29,7 +29,7 @@ $(document).ready(function () {
                     d.html(msg);
                     var dOpt = {
                         title: name,
-                        width: 700,
+                        width: 1000,
                         modal: true,
                         resizable: true,
                         buttons: {
@@ -408,7 +408,7 @@ $(document).ready(function () {
                     d.html(msg);
                     var dOpt = {
                         title: name,
-                        width: 650,
+                        width: 1000,
                         modal: true,
                         resizable: true,
                         buttons: {

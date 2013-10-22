@@ -285,8 +285,6 @@ public partial class DevicesPolicy : PageBase
     public static String GetComputersData(int id)
     {
         System.Diagnostics.Debug.Write("GetComputersData:" + id);
-
-
         return ConvertComputerDataForClient(id,
             PolicyState.GetDevicesPoliciesByComputer(id)); ;
     }
@@ -302,13 +300,12 @@ public partial class DevicesPolicy : PageBase
        
         foreach (DevicePolicy dp in list)
         {
-            String row = "<tr style='text-align:center' class='"+cssStyle+"'><td>" + Anchor.FixString(dp.Device.SerialNo, 30) + "</td>";
+            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/ dp.Device.SerialNo + "</td>";
             String comment = dp.Device.Comment;
             if (String.IsNullOrEmpty(comment))
                 comment = Anchor.GetCommentFromSerial(dp.Device.SerialNo);
 
-            row += "<td type='comment' dp=" + dp.Device.ID + " >" + comment + "</td>";
-            //row += "<td>" + (dp.LatestInsert==DateTime.MinValue?"":dp.LatestInsert.ToString()) + "</td>";
+            row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
             String select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
@@ -425,7 +422,7 @@ public partial class DevicesPolicy : PageBase
 
     private static String ConvertGroupDataForClient(int groupID, List<DevicePolicy> list)
     {
-        String table = "<table style='width:100% text-align:center !important' class='ListContrastTable' gdp=" + groupID + "><thead><th></th><th style='text-align:center'>" +
+        String table = "<table style='width:100% text-align:center !important' class='ListContrastTable' gdp=" + groupID + "><thead class='gridViewHeader'><th></th><th style='text-align:center'>" +
        ResourceControl.GetStringForCurrentCulture("SerialNo") + "</th><th style='text-align:center'>" +
        ResourceControl.GetStringForCurrentCulture("Comment") + "</th><th style='text-align:center'>" +
        ResourceControl.GetStringForCurrentCulture("ComputerName") + "</th><th style='text-align:center'>" +
@@ -433,6 +430,7 @@ public partial class DevicesPolicy : PageBase
        ResourceControl.GetStringForCurrentCulture("State") + "</th><th style='text-align:center'>" +
        ResourceControl.GetStringForCurrentCulture("Actions") + "</th></thead><tbody>";
         String all = "";
+        String cssStyle = "gridViewRow";
         foreach (DevicePolicy dp in list)
         {
             all = "";
@@ -440,14 +438,13 @@ public partial class DevicesPolicy : PageBase
             {
                 all = "<img nfadp=" + dp.Device.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' />";
             }
-            String row = "<tr style='text-align:center'><td>" + all + "</td><td>" + Anchor.FixString(dp.Device.SerialNo, 30) + "</td>";
+            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + all + "</td><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/dp.Device.SerialNo + "</td>";
             String comment = dp.Device.Comment;
             if (String.IsNullOrEmpty(comment))
                 comment = Anchor.GetCommentFromSerial(dp.Device.SerialNo);
 
             row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
             row += "<td>" + dp.Computer.ComputerName + "</td>";
-            //row += "<td>" + (dp.LatestInsert==DateTime.MinValue?"":dp.LatestInsert.ToString()) + "</td>";
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
             String select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
@@ -471,6 +468,9 @@ public partial class DevicesPolicy : PageBase
             else row += "<img style='cursor:pointer' title='" + ResourceControl.GetStringForCurrentCulture("Delete") + "' delwithoutgroupdevid=" + dp.Device.ID + " src=\'App_Themes/Main/Images/deleteicon.png\' /></td>";
             row += "</tr>";
             table += row;
+            if (cssStyle == "gridViewRow")
+                cssStyle = "gridViewRowAlternating";
+            else cssStyle = "gridViewRow";
         }
         table += "</table>";
         String text = "<div><input type=text dgr=" + groupID + " style='width:500px'></input>";
