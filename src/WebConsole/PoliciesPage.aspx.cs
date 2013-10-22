@@ -73,7 +73,23 @@ public partial class _PoliciesPage : PageBase
     protected override void InitFields()
     {
         lbtnDelete.Attributes.Add("onclick", "return confirm('" + Resources.Resource.AreYouSurePolicy + "');");        
-        btnClose.Text = Resources.Resource.Close;        
+        btnClose.Text = Resources.Resource.Close;
+
+        TaskUserEntity task = new TaskUserEntity();
+        task.Param = "<root></root>";
+
+        task.Type = TaskType.ConfigureLoader;
+        loader.InitFields();
+        loader.LoadState(task);
+
+        task.Type = TaskType.ConfigureMonitor;
+        monitor.InitFields();
+        monitor.LoadState(task);
+
+        task.Type = TaskType.ConfigureQuarantine;
+        quarantine.InitFields();
+        quarantine.LoadState(task);
+
         //get starting params
         string name = Request.QueryString["Name"];
         string mode = Request.QueryString["Mode"];
@@ -277,29 +293,33 @@ public partial class _PoliciesPage : PageBase
 
     private string GetPolicyString()
     {
-        TaskUserEntity taskLoader = loader.GetCurrentState();
-        TaskUserEntity taskMonitor = monitor.GetCurrentState();
-        TaskUserEntity taskQtn = quarantine.GetCurrentState();
-        String taskProtect = deviceProtect.BuildTask();
+        TaskUserEntity task;        
 
         ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder();
-
-
         StringBuilder sb = new StringBuilder(1024);
 
-        if(cblUsedTasks.Items[0].Selected)
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", taskLoader.Param.Replace(xml.Top, ""));
+        if (cblUsedTasks.Items[0].Selected)
+        {
+            task = loader.GetCurrentState();
+            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
+        }
         if (cblUsedTasks.Items[1].Selected)
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", taskMonitor.Param.Replace(xml.Top, ""));
+        {
+            task = monitor.GetCurrentState();
+            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
+        }
         if (cblUsedTasks.Items[2].Selected)
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", taskQtn.Param.Replace(xml.Top, ""));        
+        {
+            task = quarantine.GetCurrentState();
+            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
+        }
             
 
         //Run status of Monitor and Loader
         if (cblUsedTasks.Items[3].Selected)
         {
             //Device Protect
-            sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options>{0}</Options></TaskCustomAction></Content></Task>", taskProtect);
+            sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options>{0}</Options></TaskCustomAction></Content></Task>", deviceProtect.BuildTask());
             //Loader
             string runLoader;
             string typeLoader;
