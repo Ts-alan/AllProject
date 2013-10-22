@@ -33,11 +33,106 @@
              dataType: "json",
              success: function (msg) {
                  $('div[dpc]').html(msg);
-                 $('button[dpc]').attr('disabled', 'disabled');
-                 $('input[dpc]').attr('disabled', 'disabled');
+                 $('button[dpc]').css('display', 'none');
+                 $('input[dpc]').css('display', 'none');
              }
          });
      }
+     /*------- работа с устройствами для компьютера --------*/
+     /* изменение комментария (вызов диалогового окна)*/
+     $(document).on("click", 'img[comdp]', function () {
+         var id = $(this).attr('comdp');
+         var serial = $(this).attr('serialdp');
+         $.ajax({
+             type: "POST",
+             url: "DevicesPolicy.aspx/GetChangeCommentDialog",
+             data: "{id:" + id + "}",
+             contentType: "application/json; charset=utf-8",
+             dataType: "json",
+             success: function (msg) {
+                 $("#commentDialog").html('');
+                 var d = $('#commentDialog');
+                 d.html(msg);
+                 var dOpt = {
+                     title: serial,
+                     width: '700px',
+                     modal: true,
+                     resizable: false
+                 };
+                 d.dialog(dOpt);
+                 d.find("button").button();
+             },
+             error: function (msg) {
+                 alert(msg);
+             }
+         })
+     });
+     /* изменение комментария */
+     $(document).on("click", "button[dcdpc]", function () {
+         var id = $(this).attr('dcdpc');
+         var comment = $('input[dcdpc]').val();
+         $.ajax({
+             type: "POST",
+             url: "DevicesPolicy.aspx/ChangeComment",
+             data: "{id:" + id + ", comment:'" + comment + "'}",
+             contentType: "application/json; charset=utf-8",
+             success: function () {
+
+                 $("td[dp=" + id + "][type='comment']").html(comment);
+                 $("span[dp=" + id + "][type='comment']").html(comment);
+                 $("#commentDialog").dialog('close');
+             },
+             error: function (msg) {
+                 ShowJSONMessage(msg);
+             }
+         });
+         return false;
+     });
+     /*удаление devicePolicy для компьютера */
+     $(document).on("click", "img[deldp]", function () {
+         var id = $(this).attr('deldp');
+         $.ajax({
+             type: "POST",
+             url: "DevicesPolicy.aspx/RemoveDevicePolicy",
+             data: "{id:" + id + "}",
+             contentType: "application/json; charset=utf-8",
+             success: function () {
+                 $("img[deldp=" + id + "]").parent().parent().remove();
+             },
+             error: function (msg) {
+                 ShowJSONMessage(msg);
+             }
+         });
+         return false;
+     });
+     /* change devicePolicy state for computer*/
+     $(document).on("click", "img[cp]", function () {
+         var dp = $(this).attr('dp');
+         var cp = $(this).attr('cp');
+         var state = $(this).attr('state');
+         //установка смены чекбоксов
+         changeState($(this), dp, cp, state);
+     });
+     function changeState(img, dp, cp, state) {
+         if (state == "Enabled" || state == "Undefined") {
+             img.attr('state', "Disabled");
+             state = "Disabled";
+             img.attr('src', "App_Themes/Main/Images/disabled.gif");
+         } else if (state == "Disabled") {
+             img.attr('state', "Enabled");
+             state = "Enabled";
+             img.attr('src', "App_Themes/Main/Images/enabled.gif");
+         }
+         $.ajax({
+             type: "POST",
+             url: "DevicesPolicy.aspx/ChangeDevicePolicyStateComputer",
+             data: "{dp:" + dp + ",cp:" + cp + ",state:'" + state + "'}",
+             contentType: "application/json; charset=utf-8",
+             success: function () {
+
+             }
+         });
+     };
     </script>
 <div id="accordion">
 <h3><a href="#"><%=Resources.Resource.ComputerInfo%></a></h3>
@@ -259,4 +354,5 @@
  </div>
  </div>
 </div>
+    <div id="commentDialog" style="display:none"></div>
 </asp:Content>

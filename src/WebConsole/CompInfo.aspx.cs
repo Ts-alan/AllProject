@@ -57,7 +57,6 @@ public partial class CompInfo : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         RegisterScript(@"js/jQuery/jquery.cookie.js");
-        RegisterScript(@"js/DevicesPolicy.js");
         //Validation
         if (!Page.IsPostBack)
         {
