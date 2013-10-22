@@ -177,7 +177,7 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
 
         tboxRemote.Text = tsk.StoragePath;
 
-        cboxUseProxyServer.Checked = tsk.UseProxy == 1 ? true : false;
+        cboxUseProxyServer.Checked = tsk.UseProxy == 1;
         if (cboxUseProxyServer.Checked)
         {
             tboxUserName.Text = tsk.UserName;
@@ -190,7 +190,7 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         }
 
         //вкладка обслуживание
-        cboxMaintenancePeriod.Checked = tsk.TimeOutEx == 1 ? true : false;
+        cboxMaintenancePeriod.Checked = tsk.TimeOutEx == 1;
         if (cboxMaintenancePeriod.Checked)
         {
             cboxMaximumQuarantineSize.InputAttributes.Remove("disabled");
@@ -202,16 +202,16 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
             cboxInteractive.InputAttributes.Remove("disabled");
 
             tboxServicePeriod.Text = tsk.TimeOut.ToString();
-            cboxMaximumQuarantineSize.Checked = tsk.MaxSizeEx == 1 ? true : false;
+            cboxMaximumQuarantineSize.Checked = tsk.MaxSizeEx == 1;
             if (cboxMaximumQuarantineSize.Checked)
                 tboxMaxSize.Text = tsk.MaxSize.ToString();
 
-            cboxMaximumStorageTime.Checked = tsk.MaxTimeEx == 1 ? true : false;
+            cboxMaximumStorageTime.Checked = tsk.MaxTimeEx == 1;
             if (cboxMaximumStorageTime.Checked)
                 tboxMaximumStorageTime.Text = tsk.MaxTime.ToString();
 
-            cboxAutomaticallySendSuspiciousObject.Checked = tsk.AutoSend == 1 ? true : false;
-            cboxInteractive.Checked = tsk.INARACTIVE_MAINT == 1 ? true : false;
+            cboxAutomaticallySendSuspiciousObject.Checked = tsk.AutoSend == 1;
+            cboxInteractive.Checked = tsk.INARACTIVE_MAINT == 1;
         }
         else
         {
