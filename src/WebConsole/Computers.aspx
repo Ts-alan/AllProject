@@ -228,18 +228,18 @@
         </div> 
     </div>
 
- <div class="divSettings" runat=server id=divMainTask>
+ <div class="divSettings" runat='server' id='divMainTask'>
      
-<table class="subsection" width="100%"> 
+    <table class="subsection" width="100%"> 
         <tr>
-            <td align="left" style="min-width: 704px;">
-             <table style="width: 100%; min-width: 704px;">
+            <td align="left" >
+             <table >
 			    <tr>
-			      <td style="min-width: 450px;">
+			      <td >
                       <asp:Label ID="lblTaskName" runat="server" SkinID="SubSectionLabel"></asp:Label>
                       <asp:DropDownList ID="ddlTaskName" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlTaskName_SelectedIndexChanged" SkinID="ddlFilterList"></asp:DropDownList>
                   </td>
-                  <td style="min-width: 254px;" align="left">
+                  <td  align="left">
                     <div class="GiveButton" style="float:left" >
                             <asp:LinkButton ID="lbtnGive" runat="server" OnClick="lbtnGive_Click" Width="100%" />
                     </div>
