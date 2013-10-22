@@ -112,14 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, 
-
-PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, 
-
-PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AcountCreate" xml:space="preserve">
     <value>New account successfully created</value>
@@ -2871,5 +2867,8 @@ system administrator.</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Line</value>
+  </data>
+  <data name="CongLdrScanUSB" xml:space="preserve">
+    <value>Scan USB devices</value>
   </data>
 </root>

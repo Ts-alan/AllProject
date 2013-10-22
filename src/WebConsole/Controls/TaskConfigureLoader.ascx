@@ -186,6 +186,13 @@
             </td>
         </tr>-->
     </table>
+    <table class="ListContrastTable">
+        <tr>
+            <td>
+                <asp:CheckBox ID="cboxScanUSB" runat="server" /><%=Resources.Resource.CongLdrScanUSB%>
+            </td>
+        </tr>
+    </table>
   </ContentTemplate>
 </ajaxToolkit:TabPanel>  
 <ajaxToolkit:TabPanel runat="server" ID="tabPanel2">

@@ -136,6 +136,8 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         task.SHOW_WINDOW=cboxDisplayLoadingProgress.Checked ? 1 : 0;
         task.AUTO_CHECK_MEMORY=cboxScanMemory.Checked ? 1 : 0;
 
+        task.SCAN_USB = cboxScanUSB.Checked ? 1 : 0;
+
         if (cboxScanMemory.Checked)
             task.CHECK_MEMORY_MODE= rbMode.SelectedIndex;
 
@@ -296,20 +298,21 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         TaskConfigureLoader tsk = new TaskConfigureLoader();
         tsk.LoadFromXml(task.Param);
 
-        cboxLaunchLoaderAtStart.Checked = tsk.AUTO_START == 1 ? true : false;
-        cboxEnableMonitorAtStart.Checked = tsk.MONITOR_AUTO_START == 1 ? true : false;
-        cboxProtectProcess.Checked = tsk.PROTECT_LOADER == 1 ? true : false;
-        cboxDisplayLoadingProgress.Checked = tsk.SHOW_WINDOW == 1 ? true : false;
-        cboxScanMemory.Checked = tsk.AUTO_CHECK_MEMORY == 1 ? true : false;
-        cboxScanBoot.Checked = tsk.AUTO_CHECK_BOOT == 1 ? true : false;
-        cboxScanBootFloppy.Checked = tsk.AUTO_CHECK_BOOT_FLOPPY == 1 ? true : false;
-        cboxMaximumSizeLog.Checked = tsk.LOG_LIMIT == 1 ? true : false;
-        cboxSoundWarning.Checked = tsk.SOUND == 1 ? true : false;
-        cboxTrayIcon.Checked = tsk.ANIMATION == 1 ? true : false;
-        cboxTimeIntervals.Checked = tsk.UPDATE_TIME == 1 ? true : false;
-        cboxInteractive.Checked = tsk.UPDATE_INTERACTIVE == 1 ? true : false;
-        cboxUseProxyServer.Checked = tsk.PROXY_USAGE == 2 ? true : false;
-        cboxUseAccount.Checked = tsk.PROXY_AUTHORIZE == 1 ? true : false;
+        cboxLaunchLoaderAtStart.Checked = tsk.AUTO_START == 1;
+        cboxEnableMonitorAtStart.Checked = tsk.MONITOR_AUTO_START == 1;
+        cboxProtectProcess.Checked = tsk.PROTECT_LOADER == 1;
+        cboxDisplayLoadingProgress.Checked = tsk.SHOW_WINDOW == 1;
+        cboxScanMemory.Checked = tsk.AUTO_CHECK_MEMORY == 1;
+        cboxScanBoot.Checked = tsk.AUTO_CHECK_BOOT == 1;
+        cboxScanBootFloppy.Checked = tsk.AUTO_CHECK_BOOT_FLOPPY == 1;
+        cboxScanUSB.Checked = tsk.SCAN_USB == 1;
+        cboxMaximumSizeLog.Checked = tsk.LOG_LIMIT == 1;
+        cboxSoundWarning.Checked = tsk.SOUND == 1;
+        cboxTrayIcon.Checked = tsk.ANIMATION == 1;
+        cboxTimeIntervals.Checked = tsk.UPDATE_TIME == 1;
+        cboxInteractive.Checked = tsk.UPDATE_INTERACTIVE == 1;
+        cboxUseProxyServer.Checked = tsk.PROXY_USAGE == 2;
+        cboxUseAccount.Checked = tsk.PROXY_AUTHORIZE == 1;
 
         if (rbMode.Items.Count == 0)
         {

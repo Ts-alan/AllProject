@@ -2856,4 +2856,7 @@
   <data name="Line" xml:space="preserve">
     <value>График</value>
   </data>
+  <data name="CongLdrScanUSB" xml:space="preserve">
+    <value>Сканировать USB устройства</value>
+  </data>
 </root>
