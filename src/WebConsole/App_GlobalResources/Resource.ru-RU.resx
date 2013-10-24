@@ -2859,4 +2859,28 @@
   <data name="CongLdrScanUSB" xml:space="preserve">
     <value>Сканировать USB устройства</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Директории</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Ключи</value>
+  </data>
+  <data name="Protected" xml:space="preserve">
+    <value>Защищенные</value>
+  </data>
+  <data name="ReadOnly" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="Trusted" xml:space="preserve">
+    <value>Доверенные</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Значения</value>
+  </data>
+  <data name="Excluded" xml:space="preserve">
+    <value>Запрещенные</value>
+  </data>
 </root>

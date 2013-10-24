@@ -2871,4 +2871,28 @@ system administrator.</value>
   <data name="CongLdrScanUSB" xml:space="preserve">
     <value>Scan USB devices</value>
   </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="Protected" xml:space="preserve">
+    <value>Protected</value>
+  </data>
+  <data name="ReadOnly" xml:space="preserve">
+    <value>Read only</value>
+  </data>
+  <data name="Trusted" xml:space="preserve">
+    <value>Trusted</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Values</value>
+  </data>
+  <data name="Excluded" xml:space="preserve">
+    <value>Excluded</value>
+  </data>
 </root>

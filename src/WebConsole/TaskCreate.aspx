@@ -12,7 +12,7 @@
 <%@ Register Src="Controls/TaskConfigurePassword.ascx" TagName="TaskUser" TagPrefix="tskConfigurePassword" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskUser" TagPrefix="tskConfigureQuarantine" %>
 <%@ Register Src="Controls/TaskRestoreFileFromQtn.ascx" TagName="TaskUser" TagPrefix="tskRestoreFileFromQtn" %>
-<%@ Register Src="~/Controls/TaskProActivProtection.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
+<%@ Register Src="~/Controls/TaskConfigureProactive.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
 <%@ Register Src="~/Controls/TaskFirewall.ascx" TagName="TaskUser" TagPrefix="tskFirewall" %>
 <%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
@@ -42,13 +42,13 @@
 
 <div class="title"><%=Resources.Resource.TaskCreate%></div>    
     <asp:Panel ID="pnlControl" runat="server">
-            <tskCreateProcess:TaskUser ID=tskCreateProcess runat=server Visible=false/>
-            <tskSendFile:TaskUser ID=tskSendFile runat=server Visible=false/>
-            <tskListProcesses:TaskUser ID=tskListProcesses runat=server Visible=false/>
-            <tskCancelTask:TaskUser ID=tskCancelTask runat=server Visible=false/>
-            <tskSystemInfo:TaskUser ID=tskSystemInfo runat=server Visible=false/>
-            <tskConfigureLoader:TaskUser ID=tskConfigureLoader runat=server Visible=false/>
-            <tskConfigureMonitor:TaskUser ID=tskConfigureMonitor runat=server Visible=false/>
+            <tskCreateProcess:TaskUser ID="tskCreateProcess" runat="server" Visible="false"/>
+            <tskSendFile:TaskUser ID="tskSendFile" runat="server" Visible="false"/>
+            <tskListProcesses:TaskUser ID="tskListProcesses" runat="server" Visible="false"/>
+            <tskCancelTask:TaskUser ID="tskCancelTask" runat="server" Visible="false"/>
+            <tskSystemInfo:TaskUser ID="tskSystemInfo" runat="server" Visible="false"/>
+            <tskConfigureLoader:TaskUser ID="tskConfigureLoader" runat="server" Visible="false"/>
+            <tskConfigureMonitor:TaskUser ID="tskConfigureMonitor" runat="server" Visible="false"/>
             <tskRunScanner:TaskUser ID="tskRunScanner" runat=server Visible=false/>
             <tskComponentState:TaskUser ID="tskComponentState" runat="server" Visible="false"/>          
             <tskConfigurePassword:TaskUser ID="tskConfigurePassword" runat="server" Visible="false"/>          

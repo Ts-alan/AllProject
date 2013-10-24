@@ -24,19 +24,6 @@ public partial class TaskCreate : PageBase
         base.Page_Init(sender, e);
     }
 
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if ((!Roles.IsUserInRole("Administrator")) && (!Roles.IsUserInRole("Operator")))
@@ -50,10 +37,10 @@ public partial class TaskCreate : PageBase
         {
             InitFields();
 
-            if ((Request.QueryString["Mode"] != null) && (Request.QueryString["Mode"]=="Edit"))
+            if ((Request.QueryString["Mode"] != null) && (Request.QueryString["Mode"] == "Edit"))
             {
                 if (Session["CurrentUserTask"] == null)
-                {                    
+                {
                     lblMessage.Text = Resources.Resource.ErrorSelectTaskToEdit;
                     mpPicture.Attributes["class"] = "ModalPopupPictureError";
                     CorrectPositionModalPopup();
@@ -83,22 +70,18 @@ public partial class TaskCreate : PageBase
 
                 LoadStateTask(task);
 
-                if (task.Type == TaskType.ProactiveProtection && task.Name != String.Empty)
+
+                if (task.Type == TaskType.Firewall && task.Name != String.Empty)
                 {
-                    tbSaveAs.Text = task.Name.Substring(22);
+                    tbSaveAs.Text = task.Name.Substring(9);
                 }
                 else
-                    if (task.Type == TaskType.Firewall && task.Name != String.Empty)
+                    if (task.Type == TaskType.ConfigureSheduler && task.Name != String.Empty)
                     {
-                        tbSaveAs.Text = task.Name.Substring(9);
+                        tbSaveAs.Text = task.Name.Substring(11);
                     }
                     else
-                        if (task.Type == TaskType.ConfigureSheduler && task.Name != String.Empty)
-                        {
-                            tbSaveAs.Text = task.Name.Substring(11);
-                        }
-                        else
-                            tbSaveAs.Text = task.Name;
+                        tbSaveAs.Text = task.Name;
             }
 
             if (Request.QueryString["ID"] != null)
@@ -316,8 +299,8 @@ public partial class TaskCreate : PageBase
                 tskRestoreFileFromQtn.Visible = true;
                 break;
             case TaskType.ProactiveProtection:
-                tskProactiveProtection.ShowProfileDetails(task);
-                lblTaskName.Text = Resources.Resource.ProfileName;
+                tskProactiveProtection.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
                 tskProactiveProtection.Visible = true;
 
                 break;
@@ -474,30 +457,23 @@ public partial class TaskCreate : PageBase
                     throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.TaskName);
             }
             else
-                if (task.Type == TaskType.ProactiveProtection)
+                if (task.Type == TaskType.ConfigureSheduler)
                 {
-                    task.Name = String.Format("Proactive Protection: {0}", tbSaveAs.Text);
+                    task.Name = String.Format("Scheduler: {0}", tbSaveAs.Text);
                     if (tbSaveAs.Text == String.Empty)
                         throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.TaskName);
                 }
                 else
-                    if (task.Type == TaskType.ConfigureSheduler)
-                    {
-                        task.Name = String.Format("Scheduler: {0}", tbSaveAs.Text);
-                        if (tbSaveAs.Text == String.Empty)
-                            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.TaskName);
-                    }
-                    else
-                    {
-                        task.Name = tbSaveAs.Text;
+                {
+                    task.Name = tbSaveAs.Text;
 
-                        //Проверка имени..
+                    //Проверка имени..
 
-                        Validation vld = new Validation(task.Name);
-                        if (!vld.CheckStringFilterName())
-                            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                                + Resources.Resource.TaskName);
-                    }
+                    Validation vld = new Validation(task.Name);
+                    if (!vld.CheckStringFilterName())
+                        throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+                            + Resources.Resource.TaskName);
+                }
             //Проверим, не является ли это имя именем базовой задачи
             ResourceControl resctrl = new ResourceControl();
 

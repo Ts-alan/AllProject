@@ -211,7 +211,6 @@
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
     <Compile Include="Tasks\ITask.cs" />
-    <Compile Include="Tasks\ProactiveProtection\RuleTypeEnum.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
     <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\TaskTypeEnum.cs" />

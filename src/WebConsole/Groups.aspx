@@ -13,7 +13,7 @@
 <%@ Register Src="Controls/TaskConfigurePassword.ascx" TagName="TaskUser" TagPrefix="tskConfigurePassword" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskUser" TagPrefix="tskConfigureQuarantine" %>
 <%@ Register Src="Controls/TaskRestoreFileFromQtn.ascx" TagName="TaskUser" TagPrefix="tskRestoreFileFromQtn" %>
-<%@ Register Src="~/Controls/TaskProActivProtection.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
+<%@ Register Src="~/Controls/TaskConfigureProactive.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
 <%@ Register Src="~/Controls/TaskFirewall.ascx" TagName="TaskUser" TagPrefix="tskFirewall" %>
 <%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>

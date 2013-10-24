@@ -319,8 +319,6 @@ public partial class Computers : PageBase
         lbtnApplyPolicyToComps.Text = Resources.Resource.ApplyPolicy;
         lbtnRemoveCompsFromPolicy.Text = Resources.Resource.DeleteComputers;
         lbtnShowCompsByPolicy.Text = Resources.Resource.ShowComputers;
-
-        
     }
 
     private void InitColorOptions()
@@ -1528,7 +1526,7 @@ public partial class Computers : PageBase
         List<string> nameCollection = new List<string>();
         foreach (TaskUserEntity task in collection)
         {
-            if (task.Type != TaskType.ProactiveProtection && task.Type != TaskType.Firewall && task.Type != TaskType.ConfigureSheduler)
+            if (task.Type != TaskType.Firewall && task.Type != TaskType.ConfigureSheduler)
                 nameCollection.Add(task.Name);
         }
         nameCollection.Sort();
@@ -1949,17 +1947,16 @@ public partial class Computers : PageBase
 
             if (tskProactiveProtection.Visible == true)
             {
-                if ((tskProactiveProtection.FindControl("ddlProfiles") as DropDownList).Items.Count == 0)
-                    throw new ArgumentException(Resources.Resource.ErrorNotSelectProfile);
-                TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
-                task = collection.Get(String.Format("Proactive Protection: {0}", (tskProactiveProtection.FindControl("ddlProfiles") as DropDownList).SelectedValue));
+                task = tskProactiveProtection.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskProactiveProtection.ValidateFields();
 
                 for (int i = 0; i < compName.Length; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], Resources.Resource.TaskNameConfigureProactiveProtection + ": " + task.Name.Substring(22), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskProactiveProtection.BuildTask(@"%VBA32%Vba32 ProActive\Vba32ProActive.conf", task.Param));
+                control.PacketCustomAction(taskId, ipAddr, tskProactiveProtection.BuildTask(task));
             }
 
             if (tskFirewall.Visible == true)
@@ -2427,7 +2424,6 @@ public partial class Computers : PageBase
                                                                                     task.Name = Resources.Resource.TaskNameConfigureProactiveProtection;
                                                                                     task.Param = xmlBuil.Result;
                                                                                     lbtnDelete.Visible = false;
-                                                                                    lbtnSave.Visible = false;
                                                                                 }
                                                                                 else
                                                                                     if (name == Resources.Resource.ConfigureScheduler)
@@ -2610,6 +2606,7 @@ public partial class Computers : PageBase
             case TaskType.ProactiveProtection:
 
                 tskProactiveProtection.InitFields();
+                tskProactiveProtection.LoadState(task);
                 tskProactiveProtection.Visible = true;
                 break;
             case TaskType.Firewall:
@@ -2784,38 +2781,44 @@ public partial class Computers : PageBase
                                         tskConfigureMonitor.ValidateFields();
                                     }
                                     else
-                                        if (name == Resources.Resource.TaskNameRunScanner)
+                                        if (name == Resources.Resource.TaskNameConfigureProactiveProtection)
                                         {
-                                            task.Type = TaskType.RunScanner;
-                                            task.Name = Resources.Resource.TaskNameRunScanner;
-                                            task = tskRunScanner.GetCurrentState();
-                                            tskRunScanner.ValidateFields();
+                                            task = tskProactiveProtection.GetCurrentState();
+                                            tskProactiveProtection.ValidateFields();
                                         }
                                         else
-                                            if (name == Resources.Resource.TaskNameConfigureQuarantine)
+                                            if (name == Resources.Resource.TaskNameRunScanner)
                                             {
-                                                task.Type = TaskType.ConfigureQuarantine;
-                                                task.Name = Resources.Resource.TaskNameConfigureQuarantine;
-                                                task = tskConfigureQuarantine.GetCurrentState();
-                                                tskConfigureQuarantine.ValidateFields();
+                                                task.Type = TaskType.RunScanner;
+                                                task.Name = Resources.Resource.TaskNameRunScanner;
+                                                task = tskRunScanner.GetCurrentState();
+                                                tskRunScanner.ValidateFields();
                                             }
-
                                             else
-                                                if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
+                                                if (name == Resources.Resource.TaskNameConfigureQuarantine)
                                                 {
-                                                    //!OPTM---—трочка, возможно, излишн€€, т.к. тип устанавливаетс€ в
-                                                    //GetCurrentState
-                                                    task.Type = TaskType.RestoreFileFromQtn;
-                                                    task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
-                                                    task = tskRestoreFileFromQtn.GetCurrentState();
-                                                    tskRestoreFileFromQtn.ValidateFields();
+                                                    task.Type = TaskType.ConfigureQuarantine;
+                                                    task.Name = Resources.Resource.TaskNameConfigureQuarantine;
+                                                    task = tskConfigureQuarantine.GetCurrentState();
+                                                    tskConfigureQuarantine.ValidateFields();
                                                 }
 
                                                 else
-                                                {
-                                                    task = collection.Get(name);
-                                                    //editing = "";
-                                                }
+                                                    if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
+                                                    {
+                                                        //!OPTM---—трочка, возможно, излишн€€, т.к. тип устанавливаетс€ в
+                                                        //GetCurrentState
+                                                        task.Type = TaskType.RestoreFileFromQtn;
+                                                        task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
+                                                        task = tskRestoreFileFromQtn.GetCurrentState();
+                                                        tskRestoreFileFromQtn.ValidateFields();
+                                                    }
+
+                                                    else
+                                                    {
+                                                        task = collection.Get(name);
+                                                        //editing = "";
+                                                    }
         }
         catch (ArgumentException argEx)
         {
