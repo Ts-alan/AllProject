@@ -15,6 +15,7 @@ namespace ARM2_dbcontrol.Common
         Processes,
         TasksInstall,
         Devices,
-        UnknownDevices
+        UnknownDevices,
+        Diagrams
     }
 }

@@ -40,9 +40,11 @@ public partial class Visual : PageBase
         RegisterScript(@"js/jQuery/jqplot/jqplot.barRenderer.js");
         RegisterScript(@"js/jQuery/jqplot/jqplot.categoryAxisRenderer.js");
         RegisterScript(@"js/jQuery/jqplot/jqplot.pieRenderer.js");
-        RegisterScript(@"js/jQuery/jqplot/jqplot.pointLabels.js");
-
+        RegisterScript(@"js/jQuery/jqplot/jqplot.pointLabels.js");        
         chartData = "{\"data\": null}";
+
+        //object o = Session["visual_aspx_CurrentFilterState_StorageControl"];
+
         if (!IsPostBack)
         {
             if (Session["ViewSelectIndex"] != null)
@@ -51,6 +53,8 @@ public partial class Visual : PageBase
     }
     protected override void InitFields()
     {
+     //   FilterContainer.Clear();
+
     }
     [WebMethod]
     public static String getData(string where, string groupBy)
@@ -64,6 +68,7 @@ public partial class Visual : PageBase
             VisualReport report = new VisualReport(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
             List<StatisticEntity> dataList = report.GetStatistics(groupBy, where, 15);
             chartData = ConvertDataListToString(dataList);
+            
         }
         return chartData;
     }
@@ -76,6 +81,7 @@ public partial class Visual : PageBase
 
     private static String ConvertDataListToString(List<StatisticEntity> dataList)
     {
+        
         String data = "{\"data\":[";
         for (int i = 0; i < dataList.Count; i++)
         {

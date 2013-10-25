@@ -160,8 +160,8 @@
      <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="true" />
      <asp:UpdatePanel runat="server" ID="updatePanelEventsFilter">
         <ContentTemplate>
-            <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="EventFiltersTemp"
-                InformationListType="Events" UserFiltersProfileKey="EventFilters" runat="server"
+            <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="DiagramFiltersTemp"
+                InformationListType="Diagrams" UserFiltersProfileKey="DiagramFilters" runat="server"
                 OnActiveFilterChange="FilterContainer_ActiveFilterChanged">
                 <FiltersTemplate>
                     <table>

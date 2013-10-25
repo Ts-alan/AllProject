@@ -2689,9 +2689,10 @@ public partial class Computers : PageBase
         }
         else
         {
+            divPolicyHeader.Attributes["class"] = "GiveButton";
             lblDefaults_Click(sender, e);
             //tmpGroup.lbtnCancel_Click(sender, e);
-            divPolicyHeader.Attributes["class"] = "GiveButton";
+
         }
  
         pcPaging_HomePage(sender, e);

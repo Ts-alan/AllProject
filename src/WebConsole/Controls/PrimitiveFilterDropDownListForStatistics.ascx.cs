@@ -27,7 +27,7 @@ public partial class Controls_PrimitiveFilterSingleDropDownListForStatistics : S
 
     public void Clear()
     {
-        SingleSelectionDropDownList1.SelectedValue = String.Empty;
+        SingleSelectionDropDownList1.SelectedValue = null;
         fltTemplate.Clear();
     }
 
