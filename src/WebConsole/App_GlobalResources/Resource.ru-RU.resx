@@ -2881,6 +2881,6 @@
     <value>Значения</value>
   </data>
   <data name="Excluded" xml:space="preserve">
-    <value>Запрещенные</value>
+    <value>Исключения</value>
   </data>
 </root>
