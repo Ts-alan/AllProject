@@ -58,27 +58,21 @@ namespace ARM2_dbcontrol.Tasks
         {
             if (encoded == 1)
             {
-                return FromBase64UnicodeString(value);
+                return FromBase64String(value);
             }
             else
                 return value;
         }
 
-        public static String FromBase64UnicodeString(String source)
+        public static String FromBase64String(String source)
         {
             Byte[] bs = Convert.FromBase64String(source);
             return Encoding.Unicode.GetString(bs);
         }
 
-        public static String FromBase64String(String source)
-        {
-            Byte[] bs = Convert.FromBase64String(source);
-            return Encoding.ASCII.GetString(bs);
-        }
-
         public static String ToBase64String(String source)
         {
-            Byte[] bs = Encoding.ASCII.GetBytes(source);
+            Byte[] bs = Encoding.Unicode.GetBytes(source);
             return Convert.ToBase64String(bs);
         }
 
