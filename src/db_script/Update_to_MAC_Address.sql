@@ -125,6 +125,9 @@ AS
 		IF (SELECT COUNT([ID]) FROM [Computers]) >= @LicenseCount
 			RETURN
 
+		IF EXISTS(SELECT [ID] FROM [Computers] WHERE [ComputerName] = @ComputerName)
+			RETURN
+
 		-- Clearing same IPs in the database
 		UPDATE [Computers]
 		SET [IPAddress] = '0.0.0.0'
@@ -266,6 +269,9 @@ AS
 				--Insert new comp
 					--Check license count
 					IF (SELECT COUNT([ID]) FROM [Computers]) >= @LicenseCount
+						RETURN
+
+					IF EXISTS(SELECT [ID] FROM [Computers] WHERE [ComputerName] = @ComputerName)
 						RETURN
 
 					-- Clearing same IPs in the database
