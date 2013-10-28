@@ -11,12 +11,12 @@ using System.Data;
 using System.Data.SqlClient;
 
 using VirusBlokAda.Vba32CC.Policies.Devices.Policy;
+using VirusBlokAda.Vba32CC.Groups;
 
 namespace VirusBlokAda.Vba32CC.Policies
 {
     public class PolicyProvider
-    {
-
+    {        
         PolicyManager policyMng;
         DeviceManager deviceMng;
         DevicePolicyManager devicePolicyMng;
@@ -32,7 +32,6 @@ namespace VirusBlokAda.Vba32CC.Policies
         }
 
         #endregion
-
 
         #region Constructions
 
@@ -79,7 +78,6 @@ namespace VirusBlokAda.Vba32CC.Policies
                             ComputerPolicy.Remove(computerName);
                     }
                 }
-
                 //Getting policy to this computer..
                 //Here we call database stored procedure
                 GeneralPolicy gp = new GeneralPolicy(computerName, ip, Connection);
@@ -92,9 +90,8 @@ namespace VirusBlokAda.Vba32CC.Policies
 
                 if (String.IsNullOrEmpty(hash))
                     return GetNoPolicy();
-
+                
                 return GetNewPolicy(policy, hash);
-
             }
             catch (ArgumentException argex)
             {
@@ -217,7 +214,7 @@ namespace VirusBlokAda.Vba32CC.Policies
             foreach (ComputersEntity comp in computers)
                 compNames.Add(comp.ComputerName);
 
-            ClearComputersFromList(compNames);
+            ChangeDevicePolicy(compNames);
 
             /*lock (_computerPolicy)
             {
@@ -242,6 +239,40 @@ namespace VirusBlokAda.Vba32CC.Policies
             }
         }
 
+        private void ChangeDevicePolicyByGroup()
+        {
+            List<ComputersEntity> list;
+            using (VlslVConnection conn = new VlslVConnection(ConnectionString))
+            {
+                conn.OpenConnection();
+                GroupManager gm = new GroupManager(conn);
+                list = gm.GetComputersWithoutGroup();
+            }
+
+            if (list == null) return;
+            List<String> compNames = new List<String>();
+            foreach (ComputersEntity comp in list)
+            {
+                compNames.Add(comp.ComputerName);
+            }
+
+            ChangeDevicePolicy(compNames);
+        }
+
+        private void ChangeDevicePolicyByGroup(Int32 groupId)
+        {
+            List<String> list;
+            using (VlslVConnection conn = new VlslVConnection(ConnectionString))
+            {
+                conn.OpenConnection();
+                GroupManager gm = new GroupManager(conn);
+                list = gm.GetAllComputersNameByGroup(groupId);
+            }
+
+            if (list == null) return;
+            ChangeDevicePolicy(list);
+        }
+
         /// <summary>
         /// Clear cache values that use this computer
         /// </summary>
@@ -250,29 +281,6 @@ namespace VirusBlokAda.Vba32CC.Policies
         {
             foreach (string item in computers)
                 ChangeDevicePolicy(item);
-        }
-
-        /// <summary>
-        /// if computer from this list exist in cache, remove it from cache 
-        /// </summary>
-        /// <param name="computers"></param>
-        private void ClearComputersFromList(List<string> computers)
-        {
-            lock (_computerPolicy)
-            {
-
-                /*Dictionary<string, string>.KeyCollection keys = ComputerPolicy.Keys;
-                foreach (string item in keys)
-                {
-                    if (computers.Contains(item))
-                        ComputerPolicy.Remove(item);
-                }*/
-                foreach (string str in computers)
-                {
-                    if(ComputerPolicy.ContainsKey(str))
-                        ComputerPolicy.Remove(str);
-                }
-            }
         }
 
         public void ClearCache()
@@ -330,15 +338,14 @@ namespace VirusBlokAda.Vba32CC.Policies
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="computers"></param>
-        public void AddComputersToPolicy(Policy policy,
-            List<string> computers)
+        public void AddComputersToPolicy(Policy policy, List<string> computers)
         {
             policyMng.Connection = Connection;
 
             policyMng.RemoveComputersFromAllPolicies(computers);
             policyMng.AddComputersToPolicy(policy, computers);
 
-            ClearComputersFromList(computers);
+            ChangeDevicePolicy(computers);
         }
 
         /// <summary>
@@ -350,7 +357,7 @@ namespace VirusBlokAda.Vba32CC.Policies
 
             policyMng.RemoveComputersFromAllPolicies(computers);
 
-            ClearComputersFromList(computers);
+            ChangeDevicePolicy(computers);
         }
             
 
@@ -373,7 +380,7 @@ namespace VirusBlokAda.Vba32CC.Policies
                 List<string> compNames = new List<string>();
                 foreach (ComputersEntity comp in policyMng.GetComputersWithoutPolicyPage(1, Int16.MaxValue, "ComputerName ASC"))
                     compNames.Add(comp.ComputerName);
-                ClearComputersFromList(compNames);
+                ChangeDevicePolicy(compNames);
             }
         }
 
@@ -387,13 +394,12 @@ namespace VirusBlokAda.Vba32CC.Policies
         /// Remove selected computers from policy
         /// </summary>
         /// <param name="computers"></param>
-        public void
-            RemoveComputersFromPolicy(Policy policy, List<string> computers)
+        public void RemoveComputersFromPolicy(Policy policy, List<string> computers)
         {
             policyMng.Connection = Connection;
             policyMng.RemoveComputersFromPolicy(policy, computers);
 
-            ClearComputersFromList(computers);
+            ChangeDevicePolicy(computers);
         }
 
         public Policy GetPolicyByName(string name)
@@ -415,6 +421,7 @@ namespace VirusBlokAda.Vba32CC.Policies
         {
             policyMng.Connection = Connection;
             policyMng.ClearAllPolicy();
+            ClearCache();
         }
 
         #endregion
@@ -459,7 +466,6 @@ namespace VirusBlokAda.Vba32CC.Policies
             
         }
 
-
         public void ChangeDevicePolicyStatusForComputer(DevicePolicy devicePolicy)
         {
             devicePolicyMng.Connection = Connection;
@@ -467,26 +473,12 @@ namespace VirusBlokAda.Vba32CC.Policies
             ChangeDevicePolicy(devicePolicy.Computer.ComputerName);
         }
 
-
-
-
-
-
-
         public void ChangeDevicePolicyStatusForComputer(Int16 deviceID ,Int16 computerID ,string  state)
         {
             devicePolicyMng.Connection = Connection;
             devicePolicyMng.ChangeDevicePolicyStatusForComputer(deviceID ,computerID ,state);
             ChangeDevicePolicy(GetComputerByID(computerID).ComputerName);
         }
-
-
-
-
-
-
-
-
 
         public DevicePolicy GetDevicePolicyByID(int id)
         {
@@ -498,30 +490,31 @@ namespace VirusBlokAda.Vba32CC.Policies
         {
             devicePolicyMng.Connection = Connection;
             DevicePolicy dp = devicePolicyMng.GetDevicePolicyByID(id);
-       /*     if (dp.ID != 0)*/
-            {
-                devicePolicyMng.DeleteDevicePolicyByID(id);
-                ChangeDevicePolicy(dp.Computer.ComputerName);
-            }
+            devicePolicyMng.DeleteDevicePolicyByID(id);
+            ChangeDevicePolicy(dp.Computer.ComputerName);
         }
-        public void RemoveDevicePolicyGroup(int devID,int groupID)
+
+        public void RemoveDevicePolicyGroup(int devID, int groupID)
         {
             devicePolicyMng.Connection = Connection;
-            devicePolicyMng.RemoveDevicePolicyGroup(devID,groupID);
-         /*   ChangeDevicePolicy(dp.Computer.ComputerName);*/
+            devicePolicyMng.RemoveDevicePolicyGroup(devID, groupID);
+            ChangeDevicePolicyByGroup(groupID);
         }
+
         public void RemoveDevicePolicyWithoutGroup(int devID)
         {
             devicePolicyMng.Connection = Connection;
             devicePolicyMng.RemoveDevicePolicyWithoutGroup(devID);
-            /*   ChangeDevicePolicy(dp.Computer.ComputerName);*/
+            ChangeDevicePolicyByGroup();
         }
+
         public void AddDevicePolicy(DevicePolicy devicePolicy)
         {
             devicePolicyMng.Connection = Connection;
             devicePolicyMng.Add(devicePolicy);
             ChangeDevicePolicy(devicePolicy.Computer.ComputerName);
         }
+
         public DevicePolicy AddDevicePolicyToComputer(DevicePolicy devicePolicy)
         {
             devicePolicyMng.Connection = Connection;
@@ -530,18 +523,23 @@ namespace VirusBlokAda.Vba32CC.Policies
                 ChangeDevicePolicy(devicePolicy.Computer.ComputerName);
             return dp;
         }
+
         public Device AddDeviceToGroup(int groupID,Device device)
         {
             devicePolicyMng.Connection = Connection;
             Device dev = devicePolicyMng.AddToGroup(groupID,device);
+            ChangeDevicePolicyByGroup(groupID);
             return dev;
         }
+
         public Device AddDeviceToWithoutGroup( Device device)
         {
             devicePolicyMng.Connection = Connection;
             Device dev = devicePolicyMng.AddToWithoutGroup(device);
+            ChangeDevicePolicyByGroup();
             return dev;
         }
+
         #endregion
 
 
@@ -587,10 +585,8 @@ namespace VirusBlokAda.Vba32CC.Policies
             }
             return GetDevicesPoliciesByComputer(computerName);
         }
-
-
-        public List<Device> GetDevicesList(int index, int pageCount,
-            string where, string orderBy)
+        
+        public List<Device> GetDevicesList(int index, int pageCount, string where, string orderBy)
         {
             deviceMng.Connection = Connection;
             return deviceMng.GetDevicesList(index, pageCount,
@@ -617,7 +613,6 @@ namespace VirusBlokAda.Vba32CC.Policies
                 null, null);
         }
 
-
         public List<Policy> GetPolicyTypes()
         {
             policyMng.Connection = Connection;
@@ -634,9 +629,7 @@ namespace VirusBlokAda.Vba32CC.Policies
             return names;
         }
 
-
-        public List<ComputersEntity> GetComputersByPolicyPage(Policy policy, 
-            int index, int pageCount, string orderBy)
+        public List<ComputersEntity> GetComputersByPolicyPage(Policy policy, int index, int pageCount, string orderBy)
         {
 
             policyMng.Connection = Connection;
@@ -655,9 +648,7 @@ namespace VirusBlokAda.Vba32CC.Policies
             return policyMng.GetComputersByPolicyCount(where);
         }
 
-
-        public List<ComputersEntity> GetComputersWithoutPolicyPage(int index,
-            int pageCount, string orderBy)
+        public List<ComputersEntity> GetComputersWithoutPolicyPage(int index, int pageCount, string orderBy)
         {
 
             policyMng.Connection = Connection;
@@ -673,9 +664,7 @@ namespace VirusBlokAda.Vba32CC.Policies
             return policyMng.GetComputersWithoutPolicyCount();
         }
 
-
-        public List<DevicePolicy> GetUnknownDevicesPolicyPage(int index, int pageCount,
-            string where, string orderBy)
+        public List<DevicePolicy> GetUnknownDevicesPolicyPage(int index, int pageCount, string where, string orderBy)
         {
             string totalWhere = "StateName LIKE 'Undefined'";
             if(!String.IsNullOrEmpty(where)) 
@@ -700,13 +689,13 @@ namespace VirusBlokAda.Vba32CC.Policies
             policyMng.Connection = Connection;
             return policyMng.GetComputersByPolicy(policy);
         }
-
-
+        
         public List<DevicePolicy> GetDevicesPoliciesByGroup(Int32 groupID)
         {
             devicePolicyMng.Connection = Connection;
             return devicePolicyMng.GetDeviceEntitiesFromGroup(groupID);
         }
+        
         public List<DevicePolicy> GetDevicesPoliciesWithoutGroup()
         {
             devicePolicyMng.Connection = Connection;
@@ -716,32 +705,36 @@ namespace VirusBlokAda.Vba32CC.Policies
         public void ChangeDevicePolicyStatusForGroup(Int16 deviceID, Int32 groupID, string state)
         {
             devicePolicyMng.Connection = Connection;
-            devicePolicyMng.ChangeDevicePolicyStatusForGroup(deviceID,groupID,state);
-           /* ChangeDevicePolicy(devicePolicy.Computer.ComputerName);*/
+            devicePolicyMng.ChangeDevicePolicyStatusForGroup(deviceID, groupID, state);
+            ChangeDevicePolicyByGroup(groupID);
         }
+
         public void ChangeDevicePolicyStatusWithoutGroup(Int16 deviceID, string state)
         {
             devicePolicyMng.Connection = Connection;
             devicePolicyMng.ChangeDevicePolicyStatusToWithoutGroup(deviceID,state);
-           /* ChangeDevicePolicy(devicePolicy.Computer.ComputerName);*/
+            ChangeDevicePolicyByGroup();
         }
+
         public List<string> GetPolicyStates()
         {
             devicePolicyMng.Connection = Connection;
             return devicePolicyMng.GetPolicyStates();
         }
+
         public Int32 GetDeviceCount(string where)
         {
             deviceMng.Connection = Connection;
             return deviceMng.GetDeviceCount(where);
         }
+
         public List<DevicePolicy> GetComputerListByDeviceID(Device device)
         {
             devicePolicyMng.Connection = Connection;
             return devicePolicyMng.GetComputerListByDeviceID(device);
         }
-        public List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount,
-    string where, string orderBy)
+
+        public List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount, string where, string orderBy)
         {
             devicePolicyMng.Connection = Connection;
             

@@ -135,6 +135,29 @@ namespace VirusBlokAda.Vba32CC.Groups
             cmd.ExecuteNonQuery();
         }
 
+                
+        /// <summary>
+        /// Get all computers by group
+        /// </summary>
+        /// <param name="groupID"></param>
+        /// <returns></returns>
+        public List<String> GetAllComputersNameByGroup(Int32 groupID)
+        {
+            List<String> list = new List<String>();
+
+            IDbCommand cmd = database.CreateCommand("GetAllComputersByGroup", true);
+            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
+
+            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;            
+            while (reader.Read())
+            {
+                if (reader.GetValue(0) != DBNull.Value)
+                    list.Add(reader.GetString(0));
+            }
+            reader.Close();
+            return list;
+        }
+
         /// <summary>
         /// Get computers by group
         /// </summary>

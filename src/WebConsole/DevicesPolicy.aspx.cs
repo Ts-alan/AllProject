@@ -270,16 +270,17 @@ public partial class DevicesPolicy : PageBase
     {
         get
         {
-            PolicyProvider provider = HttpContext.Current.Application["PolicyState"] as PolicyProvider;
+            PolicyProvider provider = HttpContext.Current.Application["PoliciesState"] as PolicyProvider;
             if (provider == null)
             {
                 provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["PolicyState"] = provider;
+                HttpContext.Current.Application["PoliciesState"] = provider;
             }
 
             return provider;
         }
     }
+    
     /* получение данных о компьютере */
     [WebMethod]
     public static String GetComputersData(int id)
