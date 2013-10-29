@@ -23,11 +23,10 @@ public partial class Visual : PageBase
     protected void Page_Init(object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
-
     }
     // Visual.aspx
     // Страница Visual.aspx отображает продажи по категориям в трех различных представлениях: 
-    // круговая диаграмма (Pie Chart), гистограмма (Bar Graph) и таблица (Tabular).
+    // круговая диаграмма (Pie Chart), гистограмма (Bar Graph) и линейный график (Line Chart).
     protected String _styleSheet;
 
     private void Page_Load(object sender, System.EventArgs e)
@@ -43,18 +42,23 @@ public partial class Visual : PageBase
         RegisterScript(@"js/jQuery/jqplot/jqplot.pointLabels.js");        
         chartData = "{\"data\": null}";
 
-        //object o = Session["visual_aspx_CurrentFilterState_StorageControl"];
-
         if (!IsPostBack)
         {
             if (Session["ViewSelectIndex"] != null)
                 InitFields();
         }
     }
-    protected override void InitFields()
+    private void Page_LoadComplete(object sender, EventArgs e)
     {
-     //   FilterContainer.Clear();
-
+        if (!IsPostBack)
+        {
+            String where = FilterContainer.GenerateSQL();
+            hdnFieldWhere.Value = where;
+            HiddenFieldGroupBy.Value = fltType.GroupBy;
+        }        
+    }
+    protected override void InitFields()
+    {       
     }
     [WebMethod]
     public static String getData(string where, string groupBy)
@@ -67,8 +71,7 @@ public partial class Visual : PageBase
         {
             VisualReport report = new VisualReport(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
             List<StatisticEntity> dataList = report.GetStatistics(groupBy, where, 15);
-            chartData = ConvertDataListToString(dataList);
-            
+            chartData = ConvertDataListToString(dataList);            
         }
         return chartData;
     }

@@ -12,9 +12,16 @@
     <script type="text/javascript">
         var select = null;
         var plot = null;
-        var chartData =null;
+        var chartData = null;
+        $(window).load(function () {
+            var where = $('#<%= hdnFieldWhere.ClientID %>').attr('value');
+            if (where != null && where != "undefined" && where != "")
+            {
+                var groupBy = $('#<%= HiddenFieldGroupBy.ClientID %>').attr('value');                
+                getChartData(where, groupBy);
+            }
+        });
         $(document).ready(function () {
-            
             disableEnableButtons();
             BarAttributes = {
                 seriesDefaults: {
@@ -181,13 +188,15 @@
                     </table>
                 </FiltersTemplate>
             </flt:CompositeFilter>
+           <asp:HiddenField ID="hdnFieldWhere"  runat="server"/>
+           <asp:HiddenField ID="HiddenFieldGroupBy"  runat="server"/>
         </ContentTemplate>
     </asp:UpdatePanel>
+
     <asp:Panel ID="chartTypePanel" runat="server" HorizontalAlign="Center">
         <asp:Table runat="server" HorizontalAlign="Center">
             <asp:TableRow runat="server">
-                <asp:TableCell runat="server" Width="100px">
-                    <div id="divPieButton" class="PieButton" ></div>
+                <asp:TableCell runat="server" Width="100px">                   
                     <asp:ImageButton runat="server" ID="pieImageButton" ImageUrl="~/App_Themes/Main/Images/chart-pie.png" ToolTip='<%$ Resources:Resource, Pie %>'  OnClientClick="return false"/>
                 </asp:TableCell>
                 <asp:TableCell ID="TableCell1" runat="server" Width="100px">
