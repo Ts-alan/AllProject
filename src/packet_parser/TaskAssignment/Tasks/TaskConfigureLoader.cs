@@ -37,10 +37,17 @@ namespace Vba32CC.TaskAssignment.Tasks
         private Int32 _PROXY_PORT;
         private String _PROXY_USER;
         private String _PROXY_PASSWORD;
+        private Int32 _SCAN_USB;
 
         #endregion
 
         #region Properties
+
+        public Int32 SCAN_USB
+        {
+            get { return _SCAN_USB; }
+            set { _SCAN_USB = value; }
+        }
 
         public String PROXY_PASSWORD
         {
@@ -284,6 +291,8 @@ namespace Vba32CC.TaskAssignment.Tasks
                 }
             }
 
+            xml.AddNode("SCAN_USB", "reg_dword:" + SCAN_USB.ToString());
+
             xml.AddNode("Vba32CCUser", Vba32CCUser);
             xml.AddNode("Type", TaskType);
 
@@ -311,6 +320,7 @@ namespace Vba32CC.TaskAssignment.Tasks
             Int32.TryParse(pars.GetValue("PROXY_USAGE", "reg_dword:"), out _PROXY_USAGE);
             Int32.TryParse(pars.GetValue("PROXY_AUTHORIZE", "reg_dword:"), out _PROXY_AUTHORIZE);
             Int32.TryParse(pars.GetValue("CHECK_MEMORY_MODE", "reg_dword:"), out _CHECK_MEMORY_MODE);
+            Int32.TryParse(pars.GetValue("SCAN_USB", "reg_dword:"), out _SCAN_USB);
 
             _LOG_NAME = pars.GetValue("LOG_NAME", "reg_sz:") != String.Empty ? pars.GetValue("LOG_NAME", "reg_sz:") : "Vba32Ldr.log";
 

@@ -45,7 +45,7 @@ namespace ARM2_dbcontrol.Tasks
                     foreach (String item in splitted)
                     {
                         if (!String.IsNullOrEmpty(item))
-                            list.Add(item);
+                            list.Add(item.Replace("\0", ""));
                     }
                     
                     return list;

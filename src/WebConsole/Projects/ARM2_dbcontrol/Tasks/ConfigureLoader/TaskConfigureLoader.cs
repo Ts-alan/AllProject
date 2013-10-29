@@ -215,6 +215,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureLoader
         public String SaveToXml()
         {
             ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("loader");
+            xml.Top = String.Empty;
 
             xml.AddNode("AUTO_START", "reg_dword:"+AUTO_START.ToString());
             xml.AddNode("MONITOR_AUTO_START", "reg_dword:" + MONITOR_AUTO_START.ToString());
