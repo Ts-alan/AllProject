@@ -416,7 +416,7 @@ namespace Vba32CC
         {
             Boolean result = true;
             xml_reader.MoveToContent();
-            String xml = xml_reader.ReadOuterXml();
+            String xml = xml_reader.ReadInnerXml();
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);

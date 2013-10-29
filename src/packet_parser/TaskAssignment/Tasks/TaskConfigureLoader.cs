@@ -208,6 +208,7 @@ namespace Vba32CC.TaskAssignment.Tasks
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("loader");
+            xml.Top = String.Empty;
 
             xml.AddNode("AUTO_START", "reg_dword:"+AUTO_START.ToString());
             xml.AddNode("MONITOR_AUTO_START", "reg_dword:" + MONITOR_AUTO_START.ToString());
