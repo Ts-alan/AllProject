@@ -34,10 +34,10 @@ public partial class CompInfo : PageBase
 
             Page.Title = Resources.Resource.PageCompInfoTitle + ' ' + computerName;
             
-            if ((!Roles.IsUserInRole("Administrator")) && (!Roles.IsUserInRole("Operator")))
-            {
-                lbtnTasksList.Visible = false;
-            }
+            //if ((!Roles.IsUserInRole("Administrator")) && (!Roles.IsUserInRole("Operator")))
+            //{
+            //    lbtnTasksList.Visible = false;
+            //}
 
             WriteCompInfo(computerName);
             InitComponents();

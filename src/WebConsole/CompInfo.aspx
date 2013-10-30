@@ -306,7 +306,7 @@
  <div>
     <div id="divDevices" runat="server" style="width:850px;"></div>
  </div>
-<h3><a href="#"><%=Resources.Resource.Filter%></a></h3>
+<%--<h3><a href="#"><%=Resources.Resource.Filter%></a></h3>
 <div>
  <div class="divSettings">
     <table class="ListContrastTable" style="width:850px;">
@@ -352,7 +352,7 @@
         </tr>
     </table>
  </div>
- </div>
+ </div>--%>
 </div>
     <div id="commentDialog" style="display:none"></div>
 </asp:Content>
