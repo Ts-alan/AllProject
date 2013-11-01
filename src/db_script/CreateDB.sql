@@ -32,6 +32,20 @@ GO
 ALTER DATABASE vbaControlCenterDB SET AUTO_SHRINK ON
 GO
 
+ 
+ALTER DATABASE vbaControlCenterDB
+SET single_user
+WITH rollback immediate;
+GO
+ 
+ALTER DATABASE vbaControlCenterDB
+collate CYRILLIC_GENERAL_CI_AS
+GO
+ 
+ALTER DATABASE vbaControlCenterDB
+SET multi_user;
+GO
+
 USE vbaControlCenterDB
 GO
 
@@ -381,7 +395,9 @@ CREATE TABLE [dbo].[Vba32Versions] (
 	[ID] smallint IDENTITY(1, 1) NOT NULL,
 	[Vba32Version] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 	CONSTRAINT [PK_Vba32Versions]
-		PRIMARY KEY NONCLUSTERED ([ID])
+		PRIMARY KEY NONCLUSTERED ([ID]),
+	CONSTRAINT [U_Vba32Version]
+		UNIQUE NONCLUSTERED ([Vba32Version])
 )
 
 -----------------------------------------
@@ -389,7 +405,9 @@ CREATE TABLE [dbo].[InstallationTaskType] (
 	[ID] smallint IDENTITY(1, 1) NOT NULL,
 	[TaskType] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 	CONSTRAINT [PK_InstallationTaskType]
-		PRIMARY KEY NONCLUSTERED ([ID])
+		PRIMARY KEY NONCLUSTERED ([ID]),
+	CONSTRAINT [U_InstallationTaskType]
+		UNIQUE NONCLUSTERED ([TaskType])
 )
 
 -----------------------------------------
@@ -428,6 +446,9 @@ INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Execution error');
 INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Stopped');
 INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Delivery timeout');
 INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Execution timeout');
+INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'In queue');
+INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Sended');
+INSERT INTO [dbo].[TaskStates]([TaskState]) VALUES(N'Error');
 
 INSERT INTO [dbo].[ComponentSettings]([Name], [Settings]) VALUES(N'(unknown)', N'(unknown)');
 

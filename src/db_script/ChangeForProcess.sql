@@ -1,6 +1,12 @@
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[Processes]')
+					   AND OBJECTPROPERTY(id, N'IsTable') = 1)
 DROP TABLE [dbo].[Processes]
-DROP TABLE [dbo].[ProcessNames]
+GO
 
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[ProcessNames]')
+					   AND OBJECTPROPERTY(id, N'IsTable') = 1)
+DROP TABLE [dbo].[ProcessNames]
+GO
 
 -- Process-related tables
 CREATE TABLE [dbo].[Processes] (

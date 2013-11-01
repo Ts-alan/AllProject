@@ -1,7 +1,3 @@
-USE vbaControlCenterDB
-GO
-
-
 --------------------------------------------------
 -- Stored procedures for Vba32 CC Web interface --
 --------------------------------------------------
@@ -594,70 +590,6 @@ AS
 		SELECT
 			[ComputerName], [ComponentName], [ComponentState], [Version], [SettingsName]
 		FROM @ComponentsPage WHERE [RecID] BETWEEN (' +
-			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
-			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'
-	EXEC sp_executesql @Query
-GO
-
-
--- Returns count of Processes that match the criteria
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetProcessesCount]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[GetProcessesCount]
-GO
-
-CREATE PROCEDURE [dbo].[GetProcessesCount]
-	@Where nvarchar(2000) = NULL
-WITH ENCRYPTION
-AS
-	DECLARE @Query nvarchar(4000)
-	SET @Query =  N'SELECT COUNT (p.[ID]) FROM Processes AS p
-					INNER JOIN Computers AS c ON p.[ComputerID] = c.[ID]
-					INNER JOIN ProcessNames AS pn ON p.[ProcessID] =  pn.[ID]'
-	IF @Where IS NOT NULL
-		SET @Query = @Query + N' WHERE ' + @Where
-	EXEC sp_executesql @Query
-GO
-
-
--- Returns a page from Processes table
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetProcessesPage]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[GetProcessesPage]
-GO
-
-CREATE PROCEDURE [dbo].[GetProcessesPage]
-	@Page int,
-	@RowCount int,
-	@OrderBy nvarchar(64) = NULL,
-	@Where nvarchar(2000) = NULL
-WITH ENCRYPTION
-AS
-	DECLARE @Query nvarchar(4000)
-	SET @Query =  N'
-		-- Table variable - for paging
-		DECLARE @ProcessesPage TABLE(
-			[RecID] int IDENTITY(1, 1) NOT NULL,
-			[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[ProcessName] nvarchar(260) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[MemorySize] int NULL,
-			[LastDate] datetime NOT NULL
-		)
-	
-		INSERT INTO @ProcessesPage(
-			[ComputerName], [ProcessName], [MemorySize], [LastDate])
-		SELECT
-			c.[ComputerName], pn.[ProcessName], p.[MemorySize], p.[LastDate]
-		FROM Processes AS p
-		INNER JOIN Computers AS c ON p.[ComputerID] = c.[ID]
-		INNER JOIN ProcessNames AS pn ON p.[ProcessID] = pn.[ID]'
-	IF @Where IS NOT NULL
-		SET @Query = @Query + ' WHERE ' + @Where
-	IF @OrderBy IS NOT NULL
-		SET @Query = @Query + N' ORDER BY ' + @OrderBy
-	SET @Query = @Query + N';
-		SELECT [ComputerName], [ProcessName], [MemorySize], [LastDate]
-		FROM @ProcessesPage WHERE [RecID] BETWEEN (' +
 			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
 			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'
 	EXEC sp_executesql @Query

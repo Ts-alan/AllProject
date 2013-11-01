@@ -1,6 +1,3 @@
-USE vbaControlCenterDB
-GO
-
 -----------------------------------------
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[UpdateComputerSystemInfo]')
 					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)

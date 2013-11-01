@@ -1,7 +1,6 @@
 USE vbaControlCenterDB
 GO
 
-
 ----------------------------------------------
 -- Stored procedures for 'EventTypes' table --
 ----------------------------------------------
@@ -410,34 +409,6 @@ BEGIN
 END
 GO
 
-
-------------------------------------------------
--- Stored procedures for 'ProcessNames' table --
-------------------------------------------------
-
--- Returns Process Name ID by its name
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetProcessNameID]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[GetProcessNameID]
-GO
-
-CREATE PROCEDURE [GetProcessNameID]
-	@ProcessName nvarchar(260),
-	@InsertIfNotExists tinyint = 0
-WITH ENCRYPTION
-AS
-BEGIN
-	IF @InsertIfNotExists = 1
-	BEGIN
-		-- Checking whether there exists such an process type
-		IF NOT EXISTS (SELECT [ID] FROM [ProcessNames] WHERE [ProcessName] = @ProcessName)
-			INSERT INTO [ProcessNames](ProcessName) VALUES (@ProcessName);
-	END
-	RETURN (SELECT [ID] FROM [ProcessNames] WHERE [ProcessName] = @ProcessName)
-END
-GO
-
-
 ----------------------------------------------
 -- Stored procedures for 'TaskStates' table --
 ----------------------------------------------
@@ -490,80 +461,6 @@ BEGIN
 	RETURN (SELECT [ID] FROM [TaskTypes] WHERE [TaskName] = @TaskName)
 END
 GO
-
-
----------------------------------------------
--- Stored procedures for 'Processes' table --
----------------------------------------------
-
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[DeleteProcessInfo]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[DeleteProcessInfo]
-GO
-
-CREATE PROCEDURE [DeleteProcessInfo]
-	@ComputerName nvarchar(64)
-WITH ENCRYPTION
-AS
-	-- Retrieving ComputerID
-	DECLARE @ComputerID smallint
-	EXEC @ComputerID = dbo.GetComputerID @ComputerName
-	IF @ComputerID IS NULL
-	BEGIN
-		RAISERROR(N'Unable to find computer %s', 16, 1, @ComputerName)
-		RETURN
-	END
-	
-	DELETE FROM [Processes] WHERE [ComputerID] = @ComputerID
-GO
-
------------------------------------------
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[UpdateProcessInfo]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[UpdateProcessInfo]
-GO
-
-CREATE PROCEDURE [UpdateProcessInfo]
-	@ComputerName nvarchar(64),
-	@ProcessName nvarchar(260),
-	@MemorySize int,
-	@Date datetime
-WITH ENCRYPTION
-AS
-	-- Retrieving ComputerID
-	DECLARE @ComputerID smallint
-	EXEC @ComputerID = dbo.GetComputerID @ComputerName
-	IF @ComputerID = 0
-	BEGIN
-		RAISERROR(N'Unable to find computer %s', 16, 1, @ComputerName)
-		RETURN
-	END
-	
-	-- Retrieving ProcessID
-	DECLARE @ProcessID smallint
-	EXEC @ProcessID = dbo.GetProcessNameID @ProcessName, 1
-	
-	-- Inserting/updating data
-	DECLARE @ID smallint
-	SET @ID = (SELECT [ID] FROM [Processes] WHERE [ComputerID] = @ComputerID AND [ProcessID] = @ProcessID)
-	IF @ID IS NULL
-	BEGIN
-		-- Insert
-		INSERT INTO [Processes](ComputerID, ProcessID, MemorySize, LastDate)
-			VALUES(@ComputerID, @ProcessID, @MemorySize, @Date)
-	END
-	ELSE
-	BEGIN
-		-- Update
-		UPDATE [Processes]
-		SET	[ComputerID] = @ComputerID,
-			[ProcessID] = @ProcessID,
-			[MemorySize] = @MemorySize,
-			[LastDate] = @Date
-		WHERE [ID] = @ID
-	END
-GO
-
 
 ----------------------------------------------
 -- Stored procedures for 'Components' table --

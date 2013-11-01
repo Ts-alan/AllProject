@@ -1,6 +1,3 @@
-USE vbaControlCenterDB
-GO
-
 ------------ DEVICES -----------------
 
 -- Returns Device ID by its name. Optionally insert new record to db
@@ -547,52 +544,6 @@ AS
 	 DELETE	 FROM DevicesPolicies WHERE [ID] = @ID
 GO
 
-
--- add devicepolicy to computer
-IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[OnInsertingDevice]')
-					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[OnInsertingDevice]
-GO
-
-CREATE PROCEDURE [OnInsertingDevice]
-	@SerialNo nvarchar(256),
-	@ComputerName nvarchar(64),
-	@Comment nvarchar(128)
-WITH ENCRYPTION
-AS
-BEGIN
-	-- get computer id
-	DECLARE @ComputerID smallint
-	SET @ComputerID = (SELECT [ID] FROM [Computers] WHERE [ComputerName] = @ComputerName)
-
-	--device not exist
-	IF NOT EXISTS ((SELECT [ID] FROM [Devices] WHERE [SerialNo] = @SerialNo))
-	BEGIN
-		--insert device
-		INSERT INTO [Devices](SerialNo, DeviceTypeID, Comment) VALUES (@SerialNo, 1, @Comment);
-	END
-	
-	--get device id
-	DECLARE @DeviceID smallint
-	SET @DeviceID = (SELECT [ID] FROM [Devices] WHERE [SerialNo] = @SerialNo)
-
-	--not exesit policy to this comp and device
-	IF NOT EXISTS ((SELECT [ID] FROM [DevicesPolicies] 
-					WHERE [ComputerID] = @ComputerID AND
-						  [DeviceID] = @DeviceID))
-	BEGIN
-		DECLARE @StateID smallint
-		SET @StateID = (SELECT [ID] FROM DevicePolicyStates WHERE [StateName] = 'undefined')
-
-		INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
-		VALUES    (@ComputerID, @DeviceID, @StateID)
-	END
-	
-	UPDATE DevicesPolicies SET [LatestInsert] = GetDate()
-	WHERE [DeviceID] = @DeviceID AND [ComputerID] = @ComputerID
-
-END
-GO
 
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[GetDevicesPolicyPage]')
 					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
