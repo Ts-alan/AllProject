@@ -55,8 +55,9 @@ namespace ARM2_dbcontrol.Tasks
             {
                  str1 = str.InnerText;
             }
-
-            return str1.TrimStart(exclude.ToCharArray());
+            if (str1.StartsWith(exclude))
+                return str1.Substring(exclude.Length);
+            else return str1;
         }
 
         public string GetXmlTagContent(string key)
