@@ -48,6 +48,15 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                 throw new Exception("Cannot create vsisLib.ServiceClass: " + e.Message);
             }
             
+            //Wait when VSIS worked
+            UInt32 status;
+            _service.GetPlugStatus(out status);
+            while (status != 2)
+            {
+                System.Threading.Thread.Sleep(100);
+                _service.GetPlugStatus(out status);
+            }
+
             try
             {
                 _updateService.UpdateClass = _service.GetInterface(GUID_UpdateClass, GUID_UpdateInterface) as vsisLib.Update;
@@ -74,7 +83,8 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
             properties.ProxyType = 0;
             properties.ExpandPathesList = new PairString[1];
             properties.ExpandPathesList[0].first = "WEBCONSOLE";
-            properties.ExpandPathesList[0].second = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\WebConsole"; //@"D:\Public\Vba32 Control Center\WebConsole\";
+            String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
+            properties.ExpandPathesList[0].second = System.IO.Directory.GetParent(AppPath).Parent.FullName;
 
             _settings.SetUpdateParameters(GUID_UpdateClass, properties, 1, true);
         }

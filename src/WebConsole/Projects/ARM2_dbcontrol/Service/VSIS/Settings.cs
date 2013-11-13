@@ -123,26 +123,28 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         internal UpdateProperties GetUpdateParameters(String module_id)
         {
             UpdateProperties properties = new UpdateProperties();
+            properties.ExpandPathesList = new vsisLib.PairString[0];
+            properties.UpdatePathes = new String[0];
             Object parameter;
             UInt32 settingsType;
             _settings.GetParameter(module_id, "AuthorityName", out parameter, out settingsType);
-            properties.AuthorityName = (String)parameter;
+            properties.AuthorityName = parameter != null ? (String)parameter : "";
             _settings.GetParameter(module_id, "AuthorityPassword", out parameter, out settingsType);
-            properties.AuthorityPassword = (String)parameter;
+            properties.AuthorityPassword = parameter != null ? (String)parameter : "";
 
             _settings.GetParameter(module_id, "ProxyAddress", out parameter, out settingsType);
-            properties.ProxyAddress = (String)parameter;
+            properties.ProxyAddress = parameter != null ? (String)parameter : "";
             _settings.GetParameter(module_id, "ProxyAuthorityName", out parameter, out settingsType);
-            properties.ProxyAuthorityName = (String)parameter;
+            properties.ProxyAuthorityName = parameter != null ? (String)parameter : "";
             _settings.GetParameter(module_id, "ProxyAuthorityPassword", out parameter, out settingsType);
-            properties.ProxyAuthorityPassword = (String)parameter;
+            properties.ProxyAuthorityPassword = parameter != null ? (String)parameter : "";
             _settings.GetParameter(module_id, "ProxyPort", out parameter, out settingsType);
             if(parameter != null) properties.ProxyPort = (UInt32)parameter;
             _settings.GetParameter(module_id, "ProxyType", out parameter, out settingsType);
             if (parameter != null) properties.ProxyType = (UInt32)parameter;
 
             _settings.GetParameter(module_id, "TempFolder", out parameter, out settingsType);
-            properties.TempFolder = (String)parameter;
+            properties.TempFolder = parameter != null ? (String)parameter : "";
 
             _settings.GetParameter(module_id, "UpdatePathes", out parameter, out settingsType);
             if (parameter != null) properties.UpdatePathes = (String[])parameter;
