@@ -143,7 +143,8 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                 }
                 vsisLib.UpdateParameters param = new vsisLib.UpdateParameters();
                 param.complectation = "VBA32AAW";
-                param.program_folder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); //@"D:\Public\Vba32 Control Center";
+                String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
+                param.program_folder = System.IO.Directory.GetParent(AppPath).Parent.Parent.FullName;
                 lock (syncObject)
                 {
                     _stopReason = String.Empty;
