@@ -622,7 +622,7 @@ $(document).ready(function () {
         var serial = $(this).attr("addcompdev");
 
 
-        ComputersDialog.show(serial);
+        ComputersDialogDevice.show(serial);
         return false;
     });
     //-------------Unknown Policy---

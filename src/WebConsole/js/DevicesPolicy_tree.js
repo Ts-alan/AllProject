@@ -1,6 +1,6 @@
 ﻿
 
-        var ComputersTree = function () {
+        var ComputersTreeDevice = function () {
             var root;
             var treeStore;
             var tree;
@@ -108,13 +108,13 @@
             };
         } ();
 
-        var ComputersDialog = function () {
+        var ComputersDialogDevice = function () {
             var dialog;
             var asyncPostBack = false;
 
             function onApply(serial) {
 
-                comps = ComputersTree.generateText();
+                comps = ComputersTreeDevice.generateText();
 
 
                 $.ajax({
@@ -169,11 +169,11 @@
                             open: onShow,
                             buttons: { Apply: function () { onApply(serial); dialog.dialog("close"); } }
                         });
-                        ComputersTree.init(dialog);
+                        ComputersTreeDevice.init(dialog);
                         asyncPostBack = false;
                     }
                     else {
-                        ComputersTree.reload();
+                        ComputersTreeDevice.reload();
                     }
                 }
             };
