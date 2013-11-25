@@ -2,6 +2,9 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.CongLdrConfigureMonitor%></div>
 
 <script language="javascript" type="text/javascript">
+    function pageLoad() {
+        $("#Tabs").tabs({ cookie: { expires: 30} });
+    }
 function ChangeScanInBackGround() {
     var cbox = $get('<%=cboxScanInBackGround.ClientID%>');
 
@@ -246,68 +249,68 @@ function ChangeHeuristics() {
     }
 }
 </script>
-
-<ajaxToolkit:TabContainer runat="server" ID="Tabs" ActiveTabIndex="0" Width="560px">
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel1">
- <ContentTemplate>
-    <table class="ListContrastTable">
+<div id="Tabs" style="width:560px">
+    <ul>
+        <li><a href="#tab1"><%=Resources.Resource.CongMonitorObjects%></a> </li>
+        <li><a href="#tab2"><%=Resources.Resource.BackgroundScanning%></a> </li>
+        <li><a href="#tab3"><%=Resources.Resource.Actions%></a> </li>
+        <li><a href="#tab4"><%=Resources.Resource.CongMonitorReport%></a> </li>
+    </ul>
+    <div id="tab1" class="divSettings">
+        <table class="ListContrastTable">
             <tr>
-            <td>
-                <asp:RadioButton ID="rbScanStandartSet" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanStandartSet%>
-            </td>
+                <td>
+                    <asp:RadioButton ID="rbScanStandartSet" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanStandartSet%>
+                </td>
             </tr>
-          <tr>   
-            <td>
-                <asp:RadioButton ID="rbScanSelectedTypes" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanSelectedTypes%><br/>
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="tboxFilterDefined" runat="server" style="width:500px"></asp:TextBox>
-            </td>
+            <tr>   
+                <td>
+                    <asp:RadioButton ID="rbScanSelectedTypes" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanSelectedTypes%><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="tboxFilterDefined" runat="server" style="width:495px"></asp:TextBox>
+                </td>
             </tr>
-          <tr> 
-           <td>
-                <asp:RadioButton ID="rbMonitorScanAllTypes" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanAllTypes%><br/>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=Resources.Resource.CongMonitorExcluding%>&nbsp;<asp:TextBox ID="tboxFilterExclude" runat="server"></asp:TextBox>
-            </td>
-          </tr>
-          <tr>
-            <td>
-                <asp:CheckBox ID="cboxScanOnlyNew" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorScanOnlyNew%>
-            </td>
-          </tr>
-    </table>
-    <table class="ListContrastTable">
-        <tr>
-            <td>
-                <asp:CheckBox ID="cboxDetectWare" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorDetectWare %>   
-            </td>
-        </tr>
-    </table>
-    
-     <table class="ListContrastTable" >
-        <tr>
-            <td style="width: 547px">
-                <%=Resources.Resource.CongMonitorExcludingFoldersAndFiles %>
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 547px">
-                <asp:TextBox ID="tboxExcludingFoldersAndFilesAdd" runat="server" style="width:300px"></asp:TextBox>&nbsp;&nbsp;<asp:LinkButton ID="lbtnExcludingFoldersAndFilesAdd" runat="server" OnClick="lbtnExcludingFoldersAndFilesAdd_Click"><%=Resources.Resource.Add%></asp:LinkButton> <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="cboxIncludingSubFolders" />&nbsp;<%=Resources.Resource.CongMonitorIncludingSubFolders %><br/>
-                <asp:DropDownList ID="ddlExcludingFoldersAndFilesDelete" style="width:300px" runat="server"></asp:DropDownList>&nbsp;&nbsp;<asp:LinkButton ID="lbntnExcludingFoldersAndFilesDelete" runat="server" OnClick="lbntnExcludingFoldersAndFilesDelete_Click"><%=Resources.Resource.Delete%></asp:LinkButton>
-            </td>
-        </tr>
-    </table>
-  
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel2">
- <ContentTemplate>
-        <table class="ListContrastTable" runat="server">
+            <tr> 
+                <td>
+                    <asp:RadioButton ID="rbMonitorScanAllTypes" runat="server" GroupName="ScanMode" />&nbsp;<%=Resources.Resource.CongMonitorScanAllTypes%><br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=Resources.Resource.CongMonitorExcluding%>&nbsp;<asp:TextBox ID="tboxFilterExclude" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:CheckBox ID="cboxScanOnlyNew" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorScanOnlyNew%>
+                </td>
+            </tr>
+        </table>
+        <table class="ListContrastTable">
+            <tr>
+                <td>
+                    <asp:CheckBox ID="cboxDetectWare" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorDetectWare %>   
+                </td>
+            </tr>
+        </table>
+        <table class="ListContrastTable" >
+            <tr>
+                <td style="width: 547px">
+                    <%=Resources.Resource.CongMonitorExcludingFoldersAndFiles %>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 547px">
+                    <asp:TextBox ID="tboxExcludingFoldersAndFilesAdd" runat="server" style="width:300px"></asp:TextBox>&nbsp;&nbsp;<asp:LinkButton ID="lbtnExcludingFoldersAndFilesAdd" runat="server" OnClick="lbtnExcludingFoldersAndFilesAdd_Click"><%=Resources.Resource.Add%></asp:LinkButton> <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="cboxIncludingSubFolders" />&nbsp;<%=Resources.Resource.CongMonitorIncludingSubFolders %><br/>
+                    <asp:DropDownList ID="ddlExcludingFoldersAndFilesDelete" style="width:300px" runat="server"></asp:DropDownList>&nbsp;&nbsp;<asp:LinkButton ID="lbntnExcludingFoldersAndFilesDelete" runat="server" OnClick="lbntnExcludingFoldersAndFilesDelete_Click"><%=Resources.Resource.Delete%></asp:LinkButton>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="tab2" class="divSettings">
+         <table id="Table1" class="ListContrastTable" runat="server">
             <tr>
                 <td>
                   <asp:CheckBox ID="cboxScanInBackGround" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorScanInBackGround %>  
                 </td>
             </tr>
-             <tr>
+            <tr>
                 <td>
                      &nbsp;&nbsp;&nbsp;&nbsp;<%=Resources.Resource.CongMonitorFuncConditions %>
                      <table width="75%" border="1" >
@@ -345,8 +348,8 @@ function ChangeHeuristics() {
                     </table>
                 </td>
               </tr>
-                </table>
-            <table class="ListContrastTable" >
+         </table>
+         <table class="ListContrastTable" >
               <!--<tr>
                 <td>
                     <asp:CheckBox ID="cboxScanStartupFiles" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorScanStartupFiles %>
@@ -357,23 +360,20 @@ function ChangeHeuristics() {
                     <asp:CheckBox ID="cboxScanFilesByUser" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorScanFilesByUser %>
                 </td>
               </tr>
-              </table>
-            <table class="ListContrastTable" id="tblScanning3" runat="server">
-              <tr>
-            <td>
-            <%=Resources.Resource.CongMonitorListOfPathToScan %><br/>
-                <asp:TextBox ID="tboxListOfPathToScanAdd" runat="server" style="width:300px"></asp:TextBox>&nbsp;&nbsp;<asp:LinkButton ID="lbtnListOfPathToScanAdd" runat="server" OnClick="lbtnListOfPathToScanAdd_Click"><%=Resources.Resource.Add%></asp:LinkButton> <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="cboxListOfPathToScanIncludingSubFolders" />&nbsp;<%=Resources.Resource.CongMonitorIncludingSubFolders %><br/>
-                <asp:DropDownList ID="ddlListOfPathToScan" style="width:310px" runat="server"></asp:DropDownList>&nbsp;&nbsp;<asp:LinkButton ID="lbtnListOfPathToScanDelete" runat="server" OnClick="lbtnListOfPathToScanDelete_Click"><%=Resources.Resource.Delete%></asp:LinkButton>
-            </td>
-        </tr>
          </table>
-         
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel3">
- <ContentTemplate>
-         <table class="ListContrastTable">
+         <table class="ListContrastTable" id="tblScanning3" runat="server">
+            <tr>
+                <td>
+                    <%=Resources.Resource.CongMonitorListOfPathToScan %><br/>
+                    <asp:TextBox ID="tboxListOfPathToScanAdd" runat="server" style="width:300px"></asp:TextBox>&nbsp;&nbsp;<asp:LinkButton ID="lbtnListOfPathToScanAdd" runat="server" OnClick="lbtnListOfPathToScanAdd_Click"><%=Resources.Resource.Add%></asp:LinkButton> <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="cboxListOfPathToScanIncludingSubFolders" />&nbsp;<%=Resources.Resource.CongMonitorIncludingSubFolders %><br/>
+                    <asp:DropDownList ID="ddlListOfPathToScan" style="width:310px" runat="server"></asp:DropDownList>&nbsp;&nbsp;<asp:LinkButton ID="lbtnListOfPathToScanDelete" runat="server" OnClick="lbtnListOfPathToScanDelete_Click"><%=Resources.Resource.Delete%></asp:LinkButton>
+                </td>
+            </tr>
+         </table>
+    </div>
+    <div id="tab3" class="divSettings">
+        <table class="ListContrastTable">
             <tr>
                 <td width="50%">
                     <%=Resources.Resource.CongMonitorInfected %><br/>
@@ -386,9 +386,10 @@ function ChangeHeuristics() {
                     <asp:DropDownList ID="ddlHeuristicAnalysis" runat="server" onchange="ChangeHeuristics()">
                     </asp:DropDownList>
                      <br />
-                     <asp:CheckBox ID="cboxBlockUSB" runat="server" /><%=Resources.Resource.BlockAutorunUSB%> </td> 
+                     <asp:CheckBox ID="cboxBlockUSB" runat="server" /><%=Resources.Resource.BlockAutorunUSB%>
+                 </td> 
             </tr>
-             <tr>
+            <tr>
                 <td width="50%">
                     <br/><%=Resources.Resource.CongMonitorIfPreviousFails %><br/>
                     <asp:DropDownList ID="ddlPrevInfected" runat="server" onchange="ChangeInfectedPrev()">
@@ -402,7 +403,7 @@ function ChangeHeuristics() {
                     <asp:CheckBox ID="cboxSuspiciousQua" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorSaveCopyQuarantine %>
                 </td> 
             </tr>
-             <tr>
+            <tr>
                 <td width="50%">
                     <br/><%=Resources.Resource.CongMonitorIfPreviousFails %><br/>
                     <asp:DropDownList ID="ddlPrevPrevInfected" runat="server" onchange="ChangeInfectedPrevPrev()">
@@ -416,43 +417,38 @@ function ChangeHeuristics() {
                     <asp:CheckBox ID="cboxSuspiciousQuaPrev" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorSaveCopyQuarantine %>
                 </td> 
             </tr>
-         </table>  
-         
-
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel4">
- <ContentTemplate>
-         <table class="ListContrastTable">
+         </table>
+    </div>
+    <div id="tab4" class="divSettings">
+        <table class="ListContrastTable">
             <tr>
                 <td>
                    <asp:CheckBox ID="cboxNotifyOfMonitor" runat="server" />&nbsp;<%=Resources.Resource.CongMonitorNotifyOfMonitor %>
                 </td>
             </tr>
-         </table>
-          <table class="ListContrastTable">
-        <tr>
-           <td>
-                <asp:Label runat=server ID=lblLogFile><%=Resources.Resource.Name %></asp:Label>
-            </td>
-             <td>
-                 <asp:TextBox ID="tboxLogFile" runat="server"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:CheckBox ID="cboxMaximumSizeLog" runat="server" /><%=Resources.Resource.CongLdrMaximumSizeLog%>
-            </td>
-             <td>
-                 <asp:TextBox ID="tboxMaximumSizeLog" runat="server"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-             <td colspan=2>
+        </table>
+        <table class="ListContrastTable">
+            <tr>
+                <td>
+                    <asp:Label runat='server' ID='lblLogFile'><%=Resources.Resource.Name %></asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox ID="tboxLogFile" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:CheckBox ID="cboxMaximumSizeLog" runat="server" /><%=Resources.Resource.CongLdrMaximumSizeLog%>
+                </td>
+                <td>
+                     <asp:TextBox ID="tboxMaximumSizeLog" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td colspan='2'>
                  <asp:CheckBox ID="cboxInformationAboutCleanFiles" runat="server" /><%=Resources.Resource.CongMonitorInformationAboutCleanFiles %>
-            </td>
-        </tr>
-    </table>       
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-</ajaxToolkit:TabContainer>
+                </td>
+            </tr>
+        </table>    
+    </div>
+</div>

@@ -33,7 +33,6 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
     private void ChangeEnabledControl()
     {
-        Tabs.Enabled = _enabled;
         cboxScanMemory.Disabled = !_enabled;
         cboxScanBoot.Disabled = !_enabled;
         cboxScanBootFloppy.Disabled = !_enabled;
@@ -107,9 +106,6 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
         if (HideHeader) HeaderName.Visible = false;
 
-        tabPanel1.HeaderText = Resources.Resource.CongLdrInitialization;
-        tabPanel2.HeaderText = Resources.Resource.CongLdrReportFile;
-        tabPanel3.HeaderText = Resources.Resource.CongLdrUpdate;
 
         //lbtnInitialization.Text = Resources.Resource.CongLdrInitialization;
         //lbtnReportFile.Text = Resources.Resource.CongLdrReportFile;

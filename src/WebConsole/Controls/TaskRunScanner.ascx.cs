@@ -40,13 +40,6 @@ public partial class Controls_TaskRunScanner : System.Web.UI.UserControl, ITask
     {
         if (HideHeader) HeaderName.Visible = false;
         LoadSource();
-
-
-        tabPanel1.HeaderText = Resources.Resource.Actions;
-        tabPanel2.HeaderText = Resources.Resource.CongMonitorObjects;
-        tabPanel3.HeaderText = Resources.Resource.CongMonitorReport;
-        tabPanel4.HeaderText = Resources.Resource.CongScannerAdditional;
-
         lblExclude.Text = Resources.Resource.CongScannerExclude;
         lblSet.Text = Resources.Resource.CongScannerSet;
         lblAddArch.Text = Resources.Resource.CongScannerAdd;

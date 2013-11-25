@@ -24,7 +24,6 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
     {
         if (!Page.IsPostBack)
             InitFields();
-        ChangeEnabledControl();
     }
 
     private Boolean _hideHeader = false;
@@ -35,25 +34,11 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         set { _hideHeader = value; }
     }
 
-    private void ChangeEnabledControl()
-    {
-        Tabs.Enabled = _enabled;
-    }
-
-    private Boolean _enabled = true;
-
-    public Boolean Enabled
-    {
-        get { return _enabled; }
-        set { _enabled = value; }
-    }
 
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
-        
-        tabPanel1.HeaderText = Resources.Resource.CongQtnGeneral;
-        tabPanel2.HeaderText = Resources.Resource.CongQtnMaintenance;
+
 
         lblCongLdrUserName.Text = Resources.Resource.CongLdrUserName;
         lblCongLdrPassword.Text = Resources.Resource.CongLdrPassword;

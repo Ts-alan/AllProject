@@ -23,8 +23,6 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
     {
         if (!Page.IsPostBack)
             InitFields();
-
-        ChangeEnabledControl();
     }
 
     private String defaultFilters = ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor.DefaultFilters;
@@ -36,29 +34,14 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         get { return _hideHeader; }
         set { _hideHeader = value; }
     }
-
-    private void ChangeEnabledControl()
-    {
-        Tabs.Enabled = _enabled;        
-    }
     
-    private Boolean _enabled = true;
 
-    public Boolean Enabled
-    {
-        get { return _enabled; }
-        set { _enabled = value; }
-    }
+
 
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
-
         LoadSource();
-        tabPanel1.HeaderText = Resources.Resource.CongMonitorObjects;
-        tabPanel2.HeaderText = Resources.Resource.BackgroundScanning;
-        tabPanel3.HeaderText = Resources.Resource.Actions;
-        tabPanel4.HeaderText = Resources.Resource.CongMonitorReport;
     }
 
     public Boolean ValidateFields()

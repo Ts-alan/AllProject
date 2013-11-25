@@ -20,7 +20,7 @@
         }
     </script>
 
-    <div id="Tabs">
+    <div id="Tabs" style="width:900px">
         <ul>
             <li><a href="#tab1"><%=Resources.Resource.Applications %></a> </li>
             <li><a href="#tab2"><%=Resources.Resource.FileSystem %></a> </li>
