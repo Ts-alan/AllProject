@@ -143,6 +143,7 @@ public partial class UpdateCC : PageBase
             cboxAuthorizationEnabled.Checked = true;
             tboxAuthorizationUserName.Text = up.AuthorityName;
             tboxAuthorizationPassword.Attributes.Add("value", up.AuthorityPassword);
+            tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = true;
         }
         else
         {
@@ -159,11 +160,13 @@ public partial class UpdateCC : PageBase
                 cboxProxyAuthorizationEnabled.Checked = true;                
                 tboxProxyAuthorizationUserName.Text = up.ProxyAuthorityName;
                 tboxProxyAuthorizationPassword.Attributes.Add("value", up.ProxyAuthorityPassword);
+                tboxProxyAuthorizationUserName.Enabled = tboxProxyAuthorizationPassword.Enabled = true;
             }
             else
             {
                 tboxProxyAuthorizationUserName.Enabled = tboxProxyAuthorizationPassword.Enabled = false;
             }
+            tboxProxyAddress.Enabled = tboxProxyPort.Enabled = true;
         }
         else
         {
