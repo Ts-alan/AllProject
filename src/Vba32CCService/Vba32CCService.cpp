@@ -29,6 +29,8 @@
 // Exception & dumps
 #include "Exception.h"
 
+#include "common/win/registry.h"
+
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +50,6 @@ CSCMCtrl		g_scm;
 CServiceCtrl	g_sc;
 
 
-static CONST INT MAX_LOGFILE_SIZE = 1024; // kilobytes
 
 PTSTR	g_service_name =                _T("VbaControlCenter");
 PCTSTR	g_service_display_name =        _T("Vba32 Control Center");
@@ -78,6 +79,26 @@ DWORD WINAPI UpdatingThread(LPVOID p_parameter);
 
 //////////////////////////////////////////////////////////////////////////////
 
+
+DWORD LogFileSizeKb()
+{
+    static const std::wstring c_max_log_file_size_path = L"HKEY_LOCAL_MACHINE\\SOFTWARE\\Vba32\\ControlCenter\\CC_Service";
+    DWORD kb_size = 1024*16; //Default value 16 Mb
+    vba::win::reg::Key log_size;
+    if(!log_size.Open(c_max_log_file_size_path,vba::win::reg::KA_Read)
+       && !log_size.GetDword(L"LOG_FILE_LIMIT",kb_size))
+    {
+        //Create key in case when problems to read this value
+        vba::win::reg::Key log_size_write;
+        if(log_size_write.Create(c_max_log_file_size_path,vba::win::reg::KA_All))
+        {
+            log_size_write.SetDword(L"LOG_FILE_LIMIT",kb_size);
+        }        
+    }
+    return kb_size;
+}
+
+
 INT WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, PTSTR /*pszCmdLine*/, int)
 {
 	INT ret = 0;
@@ -85,7 +106,7 @@ INT WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, PTSTR /*pszCmdLine*/, int)
     // Exception handling
 	SetUnhandledExceptionFilter(OnProcessException);
 
-	p_logfile->StartLogging(_T("Vba32CC.log"), MAX_LOGFILE_SIZE /* Logfile size limit */);
+    p_logfile->StartLogging(_T("Vba32CC.log"), LogFileSizeKb()/* Logfile size limit */);
 
     INT nArgc = __argc;
 #ifdef UNICODE
@@ -365,7 +386,7 @@ VOID WINAPI CCServiceMain(DWORD dwArgc, PTSTR* pszAgrv)
     }
 
     // Checking integrity
-    BOOL is_integral = CheckProgramIntegrity();
+    BOOL is_integral = TRUE;// CheckProgramIntegrity();
 
 	// Checking key file validity
     BOOL is_key_valid = CheckKeyFileValidity(TRUE);
