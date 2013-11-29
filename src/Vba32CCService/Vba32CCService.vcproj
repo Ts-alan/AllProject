@@ -54,6 +54,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				ResourceOutputFileName="$(InputName).res"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -130,14 +131,92 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				ResourceOutputFileName="$(InputName).res"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ws2_32.lib"
+				AdditionalDependencies="ws2_32.lib common.lib"
 				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				GenerateMapFile="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				SetChecksum="true"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="$(SolutionDir)../tools/version_util/sym_upload.bat &quot;$(OutDir)\$(ProjectName).pdb&quot; &quot;$(ProjectName) $(ConfigurationName)&quot; &quot;$(OutDir)\$(ProjectName).exe&quot; &quot;Vba32 Control Center Service&quot;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="ReleaseStatic|Win32"
+			ConfigurationType="1"
+			InheritedPropertySheets="..\..\make\prop_sheets\base.vsprops"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="$(SolutionDir)../deps/common/deprecated;$(SolutionDir)../3rd"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;WIN32_WINNT=0x0500;_WIN32_DCOM"
+				MinimalRebuild="false"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				ResourceOutputFileName="$(InputName).res"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ws2_32.lib common.lib"
+				LinkIncremental="1"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
 				SubSystem="2"
@@ -207,6 +286,14 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Vba32CCService.cpp"
@@ -222,6 +309,15 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/MP1"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -271,6 +367,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -331,6 +435,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/MP1"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ThreadPoolWorkerThread.h"
@@ -353,6 +466,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -389,6 +510,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/MP1"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\BusinessLogic.h"
@@ -408,6 +538,15 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/MP1"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -443,6 +582,14 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\update.h"
@@ -461,6 +608,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -489,6 +644,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseStatic|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

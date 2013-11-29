@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vba32CCService", "..\src\Vba32CCService\Vba32CCService.vcproj", "{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{BE3BF7CA-E665-4CDA-B1FC-A61877373C01} = {BE3BF7CA-E665-4CDA-B1FC-A61877373C01}
 		{64BB62E8-17FC-4C0D-B410-C59DDBE84D92} = {64BB62E8-17FC-4C0D-B410-C59DDBE84D92}
 	EndProjectSection
 EndProject
@@ -35,7 +36,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libupdate", "..\deps\common
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "deprecated_unicode", "..\deps\common\deprecated\make\deprecated_unicode.vcproj", "{F7F3AADE-E5F3-4ED5-BA5F-0117E1BFB452}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcrypt", "..\deps\common\deprecated\libcrypt-devel\libcrypt.vcproj", "{04290386-D9EF-4B86-B3FA-55D72BEDBD4A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcrypt-devel", "..\deps\common\deprecated\libcrypt-devel\libcrypt.vcproj", "{04290386-D9EF-4B86-B3FA-55D72BEDBD4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,8 +49,8 @@ Global
 		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Debug|Win32.Build.0 = Debug|Win32
 		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Debug|x64.ActiveCfg = Debug|Win32
-		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Release|Win32.ActiveCfg = Release|Win32
-		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Release|Win32.Build.0 = Release|Win32
+		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Release|Win32.ActiveCfg = ReleaseStatic|Win32
+		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Release|Win32.Build.0 = ReleaseStatic|Win32
 		{7BE0FA6B-CD86-4129-A0FA-AABC597A80B6}.Release|x64.ActiveCfg = Release|Win32
 		{FC3508BC-0944-4A22-813A-1771E13A1DE1}.Debug|Win32.ActiveCfg = Debug|Win32
 		{FC3508BC-0944-4A22-813A-1771E13A1DE1}.Debug|Win32.Build.0 = Debug|Win32
@@ -63,14 +64,14 @@ Global
 		{64BB62E8-17FC-4C0D-B410-C59DDBE84D92}.Release|Win32.ActiveCfg = Release|Win32
 		{64BB62E8-17FC-4C0D-B410-C59DDBE84D92}.Release|Win32.Build.0 = Release|Win32
 		{64BB62E8-17FC-4C0D-B410-C59DDBE84D92}.Release|x64.ActiveCfg = Release|Win32
-		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Debug|Win32.Build.0 = Debug|Win32
+		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Debug|Win32.ActiveCfg = DebugStatic|Win32
+		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Debug|Win32.Build.0 = DebugStatic|Win32
 		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Debug|x64.ActiveCfg = Debug|Win32
 		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Release|Win32.ActiveCfg = Release|Win32
 		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Release|Win32.Build.0 = Release|Win32
 		{731D6AA6-B0B5-4329-90A1-F1FF61894DB9}.Release|x64.ActiveCfg = Release|Win32
-		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Debug|Win32.ActiveCfg = Debug|Win32
-		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Debug|Win32.Build.0 = Debug|Win32
+		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Debug|Win32.ActiveCfg = DebugStatic|Win32
+		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Debug|Win32.Build.0 = DebugStatic|Win32
 		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Debug|x64.ActiveCfg = Debug|Win32
 		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Release|Win32.ActiveCfg = Release|Win32
 		{09311F1B-1468-4550-A5D9-018D3D7F3615}.Release|Win32.Build.0 = Release|Win32
