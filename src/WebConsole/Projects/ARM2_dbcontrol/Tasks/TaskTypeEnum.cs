@@ -29,6 +29,7 @@ namespace ARM2_dbcontrol.Tasks
             Uninstall,
             ConfigureAgent,
             DetachAgent,
-            Install
+            Install,
+            AgentSettings
         }
 }

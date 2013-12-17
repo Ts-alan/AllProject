@@ -2898,4 +2898,10 @@ system administrator.</value>
   <data name="Excluded" xml:space="preserve">
     <value>Excluded</value>
   </data>
+  <data name="PoollingTimeInterval" xml:space="preserve">
+    <value>Pooling interval</value>
+  </data>
+  <data name="TaskAgentSettings" xml:space="preserve">
+    <value>Change agent settings</value>
+  </data>
 </root>

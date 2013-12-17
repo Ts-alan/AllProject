@@ -2886,4 +2886,10 @@
   <data name="Excluded" xml:space="preserve">
     <value>Исключения</value>
   </data>
+  <data name="PoollingTimeInterval" xml:space="preserve">
+    <value>Интервал опроса</value>
+  </data>
+  <data name="TaskAgentSettings" xml:space="preserve">
+    <value>Изменить настройки агента</value>
+  </data>
 </root>

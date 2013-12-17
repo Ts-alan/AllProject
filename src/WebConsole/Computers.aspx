@@ -27,6 +27,7 @@
 <%@ Register Src="~/Controls/TaskConfigureAgent.ascx" TagName="TaskUser" TagPrefix="tskConfigureAgent" %>
 <%@ Register Src="~/Controls/TaskDetachAgent.ascx" TagName="TaskUser" TagPrefix="tskDetachAgent" %>
 <%@ Register Src="~/Controls/TaskProductInstall.ascx" TagName="TaskUser" TagPrefix="tskProductInstall" %>
+<%@ Register Src="~/Controls/TaskAgentSettings.ascx" TagName="TaskUser" TagPrefix="tskAgentSettings" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" />
@@ -267,6 +268,7 @@
                           <tskSendFile:TaskUser ID="tskSendFile" runat="server" Visible="false"  HideHeader="true"/>
                           <tskListProcesses:TaskUser ID="tskListProcesses" runat="server" Visible="false"  HideHeader="true"/>
                           <tskSystemInfo:TaskUser ID="tskSystemInfo" runat="server" HideHeader="true" Visible="false"/>
+                          <tskAgentSettings:TaskUser ID="tskAgentSettings" runat="server" HideHeader="true" Visible="false" />
                           <tskConfigureLoader:TaskUser ID="tskConfigureLoader" runat="server" Visible="false" HideHeader="true"/>
                           <tskConfigureMonitor:TaskUser ID="tskConfigureMonitor" runat="server" Visible="false" HideHeader="true"/>
                           <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true"/>          

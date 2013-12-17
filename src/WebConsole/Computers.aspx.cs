@@ -1498,6 +1498,7 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameComponentState);
         taskName.Add(Resources.Resource.Install);
         taskName.Add(Resources.Resource.TaskUninstall);
+        taskName.Add(Resources.Resource.TaskAgentSettings);
         taskName.Add(Resources.Resource.ConfigureAgent);
         taskName.Add(Resources.Resource.DetachAgent);
         taskName.Add(Resources.Resource.CongLdrConfigureLoader);
@@ -2017,6 +2018,20 @@ public partial class Computers : PageBase
 
                 control.PacketCustomAction(taskId, ipAddr, tskDailyDeviceProtect.BuildTask());
             }
+
+            if (tskAgentSettings.Visible == true)
+            {
+                task = tskAgentSettings.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+
+                XmlTaskParser xml = new XmlTaskParser(task.Param);
+                for (int i = 0; i < compName.Length; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, ipAddr, tskAgentSettings.BuildTask());
+            }
                         
             if (tskUninstall.Visible == true)
             {
@@ -2462,6 +2477,15 @@ public partial class Computers : PageBase
                                                                                                     lbtnSave.Visible = false;
                                                                                                 }
                                                                                                 else
+                                                                                                    if (name == Resources.Resource.TaskAgentSettings)
+                                                                                                    {
+                                                                                                        task.Type = TaskType.AgentSettings;
+                                                                                                        task.Name = Resources.Resource.TaskAgentSettings;
+                                                                                                        task.Param = xmlBuil.Result;
+                                                                                                        lbtnDelete.Visible = false;
+                                                                                                        lbtnSave.Visible = false;
+                                                                                                    }
+                                                                                                else
                                                                                                     if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
                                                                                                     {
                                                                                                         task.Type = TaskType.RestoreFileFromQtn;
@@ -2525,6 +2549,7 @@ public partial class Computers : PageBase
         tskConfigureAgent.Visible = false;
         tskDetachAgent.Visible = false;
         tskProductInstall.Visible = false;
+        tskAgentSettings.Visible = false;
 
         LoadStateTask(task);
     }
@@ -2641,6 +2666,10 @@ public partial class Computers : PageBase
                 break;
             case TaskType.Uninstall:
                 tskUninstall.Visible = true;
+                break;
+            case TaskType.AgentSettings:
+                tskAgentSettings.LoadState(task);
+                tskAgentSettings.Visible = true;
                 break;
             case TaskType.ConfigureAgent:
                 tskConfigureAgent.InitFields();
