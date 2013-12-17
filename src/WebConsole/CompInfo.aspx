@@ -7,133 +7,144 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
  <script type="text/javascript">
-     $(function () {
-         $("#accordion").accordion({ heightStyle: 'content' });
-         $("#accordion tr[isHover]").hover(function () {
-             $(this).css('background-color', 'yellow');
-         },
+
+     function alertMessage(message) {
+         alert(message);
+     };
+     function pageLoad() {
+         $(document).ready(function () {
+             $("button").button();
+             $("input[type='submit']").button();
+             $("#accordion").accordion({ heightStyle: 'content' });
+             $("#accordion tr[isHover]").hover(function () {
+                 $(this).css('background-color', 'yellow');
+             },
             function () {
                 $(this).css('background-color', '');
             });
-         $('#<%= divDevices.ClientID %>').ready(function () {
-             UpdateDevicesList();
+             $('#<%= divDevices.ClientID %>').ready(function () {
+                 UpdateDevicesList();
+             });
+
+             var divComponents = '#<%=divComponents.ClientID %>';
+             $(divComponents).accordion({ collapsible: true, active: false, heightStyle: 'content' });
          });
 
-         var divComponents = '#<%=divComponents.ClientID %>';
-         $(divComponents).accordion({ collapsible: true, active: false, heightStyle: 'content' });
-     });
 
-     function UpdateDevicesList() {
-         var id = $('#<%= divDevices.ClientID %>').attr('dpc');
-         $.ajax({
-             type: "POST",
-             url: "DevicesPolicy.aspx/GetComputersData",
-             data: "{id:" + id + "}",
-             contentType: "application/json; charset=utf-8",
-             dataType: "json",
-             success: function (msg) {
-                 $('div[dpc]').html(msg);
-                 $('button[dpc]').css('display', 'none');
-                 $('input[dpc]').css('display', 'none');
-             }
-         });
-     }
-     /*------- работа с устройствами для компьютера --------*/
-     /* изменение комментария (вызов диалогового окна)*/
-     $(document).on("click", 'img[comdp]', function () {
-         var id = $(this).attr('comdp');
-         var serial = $(this).attr('serialdp');
-         $.ajax({
-             type: "POST",
-             url: "DevicesPolicy.aspx/GetChangeCommentDialog",
-             data: "{id:" + id + "}",
-             contentType: "application/json; charset=utf-8",
-             dataType: "json",
-             success: function (msg) {
-                 $("#commentDialog").html('');
-                 var d = $('#commentDialog');
-                 d.html(msg);
-                 var dOpt = {
-                     title: serial,
-                     width: '700px',
-                     modal: true,
-                     resizable: false
-                 };
-                 d.dialog(dOpt);
-                 d.find("button").button();
-             },
-             error: function (msg) {
-                 alert(msg);
-             }
-         })
-     });
-     /* изменение комментария */
-     $(document).on("click", "button[dcdpc]", function () {
-         var id = $(this).attr('dcdpc');
-         var comment = $('input[dcdpc]').val();
-         $.ajax({
-             type: "POST",
-             url: "DevicesPolicy.aspx/ChangeComment",
-             data: "{id:" + id + ", comment:'" + comment + "'}",
-             contentType: "application/json; charset=utf-8",
-             success: function () {
 
-                 $("td[dp=" + id + "][type='comment']").html(comment);
-                 $("span[dp=" + id + "][type='comment']").html(comment);
-                 $("#commentDialog").dialog('close');
-             },
-             error: function (msg) {
-                 ShowJSONMessage(msg);
-             }
-         });
-         return false;
-     });
-     /*удаление devicePolicy для компьютера */
-     $(document).on("click", "img[deldp]", function () {
-         var id = $(this).attr('deldp');
-         $.ajax({
-             type: "POST",
-             url: "DevicesPolicy.aspx/RemoveDevicePolicy",
-             data: "{id:" + id + "}",
-             contentType: "application/json; charset=utf-8",
-             success: function () {
-                 $("img[deldp=" + id + "]").parent().parent().remove();
-             },
-             error: function (msg) {
-                 ShowJSONMessage(msg);
-             }
-         });
-         return false;
-     });
-     /* change devicePolicy state for computer*/
-     $(document).on("click", "img[cp]", function () {
-         var dp = $(this).attr('dp');
-         var cp = $(this).attr('cp');
-         var state = $(this).attr('state');
-         //установка смены чекбоксов
-         changeState($(this), dp, cp, state);
-     });
-     function changeState(img, dp, cp, state) {
-         if (state == "Enabled" || state == "Undefined") {
-             img.attr('state', "Disabled");
-             state = "Disabled";
-             img.attr('src', "App_Themes/Main/Images/disabled.gif");
-         } else if (state == "Disabled") {
-             img.attr('state', "Enabled");
-             state = "Enabled";
-             img.attr('src', "App_Themes/Main/Images/enabled.gif");
+         function UpdateDevicesList() {
+             var id = $('#<%= divDevices.ClientID %>').attr('dpc');
+             $.ajax({
+                 type: "POST",
+                 url: "DevicesPolicy.aspx/GetComputersData",
+                 data: "{id:" + id + "}",
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (msg) {
+                     $('div[dpc]').html(msg);
+                     $('button[dpc]').css('display', 'none');
+                     $('input[dpc]').css('display', 'none');
+                 }
+             });
          }
-         $.ajax({
-             type: "POST",
-             url: "DevicesPolicy.aspx/ChangeDevicePolicyStateComputer",
-             data: "{dp:" + dp + ",cp:" + cp + ",state:'" + state + "'}",
-             contentType: "application/json; charset=utf-8",
-             success: function () {
-
-             }
+         /*------- работа с устройствами для компьютера --------*/
+         /* изменение комментария (вызов диалогового окна)*/
+         $(document).on("click", 'img[comdp]', function () {
+             var id = $(this).attr('comdp');
+             var serial = $(this).attr('serialdp');
+             $.ajax({
+                 type: "POST",
+                 url: "DevicesPolicy.aspx/GetChangeCommentDialog",
+                 data: "{id:" + id + "}",
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (msg) {
+                     $("#commentDialog").html('');
+                     var d = $('#commentDialog');
+                     d.html(msg);
+                     var dOpt = {
+                         title: serial,
+                         width: '700px',
+                         modal: true,
+                         resizable: false
+                     };
+                     d.dialog(dOpt);
+                     d.find("button").button();
+                 },
+                 error: function (msg) {
+                     alert(msg);
+                 }
+             })
          });
-     };
-    </script>
+         /* изменение комментария */
+         $(document).on("click", "button[dcdpc]", function () {
+             var id = $(this).attr('dcdpc');
+             var comment = $('input[dcdpc]').val();
+             $.ajax({
+                 type: "POST",
+                 url: "DevicesPolicy.aspx/ChangeComment",
+                 data: "{id:" + id + ", comment:'" + comment + "'}",
+                 contentType: "application/json; charset=utf-8",
+                 success: function () {
+
+                     $("td[dp=" + id + "][type='comment']").html(comment);
+                     $("span[dp=" + id + "][type='comment']").html(comment);
+                     $("#commentDialog").dialog('close');
+                 },
+                 error: function (msg) {
+                     ShowJSONMessage(msg);
+                 }
+             });
+             return false;
+         });
+         /*удаление devicePolicy для компьютера */
+         $(document).on("click", "img[deldp]", function () {
+             var id = $(this).attr('deldp');
+             $.ajax({
+                 type: "POST",
+                 url: "DevicesPolicy.aspx/RemoveDevicePolicy",
+                 data: "{id:" + id + "}",
+                 contentType: "application/json; charset=utf-8",
+                 success: function () {
+                     $("img[deldp=" + id + "]").parent().parent().remove();
+                 },
+                 error: function (msg) {
+                     ShowJSONMessage(msg);
+                 }
+             });
+             return false;
+         });
+         /* change devicePolicy state for computer*/
+         $(document).on("click", "img[cp]", function () {
+             var dp = $(this).attr('dp');
+             var cp = $(this).attr('cp');
+             var state = $(this).attr('state');
+             //установка смены чекбоксов
+             changeState($(this), dp, cp, state);
+         });
+         function changeState(img, dp, cp, state) {
+             if (state == "Enabled" || state == "Undefined") {
+                 img.attr('state', "Disabled");
+                 state = "Disabled";
+                 img.attr('src', "App_Themes/Main/Images/disabled.gif");
+             } else if (state == "Disabled") {
+                 img.attr('state', "Enabled");
+                 state = "Enabled";
+                 img.attr('src', "App_Themes/Main/Images/enabled.gif");
+             }
+             $.ajax({
+                 type: "POST",
+                 url: "DevicesPolicy.aspx/ChangeDevicePolicyStateComputer",
+                 data: "{dp:" + dp + ",cp:" + cp + ",state:'" + state + "'}",
+                 contentType: "application/json; charset=utf-8",
+                 success: function () {
+
+                 }
+             });
+         };
+     }
+
+ </script>
 <div id="accordion">
 <h3><a href="#"><%=Resources.Resource.ComputerInfo%></a></h3>
 <div>
@@ -282,24 +293,42 @@
  <h3><a href="#"><%=Resources.Resource.Components%></a></h3>
  <div>
      <div class="divSettings" style="width:850px;">
+
+
      <div id='divComponents' runat="server">
         <h3><a><img runat="server" id="imgLoader" style="margin-right: 10px;" /><span>Vba32 Loader</span></a></h3>        
         <div>
             <cc:Loader runat="server" ID="tskLoader" HideHeader="true" Visible="false" />
-            <span runat="server" id="lblLoader" visible="false"></span>
+            <span runat="server" id="lblLoader" visible="false" ></span>
+            <asp:UpdatePanel runat="server" ID="updatePaneltskLoader">
+                <ContentTemplate>
+                    <asp:Button ID="btnTskLoader" runat="server" Visible="false" OnClick="btnTskLoader_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>"/>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
         <h3><a><img runat="server" id="imgMonitor" style="margin-right: 10px;" /><span>Vba32 Monitor</span></a></h3>        
         <div>
             <cc:Monitor runat="server" ID="tskMonitor" HideHeader="true" Visible="false" />
             <span runat="server" id="lblMonitor" visible="false"></span>
+            <asp:UpdatePanel runat="server" ID="updatePaneltskMonitor">
+                <ContentTemplate>
+                    <asp:Button ID="btnTskMonitor" runat="server" Visible="false" OnClick="btnTskMonitor_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>" />
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            
         </div>
         <h3><a><img runat="server" id="imgQuarantine" style="margin-right: 10px;" /><span>Vba32 Quarantine</span></a></h3>        
         <div>
             <cc:Quarantine runat="server" ID="tskQuarantine" HideHeader="true" Visible="false" />
             <span runat="server" id="lblQuarantine" visible="false"></span>
+            <asp:UpdatePanel runat="server" ID="updatePaneltskQuarantine">
+                <ContentTemplate>
+                    <asp:Button ID="btnTskQuarantine" runat="server" Visible="false" OnClick="btnTskQuarantine_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>" />
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
-            
      </div>
+
      </div>
  </div>
 <h3><a href='#'><%=Resources.Resource.Devices%></a></h3>
