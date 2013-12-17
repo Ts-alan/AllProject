@@ -2,9 +2,10 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.CongLdrConfigureMonitor%></div>
 
 <script language="javascript" type="text/javascript">
-    function pageLoad() {
-        $("#Tabs").tabs({ cookie: { expires: 30} });
-    }
+    $(document).ready(function () {
+        $("#TabsMonitor").tabs({ cookie: { expires: 30} });
+
+    });
 function ChangeScanInBackGround() {
     var cbox = $get('<%=cboxScanInBackGround.ClientID%>');
 
@@ -249,7 +250,7 @@ function ChangeHeuristics() {
     }
 }
 </script>
-<div id="Tabs" style="width:560px">
+<div id="TabsMonitor" style="width:560px">
     <ul>
         <li><a href="#tab1"><%=Resources.Resource.CongMonitorObjects%></a> </li>
         <li><a href="#tab2"><%=Resources.Resource.BackgroundScanning%></a> </li>

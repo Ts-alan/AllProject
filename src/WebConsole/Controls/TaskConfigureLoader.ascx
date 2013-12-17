@@ -3,10 +3,10 @@
 
 <script language="javascript" type="text/javascript" >
 
-    function pageLoad() {
-        $("#Tabs").tabs({ cookie: { expires: 30} });
+    $(document).ready(function () {
+        $("#TabsLoader").tabs({ cookie: { expires: 30} });
 
-    }
+    });
     //Select
     function AddToSelect(path, sel)
     {
@@ -138,7 +138,7 @@
    }
    
 </script>
-<div id="Tabs" style="width:560px">
+<div id="TabsLoader" style="width:560px">
     <ul>
         <li><a href="#tab1"><%=Resources.Resource.CongLdrInitialization%></a> </li>
         <li><a href="#tab2"><%=Resources.Resource.CongLdrReportFile%></a> </li>

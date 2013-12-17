@@ -2,7 +2,7 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:100%"><%=Resources.Resource.TaskNameRunScanner%></div>
 <script type="text/javascript" language="javascript">
     function pageLoad() {
-        $("#Tabs").tabs({ cookie: { expires: 30} });
+        $("#TabsScanner").tabs({ cookie: { expires: 30} });
        
     }
     function CheckedChanged(el)
@@ -15,7 +15,7 @@
     }
 
 </script>
-    <div id="Tabs" style="width:800px">
+    <div id="TabsScanner" style="width:800px">
         <ul>
             <li><a href="#tab1"><%=Resources.Resource.Actions%></a> </li>
             <li><a href="#tab2"><%=Resources.Resource.CongMonitorObjects%></a> </li>

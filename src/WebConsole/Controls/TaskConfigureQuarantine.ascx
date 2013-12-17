@@ -2,10 +2,10 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.TaskNameConfigureQuarantine%></div>
 
 <script language="javascript" type="text/javascript">
-    function pageLoad() {
-        $("#Tabs").tabs({ cookie: { expires: 30} });
 
-    }
+    $(document).ready(function () {
+        $("#TabsQuarantine").tabs({ cookie: { expires: 30} });
+    });
 function ClickCheckBox()
 {
     var cbox = $get('<%=cboxMaintenancePeriod.ClientID%>');
@@ -32,7 +32,7 @@ function CheckClick(cbox, elem)
 }
 
 </script>
-<div id="Tabs" style="width:560px">
+<div id="TabsQuarantine" style="width:560px">
     <ul>
         <li><a href="#tab1"><%=Resources.Resource.CongQtnGeneral%></a> </li>
         <li><a href="#tab2"><%=Resources.Resource.CongQtnMaintenance%></a> </li>
