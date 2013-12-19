@@ -910,6 +910,8 @@ namespace Vba32CC
                 command.Parameters[11].Value = CompCount;
                 command.Parameters.Add("@MACAddress", SqlDbType.NVarChar, 64);
                 command.Parameters[12].Value = name_value_map["MACAddress"];
+                command.Parameters.Add("@ControlName", SqlDbType.NVarChar, 64);
+                command.Parameters[13].Value = name_value_map["Observable"];
                 result = ExecuteStoredProcedure(command);
             }
             catch (Exception e)
