@@ -24,12 +24,12 @@ CREATE PROCEDURE [UpdateComputerSystemInfo]
 				-- Retrieving OSID
 				DECLARE @OSTypeID smallint	
 				IF @OSName IS NULL
-					SET @OSName = ''(unknown)''
+					SET @OSName = '(unknown)'
 				EXEC @OSTypeID = dbo.GetOSTypeID @OSName, 1
 
 				DECLARE @ControlDeviceTypeID smallint	
 				IF @ControlName IS NULL
-					SET @ControlName = ''Unknown''    
+					SET @ControlName = 'Unknown'    
 				SET @ControlDeviceTypeID = (SELECT [ID] FROM ControlDeviceType WHERE [ControlName] = @ControlName)
 				
 				-- Checking @ControlCenter param
@@ -38,7 +38,7 @@ CREATE PROCEDURE [UpdateComputerSystemInfo]
 
 				-- Checking @IPAddress param
 				IF @IPAddress IS NULL
-					SET @IPAddress = ''0.0.0.0''
+					SET @IPAddress = '0.0.0.0'
 
 				-- Retrieving ComputerID
 				DECLARE @ComputerID smallint
@@ -56,7 +56,7 @@ CREATE PROCEDURE [UpdateComputerSystemInfo]
 
 					-- Clearing same IPs in the database
 					UPDATE [Computers]
-					SET [IPAddress] = ''0.0.0.0''
+					SET [IPAddress] = '0.0.0.0'
 					WHERE [IPAddress] = @IPAddress
 					
 					-- New computer registration
@@ -90,7 +90,7 @@ CREATE PROCEDURE [UpdateComputerSystemInfo]
 					IF NOT EXISTS(SELECT [ID] FROM Computers WHERE [ID] = @ComputerID AND [IPAddress] = @IPAddress)
 					BEGIN
 						UPDATE [Computers]
-						SET [IPAddress] = ''0.0.0.0''
+						SET [IPAddress] = '0.0.0.0'
 						WHERE [IPAddress] = @IPAddress
 
 						UPDATE [Computers]
