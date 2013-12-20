@@ -299,6 +299,9 @@ namespace VirusBlokAda.Vba32CC.Policies.General
 
                 if (reader.GetValue(16) != DBNull.Value)
                     comp.Description = reader.GetString(16);
+                
+                if (reader.GetValue(17) != DBNull.Value)
+                    comp.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
                 #endregion
                 computers.Add(comp);
 

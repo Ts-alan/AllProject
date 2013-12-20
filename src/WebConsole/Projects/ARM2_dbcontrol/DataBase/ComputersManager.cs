@@ -172,6 +172,8 @@ namespace ARM2_dbcontrol.DataBase
 					computers.Vba32KeyValid = reader.GetBoolean(15);
                 if (reader.GetValue(16) != DBNull.Value)
                     computers.Description = reader.GetString(16);
+                if (reader.GetValue(17) != DBNull.Value)
+                    computers.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
 				list.Add(computers);
 			}
 			reader.Close();

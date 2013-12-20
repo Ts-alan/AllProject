@@ -132,6 +132,7 @@
     <Compile Include="DataBase\ComputersManager.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataBase\ControlDeviceTypeEnum.cs" />
     <Compile Include="DataBase\DataBaseEntity.cs" />
     <Compile Include="DataBase\DataBaseManager.cs" />
     <Compile Include="DataBase\EventsEntity.cs">

@@ -311,7 +311,8 @@
 
  <asp:Panel runat=server ScrollBars=Horizontal ID=pnlComplist Width=100%>
  
-<TABLE class="ListContrastTableMain"><TBODY><TR><TD align=left><cc1:PagingControl id="pcPagingTop" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl> </TD><TD align=right><a runat="server" ID="lbtnColorsTop" ><%=Resources.Resource.ColorMap %></a>&nbsp;&nbsp;&nbsp;<asp:Label id="lblCount" runat="server" SkinId="LabelContrast" ></asp:Label> </TD></TR><TR><TD colSpan=3><asp:datalist id="DataList1" runat="server" SkinId="ComputersDataList" OnItemDataBound="DataList1_ItemDataBound" OnItemCommand="DataList1_ItemCommand" border="1">
+<TABLE class="ListContrastTableMain"><TBODY><TR><TD align=left><cc1:PagingControl id="pcPagingTop" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl> </TD><TD align=right><a runat="server" ID="lbtnColorsTop" ><%=Resources.Resource.ColorMap %></a>&nbsp;&nbsp;&nbsp;<asp:Label id="lblCount" runat="server" SkinId="LabelContrast" ></asp:Label> </TD></TR><TR><TD colSpan=3>
+    <asp:datalist id="DataList1" runat="server" SkinId="ComputersDataList" OnItemDataBound="DataList1_ItemDataBound" OnItemCommand="DataList1_ItemCommand" border="1">
 							<HeaderTemplate>
 								<asp:LinkButton ID="lbtnSel" runat="server" CommandArgument="Select" CommandName="SelectCommand">
 									<%#Resources.Resource.SelectText%>
@@ -389,6 +390,8 @@
 									<asp:LinkButton id="lbtnDescription" runat="server" CommandArgument="Description" CommandName="SortCommand">
 									</asp:LinkButton>
 								</td>
+                                <td runat="server" id="tdControlDeviceType" style="display: none;">
+								</td>
 							</HeaderTemplate>
 							<ItemTemplate>
 								<asp:CheckBox Runat="server" ID="check"></asp:CheckBox>	
@@ -401,6 +404,9 @@
 								</td>
 								<td runat="server" id="tdDescription">
 								    <asp:Label runat="server" ID="lbtnDescription" Visible="false" CommandName="EditCommand" />
+								</td>
+                                <td runat="server" id="tdControlDeviceType" style="display: none;">
+								    <asp:Label runat="server" ID="lblControlDeviceType" />
 								</td>
 							</ItemTemplate>
 						</asp:datalist> </TD>

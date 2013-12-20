@@ -153,28 +153,31 @@ AS
 			[LatestMalware] nvarchar(256) NULL,
 			[Vba32Integrity] bit NULL,
 			[Vba32KeyValid] bit NULL,
-			[Description] nvarchar(64) NULL
+			[Description] nvarchar(64) NULL,
+			[ControlName] nvarchar(64) NOT NULL
 		)
 	
 		INSERT INTO @ComputersByGroupPage(
 			[ID], [ComputerName], [IPAddress], [ControlCenter],
 			[DomainName], [UserLogin], [OSName], [RAM], [CPUClock],
 			[RecentActive], [LatestUpdate], [Vba32Version], [LatestInfected],
-			[LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description])
+			[LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description], [ControlName])
 		SELECT	c.[ID], c.[ComputerName], c.[IPAddress], c.[ControlCenter],
 				c.[DomainName], c.[UserLogin], o.[OSName], c.[RAM], c.[CPUClock],
 				c.[RecentActive], c.[LatestUpdate], c.[Vba32Version], c.[LatestInfected],
-				c.[LatestMalware], c.[Vba32Integrity], c.[Vba32KeyValid], c.[Description]
+				c.[LatestMalware], c.[Vba32Integrity], c.[Vba32KeyValid], c.[Description], cdt.[ControlName]
 		FROM Groups as g
 		INNER JOIN Computers AS c ON c.[ID] = g.[ComputerID]
 		INNER JOIN OSTypes AS o ON c.[OSTypeID] = o.[ID]
+		INNER JOIN ComputerAdditionalInfo AS cai ON c.[ID] = cai.[ComputerID]
+		INNER JOIN ControlDeviceType AS cdt ON cdt.[ID] = cai.[ControlDeviceTypeID]
 		WHERE g.[GroupID] = ' + CAST(@GroupID AS nvarchar(32));
 	
 	SET @Query = @Query + N';
 		SELECT [ID], [ComputerName], [IPAddress], [ControlCenter],
 			   [DomainName], [UserLogin], [OSName], [RAM], [CPUClock], 
 			   [RecentActive], [LatestUpdate], [Vba32Version], [LatestInfected],
-			   [LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description]
+			   [LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description], [ControlName]
 		FROM @ComputersByGroupPage
 		ORDER BY [ComputerName] ASC'
 

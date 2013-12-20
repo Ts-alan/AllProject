@@ -346,21 +346,24 @@ AS
 			[LatestMalware] nvarchar(256) NULL,
 			[Vba32Integrity] bit NULL,
 			[Vba32KeyValid] bit NULL,
-			[Description] nvarchar(64) NULL
+			[Description] nvarchar(64) NULL,
+			[ControlName] nvarchar(64) NOT NULL
 		)
 	
 		INSERT INTO @ComputersByPolicyPage(
 			[ID], [ComputerName], [IPAddress], [ControlCenter],
 			[DomainName], [UserLogin], [OSName], [RAM], [CPUClock],
 			[RecentActive], [LatestUpdate], [Vba32Version], [LatestInfected],
-			[LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description])
+			[LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description], [ControlName])
 		SELECT	c.[ID], c.[ComputerName], c.[IPAddress], c.[ControlCenter],
 				c.[DomainName], c.[UserLogin], o.[OSName], c.[RAM], c.[CPUClock],
 				c.[RecentActive], c.[LatestUpdate], c.[Vba32Version], c.[LatestInfected],
-				c.[LatestMalware], c.[Vba32Integrity], c.[Vba32KeyValid], c.[Description]
+				c.[LatestMalware], c.[Vba32Integrity], c.[Vba32KeyValid], c.[Description], cdt.[ControlName]
 		FROM Policies as p
 		INNER JOIN Computers AS c ON c.[ID] = p.[ComputerID]
-		INNER JOIN OSTypes AS o ON c.[OSTypeID] = o.[ID]'
+		INNER JOIN OSTypes AS o ON c.[OSTypeID] = o.[ID]
+		INNER JOIN ComputerAdditionalInfo AS cai ON c.[ID] = cai.[ComputerID]
+		INNER JOIN ControlDeviceType AS cdt ON cdt.[ID] = cai.[ControlDeviceTypeID]'
 	IF @Where IS NOT NULL
 		SET @Query = @Query + N' WHERE ' + @Where
 	IF @OrderBy IS NOT NULL
@@ -369,7 +372,7 @@ AS
 		SELECT [ID], [ComputerName], [IPAddress], [ControlCenter],
 			   [DomainName], [UserLogin], [OSName], [RAM], [CPUClock], 
 			   [RecentActive], [LatestUpdate], [Vba32Version], [LatestInfected],
-			   [LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description]
+			   [LatestMalware], [Vba32Integrity], [Vba32KeyValid], [Description], [ControlName]
 		FROM @ComputersByPolicyPage WHERE [RecID] BETWEEN (' +
 			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +
 			+ STR(@RowCount) + N' * ' + STR(@Page) + N' )'

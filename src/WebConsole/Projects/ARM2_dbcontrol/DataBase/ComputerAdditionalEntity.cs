@@ -29,19 +29,27 @@ namespace ARM2_dbcontrol.DataBase
             set { _previousComputerName = value; }
         }
 
+        protected ControlDeviceTypeEnum _controlDeviceType;
+        public ControlDeviceTypeEnum ControlDeviceType
+        {
+            get { return _controlDeviceType; }
+            set { _controlDeviceType = value; }
+        }
+
         #endregion
 
         #region Constructors
 
         public ComputerAdditionalEntity()
-            : this(true, false, String.Empty)
+            : this(true, false, String.Empty, ControlDeviceTypeEnum.Unknown)
         { }
 
-        public ComputerAdditionalEntity(Boolean isControllable, Boolean isRenamed, String previousComputerName)
+        public ComputerAdditionalEntity(Boolean isControllable, Boolean isRenamed, String previousComputerName, ControlDeviceTypeEnum controlDeviceType)
         {
             this._isControllable = isControllable;
             this._isRenamed = isRenamed;
             this._previousComputerName = previousComputerName;
+            this._controlDeviceType = controlDeviceType;
         }
 
         #endregion
@@ -50,9 +58,9 @@ namespace ARM2_dbcontrol.DataBase
 
         public object Clone()
         {
-            return new ComputerAdditionalEntity(this._isControllable, this._isRenamed, this._previousComputerName);
+            return new ComputerAdditionalEntity(this._isControllable, this._isRenamed, this._previousComputerName, this._controlDeviceType);
         }
 
         #endregion
-    }
+    }    
 }

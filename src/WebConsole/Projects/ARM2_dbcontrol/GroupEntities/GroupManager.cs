@@ -209,6 +209,8 @@ namespace VirusBlokAda.Vba32CC.Groups
                     ent.Vba32KeyValid = reader.GetBoolean(15);
                 if (reader.GetValue(16) != DBNull.Value)
                     ent.Description = reader.GetString(16);
+                if (reader.GetValue(17) != DBNull.Value)
+                    ent.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
 
                 list.Add(ent);
             }

@@ -997,6 +997,8 @@ public partial class Computers : PageBase
                     {
                         (e.Item.FindControl("tdDescription") as HtmlTableCell).Visible = false;
                     }
+
+                    (e.Item.FindControl("lblControlDeviceType") as Label).Text = ((ComputersEntity)e.Item.DataItem).AdditionalInfo.ControlDeviceType.ToString();
                 }
 
                 if (Session["CompsCheckedValues"] != null)
