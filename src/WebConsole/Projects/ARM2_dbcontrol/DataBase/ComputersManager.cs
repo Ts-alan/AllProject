@@ -86,6 +86,8 @@ namespace ARM2_dbcontrol.DataBase
                     computers.Description = reader.GetString(16);
                 if (reader.GetValue(17) != DBNull.Value)
                     computers.OSName = reader.GetString(17);
+                if (reader.GetValue(18) != DBNull.Value)
+                    computers.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(18));
 
 			}
 			reader.Close();

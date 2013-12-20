@@ -145,6 +145,11 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
     /// <returns></returns>
     private String BuildXml()
     {
+        return GetTaskEntity().SaveToXml();
+    }
+
+    private ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor GetTaskEntity()
+    {
         ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor task = new ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor();
         //Набор файлов
         if (rbScanStandartSet.Checked)
@@ -251,7 +256,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
         task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
 
-        return task.SaveToXml();
+        return task;
     }
 
     public void LoadState(TaskUserEntity task)
@@ -484,6 +489,11 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         task.Param = BuildXml();
 
         return task;
+    }
+
+    public String GetTaskForVSIS()
+    {
+        return GetTaskEntity().GetTaskForVSIS();
     }
 
     private void ScrollToObj(String controlId)

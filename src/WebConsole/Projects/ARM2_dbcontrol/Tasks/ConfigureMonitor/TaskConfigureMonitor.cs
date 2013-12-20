@@ -408,6 +408,11 @@ namespace ARM2_dbcontrol.Tasks.ConfigureMonitor
             return xml.Result + xmlExclusions.Result + xmlIdlecheck.Result;
         }
 
+        public String GetTaskForVSIS()
+        {
+            return String.Empty;
+        }
+
         public void LoadFromXml(String xml)
         {
             XmlTaskParser pars = new XmlTaskParser("<TaskMonitor>" + xml + "</TaskMonitor>");

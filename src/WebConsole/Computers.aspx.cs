@@ -1570,7 +1570,7 @@ public partial class Computers : PageBase
     /// </summary>
     /// <param name="ipAddr"></param>
     /// <param name="compName"></param>
-    private bool InitSelectedComputers(ref string[] ipAddr, ref string[] compName, ref string[] vbaVersion, ref string[] osVersion)
+    private bool InitSelectedComputers(SelectedComputersSet _set)
     {
         bool isAllSelected = cboxSelectAll.Checked;
         List<Int16> list = new List<Int16>();
@@ -1666,35 +1666,33 @@ public partial class Computers : PageBase
 
                 conn.CloseConnection();
 
-                ipAddr = new string[compsList.Count];
-                compName = new string[compsList.Count];
-                vbaVersion = new string[compsList.Count];
-                osVersion = new string[compsList.Count];
                 for (int i = 0; i < compsList.Count; i++)
                 {
-                    ipAddr[i] = compsList[i].IPAddress;
-                    compName[i] = compsList[i].ComputerName;
-                    vbaVersion[i] = compsList[i].Vba32Version;
-                    osVersion[i] = compsList[i].OSName;
+                    _set.AllComputers.Add(compsList[i]);
+                    
+                    if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
+                        _set.VSISComputers.Add(compsList[i]);
+                    else
+                        _set.OtherComputers.Add(compsList[i]);
                 }
             }
         }
         else
         {
-            ipAddr = PreServAction.GetIPArray((List<Int16>)Session["SelectedID"],
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+            ComputersEntity compEnt = null;
+            foreach (Int16 compId in (List<Int16>)Session["SelectedID"])
+            {
+                compEnt = PreServAction.GetComputerById(compId, ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+                if (compEnt == null) continue;
+                _set.AllComputers.Add(compEnt);
 
-            compName = PreServAction.GetComputerNameArray((List<Int16>)Session["SelectedID"],
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            vbaVersion = PreServAction.GetVbaVersionArray((List<Int16>)Session["SelectedID"],
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            osVersion = PreServAction.GetOSVersionArray((List<Int16>)Session["SelectedID"],
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+                if (compEnt.AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
+                    _set.VSISComputers.Add(compEnt);
+                else
+                    _set.OtherComputers.Add(compEnt);
+            }
         }
 
-        
-        if (ipAddr.Length != compName.Length)
-            throw new Exception(Resources.Resource.ErrorCriticalError + ": ipAddr.Length!=compName.Length");
         return true;
     }
 
@@ -1719,13 +1717,10 @@ public partial class Computers : PageBase
     protected void lbtnGive_Click(object sender, EventArgs e)
     {
         String userName = Anchor.GetStringForTaskGivedUser();
-        string[] ipAddr = new string[0];
-        string[] compName = new string[0];
-        string[] vbaVersion = new string[0];
-        string[] osVersion = new string[0];        
-        if (!InitSelectedComputers(ref ipAddr, ref compName, ref vbaVersion, ref osVersion)) return;
+        SelectedComputersSet _set = new SelectedComputersSet();       
+        if (!InitSelectedComputers(_set)) return;
 
-        Int64[] taskId = new Int64[compName.Length];
+        Int64[] taskId = new Int64[_set.AllComputers.Count];
 
         string service = ConfigurationManager.AppSettings["Service"];
         string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
@@ -1743,15 +1738,15 @@ public partial class Computers : PageBase
                 tskCreateProcess.ValidateFields();
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
                 //ggg
                 string str = Server.HtmlEncode(xml.GetValue(tskCreateProcess.TagCommandLine)).Replace("&amp;", "&").Replace("&#160;", " ");
                 str = Server.HtmlDecode(str);
 
-                control.PacketCreateProcess(taskId, ipAddr, str);
+                control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), str);
 
             }
 
@@ -1762,11 +1757,11 @@ public partial class Computers : PageBase
                 tskSendFile.ValidateFields();
                 //!--
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketSendFile(taskId, ipAddr, xml.GetValue(tskSendFile.TagSource),
+                control.PacketSendFile(taskId, _set.AllComputers.GetIPAddresses().ToArray(), xml.GetValue(tskSendFile.TagSource),
                     xml.GetValue(tskSendFile.TagDestination));
 
             }
@@ -1777,11 +1772,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskSystemInfo.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketSystemInfo(taskId, ipAddr);
+                control.PacketSystemInfo(taskId, _set.AllComputers.GetIPAddresses().ToArray());
 
             }
 
@@ -1791,11 +1786,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskListProcesses.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketListProcesses(taskId, ipAddr);
+                control.PacketListProcesses(taskId, _set.AllComputers.GetIPAddresses().ToArray());
             }
 
             if (tskComponentState.Visible == true)
@@ -1804,11 +1799,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskComponentState.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketComponentState(taskId, ipAddr);
+                control.PacketComponentState(taskId, _set.AllComputers.GetIPAddresses().ToArray());
             }
 
             if (tskProductInstall.Visible == true)
@@ -1817,10 +1812,10 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskProductInstall.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
-                    control.PacketCustomAction(new Int64[] { taskId[i] }, new String[] { ipAddr[i] }, tskProductInstall.BuildTask(osVersion[i]));
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    control.PacketCustomAction(new Int64[] { taskId[i] }, new String[] { _set.AllComputers[i].IPAddress }, tskProductInstall.BuildTask(_set.AllComputers[i].OSName));
                 }
             }
 
@@ -1830,11 +1825,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskConfigureAgent.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
-                }                
-                control.PacketCustomAction(taskId, ipAddr, tskConfigureAgent.BuildTask());
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                }
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureAgent.BuildTask());
             }
 
             if (tskDetachAgent.Visible == true)
@@ -1843,11 +1838,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskDetachAgent.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketCustomAction(taskId, ipAddr, tskDetachAgent.BuildTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskDetachAgent.BuildTask());
             }
 
             if (tskConfigureLoader.Visible == true)
@@ -1856,14 +1851,14 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskConfigureLoader.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
                 string strtask = task.Param.Remove(0, builder.Top.Length);
                 string s = @"<Type>ConfigureLoader</Type>";
                 strtask = strtask.Replace(s, "");
-                control.PacketConfigureSettings(taskId, ipAddr, strtask);
+                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
             }
 
             if (tskConfigureMonitor.Visible == true)
@@ -1873,14 +1868,37 @@ public partial class Computers : PageBase
                 tskConfigureMonitor.ValidateFields();
                 //!--
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                                
+                String strtask = task.Param;
+                String s = @"<Type>ConfigureMonitor</Type>";
+                strtask = strtask.Replace(s, "");
+                if (_set.VSISComputers.Count == 0)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    for (int i = 0; i < _set.AllComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
                 }
-                string strtask = task.Param;
-                string s = @"<Type>ConfigureMonitor</Type>";
-                strtask = strtask.Replace(s, "");                
-                control.PacketConfigureSettings(taskId, ipAddr, strtask);
+                else
+                {
+                    taskId = new Int64[_set.VSISComputers.Count];
+                    for (int i = 0; i < _set.VSISComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketConfigureSettings(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.GetTaskForVSIS());
+                    
+                    if (_set.OtherComputers.Count != 0)
+                    {
+                        taskId = new Int64[_set.OtherComputers.Count];
+                        for (int i = 0; i < _set.OtherComputers.Count; i++)
+                        {
+                            taskId[i] = PreServAction.CreateTask(_set.OtherComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                        }
+                        control.PacketConfigureSettings(taskId, _set.OtherComputers.GetIPAddresses().ToArray(), strtask);
+                    }
+                }
             }
 
             if (tskRunScanner.Visible == true)
@@ -1889,12 +1907,12 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskRunScanner.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
 
                 }
-                control.PacketCreateProcess(taskId, ipAddr, tskRunScanner.GenerateCommandLine(task));
+                control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskRunScanner.GenerateCommandLine(task));
 
             }
 
@@ -1905,15 +1923,15 @@ public partial class Computers : PageBase
                 tskConfigurePassword.ValidateFields();
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
                 string strtask = task.Param.Remove(0, builder.Top.Length);
                 string s = @"<Type>ConfigurePassword</Type>";
                 strtask = strtask.Replace(s, "");
-                control.PacketConfigureSettings(taskId, ipAddr, strtask);
+                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
             }
 
             if (tskConfigureQuarantine.Visible == true)
@@ -1922,14 +1940,14 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskConfigureQuarantine.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
                 string strtask = task.Param.Remove(0, builder.Top.Length);
                 string s = @"<Type>ConfigureQuarantine</Type>";
                 strtask = strtask.Replace(s, "");
-                control.PacketConfigureSettings(taskId, ipAddr, strtask);
+                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
             }
 
             if (tskRestoreFileFromQtn.Visible == true)
@@ -1940,12 +1958,12 @@ public partial class Computers : PageBase
 
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCreateProcess(taskId, ipAddr, tskRestoreFileFromQtn.GetCommandLine);
+                control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskRestoreFileFromQtn.GetCommandLine);
             }
 
             if (tskProactiveProtection.Visible == true)
@@ -1954,12 +1972,12 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskProactiveProtection.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskProactiveProtection.BuildTask(task));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskProactiveProtection.BuildTask(task));
             }
 
             if (tskFirewall.Visible == true)
@@ -1969,9 +1987,9 @@ public partial class Computers : PageBase
                 TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
                 task = collection.Get(String.Format("Firewall:{0}", (tskFirewall.FindControl("ddlProfiles") as DropDownList).SelectedValue));
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], Resources.Resource.TaskNameConfigureFirewall + ": " + task.Name.Substring(9), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, Resources.Resource.TaskNameConfigureFirewall + ": " + task.Name.Substring(9), task.Param, userName, connStr);
                 }
 
                 //Написать реализацию отправки задачи
@@ -1985,12 +2003,12 @@ public partial class Computers : PageBase
                 TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
                 task = collection.Get(String.Format("Scheduler: {0}", (tskConfigureScheduler.FindControl("ddlProfiles") as DropDownList).SelectedValue));
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], Resources.Resource.ConfigureScheduler + ": " + task.Name.Substring(11), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, Resources.Resource.ConfigureScheduler + ": " + task.Name.Substring(11), task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskConfigureScheduler.BuildTask(task.Param));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScheduler.BuildTask(task.Param));
             }
 
             if (tskChangeDeviceProtect.Visible == true)
@@ -1999,12 +2017,12 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskChangeDeviceProtect.BuildTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskChangeDeviceProtect.BuildTask());
             }
 
             if (tskDailyDeviceProtect.Visible == true)
@@ -2013,12 +2031,12 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskDailyDeviceProtect.BuildTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskDailyDeviceProtect.BuildTask());
             }
 
             if (tskAgentSettings.Visible == true)
@@ -2027,12 +2045,12 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
 
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, ipAddr, tskAgentSettings.BuildTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskAgentSettings.BuildTask());
             }
                         
             if (tskUninstall.Visible == true)
@@ -2040,24 +2058,24 @@ public partial class Computers : PageBase
                 tskUninstall.ValidateFields();
                 List<RemoteInstallEntity> list = new List<RemoteInstallEntity>();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
                     RemoteInstallEntity r = new RemoteInstallEntity();
-                    r.ComputerName = compName[i];
-                    r.IP = ipAddr[i];
-                    if (vbaVersion[i].Contains(Vba32VersionInfo.Vba32NTS))
+                    r.ComputerName = _set.AllComputers[i].ComputerName;
+                    r.IP = _set.AllComputers[i].IPAddress;
+                    if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32NTS))
                     {
                         r.VbaVersion = Vba32VersionInfo.Vba32NTS;
                     }
-                    else if (vbaVersion[i].Contains(Vba32VersionInfo.Vba32NTW))
+                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32NTW))
                     {
                         r.VbaVersion = Vba32VersionInfo.Vba32NTW;
                     }
-                    else if (vbaVersion[i].Contains(Vba32VersionInfo.Vba32Vis))
+                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32Vis))
                     {
                         r.VbaVersion = Vba32VersionInfo.Vba32Vis;
                     }
-                    else if (vbaVersion[i].Contains(Vba32VersionInfo.Vba32Vista))
+                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32Vista))
                     {
                         r.VbaVersion = Vba32VersionInfo.Vba32Vista;
                     }
@@ -2087,11 +2105,11 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskRequestPolicy.ValidateFields();
 
-                for (int i = 0; i < compName.Length; i++)
+                for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(compName[i], task.Name, tskRequestPolicy.BuildParam(task.Param), userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, tskRequestPolicy.BuildParam(task.Param), userName, connStr);
                 }
-                control.PacketCustomAction(taskId, ipAddr, task.Param);
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), task.Param);
             }
         }
         catch (ArgumentException argEx)
@@ -2133,13 +2151,10 @@ public partial class Computers : PageBase
     protected void lbtnUpdateInfo_Click(object sender, EventArgs e)
     {
         string userName = Anchor.GetStringForTaskGivedUser();
-        string[] ipAddr = new string[0];
-        string[] compName = new string[0];
-        string[] vbaVersion = new string[0];
-        string[] osVersion = new string[0];
-        if (!InitSelectedComputers(ref ipAddr, ref compName, ref vbaVersion, ref osVersion)) return;
+        SelectedComputersSet _set = new SelectedComputersSet();
+        if (!InitSelectedComputers(_set)) return;
 
-        Int64[] taskId = new Int64[compName.Length];
+        Int64[] taskId = new Int64[_set.AllComputers.Count];
 
         string service = ConfigurationManager.AppSettings["Service"];
         string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
@@ -2155,29 +2170,29 @@ public partial class Computers : PageBase
             task = tskSystemInfo.GetCurrentState();
             task.Name = Resources.Resource.TaskNameSystemInfo;
 
-            for (int i = 0; i < compName.Length; i++)
+            for (int i = 0; i < _set.AllComputers.Count; i++)
             {
-                taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
             }
-            control.PacketSystemInfo(taskId, ipAddr);
+            control.PacketSystemInfo(taskId, _set.AllComputers.GetIPAddresses().ToArray());
             //tskListProcesses
             task = tskListProcesses.GetCurrentState();
             task.Name = Resources.Resource.TaskNameListProcesses;
 
-            for (int i = 0; i < compName.Length; i++)
+            for (int i = 0; i < _set.AllComputers.Count; i++)
             {
-                taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
             }
-            control.PacketListProcesses(taskId, ipAddr);            
+            control.PacketListProcesses(taskId, _set.AllComputers.GetIPAddresses().ToArray());            
             //tskComponentState
             task = tskComponentState.GetCurrentState();
-            task.Name = Resources.Resource.TaskNameComponentState;            
+            task.Name = Resources.Resource.TaskNameComponentState;
 
-            for (int i = 0; i < compName.Length; i++)
+            for (int i = 0; i < _set.AllComputers.Count; i++)
             {
-                taskId[i] = PreServAction.CreateTask(compName[i], task.Name, task.Param, userName, connStr);
+                taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
             }
-            control.PacketComponentState(taskId, ipAddr);        
+            control.PacketComponentState(taskId, _set.AllComputers.GetIPAddresses().ToArray());        
         }
         catch (ArgumentException argEx)
         {
@@ -3069,25 +3084,16 @@ public partial class Computers : PageBase
         if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
             return;
 
-        string[] ipAddr = new string[0];
-        string[] compName = new string[0];
-        string[] vbaVersion = new string[0];
-        string[] osVersion = new string[0];
-        if (!InitSelectedComputers(ref ipAddr, ref compName, ref vbaVersion, ref osVersion)) return;
-
-        List<string> list = new List<string>();
-        //Convert fro array to list
-        foreach (string s in compName)
-            list.Add(s);
-
-
+        SelectedComputersSet _set = new SelectedComputersSet();
+        if (!InitSelectedComputers(_set)) return;
+        
         PolicyProvider provider = PoliciesState;
 
         //Get selected policy
         Policy policy = provider.GetPolicyByName(selectedPolicyName);
 
         //Add computers to policy
-        provider.AddComputersToPolicy(policy, list);
+        provider.AddComputersToPolicy(policy, _set.AllComputers.GetComputerNames());
 
         lblMessage.Text = selectedPolicyName + ": " + Resources.Resource.PolicyApplied;
         mpPicture.Attributes["class"] = "ModalPopupPictureSuccess";        
@@ -3130,17 +3136,8 @@ public partial class Computers : PageBase
         if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
             return;
 
-        string[] ipAddr = new string[0];
-        string[] compName = new string[0];
-        string[] vbaVersion = new string[0];
-        string[] osVersion = new string[0];
-        if (!InitSelectedComputers(ref ipAddr, ref compName, ref vbaVersion, ref osVersion)) return;
-
-        List<string> list = new List<string>();
-        //Convert fro array to list
-        foreach (string s in compName)
-            list.Add(s);
-
+        SelectedComputersSet _set = new SelectedComputersSet();
+        if (!InitSelectedComputers(_set)) return;
 
         PolicyProvider provider = PoliciesState;
 
@@ -3148,8 +3145,7 @@ public partial class Computers : PageBase
         Policy policy = provider.GetPolicyByName(selectedPolicyName);
 
         //Add computers to policy
-        provider.RemoveComputersFromPolicy(policy, list);
-
+        provider.RemoveComputersFromPolicy(policy, _set.AllComputers.GetComputerNames());
 
         InitFields();
     }
