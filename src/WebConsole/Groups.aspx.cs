@@ -1197,7 +1197,7 @@ public partial class Groups : PageBase
                     {
                         taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                     }
-                    control.PacketConfigureSettings(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.GetTaskForVSIS());
+                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.GetTaskForVSIS());
 
                     if (_set.OtherComputers.Count != 0)
                     {
