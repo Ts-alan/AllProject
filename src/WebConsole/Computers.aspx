@@ -11,7 +11,7 @@
 <%@ Register Src="Controls/TaskSystemInfo.ascx" TagName="TaskUser" TagPrefix="tskSystemInfo" %>
 <%@ Register Src="Controls/TaskConfigureLoader.ascx" TagName="TaskUser" TagPrefix="tskConfigureLoader" %>
 <%@ Register Src="Controls/TaskConfigureMonitor.ascx" TagName="TaskUser" TagPrefix="tskConfigureMonitor" %>
-<%@ Register Src="Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
+<%@ Register Src="Controls/TaskConfigureScanner.ascx" TagName="TaskUser" TagPrefix="tskConfigureScanner" %>
 <%@ Register Src="Controls/TaskComponentState.ascx" TagName="TaskUser" TagPrefix="tskComponentState" %>
 <%@ Register Src="Controls/TaskConfigurePassword.ascx" TagName="TaskUser" TagPrefix="tskConfigurePassword" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskUser" TagPrefix="tskConfigureQuarantine" %>
@@ -28,6 +28,9 @@
 <%@ Register Src="~/Controls/TaskDetachAgent.ascx" TagName="TaskUser" TagPrefix="tskDetachAgent" %>
 <%@ Register Src="~/Controls/TaskProductInstall.ascx" TagName="TaskUser" TagPrefix="tskProductInstall" %>
 <%@ Register Src="~/Controls/TaskAgentSettings.ascx" TagName="TaskUser" TagPrefix="tskAgentSettings" %>
+<%@ Register Src="~/Controls/TaskMonitorOn.ascx" TagName="TaskUser" TagPrefix="tskMonitorOn" %>
+<%@ Register Src="~/Controls/TaskMonitorOff.ascx" TagName="TaskUser" TagPrefix="tskMonitorOff" %>
+<%@ Register Src="~/Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" />
@@ -271,7 +274,7 @@
                           <tskAgentSettings:TaskUser ID="tskAgentSettings" runat="server" HideHeader="true" Visible="false" />
                           <tskConfigureLoader:TaskUser ID="tskConfigureLoader" runat="server" Visible="false" HideHeader="true"/>
                           <tskConfigureMonitor:TaskUser ID="tskConfigureMonitor" runat="server" Visible="false" HideHeader="true"/>
-                          <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true"/>          
+                          <tskConfigureScanner:TaskUser ID="tskConfigureScanner" runat="server" Visible="false" HideHeader="true"/>          
                           <tskComponentState:TaskUser ID="tskComponentState" runat="server" Visible="false" HideHeader="true"/>          
                           <tskConfigurePassword:TaskUser ID="tskConfigurePassword" runat="server" Visible="false" HideHeader="true"/>          
                           <tskConfigureQuarantine:TaskUser ID="tskConfigureQuarantine" runat="server" Visible="false" HideHeader="true"/>          
@@ -286,6 +289,9 @@
                           <tskConfigureAgent:TaskUser ID="tskConfigureAgent" runat="server" HideHeader="true" Visible="false" />
                           <tskDetachAgent:TaskUser ID="tskDetachAgent" runat="server" HideHeader="true" Visible="false" />
                           <tskProductInstall:TaskUser ID="tskProductInstall" runat="server" HideHeader="true" Visible="false" />
+                          <tskMonitorOn:TaskUser ID="tskMonitorOn" runat="server" Visible="false" />
+                          <tskMonitorOff:TaskUser ID="tskMonitorOff" runat="server" Visible="false" />
+                          <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true" />
                     </asp:Panel>
                 </td>
             </tr>

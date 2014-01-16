@@ -2904,4 +2904,10 @@ system administrator.</value>
   <data name="TaskAgentSettings" xml:space="preserve">
     <value>Change agent settings</value>
   </data>
+  <data name="TaskNameConfigureScanner" xml:space="preserve">
+    <value>Configure Vba32 Scanner</value>
+  </data>
+  <data name="ScanMemory" xml:space="preserve">
+    <value>Scan memory</value>
+  </data>
 </root>

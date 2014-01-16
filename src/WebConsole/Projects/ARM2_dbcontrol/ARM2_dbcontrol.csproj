@@ -213,13 +213,17 @@
     <Compile Include="Service\VSIS\VSISWrapper.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
     <Compile Include="Tasks\ConfigureLoader\TaskConfigureLoader.cs" />
+    <Compile Include="Tasks\ConfigureMonitor\MonitorActionsEnum.cs" />
     <Compile Include="Tasks\ConfigureMonitor\TaskConfigureMonitor.cs" />
     <Compile Include="Tasks\ConfigureQuarantine\TaskConfigureQuarantine.cs" />
+    <Compile Include="Tasks\ConfigureScanner\TaskConfigureScanner.cs" />
     <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
     <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Tasks\MonitorOnOff\TaskMonitorOnOff.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
+    <Compile Include="Tasks\RunScanner\TaskRunScanner.cs" />
     <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\TaskTypeEnum.cs" />
     <Compile Include="Tasks\TaskUserCollection.cs" />

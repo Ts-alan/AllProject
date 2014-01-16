@@ -37,26 +37,6 @@ using VirusBlokAda.RemoteOperations.Common;
 /// </summary>
 public partial class Computers : PageBase
 {
-    protected void Page_Init(object sender, EventArgs e)
-    {
-        base.Page_Init(sender, e);
-    }
-
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-        
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
-
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PageComputersTitle;
@@ -1494,7 +1474,7 @@ public partial class Computers : PageBase
         List<string> taskName = new List<string>();
         taskName.Add(Resources.Resource.Process);
         taskName.Add(Resources.Resource.SendFile);
-        taskName.Add(Resources.Resource.TaskNameRunScanner);
+        taskName.Add(Resources.Resource.TaskNameRunScanner);        
         taskName.Add(Resources.Resource.MenuSystemInfo);
         taskName.Add(Resources.Resource.TaskNameListProcesses);
         taskName.Add(Resources.Resource.TaskNameComponentState);
@@ -1505,6 +1485,7 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.DetachAgent);
         taskName.Add(Resources.Resource.CongLdrConfigureLoader);
         taskName.Add(Resources.Resource.CongLdrConfigureMonitor);
+        taskName.Add(Resources.Resource.TaskNameConfigureScanner);
         taskName.Add(Resources.Resource.TaskNameConfigureQuarantine);
         taskName.Add(Resources.Resource.TaskNameConfigureProactiveProtection);
         taskName.Add(Resources.Resource.ConfigureScheduler);
@@ -1861,6 +1842,7 @@ public partial class Computers : PageBase
                 control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
             }
 
+            #region Configure Monitor
             if (tskConfigureMonitor.Visible == true)
             {
                 task = tskConfigureMonitor.GetCurrentState();
@@ -1900,6 +1882,122 @@ public partial class Computers : PageBase
                     }
                 }
             }
+            #endregion
+
+            #region Monitor On
+            if (tskMonitorOn.Visible == true)
+            {
+                task = tskMonitorOn.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskMonitorOn.ValidateFields();
+                
+                if (_set.VSISComputers.Count == 0)
+                {
+                    for (int i = 0; i < _set.AllComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskMonitorOn.GetTaskForLoader());
+                }
+                else
+                {
+                    taskId = new Int64[_set.VSISComputers.Count];
+                    for (int i = 0; i < _set.VSISComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskMonitorOn.GetTaskForVSIS());
+
+                    if (_set.OtherComputers.Count != 0)
+                    {
+                        taskId = new Int64[_set.OtherComputers.Count];
+                        for (int i = 0; i < _set.OtherComputers.Count; i++)
+                        {
+                            taskId[i] = PreServAction.CreateTask(_set.OtherComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                        }
+                        control.PacketCreateProcess(taskId, _set.OtherComputers.GetIPAddresses().ToArray(), tskMonitorOn.GetTaskForLoader());
+                    }
+                }
+            }
+            #endregion
+
+            #region Monitor Off
+            if (tskMonitorOff.Visible == true)
+            {
+                task = tskMonitorOff.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskMonitorOff.ValidateFields();
+
+                if (_set.VSISComputers.Count == 0)
+                {
+                    for (int i = 0; i < _set.AllComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskMonitorOff.GetTaskForLoader());
+                }
+                else
+                {
+                    taskId = new Int64[_set.VSISComputers.Count];
+                    for (int i = 0; i < _set.VSISComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskMonitorOff.GetTaskForVSIS());
+
+                    if (_set.OtherComputers.Count != 0)
+                    {
+                        taskId = new Int64[_set.OtherComputers.Count];
+                        for (int i = 0; i < _set.OtherComputers.Count; i++)
+                        {
+                            taskId[i] = PreServAction.CreateTask(_set.OtherComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                        }
+                        control.PacketCreateProcess(taskId, _set.OtherComputers.GetIPAddresses().ToArray(), tskMonitorOff.GetTaskForLoader());
+                    }
+                }
+            }
+            #endregion
+
+            #region Configure Scanner
+
+            if (tskConfigureScanner.Visible == true)
+            {
+                task = tskConfigureScanner.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskConfigureScanner.ValidateFields();
+
+                if (_set.VSISComputers.Count == 0)
+                {
+                    for (int i = 0; i < _set.AllComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GenerateCommandLine(task));
+                }
+                else
+                {
+                    taskId = new Int64[_set.VSISComputers.Count];
+                    for (int i = 0; i < _set.VSISComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GetTaskForVSIS());
+
+                    if (_set.OtherComputers.Count != 0)
+                    {
+                        taskId = new Int64[_set.OtherComputers.Count];
+                        for (int i = 0; i < _set.OtherComputers.Count; i++)
+                        {
+                            taskId[i] = PreServAction.CreateTask(_set.OtherComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                        }
+                        control.PacketCreateProcess(taskId, _set.OtherComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GenerateCommandLine(task));
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Run Scanner
 
             if (tskRunScanner.Visible == true)
             {
@@ -1907,14 +2005,18 @@ public partial class Computers : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskRunScanner.ValidateFields();
 
-                for (int i = 0; i < _set.AllComputers.Count; i++)
+                if (_set.VSISComputers.Count != 0)
                 {
-                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
-
+                    taskId = new Int64[_set.VSISComputers.Count];
+                    for (int i = 0; i < _set.VSISComputers.Count; i++)
+                    {
+                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    }
+                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskRunScanner.GetTaskForVSIS());
                 }
-                control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskRunScanner.GenerateCommandLine(task));
-
             }
+
+            #endregion
 
             if (tskConfigurePassword.Visible == true)
             {
@@ -2341,44 +2443,37 @@ public partial class Computers : PageBase
                                         }
                                         else
 
-                                            if (name == Resources.Resource.TaskNameRunScanner)
+                                            if (name == Resources.Resource.TaskNameConfigureScanner)
                                             {
-                                                task.Type = TaskType.RunScanner;
-                                                task.Name = Resources.Resource.TaskNameRunScanner;
+                                                task.Type = TaskType.ConfigureScanner;
+                                                task.Name = Resources.Resource.TaskNameConfigureScanner;
                                                 task.Param = xmlBuil.Result;
                                                 lbtnDelete.Visible = false;
                                             }
                                             else
-                                                if (name == Resources.Resource.TaskNameConfigurePassword)
+                                                if (name == Resources.Resource.TaskNameRunScanner)
                                                 {
-                                                    task.Type = TaskType.ConfigurePassword;
-                                                    task.Name = Resources.Resource.TaskNameConfigurePassword;
+                                                    task.Type = TaskType.RunScanner;
+                                                    task.Name = Resources.Resource.TaskNameRunScanner;
                                                     task.Param = xmlBuil.Result;
                                                     lbtnDelete.Visible = false;
-                                                    lbtnSave.Visible = false;
                                                 }
                                                 else
-                                                    if (name == Resources.Resource.TaskNameVba32LoaderEnable)
+                                                    if (name == Resources.Resource.TaskNameConfigurePassword)
                                                     {
-                                                        task.Type = TaskType.CreateProcess;
-                                                        task.Name = Resources.Resource.TaskNameVba32LoaderEnable;
-
-                                                        string str = Resources.Resource.TaskParamVba32LoaderEnable;
-                                                        xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                        xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                        xml.Generate();
-                                                        task.Param = xml.Result;
+                                                        task.Type = TaskType.ConfigurePassword;
+                                                        task.Name = Resources.Resource.TaskNameConfigurePassword;
+                                                        task.Param = xmlBuil.Result;
                                                         lbtnDelete.Visible = false;
                                                         lbtnSave.Visible = false;
                                                     }
                                                     else
-                                                        if (name == Resources.Resource.TaskNameVba32LoaderDisable)
+                                                        if (name == Resources.Resource.TaskNameVba32LoaderEnable)
                                                         {
                                                             task.Type = TaskType.CreateProcess;
-                                                            task.Name = Resources.Resource.TaskNameVba32LoaderDisable;
+                                                            task.Name = Resources.Resource.TaskNameVba32LoaderEnable;
 
-                                                            string str = Resources.Resource.TaskParamVba32LoaderDisable;
+                                                            string str = Resources.Resource.TaskParamVba32LoaderEnable;
                                                             xml.AddNode(tskCreateProcess.TagCommandLine, str);
                                                             xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
 
@@ -2388,12 +2483,12 @@ public partial class Computers : PageBase
                                                             lbtnSave.Visible = false;
                                                         }
                                                         else
-                                                            if (name == Resources.Resource.TaskNameVba32MonitorEnable)
+                                                            if (name == Resources.Resource.TaskNameVba32LoaderDisable)
                                                             {
                                                                 task.Type = TaskType.CreateProcess;
-                                                                task.Name = Resources.Resource.TaskNameVba32MonitorEnable;
+                                                                task.Name = Resources.Resource.TaskNameVba32LoaderDisable;
 
-                                                                string str = Resources.Resource.TaskParamVba32MonitorEnable;
+                                                                string str = Resources.Resource.TaskParamVba32LoaderDisable;
                                                                 xml.AddNode(tskCreateProcess.TagCommandLine, str);
                                                                 xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
 
@@ -2403,146 +2498,149 @@ public partial class Computers : PageBase
                                                                 lbtnSave.Visible = false;
                                                             }
                                                             else
-                                                                if (name == Resources.Resource.TaskNameVba32MonitorDisable)
+                                                                if (name == Resources.Resource.TaskNameVba32MonitorEnable)
                                                                 {
-                                                                    task.Type = TaskType.CreateProcess;
-                                                                    task.Name = Resources.Resource.TaskNameVba32MonitorDisable;
-
-                                                                    string str = Resources.Resource.TaskParamVba32MonitorDisable;
-                                                                    xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                                    xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                                    xml.Generate();
-                                                                    task.Param = xml.Result;
+                                                                    task.Type = TaskType.MonitorOn;
+                                                                    task.Name = Resources.Resource.TaskNameVba32MonitorEnable;
+                                                                    task.Param = xmlBuil.Result;
                                                                     lbtnDelete.Visible = false;
                                                                     lbtnSave.Visible = false;
                                                                 }
                                                                 else
-                                                                    if (name == Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate)
+                                                                    if (name == Resources.Resource.TaskNameVba32MonitorDisable)
                                                                     {
-                                                                        task.Type = TaskType.CreateProcess;
-                                                                        task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
-
-                                                                        string str = Resources.Resource.TaskParamVba32ProgramAndDataBaseUpdate;
-                                                                        xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                                        xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                                        xml.Generate();
-                                                                        task.Param = xml.Result;
+                                                                        task.Type = TaskType.MonitorOff;
+                                                                        task.Name = Resources.Resource.TaskNameVba32MonitorDisable;
+                                                                        task.Param = xmlBuil.Result;
                                                                         lbtnDelete.Visible = false;
                                                                         lbtnSave.Visible = false;
                                                                     }
                                                                     else
-                                                                        if (name == Resources.Resource.TaskNameConfigureQuarantine)
+                                                                        if (name == Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate)
                                                                         {
-                                                                            task.Type = TaskType.ConfigureQuarantine;
-                                                                            task.Name = Resources.Resource.TaskNameConfigureQuarantine;
-                                                                            task.Param = xmlBuil.Result;
+                                                                            task.Type = TaskType.CreateProcess;
+                                                                            task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
+
+                                                                            string str = Resources.Resource.TaskParamVba32ProgramAndDataBaseUpdate;
+                                                                            xml.AddNode(tskCreateProcess.TagCommandLine, str);
+                                                                            xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
+
+                                                                            xml.Generate();
+                                                                            task.Param = xml.Result;
                                                                             lbtnDelete.Visible = false;
+                                                                            lbtnSave.Visible = false;
                                                                         }
                                                                         else
-                                                                            if (name == Resources.Resource.TaskNameConfigureFirewall)
+                                                                            if (name == Resources.Resource.TaskNameConfigureQuarantine)
                                                                             {
-                                                                                task.Type = TaskType.Firewall;
-                                                                                task.Name = Resources.Resource.TaskNameConfigureFirewall;
+                                                                                task.Type = TaskType.ConfigureQuarantine;
+                                                                                task.Name = Resources.Resource.TaskNameConfigureQuarantine;
                                                                                 task.Param = xmlBuil.Result;
                                                                                 lbtnDelete.Visible = false;
-                                                                                lbtnSave.Visible = false;
                                                                             }
                                                                             else
-                                                                                if (name == Resources.Resource.TaskNameConfigureProactiveProtection)
+                                                                                if (name == Resources.Resource.TaskNameConfigureFirewall)
                                                                                 {
-                                                                                    task.Type = TaskType.ProactiveProtection;
-                                                                                    task.Name = Resources.Resource.TaskNameConfigureProactiveProtection;
+                                                                                    task.Type = TaskType.Firewall;
+                                                                                    task.Name = Resources.Resource.TaskNameConfigureFirewall;
                                                                                     task.Param = xmlBuil.Result;
                                                                                     lbtnDelete.Visible = false;
+                                                                                    lbtnSave.Visible = false;
                                                                                 }
                                                                                 else
-                                                                                    if (name == Resources.Resource.ConfigureScheduler)
+                                                                                    if (name == Resources.Resource.TaskNameConfigureProactiveProtection)
                                                                                     {
-                                                                                        task.Type = TaskType.ConfigureSheduler;
-                                                                                        task.Name = Resources.Resource.ConfigureScheduler;
+                                                                                        task.Type = TaskType.ProactiveProtection;
+                                                                                        task.Name = Resources.Resource.TaskNameConfigureProactiveProtection;
                                                                                         task.Param = xmlBuil.Result;
                                                                                         lbtnDelete.Visible = false;
-                                                                                        lbtnSave.Visible = false;
                                                                                     }
                                                                                     else
-                                                                                        if (name == Resources.Resource.TaskChangeDeviceProtect)
+                                                                                        if (name == Resources.Resource.ConfigureScheduler)
                                                                                         {
-                                                                                            task.Type = TaskType.ChangeDeviceProtect;
-                                                                                            task.Name = Resources.Resource.TaskChangeDeviceProtect;
+                                                                                            task.Type = TaskType.ConfigureSheduler;
+                                                                                            task.Name = Resources.Resource.ConfigureScheduler;
                                                                                             task.Param = xmlBuil.Result;
                                                                                             lbtnDelete.Visible = false;
                                                                                             lbtnSave.Visible = false;
                                                                                         }
                                                                                         else
-                                                                                            if (name == Resources.Resource.TaskDailyDeviceProtect)
+                                                                                            if (name == Resources.Resource.TaskChangeDeviceProtect)
                                                                                             {
-                                                                                                task.Type = TaskType.DailyDeviceProtect;
-                                                                                                task.Name = Resources.Resource.TaskDailyDeviceProtect;
+                                                                                                task.Type = TaskType.ChangeDeviceProtect;
+                                                                                                task.Name = Resources.Resource.TaskChangeDeviceProtect;
                                                                                                 task.Param = xmlBuil.Result;
                                                                                                 lbtnDelete.Visible = false;
                                                                                                 lbtnSave.Visible = false;
                                                                                             }
                                                                                             else
-                                                                                                if (name == Resources.Resource.TaskRequestPolicy)
+                                                                                                if (name == Resources.Resource.TaskDailyDeviceProtect)
                                                                                                 {
-                                                                                                    task.Type = TaskType.RequestPolicy;
-                                                                                                    task.Name = Resources.Resource.TaskRequestPolicy;
+                                                                                                    task.Type = TaskType.DailyDeviceProtect;
+                                                                                                    task.Name = Resources.Resource.TaskDailyDeviceProtect;
                                                                                                     task.Param = xmlBuil.Result;
                                                                                                     lbtnDelete.Visible = false;
                                                                                                     lbtnSave.Visible = false;
                                                                                                 }
                                                                                                 else
-                                                                                                    if (name == Resources.Resource.TaskAgentSettings)
+                                                                                                    if (name == Resources.Resource.TaskRequestPolicy)
                                                                                                     {
-                                                                                                        task.Type = TaskType.AgentSettings;
-                                                                                                        task.Name = Resources.Resource.TaskAgentSettings;
+                                                                                                        task.Type = TaskType.RequestPolicy;
+                                                                                                        task.Name = Resources.Resource.TaskRequestPolicy;
                                                                                                         task.Param = xmlBuil.Result;
                                                                                                         lbtnDelete.Visible = false;
                                                                                                         lbtnSave.Visible = false;
                                                                                                     }
-                                                                                                else
-                                                                                                    if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
-                                                                                                    {
-                                                                                                        task.Type = TaskType.RestoreFileFromQtn;
-                                                                                                        task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
-
-
-                                                                                                        task.Param = xmlBuil.Result;
-                                                                                                        lbtnDelete.Visible = false;
-                                                                                                    }
                                                                                                     else
-                                                                                                        if (name == Resources.Resource.ConfigureAgent)
+                                                                                                        if (name == Resources.Resource.TaskAgentSettings)
                                                                                                         {
-                                                                                                            task.Type = TaskType.ConfigureAgent;
-                                                                                                            task.Name = name;
+                                                                                                            task.Type = TaskType.AgentSettings;
+                                                                                                            task.Name = Resources.Resource.TaskAgentSettings;
                                                                                                             task.Param = xmlBuil.Result;
-
                                                                                                             lbtnDelete.Visible = false;
                                                                                                             lbtnSave.Visible = false;
                                                                                                         }
                                                                                                         else
-                                                                                                            if (name == Resources.Resource.DetachAgent)
+                                                                                                            if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
                                                                                                             {
-                                                                                                                task.Type = TaskType.DetachAgent;
-                                                                                                                task.Name = name;
-                                                                                                                task.Param = xmlBuil.Result;
+                                                                                                                task.Type = TaskType.RestoreFileFromQtn;
+                                                                                                                task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
 
+
+                                                                                                                task.Param = xmlBuil.Result;
                                                                                                                 lbtnDelete.Visible = false;
-                                                                                                                lbtnSave.Visible = false;
                                                                                                             }
                                                                                                             else
-                                                                                                            {
-                                                                                                                //User task
-                                                                                                                collection = (TaskUserCollection)Session["TaskUser"];
-                                                                                                                foreach (TaskUserEntity tsk in collection)
+                                                                                                                if (name == Resources.Resource.ConfigureAgent)
                                                                                                                 {
-                                                                                                                    if (tsk.Name == name)
-                                                                                                                        task = tsk;
+                                                                                                                    task.Type = TaskType.ConfigureAgent;
+                                                                                                                    task.Name = name;
+                                                                                                                    task.Param = xmlBuil.Result;
+
+                                                                                                                    lbtnDelete.Visible = false;
+                                                                                                                    lbtnSave.Visible = false;
                                                                                                                 }
-                                                                                                                lbtnDelete.Visible = true;
-                                                                                                            }
+                                                                                                                else
+                                                                                                                    if (name == Resources.Resource.DetachAgent)
+                                                                                                                    {
+                                                                                                                        task.Type = TaskType.DetachAgent;
+                                                                                                                        task.Name = name;
+                                                                                                                        task.Param = xmlBuil.Result;
+
+                                                                                                                        lbtnDelete.Visible = false;
+                                                                                                                        lbtnSave.Visible = false;
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        //User task
+                                                                                                                        collection = (TaskUserCollection)Session["TaskUser"];
+                                                                                                                        foreach (TaskUserEntity tsk in collection)
+                                                                                                                        {
+                                                                                                                            if (tsk.Name == name)
+                                                                                                                                task = tsk;
+                                                                                                                        }
+                                                                                                                        lbtnDelete.Visible = true;
+                                                                                                                    }
 
         tskCreateProcess.Visible = false;
         tskSendFile.Visible = false;
@@ -2551,7 +2649,7 @@ public partial class Computers : PageBase
         tskSystemInfo.Visible = false;
         tskConfigureLoader.Visible = false;
         tskConfigureMonitor.Visible = false;
-        tskRunScanner.Visible = false;
+        tskConfigureScanner.Visible = false;
         tskComponentState.Visible = false;
         tskConfigurePassword.Visible = false;
         tskConfigureQuarantine.Visible = false;
@@ -2567,6 +2665,9 @@ public partial class Computers : PageBase
         tskDetachAgent.Visible = false;
         tskProductInstall.Visible = false;
         tskAgentSettings.Visible = false;
+        tskMonitorOn.Visible = false;
+        tskMonitorOff.Visible = false;
+        tskRunScanner.Visible = false;
 
         LoadStateTask(task);
     }
@@ -2620,8 +2721,14 @@ public partial class Computers : PageBase
 
                 break;
 
-            case TaskType.RunScanner:
+            case TaskType.ConfigureScanner:
 
+                tskConfigureScanner.InitFields();
+                tskConfigureScanner.LoadState(task);
+                tskConfigureScanner.Visible = true;
+                break;
+
+            case TaskType.RunScanner:
                 tskRunScanner.InitFields();
                 tskRunScanner.LoadState(task);
                 tskRunScanner.Visible = true;
@@ -2695,6 +2802,14 @@ public partial class Computers : PageBase
             case TaskType.DetachAgent:
                 tskDetachAgent.InitFields();
                 tskDetachAgent.Visible = true;
+                break;
+            case TaskType.MonitorOn:
+                tskMonitorOn.LoadState(task);
+                tskMonitorOn.Visible = true;
+                break;
+            case TaskType.MonitorOff:
+                tskMonitorOff.LoadState(task);
+                tskMonitorOff.Visible = true;
                 break;
             default:
                 break;
@@ -2834,38 +2949,45 @@ public partial class Computers : PageBase
                                             tskProactiveProtection.ValidateFields();
                                         }
                                         else
-                                            if (name == Resources.Resource.TaskNameRunScanner)
+                                            if (name == Resources.Resource.TaskNameConfigureScanner)
                                             {
-                                                task.Type = TaskType.RunScanner;
-                                                task.Name = Resources.Resource.TaskNameRunScanner;
-                                                task = tskRunScanner.GetCurrentState();
-                                                tskRunScanner.ValidateFields();
+                                                task.Type = TaskType.ConfigureScanner;
+                                                task.Name = Resources.Resource.TaskNameConfigureScanner;
+                                                task = tskConfigureScanner.GetCurrentState();
+                                                tskConfigureScanner.ValidateFields();
                                             }
                                             else
-                                                if (name == Resources.Resource.TaskNameConfigureQuarantine)
+                                                if (name == Resources.Resource.TaskNameRunScanner)
                                                 {
-                                                    task.Type = TaskType.ConfigureQuarantine;
-                                                    task.Name = Resources.Resource.TaskNameConfigureQuarantine;
-                                                    task = tskConfigureQuarantine.GetCurrentState();
-                                                    tskConfigureQuarantine.ValidateFields();
+                                                    task.Type = TaskType.RunScanner;
+                                                    task.Name = Resources.Resource.TaskNameRunScanner;
+                                                    task = tskRunScanner.GetCurrentState();
                                                 }
-
                                                 else
-                                                    if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
+                                                    if (name == Resources.Resource.TaskNameConfigureQuarantine)
                                                     {
-                                                        //!OPTM---—трочка, возможно, излишн€€, т.к. тип устанавливаетс€ в
-                                                        //GetCurrentState
-                                                        task.Type = TaskType.RestoreFileFromQtn;
-                                                        task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
-                                                        task = tskRestoreFileFromQtn.GetCurrentState();
-                                                        tskRestoreFileFromQtn.ValidateFields();
+                                                        task.Type = TaskType.ConfigureQuarantine;
+                                                        task.Name = Resources.Resource.TaskNameConfigureQuarantine;
+                                                        task = tskConfigureQuarantine.GetCurrentState();
+                                                        tskConfigureQuarantine.ValidateFields();
                                                     }
 
                                                     else
-                                                    {
-                                                        task = collection.Get(name);
-                                                        //editing = "";
-                                                    }
+                                                        if (name == Resources.Resource.TaskNameRestoreFileFromQtn)
+                                                        {
+                                                            //!OPTM---—трочка, возможно, излишн€€, т.к. тип устанавливаетс€ в
+                                                            //GetCurrentState
+                                                            task.Type = TaskType.RestoreFileFromQtn;
+                                                            task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
+                                                            task = tskRestoreFileFromQtn.GetCurrentState();
+                                                            tskRestoreFileFromQtn.ValidateFields();
+                                                        }
+
+                                                        else
+                                                        {
+                                                            task = collection.Get(name);
+                                                            //editing = "";
+                                                        }
         }
         catch (ArgumentException argEx)
         {

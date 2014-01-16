@@ -7,7 +7,7 @@
 <%@ Register Src="Controls/TaskSystemInfo.ascx" TagName="TaskUser" TagPrefix="tskSystemInfo" %>
 <%@ Register Src="Controls/TaskConfigureLoader.ascx" TagName="TaskUser" TagPrefix="tskConfigureLoader" %>
 <%@ Register Src="Controls/TaskConfigureMonitor.ascx" TagName="TaskUser" TagPrefix="tskConfigureMonitor" %>
-<%@ Register Src="Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
+<%@ Register Src="Controls/TaskConfigureScanner.ascx" TagName="TaskUser" TagPrefix="tskConfigureScanner" %>
 <%@ Register Src="Controls/TaskComponentState.ascx" TagName="TaskUser" TagPrefix="tskComponentState" %>
 <%@ Register Src="Controls/TaskConfigurePassword.ascx" TagName="TaskUser" TagPrefix="tskConfigurePassword" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskUser" TagPrefix="tskConfigureQuarantine" %>
@@ -17,6 +17,7 @@
 <%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
+<%@ Register Src="~/Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
 
 <%@ OutputCache Location="None" %>
 
@@ -49,7 +50,7 @@
             <tskSystemInfo:TaskUser ID="tskSystemInfo" runat="server" Visible="false"/>
             <tskConfigureLoader:TaskUser ID="tskConfigureLoader" runat="server" Visible="false"/>
             <tskConfigureMonitor:TaskUser ID="tskConfigureMonitor" runat="server" Visible="false"/>
-            <tskRunScanner:TaskUser ID="tskRunScanner" runat=server Visible=false/>
+            <tskConfigureScanner:TaskUser ID="tskConfigureScanner" runat="server" Visible="false"/>
             <tskComponentState:TaskUser ID="tskComponentState" runat="server" Visible="false"/>          
             <tskConfigurePassword:TaskUser ID="tskConfigurePassword" runat="server" Visible="false"/>          
             <tskConfigureQuarantine:TaskUser ID="tskConfigureQuarantine" runat="server" Visible="false"/>
@@ -59,12 +60,13 @@
             <tskChangeDeviceProtect:TaskUser ID="tskChangeDeviceProtect" runat="server" Visible="false" />
             <tskRequestPolicy:TaskUser ID="tskRequestPolicy" runat="server" Visible="false" />
             <tskConfigureScheduler:TaskUser ID="tskConfigureScheduler" runat="server" Visible="false" />
+            <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true" />
                                     
     </asp:Panel>
     <table>
     <tr>
         <td>
-            <asp:Label runat=server ID="lblTaskName"></asp:Label>
+            <asp:Label runat="server" ID="lblTaskName"></asp:Label>
         </td>
         <td>
         &nbsp;&nbsp;<asp:TextBox ID="tbSaveAs" runat="server"></asp:TextBox>&nbsp;&nbsp;<asp:LinkButton ID="lbtnSaveAs" runat="server" OnClick="lbtnSaveAs_Click"></asp:LinkButton>

@@ -2892,4 +2892,10 @@
   <data name="TaskAgentSettings" xml:space="preserve">
     <value>Изменить настройки агента</value>
   </data>
+  <data name="TaskNameConfigureScanner" xml:space="preserve">
+    <value>Настроить Vba32 Cканер</value>
+  </data>
+  <data name="ScanMemory" xml:space="preserve">
+    <value>Сканировать память</value>
+  </data>
 </root>

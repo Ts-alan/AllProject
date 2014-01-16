@@ -410,7 +410,76 @@ namespace ARM2_dbcontrol.Tasks.ConfigureMonitor
 
         public String GetTaskForVSIS()
         {
-            return String.Empty;
+            StringBuilder result = new StringBuilder(512);
+
+            result.Append("<VsisCommand>");
+            result.Append("<Args>");
+
+            result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
+            result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
+            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{A3F5FCA0-46DC-4328-8568-5FDF961E87E6}</id>");
+            
+            #region Settings
+            
+            result.Append(@"<param><id>MntExcludedFolders</id><type>stringlist</type>");
+            if (ExcludingFoldersAndFilesDelete.Count == 0)
+                result.Append(@"<value />");
+            else
+            {
+                result.Append(@"<value>");
+                for (Int32 index = 0; index < ExcludingFoldersAndFilesDelete.Count; index++)
+                {
+                    result.AppendFormat(@"<string><id>{0}</id><val>{1}</val></string>", index.ToString(), ExcludingFoldersAndFilesDelete[index]);
+                }
+                result.Append(@"</value>");
+            }
+            result.Append(@"</param>");
+
+            Int32 id = 0;
+            result.Append(@"<param><id>ScanSettings</id><type>stringmap</type><value>");
+
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "AddSpyRiskWareAnalyze", DETECT_RISKWARE == 1 ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "Cache", FAST_MODE == 1 ? "On" : "Off");
+            switch (CHECK_MODE)
+            {
+                case 0:
+                    result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val /></string>", id++, "ExcludedExtensions");
+                    result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ProcessedExtensions", DefaultFilters);
+                    break;
+                case 1:                    
+                    result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val /></string>", id++, "ExcludedExtensions");
+                    result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ProcessedExtensions", String.IsNullOrEmpty(FILTER_DEFINED) ? DefaultFilters : FILTER_DEFINED);
+                    break;
+                case 2:                    
+                    if (String.IsNullOrEmpty(FILTER_EXCLUDE))
+                        result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val /></string>", id++, "ExcludedExtensions");
+                    else
+                        result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ExcludedExtensions", FILTER_EXCLUDE);
+
+                    result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ProcessedExtensions", "*");
+                    break;
+            }
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "Heuristic", HEURISTIC == 0 ? "Off" : "On");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "InfectedQuarantine", (InfectedCopy1 == 1 || InfectedCopy2 == 1 || InfectedCopy3 == 1) ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "SuspectedQuarantine", (SuspiciousCopy1 == 1 || SuspiciousCopy2 == 1) ? "On" : "Off");
+
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "FirstInfectedAction", ((MonitorActionsEnum)InfectedAction1).ToString());
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "SecondInfectedAction", ((MonitorActionsEnum)InfectedAction2).ToString());
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ThirdInfectedAction", ((MonitorActionsEnum)InfectedAction3).ToString());
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "FirstSuspectedAction", ((MonitorActionsEnum)SuspiciousAction1).ToString());
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "SecondSuspectedAction", ((MonitorActionsEnum)SuspiciousAction2).ToString());
+
+            result.Append(@"</value></param>");
+            
+            #endregion
+
+            result.Append(@"</module></config></value></arg></command>");
+
+            result.Append(@"</Args>");
+            result.Append(@"<Async>0</Async>");
+            result.Append(@"</VsisCommand>");
+
+            return result.ToString();
         }
 
         public void LoadFromXml(String xml)

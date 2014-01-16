@@ -57,7 +57,7 @@ public partial class TaskCreate : PageBase
                 tskCancelTask.Visible = false;
                 tskConfigureLoader.Visible = false;
                 tskConfigureMonitor.Visible = false;
-                tskRunScanner.Visible = false;
+                tskConfigureScanner.Visible = false;
                 tskComponentState.Visible = false;
                 tskConfigurePassword.Visible = false;
                 tskConfigureQuarantine.Visible = false;
@@ -67,6 +67,7 @@ public partial class TaskCreate : PageBase
                 tskChangeDeviceProtect.Visible = false;
                 tskRequestPolicy.Visible = false;
                 tskConfigureScheduler.Visible = false;
+                tskRunScanner.Visible = false;
 
                 LoadStateTask(task);
 
@@ -158,6 +159,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "ConfigureMonitor":
                         taskUserType.Type = TaskType.ConfigureMonitor;
+                        break;
+                    case "ConfigureScanner":
+                        taskUserType.Type = TaskType.ConfigureScanner;
                         break;
                     case "RunScanner":
                         taskUserType.Type = TaskType.RunScanner;
@@ -263,9 +267,16 @@ public partial class TaskCreate : PageBase
                 tskConfigureMonitor.Visible = true;
                 break;
 
+            case TaskType.ConfigureScanner:
+
+                tskConfigureScanner.InitFields();
+                tskConfigureScanner.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
+                tskConfigureScanner.Visible = true;
+                break;
+
             case TaskType.RunScanner:
 
-                tskRunScanner.InitFields();
                 tskRunScanner.LoadState(task);
                 lblTaskName.Text = Resources.Resource.TaskName;
                 tskRunScanner.Visible = true;
@@ -406,6 +417,12 @@ public partial class TaskCreate : PageBase
                     tskConfigureMonitor.ValidateFields();
                     break;
 
+                case "ConfigureScanner":
+                    task.Type = TaskType.ConfigureScanner;
+                    task = tskConfigureScanner.GetCurrentState();
+                    tskConfigureScanner.ValidateFields();
+                    break;
+
                 case "RunScanner":
                     task.Type = TaskType.RunScanner;
                     task = tskRunScanner.GetCurrentState();
@@ -484,6 +501,7 @@ public partial class TaskCreate : PageBase
                 (resctrl.IsExist("TaskNameComponentState", task.Name)) ||
                 (resctrl.IsExist("CongLdrConfigureLoader", task.Name)) ||
                 (resctrl.IsExist("CongLdrConfigureMonitor", task.Name)) ||
+                (resctrl.IsExist("TaskNameConfigureScanner", task.Name)) ||
                 (resctrl.IsExist("TaskNameRunScanner", task.Name)) ||
                 (resctrl.IsExist("TaskNameConfigureQuarantine", task.Name)) ||
                 (resctrl.IsExist("TaskSeparate", task.Name)) ||
