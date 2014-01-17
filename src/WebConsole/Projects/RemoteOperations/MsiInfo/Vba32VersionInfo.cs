@@ -77,6 +77,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
         public static readonly String Vba32Vis = "Vba32 for Windows Server 2008";
         public static readonly String Vba32RemoteConsoleScanner = "Vba32 Remote Console Scanner";
         public static readonly String Vba32RemoteControlAgent = "Vba32 Remote Control Agent";
+        public static readonly String Vba32Antivirus = "Vba32 Antivirus";
         
         #endregion
     }

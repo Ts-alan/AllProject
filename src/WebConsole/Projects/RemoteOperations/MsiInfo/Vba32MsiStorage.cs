@@ -175,6 +175,18 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
             return version;
         }
 
+        public static String GetArgsByOSVersion(String osversion)
+        {
+            String args = String.Empty;
+            String osversionl = osversion.ToLower();
+            if (osversionl.Contains("windows"))
+            {
+                args = osversionl.Contains("server") ? "/qb ADDLOCAL=VSIS,VPP,VMT,VKW,VAS" : "/qb ADDLOCAL=VSIS,VPP,VMT,VAS";
+            }
+
+            return args;
+        }
+
         /// <summary>
         /// Delete file.
         /// </summary>

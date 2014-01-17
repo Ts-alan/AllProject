@@ -2898,4 +2898,7 @@
   <data name="ScanMemory" xml:space="preserve">
     <value>Сканировать память</value>
   </data>
+  <data name="AntivirusVirtualization" xml:space="preserve">
+    <value>AntivirusVirtualization</value>
+  </data>
 </root>

@@ -49,6 +49,7 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
         List<String> list = new List<String>();
         list.Add(Resources.Resource.Antivirus);
         list.Add(Resources.Resource.RemoteConsoleScanner);
+        list.Add(Resources.Resource.AntivirusVirtualization);
 
         ddlProduct.DataSource = list;
         ddlProduct.DataBind();
@@ -111,11 +112,27 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
     public String BuildTask(String osVersion)
     {
         StringBuilder result = new StringBuilder();
-        String version = ddlProduct.SelectedIndex == 0 ? Vba32MsiStorage.GetVba32VersionByOSVersion(osVersion) : Vba32VersionInfo.Vba32RemoteConsoleScanner;
+        String version = String.Empty;
+        String args = String.Empty;
+        switch (ddlProduct.SelectedIndex)
+        {
+            case 0:
+                version = Vba32MsiStorage.GetVba32VersionByOSVersion(osVersion);
+                args = tboxArguments.Text;
+                break;
+            case 1:
+                version = Vba32VersionInfo.Vba32RemoteConsoleScanner;
+                args = tboxArguments.Text;
+                break;
+            case 2:
+                version = Vba32VersionInfo.Vba32Antivirus;
+                args = Vba32MsiStorage.GetArgsByOSVersion(osVersion) + (String.IsNullOrEmpty(tboxArguments.Text) ? "" : (" " + tboxArguments.Text));
+                break;
+        }
 
         result.Append("<InstallProduct>");
         result.AppendFormat(@"<ServerFile>{0}</ServerFile>", GetPath(version));        
-        result.AppendFormat(@"<AdditionalArgs>{0}</AdditionalArgs>", tboxArguments.Text);
+        result.AppendFormat(@"<AdditionalArgs>{0}</AdditionalArgs>", args);
         result.AppendFormat(@"<Hash>{0}</Hash>", GetHash(version));
         result.Append(@"</InstallProduct>");
 
