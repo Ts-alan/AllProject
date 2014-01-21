@@ -1215,7 +1215,6 @@ public partial class Groups : PageBase
             }
 
             #endregion
-
             #region Monitor On
             if (tskMonitorOn.Visible == true)
             {
@@ -1252,7 +1251,6 @@ public partial class Groups : PageBase
                 }
             }
             #endregion
-
             #region Monitor Off
             if (tskMonitorOff.Visible == true)
             {
@@ -1289,7 +1287,6 @@ public partial class Groups : PageBase
                 }
             }
             #endregion
-
             #region Configure Scanner
 
             if (tskConfigureScanner.Visible == true)
@@ -1328,7 +1325,6 @@ public partial class Groups : PageBase
             }
 
             #endregion
-
             #region Run Scanner
 
             if (tskRunScanner.Visible == true)
@@ -1473,49 +1469,22 @@ public partial class Groups : PageBase
                 control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskAgentSettings.BuildTask());
             }
 
+            #region Uninstall product
+
             if (tskUninstall.Visible == true)
             {
+                task = tskUninstall.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
                 tskUninstall.ValidateFields();
-                List<RemoteInstallEntity> list = new List<RemoteInstallEntity>();
 
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    RemoteInstallEntity r = new RemoteInstallEntity();
-                    r.ComputerName = _set.AllComputers[i].ComputerName;
-                    r.IP = _set.AllComputers[i].IPAddress;
-                    if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32NTS))
-                    {
-                        r.VbaVersion = Vba32VersionInfo.Vba32NTS;
-                    }
-                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32NTW))
-                    {
-                        r.VbaVersion = Vba32VersionInfo.Vba32NTW;
-                    }
-                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32Vis))
-                    {
-                        r.VbaVersion = Vba32VersionInfo.Vba32Vis;
-                    }
-                    else if (_set.AllComputers[i].Vba32Version.Contains(Vba32VersionInfo.Vba32Vista))
-                    {
-                        r.VbaVersion = Vba32VersionInfo.Vba32Vista;
-                    }
-                    else
-                    {
-                        r.VbaVersion = "unknown";
-                    }
-                    r.Guid = Vba32VersionInfo.GetGuid(r.VbaVersion);
-                    if (r.Guid != "unknown")
-                    {
-                        list.Add(r);
-                    }
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                    control.PacketCreateProcess(new Int64[] { taskId[i] }, new String[] { _set.AllComputers[i].IPAddress }, tskUninstall.BuildTask(_set.AllComputers[i].OSName));
                 }
-                Credentials credentials = new Credentials(tskUninstall.Domain, tskUninstall.Login,
-                    tskUninstall.Password);
-                int maxThreads = 5;
-                RemoteInstaller ri = new RemoteInstaller(credentials, maxThreads, ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                ri.UninstallAll(list, tskUninstall.DoRestart);               
-                Response.Redirect("~/TasksInstall.aspx");
             }
+
+            #endregion
 
             if (tskRequestPolicy.Visible == true)
             {
@@ -2050,6 +2019,7 @@ public partial class Groups : PageBase
                 tskRequestPolicy.Visible = true;
                 break;
             case TaskType.Uninstall:
+                tskUninstall.InitFields();
                 tskUninstall.Visible = true;
                 break;
             case TaskType.AgentSettings:
