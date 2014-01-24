@@ -33,8 +33,22 @@
             //Application["SqlExceptOccured"] = new Exception("vbaMembership");
         }
 
-      
+        try
+        {
+            EncryptConnString();
+        }
+        catch { }
+    }
 
+    private void EncryptConnString()
+    {        
+        Configuration config = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/Vba32CCWebConsole"); //  "/WebConsole" for local
+        ConfigurationSection section = config.GetSection("connectionStrings");
+        if (!section.SectionInformation.IsProtected)
+        {
+            section.SectionInformation.ProtectSection("RsaProtectedConfigurationProvider");
+            config.Save();
+        }
     }
     
     void Application_End(object sender, EventArgs e) 
