@@ -1,4 +1,4 @@
-<%@ Page Language="C#" validateRequest=false MaintainScrollPositionOnPostback="true" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="ControlCenter.aspx.cs" Inherits="ControlCenter" Title="Untitled Page" %>
+<%@ Page Language="C#" validateRequest="false" MaintainScrollPositionOnPostback="true" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="ControlCenter.aspx.cs" Inherits="ControlCenter" Title="Untitled Page" %>
 <%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 
 <%@ OutputCache Location="None" %>
@@ -57,7 +57,7 @@
         <table class="ListContrastTableMain">
 				<tr>
 					<td><cc1:PagingControl ID="pcPagingTop" runat="server" OnNextPage="pcPaging_NextPage" OnPrevPage="pcPaging_PrevPage" OnHomePage="pcPaging_HomePage" OnLastPage="pcPaging_LastPage"/>
-					<asp:datalist id="dlEvents" Width=100% border=0 runat="server" Height="80px" OnItemCommand="dlEvents_ItemCommand" OnItemDataBound="dlEvents_ItemDataBound">
+					<asp:datalist id="dlEvents" Width="100%" border="0" runat="server" Height="80px" OnItemCommand="dlEvents_ItemCommand" OnItemDataBound="dlEvents_ItemDataBound">
 							<HeaderTemplate>
 							  <tr class="subsection" >
 							    <td style="width: 100px;">
@@ -73,12 +73,12 @@
 							</HeaderTemplate>
 							<ItemTemplate>
 							  <tr>
-							    <td align=center>
-								    <asp:Label id="lblID" runat="server" Visible=False Text='<%# DataBinder.Eval(Container.DataItem, "ID")%>'></asp:Label>
-								    <asp:ImageButton ID="ibtnSend" runat=server CommandName="SelectCommand" CommandArgument="Send" />
+							    <td align="center">
+								    <asp:Label id="lblID" runat="server" Visible="False" Text='<%# DataBinder.Eval(Container.DataItem, "ID")%>'></asp:Label>
+								    <asp:ImageButton ID="ibtnSend" runat="server" CommandName="SelectCommand" CommandArgument="Send" />
 								</td>
-								<td align=center>
-								    <asp:ImageButton ID="ibtnNoDelete" runat=server CommandName="SelectCommand" CommandArgument="NoDelete" />
+								<td align="center">
+								    <asp:ImageButton ID="ibtnNoDelete" runat="server" CommandName="SelectCommand" CommandArgument="NoDelete" />
 								</td>
 								<td>								
 								    <asp:Label id="lblName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:Label>
@@ -119,11 +119,11 @@
             <asp:Label ID="lblSendDataInterval" runat="server"><%=Resources.Resource.SendDataInterval %></asp:Label>
        </td>
        <td>
-            <asp:DropDownList ID="ddlEvery" runat=server style="width:auto;"  AutoPostBack=true OnSelectedIndexChanged="ddlEvery_SelectedIndexChanged" />
-            <asp:DropDownList ID="ddlDay" runat=server style="width:auto;"  Visible=false />
+            <asp:DropDownList ID="ddlEvery" runat="server" style="width:auto;"  AutoPostBack="true" OnSelectedIndexChanged="ddlEvery_SelectedIndexChanged" />
+            <asp:DropDownList ID="ddlDay" runat="server" style="width:auto;"  Visible="false" />
             &nbsp;
             <asp:Label runat="server" ID="lblIn"><%=Resources.Resource.In%></asp:Label>            
-            <asp:DropDownList ID="ddlTime" runat=server  style="width:auto;"  />
+            <asp:DropDownList ID="ddlTime" runat="server"  style="width:auto;"  />
             <%=Resources.Resource.Hours %>
        </td>     
    </tr>
@@ -132,7 +132,7 @@
              <asp:Label ID="lblDaysToDelete" runat="server"><%=Resources.Resource.DaysToDelete%></asp:Label>
        </td>
        <td>
-            <asp:TextBox ID="tboxDaysToDelete" runat=server />
+            <asp:TextBox ID="tboxDaysToDelete" runat="server" />
        </td>
    </tr>
    <tr>
@@ -140,7 +140,15 @@
             <asp:Label ID="lblTasksDaysToDelete" runat="server"><%=Resources.Resource.TaskDaysToDelete%></asp:Label>            
         </td>
         <td>
-            <asp:TextBox ID="tboxTasksDaysToDelete" runat=server />
+            <asp:TextBox ID="tboxTasksDaysToDelete" runat="server" />
+        </td>
+   </tr>
+   <tr>
+        <td>
+            <asp:Label ID="lblComputersDaysToDelete" runat="server"><%=Resources.Resource.ComputersDaysToDelete%></asp:Label>            
+        </td>
+        <td>
+            <asp:TextBox ID="tboxComputersDaysToDelete" runat="server" />
         </td>
    </tr>
 </table>

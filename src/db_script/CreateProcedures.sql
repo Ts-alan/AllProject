@@ -1087,3 +1087,21 @@ AS
 	DELETE FROM InstallationTasks
 	WHERE [ComputerName] = @ComputerName OR [IPAddress] = @IPAddress
 GO
+
+-- Clear Computers table
+IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[DeleteOldComputers]')
+					   AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[DeleteOldComputers]
+GO
+
+CREATE PROCEDURE [DeleteOldComputers]
+	@Date smalldatetime = NULL
+WITH ENCRYPTION
+AS
+	DELETE FROM Computers
+		WHERE [IPAddress] = N'0.0.0.0'
+		
+    IF @Date IS NOT NULL
+		DELETE FROM Computers
+		WHERE [RecentActive] < @Date
+GO

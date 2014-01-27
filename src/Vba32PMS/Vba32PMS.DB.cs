@@ -205,6 +205,47 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         }
 
         /// <summary>
+        /// Очищаем базу от старых компьютеров и компьютеров с нулевым IP адресом
+        /// </summary>
+        /// <param name="connectionString"></param>
+        private Boolean ClearOldComputers(String connStr)
+        {
+            Logger.Debug("Vba32PMS.ClearOldComputers()::Удаляем старые компьютеры");
+            DateTime dtTo = DateTime.Now;
+            try
+            {                
+                Int32 tmp = 0 - compDaysToDelete;
+                dtTo = dtTo.AddDays(tmp);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Vba32PMS.ClearOldComputers()::Ошибка при формировании строки-фильтра: " + ex.Message);
+                return false;
+            }
+
+            try
+            {
+                using (VlslVConnection conn = new VlslVConnection(connStr))
+                {
+                    EventsManager db = new EventsManager(conn);
+                    conn.OpenConnection();
+                    conn.CheckConnectionState(true);
+
+                    //Вызов соответствующей хранимой процедуры
+                    db.ClearOldComputers(dtTo);
+
+                    conn.CloseConnection();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Vba32PMS.ClearOldComputers()::Ошибка при запросе к БД: " + ex.Message);
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Сжатие базы данных
         /// </summary>
         /// <param name="connStr">Строка подключения</param>

@@ -40,6 +40,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         private Int32 dataSendInterval = 66;              //интервал отсылки сообщений
         private Int32 daysToDelete = 66;
         private Int32 taskDaysToDelete = 66;
+        private Int32 compDaysToDelete = 0;
         private LogLevel allowLog = LogLevel.Info;
         private Int32 hourIntervalToSend = 4;             //интервал отсылки сообщений в часах
 
@@ -236,8 +237,14 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 else
                     return false;
 
+                Logger.Debug("6. „истим от старых компьютеров.. ");
+                if (!isShutdown)
+                    ClearOldComputers(connectionString);
+                else
+                    return false;
+
                 /*
-                    Logger.Debug("6. —жатие базы... ");
+                    Logger.Debug("7. —жатие базы... ");
                     if (!isShutdown)
                         CompressDB(connectionString);
                  */
@@ -250,5 +257,6 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             return true;
         }
+
     }
 }

@@ -27,19 +27,6 @@ public partial class ControlCenter : PageBase
     private const string GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
     private const string LocalHearthEvent = "vba32.cc.LocalHearth";
 
-    /*protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }*/
-
     protected void Page_Init(object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
@@ -190,6 +177,12 @@ public partial class ControlCenter : PageBase
             else
                 tboxTasksDaysToDelete.Text = tmp.ToString();
 
+            tmp = key.GetValue("ComputerDaysToDelete");
+            if (tmp == null)
+                tboxComputersDaysToDelete.Text = Resources.Resource.NotAvailable;
+            else
+                tboxComputersDaysToDelete.Text = tmp.ToString();
+
 
             if (ddlEvery.Items.Count == 0)
             {
@@ -318,6 +311,11 @@ public partial class ControlCenter : PageBase
             if (!vld.CheckUInt16() || (Convert.ToUInt16(tboxTasksDaysToDelete.Text) == 0))
                 throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
                  + Resources.Resource.TaskDaysToDelete);
+
+            vld = new Validation(tboxComputersDaysToDelete.Text);
+            if (!vld.CheckUInt16() || (Convert.ToUInt16(tboxComputersDaysToDelete.Text) == 0))
+                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+                 + Resources.Resource.ComputersDaysToDelete);                        
         }
 
         //vld.Value = tboxPort.Text;
@@ -497,19 +495,24 @@ public partial class ControlCenter : PageBase
                 //Конечно, взаимодействовать между собой приложениям .NET из одного программного продукта
                 //посредством использания реестра чудовищно... ТЗ есть ТЗ
                 IFormatProvider culture = new CultureInfo("ru-RU");
-               
+
                 StringBuilder xml = new StringBuilder(1024);
                 xml.AppendFormat("<VbaSettings><ControlCenter><PeriodicalMaintenance>" +
                                 "<DeliveryTimeoutCheck type=" + "\"reg_dword\"" + ">{0}</DeliveryTimeoutCheck>" +
                                 "<DataSendInterval type=" + "\"reg_dword\"" + ">{1}</DataSendInterval>" +
                                 "<DaysToDelete type=" + "\"reg_dword\"" + ">{2}</DaysToDelete>" +
                                 "<TaskDaysToDelete type=" + "\"reg_dword\"" + ">{5}</TaskDaysToDelete>" +
+                                "<ComputerDaysToDelete type=" + "\"reg_dword\"" + ">{6}</ComputerDaysToDelete>" +
                                 "<NextSendDate type=" + "\"reg_sz\"" + ">{3}</NextSendDate>" +
                                 "<MaintenanceEnabled type=" + "\"reg_dword\"" + ">{4}</MaintenanceEnabled>" +
-                                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",    
+                                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",
                                 tboxDeliveryTimeoutCheck.Text,
-                                ddlEvery.SelectedIndex, tboxDaysToDelete.Text, dt.ToString(culture),
-                                (cboxMaintenanceEnabled.Checked ? "1" : "0"),tboxTasksDaysToDelete.Text);
+                                ddlEvery.SelectedIndex, 
+                                tboxDaysToDelete.Text, 
+                                dt.ToString(culture),
+                                (cboxMaintenanceEnabled.Checked ? "1" : "0"), 
+                                tboxTasksDaysToDelete.Text, 
+                                tboxComputersDaysToDelete.Text);
 
                 if (cboxMaintenanceEnabled.Checked)
                 {

@@ -124,6 +124,17 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
             command.ExecuteNonQuery();
         }
 
+        public void ClearOldComputers(DateTime dt)
+        {
+            IDbCommand command = database.CreateCommand("DeleteOldComputers", true);
+
+            if (DateTime.Now.Subtract(dt).Days > 0)
+                database.AddCommandParameter(command, "@Date",
+                    DbType.Date, dt, ParameterDirection.Input);
+
+            command.ExecuteNonQuery();
+        }
+
         /// <summary>
         /// —жатие базы данных
         /// </summary>
@@ -145,8 +156,6 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
         }
 		
 		#endregion
-	
-		
-	}		
+    }		
 }
 

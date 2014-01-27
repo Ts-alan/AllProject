@@ -157,6 +157,16 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     taskDaysToDelete = (Int32)tmp;
                 Logger.Info("Полученное значение TaskDaysToDelete: " + taskDaysToDelete);
 
+                tmp = key.GetValue("ComputerDaysToDelete");
+                if (tmp == null)
+                {
+                    Logger.Warning("ReadSettingsFromRegistry()::Не удалось получить ключ ComputerDaysToDelete. Инициализируем по умолчанию");
+                    compDaysToDelete = 0;
+                }
+                else
+                    compDaysToDelete = (Int32)tmp;
+                Logger.Info("Полученное значение ComputerDaysToDelete: " + compDaysToDelete);
+
                 tmp = key.GetValue("HourIntervalToSend");
                 if (tmp == null)
                 {

@@ -2901,4 +2901,7 @@
   <data name="AntivirusVirtualization" xml:space="preserve">
     <value>AntivirusVirtualization</value>
   </data>
+  <data name="ComputersDaysToDelete" xml:space="preserve">
+    <value>Удалять компьютеры с активностью старше (дней)</value>
+  </data>
 </root>

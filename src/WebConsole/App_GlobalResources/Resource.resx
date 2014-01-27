@@ -2913,4 +2913,7 @@ system administrator.</value>
   <data name="AntivirusVirtualization" xml:space="preserve">
     <value>AntivirusVirtualization</value>
   </data>
+  <data name="ComputersDaysToDelete" xml:space="preserve">
+    <value>Delete computers with activity older (days)</value>
+  </data>
 </root>
