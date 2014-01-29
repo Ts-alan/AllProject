@@ -2916,4 +2916,13 @@ system administrator.</value>
   <data name="ComputersDaysToDelete" xml:space="preserve">
     <value>Delete computers with activity older (days)</value>
   </data>
+  <data name="CongScannerAuthenticode" xml:space="preserve">
+    <value>Enable detection for signed files</value>
+  </data>
+  <data name="CongScannerRemote" xml:space="preserve">
+    <value>Scan server</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
 </root>

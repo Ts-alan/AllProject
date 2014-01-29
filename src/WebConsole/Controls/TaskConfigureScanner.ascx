@@ -11,6 +11,11 @@ function CheckedChanged(el)
    ddlCountThread.disabled = !el.checked;
 }
 
+function RemoteCheckedChanged(el) {
+    var tboxRemoteAddress = $get('<%=tboxRemoteAddress.ClientID%>');
+    tboxRemoteAddress.disabled = !el.checked;
+}
+
 </script>
 <ajaxToolkit:TabContainer runat="server" ID="Tabs" ActiveTabIndex="0" Width="800px">
 <ajaxToolkit:TabPanel runat="server" ID="tabPanel1">
@@ -102,62 +107,69 @@ function CheckedChanged(el)
         <td>
              <%=Resources.Resource.CongScannerInfected %>
         </td>
-         <td>
-            
+        <td>
+            <%=Resources.Resource.SuspiciousFiles %>
+       </td>
+       <td>
+            <asp:CheckBox runat="server" ID="cboxCureBoot" />&nbsp;<%=Resources.Resource.CongScannerCureBoot %>
        </td>
     </tr>
     <tr>
         <td>
              <asp:CheckBox runat="server" ID="cboxCure" />&nbsp;<%=Resources.Resource.CongScannerCure %>
         </td>
-         <td>
-            <asp:CheckBox runat="server" ID="cboxCureBoot" />&nbsp;<%=Resources.Resource.CongScannerCureBoot %>
+        <td></td>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxDeleteArchives" />&nbsp;<%=Resources.Resource.CongScannerDeleteArchives %>
        </td>
     </tr>
     <tr>
         <td>
             <asp:RadioButton runat="server" ID="rbSkip" GroupName="rbInfFiles" /><%=Resources.Resource.Skip %>
         </td>
-         <td>
-            <asp:CheckBox runat="server" ID="cboxDeleteArchives" />&nbsp;<%=Resources.Resource.CongScannerDeleteArchives %>
-       </td>
+        <td>
+            <asp:RadioButton runat="server" ID="rbSkipSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Skip %>
+        </td>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxDeleteMail" />&nbsp;<%=Resources.Resource.CongScannerDeleteMail%>
+        </td>
     </tr>
     <tr>
         <td>
             <asp:RadioButton runat="server" ID="rbDelete" GroupName="rbInfFiles" /><%=Resources.Resource.Delete %>
         </td>
-         <td>
-            <asp:CheckBox runat="server" ID="cboxDeleteMail" />&nbsp;<%=Resources.Resource.CongScannerDeleteMail%>
+        <td>
+            <asp:RadioButton runat="server" ID="rbDeleteSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Delete%>
+        </td>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxSaveInfectedToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveInfectedToQuarantine %>
        </td>
     </tr>
     <tr>
         <td>
             <asp:RadioButton runat="server" ID="rbRename" GroupName="rbInfFiles" /><%=Resources.Resource.Rename %>
         </td>
-         <td>
-            <asp:CheckBox runat="server" ID="cboxSaveInfectedToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveInfectedToQuarantine %>
-       </td>
+        <td>
+            <asp:RadioButton runat="server" ID="rbRenameSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Rename %>
+        </td>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxSaveSusToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveSusToQuarantine %>
+        </td>
     </tr>
     <tr>
         <td>
             <asp:RadioButton runat="server" ID="rbRemove" GroupName="rbInfFiles" /><%=Resources.Resource.Remove %>
         </td>
-         <td>
-            <asp:CheckBox runat="server" ID="cboxSaveSusToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveSusToQuarantine %>
-       </td>
-    </tr>
-    <tr>
         <td>
-        
+            <asp:RadioButton runat="server" ID="rbRemoveSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Remove %>
         </td>
         <td>
             <%=Resources.Resource.CongScannerRemovePathToInfected %>
         </td>
     </tr>
-     <tr>
-        <td>
-        
-        </td>
+    <tr>
+        <td></td>
+        <td></td>
         <td>
             <asp:TextBox runat="server" ID="tboxRemove" style="width:300px"/>
         </td>
@@ -207,6 +219,11 @@ function CheckedChanged(el)
             <asp:CheckBox ID="cboxEnableCach" runat="server" />&nbsp;<%=Resources.Resource.CongScannerEnableCach %>
         </td>
     </tr>
+    <tr>
+        <td>
+            <asp:CheckBox ID="cboxAuthenticode" runat="server" />&nbsp;<%=Resources.Resource.CongScannerAuthenticode%>
+        </td>
+    </tr>
      <tr>
         <td>
             <asp:CheckBox ID="cboxCheckMacros" runat="server" />&nbsp;<%=Resources.Resource.CongScannerCheckMacros %>
@@ -218,7 +235,7 @@ function CheckedChanged(el)
         </td>
     </tr>    
     </table>
-    <table class="ListContrastTable" style="padding-bottom: 10px;" >
+    <table class="ListContrastTable" style="padding-bottom: 15px;" >
         <tr>
             <td style="padding-top: 5px;padding-bottom:5px;">
                 <asp:Label runat="server" ID="lblMultyThreading"><%=Resources.Resource.Multithreading%>:</asp:Label>
@@ -242,6 +259,34 @@ function CheckedChanged(el)
                 <asp:CheckBox runat="server" ID="cboxShowProgressScan" />
             </td>            
         </tr>
+    </table>
+</ContentTemplate>
+</ajaxToolkit:TabPanel>
+<ajaxToolkit:TabPanel runat="server" ID="tabPanel5">
+ <ContentTemplate>     
+     <table class="ListContrastTable"">
+    <tr>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxRemoteServer" />&nbsp;<%=Resources.Resource.Server%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <asp:CheckBox runat="server" ID="cboxRemoteClient" onclick="RemoteCheckedChanged(this)" />&nbsp;<%=Resources.Resource.Client%>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table style="margin: 5px 0px 10px 20px;">
+                <tr>
+                    <td><%=Resources.Resource.CongLdrAddress%></td>
+                    <td style="padding-left:10px;">
+                        <asp:TextBox runat="server" ID="tboxRemoteAddress" Enabled="false"></asp:TextBox>
+                    </td>
+                </tr>                
+            </table>
+        </td>
+    </tr>
     </table>
 </ContentTemplate>
 </ajaxToolkit:TabPanel>

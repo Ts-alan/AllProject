@@ -55,6 +55,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         tabPanel2.HeaderText = Resources.Resource.CongMonitorObjects;
         tabPanel3.HeaderText = Resources.Resource.CongMonitorReport;
         tabPanel4.HeaderText = Resources.Resource.CongScannerAdditional;
+        tabPanel5.HeaderText = Resources.Resource.CongScannerRemote;
 
         lblExclude.Text = Resources.Resource.CongScannerExclude;
         lblSet.Text = Resources.Resource.CongScannerSet;
@@ -69,6 +70,9 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         if (ddlHeuristicAnalysis.Items.Count != 0) return;
         if ((!rbDelete.Checked) && (!rbRemove.Checked) && (!rbRename.Checked) && (!rbSkip.Checked))
             rbSkip.Checked = true;
+
+        if ((!rbDeleteSusp.Checked) && (!rbRemoveSusp.Checked) && (!rbRenameSusp.Checked) && (!rbSkipSusp.Checked))
+            rbSkipSusp.Checked = true;
 
         ddlHeuristicAnalysis.Items.Add(Resources.Resource.Disabled);
         ddlHeuristicAnalysis.Items.Add(Resources.Resource.Optimal);
@@ -195,6 +199,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         cboxAddArch.Checked = tsk.IsAddArch;
         cboxAddInf.Checked = tsk.IsAddInf;
         cboxUpdate.Checked = tsk.IsUpdateBase;
+        cboxAuthenticode.Checked = tsk.IsAuthenticode;
 
         cboxIsArchiveSize.Checked = tsk.IsUncheckLargeArchives;
         tboxCheckObjects.Text = tsk.CheckObjects;        
@@ -224,6 +229,22 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
                 break;
         }
 
+        switch (tsk.SuspiciousMode)
+        {
+            case 1:
+                rbSkipSusp.Checked = true;
+                break;
+            case 2:
+                rbDeleteSusp.Checked = true;
+                break;
+            case 3:
+                rbRenameSusp.Checked = true;
+                break;
+            case 4:
+                rbRemoveSusp.Checked = true;
+                break;
+        }
+
         ddlHeuristicAnalysis.SelectedIndex = tsk.HeuristicAnalysis;
         ddlMode.SelectedIndex = tsk.Mode;
 
@@ -242,6 +263,11 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         }
 
         cboxShowProgressScan.Checked = tsk.IsShowScanProgress;
+
+        cboxRemoteServer.Checked = tsk.IsRemoteServerEnabled;
+        cboxRemoteClient.Checked = tsk.IsRemoteClientEnabled;
+        tboxRemoteAddress.Text = tsk.RemoteClientAddress;
+        tboxRemoteAddress.Enabled = tsk.IsRemoteClientEnabled;
     }
 
     public String GenerateCommandLine(TaskUserEntity task)
@@ -303,6 +329,12 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         if (rbRemove.Checked) index = 4;
         task.IfCureChecked = index;
 
+        if (rbSkipSusp.Checked) index = 1;
+        if (rbDeleteSusp.Checked) index = 2;
+        if (rbRenameSusp.Checked) index = 3;
+        if (rbRemoveSusp.Checked) index = 4;
+        task.SuspiciousMode = index;
+
         task.IsCheckCureBoot = cboxCureBoot.Checked;
         task.IsDeleteArchives = cboxDeleteArchives.Checked;
         task.IsDeleteMail = cboxDeleteMail.Checked;
@@ -321,6 +353,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         task.IsAddInf = cboxAddInf.Checked;
 
         task.IsEnableCach = cboxEnableCach.Checked;
+        task.IsAuthenticode = cboxAuthenticode.Checked;
         task.IsCheckMacros = cboxCheckMacros.Checked;
         task.PathToScanner = tboxPathToScanner.Text;
         task.IsMultyThreading = cboxMultyThreading.Checked;
@@ -329,6 +362,11 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
             task.MultyThreading = ddlCountThread.SelectedIndex + 1;
         }
         task.IsShowScanProgress = cboxShowProgressScan.Checked;
+
+        task.IsRemoteServerEnabled = cboxRemoteServer.Checked;
+        task.IsRemoteClientEnabled = cboxRemoteClient.Checked;
+        if (task.IsRemoteClientEnabled)
+            task.RemoteClientAddress = tboxRemoteAddress.Text;
         
         task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
 
