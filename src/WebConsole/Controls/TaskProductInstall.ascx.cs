@@ -50,6 +50,7 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
         list.Add(Resources.Resource.Antivirus);
         list.Add(Resources.Resource.RemoteConsoleScanner);
         list.Add(Resources.Resource.AntivirusVirtualization);
+        list.Add(String.Format("{0} ({1})", Resources.Resource.AntivirusVirtualization, Resources.Resource.Server));
 
         ddlProduct.DataSource = list;
         ddlProduct.DataBind();
@@ -126,7 +127,11 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
                 break;
             case 2:
                 version = Vba32VersionInfo.Vba32Antivirus;
-                args = Vba32MsiStorage.GetArgsByOSVersion(osVersion) + (String.IsNullOrEmpty(tboxArguments.Text) ? "" : (" " + tboxArguments.Text));
+                args = Vba32MsiStorage.GetArgsByOSVersion(false) + (String.IsNullOrEmpty(tboxArguments.Text) ? "" : (" " + tboxArguments.Text));
+                break;
+            case 3:
+                version = Vba32VersionInfo.Vba32Antivirus;
+                args = Vba32MsiStorage.GetArgsByOSVersion(true) + (String.IsNullOrEmpty(tboxArguments.Text) ? "" : (" " + tboxArguments.Text));
                 break;
         }
 

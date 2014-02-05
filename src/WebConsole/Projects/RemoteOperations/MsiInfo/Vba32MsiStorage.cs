@@ -175,16 +175,9 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
             return version;
         }
 
-        public static String GetArgsByOSVersion(String osversion)
+        public static String GetArgsByOSVersion(Boolean isServer)
         {
-            String args = String.Empty;
-            String osversionl = osversion.ToLower();
-            if (osversionl.Contains("windows"))
-            {
-                args = osversionl.Contains("server") ? "/qb ADDLOCAL=VSIS,VPP,VMT,VKW,VAS" : "/qb ADDLOCAL=VSIS,VPP,VMT,VAS";
-            }
-
-            return args;
+            return isServer ? "/qb ADDLOCAL=VSIS,VPP,VMT,VKW,VAS" : "/qb ADDLOCAL=VSIS,VPP,VMT,VAS";
         }
 
         /// <summary>
