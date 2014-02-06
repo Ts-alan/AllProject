@@ -34,6 +34,12 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         set { _hideHeader = value; }
     }
 
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
 
     public void InitFields()
     {
