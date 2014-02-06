@@ -154,23 +154,21 @@ dialog
     width: 20px;
     height: 20px;
 }
-
-.bigTree .folder .x-tree-node-icon{
-    background:transparent url(resources/themes/images/default/tree/folder20.gif);
+.bigTree .x-tree-icon-parent{
+    background:transparent url(resources/themes/images/default/tree/folder20.gif) !important;
     width: 20px;
     height: 20px;
 }
-.bigTree .x-tree-node-expanded .x-tree-node-icon{
-    background:transparent url(resources/themes/images/default/tree/folder-open20.gif);
+.bigTree .x-grid-tree-node-expanded .x-tree-icon-parent{
+    background:transparent url(resources/themes/images/default/tree/folder-open20.gif) !important;
     width: 20px;
     height: 20px;
 }
-
-.bigTree .x-tree-node{
+.bigTree .x-grid-cell-inner{
 	font-size: 14px;
 }
 /* checkboxes */
-.bigTree input.x-tree-node-cb {
+.bigTree input.x-tree-checkbox {
     margin-left:5px;
     margin-top:3px;    
 }
@@ -180,7 +178,7 @@ vertical-align: text-bottom;
 }
 
 /*Elbow*/
-.bigTree .x-tree-lines .x-tree-elbow{
+.bigTree .x-tree-lines .x-tree-elbow-line{
 	background-image:url(resources/themes/images/default/tree/elbow20.gif);
 	height: 22px;
 }

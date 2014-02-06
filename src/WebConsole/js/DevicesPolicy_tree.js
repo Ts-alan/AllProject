@@ -86,7 +86,9 @@
                     root.expand(false);
                 },
                 reload: function () {
-                    treeStore.reload();
+                    if(treeStore)
+                        treeStore.reload();
+                     
                 },
                 generateText: function () {
                     computers = new Array();

@@ -80,6 +80,22 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             set { _isExpanded = value; }
         }
 
+        private String _ipAddress = String.Empty;
+        [JsonProperty("ip", NullValueHandling = NullValueHandling.Ignore)]
+        public String IPAddress
+        {
+            get { return _ipAddress; }
+            set { _ipAddress = value; }
+        }
+
+        private String _OSName = String.Empty;
+        [JsonProperty("os", NullValueHandling = NullValueHandling.Ignore)]
+        public String OSName
+        {
+            get { return _OSName; }
+            set { _OSName = value; }
+        }
+
         private List<TreeNodeJSONEntity> _children = null;
         [JsonProperty("children", NullValueHandling = NullValueHandling.Ignore)]
         public List<TreeNodeJSONEntity> Children
@@ -88,13 +104,14 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             set { _children = value; }
         }
 
-        private CompAdditionalInfo _compAdditionalInfo = null;
+/*        private CompAdditionalInfo _compAdditionalInfo = null;
         [JsonProperty("compAdditionalInfo", NullValueHandling = NullValueHandling.Ignore)]
         public CompAdditionalInfo ComputerAdditionalInfo
         {
             get { return _compAdditionalInfo; }
             set { _compAdditionalInfo = value; }
         }
+*/
         #endregion
 
         #region Constructors
@@ -109,12 +126,21 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             this._children = children;
         }
 
-        public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
+    /*    public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
             Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded,
             List<TreeNodeJSONEntity> children, CompAdditionalInfo info)
             : this(text, id, iconClassStyle, qtip, isChecked, allowDrag, allowDrop, isLeaf, isExpanded, children)
         {
             this._compAdditionalInfo = info;
+        }
+*/
+            public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
+            Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded,String ipAddress, String osName,
+            List<TreeNodeJSONEntity> children)
+            : this(text, id, iconClassStyle, qtip, isChecked, allowDrag, allowDrop, isLeaf, isExpanded, children)
+        {
+            this._ipAddress = ipAddress;
+            this._OSName = osName;
         }
 
         public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
@@ -129,6 +155,8 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
             this._allowDrop = allowDrop;
             this._isLeaf = isLeaf;
             this._isExpanded = isExpanded;
+            this._ipAddress = null;
+            this._OSName = null;
 
             _children = new List<TreeNodeJSONEntity>();
         }
