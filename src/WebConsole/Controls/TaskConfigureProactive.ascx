@@ -9,16 +9,14 @@
             $("#AccordionRegistry").accordion({ collapsible: false, active: false, heightStyle: 'content' });
     });
 
-        }
-
-        function OnChange(lboxId, tboxAttr) {
-            var lbox = $('#' + lboxId.id);            
-            var option = $("#" + lboxId.id + " option");
-            var index = option.index($("#" + lboxId.id + " option:selected"));
-            if (index == -1) return;
+    function OnChange(lboxId, tboxAttr) {
+        var lbox = $('#' + lboxId.id);            
+        var option = $("#" + lboxId.id + " option");
+        var index = option.index($("#" + lboxId.id + " option:selected"));
+        if (index == -1) return;
             
-            $("[" + tboxAttr + "]").val(lbox.val());
-        }
+        $("[" + tboxAttr + "]").val(lbox.val());
+    }
     </script>
 
     <div id="TabsProactive" style="width:900px">

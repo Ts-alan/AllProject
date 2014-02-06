@@ -16,8 +16,6 @@
     TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/ChangeDeviceProtectTaskOptions.ascx" TagName="ChangeDeviceProtectTaskOptions"
     TagPrefix="tsk" %>
-<%@ Register Src="~/Controls/SendFileTaskOptions.ascx" TagName="SendFileTaskOptions"
-    TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/TestTaskOptions.ascx" TagName="TestTaskOptions"
     TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/TaskOptionsDialog.ascx" TagName="TaskOptionsDialog"
@@ -58,10 +56,6 @@
                     <tsk:CustomizableTask ID="RestoreFileFromQtnTask" runat="server" TaskName="<%$ Resources:Resource, TaskNameRestoreFileFromQtn %>"
                         TaskOptionsID="RestoreFileFromQtnTaskOptions1" />
                     <tsk:RestoreFileFromQtnTaskOptions ID="RestoreFileFromQtnTaskOptions1" runat="server" />
-                     
-                    <tsk:CustomizableTask ID="SendFileTask" runat="server" TaskName="<%$ Resources:Resource, SendFile %>"
-                        TaskOptionsID="SendFileTaskOptions1" />
-                    <tsk:SendFileTaskOptions ID="SendFileTaskOptions1" runat="server" />
 
                     <tsk:CustomizableTask ID="UninstallTask" runat="server" TaskName="<%$ Resources:Resource, TaskUninstall %>"
                         TaskOptionsID="UninstallTaskOptions1" />
