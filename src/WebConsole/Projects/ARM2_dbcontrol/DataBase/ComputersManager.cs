@@ -304,6 +304,59 @@ namespace ARM2_dbcontrol.DataBase
             return list;
         }
 
+        public ComputersEntityEx GetComputerEx(Int16 computersID)
+        {
+            IDbCommand command = database.CreateCommand("GetComputerEx", true);
+
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int16, (Int16)computersID, ParameterDirection.Input);
+
+            ComputersEntityEx computers = new ComputersEntityEx();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+
+            if (reader.Read())
+            {
+
+                if (reader.GetValue(0) != DBNull.Value)
+                    computers.ID = reader.GetInt16(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    computers.ComputerName = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    computers.IPAddress = reader.GetString(2);
+                if (reader.GetValue(3) != DBNull.Value)
+                    computers.ControlCenter = reader.GetBoolean(3);
+                if (reader.GetValue(4) != DBNull.Value)
+                    computers.DomainName = reader.GetString(4);
+                if (reader.GetValue(5) != DBNull.Value)
+                    computers.UserLogin = reader.GetString(5);
+                if (reader.GetValue(6) != DBNull.Value)
+                    computers.OSName = reader.GetString(6);
+                if (reader.GetValue(7) != DBNull.Value)
+                    computers.RAM = reader.GetInt16(7);
+                if (reader.GetValue(8) != DBNull.Value)
+                    computers.CPUClock = reader.GetInt16(8);
+                if (reader.GetValue(9) != DBNull.Value)
+                    computers.RecentActive = reader.GetDateTime(9);
+                if (reader.GetValue(10) != DBNull.Value)
+                    computers.LatestUpdate = reader.GetDateTime(10);
+                if (reader.GetValue(11) != DBNull.Value)
+                    computers.Vba32Version = reader.GetString(11);
+                if (reader.GetValue(12) != DBNull.Value)
+                    computers.LatestInfected = reader.GetDateTime(12);
+                if (reader.GetValue(13) != DBNull.Value)
+                    computers.LatestMalware = reader.GetString(13);
+                if (reader.GetValue(14) != DBNull.Value)
+                    computers.Vba32Integrity = reader.GetBoolean(14);
+                if (reader.GetValue(15) != DBNull.Value)
+                    computers.Vba32KeyValid = reader.GetBoolean(15);
+                if (reader.GetValue(16) != DBNull.Value)
+                    computers.Description = reader.GetString(16);
+                if (reader.GetValue(17) != DBNull.Value)
+                    computers.PolicyName = reader.GetString(17);
+            }
+            reader.Close();
+            return computers;
+        }
 
 		#endregion
 		

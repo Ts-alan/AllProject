@@ -6,7 +6,19 @@
 <%@ Register Src="~/Controls/CustomizableTask.ascx" TagName="CustomizableTask" TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/CreateProcessTaskOptions.ascx" TagName="CreateProcessTaskOptions"
     TagPrefix="tsk" %>
-    <%@ Register Src="~/Controls/TestTaskOptions.ascx" TagName="TestTaskOptions"
+<%@ Register Src="~/Controls/ConfigurePasswordTaskOptions.ascx" TagName="ConfigurePasswordTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/RestoreFileFromQtnTaskOptions.ascx" TagName="RestoreFileFromQtnTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/UninstallTaskOptions.ascx" TagName="UninstallTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/ProductInstallTaskOptions.ascx" TagName="ProductInstallTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/ChangeDeviceProtectTaskOptions.ascx" TagName="ChangeDeviceProtectTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/SendFileTaskOptions.ascx" TagName="SendFileTaskOptions"
+    TagPrefix="tsk" %>
+<%@ Register Src="~/Controls/TestTaskOptions.ascx" TagName="TestTaskOptions"
     TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/TaskOptionsDialog.ascx" TagName="TaskOptionsDialog"
     TagPrefix="tsk" %>
@@ -38,6 +50,31 @@
                     <tsk:CustomizableTask ID="CreateProcessTask" runat="server" TaskName="<%$ Resources:Resource, CreateProcess %>"
                         TaskOptionsID="CreateProcessTaskOptions1" />
                     <tsk:CreateProcessTaskOptions ID="CreateProcessTaskOptions1" runat="server" />
+
+                   <tsk:CustomizableTask ID="ConfigurePasswordTask" runat="server" TaskName="<%$ Resources:Resource, TaskNameConfigurePassword %>"
+                        TaskOptionsID="ConfigurePasswordTaskOptions1" />
+                    <tsk:ConfigurePasswordTaskOptions ID="ConfigurePasswordTaskOptions1" runat="server" />
+
+                    <tsk:CustomizableTask ID="RestoreFileFromQtnTask" runat="server" TaskName="<%$ Resources:Resource, TaskNameRestoreFileFromQtn %>"
+                        TaskOptionsID="RestoreFileFromQtnTaskOptions1" />
+                    <tsk:RestoreFileFromQtnTaskOptions ID="RestoreFileFromQtnTaskOptions1" runat="server" />
+                     
+                    <tsk:CustomizableTask ID="SendFileTask" runat="server" TaskName="<%$ Resources:Resource, SendFile %>"
+                        TaskOptionsID="SendFileTaskOptions1" />
+                    <tsk:SendFileTaskOptions ID="SendFileTaskOptions1" runat="server" />
+
+                    <tsk:CustomizableTask ID="UninstallTask" runat="server" TaskName="<%$ Resources:Resource, TaskUninstall %>"
+                        TaskOptionsID="UninstallTaskOptions1" />
+                    <tsk:UninstallTaskOptions ID="UninstallTaskOptions1" runat="server" />
+
+                    <tsk:CustomizableTask ID="ProductInstallTask" runat="server" TaskName="<%$ Resources:Resource, Install %>"
+                        TaskOptionsID="ProductInstallTaskOptions1" />
+                    <tsk:ProductInstallTaskOptions ID="ProductInstallTaskOptions1" runat="server" />
+
+                    <tsk:CustomizableTask ID="ChangeDeviceProtectTask" runat="server" TaskName="<%$ Resources:Resource, TaskChangeDeviceProtect %>"
+                        TaskOptionsID="ChangeDeviceProtectTaskOptions1" />
+                    <tsk:ChangeDeviceProtectTaskOptions ID="ChangeDeviceProtectTaskOptions1" runat="server" />
+
                     <tsk:CustomizableTask ID="TestTask" runat="server" TaskName="Test"
                         TaskOptionsID="TestTaskOptions1" />
                     <tsk:TestTaskOptions ID="TestTaskOptions1" runat="server" />

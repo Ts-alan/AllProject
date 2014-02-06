@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
@@ -16,6 +17,9 @@ using VirusBlokAda.Vba32CC.Policies;
 using VirusBlokAda.Vba32CC.Policies.General;
 using Filters.Primitive;
 using ARM2_dbcontrol.Tasks;
+
+
+using ARM2_dbcontrol.Service.TaskAssignment;
 
 /// <summary>
 /// Info about computer
@@ -217,9 +221,9 @@ public partial class CompInfo : PageBase
     {
         ComponentsEntity cmpt = new ComponentsEntity();
         cmpt.ComponentState = "Not installed";
-        SetComponentAttributes(tskLoader, imgLoader, lblLoader, cmpt, TaskType.ConfigureLoader);
-        SetComponentAttributes(tskMonitor, imgMonitor, lblMonitor, cmpt, TaskType.ConfigureMonitor);
-        SetComponentAttributes(tskQuarantine, imgQuarantine, lblQuarantine, cmpt, TaskType.ConfigureQuarantine);
+        SetComponentAttributes(tskLoader, imgLoader, lblLoader, cmpt, TaskType.ConfigureLoader,btnTskLoader);
+        SetComponentAttributes(tskMonitor, imgMonitor, lblMonitor, cmpt, TaskType.ConfigureMonitor,btnTskMonitor);
+        SetComponentAttributes(tskQuarantine, imgQuarantine, lblQuarantine, cmpt, TaskType.ConfigureQuarantine,btnTskQuarantine);
     }
 
     protected void WriteComponentState(String compName)
@@ -233,13 +237,13 @@ public partial class CompInfo : PageBase
             switch (cmpt.ComponentName)
             {
                 case "Vba32 Loader":
-                    SetComponentAttributes(tskLoader, imgLoader, lblLoader, cmpt, TaskType.ConfigureLoader);                    
+                    SetComponentAttributes(tskLoader, imgLoader, lblLoader, cmpt, TaskType.ConfigureLoader,btnTskLoader);                    
                     break;
                 case "Vba32 Monitor":
-                    SetComponentAttributes(tskMonitor, imgMonitor, lblMonitor, cmpt, TaskType.ConfigureMonitor);                    
+                    SetComponentAttributes(tskMonitor, imgMonitor, lblMonitor, cmpt, TaskType.ConfigureMonitor,btnTskMonitor);                    
                     break;
                 case "Vba32 Quarantine":
-                    SetComponentAttributes(tskQuarantine, imgQuarantine, lblQuarantine, cmpt, TaskType.ConfigureQuarantine);
+                    SetComponentAttributes(tskQuarantine, imgQuarantine, lblQuarantine, cmpt, TaskType.ConfigureQuarantine,btnTskQuarantine);
                     break;                
                 default:
                     AddComponent(cmpt);
@@ -267,7 +271,7 @@ public partial class CompInfo : PageBase
         divComponents.Controls.Add(new HtmlGenericControl("div"));        
     }
 
-    private void SetComponentAttributes(UserControl ctrl, HtmlImage img, HtmlGenericControl lbl, ComponentsEntity cmpt, TaskType taskType)
+    private void SetComponentAttributes(UserControl ctrl, HtmlImage img, HtmlGenericControl lbl, ComponentsEntity cmpt, TaskType taskType,Button button)
     {
         String title;
         img.Src = GetImageSrcByState(cmpt.ComponentState, out title);
@@ -285,14 +289,14 @@ public partial class CompInfo : PageBase
                     SetErrorMessage(lbl, String.Format(Resources.Resource.ErrorTaskTypeConflict, cmpt.ComponentName));
                 else
                 {
-                    if (LoadComponentSettings(control, compID, cmpt.ComponentName, taskType, lbl))
+                    if (LoadComponentSettings(control, compID, cmpt.ComponentName, taskType, lbl,button))
                         ctrl.Visible = true;
                 }
             }
         }
     }
 
-    private Boolean LoadComponentSettings(ITask ctrl, Int16 compID, String ComponentName, TaskType taskType, HtmlGenericControl lbl)
+    private Boolean LoadComponentSettings(ITask ctrl, Int16 compID, String ComponentName, TaskType taskType, HtmlGenericControl lbl,Button button)
     {
         //Try load state
         TaskUserEntity task = new TaskUserEntity();
@@ -316,6 +320,8 @@ public partial class CompInfo : PageBase
         try
         {
             ctrl.LoadState(task);
+            button.Visible = true;
+            
         }
         catch (Exception e)
         {
@@ -350,7 +356,103 @@ public partial class CompInfo : PageBase
 
         return String.Empty;
     }
+    protected void btnTskLoader_Click(object sender, EventArgs e)
+    {
+        TaskUserEntity task = tskLoader.GetCurrentState();
+        task.Name = Resources.Resource.CongLdrConfigureLoader;
+        tskLoader.ValidateFields();
+        String compName = Request.QueryString["CompName"];
+        String userName = Anchor.GetStringForTaskGivedUser();
 
+
+        string service = ConfigurationManager.AppSettings["Service"];
+        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+        Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
+
+        String alertMessage = "";
+        try
+        {
+            ARM2_dbcontrol.Generation.XmlBuilder builder = new ARM2_dbcontrol.Generation.XmlBuilder();
+            Int64[] taskId = new Int64[1];
+            taskId[0] = PreServAction.CreateTask(compName, task.Name, task.Param, userName, connStr);
+            String[] ipAddr = new String[1];
+            ipAddr[0] = lblIPAdress.Text;
+            string strtask = task.Param.Remove(0, builder.Top.Length);
+            string s = @"<Type>ConfigureLoader</Type>";
+            strtask = strtask.Replace(s, "");
+
+            control.PacketConfigureSettings(taskId, ipAddr, strtask);
+            alertMessage = Resources.Resource.TaskGived;           
+        }
+        catch (Exception ex){
+            alertMessage = Resources.Resource.Error + ". " + ex.Message;
+        }
+        ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alertMessage(\"" + alertMessage + "\");", true);
+    }
+    protected void btnTskMonitor_Click(object sender, EventArgs e)
+    {
+        TaskUserEntity task = tskMonitor.GetCurrentState();
+        task.Name = Resources.Resource.CongLdrConfigureMonitor;
+        tskMonitor.ValidateFields();
+        String compName = Request.QueryString["CompName"];
+        String userName = Anchor.GetStringForTaskGivedUser();
+        //!--
+
+        string service = ConfigurationManager.AppSettings["Service"];
+        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+        Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
+        string alertMessage = "";
+        try
+        {
+            XmlTaskParser xml = new XmlTaskParser(task.Param);
+            Int64[] taskId = new Int64[1];
+            taskId[0] = PreServAction.CreateTask(compName, task.Name, task.Param, userName, connStr);
+            String[] ipAddr = new String[1];
+            ipAddr[0] = lblIPAdress.Text;
+            string strtask = task.Param;
+            string s = @"<Type>ConfigureMonitor</Type>";
+            strtask = strtask.Replace(s, "");
+            control.PacketConfigureSettings(taskId, ipAddr, strtask);
+            alertMessage = Resources.Resource.TaskGived;
+        }
+        catch (Exception ex)
+        {
+            alertMessage = Resources.Resource.Error + ". " + ex.Message;
+        }
+        ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alertMessage(\"" + alertMessage + "\");", true);
+    }
+    protected void btnTskQuarantine_Click(object sender, EventArgs e)
+    {
+        TaskUserEntity task = tskQuarantine.GetCurrentState();
+        task.Name = Resources.Resource.TaskNameConfigureQuarantine;
+        tskMonitor.ValidateFields();
+        String compName = Request.QueryString["CompName"];
+        String userName = Anchor.GetStringForTaskGivedUser();
+        //!--
+
+        string service = ConfigurationManager.AppSettings["Service"];
+        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+        Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
+        String alertMessage = "";
+        try
+        {
+            XmlTaskParser xml = new XmlTaskParser(task.Param);
+            Int64[] taskId = new Int64[1];
+            taskId[0] = PreServAction.CreateTask(compName, task.Name, task.Param, userName, connStr);
+            String[] ipAddr = new String[1];
+            ipAddr[0] = lblIPAdress.Text;
+            string strtask = task.Param;
+            string s = @"<Type>ConfigureQuarantine</Type>";
+            strtask = strtask.Replace(s, "");
+            control.PacketConfigureSettings(taskId, ipAddr, strtask);
+            alertMessage = Resources.Resource.TaskGived;
+        }
+        catch (Exception ex)
+        {
+            alertMessage = Resources.Resource.Error + ". " + ex.Message;
+        }
+        ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alertMessage(\"" + alertMessage + "\");", true);
+    }
     /// <summary>
     /// Redirect to Processes list for this computer
     /// </summary>

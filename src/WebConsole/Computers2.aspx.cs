@@ -10,6 +10,7 @@ using VirusBlokAda.Vba32CC.JSON;
 using System.Configuration;
 using ARM2_dbcontrol.DataBase;
 using VirusBlokAda.Vba32CC.Policies;
+using System.Web.Services;
 
 /// <summary>
 /// Computers page
@@ -29,13 +30,13 @@ public partial class Computers2 : PageBase
             InitFields();
         }
     }
-    
+
     protected override void InitFields()
     {
         List<DDLPair> list = new List<DDLPair>();
         list.Add(new DDLPair(Resources.Resource.Yes, "1"));
         list.Add(new DDLPair(Resources.Resource.No, "0"));
-        
+
         fltControlCenter.DataSource = list;
         fltControlCenter.DataBind();
         fltVBA32Integrity.DataSource = list;
@@ -55,7 +56,7 @@ public partial class Computers2 : PageBase
         list.Clear();
         foreach (String policyName in provider.GetAllPolicyTypesNames())
         {
-            list.Add(new DDLPair(policyName, policyName)); 
+            list.Add(new DDLPair(policyName, policyName));
         }
         fltPolicy.DataSource = list;
         fltPolicy.DataBind();
@@ -81,8 +82,30 @@ public partial class Computers2 : PageBase
     {
         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeLoaderScript", "Ext.onReady(function(){ $get('" + btnReload.ClientID + "').onclick(\"" + e.Where + "\"); });", true);
     }
-}
 
+    #region WebMethods
+    [WebMethod]
+    public static string GetAdditionalInfo(String id)
+    {
+        Int16 compID = Convert.ToInt16(id);
+        ComputersEntityEx comp = new ComputersEntityEx();
+        CompAdditionalInfo info;
+        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        {
+            ComputersManager cmg = new ComputersManager(conn);
+            ComponentsManager cmptMngr = new ComponentsManager(conn);
+            conn.OpenConnection();
+
+            comp = cmg.GetComputerEx(compID);
+            comp = new ComputersEntityEx(comp, comp.PolicyName, cmptMngr.GetComponentsPageByComputerID(comp.ID));
+            info = new CompAdditionalInfo(comp);
+            conn.CloseConnection();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(info);
+
+        }
+    #endregion
+    }
+}
 /// <summary>
 /// Class DropDownListPair
 /// </summary>

@@ -15,7 +15,8 @@ public class ComputerPageHandler : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
         String where = context.Request.Params.Get("where");
-        where = where.Substring(1, where.Length - 2);
+        if(!String.IsNullOrEmpty(where))
+            where = where.Substring(1, where.Length - 2);
         if (String.IsNullOrEmpty(where)) where = null;
 
         context.Response.ContentType = "text/plain";
@@ -26,19 +27,20 @@ public class ComputerPageHandler : IHttpHandler {
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
-            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false, false, true, false));
+            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false, false, false, false));
             RecursiveAddChildren(tree[tree.Count - 1], provider, list, index, where);
             index++;
         }
 
         //without group
-        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, Resources.Resource.CompWithoutGroup, null), false, false, false, false, true, false));
+        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, Resources.Resource.CompWithoutGroup, null), false, false, false, false, false, false));
         foreach (ComputersEntityEx comp in provider.GetComputersExWithoutGroup(where))
         {
             for (index = 0; index < comp.Components.Count; index++)
             {
                 comp.Components[index].ComponentState = DatabaseNameLocalization.GetNameForCurrentCulture(comp.Components[index].ComponentState);
             }
+            
             tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, false, true, false, false));
         }
 

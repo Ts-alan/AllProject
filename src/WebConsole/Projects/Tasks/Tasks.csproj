@@ -53,6 +53,12 @@
     <Compile Include="Customizable\CustomizableTaskStateCollectionStorage.cs" />
     <Compile Include="Customizable\CustomizableTaskStateSerializationInfo.cs" />
     <Compile Include="Entities\ConfigureLoaderTaskEntity.cs" />
+    <Compile Include="Entities\ChangeDeviceProtectTaskEntity.cs" />
+    <Compile Include="Entities\ConfigurePasswordTaskEntity.cs" />
+    <Compile Include="Entities\SendFileTaskEntity.cs" />
+    <Compile Include="Entities\RestoreFileFromQtnTaskEntity.cs" />
+    <Compile Include="Entities\UninstallTaskEntity.cs" />
+    <Compile Include="Entities\InstallProductTaskEntity.cs" />
     <Compile Include="Entities\CreateProcessTaskEntity.cs" />
     <Compile Include="Entities\NamedTaskEntity.cs" />
     <Compile Include="Entities\QueryComponentsStateTaskEntity.cs" />

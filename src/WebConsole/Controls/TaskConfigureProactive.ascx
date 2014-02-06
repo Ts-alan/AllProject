@@ -3,11 +3,12 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:560px"><%=Resources.Resource.TaskNameConfigureProactiveProtection%></div>
 <div class="divSettings">
     <script type="text/javascript">
-        function pageLoad() {
-            $("#Tabs").tabs({ cookie: { expires: 30} });
-
+     $(document).ready(function () {
+            $("#TabsProactive").tabs({ cookie: { expires: 30} });
             $("#AccordionFileSystem").accordion({ collapsible: false, active: false, heightStyle: 'content' });
             $("#AccordionRegistry").accordion({ collapsible: false, active: false, heightStyle: 'content' });
+    });
+
         }
 
         function OnChange(lboxId, tboxAttr) {
@@ -20,7 +21,7 @@
         }
     </script>
 
-    <div id="Tabs">
+    <div id="TabsProactive" style="width:900px">
         <ul>
             <li><a href="#tab1"><%=Resources.Resource.Applications %></a> </li>
             <li><a href="#tab2"><%=Resources.Resource.FileSystem %></a> </li>

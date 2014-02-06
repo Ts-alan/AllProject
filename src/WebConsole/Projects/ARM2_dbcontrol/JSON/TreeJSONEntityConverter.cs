@@ -51,7 +51,7 @@ namespace VirusBlokAda.Vba32CC.JSON
                 qtip = GenerateQTIP(comp);
 
             return new TreeNodeJSONEntity(comp.ComputerName, comp.ID.ToString(), iconStyle, qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded, null);
+                                          isLeaf, isExpanded,comp.IPAddress,comp.OSName, null);
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
@@ -70,7 +70,7 @@ namespace VirusBlokAda.Vba32CC.JSON
                 qtip = GenerateQTIP(compEx);
 
             return new TreeNodeJSONEntity(compEx.ComputerName, compEx.ID.ToString(), GetComputerState(compEx), qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded, null, new CompAdditionalInfo(compEx));
+                                          isLeaf, isExpanded,compEx.IPAddress,compEx.OSName, null/*, new CompAdditionalInfo(compEx)*/);
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(

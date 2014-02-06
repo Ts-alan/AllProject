@@ -11,7 +11,8 @@ using System.Xml.Serialization;
 
 namespace Tasks.Entities
 {
-    [XmlInclude(typeof(CreateProcessTaskEntity)), XmlInclude(typeof(ConfigureLoaderTaskEntity))]
+    [XmlInclude(typeof(CreateProcessTaskEntity)), XmlInclude(typeof(ConfigureLoaderTaskEntity)), XmlInclude(typeof(ConfigurePasswordTaskEntity)), XmlInclude(typeof(UninstallTaskEntity)),
+    XmlInclude(typeof(RestoreFileFromQtnTaskEntity)), XmlInclude(typeof(InstallProductTaskEntity)), XmlInclude(typeof(ChangeDeviceProtectTaskEntity)),XmlInclude(typeof(SendFileTaskEntity))]
     public abstract class TaskEntity
     {
         #region Properties

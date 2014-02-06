@@ -2898,6 +2898,9 @@ system administrator.</value>
   <data name="Excluded" xml:space="preserve">
     <value>Excluded</value>
   </data>
+  <data name="ChangeComponentSettings" xml:space="preserve">
+    <value>Change component settings</value>
+  </data>
   <data name="PoollingTimeInterval" xml:space="preserve">
     <value>Pooling interval</value>
   </data>

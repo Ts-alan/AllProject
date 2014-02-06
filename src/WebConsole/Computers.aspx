@@ -194,7 +194,7 @@
 
                             </td>
                             <td>
-                                   <div runat="server" id="divPolicyMenu" class="menuS" >
+                                   <div runat="server" id="divPolicyMenu" class="menu" style="position:relative;z-index:50">
                                     <ul> 
                                         <li><a><%=Resources.Resource.Action%></a>
                                             <ul>

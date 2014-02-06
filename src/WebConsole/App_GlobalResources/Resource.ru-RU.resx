@@ -2886,6 +2886,9 @@
   <data name="Excluded" xml:space="preserve">
     <value>Исключения</value>
   </data>
+  <data name="ChangeComponentSettings" xml:space="preserve">
+    <value>Изменить настройки компонента</value>
+  </data>
   <data name="PoollingTimeInterval" xml:space="preserve">
     <value>Интервал опроса</value>
   </data>
