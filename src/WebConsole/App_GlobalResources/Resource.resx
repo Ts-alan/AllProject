@@ -2928,4 +2928,7 @@ system administrator.</value>
   <data name="Client" xml:space="preserve">
     <value>Client</value>
   </data>
+  <data name="ShowAdditionalInfo" xml:space="preserve">
+    <value>Show additional info about computer</value>
+  </data>
 </root>

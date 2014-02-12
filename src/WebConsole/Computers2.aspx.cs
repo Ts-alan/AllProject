@@ -11,6 +11,8 @@ using System.Configuration;
 using ARM2_dbcontrol.DataBase;
 using VirusBlokAda.Vba32CC.Policies;
 using System.Web.Services;
+using Tasks.Common;
+using ARM2_dbcontrol.Service.TaskAssignment;
 
 /// <summary>
 /// Computers page
@@ -103,9 +105,35 @@ public partial class Computers2 : PageBase
             return Newtonsoft.Json.JsonConvert.SerializeObject(info);
 
         }
-    #endregion
     }
+    #endregion
+    
+    #region Tasks
+    protected void CompositeTaskPanel_TaskAssign(object sender, TaskEventArgs e)
+    {
+        
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
+        String[] CompNames = hdnSelectedCompsNames.Value.Split('&');
+        String[] CompIP = hdnSelectedCompsIP.Value.Split('&');
+
+        Int64[] taskId = new Int64[CompNames.Length];
+
+        String userName = Anchor.GetStringForTaskGivedUser();
+        string service = ConfigurationManager.AppSettings["Service"];
+        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+
+        Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
+
+        for (int i = 0; i < CompNames.Length; i++)
+        {
+      //      taskId[i] = PreServAction.CreateTask(CompNames[i]," task.Name", task.Param, userName, connStr);
+        }
+        string str = e.Xml;
+      /*  control.PacketNewTask(taskId,CompIP, str);  */
+    }
+    #endregion
 }
+
 /// <summary>
 /// Class DropDownListPair
 /// </summary>

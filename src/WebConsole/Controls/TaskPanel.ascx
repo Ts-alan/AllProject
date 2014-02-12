@@ -7,12 +7,13 @@
         return {
             //enable assigntask and assigntasktoall buttons            
             EnableActionButtons: function () {
+            /**/
                 $('#<%= divAssignTask.ClientID %>').removeClass("ButtonDisabled");
                 $('#<%= divAssignTask.ClientID %>').addClass("Button");
                 $('#<%= divAssignTaskToAll.ClientID %>').removeClass("ButtonDisabled");
                 $('#<%= divAssignTaskToAll.ClientID %>').addClass("Button");
-                $('#<%= lbtnAssignTask.ClientID %>').click( function () { });
-                $('#<%= lbtnAssignTaskToAll.ClientID %>').click(function () { });
+                $get('<%= lbtnAssignTask.ClientID %>').onclick="";
+                $get('<%= lbtnAssignTaskToAll.ClientID %>').onclick="";
             },
             //disable assigntask and assigntasktoall buttons
             DisableActionButtons: function () {
@@ -20,8 +21,8 @@
                 $('#<%= divAssignTask.ClientID %>').addClass("ButtonDisabled");
                 $('#<%= divAssignTaskToAll.ClientID %>').removeClass("Button");
                 $('#<%= divAssignTaskToAll.ClientID %>').addClass("ButtonDisabled");
-                $('#<%= lbtnAssignTask.ClientID %>').click(function(){ return false; });
-                $('#<%= lbtnAssignTaskToAll.ClientID %>').click(function(){ return false; });
+                $get('<%= lbtnAssignTask.ClientID %>').onclick=function(){ return false; };
+                $get('<%= lbtnAssignTaskToAll.ClientID %>').onclick=function(){ return false; };
             }
         };
     } ();
@@ -45,11 +46,11 @@
         </div>
         <div>
             <div id="divAssignTask" runat="server" style="width: 100px; float: left">
-                <asp:LinkButton ID="lbtnAssignTask" SkinID="TaskActions" runat="server" OnClick="lbtnAssignTask_Click"
+                <asp:LinkButton ID="lbtnAssignTask" SkinID="TaskActions" runat="server" OnClick="lbtnAssignTask_Click" OnClientClick="return false;"
                     ForeColor="White" Text="<%$ Resources:Resource, AssignTask %>" />
             </div>
             <div id="divAssignTaskToAll" runat="server" style="width: 210px; float: left">
-                <asp:LinkButton ID="lbtnAssignTaskToAll" SkinID="TaskActions" runat="server" OnClick="lbtnAssignTaskToAll_Click"
+                <asp:LinkButton ID="lbtnAssignTaskToAll" SkinID="TaskActions" runat="server" OnClick="lbtnAssignTaskToAll_Click" OnClientClick="return false;"
                     ForeColor="White" Text="<%$ Resources:Resource, AssignTaskToAll %>" />
             </div>
         </div>

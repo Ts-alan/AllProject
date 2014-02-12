@@ -2916,4 +2916,7 @@
   <data name="CongScannerRemote" xml:space="preserve">
     <value>Сервер сканирования</value>
   </data>
+  <data name="ShowAdditionalInfo" xml:space="preserve">
+    <value>Показать дополнительную информацию о компьютере</value>
+  </data>
 </root>

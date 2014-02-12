@@ -15,8 +15,8 @@ public class ComputerPageHandler : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
         String where = context.Request.Params.Get("where");
-        if(!String.IsNullOrEmpty(where))
-            where = where.Substring(1, where.Length - 2);
+    /*    if(!String.IsNullOrEmpty(where))
+            where = where.Substring(1, where.Length - 2);*/
         if (String.IsNullOrEmpty(where)) where = null;
 
         context.Response.ContentType = "text/plain";
