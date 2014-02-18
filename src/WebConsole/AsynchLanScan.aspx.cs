@@ -81,6 +81,7 @@ public partial class AsynchLanScan : PageBase
                 SortIsSelectedDesc();
             }
         }
+        ReloadGridView();
     }
 
     protected void Page_Prerender(object sender, EventArgs e)
@@ -920,6 +921,8 @@ public partial class AsynchLanScan : PageBase
             var gridViewSelector = '#" + GridView1.ClientID + @"';
             var hfSelectOptionsSelector = '#" + hfSelectOptions.ClientID + @"';
 
+
+            
             function ToggleCheckUncheckAllOptionAsNeeded() {
                 var totalCountAvailable = GetTotalCountAvailable();
                 var totalCountSelected = GetTotalCountSelected();
@@ -932,10 +935,11 @@ public partial class AsynchLanScan : PageBase
                 if (countCheckboxes.available == 0)
                 {
                     $(allCheckBoxSelector).attr('disabled', true);
-                    $(allCheckBoxSelector).attr('checked', false);
+                    $(allCheckBoxSelector).prop('checked', false);
                 }
                 else {
-                    $(allCheckBoxSelector).attr('checked', allCheckboxesOnPageAreChecked);
+                    $(allCheckBoxSelector).prop('checked', allCheckboxesOnPageAreChecked);
+
                 }
 
                 if (allCheckboxesOnPageAreChecked) {
@@ -1008,6 +1012,7 @@ public partial class AsynchLanScan : PageBase
             }
             
             function GetTotalCountSelected() {
+                
                 return parseInt($(gridViewSelector).attr('" + totalCountSelectedKey + @"'));
             }
 
@@ -1016,7 +1021,7 @@ public partial class AsynchLanScan : PageBase
             }
 
             function SetTotalCountSelected(totalCountSelected) {
-                $(gridViewSelector).attr('" + totalCountSelectedKey + @"', totalCountSelected);
+                $(gridViewSelector).attr('" + totalCountSelectedKey + @"', totalCountSelected);              
             }
 
             function EditTotalCountOnSelectAllOnPage()
@@ -1026,6 +1031,8 @@ public partial class AsynchLanScan : PageBase
                 totalCountSelected -= countCheckboxes.checked;
                 totalCountSelected += countCheckboxes.available;  
                 SetTotalCountSelected(totalCountSelected);
+
+                
             }
 
             function EditTotalCountOnUnselectAllOnPage()
@@ -1062,20 +1069,24 @@ public partial class AsynchLanScan : PageBase
                     }
                     else if (val=='selectAllPage') { 
                         EditTotalCountOnSelectAllOnPage();
+                        
                         $(checkBoxSelector).each(function() {
+                            
                             if (!$(this).is(':disabled'))
                             {
-                                $(this).attr('checked', true); 
+                                $(this).prop('checked', true); 
                             }
                         });                 
                         ToggleCheckUncheckAllOptionAsNeeded();                            
                     }
                     else if (val=='unselectAllPage') { 
                         EditTotalCountOnUnselectAllOnPage();
+
                             $(checkBoxSelector).each(function() {
+
                             if (!$(this).is(':disabled'))
                             {
-                                $(this).attr('checked', false); 
+                                $(this).prop('checked', false); 
                             }
                         });
                         ToggleCheckUncheckAllOptionAsNeeded();
@@ -1086,7 +1097,7 @@ public partial class AsynchLanScan : PageBase
                         $(checkBoxSelector).each(function() {
                             if (!$(this).is(':disabled'))
                             {
-                                $(this).attr('checked', true); 
+                                $(this).prop('checked', true); 
                             }
                         });                  
                         ToggleCheckUncheckAllOptionAsNeeded();
@@ -1097,14 +1108,14 @@ public partial class AsynchLanScan : PageBase
                         $(checkBoxSelector).each(function() {
                             if (!$(this).is(':disabled'))
                             {
-                                $(this).attr('checked', false); 
+                                $(this).prop('checked', false); 
                             }
                         });
                         ToggleCheckUncheckAllOptionAsNeeded();
                     }
 			    });
 
-                $(allCheckBoxSelector).bind('click', function (event) {
+                $(allCheckBoxSelector).on('click', function (event) {
                     event.stopPropagation(); 
                     if ($(this).is(':checked'))
                     {
@@ -1113,18 +1124,46 @@ public partial class AsynchLanScan : PageBase
                     else
                     {
                         EditTotalCountOnUnselectAllOnPage();
+
                     }
                     var checked = $(this).is(':checked');
+   
                     $(checkBoxSelector).each(function() {
                         if (!$(this).is(':disabled'))
                         {
-                            $(this).attr('checked', checked); 
+                            
+                            $(this).prop('checked', checked); 
                         }
                     });
                     ToggleCheckUncheckAllOptionAsNeeded();
                 });
+                
+                $(allCheckBoxSelector).on('dblclick', function (event) {
+                    event.stopPropagation();
+                    if(navigator.appName==='Microsoft Internet Explorer') 
+                        {
+                            $(this).prop('checked',!$(this).is(':checked') );  
+                            if ($(this).is(':checked'))
+                            {
+                                EditTotalCountOnSelectAllOnPage();
+                            }
+                            else
+                            {
+                                EditTotalCountOnUnselectAllOnPage();
+                            }
+                            var checked = $(this).is(':checked');
+   
+                            $(checkBoxSelector).each(function() {
+                                if (!$(this).is(':disabled'))
+                                {                            
+                                    $(this).prop('checked', checked); 
+                                }
+                            });
+                            ToggleCheckUncheckAllOptionAsNeeded();
+                        }
+                });
 
-                $(checkBoxSelector).bind('click', function () {
+                $(checkBoxSelector).on('click', function () {
                     var totalCountSelected = GetTotalCountSelected();
                     if ($(this).is(':checked'))
                     {                        
@@ -1137,7 +1176,23 @@ public partial class AsynchLanScan : PageBase
                     SetTotalCountSelected(totalCountSelected);
                     ToggleCheckUncheckAllOptionAsNeeded();
                 });
-
+                $(checkBoxSelector).on('dblclick', function () {
+                    if(navigator.appName==='Microsoft Internet Explorer') 
+                        {                            
+                            var totalCountSelected = GetTotalCountSelected();
+                            if ($(this).is(':checked'))
+                            {                        
+                                totalCountSelected=totalCountSelected-2;                        
+                            }
+                            else
+                            {
+                                totalCountSelected=totalCountSelected+2;
+                            }
+                            SetTotalCountSelected(totalCountSelected);
+                            $(this).prop('checked',!$(this).is(':checked') ); 
+                            ToggleCheckUncheckAllOptionAsNeeded();
+                         }                   
+                });
                 ToggleCheckUncheckAllOptionAsNeeded();              
             });";
         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);        
@@ -1177,6 +1232,7 @@ public partial class AsynchLanScan : PageBase
             if (next.IsSelected)
             {
                 next.IsDisabled = false;
+                /*next.IsSelected = false;*/
                 RemoteInstallEntity rie = new RemoteInstallEntity();
                 rie.IP = next.IPAddress.ToString();
                 rie.ComputerName = next.Name;
@@ -1185,6 +1241,7 @@ public partial class AsynchLanScan : PageBase
                 rie.ConfigPath = pathConfig;
                 installEntities.Add(rie);
             }
+            ReloadGridView();
         }
 
         RemoteInstaller installer = new RemoteInstaller(GetCredentials(), 40, ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);

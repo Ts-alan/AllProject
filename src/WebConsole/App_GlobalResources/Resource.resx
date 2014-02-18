@@ -2931,4 +2931,7 @@ system administrator.</value>
   <data name="ShowAdditionalInfo" xml:space="preserve">
     <value>Show additional info about computer</value>
   </data>
+  <data name="TotallySelected" xml:space="preserve">
+    <value>Totally Selected</value>
+  </data>
 </root>

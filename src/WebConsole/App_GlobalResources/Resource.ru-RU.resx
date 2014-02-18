@@ -2919,4 +2919,7 @@
   <data name="ShowAdditionalInfo" xml:space="preserve">
     <value>Показать дополнительную информацию о компьютере</value>
   </data>
+  <data name="TotallySelected" xml:space="preserve">
+    <value>Всего выбрано</value>
+  </data>
 </root>
