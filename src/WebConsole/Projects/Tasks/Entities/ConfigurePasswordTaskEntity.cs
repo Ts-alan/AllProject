@@ -27,5 +27,11 @@ namespace Tasks.Entities
             get { return _password; }
             set { _password = value; }
         }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

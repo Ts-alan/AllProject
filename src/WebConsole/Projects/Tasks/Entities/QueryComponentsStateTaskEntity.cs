@@ -9,5 +9,13 @@ namespace Tasks.Entities
     public class QueryComponentsStateTaskEntity : TaskEntity
     {
         public QueryComponentsStateTaskEntity() : base("ComponentState") { }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
+
+
 }

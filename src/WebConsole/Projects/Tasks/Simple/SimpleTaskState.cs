@@ -18,6 +18,17 @@ namespace Tasks.Simple
         {
             return entity.ToXmlString();
         }
+
+        public override string GetTaskXml()
+        {
+            return entity.ToTaskXml();
+        }
+
+        public override string GetTaskName()
+        {
+            return entity.Type;
+        }
+
         #endregion
 
         #region Properties
@@ -48,5 +59,7 @@ namespace Tasks.Simple
             _taskType = taskType;
         }
         #endregion
+
+        
     }
 }

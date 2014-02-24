@@ -363,5 +363,16 @@ public partial class Controls_CustomizableTask : System.Web.UI.UserControl, ITas
         //return xml string corresponding to this task
         return currentCustomizableTaskState.GetXmlString();
     }
+
+    public string GetTaskXml()
+    {
+        return currentCustomizableTaskState.GetTaskXml();
+    }
+
+    public string GetTaskName()
+    {
+        return currentCustomizableTaskState.GetTaskName();
+    }
     #endregion
+
 }

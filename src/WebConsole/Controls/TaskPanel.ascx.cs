@@ -139,12 +139,12 @@ public partial class Controls_TaskPanel : System.Web.UI.UserControl
        Description("Task assign event"),
     ]
     public event EventHandler<TaskEventArgs> TaskAssign;
-    protected void OnTaskAssign(string xml, bool assignToAll)
+    protected void OnTaskAssign(TaskInfo taskInfo, bool assignToAll)
     {
         EventHandler<TaskEventArgs> temp = TaskAssign;
         if (temp != null)
         {
-            temp(this, new TaskEventArgs(xml, assignToAll));
+            temp(this, new TaskEventArgs(taskInfo.Xml,taskInfo.TaskXml,taskInfo.TaskName, assignToAll));
         }
     }
     #endregion
@@ -197,7 +197,7 @@ public partial class Controls_TaskPanel : System.Web.UI.UserControl
 
     #region Helper Methods
     //returns xml string for active task
-    private string ActiveTaskXml()
+    private TaskInfo ActiveTaskXml()
     {
         ITask activeTask = ActiveTask();
         if (activeTask == null)
@@ -205,7 +205,11 @@ public partial class Controls_TaskPanel : System.Web.UI.UserControl
             throw new InvalidOperationException(String.Format(
                 "CompositeTaskPanel {0} is trying to assign task when no task is active.", ClientID));
         }
-        return activeTask.GetXmlString();
+        TaskInfo taskInfo;
+        taskInfo.TaskName = activeTask.GetTaskName();
+        taskInfo.TaskXml = activeTask.GetTaskXml();
+        taskInfo.Xml = activeTask.GetXmlString();
+        return taskInfo;
     }
 
     //returns active ITask if any
@@ -253,4 +257,11 @@ public partial class Controls_TaskPanel : System.Web.UI.UserControl
         }
     }
     #endregion
+
+    protected struct TaskInfo
+    {
+        public string Xml;
+        public string TaskXml;
+        public string TaskName;
+    }
 }

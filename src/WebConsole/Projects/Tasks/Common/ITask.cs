@@ -8,5 +8,7 @@ namespace Tasks.Common
     {
         bool IsActive();
         string GetXmlString();
+        string GetTaskXml();
+        string GetTaskName();
     }
 }

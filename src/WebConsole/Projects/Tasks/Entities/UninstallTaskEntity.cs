@@ -58,5 +58,11 @@ namespace Tasks.Entities
             get { return _selectedIndex; }
             set { _selectedIndex = value; }
         }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

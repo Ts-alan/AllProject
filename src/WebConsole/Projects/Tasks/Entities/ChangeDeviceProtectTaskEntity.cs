@@ -27,5 +27,11 @@ namespace Tasks.Entities
             get { return _index; }
             set { _index = value; }
         }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

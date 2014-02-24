@@ -119,17 +119,16 @@ public partial class Computers2 : PageBase
         Int64[] taskId = new Int64[CompNames.Length];
 
         String userName = Anchor.GetStringForTaskGivedUser();
-        string service = ConfigurationManager.AppSettings["Service"];
-        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+        String service = ConfigurationManager.AppSettings["Service"];
+        String connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
 
         Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
 
         for (int i = 0; i < CompNames.Length; i++)
         {
-      //      taskId[i] = PreServAction.CreateTask(CompNames[i]," task.Name", task.Param, userName, connStr);
+            taskId[i] = PreServAction.CreateTask(CompNames[i], e.TaskName, e.Xml, userName, connStr);
         }
-        string str = e.Xml;
-      /*  control.PacketNewTask(taskId,CompIP, str);  */
+        control.PacketCustomAction(taskId,CompIP, e.TaskXml);
     }
     #endregion
 }

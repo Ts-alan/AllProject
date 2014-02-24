@@ -28,5 +28,11 @@ namespace Tasks.Entities
             get { return _fullPath; }
             set { _fullPath = value; }
         }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

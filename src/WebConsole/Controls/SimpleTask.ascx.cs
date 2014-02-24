@@ -90,6 +90,16 @@ public partial class Controls_SimpleTask : System.Web.UI.UserControl, ITask
         //return xml string corresponding to this task
         return currentSimpleTaskState.GetXmlString();
     }
+
+    public string GetTaskXml()
+    {
+        return currentSimpleTaskState.GetTaskXml();
+    }
+
+    public string GetTaskName()
+    {
+        return currentSimpleTaskState.GetTaskName();
+    }
     #endregion
 
     #region Task State
@@ -126,4 +136,7 @@ public partial class Controls_SimpleTask : System.Web.UI.UserControl, ITask
         set { _taskType = value; }
     }
     #endregion
+
+
+
 }

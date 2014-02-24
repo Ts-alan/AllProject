@@ -138,6 +138,16 @@ namespace Tasks.Customizable
         {
             return GetSelectedTask().ToXmlString();
         }
+
+        public override string GetTaskXml()
+        {
+            return GetSelectedTask().ToTaskXml();
+        }
+
+        public override string GetTaskName()
+        {
+            return GetSelectedTask().Type;
+        }
         #endregion
 
         #region TaskType

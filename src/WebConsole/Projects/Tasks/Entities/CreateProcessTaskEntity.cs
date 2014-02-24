@@ -34,5 +34,11 @@ namespace Tasks.Entities
             get { return _commandLine; }
             set { _commandLine = value; }
         }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

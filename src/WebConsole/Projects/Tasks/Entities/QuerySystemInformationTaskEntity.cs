@@ -8,5 +8,11 @@ namespace Tasks.Entities
     public class QuerySystemInformationTaskEntity : TaskEntity
     {
         public QuerySystemInformationTaskEntity() : base("SystemInfo") { }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

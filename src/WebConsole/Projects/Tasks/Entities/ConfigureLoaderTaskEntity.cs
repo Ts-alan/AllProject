@@ -208,5 +208,11 @@ namespace Tasks.Entities
         }
 
         public ConfigureLoaderTaskEntity() : base("ConfigureLoader") { }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

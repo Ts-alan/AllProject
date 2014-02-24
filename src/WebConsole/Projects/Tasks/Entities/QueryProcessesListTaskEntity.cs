@@ -9,5 +9,11 @@ namespace Tasks.Entities
     public class QueryProcessesListTaskEntity : TaskEntity
     {
         public QueryProcessesListTaskEntity() : base("ListProcesses") { }
+
+        [Obsolete("Необходимо переопределить")]
+        public override string ToTaskXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

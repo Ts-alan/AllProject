@@ -69,6 +69,8 @@ namespace Tasks.Entities
             return sb.ToString();
         }
 
+        public abstract string ToTaskXml();
+
         public override bool Equals(object obj)
         {
             if (obj.GetType() != this.GetType())

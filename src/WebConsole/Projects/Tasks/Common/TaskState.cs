@@ -16,5 +16,9 @@ namespace Tasks.Common
         public abstract bool IsActive();
 
         public abstract string GetXmlString();
+
+        public abstract string GetTaskXml();
+
+        public abstract string GetTaskName();
     }
 }
