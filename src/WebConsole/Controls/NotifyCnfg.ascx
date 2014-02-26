@@ -1,17 +1,13 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="NotifyCnfg.ascx.cs" Inherits="Controls_NotifyCnfg" %>
 
 <script language="javascript" type="text/javascript">
-
-
     function IsMail(value) {
         var mail = new RegExp(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/);
         return mail.test(value);
     }
 
-//Select
+    //Select
     function AddToSelect(path, sel, hdn, isMail) {
-
-    
        if(path.value == "")
            return;
 
@@ -116,10 +112,10 @@
 <table class="NotifyControl" runat="server" id="tblMail" disabled="true">
     <tr>
         <td>
-            <asp:Label ID="lblMailSubject" runat=server>Subject</asp:Label>
+            <asp:Label ID="lblMailSubject" runat="server">Subject</asp:Label>
         </td>
         <td style="width:170px;">
-            <asp:Label ID="lblMailAddresses" runat=server>Addresses</asp:Label>
+            <asp:Label ID="lblMailAddresses" runat="server">Addresses</asp:Label>
         </td>
         <td align=left> 
         </td>
@@ -131,14 +127,14 @@
         <td style="width:170px;">
             <asp:TextBox ID="tboxMailAddresses" runat="server" style="width:160px" Enabled="false"  />
         </td>
-        <td valign=middle align=left>
+        <td valign="middle" align="left">
             <a id="lbtnMailAdd" onclick="AddToSelect($get('<%=tboxMailAddresses.ClientID%>'),$get('<%=lboxMailAddresses.ClientID%>'),$get('<%=hdnMail.ClientID%>'), 1);"><%=Resources.Resource.Add%></a>
         </td>
     </tr>
     <tr>
         <td style="width:270px;">
-            <asp:Label ID="lblMailBody" runat=server>Body</asp:Label>
-            <asp:TextBox ID="tboxMailBody" Enabled="false" runat="server" TextMode=MultiLine style="width:260px;height:100px" />
+            <asp:Label ID="lblMailBody" runat="server">Body</asp:Label>
+            <asp:TextBox ID="tboxMailBody" Enabled="false" runat="server" TextMode="MultiLine" style="width:260px;height:100px" />
             
         </td>
         <td style="width:170px;">
@@ -167,9 +163,9 @@
         <td>
         </td>
         <td style="width:170px;">
-            <asp:Label ID="lblJabberAddresses" runat=server>Addresses</asp:Label>
+            <asp:Label ID="lblJabberAddresses" runat="server">Addresses</asp:Label>
         </td>
-        <td align=left>
+        <td align="left">
         </td>
     </tr>
     <tr>

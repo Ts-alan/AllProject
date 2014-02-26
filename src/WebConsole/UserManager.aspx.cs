@@ -17,16 +17,8 @@ public partial class UserManager : PageBase
         base.Page_Init(sender, e);
     }
 
-    protected new void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-        base.Page_PreInit(sender, e);
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
-        
         if (!Roles.IsUserInRole("Administrator"))
         {
             Response.Redirect("Default.aspx");
@@ -45,15 +37,14 @@ public partial class UserManager : PageBase
         btnCancelCreateUser.ImageUrl = "~/App_Themes/" + Profile.Theme + "/Images/close.gif";
         btnCancelEditUser.ImageUrl = "~/App_Themes/" + Profile.Theme + "/Images/close.gif";
     }
+
     protected void SetRegularExpressions()
     {
-        regexPassword.ValidationExpression =
-        "^.*(?=.{7,})(?=.*[\\W]).*$";
-        regexEmail.ValidationExpression =
-            "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
-        regexEmailEdit.ValidationExpression =
-            "^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$";
+        regexPassword.ValidationExpression = RegularExpressions.Password;
+        regexEmail.ValidationExpression = RegularExpressions.Email;
+        regexEmailEdit.ValidationExpression = RegularExpressions.Email;
     }
+
     #endregion
 
     #region users grid

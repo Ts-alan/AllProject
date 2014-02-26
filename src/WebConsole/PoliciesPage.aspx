@@ -22,7 +22,7 @@
     function OnClientCheck()
     {
         var tbox = $get('<%=tboxPolicyName.ClientID%>');
-        var expr = new RegExp("^[a-zA-Z\u0451\u0401а-яА-Я_0-9 -]+$");
+        var expr = new RegExp('<%=RegularExpressions.PolicyName %>');
         if(!expr.test(tbox.value))
         {
             alert('<%=Resources.Resource.ErrorPolicyName%>');

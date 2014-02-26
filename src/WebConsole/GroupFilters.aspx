@@ -18,7 +18,7 @@
             return false;
         }
 
-        var expr = new RegExp("^[a-zA-Z_а-яА-Я0-9\u0020\u0451\u0401.\-]+$");
+        var expr = new RegExp('<%=RegularExpressions.FilterName %>');
         if (!expr.test(tbox.value)) {
             alert('No correct name.');
             return false;
@@ -34,13 +34,13 @@
     <div  class="divSettings">
     <table class="ListContrastTable">
         <tr>
-             <td colspan=2 align=center>
-                <asp:Label ID="lblMessage" runat=server Visible=false></asp:Label>
+             <td colspan="2" align="center">
+                <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
             </td>
         </tr>
         <tr>
           <td class="area">
-            <cmpfltMain:GroupFilters runat=server ID="cmpfltMain" />
+            <cmpfltMain:GroupFilters runat="server" ID="cmpfltMain" />
           </td>          
     </table> 
     </div>

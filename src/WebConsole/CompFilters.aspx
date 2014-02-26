@@ -23,8 +23,8 @@ function ValidationFilterName()
         alert("No correct length name.");
         return false;
     }
-    
-    var expr = new RegExp("^[a-zA-Z_à-ÿÀ-ß0-9\u0020\u0451\u0401.\-]+$");
+
+    var expr = new RegExp('<%=RegularExpressions.FilterName %>');
     if(!expr.test(tbox.value))
     {
         alert('No correct name.');
@@ -42,26 +42,26 @@ function ValidationFilterName()
     <div  class="divSettings">
     <table class="ListContrastTable">
         <tr>
-             <td colspan=2 align=center>
-                <asp:Label ID="lblMessage" runat=server Visible=false></asp:Label>
+             <td colspan="2" align="center">
+                <asp:Label ID="lblMessage" runat="server" Visible="false"></asp:Label>
             </td>
         </tr>
         <tr>
           <td class="area">
-            <cmpfltMain:CompFilters runat=server ID="cmpfltMain" />
+            <cmpfltMain:CompFilters runat="server" ID="cmpfltMain" />
           </td>
           <td class="area">
-            <cmpfltExtra:CompFilters runat=server ID="cmpfltExtra" />
+            <cmpfltExtra:CompFilters runat="server" ID="cmpfltExtra" />
           </td>
         </tr>
          <tr>
-          <td colspan=2 class="area">
-            <cmpfltDate:CompFilters runat=server ID="cmpfltDate" />
+          <td colspan="2" class="area">
+            <cmpfltDate:CompFilters runat="server" ID="cmpfltDate" />
           </td>
           </tr>
          <tr>
-          <td colspan=2 class="area">
-            <cmpfltBool:CompFilters runat=server ID="cmpfltBool" />
+          <td colspan="2" class="area">
+            <cmpfltBool:CompFilters runat="server" ID="cmpfltBool" />
           </td>
         </tr>
     </table> 

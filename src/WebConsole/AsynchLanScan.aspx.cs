@@ -102,6 +102,8 @@ public partial class AsynchLanScan : PageBase
         lblPingTimeout.Text = Resources.Resource.Timeout;
         rangePingCount.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 10);
         rangePingTimeout.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 1, 100);
+
+        regexNewIpAddress.ValidationExpression = RegularExpressions.IPAddressRangeFull;
     }        
     #endregion
 
