@@ -31,7 +31,14 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<SetRegistrySettings>");
+            result.AppendFormat(@"<Common><RegisterPath>{0}</RegisterPath><IsDeleteOld>0</IsDeleteOld></Common>",
+                        @"HKLM\SOFTWARE\Vba32\Loader\Devices");
+            result.AppendFormat(@"<Settings><DEVICE_PROTECT>reg_dword:{0}</DEVICE_PROTECT></Settings>", Index);
+            result.Append("</SetRegistrySettings>");
+            return result.ToString();
         }
     }
 }

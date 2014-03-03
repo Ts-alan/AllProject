@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tasks.Attributes;
+using Tasks.Service;
 
 namespace Tasks.Entities
 {
@@ -206,13 +207,105 @@ namespace Tasks.Entities
             get { return _proxyPassword; }
             set { _proxyPassword = value; }
         }
+        private bool _scanUSB;
+        [TaskEntityBooleanProperty("SCAN_USB", format = "reg_dword:{0}")]
+        public bool ScanUsb
+        {
+            get { return _scanUSB; }
+            set { _scanUSB = value; }
+        }
+
+
 
         public ConfigureLoaderTaskEntity() : base("ConfigureLoader") { }
 
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+
+
+
+            String PassPrefix = "HER!%&$";
+            StringBuilder result = new StringBuilder(1024);
+
+            result.Append("<TaskConfigureSettings>");
+            result.Append("<loader>");
+            result.AppendFormat("<AUTO_START>reg_dword:{0}</AUTO_START>", (LaunchLoaderAtStart==true)?"1":"0");
+            result.AppendFormat("<MONITOR_AUTO_START>reg_dword:{0}</MONITOR_AUTO_START>", (EnableMonitorAtStart == true) ? "1" : "0");
+            result.AppendFormat("<PROTECT_LOADER>reg_dword:{0}</PROTECT_LOADER>", (ProtectProcess == true) ? "1" : "0");
+            result.AppendFormat("<SHOW_WINDOW>reg_dword:{0}</SHOW_WINDOW>", (DisplayLoadingProgress== true) ? "1" : "0");
+            result.AppendFormat("<AUTO_CHECK_MEMORY>reg_dword:{0}</AUTO_CHECK_MEMORY>", (ScanMemory == true) ? "1" : "0");
+            if (ScanMemoryMode > -1)
+            {
+                result.AppendFormat("<CHECK_MEMORY_MODE>reg_dword:{0}</CHECK_MEMORY_MODE>", ScanMemoryMode.ToString());
+            }
+            result.AppendFormat("<AUTO_CHECK_BOOT>reg_dword:{0}</AUTO_CHECK_BOOT>", (ScanBoot == true) ? "1" : "0");
+            result.AppendFormat("<AUTO_CHECK_BOOT_FLOPPY>reg_dword:{0}</AUTO_CHECK_BOOT_FLOPPY>", (ScanBootFloppy == true) ? "1" : "0");
+            result.AppendFormat("<LOG_LIMIT>reg_dword:{0}</LOG_LIMIT>", (MaximumSizeLog == true) ? "1" : "0");
+            result.AppendFormat("<SOUND>reg_dword:{0}</SOUND>", (SoundWarning == true) ? "1" : "0");
+            result.AppendFormat("<ANIMATION>reg_dword:{0}</ANIMATION>", (TrayIcon == true) ? "1" : "0");
+            result.AppendFormat("<UPDATE_TIME>reg_dword:{0}</UPDATE_TIME>", (TimeIntervals == true) ? "1" : "0");
+            result.AppendFormat("<UPDATE_INTERACTIVE>reg_dword:{0}</UPDATE_INTERACTIVE>", (Interactive == true) ? "1" : "0");
+            result.AppendFormat("<PROXY_USAGE>reg_dword:{0}</PROXY_USAGE>", (UseProxyServer == true) ? "1" : "0");
+            result.AppendFormat("<PROXY_AUTHORIZE>reg_dword:{0}</PROXY_AUTHORIZE>", (UseAccount == true) ? "1" : "0");
+
+            
+            result.AppendFormat("<LOG_NAME>reg_sz:{0}</LOG_NAME>",String.IsNullOrEmpty(LogFile) ? "Vba32Ldr.log" : LogFile);
+            if (MaximumSizeLog == true &&MaximumSizeLogValue>-1)
+            {
+                result.AppendFormat("<LOG_LIMIT_VALUE>reg_dword:{0}</LOG_LIMIT_VALUE>",MaximumSizeLogValue.ToString());
+            }
+            if (TimeIntervalsValue != String.Empty)
+            {
+                result.AppendFormat("<UPDATE_TIME_VALUE>reg_sz:{0}</UPDATE_TIME_VALUE>", TimeIntervalsValue);
+            }
+            if (UpdateFolder != String.Empty)
+            {
+                result.AppendFormat("<UPDATE_FOLDER>reg_sz:{0}</UPDATE_FOLDER>", UpdateFolder);
+            }
+            if (UpdateFolderList!=String.Empty)
+            {
+                result.AppendFormat("<UPDATE_FOLDER_LIST>reg_multi_sz:{0}</UPDATE_FOLDER_LIST>", UpdateFolderList);
+            }
+            if (!String.IsNullOrEmpty(ProxyAddress))
+            {
+                result.AppendFormat("<PROXY_ADDRESS>reg_sz:{0}</PROXY_ADDRESS>", ProxyAddress);
+                result.AppendFormat("<PROXY_PORT>reg_sz:{0}</PROXY_PORT>", ProxyPort.ToString());
+            }
+            if (!String.IsNullOrEmpty(ProxyUser))
+            {
+                result.AppendFormat("<PROXY_USER>reg_sz:{0}</PROXY_USER>", ProxyUser);
+
+                if (!ProxyPassword.Contains(PassPrefix))
+                {
+                    Byte[] bytes = Encoding.Unicode.GetBytes(ProxyPassword);
+
+                    Byte xorValue = 0xAA;
+                    Byte delta = 0x1;
+
+                    for (Int32 i = 0; i < bytes.Length; i++)
+                    {
+                        bytes[i] ^= xorValue;
+                        delta = Convert.ToByte(delta % 3 + 1);
+                        xorValue += delta;
+                    }
+                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>",PreServAction.ConvertToDumpString(bytes) );
+                }
+                else
+                {
+                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>", ProxyPassword.Replace(PassPrefix,""));
+                }
+            }
+            result.AppendFormat("<SCAN_USB>reg_dword:{0}</SCAN_USB>", (ScanUsb == true) ? "1" : "0");
+
+
+
+
+            result.Append("</loader>");
+            result.AppendFormat("</TaskConfigureSettings>");
+            
+            return result.ToString();
+  
         }
     }
 }

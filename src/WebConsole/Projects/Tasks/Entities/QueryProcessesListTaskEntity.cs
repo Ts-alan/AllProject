@@ -13,7 +13,10 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<TaskRequestProcessList></TaskRequestProcessList>");
+            return result.ToString();
         }
     }
 }

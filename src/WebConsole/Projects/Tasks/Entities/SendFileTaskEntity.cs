@@ -46,7 +46,15 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<TaskSendFile>");
+            result.AppendFormat(@"<Source>{0}</Source>",SourceFile);
+            result.AppendFormat(@"<Destination>{0}</Destination>", DestinationFile);
+            result.Append("</TaskSendFile>");
+
+            return result.ToString();
+
         }
     }
 }

@@ -13,43 +13,8 @@ namespace Tasks.Entities
         
         }
 
-        public UninstallTaskEntity(string domain,string login,string password )
-            : this()
-        {
-            _domain = domain;
-            _login = login;
-            _password = password;
-        }
 
-        private bool _rebootAfterInstall;
-        [TaskEntityBooleanProperty("RebootAfterInstall", format = "reg_dword:{0}")]
-        public bool RebootAfterInstall
-        {
-            get { return _rebootAfterInstall; }
-            set { _rebootAfterInstall = value; }
-        }
 
-        private string _domain;
-        [TaskEntityStringProperty("Domain")]
-        public string Domain
-        {
-            get { return _domain; }
-            set { _domain = value; }
-        }
-        private string _login;
-        [TaskEntityStringProperty("Login")]
-        public string Login
-        {
-            get { return _login; }
-            set { _login = value; }
-        }
-        private string _password;        
-        [TaskEntityStringProperty("Password")]
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
-        }
 
         private int _selectedIndex;
         [TaskEntityInt32Property("SelectedIndex")]
@@ -62,7 +27,28 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            String version = String.Empty;
+            String cmd = String.Empty;
+ /*           switch (SelectedIndex)
+            {
+                case 0:
+                    version = Vba32MsiStorage.GetVba32VersionByOSVersion(osVersion);
+                    break;
+                case 1:
+                    version = Vba32VersionInfo.Vba32RemoteConsoleScanner;
+                    break;
+                case 2:
+                    version = Vba32VersionInfo.Vba32Antivirus;
+                    break;
+            }
+
+            cmd= String.Format("msiexec.exe /x \"{0}\" /q /norestart", Vba32VersionInfo.GetGuid(version));*/
+            StringBuilder content = new StringBuilder();
+            content.Append("<TaskCreateProcess>");
+            content.AppendFormat(@"<CommandLine>{0}</CommandLine>",cmd );
+            content.Append(@"</TaskCreateProcess>");
+
+            return content.ToString();
         }
     }
 }

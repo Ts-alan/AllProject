@@ -67,6 +67,9 @@
     <Compile Include="Entities\TaskEntity.cs" />
     <Compile Include="Entities\TestTaskEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\PreServAction.cs" />
+    <Compile Include="Service\TaskInfo.cs" />
+    <Compile Include="Service\Vba32ControlCenterWrapper.cs" />
     <Compile Include="Simple\SimpleTaskEntityBuilder.cs" />
     <Compile Include="Simple\SimpleTaskEntityEnum.cs" />
     <Compile Include="Simple\SimpleTaskState.cs" />

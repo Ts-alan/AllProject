@@ -8,10 +8,11 @@ namespace Tasks.Entities
     [TaskEntity("task")]
     public class RestoreFileFromQtnTaskEntity : TaskEntity
     {
+        private string comSpecOption = "\"%VBA32%Vba32Qtn.exe\" RF=";
+
         public RestoreFileFromQtnTaskEntity()
             : base("RestoreFileFromQtn")
-        {
-        
+        {        
         }
 
         public RestoreFileFromQtnTaskEntity(string fullpath)
@@ -32,7 +33,13 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+           StringBuilder result = new StringBuilder(256);
+
+            result.Append("<TaskCreateProcess>");
+            result.AppendFormat(@"<CommandLine>{0}\{1}</CommandLine>", comSpecOption, FullPath);
+            result.Append("</TaskCreateProcess>");
+
+            return result.ToString();
         }
     }
 }

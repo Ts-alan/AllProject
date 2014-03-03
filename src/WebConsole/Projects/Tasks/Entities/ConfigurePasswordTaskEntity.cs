@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using Tasks.Attributes;
+using System.Security.Cryptography;
+using Tasks.Service;
 
 namespace Tasks.Entities
 {
     [Serializable]
     [TaskEntity("task")]
     public class ConfigurePasswordTaskEntity : TaskEntity
-    { 
+    {
+        private string tagPassword = "SecurityOptions";
+
         public ConfigurePasswordTaskEntity() : base("ConfigurePassword")
         {
         
@@ -31,7 +35,26 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            string str = Password;
+            if (str != "")
+            {
+                //Вычисляем хэш и конвертим в base64
+                MD5 md5Hasher = MD5.Create();
+                byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(str));
+                str = "reg_binary:" + PreServAction.ConvertToDumpString(data); //Convert.ToBase64String(data);
+                //
+            }
+            else
+                str = "-";
+
+            result.Append("<TaskConfigureSettings>");
+            result.Append("<password>");
+            result.AppendFormat("<{0}>{1}{/0}>", tagPassword, str);
+            result.Append("</password>");
+            result.Append("</TaskConfigureSettings>");
+            return result.ToString();
         }
     }
 }

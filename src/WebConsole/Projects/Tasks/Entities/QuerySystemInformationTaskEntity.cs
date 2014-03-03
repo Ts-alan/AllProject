@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tasks.Attributes;
+using System.Text;
 
 namespace Tasks.Entities
 {
@@ -12,7 +13,10 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<TaskRequestSystemInfo></TaskRequestSystemInfo>");
+            return result.ToString();
         }
     }
 }

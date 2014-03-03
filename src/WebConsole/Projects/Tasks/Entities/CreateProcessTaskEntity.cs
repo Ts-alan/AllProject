@@ -38,7 +38,13 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<TaskCreateProcess>");
+            result.AppendFormat(@"<CommandLine>{0}</CommandLine>", CommandLine);
+            result.Append("</TaskCreateProcess>");
+
+            return result.ToString();
         }
     }
 }

@@ -38,7 +38,12 @@ namespace Tasks.Entities
         [Obsolete("Необходимо переопределить")]
         public override string ToTaskXml()
         {
-            throw new NotImplementedException();
+            StringBuilder content = new StringBuilder();
+            content.Append("<InstallProduct>");
+            content.AppendFormat(@"<ServerFile>{0}</ServerFile>", SelectedIndex);
+            content.AppendFormat(@"<AdditionalArgs>{0}</AdditionalArgs>", CommandLine);
+            content.Append(@"</InstallProduct>");
+            return content.ToString();
         }
 
     }
