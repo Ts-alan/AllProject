@@ -585,8 +585,7 @@ GO
 CREATE PROCEDURE [UpdateTaskState]
 	@TaskID bigint,
 	@TaskState nvarchar(32),
-	@Date datetime,
-	@Description nvarchar(256) = NULL
+	@Date datetime
 WITH ENCRYPTION
 AS
 	-- Retrieving StateID
@@ -640,13 +639,6 @@ AS
 		SET	[StateID] = @StateID,
 			[DateUpdated] = @Date
 		WHERE [ID] = @TaskID
-
-		IF @Description IS NOT NULL
-		BEGIN
-			UPDATE [Tasks]
-				SET	[TaskDescription] = @Description
-				WHERE [ID] = @TaskID
-		END
 		
 		-- Checking particular states
 		IF @TaskState = N'Completed successfully'
@@ -654,34 +646,16 @@ AS
 			UPDATE [Tasks]
 			SET	[DateComplete] = @Date
 			WHERE [ID] = @TaskID
-
-			--костыль дл€ удалени€ компа после успешного завершени€ задачи на отсоединение агента
-			IF (SELECT tt.[TaskName] FROM Tasks AS t
-				INNER JOIN TaskTypes AS tt ON t.[TaskID] = tt.[ID]
-				WHERE t.[ID] = @TaskID) IN ('Detach agent', 'ќтсоединить агент')
-			BEGIN
-				DECLARE @ComputerID smallint
-				SET @ComputerID = (SELECT [ComputerID] FROM [Tasks] WHERE [ID] = @TaskID)
-				
-				-- установить статус "Ќеуправл€емый"
-				UPDATE ComputerAdditionalInfo
-				SET [IsControllable] = 0
-				WHERE [ComputerID] = @ComputerID
-
-				-- почистить таблицы
-				DELETE FROM DevicesPolicies
-				WHERE [ComputerID] = @ComputerID
-
-				DELETE FROM Groups
-				WHERE [ComputerID] = @ComputerID
-			END
 		END	
 	END
-
-	-- Recent activity time
-	UPDATE [Computers]
-	SET [RecentActive] = GETDATE()
-	WHERE [ID] = (SELECT ComputerID FROM [Tasks] WHERE [ID] = @TaskID)
+	
+	-- Recent activity time (Status from agent, but not from TaskAssignment)
+	IF(@Priority1 > 2)
+	BEGIN
+		UPDATE [Computers]
+		SET [RecentActive] = GETDATE()
+		WHERE [ID] = (SELECT ComputerID FROM [Tasks] WHERE [ID] = @TaskID)
+	END
 GO
 
 IF EXISTS (SELECT [ID] FROM dbo.sysobjects WHERE [ID] = OBJECT_ID(N'[dbo].[UpdateDeliveryState]')
