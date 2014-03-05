@@ -357,7 +357,29 @@ namespace ARM2_dbcontrol.DataBase
             reader.Close();
             return computers;
         }
+        public SelectedComputersForTask GetSelectionComputerForTask(String where)
+        {
+            if (where == "") where = null;
+            IDbCommand command = database.CreateCommand("GetSelectionComputerForTask", true);
 
+            database.AddCommandParameter(command, "@where",
+                DbType.String, where, ParameterDirection.Input);
+
+            SelectedComputersForTask selected;
+            selected.Names = new List<string>();
+            selected.IpAddresses = new List<string>();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+
+            while (reader.Read())
+            {
+                if (reader.GetValue(0) != DBNull.Value)
+                    selected.Names.Add(reader.GetString(0));
+                if (reader.GetValue(1) != DBNull.Value)
+                    selected.IpAddresses.Add(reader.GetString(1));                
+            }
+            reader.Close();
+            return selected;
+        }
 		#endregion
 		
 	}		

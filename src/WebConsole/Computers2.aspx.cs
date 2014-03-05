@@ -13,6 +13,7 @@ using VirusBlokAda.Vba32CC.Policies;
 using System.Web.Services;
 using Tasks.Common;
 using ARM2_dbcontrol.Service.TaskAssignment;
+using System.Threading;
 
 /// <summary>
 /// Computers page
@@ -111,12 +112,11 @@ public partial class Computers2 : PageBase
     #region Tasks
     protected void CompositeTaskPanel_TaskAssign(object sender, TaskEventArgs e)
     {
-        
-        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
-        String[] CompNames = hdnSelectedCompsNames.Value.Split('&');
-        String[] CompIP = hdnSelectedCompsIP.Value.Split('&');
-
-        Int64[] taskId = new Int64[CompNames.Length];
+        //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
+        SelectedComputersForTask selectedComps=GetSelectedCompsForTasks(e.AssignToAll); 
+       
+       
+        Int64[] taskId = new Int64[selectedComps.Names.Count];
 
         String userName = Anchor.GetStringForTaskGivedUser();
         String service = ConfigurationManager.AppSettings["Service"];
@@ -124,11 +124,38 @@ public partial class Computers2 : PageBase
 
         Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
 
-        for (int i = 0; i < CompNames.Length; i++)
+        for (int i = 0; i < selectedComps.Names.Count; i++)
         {
-            taskId[i] = PreServAction.CreateTask(CompNames[i], e.TaskName, e.Xml, userName, connStr);
+            taskId[i] = PreServAction.CreateTask(selectedComps.Names[i], e.TaskName, e.Xml, userName, connStr);
         }
-        control.PacketCustomAction(taskId,CompIP, e.TaskXml);
+        control.PacketCustomAction(taskId,selectedComps.IpAddresses.ToArray(), e.TaskXml);
+    }
+
+    private SelectedComputersForTask GetSelectedCompsForTasks(bool all)
+    {
+        SelectedComputersForTask selected;
+        if (!all)
+        {
+
+            selected.Names = new List<string>(hdnSelectedCompsNames.Value.Split('&'));
+            selected.IpAddresses = new List<string>(hdnSelectedCompsIP.Value.Split('&'));
+        }
+        else
+        {
+            string where=FilterContainer1.GenerateSQL();
+            using (VlslVConnection conn = new VlslVConnection(
+            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+            {
+                ComputersManager cmng = new ComputersManager(conn);
+                conn.OpenConnection();
+                conn.CheckConnectionState(true);
+                selected=cmng.GetSelectionComputerForTask(where);
+                
+                
+                conn.CloseConnection();
+            }
+        }
+        return selected;
     }
     #endregion
 }

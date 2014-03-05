@@ -215,6 +215,7 @@
                     toggleParentCheck(node, isCheck);
 
             }
+            getCompsInfo();
         }
         function toggleParentCheck(node, isCheck) {
             while (node.parentNode != treeRoot) {
@@ -304,18 +305,18 @@
             $get('AdditionalInfoPanel').innerHTML = result;
         }
         /* all=true, если для всех компов */
-        function getCompsInfo(all) {
+        function getCompsInfo() {
             computers = new Array();
             compIP = new Array();
             treeRoot.eachChild(function (group) {
-                RecursiveAddNodes(group, all);
+                RecursiveAddNodes(group);
 
-                function RecursiveAddNodes(rootNode, all) {
+                function RecursiveAddNodes(rootNode) {
                     for (var i = 0; i < rootNode.childNodes.length; i++) {
-                        RecursiveAddNodes(rootNode.childNodes[i], all);
+                        RecursiveAddNodes(rootNode.childNodes[i]);
                     }
                     /**/
-                    if (rootNode.isLeaf() && (rootNode.get('checked') || all)) {
+                    if (rootNode.isLeaf() && (rootNode.get('checked'))) {
                         computers.push(rootNode.get("text").toLowerCase());
                         compIP.push(rootNode.get("ip"));
                     }
@@ -323,18 +324,12 @@
             });
             $get('<%=hdnSelectedCompsNames.ClientID %>').value = computers.join('&');
             $get('<%=hdnSelectedCompsIP.ClientID %>').value = compIP.join('&');
-            alert(compIP.join('&'));
         }
         $get('<%=btnReload.ClientID%>').onclick = function (param) {
             hdnWhere = param;
             treeStore.proxy.extraParams = { where: hdnWhere };
-            treeStore.reload();
-        }
-        $get('<%=btnGetCompsInfo.ClientID%>').onclick = function (param) {
-            if (param == "True")
-                getCompsInfo(true);
-            else
-                getCompsInfo(false);
+            
+            treeStore.load();
         }
     });
 
@@ -438,7 +433,6 @@
 <div id="AdditionalInfoPanel" style="width: 300px; min-height: 150px; padding: 8px; margin: 5px 20px; background-color: Gray; float: left;display: none;"></div>
 
 <input runat="server" id="btnReload" type="button" value="Reload" style="display: none;" />
-<input runat="server" id="btnGetCompsInfo" type="button" value="CompInfo" style="display: none;" />
 <input runat="server" id="hdnSelectedCompsNames" value=""  style="display:none;" />
 <input runat="server" id="hdnSelectedCompsIP" value=""  style="display:none;" />
 

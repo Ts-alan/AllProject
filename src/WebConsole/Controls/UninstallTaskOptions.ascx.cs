@@ -61,25 +61,15 @@ public partial class Controls_UninstallTaskOptions : System.Web.UI.UserControl, 
     #region ITaskOptionsHelper
     public void LoadTaskEntity(UninstallTaskEntity entity)
     {
-        tboxDomain.Text = entity.Domain;        
-        tboxLogin.Text = entity.Login;
 
-        tboxPassword.Attributes.Add("value", entity.Password);
-       // tboxPassword.Text = entity.Password;
-
-        cbRebootAfterInstall.Checked = entity.RebootAfterInstall;
-        rbtnlProviders.SelectedIndex = entity.SelectedIndex;
+        ddlProduct.SelectedIndex = entity.SelectedIndex;
     }
 
     public UninstallTaskEntity SaveTaskEntity(UninstallTaskEntity oldEntity, out bool changed)
     {
         UninstallTaskEntity entity = new UninstallTaskEntity();
-        entity.Password = tboxPassword.Text;
-        entity.Login = tboxLogin.Text;
-        entity.Domain = tboxDomain.Text;
 
-        entity.RebootAfterInstall = cbRebootAfterInstall.Checked;
-        entity.SelectedIndex = rbtnlProviders.SelectedIndex;
+        entity.SelectedIndex = ddlProduct.SelectedIndex;
         changed = !oldEntity.Equals(entity);
         return entity;
     }

@@ -159,6 +159,7 @@
     <Compile Include="DataBase\ScanningObjectEntity.cs" />
     <Compile Include="DataBase\ScanningObjectManager.cs" />
     <Compile Include="DataBase\ScanningObjectProvider.cs" />
+    <Compile Include="DataBase\SelectedComputersForTask.cs" />
     <Compile Include="DataBase\StatisticEntity.cs" />
     <Compile Include="DataBase\TaskEntity.cs" />
     <Compile Include="DataBase\TaskManager.cs" />
