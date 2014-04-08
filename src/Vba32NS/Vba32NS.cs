@@ -88,7 +88,7 @@ namespace Vba32.ControlCenter.NotificationService
                 
                 list = GetNotifyEventList();
                 if (!ReadSettingsFromRegistry())
-                    LogError("Vba32NS.OnStop()::ReadSettingsFromRegistry returned false", EventLogEntryType.Error);
+                    LogError("Vba32NS.OnStop()::ReadSettingsFromRegistry() returned false", EventLogEntryType.Error);
 
         
                 LogMessage("Vba32NS.Vba32NS()::Finished",5);
