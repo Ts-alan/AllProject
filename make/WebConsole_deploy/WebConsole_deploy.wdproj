@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Microsoft Visual Studio 2010 Web Deployment Project 
+  http://go.microsoft.com/fwlink/?LinkID=104956
+
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30319</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}</ProjectGuid>
+    <SourceWebPhysicalPath>..\..\src\WebConsole</SourceWebPhysicalPath>
+    <SourceWebProject>{870FD66C-2B79-4B36-86EC-5A252C2208A5}|D:\Projects\Vba32ControlCenter\src\WebConsole</SourceWebProject>
+    <SourceWebVirtualPath>/WebConsole</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\Debug</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>WebConsole_deploy</SingleAssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\Release</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>
+    </SingleAssemblyName>
+    <ContentAssemblyName>Vba32CCWebConsole</ContentAssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj">
+      <Project>{4B1FCD41-E001-41BE-97B1-E67D79300466}</Project>
+      <Name>AjaxControlToolkitX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\CustomControls\CustomControls.csproj">
+      <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\DateControl\DateControl.csproj">
+      <Project>{523F3FD9-CEB7-48A0-843F-2BE730C90644}</Project>
+      <Name>DateControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\Filters\Filters.csproj">
+      <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
+      <Name>Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\PagingControl\PagingControl.csproj">
+      <Project>{6F6EC59B-465E-4499-A2DD-F3FA09674823}</Project>
+      <Name>PagingControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj">
+      <Project>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</Project>
+      <Name>RemoteOperations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\Tasks\Tasks.csproj">
+      <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
+      <Name>Tasks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v10.0\Microsoft.WebDeployment.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.WebDeployment.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="BeforeMerge">
+  </Target>
+  <Target Name="AfterMerge">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

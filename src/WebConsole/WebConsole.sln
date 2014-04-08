@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Projects\Common\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "Projects\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
 EndProject
+Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WebConsole_deploy", "..\..\make\WebConsole_deploy\WebConsole_deploy.wdproj", "{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -150,6 +152,16 @@ Global
 		{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|.NET.ActiveCfg = Release|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
