@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using vsisLib;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
@@ -141,7 +142,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                     }
                     return;
                 }
-                vsisLib.UpdateParameters param = new vsisLib.UpdateParameters();
+                UpdateParameters param = new UpdateParameters();
                 param.complectation = "VBA32AAW";
                 String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
                 param.program_folder = System.IO.Directory.GetParent(AppPath).Parent.Parent.FullName;
