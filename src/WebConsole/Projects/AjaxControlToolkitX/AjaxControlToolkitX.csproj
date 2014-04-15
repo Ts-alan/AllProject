@@ -12,8 +12,8 @@
     <AssemblyName>AjaxControlToolkitX</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\$(SolutionName)\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\$(SolutionName)\$(AssemblyName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\WebConsole\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\.bin\WebConsole\$(AssemblyName)\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

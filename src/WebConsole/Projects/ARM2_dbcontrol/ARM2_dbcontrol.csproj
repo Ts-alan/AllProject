@@ -44,8 +44,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\$(SolutionName)\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\$(SolutionName)\$(AssemblyName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\WebConsole\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\.bin\WebConsole\$(AssemblyName)\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
