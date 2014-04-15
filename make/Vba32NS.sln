@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vba32NS", "Vba32NS.csproj", "{C89D783D-01F8-4D52-A785-ABE9D3D18CD4}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vba32NS", "..\src\Vba32NS\Vba32NS.csproj", "{C89D783D-01F8-4D52-A785-ABE9D3D18CD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
