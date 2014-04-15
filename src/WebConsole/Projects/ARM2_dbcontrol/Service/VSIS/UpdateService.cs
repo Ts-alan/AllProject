@@ -142,16 +142,13 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                     }
                     return;
                 }
-                UpdateParameters param = new UpdateParameters();
-                param.complectation = "VBA32AAW";
-                String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
-                param.program_folder = System.IO.Directory.GetParent(AppPath).Parent.Parent.FullName;
+                String[] param = new String[] { "VBA32AAW" };
                 lock (syncObject)
                 {
                     _stopReason = String.Empty;
                     _isAlive = true;
                 }
-                _update.UpdateNow(ref param);
+                _update.UpdateNow(param);
             }
             catch (Exception e)
             {

@@ -82,7 +82,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         {
             properties.ProxyType = 0;
             properties.ExpandPathesList = new PairString[1];
-            properties.ExpandPathesList[0].first = "WEBCONSOLE";
+            properties.ExpandPathesList[0].first = "%WEBCONSOLE%";
             String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
             properties.ExpandPathesList[0].second = System.IO.Directory.GetParent(AppPath).Parent.FullName;
 
