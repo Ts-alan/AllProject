@@ -272,7 +272,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Service\VSIS\vsis.tlb" />
+  </ItemGroup>
   <ItemGroup>
     <COMReference Include="vsisLib">
       <Guid>{B3EF5DD1-AD74-4187-89AC-944641FE17FB}</Guid>
