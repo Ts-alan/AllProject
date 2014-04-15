@@ -20,7 +20,7 @@
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
     <RootNamespace>ARM2_dbcontrol</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
     <FileUpgradeFlags>
@@ -44,9 +44,11 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\$(SolutionName)\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\.bin\$(SolutionName)\$(AssemblyName)\$(Configuration)</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -69,7 +71,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -290,7 +291,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>$(SolutionDir)CleanSrcDir.bat $(ProjectDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>
