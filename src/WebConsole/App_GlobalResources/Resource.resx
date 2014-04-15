@@ -2318,10 +2318,10 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
   <data name="ZoneFriendlyIP" xml:space="preserve">
     <value>Zone of friendly IP addresses</value>
   </data>
-  <data name="Аctivate" xml:space="preserve">
+  <data name="Activate" xml:space="preserve">
     <value>Аctivate</value>
   </data>
-  <data name="СhoiseEvent" xml:space="preserve">
+  <data name="ChoiseEvent" xml:space="preserve">
     <value>Select event</value>
   </data>
   <data name="PageGroupsTitle" xml:space="preserve">

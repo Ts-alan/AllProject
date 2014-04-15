@@ -7,7 +7,7 @@
             <asp:Label runat="server" ID="lblMode"><%=Resources.Resource.Mode%></asp:Label>&nbsp;
             <asp:DropDownList runat="server" ID="ddlMode">            
                 <asp:ListItem Value='0' Text='<%$Resources:Resource, Deactivate %>' ></asp:ListItem>
-                <asp:ListItem Value='1' Text='<%$Resources:Resource, Àctivate %>' ></asp:ListItem>     
+                <asp:ListItem Value='1' Text='<%$Resources:Resource, Activate %>' ></asp:ListItem>     
                 <asp:ListItem Value='2' Text='<%$Resources:Resource, LogEvents %>' ></asp:ListItem>             
             </asp:DropDownList>            
         </td>

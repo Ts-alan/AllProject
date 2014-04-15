@@ -2316,10 +2316,10 @@
   <data name="ZoneFriendlyIP" xml:space="preserve">
     <value>Зона дружественных IP-адресов</value>
   </data>
-  <data name="Аctivate" xml:space="preserve">
+  <data name="Activate" xml:space="preserve">
     <value>Включить</value>
   </data>
-  <data name="СhoiseEvent" xml:space="preserve">
+  <data name="ChoiseEvent" xml:space="preserve">
     <value>Выберите событие</value>
   </data>
   <data name="PageGroupsTitle" xml:space="preserve">

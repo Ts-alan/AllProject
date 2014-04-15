@@ -60,7 +60,7 @@ public partial class Controls_TaskChangeDeviceProtect : System.Web.UI.UserContro
     {
         ddlMode.Items.Clear();
         ddlMode.Items.Add(Resources.Resource.Deactivate);
-        ddlMode.Items.Add(Resources.Resource.Àctivate);
+        ddlMode.Items.Add(Resources.Resource.Activate);
         ddlMode.Items.Add(Resources.Resource.LogEvents);        
                 
         if (HideHeader) HeaderName.Visible = false;

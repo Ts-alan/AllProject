@@ -103,7 +103,7 @@ public partial class Controls_TaskChangeDeviceProtectEx : System.Web.UI.UserCont
     {
         List<String> list = new List<String>();
         list.Add(Resources.Resource.Deactivate);
-        list.Add(Resources.Resource.Аctivate);
+        list.Add(Resources.Resource.Activate);
         list.Add(Resources.Resource.LogEvents);
 
         return list;
