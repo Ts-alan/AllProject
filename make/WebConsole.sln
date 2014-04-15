@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateControl", "Projects\DateControl\DateControl.csproj", "{523F3FD9-CEB7-48A0-843F-2BE730C90644}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateControl", "..\src\WebConsole\Projects\DateControl\DateControl.csproj", "{523F3FD9-CEB7-48A0-843F-2BE730C90644}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagingControl", "Projects\PagingControl\PagingControl.csproj", "{6F6EC59B-465E-4499-A2DD-F3FA09674823}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagingControl", "..\src\WebConsole\Projects\PagingControl\PagingControl.csproj", "{6F6EC59B-465E-4499-A2DD-F3FA09674823}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", ".", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", "..\src\WebConsole\.", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{92AE384B-3F82-42AB-872F-98636FD00B12}|ARM2_dbcontrol.dll;{523F3FD9-CEB7-48A0-843F-2BE730C90644}|DateControl.dll;{6F6EC59B-465E-4499-A2DD-F3FA09674823}|PagingControl.dll;{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}|RemoteOperations.dll;{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}|CustomControls.dll;{C09A5B35-526F-4A85-9046-909E9D811BBD}|Filters.dll;{4B1FCD41-E001-41BE-97B1-E67D79300466}|AjaxControlToolkitX.dll;{C8F6D412-C657-438C-BBE3-842FB4466440}|Common.dll;{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}|Tasks.dll;"
@@ -28,19 +28,19 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", ".", "{870FD66
 		VWDPort = "50886"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteOperations", "Projects\RemoteOperations\RemoteOperations.csproj", "{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteOperations", "..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj", "{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "Projects\CustomControls\CustomControls.csproj", "{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "..\src\WebConsole\Projects\CustomControls\CustomControls.csproj", "{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "Projects\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "..\src\WebConsole\Projects\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxControlToolkitX", "Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj", "{4B1FCD41-E001-41BE-97B1-E67D79300466}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjaxControlToolkitX", "..\src\WebConsole\Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj", "{4B1FCD41-E001-41BE-97B1-E67D79300466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Projects\Common\Common.csproj", "{C8F6D412-C657-438C-BBE3-842FB4466440}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\src\WebConsole\Projects\Common\Common.csproj", "{C8F6D412-C657-438C-BBE3-842FB4466440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "Projects\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "..\src\WebConsole\Projects\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
 EndProject
-Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WebConsole_deploy", "..\..\make\WebConsole_deploy\WebConsole_deploy.wdproj", "{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}"
+Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WebConsole_deploy", "WebConsole_deploy\WebConsole_deploy.wdproj", "{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
