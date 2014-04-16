@@ -69,7 +69,7 @@ RMDIR /S /Q %bindirCC%\Temp\
 ERASE /F /S /Q %bindirCC%\bin\*.pdb
 ERASE /F /S /Q %bindirCC%\ConnectionStrings.config
 
-XCOPY %bindirCC% %1  /E /C /I /F /H /R /Y /v
+XCOPY %bindirCC% %1WEBCONSOLE  /E /C /I /F /H /R /Y /v
 IF NOT ERRORLEVEL 0 (
     ECHO Error %ERRORLEVEL% while copying
     EXIT /B 1
