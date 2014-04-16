@@ -844,7 +844,7 @@ namespace Vba32CC
 
                 name_value_map["Comment"] = comment;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //debug
                 //name_value_map["Comment"] = ex.Message;

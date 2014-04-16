@@ -92,7 +92,7 @@ namespace Vba32CC.TaskAssignment
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Log.Write(String.Format("Error: {0}", ex.Message));
             }
