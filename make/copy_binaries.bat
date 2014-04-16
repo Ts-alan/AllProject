@@ -22,8 +22,8 @@ IF NOT EXIST %1 (
    )
 )
 
-set bindir="%~dp0\..\.bin"
-set bindirCC=%bindir%\WebConsole_deploy\%config%"
+set bindir=%~dp0\..\.bin
+set bindirCC=%bindir%\WebConsole_deploy\%config%
 
 IF NOT EXIST %1SERVICE (
    ECHO Destination %1SERVICE not exists or is not a directory
@@ -35,8 +35,8 @@ IF NOT EXIST %1SERVICE (
 )
 
 FOR %%i IN (Vba32PMS  Vba32NS  Vba32SS packet_parser) DO (
-    ERASE /F /S /Q %bindir%\%%i\%config%\*.pdb
-    XCOPY %bindir%\%%i\%config% %1SERVICE  /E /C /I /F /H /R /Y /v
+    ERASE /F /S /Q "%bindir%\%%i\%config%\*.pdb"
+    XCOPY "%bindir%\%%i\%config%" %1SERVICE  /E /C /I /F /H /R /Y /v
     IF NOT ERRORLEVEL 0 (
         ECHO Error %ERRORLEVEL% while copying
         EXIT /B 1
@@ -53,12 +53,13 @@ IF NOT EXIST %1WEBCONSOLE (
    )
 )
 
-RMDIR /S /Q %bindirCC%\Projects\
-RMDIR /S /Q %bindirCC%\Temp\
-ERASE /F /S /Q %bindirCC%\bin\*.pdb
-ERASE /F /S /Q %bindirCC%\ConnectionStrings.config
+RMDIR /S /Q "%bindirCC%\Projects\"
+RMDIR /S /Q "%bindirCC%\Temp\"
+ERASE /F /S /Q "%bindirCC%\bin\*.pdb"
+ERASE /F /S /Q "%bindirCC%\ConnectionStrings.config"
 
-XCOPY %bindirCC% %1WEBCONSOLE  /E /C /I /F /H /R /Y /v
+
+XCOPY "%bindirCC%"  %1\WEBCONSOLE  /E /C /I /F /H /R /Y /v
 IF NOT ERRORLEVEL 0 (
     ECHO Error %ERRORLEVEL% while copying
     EXIT /B 1
