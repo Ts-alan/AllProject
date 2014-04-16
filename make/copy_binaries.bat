@@ -43,17 +43,6 @@ FOR %%i IN (Vba32PMS  Vba32NS  Vba32SS packet_parser) DO (
         )
 )
 
-RMDIR /S /Q %bindirCC%\Projects\
-RMDIR /S /Q %bindirCC%\Temp\
-ERASE /F /S /Q %bindirCC%\bin\*.pdb
-ERASE /F /S /Q %bindirCC%\ConnectionStrings.config
-
-XCOPY %bindirCC% %1  /E /C /I /F /H /R /Y /v
-IF NOT ERRORLEVEL 0 (
-    ECHO Error %ERRORLEVEL% while copying
-    EXIT /B 1
-    )
-
 
 IF NOT EXIST %1WEBCONSOLE (
    ECHO Destination %1WEBCONSOLE not exists or is not a directory
