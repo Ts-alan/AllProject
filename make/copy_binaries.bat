@@ -22,14 +22,54 @@ IF NOT EXIST %1 (
    )
 )
 
-set bindir="%~dp0\..\.bin\WebConsole_deploy\%config%"
+set bindir="%~dp0\..\.bin"
+set bindirCC=%bindir%\WebConsole_deploy\%config%"
 
-RMDIR /S /Q %bindir%\Projects\
-RMDIR /S /Q %bindir%\Temp\
-ERASE /F /S /Q %bindir%\bin\*.pdb
-ERASE /F /S /Q %bindir%\ConnectionStrings.config
+IF NOT EXIST %1SERVICE (
+   ECHO Destination %1SERVICE not exists or is not a directory
+   MKDIR %1SERVICE
+   IF NOT ERRORLEVEL 0 (
+      ECHO Can not to create dir %1SERVICE
+      EXIT /B 1
+   )
+)
 
-XCOPY %bindir% %1  /E /C /I /F /H /R /Y /v
+FOR %%i IN (Vba32PMS  Vba32NS  Vba32SS packet_parser) DO (
+    ERASE /F /S /Q %bindir%\%%i\%config%\*.pdb
+    XCOPY %bindir%\%%i\%config% %1SERVICE  /E /C /I /F /H /R /Y /v
+    IF NOT ERRORLEVEL 0 (
+        ECHO Error %ERRORLEVEL% while copying
+        EXIT /B 1
+        )
+)
+
+RMDIR /S /Q %bindirCC%\Projects\
+RMDIR /S /Q %bindirCC%\Temp\
+ERASE /F /S /Q %bindirCC%\bin\*.pdb
+ERASE /F /S /Q %bindirCC%\ConnectionStrings.config
+
+XCOPY %bindirCC% %1  /E /C /I /F /H /R /Y /v
+IF NOT ERRORLEVEL 0 (
+    ECHO Error %ERRORLEVEL% while copying
+    EXIT /B 1
+    )
+
+
+IF NOT EXIST %1WEBCONSOLE (
+   ECHO Destination %1WEBCONSOLE not exists or is not a directory
+   MKDIR %1WEBCONSOLE
+   IF NOT ERRORLEVEL 0 (
+      ECHO Can not to create dir %1WEBCONSOLE
+      EXIT /B 1
+   )
+)
+
+RMDIR /S /Q %bindirCC%\Projects\
+RMDIR /S /Q %bindirCC%\Temp\
+ERASE /F /S /Q %bindirCC%\bin\*.pdb
+ERASE /F /S /Q %bindirCC%\ConnectionStrings.config
+
+XCOPY %bindirCC% %1  /E /C /I /F /H /R /Y /v
 IF NOT ERRORLEVEL 0 (
     ECHO Error %ERRORLEVEL% while copying
     EXIT /B 1
