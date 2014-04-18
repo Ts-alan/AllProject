@@ -177,7 +177,7 @@ namespace VirusBlokAda.RemoteOperations.MsiInfo
 
         public static String GetArgsByOSVersion(Boolean isServer)
         {
-            return isServer ? "/qb ADDLOCAL=VSIS,VPP,VMT,VKW,VAS" : "/qb ADDLOCAL=VSIS,VPP,VMT,VAS";
+            return isServer ? "/qb ADDLOCAL=VSIS,VPP,VMT,VKW,VAS,VGI" : "/qb ADDLOCAL=VSIS,VPP,VMT,VAS,VGI";
         }
 
         /// <summary>
