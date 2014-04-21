@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE [GetTaskStatesList]
+WITH ENCRYPTION
+AS
+	SELECT [TaskState] FROM [TaskStates]

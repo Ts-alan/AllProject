@@ -1,0 +1,5 @@
+﻿ALTER TABLE [dbo].[Policies]
+	ADD CONSTRAINT [FK_Policies_PolicyTypes] 
+	FOREIGN KEY (PolicyID)
+	REFERENCES PolicyTypes([ID])
+	ON UPDATE CASCADE ON DELETE CASCADE

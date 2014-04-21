@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Processes]
+	ADD CONSTRAINT [PK_Processes]
+	PRIMARY KEY NONCLUSTERED ([ID])

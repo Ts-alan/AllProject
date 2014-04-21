@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Devices]
+	ADD CONSTRAINT [PK_Devices]
+	PRIMARY KEY NONCLUSTERED ([ID])

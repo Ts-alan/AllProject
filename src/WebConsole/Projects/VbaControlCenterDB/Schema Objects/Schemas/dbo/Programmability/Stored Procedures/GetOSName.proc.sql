@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE [GetOSName]
+	@ID smallint
+WITH ENCRYPTION
+AS
+	SELECT [OSName] FROM [OSTypes] WHERE [ID] = @ID

@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[ComponentTypes]
+	ADD CONSTRAINT [PK_ComponentTypes]
+	PRIMARY KEY NONCLUSTERED ([ID])

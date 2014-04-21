@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[TaskTypes]
+	ADD CONSTRAINT [PK_TaskTypes]
+	PRIMARY KEY NONCLUSTERED ([ID])

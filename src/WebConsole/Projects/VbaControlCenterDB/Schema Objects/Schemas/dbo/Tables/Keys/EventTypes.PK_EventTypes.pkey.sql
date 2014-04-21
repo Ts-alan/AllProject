@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[EventTypes]
+	ADD CONSTRAINT [PK_EventTypes]
+	PRIMARY KEY NONCLUSTERED ([ID])

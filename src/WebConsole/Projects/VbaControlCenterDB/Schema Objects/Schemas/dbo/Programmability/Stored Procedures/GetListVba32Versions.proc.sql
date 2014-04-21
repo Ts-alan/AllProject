@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE [GetListVba32Versions]
+WITH ENCRYPTION
+AS
+	SELECT [Vba32Version] FROM Vba32Versions

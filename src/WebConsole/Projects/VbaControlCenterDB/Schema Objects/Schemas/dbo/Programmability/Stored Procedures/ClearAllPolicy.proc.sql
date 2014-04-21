@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE [dbo].[ClearAllPolicy]
+WITH ENCRYPTION
+AS	
+	DELETE FROM [Policies]

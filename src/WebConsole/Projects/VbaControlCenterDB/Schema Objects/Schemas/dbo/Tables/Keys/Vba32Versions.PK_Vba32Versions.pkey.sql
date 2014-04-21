@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Vba32Versions]
+	ADD CONSTRAINT [PK_Vba32Versions]
+	PRIMARY KEY NONCLUSTERED ([ID])

@@ -7,19 +7,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateControl", "..\src\WebCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagingControl", "..\src\WebConsole\Projects\PagingControl\PagingControl.csproj", "{6F6EC59B-465E-4499-A2DD-F3FA09674823}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", "..\src\WebConsole\.", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", "..\src\WebConsole\", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{92AE384B-3F82-42AB-872F-98636FD00B12}|ARM2_dbcontrol.dll;{523F3FD9-CEB7-48A0-843F-2BE730C90644}|DateControl.dll;{6F6EC59B-465E-4499-A2DD-F3FA09674823}|PagingControl.dll;{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}|RemoteOperations.dll;{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}|CustomControls.dll;{C09A5B35-526F-4A85-9046-909E9D811BBD}|Filters.dll;{4B1FCD41-E001-41BE-97B1-E67D79300466}|AjaxControlToolkitX.dll;{C8F6D412-C657-438C-BBE3-842FB4466440}|Common.dll;{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}|Tasks.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/WebConsole"
-		Debug.AspNetCompiler.PhysicalPath = "..\WebConsole\"
+		Debug.AspNetCompiler.PhysicalPath = "..\src\WebConsole\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebConsole\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/WebConsole"
-		Release.AspNetCompiler.PhysicalPath = "..\WebConsole\"
+		Release.AspNetCompiler.PhysicalPath = "..\src\WebConsole\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\WebConsole\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
@@ -41,6 +41,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "..\src\WebConsole\Projects\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
 EndProject
 Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WebConsole_deploy", "WebConsole_deploy\WebConsole_deploy.wdproj", "{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "VbaControlCenterDB", "..\src\WebConsole\Projects\VbaControlCenterDB\VbaControlCenterDB.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +164,20 @@ Global
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|.NET.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

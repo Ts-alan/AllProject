@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE [GetTaskTypesList]
+WITH ENCRYPTION
+AS
+	SELECT [ID],[TaskName] FROM [TaskTypes]

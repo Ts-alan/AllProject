@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[PolicyTypes]
+	ADD CONSTRAINT [PK_PolicyTypes]
+	PRIMARY KEY NONCLUSTERED ([ID])

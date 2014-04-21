@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Groups]
+	ADD CONSTRAINT [PK_Groups]
+	PRIMARY KEY NONCLUSTERED ([ID])

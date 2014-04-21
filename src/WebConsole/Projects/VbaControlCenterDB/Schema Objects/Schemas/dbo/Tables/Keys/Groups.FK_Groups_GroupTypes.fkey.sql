@@ -1,0 +1,5 @@
+﻿ALTER TABLE [dbo].[Groups]
+	ADD CONSTRAINT [FK_Groups_GroupTypes] 
+	FOREIGN KEY (GroupID)
+	REFERENCES GroupTypes([ID])
+	ON UPDATE CASCADE ON DELETE CASCADE

@@ -1,0 +1,5 @@
+﻿ALTER TABLE [dbo].[Policies]
+	ADD CONSTRAINT [FK_Policies_Computers] 
+	FOREIGN KEY (ComputerID)
+	REFERENCES Computers([ID])
+	ON UPDATE CASCADE ON DELETE CASCADE

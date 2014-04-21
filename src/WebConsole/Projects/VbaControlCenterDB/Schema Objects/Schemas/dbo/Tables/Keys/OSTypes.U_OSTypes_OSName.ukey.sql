@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[OSTypes]
+    ADD CONSTRAINT [U_OSTypes_OSName]
+    UNIQUE NONCLUSTERED ([OSName])

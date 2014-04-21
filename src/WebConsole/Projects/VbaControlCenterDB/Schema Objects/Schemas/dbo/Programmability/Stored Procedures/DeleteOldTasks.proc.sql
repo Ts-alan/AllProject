@@ -1,0 +1,16 @@
+﻿CREATE PROCEDURE [DeleteOldTasks]
+	@Date datetime
+WITH ENCRYPTION
+AS
+	SET ROWCOUNT 10000 
+
+	WHILE (667 = 667)
+	BEGIN
+		DELETE FROM [Tasks]
+			WHERE [Tasks].[DateIssued] < @Date
+        
+		IF @@ROWCOUNT < 10000
+		BREAK
+	END
+
+	SET ROWCOUNT 0

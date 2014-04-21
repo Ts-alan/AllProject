@@ -1,0 +1,5 @@
+﻿ALTER TABLE [dbo].[Events]
+	ADD CONSTRAINT [FK_Events_Components] 
+	FOREIGN KEY (ComponentID)
+	REFERENCES ComponentTypes([ID])
+	ON UPDATE CASCADE ON DELETE CASCADE

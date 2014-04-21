@@ -1,0 +1,20 @@
+﻿CREATE TABLE [dbo].[Computers] (
+	[ID] smallint IDENTITY(1, 1) NOT NULL,
+	[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[MACAddress] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[IPAddress] nvarchar(16) COLLATE Cyrillic_General_CI_AS NOT NULL,
+	[ControlCenter] bit NOT NULL,
+	[DomainName] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
+	[UserLogin] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
+	[OSTypeID] smallint NULL,
+	[RAM] smallint NULL,
+	[CPUClock] smallint NULL,
+	[RecentActive] smalldatetime NOT NULL,
+	[LatestUpdate] smalldatetime NULL,
+	[Vba32Version] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
+	[LatestInfected] smalldatetime NULL,
+	[LatestMalware] nvarchar(256) COLLATE Cyrillic_General_CI_AS NULL,
+	[Vba32Integrity] bit NULL,
+	[Vba32KeyValid] bit NULL,
+	[Description] nvarchar(64) COLLATE Cyrillic_General_CI_AS NULL
+)
