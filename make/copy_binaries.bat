@@ -72,7 +72,7 @@ IF NOT ERRORLEVEL 0 (
 
 
 ECHO SQL files copying...
-XCOPY "%bindir%\Sql\%config%\VbaControlCenterDB.dbproj.sql"  %1\Sql\VbaControlCenterDB.sql  /C /F /H /R /Y /v
+COPY "%bindir%\Sql\%config%\VbaControlCenterDB.dbproj.sql"  %1\Sql\VbaControlCenterDB.sql /Y /v
 
 
 
