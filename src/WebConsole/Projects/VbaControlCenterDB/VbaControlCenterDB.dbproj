@@ -27,7 +27,7 @@
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <BuildScriptName>VbaControlCenterDB.sql</BuildScriptName>
     <TargetConnectionString>
     </TargetConnectionString>
     <TargetDatabase>
@@ -40,7 +40,7 @@
     <RunCodeAnalysis>False</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <BuildScriptName>VbaControlCenterDB.sql</BuildScriptName>
     <TargetConnectionString>
     </TargetConnectionString>
     <TargetDatabase>

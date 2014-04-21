@@ -34,6 +34,9 @@ IF NOT EXIST %1SERVICE (
    )
 )
 
+
+ECHO Service files copying...
+
 FOR %%i IN (Vba32PMS  Vba32NS  Vba32SS packet_parser) DO (
     ERASE /F /S /Q "%bindir%\%%i\%config%\*.pdb"
     XCOPY "%bindir%\%%i\%config%" %1SERVICE  /E /C /I /F /H /R /Y /v
@@ -59,12 +62,17 @@ ERASE /F /S /Q "%bindirCC%\bin\*.pdb"
 ERASE /F /S /Q "%bindirCC%\ConnectionStrings.config"
 
 
+ECHO WebConsole files copying...
+
 XCOPY "%bindirCC%"  %1\WEBCONSOLE  /E /C /I /F /H /R /Y /v
 IF NOT ERRORLEVEL 0 (
     ECHO Error %ERRORLEVEL% while copying
     EXIT /B 1
     )
 
+
+ECHO SQL files copying...
+XCOPY "%bindir%\Sql\%config%\VbaControlCenterDB.sql"  %1\Sql\VbaControlCenterDB.sql  /C /F /H /R /Y /v
 
 
 
