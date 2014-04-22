@@ -71,12 +71,16 @@ IF NOT ERRORLEVEL 0 (
     )
 
 
+
+IF NOT EXIST %1Sql (
+   ECHO Destination %1Sql not exists or is not a directory
+   MKDIR %1Sql
+   IF NOT ERRORLEVEL 0 (
+      ECHO Can not to create dir %1Sql
+      EXIT /B 1
+   )
+)
+
+
 ECHO SQL files copying...
-COPY "%bindir%\Sql\%config%\VbaControlCenterDB.dbproj.sql"  %1\Sql\VbaControlCenterDB.sql /Y /v
-
-
-
-
-
-
-
+COPY "%bindir%\Sql\%config%\VbaControlCenterDB.dbproj.sql"  %1\Sql\VbaControlCenterDB.sql /Y /V
