@@ -5,6 +5,7 @@ using System.Web;
 
 using System.Collections.Generic;
 using VirusBlokAda.Vba32CC.JSON;
+using VirusBlokAda.Vba32CC.JSON.Entities;
 using Newtonsoft.Json;
 using VirusBlokAda.Vba32CC.Groups;
 using System.Configuration;

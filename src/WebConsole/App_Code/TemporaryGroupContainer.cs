@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Configuration;
-using ARM2_dbcontrol.Common;
+using VirusBlokAda.Vba32CC.Common;
 
 
 public static class TemporaryGroupContainer

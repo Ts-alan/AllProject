@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
     public struct SelectedComputersForTask
     {

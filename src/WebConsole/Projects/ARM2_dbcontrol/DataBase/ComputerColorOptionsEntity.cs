@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {    
     public enum EPriorityComputerColor
     {

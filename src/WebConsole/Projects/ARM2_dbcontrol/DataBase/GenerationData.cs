@@ -4,7 +4,7 @@ using System.Text;
 
 using System.Collections;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
     class GenerationData
     {

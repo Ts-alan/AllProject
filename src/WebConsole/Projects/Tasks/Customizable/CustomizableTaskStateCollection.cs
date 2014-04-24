@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Common;
+using VirusBlokAda.Vba32CC.Common;
 using System.Web;
 using System.Configuration;
-using Common.Collection;
+using VirusBlokAda.Vba32CC.Common.Collection;
 using System.IO;
 using System.Xml.Serialization;
 using Tasks.Entities;

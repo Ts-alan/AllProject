@@ -14,10 +14,9 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ARM2_dbcontrol.Tasks.Firewall;
 using ARM2_dbcontrol.Service.Vba32NS;
 using ARM2_dbcontrol.Filters;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 
 public partial class Controls_TaskFirewall : System.Web.UI.UserControl, ITask
 {

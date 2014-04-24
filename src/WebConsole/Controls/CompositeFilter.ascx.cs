@@ -6,11 +6,11 @@ using System.Web.UI.WebControls;
 using System.Text;
 using CustomControls;
 using System.ComponentModel;
-using Common.Collection;
+using VirusBlokAda.Vba32CC.Common.Collection;
 using Filters.Primitive;
 using Filters.Common;
 using Filters.Composite;
-using ARM2_dbcontrol.Common;
+using VirusBlokAda.Vba32CC.Common;
 
 [ParseChildren(true)]
 [PersistChildren(false)]

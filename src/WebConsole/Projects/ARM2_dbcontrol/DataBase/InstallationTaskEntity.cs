@@ -1,6 +1,6 @@
 using System;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
     public class InstallationTaskEntity:ICloneable
     {        	

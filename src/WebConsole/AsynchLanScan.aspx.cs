@@ -15,7 +15,7 @@ using System.Web.UI.HtmlControls;
 using VirusBlokAda.RemoteOperations.MsiInfo;
 using VirusBlokAda.RemoteOperations.RemoteInstall;
 using System.Configuration;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Web.Services; 
 
 public partial class AsynchLanScan : PageBase

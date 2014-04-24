@@ -162,5 +162,4 @@ namespace VirusBlokAda.Vba32CC.JSON.Entities
         }
         #endregion
     }
-
 }

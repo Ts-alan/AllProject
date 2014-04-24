@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Collections;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
 	/// <summary>
 	/// Summary description for SettingsEntity.

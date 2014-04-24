@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARM2_dbcontrol.Common
+namespace VirusBlokAda.Vba32CC.Common
 {
     public enum InformationListTypes
     {

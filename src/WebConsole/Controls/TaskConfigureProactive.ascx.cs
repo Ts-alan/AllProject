@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ARM2_dbcontrol.Tasks;
-using ARM2_dbcontrol.Tasks.ProactiveProtection;
 
 public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl, ITask
 {

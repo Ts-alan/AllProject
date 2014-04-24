@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using ARM2_dbcontrol.GroupEntities;
 using VirusBlokAda.Vba32CC.Policies.General;
 

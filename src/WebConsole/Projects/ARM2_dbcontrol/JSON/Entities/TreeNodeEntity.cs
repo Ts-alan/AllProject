@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace VirusBlokAda.Vba32CC.JSON
+namespace VirusBlokAda.Vba32CC.JSON.Entities
 {
     /// <summary>
     /// General group entity
@@ -56,6 +56,7 @@ namespace VirusBlokAda.Vba32CC.JSON
         #endregion
 
         #region Constructors
+
         public TreeNodeEntity() { }
         public TreeNodeEntity(String nodeId, String nodeName, String parentId, String comment, Boolean isLeaf)
         {
@@ -69,6 +70,7 @@ namespace VirusBlokAda.Vba32CC.JSON
             : this(nodeId, nodeName, null, null, isLeaf)
         {
         }
+
         #endregion
     }
 }

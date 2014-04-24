@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace ARM2_dbcontrol.Tasks.ConfigureAgent
+namespace ARM2_dbcontrol.Tasks
 {
     public class TaskConfigureAgent
     {

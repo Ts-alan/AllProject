@@ -25,7 +25,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
             InitFields();
     }
 
-    private String defaultFilters = ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor.DefaultFilters;
+    private String defaultFilters = TaskConfigureMonitor.DefaultFilters;
 
     private Boolean _hideHeader = false;
 
@@ -136,9 +136,9 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         return GetTaskEntity().SaveToXml();
     }
 
-    private ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor GetTaskEntity()
+    private TaskConfigureMonitor GetTaskEntity()
     {
-        ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor task = new ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor();
+        TaskConfigureMonitor task = new TaskConfigureMonitor();
         //Набор файлов
         if (rbScanStandartSet.Checked)
             task.CHECK_MODE = 0;
@@ -252,7 +252,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         if (task.Type != TaskType.ConfigureMonitor)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor tsk = new ARM2_dbcontrol.Tasks.ConfigureMonitor.TaskConfigureMonitor();
+        TaskConfigureMonitor tsk = new TaskConfigureMonitor();
         tsk.LoadFromXml(task.Param);
 
         //cbox

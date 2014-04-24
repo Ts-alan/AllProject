@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARM2_dbcontrol.Tasks.Firewall
+namespace ARM2_dbcontrol.Tasks
 {
     /// <summary>
     /// Правило настройки файрвола

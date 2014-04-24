@@ -218,7 +218,7 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <returns></returns>
         public Int32 DefaultConfigureAgent(String ip)
         {            
-            ARM2_dbcontrol.Tasks.ConfigureAgent.TaskConfigureAgent task = new Tasks.ConfigureAgent.TaskConfigureAgent();
+            ARM2_dbcontrol.Tasks.TaskConfigureAgent task = new Tasks.TaskConfigureAgent();
             
             //Get path current dll (ARM2_dbcontrol) (ex. "file:///C:/Program Files/Vba32 Control Center/Web Console/bin/ARM2_dbcontrol.dll")
             //Format path in "C:\Program Files\Vba32 Control Center\Web Console\bin\ARM2_dbcontrol.dll"

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common
+namespace VirusBlokAda.Vba32CC.Common
 {
     public class StringPair
     {

@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 
 namespace ARM2_dbcontrol.Diagram
 {

@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
     public class InstallationTaskManager
     {

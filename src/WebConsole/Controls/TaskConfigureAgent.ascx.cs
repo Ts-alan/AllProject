@@ -6,7 +6,6 @@ using System.Web.UI.WebControls;
 using ARM2_dbcontrol.Tasks;
 using System.Text;
 using System.IO;
-using ARM2_dbcontrol.Tasks.ConfigureAgent;
 
 public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, ITask
 {

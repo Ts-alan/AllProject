@@ -116,7 +116,7 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
     /// <returns></returns>
     private String BuildXml()
     {
-        ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine task = new ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine();
+        TaskConfigureQuarantine task = new TaskConfigureQuarantine();
 
         //Удаленное хранилище        
         task.StoragePath = tboxRemote.Text;
@@ -163,7 +163,7 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
         if (task.Type != TaskType.ConfigureQuarantine)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine tsk = new ARM2_dbcontrol.Tasks.ConfigureQuarantine.TaskConfigureQuarantine();
+        TaskConfigureQuarantine tsk = new TaskConfigureQuarantine();
         tsk.LoadFromXml(task.Param);
 
         tboxRemote.Text = tsk.StoragePath;

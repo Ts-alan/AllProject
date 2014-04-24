@@ -172,7 +172,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         if (task.Type != TaskType.ConfigureScanner)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner tsk = new ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner();
+        TaskConfigureScanner tsk = new TaskConfigureScanner();
         tsk.LoadFromXml(task.Param);
 
         cboxCheckArchives.Checked = tsk.IsCheckArchives;
@@ -275,7 +275,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         if (task.Type != TaskType.ConfigureScanner)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner tsk = new ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner();
+        TaskConfigureScanner tsk = new TaskConfigureScanner();
         tsk.LoadFromXml(task.Param);
 
         return tsk.GetTaskForLoader();
@@ -292,9 +292,9 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         return task;
     }
 
-    private ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner GetTaskEntity()
+    private TaskConfigureScanner GetTaskEntity()
     {
-        ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner task = new ARM2_dbcontrol.Tasks.ConfigureScanner.TaskConfigureScanner();
+        TaskConfigureScanner task = new TaskConfigureScanner();
 
         task.CheckObjects = tboxCheckObjects.Text;
         task.IsCheckMemory = cboxCheckMemory.Checked;        

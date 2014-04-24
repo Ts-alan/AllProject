@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using VirusBlokAda.Vba32CC.Policies.Devices;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Configuration;
 using VirusBlokAda.Vba32CC.Policies;
 using VirusBlokAda.Vba32CC.Policies.Devices.Policy;

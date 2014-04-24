@@ -16,7 +16,7 @@ using System.Text;
 
 using Microsoft.Win32;
 
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using ARM2_dbcontrol.Filters;
 
 using Vba32.ControlCenter.SettingsService;

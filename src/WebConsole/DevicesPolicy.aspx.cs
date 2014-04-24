@@ -10,7 +10,7 @@ using VirusBlokAda.Vba32CC.Groups;
 using VirusBlokAda.Vba32CC.Policies;
 using VirusBlokAda.Vba32CC.Policies.Devices.Policy;
 using VirusBlokAda.Vba32CC.Policies.Devices;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Configuration;
 using Filters.Common;
 

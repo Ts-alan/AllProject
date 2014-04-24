@@ -51,9 +51,9 @@ public partial class Controls_TaskMonitorOn : System.Web.UI.UserControl, ITask
         return GetTaskEntity().GetTaskForLoader();
     }
 
-    private ARM2_dbcontrol.Tasks.MonitorOnOff.TaskMonitorOnOff GetTaskEntity()
+    private TaskMonitorOnOff GetTaskEntity()
     {
-        ARM2_dbcontrol.Tasks.MonitorOnOff.TaskMonitorOnOff task = new ARM2_dbcontrol.Tasks.MonitorOnOff.TaskMonitorOnOff();
+        TaskMonitorOnOff task = new TaskMonitorOnOff();
 
         task.IsMonitorOn = true;
         task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();

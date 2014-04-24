@@ -9,7 +9,7 @@ using VirusBlokAda.RemoteOperations.Wmi;
 using System.Runtime.InteropServices;
 using VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper;
 using VirusBlokAda.RemoteOperations.RemoteService;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Configuration;
 using System.Diagnostics;
 

@@ -1,45 +1,21 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-
-using System.Xml;
 using System.Collections.Generic;
+using System.Web.Security;
 using System.Text.RegularExpressions;
-
-using ARM2_dbcontrol.DataBase;
-using ARM2_dbcontrol.Filters;
-
-using Vba32.ControlCenter.Service;
+using System.Configuration;
 using Microsoft.Win32;
-using System.Resources;
-
+using VirusBlokAda.Vba32CC.DataBase;
+using ARM2_dbcontrol.Filters;
+using Vba32.ControlCenter.Service;
 
 /// <summary>
 /// Defaults page
 /// </summary>
 public partial class _Default : PageBase
 {
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-        //
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -64,11 +40,6 @@ public partial class _Default : PageBase
         }
 
         Page.Title = Resources.Resource.PageDefaultTitle;
-
-        //Добавить на форму рядом с полем
-        //<asp:LinkButton runat=server ID="lbtnARM2DataBaseDataSourceSave" OnClick="lbtnARM2DataBaseDataSourceSave_Click"></asp:LinkButton>
-
-        
 
         try
         {

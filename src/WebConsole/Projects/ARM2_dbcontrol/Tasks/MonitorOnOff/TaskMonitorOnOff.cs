@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARM2_dbcontrol.Tasks.MonitorOnOff
+namespace ARM2_dbcontrol.Tasks
 {
     public class TaskMonitorOnOff
     {

@@ -6,8 +6,8 @@ using System.Web.UI.WebControls;
 using System.ComponentModel;
 using Filters.Common;
 using Filters.TemporaryGroup;
-using ARM2_dbcontrol.Common;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.Vba32CC.DataBase;
 using System.Configuration;
 
 public partial class Controls_TemporaryGroupFilter : System.Web.UI.UserControl

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace ARM2_dbcontrol.Tasks.ConfigureQuarantine
+namespace ARM2_dbcontrol.Tasks
 {
     public class TaskConfigureQuarantine
     {

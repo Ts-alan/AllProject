@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ARM2_dbcontrol.Common;
+using VirusBlokAda.Vba32CC.Common;
 
-namespace ARM2_dbcontrol.DataBase
+namespace VirusBlokAda.Vba32CC.DataBase
 {
     public class TemporaryGroupProvider
     {

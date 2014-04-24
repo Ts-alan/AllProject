@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARM2_dbcontrol.Tasks.ProactiveProtection
+namespace ARM2_dbcontrol.Tasks
 {
     /// <summary>
     /// Правило проактивной защиты

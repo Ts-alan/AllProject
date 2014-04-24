@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using VirusBlokAda.Vba32CC.Policies.General;
 using VirusBlokAda.Vba32CC.Policies.Devices;
 //using VirusBlokAda.Vba32CC.Policies.Cash;

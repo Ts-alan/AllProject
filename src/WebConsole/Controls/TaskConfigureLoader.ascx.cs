@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using ARM2_dbcontrol.Generation;
 using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Filters;
-using ARM2_dbcontrol.Tasks.ConfigureLoader;
 
 /// <summary>
 /// Задача настройки Диспетчера

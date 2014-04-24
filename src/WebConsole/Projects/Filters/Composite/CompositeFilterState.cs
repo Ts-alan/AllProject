@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Common.Collection;
+using VirusBlokAda.Vba32CC.Common.Collection;
 using Filters.Primitive;
 
 namespace Filters.Composite

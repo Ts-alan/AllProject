@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace ARM2_dbcontrol.Common
+namespace VirusBlokAda.Vba32CC.Common
 {
     /// <summary>
     /// Class for getting informations from key file

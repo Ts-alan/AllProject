@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
-using Common;
+using VirusBlokAda.Vba32CC.Common;
 
 namespace CustomControls
 {

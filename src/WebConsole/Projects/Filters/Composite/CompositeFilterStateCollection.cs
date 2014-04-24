@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Common.Collection;
+using VirusBlokAda.Vba32CC.Common.Collection;
 using System.IO;
 using System.Xml.Serialization;
 

@@ -69,7 +69,7 @@ public partial class Controls_TaskRunScanner : System.Web.UI.UserControl, ITask
         if (task.Type != TaskType.RunScanner)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        ARM2_dbcontrol.Tasks.RunScanner.TaskRunScanner tsk = new ARM2_dbcontrol.Tasks.RunScanner.TaskRunScanner();
+        TaskRunScanner tsk = new TaskRunScanner();
         tsk.LoadFromXml(task.Param);
         
         cboxCheckMemory.Checked = tsk.IsCheckMemory;
@@ -94,9 +94,9 @@ public partial class Controls_TaskRunScanner : System.Web.UI.UserControl, ITask
         return GetTaskEntity().GetTaskForVSIS();
     }
 
-    private ARM2_dbcontrol.Tasks.RunScanner.TaskRunScanner GetTaskEntity()
+    private TaskRunScanner GetTaskEntity()
     {
-        ARM2_dbcontrol.Tasks.RunScanner.TaskRunScanner task = new ARM2_dbcontrol.Tasks.RunScanner.TaskRunScanner();
+        TaskRunScanner task = new TaskRunScanner();
 
         foreach (ListItem item in lboxPathes.Items)
         {

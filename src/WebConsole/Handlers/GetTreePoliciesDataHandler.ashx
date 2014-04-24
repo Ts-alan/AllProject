@@ -3,9 +3,10 @@
 using System;
 using System.Web;
 using VirusBlokAda.Vba32CC.JSON;
+using VirusBlokAda.Vba32CC.JSON.Entities;
 using System.Collections.Generic;
 using VirusBlokAda.Vba32CC.Policies;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 using VirusBlokAda.Vba32CC.Policies.General;
 using Newtonsoft.Json;
 

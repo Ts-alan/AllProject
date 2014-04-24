@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using VirusBlokAda.Vba32CC.Policies.General;
-using ARM2_dbcontrol.DataBase;
+using VirusBlokAda.Vba32CC.DataBase;
 
 namespace VirusBlokAda.Vba32CC.Groups
 {
