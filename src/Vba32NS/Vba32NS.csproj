@@ -34,8 +34,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BaseIntermediateOutputPath>..\..\.bin\int\$(SolutionName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\$(SolutionName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\.bin\int\Vba32NS\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\.bin\Vba32NS\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

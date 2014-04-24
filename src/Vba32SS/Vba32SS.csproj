@@ -17,8 +17,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <BaseIntermediateOutputPath>..\..\.bin\int\$(SolutionName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\$(SolutionName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\.bin\int\Vba32SS\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\.bin\Vba32SS\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

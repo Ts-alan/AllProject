@@ -15,8 +15,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <BaseIntermediateOutputPath>..\..\.bin\int\$(SolutionName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\$(SolutionName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\.bin\int\packet_parser\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\.bin\packet_parser\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
