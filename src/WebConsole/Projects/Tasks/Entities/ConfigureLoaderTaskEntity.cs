@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Tasks.Attributes;
-using Tasks.Service;
+using VirusBlokAda.CC.Tasks.Attributes;
+using VirusBlokAda.CC.Tasks.Service;
 
-namespace Tasks.Entities
+namespace VirusBlokAda.CC.Tasks.Entities
 {
     [Serializable]
     [TaskEntity("loader")]

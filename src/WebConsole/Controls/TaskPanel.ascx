@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TaskPanel.ascx.cs" Inherits="Controls_TaskPanel" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <%@ Register Src="~/Controls/CollapsiblePanelSwitch.ascx" TagName="CollapsiblePanelSwitch"
     TagPrefix="cc1" %>
 <script language="javascript" type="text/javascript">

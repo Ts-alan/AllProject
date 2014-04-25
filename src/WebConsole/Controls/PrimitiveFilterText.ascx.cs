@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.ComponentModel;
-using Filters.Primitive;
+using VirusBlokAda.CC.Filters.Primitive;
 
 public partial class Controls_PrimitiveFilterText : System.Web.UI.UserControl, IPrimitiveFilter
 {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 
 using System.Text;
-using VirusBlokAda.RemoteOperations.RemoteInstall;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
 {
     public class RemoteInstallEntity
     {

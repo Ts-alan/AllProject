@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using VirusBlokAda.RemoteOperations.RemoteScan;
-using VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo;
-using VirusBlokAda.RemoteOperations.Common;
-using VirusBlokAda.RemoteOperations.Net;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo;
+using VirusBlokAda.CC.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Net;
 using System.Net;
 using System.Web.Security;
 using System.Diagnostics;
 using System.Text;
 using System.Web.UI.HtmlControls;
-using VirusBlokAda.RemoteOperations.MsiInfo;
-using VirusBlokAda.RemoteOperations.RemoteInstall;
+using VirusBlokAda.CC.RemoteOperations.MsiInfo;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall;
 using System.Configuration;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using System.Web.Services; 
 
 public partial class AsynchLanScan : PageBase

@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.Vba32CC.Common
+namespace VirusBlokAda.CC.Common
 {
     public class StringPair
     {
-        private string _name;
-        private string _value;
+        private String _name;
+        private String _value;
 
-        public string Name
+        public String Name
         {
             get { return _name; }
             set { _name = value; }
         }
 
-        public string Value
+        public String Value
         {
             get { return _value; }
             set { _value = value; }
         }
-        public StringPair(string name, string value)
+        public StringPair(String name, String value)
         {
             _name = name;
             _value = value;

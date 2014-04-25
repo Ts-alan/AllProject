@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Diagnostics;
 using System.Threading;
 using System.Collections.Specialized;
-
-using Vba32.ControlCenter.NotificationService.Xml;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 
@@ -29,12 +26,11 @@ namespace Vba32.ControlCenter.NotificationService
                 //неплохо бы проверить еще остальные пол€ на null
                 try
                 {
-                    Vba32NS.LogMessage("Vba32NS.OnRegisteredMessage():: " + message["EventName"],1);
+                    LoggerNS.log.Info("Vba32NS.OnRegisteredMessage():: " + message["EventName"]);
                 }
                 catch (Exception iexp)
                 {
-                    Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: Input parameter is wrong. Throw exception.. ", 
-                        EventLogEntryType.Error);
+                    LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: Input parameter is wrong. Throw exception.. ");
                     throw iexp;
                 }
 
@@ -50,12 +46,12 @@ namespace Vba32.ControlCenter.NotificationService
                                             Vba32NS.jabberFromJID,
                                             Vba32NS.jabberPassword))
                             {
-                                Vba32NS.LogMessage("Need to reconnect to server jabber", 6);
+                                LoggerNS.log.Info("Need to reconnect to server jabber");
                                 Vba32NS.Jclient.CloseConnection();
                             }
                             else
                             {
-                                Vba32NS.LogMessage("Needn't to reconnect to server jabber", 6);
+                                LoggerNS.log.Info("Needn't to reconnect to server jabber");
                             }
                         }
                         else 
@@ -72,16 +68,14 @@ namespace Vba32.ControlCenter.NotificationService
                     Vba32NS.list = Vba32NS.GetNotifyEventList();
                     if (Vba32NS.list == null)
                     {
-                        Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: Cannot get list of events",
-                               EventLogEntryType.Error);
+                        LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: Cannot get list of events");
                         //≈сли уж и здесь мы его не получили, то дальше бесполезно
                         //рыпатьс€. ѕри тестировании получилось воспроизвести данную 
                         //ситуацию, когда файл с данными настройками не существовал на диске
                         return;
                     }
                     if (!Vba32NS.ReadSettingsFromRegistry())
-                        Vba32NS.LogError("Vba32NS.OnRegisteredMessage()::ReadSettingsFromRegistry returned false ",
-                            EventLogEntryType.Error);
+                        LoggerNS.log.Error("Vba32NS.OnRegisteredMessage()::ReadSettingsFromRegistry returned false ");
                     else
                         Vba32NS.SkipReRead();
                 }
@@ -95,13 +89,13 @@ namespace Vba32.ControlCenter.NotificationService
                         //if ((ev.IsNotify) && (ev.EventName == message["EventName"]))
                         if (ev.EventName == message["EventName"])
                         {
-                            Vba32NS.LogMessage("Vba32NS.OnRegisteredMessage():: Event " + message["EventName"] + " has been registred",1);
+                            LoggerNS.log.Info("Vba32NS.OnRegisteredMessage():: Event " + message["EventName"] + " has been registred");
                             if (ev.NetSend.IsUse)
                             {
                                 foreach (string addr in ev.NetSend.AddrList)
                                 {
-                                    Vba32NS.LogMessage(String.Format("NetSend to {0}, message: {1}",
-                                        addr, NotifyMessageBuilder.BuildBody(message, ev.NetSend.Message)),4);
+                                    LoggerNS.log.Info(String.Format("NetSend to {0}, message: {1}",
+                                        addr, NotifyMessageBuilder.BuildBody(message, ev.NetSend.Message)));
                                         
                                     Vba32NS.SendNetSend(addr, NotifyMessageBuilder.BuildBody(message, ev.NetSend.Message));
 
@@ -123,15 +117,14 @@ namespace Vba32.ControlCenter.NotificationService
                                     foreach (string addr in ev.Jabber.AddrList)
                                     {
 
-                                        Vba32NS.LogMessage(String.Format("Jabber to {0}, message: {1}",
-                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Jabber.Message)),4);
+                                        LoggerNS.log.Info(String.Format("Jabber to {0}, message: {1}",
+                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Jabber.Message)));
 
                                         Vba32NS.SendJabber(addr, NotifyMessageBuilder.BuildBody(message, ev.Jabber.Message));
                                     }
                                 }
                                 else
-                                    Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: The jabber server hasn't been defined, but the event will be sent",
-                                       EventLogEntryType.Error);
+                                    LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: The jabber server hasn't been defined, but the event will be sent");
 
                             }
 
@@ -140,8 +133,8 @@ namespace Vba32.ControlCenter.NotificationService
                                 if (!String.IsNullOrEmpty(Vba32NS.mailServer))
                                     foreach (string addr in ev.Mail.AddrList)
                                     {
-                                        Vba32NS.LogMessage(String.Format("Mail to {0}, message: {1}",
-                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Mail.Message)),4);
+                                        LoggerNS.log.Info(String.Format("Mail to {0}, message: {1}",
+                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Mail.Message)));
                                              
                                         Vba32NS.SendMail(Vba32NS.mailServer, Vba32NS.mailFrom, Vba32NS.mailDisplayName,
                                             NotifyMessageBuilder.BuildSubject(message, ev.Mail.Subject),
@@ -149,16 +142,15 @@ namespace Vba32.ControlCenter.NotificationService
                                             ev.Mail.Priority);
                                     }
                                 else
-                                    Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: The mail server hasn't been defined, but the event will be sent",
-                                        EventLogEntryType.Error);
+                                    LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: The mail server hasn't been defined, but the event will be sent");
                             }
                             return true;
                         }
                     }
                     catch (Exception ex)
                     {
-                        Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: Find error: " +
-                            String.Format("{0}, {1}, {2}",ex,ex.Source,ex.StackTrace) , EventLogEntryType.Error);
+                        LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: Find error: " +
+                            String.Format("{0}, {1}, {2}",ex,ex.Source,ex.StackTrace));
                     }
                     return false;
                 }
@@ -167,8 +159,7 @@ namespace Vba32.ControlCenter.NotificationService
             }
             catch (Exception ex)
             {
-                Vba32NS.LogError("Vba32NS.OnRegisteredMessage():: " +
-                    ex.Message, EventLogEntryType.Error);
+                LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: " + ex.Message);
             }
         }
     }

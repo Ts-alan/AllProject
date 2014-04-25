@@ -9,9 +9,9 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
-using Filters.Primitive;
+using VirusBlokAda.CC.Filters.Primitive;
 
 /// <summary>
 /// Statistic page

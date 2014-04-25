@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.Vba32CC.DataBase;
-using VirusBlokAda.Vba32CC.Groups;
-using VirusBlokAda.Vba32CC.Policies.General;
-using VirusBlokAda.Vba32CC.JSON.Entities;
+using VirusBlokAda.CC.DataBase;
 
-namespace VirusBlokAda.Vba32CC.JSON
+namespace VirusBlokAda.CC.JSON
 {
     public static class TreeJSONEntityConverter
     {

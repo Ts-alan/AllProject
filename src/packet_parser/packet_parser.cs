@@ -63,17 +63,6 @@ namespace Vba32CC
         private readonly String AppPath = String.Empty;
         private const String logFileName = @"Vba32PacketParser.log";
         private const String keyFileName = @"vba32.key";
-        private Logger log;
-        private Logger Log
-        {
-            get {
-                if (log == null)
-                    log = new Logger(AppPath + logFileName);
-
-                return log;
-            }
-        }
-
 
         // Constructor.
         public PacketParser()
@@ -123,7 +112,7 @@ namespace Vba32CC
             }
             catch
             {
-                Log.Write("Key file is not exist or invalid.");
+                LoggerPP.log.Error("Key file is not exist or invalid.");
                 CompCount = 0;
                 CompUsbCount = 0;
 
@@ -654,7 +643,7 @@ namespace Vba32CC
             catch (Exception e)
             {
                 m_error_info = e.Message;
-                Log.Write(e.Message);
+                LoggerPP.log.Error(e.Message);
                 result = false;
             }
             return result;

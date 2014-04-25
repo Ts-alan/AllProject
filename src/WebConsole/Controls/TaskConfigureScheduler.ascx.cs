@@ -13,6 +13,7 @@ using ARM2_dbcontrol.Service.Vba32NS;
 using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
+using VirusBlokAda.CC.Common.Xml;
 
 public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl, ITask
 {
@@ -215,7 +216,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
     /// <returns>xml строка</returns>
     private string BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("ConfigureSheduler");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("ConfigureSheduler");
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ConfigureSheduler");
         xml.AddNode("Content", Server.HtmlEncode(ObjectSerializer.ObjToXmlStr(Rules).Remove(0, 39)));
@@ -226,7 +227,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
 
     public string BuildTask(string xmlParam)
     {
-        XmlTaskParser pars = new XmlTaskParser(xmlParam);        
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(xmlParam);        
         List < SchedulerRule > lstRules = ObjectSerializer.XmlStrToObj<List<SchedulerRule>>(Server.HtmlDecode(pars.GetValue("Content")));
 
         StringBuilder result = new StringBuilder();
@@ -371,7 +372,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         if (task == null || task.Type != TaskType.ConfigureSheduler)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
         Rules = ObjectSerializer.XmlStrToObj<List<SchedulerRule>>(Server.HtmlDecode(pars.GetValue("Content")));        
         UpdateData();
     }

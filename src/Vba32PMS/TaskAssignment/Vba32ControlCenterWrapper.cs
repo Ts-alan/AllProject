@@ -67,7 +67,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment
         /// <returns></returns>
         public Int32 PacketGeneral(Object[] args, String taskType)
         {
-            Logger.Debug("Vba32ControlCenterWrapper.PacketGeneral():: Выдача задачи " + taskType);
+            LoggerPMS.log.Debug("Vba32ControlCenterWrapper.PacketGeneral():: Выдача задачи " + taskType);
             Int32 retval = 0;         //return value
             //call COM-server method
             try
@@ -80,7 +80,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment
             catch (Exception e)
             {
                 m_last_error = "Message: " + e.Message + " InnerException: " + e.InnerException;
-                Logger.Error(String.Format("Ошибка при выдаче задачи {0} ({1})", taskType, m_last_error));
+                LoggerPMS.log.Error(String.Format("Ошибка при выдаче задачи {0} ({1})", taskType, m_last_error));
                 retval = 1;
             }
             return retval;
@@ -220,7 +220,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment
         /// <returns></returns>
         public Int32 DefaultConfigureAgent(String ip)
         {
-            Logger.Debug(String.Format("Vba32ControlCenterWrapper.DefaultConfigureAgent():: выдаем задачу на конфигурацию агента (IP: {0})", ip));
+            LoggerPMS.log.Debug(String.Format("Vba32ControlCenterWrapper.DefaultConfigureAgent():: выдаем задачу на конфигурацию агента (IP: {0})", ip));
             TaskConfigureAgent task = new TaskConfigureAgent();
 
             //Get path current assembly (ex. "file:///C:/Program Files/Vba32 Control Center/Vba32PMS.exe")
@@ -228,7 +228,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment
             String AppPath = System.Reflection.Assembly.GetExecutingAssembly().CodeBase.Replace(@"file:///", "").Replace(@"/", @"\");
             //Get full path directory "Vba32 Control Center"
             AppPath = System.IO.Directory.GetParent(AppPath).FullName + @"\VbaControlAgent.cfg";
-            Logger.Debug("Path cfg-file: " + AppPath);
+            LoggerPMS.log.Debug("Path cfg-file: " + AppPath);
             task.ConfigFile = AppPath;
 
             String xml = String.Empty;
@@ -238,7 +238,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment
             }
             catch (Exception e)
             {
-                Logger.Error("Пакет на конфигурацию агента не построен: " + e.Message);
+                LoggerPMS.log.Error("Пакет на конфигурацию агента не построен: " + e.Message);
                 return 1; 
             }
 

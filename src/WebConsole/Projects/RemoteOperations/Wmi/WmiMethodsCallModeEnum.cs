@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 
-namespace VirusBlokAda.RemoteOperations.Wmi
+namespace VirusBlokAda.CC.RemoteOperations.Wmi
 {
     public enum WmiMethodsCallMode
     {

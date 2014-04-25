@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Tasks.Entities;
-using Tasks.Customizable;
-using Tasks.Common;
+using VirusBlokAda.CC.Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Customizable;
+using VirusBlokAda.CC.Tasks.Common;
 using System.Threading;
 using System.Text;
 

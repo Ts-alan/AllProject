@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Reflection;
 
-namespace Tasks.Service
+namespace VirusBlokAda.CC.Tasks.Service
 {
     /// <summary>
     /// Хранит информацию для вызова метода com-объекта в отдельном потоке

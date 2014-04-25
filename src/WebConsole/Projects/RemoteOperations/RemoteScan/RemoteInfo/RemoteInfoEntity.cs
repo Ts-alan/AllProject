@@ -5,7 +5,7 @@ using System.Threading;
 using System.Net;
 
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo
 {
     public class RemoteInfoEntity
     {        

@@ -14,20 +14,18 @@ using System.Text.RegularExpressions;
 
 using Microsoft.Win32;
 
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Service.TaskAssignment;
 using Vba32.ControlCenter.SettingsService;
-
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.Policies.General;
 using System.Drawing;
 using System.Text;
 using System.Diagnostics;
-using VirusBlokAda.RemoteOperations.MsiInfo;
-using VirusBlokAda.RemoteOperations.RemoteInstall;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.MsiInfo;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall;
+using VirusBlokAda.CC.RemoteOperations.Common;
+using VirusBlokAda.CC.Common.Xml;
 
 
 //!-OPTM Вынести выдачу задач в отдельный partial-файл
@@ -1711,7 +1709,7 @@ public partial class Computers : PageBase
         TaskUserEntity task = new TaskUserEntity();
         try
         {
-            ARM2_dbcontrol.Generation.XmlBuilder builder = new ARM2_dbcontrol.Generation.XmlBuilder();
+            VirusBlokAda.CC.Common.Xml.XmlBuilder builder = new VirusBlokAda.CC.Common.Xml.XmlBuilder();
             if (tskCreateProcess.Visible == true)
             {
                 task = tskCreateProcess.GetCurrentState();
@@ -1736,7 +1734,7 @@ public partial class Computers : PageBase
                 task = tskSendFile.GetCurrentState();
                 task.Name = ddlTaskName.SelectedValue;
                 tskSendFile.ValidateFields();
-                //!--
+                
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
@@ -2242,7 +2240,7 @@ public partial class Computers : PageBase
         TaskUserEntity task = new TaskUserEntity();
         try
         {
-            ARM2_dbcontrol.Generation.XmlBuilder builder = new ARM2_dbcontrol.Generation.XmlBuilder();
+            VirusBlokAda.CC.Common.Xml.XmlBuilder builder = new VirusBlokAda.CC.Common.Xml.XmlBuilder();
             
             //tskSystemInfo 
             task = tskSystemInfo.GetCurrentState();
@@ -2328,9 +2326,9 @@ public partial class Computers : PageBase
 
 
         //По умолчанию
-        ARM2_dbcontrol.Generation.XmlBuilder xmlBuil = new ARM2_dbcontrol.Generation.XmlBuilder("root");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xmlBuil = new VirusBlokAda.CC.Common.Xml.XmlBuilder("root");
         //Для тех, у кого потребуется задать какие-то параметры(например загрузить/выгрузить Диспетчер)
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("root");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("root");
 
         xmlBuil.Generate();
 
@@ -2850,7 +2848,7 @@ public partial class Computers : PageBase
 
         //Отсечь базовые задачи..
         TaskUserEntity task = new TaskUserEntity();
-        ARM2_dbcontrol.Generation.XmlBuilder xmlBuil = new ARM2_dbcontrol.Generation.XmlBuilder("root");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xmlBuil = new VirusBlokAda.CC.Common.Xml.XmlBuilder("root");
         xmlBuil.Generate();
 
         string editing = "&Mode=Edit";

@@ -2,12 +2,9 @@
 
 using System;
 using System.Web;
-using VirusBlokAda.Vba32CC.JSON;
-using VirusBlokAda.Vba32CC.JSON.Entities;
+using VirusBlokAda.CC.JSON;
 using System.Collections.Generic;
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.DataBase;
-using VirusBlokAda.Vba32CC.Policies.General;
+using VirusBlokAda.CC.DataBase;
 using Newtonsoft.Json;
 
 public class GetTreePoliciesDataHandler : IHttpHandler

@@ -2,7 +2,7 @@
     CodeFile="AsynchLanScan.aspx.cs" Inherits="AsynchLanScan" %>
 
 <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
     <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </ajaxToolkit:ToolkitScriptManager>
@@ -528,11 +528,11 @@
                         <ItemTemplate>
                             <div style="padding-left: 20px; width: 90%;">
                                 <div style="word-wrap: break-word; float: left; width: 90%;">
-                                    <asp:Label ID="lblInformation" runat="server" Width="100%" IP="<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %>" />
+                                    <asp:Label ID="lblInformation" runat="server" Width="100%" IP="<%# ((VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %>" />
                                 </div>
                                 <div id="imgComment" runat="server" style="float: right; max-width: 20px;" class="EditComment"
                                     titledialog="<%# Resources.Resource.Comment %>" title='<%# Resources.Resource.AddOrEditComment %>'
-                                    savetitle='<%# Resources.Resource.Save %>' ip="<%# ((VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %>">
+                                    savetitle='<%# Resources.Resource.Save %>' ip="<%# ((VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo.RemoteInfoEntityShow)Container.DataItem).IPAddress %>">
                                 </div>
                             </div>
                         </ItemTemplate>

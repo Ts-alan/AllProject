@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tasks.Simple
+namespace VirusBlokAda.CC.Tasks.Simple
 {
     public enum SimpleTaskEntityEnum
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace VirusBlokAda.RemoteOperations.Threading
+namespace VirusBlokAda.CC.RemoteOperations.Threading
 {
     class WaitCallbackContainer
     {

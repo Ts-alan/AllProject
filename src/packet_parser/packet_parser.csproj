@@ -49,9 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anchor.cs" />
+    <Compile Include="Common\LoggerPP.cs" />
     <Compile Include="EventsEntity.cs" />
     <Compile Include="EventsFlowManager.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="notifications.cs" />
     <Compile Include="packet_parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,11 +72,15 @@
     <Compile Include="TaskAssignment\Tasks\TaskRunScanner.cs" />
     <Compile Include="TaskAssignment\Vba32ControlCenterWrapper.cs" />
     <Compile Include="TaskAssignment\DataBase\VlslVConnection.cs" />
-    <Compile Include="TaskAssignment\XmlBuilder.cs" />
-    <Compile Include="TaskAssignment\XmlTaskParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TaskAssignment\VbaTaskAssignment.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

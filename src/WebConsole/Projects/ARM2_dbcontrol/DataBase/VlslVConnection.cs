@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 
-namespace VirusBlokAda.Vba32CC.DataBase
+namespace VirusBlokAda.CC.DataBase
 {
 	/// <summary>
 	/// Class to connect to database

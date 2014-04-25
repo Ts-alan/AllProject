@@ -8,8 +8,6 @@ using System.Text;
 
 using System.IO;
 using System.Threading;
-
-using Vba32.ControlCenter.NotificationService.Xml;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 
@@ -31,7 +29,7 @@ namespace Vba32.ControlCenter.NotificationService
         /// <returns></returns>
         internal static bool SendJabber(string to, string message)
         {
-            LogMessage("Vba32NS.SendJabber():: Started",5);
+            LoggerNS.log.Info("Vba32NS.SendJabber():: Started");
             bool retValue = false;
             Thread thread = new Thread(delegate()
             {
@@ -39,14 +37,14 @@ namespace Vba32.ControlCenter.NotificationService
 
             });
             thread.Start();
-            LogMessage("Wait 10 seconds..",10);
+            LoggerNS.log.Info("Wait 10 seconds..");
             if (thread.Join(TimeSpan.FromSeconds(10)))
             {
-                LogMessage("thread.Join returned true",6);
+                LoggerNS.log.Info("thread.Join returned true");
             }
             else
             {
-                LogMessage("thread.Join returned false", 6);
+                LoggerNS.log.Info("thread.Join returned false");
                 thread.Abort();
                 return false;
             }
@@ -67,7 +65,7 @@ namespace Vba32.ControlCenter.NotificationService
         internal static bool SendMail(string server, string from, string displayName,
             string subject, string to, string body, int priority)
         {
-            LogMessage("Vba32NS.SendMail():: Started",5);
+            LoggerNS.log.Info("Vba32NS.SendMail():: Started");
             SMTPMessage ob = new SMTPMessage();
             System.Net.Mail.MailPriority mpriority = new System.Net.Mail.MailPriority();
             switch (priority)
@@ -96,7 +94,7 @@ namespace Vba32.ControlCenter.NotificationService
         /// <returns></returns>
         internal static bool SendNetSend(string to, string message)
         {
-            LogMessage("Vba32NS.SendNetSend():: Started",5);
+            LoggerNS.log.Info("Vba32NS.SendNetSend():: Started");
             bool retValue = false;
             Thread thread = new Thread(delegate()
             {
@@ -104,14 +102,14 @@ namespace Vba32.ControlCenter.NotificationService
             });
 
             thread.Start();
-            LogMessage("Wait 10 seconds...",10);
+            LoggerNS.log.Info("Wait 10 seconds...");
             if (thread.Join(TimeSpan.FromSeconds(10)))
             {
-                LogMessage("thread.Join returned true",10);
+                LoggerNS.log.Info("thread.Join returned true");
             }
             else
             {
-                LogMessage("thread.Join returned false", 10);
+                LoggerNS.log.Info("thread.Join returned false");
                 thread.Abort();
                 return false;
             }

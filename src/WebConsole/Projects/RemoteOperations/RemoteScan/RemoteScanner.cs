@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Common;
 using System.Net;
-using VirusBlokAda.RemoteOperations.Net;
+using VirusBlokAda.CC.RemoteOperations.Net;
 using System.Threading;
-using VirusBlokAda.RemoteOperations.Threading;
-using VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo;
+using VirusBlokAda.CC.RemoteOperations.Threading;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo;
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan
 {
     public class RemoteScanner
     {

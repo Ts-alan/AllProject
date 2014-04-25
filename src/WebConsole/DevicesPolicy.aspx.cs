@@ -5,14 +5,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Services;
 using System.IO;
-
-using VirusBlokAda.Vba32CC.Groups;
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.Policies.Devices.Policy;
-using VirusBlokAda.Vba32CC.Policies.Devices;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using System.Configuration;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Common;
 
 public partial class DevicesPolicy : PageBase
 {

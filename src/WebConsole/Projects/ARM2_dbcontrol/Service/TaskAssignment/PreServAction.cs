@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 
 using System.Runtime.InteropServices;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 
 namespace ARM2_dbcontrol.Service.TaskAssignment
 {

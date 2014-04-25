@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using System.Configuration;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Common;
 
 
 public static class TemporaryGroupContainer
@@ -21,6 +21,6 @@ public static class TemporaryGroupContainer
         {
             where = null;
         }
-        return provider.GetComputerNameList(type, where);
+        return provider.GetComputerNameList(type.ToString().ToUpper(), where);
     }
 }

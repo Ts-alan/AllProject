@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="TemporaryGroupFilter.ascx.cs"
     Inherits="Controls_TemporaryGroupFilter" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <script language="javascript" type="text/javascript">
     var TemporaryGroupFilter = function () {
         return {

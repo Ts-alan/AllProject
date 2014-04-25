@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using VirusBlokAda.Vba32CC.Common;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.Common;
+using VirusBlokAda.CC.DataBase;
 using System.Reflection;
 
 public partial class Controls_AutoUpdateControl : System.Web.UI.UserControl

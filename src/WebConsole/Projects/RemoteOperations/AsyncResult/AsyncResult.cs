@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.RemoteOperations.Async
+namespace VirusBlokAda.CC.RemoteOperations.Async
 {
     internal class AsyncResult<TResult> : AsyncResultNoResult
     {

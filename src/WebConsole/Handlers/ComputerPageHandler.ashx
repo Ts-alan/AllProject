@@ -2,12 +2,10 @@
 
 using System;
 using System.Web;
-using VirusBlokAda.Vba32CC.Groups;
 using System.Configuration;
-using VirusBlokAda.Vba32CC.JSON;
+using VirusBlokAda.CC.JSON;
 using System.Collections.Generic;
-using VirusBlokAda.Vba32CC.DataBase;
-using VirusBlokAda.Vba32CC.JSON.Entities;
+using VirusBlokAda.CC.DataBase;
 
 public class ComputerPageHandler : IHttpHandler {
     

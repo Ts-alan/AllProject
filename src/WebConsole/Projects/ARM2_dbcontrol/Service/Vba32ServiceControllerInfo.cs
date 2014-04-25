@@ -52,16 +52,13 @@ namespace Vba32.ControlCenter.Service
         /// <returns></returns>
         public static Dictionary<string, string> GetServicesInfo(List<string> names)
         {
-            ARM2_dbcontrol.Generation.Logger logger = new ARM2_dbcontrol.Generation.Logger("C:\\Program Files\\Vba32 Control Center\\WebConsole\\Settings\\vba32services.log");
             Dictionary<string, string> dic = new Dictionary<string, string>();
             try
             {
             foreach (ServiceController service in ServiceController.GetServices())
             {
-                logger.Write(String.Format("{0};  ", service.DisplayName));
                 if (names.Contains(service.ServiceName))
                 {
-                    logger.Write(String.Format("{0} is including.", service.DisplayName));
                     dic.Add(service.DisplayName, service.Status.ToString());
                 }
             }
@@ -69,7 +66,6 @@ namespace Vba32.ControlCenter.Service
             catch (Exception ex)
             {
                 Debug.Write("Vba32ServiceControllerInfo.GetServicesInfo(): Error:" + ex.Message);
-                logger.Write(ex.Message);
             }
             return dic;
 

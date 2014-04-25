@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Common;
 
-namespace Filters.Primitive
+namespace VirusBlokAda.CC.Filters.Primitive
 {
     public static class PrimitiveFilterHelper
     {

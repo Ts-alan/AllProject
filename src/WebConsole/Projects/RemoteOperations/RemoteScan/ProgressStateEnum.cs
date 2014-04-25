@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan
 {
     public enum ProgressStateEnum
     {

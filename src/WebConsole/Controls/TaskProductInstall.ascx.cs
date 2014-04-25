@@ -5,7 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ARM2_dbcontrol.Tasks;
 using System.Text;
-using VirusBlokAda.RemoteOperations.MsiInfo;
+using VirusBlokAda.CC.RemoteOperations.MsiInfo;
 
 public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, ITask
 {
@@ -75,7 +75,7 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
         if (task.Type != TaskType.Install)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
         Int32 value;
         try
         {
@@ -100,7 +100,7 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
         content.AppendFormat(@"<AdditionalArgs>{0}</AdditionalArgs>", tboxArguments.Text);
         content.Append(@"</InstallProduct>");
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("Install");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("Install");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ProductInstall");        

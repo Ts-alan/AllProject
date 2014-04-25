@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 {
@@ -28,7 +29,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 
         public String Convert()
         {
-            Logger.Debug("EventsToControlAgentXml.Convert::Конвертируем в формат пакета агента");
+            LoggerPMS.log.Debug("EventsToControlAgentXml.Convert::Конвертируем в формат пакета агента");
             XmlBuilder xml = new XmlBuilder(rootTag);   //Коллекция событий
             for (Int32 i = 0; i < list.Count; i++)
             {

@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LoggerPMS.cs" />
     <Compile Include="DataBase\EventsEntity.cs" />
     <Compile Include="DataBase\EventsFilterEntity.cs" />
     <Compile Include="DataBase\EventsManager.cs" />
@@ -105,10 +106,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xml\EventsToControlAgentXml.cs" />
-    <Compile Include="Xml\Logger.cs" />
-    <Compile Include="Xml\LogLevel.cs" />
-    <Compile Include="Xml\ObjectSerializer.cs" />
-    <Compile Include="Xml\XmlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="PMS.ico" />
@@ -131,6 +128,13 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir)CleanSrcDir.bat $(ProjectDir)</PostBuildEvent>

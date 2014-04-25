@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI.WebControls;
 
-namespace CustomControls
+namespace VirusBlokAda.CC.CustomControls
 {
     public class GridViewStorage
     {

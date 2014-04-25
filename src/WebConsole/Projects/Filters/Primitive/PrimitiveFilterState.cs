@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Filters.Primitive
+namespace VirusBlokAda.CC.Filters.Primitive
 {
     public class PrimitiveFilterState
     {

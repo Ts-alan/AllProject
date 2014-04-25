@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tasks.Attributes;
+using VirusBlokAda.CC.Tasks.Attributes;
 using System.Text;
 
-namespace Tasks.Entities
+namespace VirusBlokAda.CC.Tasks.Entities
 {
     [TaskEntity("task")]
     public class QuerySystemInformationTaskEntity : TaskEntity

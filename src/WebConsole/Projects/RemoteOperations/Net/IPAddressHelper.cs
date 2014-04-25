@@ -6,7 +6,7 @@ using System.Text;
 using System.Net;
 using System.Collections.Generic;
 
-namespace VirusBlokAda.RemoteOperations.Net
+namespace VirusBlokAda.CC.RemoteOperations.Net
 {
     public static class IPAddressHelper
     {

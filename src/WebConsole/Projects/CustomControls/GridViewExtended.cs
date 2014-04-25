@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Common;
 
-namespace CustomControls
+namespace VirusBlokAda.CC.CustomControls
 {
     public class GridViewExtended : GridView
     {

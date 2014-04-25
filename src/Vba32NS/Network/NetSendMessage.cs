@@ -10,7 +10,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
     {
         public static bool Send(string toAddr, string message)
         {
-            LogMessage("NetSendMessage.Send():: Started ", 15);
+            LoggerNS.log.Info("NetSendMessage.Send():: Started ");
             try
             {
                 ProcessStartInfo info = new ProcessStartInfo();
@@ -21,15 +21,10 @@ namespace Vba32.ControlCenter.NotificationService.Network
             }
             catch (Exception ex)
             {
-                LogMessage("NetSendMessage.Send():: "+ex.Message,10);
+                LoggerNS.log.Info("NetSendMessage.Send():: " + ex.Message);
                 return false;
             }
             return true;
-        }
-
-        public static void LogMessage(string body, int level)
-        {
-            Vba32NS.LogMessage(body, level);
         }
     }
 }

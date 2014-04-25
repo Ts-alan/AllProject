@@ -11,15 +11,14 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.Policies.General;
-using Filters.Primitive;
+using VirusBlokAda.CC.Filters.Primitive;
 using ARM2_dbcontrol.Tasks;
 
 
 using ARM2_dbcontrol.Service.TaskAssignment;
+using VirusBlokAda.CC.Common.Xml;
 
 /// <summary>
 /// Info about computer
@@ -372,7 +371,7 @@ public partial class CompInfo : PageBase
         String alertMessage = "";
         try
         {
-            ARM2_dbcontrol.Generation.XmlBuilder builder = new ARM2_dbcontrol.Generation.XmlBuilder();
+            VirusBlokAda.CC.Common.Xml.XmlBuilder builder = new VirusBlokAda.CC.Common.Xml.XmlBuilder();
             Int64[] taskId = new Int64[1];
             taskId[0] = PreServAction.CreateTask(compName, task.Name, task.Param, userName, connStr);
             String[] ipAddr = new String[1];

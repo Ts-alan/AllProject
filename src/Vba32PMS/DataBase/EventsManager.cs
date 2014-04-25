@@ -142,7 +142,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase
         /// <param name="targetPercent">Is the desired percentage of free space left in the database file after the database has been shrunk</param>
         public static void ShrinkDataBase(String connectionString, Int32 targetPercent)
         {
-            Logger.Warning("ShrinkDataBase():: непроверенный функционал!");
+            LoggerPMS.log.Warning("ShrinkDataBase():: непроверенный функционал!");
             System.Text.StringBuilder query = new System.Text.StringBuilder(64);
             query.AppendFormat("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent);
 

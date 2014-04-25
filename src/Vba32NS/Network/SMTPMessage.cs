@@ -20,7 +20,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
         public bool Send(string server, string fromMail,string displayName,
             string toMail, string  subject, string body, MailPriority priority)
         {
-            LogMessage("SMTPMessage.Send():: Started ", 15);
+            LoggerNS.log.Info("SMTPMessage.Send():: Started ");
 
             // Command line argument must the the SMTP host.
             SmtpClient client = new SmtpClient(server);
@@ -58,26 +58,19 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         private void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
-            LogMessage("SMTPMessage.SendCompletedCallback():: Started ", 15);
+            LoggerNS.log.Info("SMTPMessage.SendCompletedCallback():: Started ");
             // Get the unique identifier for this asynchronous operation.
             String token = (string)e.UserState;
 
             if (e.Error != null)
             {
-               LogMessage("Vba32NS, SMTPSend: " + e.Error.ToString(),10);
+               LoggerNS.log.Info("Vba32NS, SMTPSend: " + e.Error.ToString());
                 lock (this)
                 {
                     mailSent = false;
                 }
             }
             onEvent.Set();
-        }
-
-        protected void LogMessage(string body, int level)
-        {
-            Vba32NS.LogMessage(body, level);
-        }
-
-
+        }        
     }
 }

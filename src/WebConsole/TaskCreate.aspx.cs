@@ -12,7 +12,8 @@ using System.Web.UI.HtmlControls;
 using ARM2_dbcontrol.Filters;
 using ARM2_dbcontrol.Generation;
 using ARM2_dbcontrol.Tasks;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
+using VirusBlokAda.CC.Common.Xml;
 
 /// <summary>
 /// Task create

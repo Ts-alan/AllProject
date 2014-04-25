@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using ARM2_dbcontrol.Filters;
-using ARM2_dbcontrol.Generation;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {

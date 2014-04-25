@@ -5,7 +5,7 @@ using System.Web;
 using System.Reflection;
 using System.Net;
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo
 {
     /// <summary>
     /// Summary description for RemoteInfoEntityExt

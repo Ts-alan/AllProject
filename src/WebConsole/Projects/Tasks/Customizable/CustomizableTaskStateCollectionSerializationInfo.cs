@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.Vba32CC.Common.Collection;
+using VirusBlokAda.CC.Common.Collection;
 
-namespace Tasks.Customizable
+namespace VirusBlokAda.CC.Tasks.Customizable
 {
     public class CustomizableTaskStateCollectionSerializationInfo
     {

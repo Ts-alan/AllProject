@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.ComponentModel;
 
-namespace VirusBlokAda.RemoteOperations.RemoteService
+namespace VirusBlokAda.CC.RemoteOperations.RemoteService
 {
     /// <summary>
     /// Most of the used api function are wrapped in C# 3.5

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
@@ -214,7 +215,7 @@ namespace ARM2_dbcontrol.Tasks
 
         public String SaveToXml()
         {
-            ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("loader");
+            XmlBuilder xml = new XmlBuilder("loader");
             xml.Top = String.Empty;
 
             xml.AddNode("AUTO_START", "reg_dword:"+AUTO_START.ToString());

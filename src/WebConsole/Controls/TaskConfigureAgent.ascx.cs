@@ -58,7 +58,7 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
         if (task.Type != TaskType.ConfigureAgent)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         tboxConfigPath.Text = parser.GetXmlTagContent("ConfigPath");
     }
@@ -71,7 +71,7 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
     /// <returns></returns>
     private String BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("ConfigureAgent");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("ConfigureAgent");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ConfigureAgent");

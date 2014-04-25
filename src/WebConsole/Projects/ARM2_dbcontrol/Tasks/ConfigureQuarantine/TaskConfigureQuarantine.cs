@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
@@ -136,7 +137,7 @@ namespace ARM2_dbcontrol.Tasks
 
         public String SaveToXml()
         {
-            ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("qtn");
+            XmlBuilder xml = new XmlBuilder("qtn");
             
             if (!String.IsNullOrEmpty(StoragePath))
                 xml.AddNode("StoragePath", "reg_sz:" + StoragePath);

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Common;
 
-namespace VirusBlokAda.RemoteOperations.Net
+namespace VirusBlokAda.CC.RemoteOperations.Net
 {
 
     class NetworkUtility

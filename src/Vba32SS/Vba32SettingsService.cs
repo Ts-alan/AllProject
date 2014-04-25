@@ -15,29 +15,24 @@ using System.Security;
 using System.Security.AccessControl;
 using System.Collections;
 
-using Vba32.ControlCenter.SettingsService.Xml;
-
 namespace Vba32.ControlCenter.SettingsService
 {
     public partial class Vba32SettingsService : ServiceBase
     {
 
         private string path;                            //путь
-        private static Logger log;                      //Класс, позволяющий записывать в файл на диске строки-сообщения
 
         public Vba32SettingsService()
         {
-            LogMessage("Vba32SettingsService.Vba32SettingsService():: Вызван");
+            LoggerSS.log.Info("Vba32SettingsService.Vba32SettingsService():: Вызван");
             InitializeComponent();
             try
             {
                 path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName) + "\\";
-                log = new Logger(path + AppDomain.CurrentDomain.FriendlyName + ".log", Encoding.Default, true);
             }
             catch (Exception ex)
             {
-                LogError("Vba32SettingsService::OnStart():" + ex.Message,
-                    EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsService::OnStart():" + ex.Message);
             }
         }
 
@@ -46,7 +41,7 @@ namespace Vba32.ControlCenter.SettingsService
 
         protected override void OnStart(string[] args)
         {
-            LogMessage("Vba32SettingsService::OnStart() Вызван");
+            LoggerSS.log.Info("Vba32SettingsService::OnStart() Вызван");
             try
             {
                 //Регистрируем тип для .NET Remoting
@@ -56,14 +51,13 @@ namespace Vba32.ControlCenter.SettingsService
             }
             catch (Exception ex)
             {
-                LogError("Vba32SettingsService::OnStart():" + ex.Message,
-                    EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsService::OnStart():" + ex.Message);
             }
         }
 
         protected override void OnStop()
         {
-           LogMessage("Vba32SettingsService::OnStop() Вызван");
+           LoggerSS.log.Info("Vba32SettingsService::OnStop() Вызван");
        }
 
         #endregion
@@ -111,42 +105,10 @@ namespace Vba32.ControlCenter.SettingsService
             }
             catch(Exception ex)
             {
-                LogError("Vba32SettingsService::ConfigureIPC():" + ex.Message,
-                  EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsService::ConfigureIPC():" + ex.Message);
                 return false;
             }
             return true;
         }
-
-        #region Loging
-        public static void LogError(string errorMessage, EventLogEntryType eventLogType)
-        {
-            try
-            {
-                Debug.WriteLine(errorMessage);
-                log.Write(errorMessage);
-                EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, eventLogType);
-            }
-            catch
-            {
-            }
-
-        }
-
-        public static void LogMessage(string errorMessage)
-        {
-            try
-            {
-                Debug.WriteLine(errorMessage);
-                log.Write(errorMessage);
-            }
-            catch
-            {
-            }
-        }
-        #endregion
-
-
-
     }
 }

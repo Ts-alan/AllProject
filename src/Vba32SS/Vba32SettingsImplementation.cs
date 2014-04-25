@@ -20,7 +20,7 @@ namespace Vba32.ControlCenter.SettingsService
         /// <returns></returns>
         public bool ChangeRegistry(string xml)
         {
-            Vba32SettingsService.LogMessage("Vba32SettingsImplementation.ChangeRegistry()::Вызван");
+            LoggerSS.log.Info("Vba32SettingsImplementation.ChangeRegistry()::Вызван");
             try
             {
                 if((xml[0]!='<')&&(xml[1]!='?'))
@@ -40,8 +40,7 @@ namespace Vba32.ControlCenter.SettingsService
             }
             catch (Exception ex)
             {
-                Vba32SettingsService.LogError("Vba32SettingsImplementation.ChangeRegistry()::"
-                  + ex.Message, EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsImplementation.ChangeRegistry()::" + ex.Message);
                 return false;
             }
             return true;
@@ -126,8 +125,7 @@ namespace Vba32.ControlCenter.SettingsService
             }
             catch (Exception ex)
             {
-                Vba32SettingsService.LogError("Vba32SettingsImplementation.ChangeKey()::"
-                    + ex.Message, EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsImplementation.ChangeKey()::" + ex.Message);
                 return false;
             }
 
@@ -174,8 +172,7 @@ namespace Vba32.ControlCenter.SettingsService
             }
             catch (Exception ex)
             {
-                Vba32SettingsService.LogError("Vba32SettingsImplementation.ChangeValue()::"
-                    + ex.Message, EventLogEntryType.Error);
+                LoggerSS.log.Error("Vba32SettingsImplementation.ChangeValue()::" + ex.Message);
                 return false;
             }
 

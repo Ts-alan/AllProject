@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="SimpleTask.ascx.cs" Inherits="Controls_SimpleTask" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <div runat="server" id="divSimpleTask" class="simpleTask" >
     <div class="name">
         <asp:Label runat="Server" ID="lblName"  ></asp:Label>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace VirusBlokAda.Vba32CC.JSON.Entities
+namespace VirusBlokAda.CC.JSON
 {
     /// <summary>
     /// General group entity

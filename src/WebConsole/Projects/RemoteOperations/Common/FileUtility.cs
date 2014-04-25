@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace VirusBlokAda.RemoteOperations.Common
+namespace VirusBlokAda.CC.RemoteOperations.Common
 {
     /// <summary>
     /// Class containing helper functions

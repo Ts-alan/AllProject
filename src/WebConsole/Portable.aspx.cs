@@ -15,9 +15,10 @@ using System.Xml;
 
 using ARM2_dbcontrol.Filters;
 using ARM2_dbcontrol.Tasks;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Generation;
-using Filters.Composite;
+using VirusBlokAda.CC.Filters.Composite;
+using VirusBlokAda.CC.Common.Xml;
 
 /// <summary>
 /// Import and export filters and task's from/to xml
@@ -204,7 +205,7 @@ public partial class Portable : PageBase
     protected void lbtnExport_Click(object sender, EventArgs e)
     {
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("XmlContainer");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("XmlContainer");
 
         if (cbList.Items[0].Selected)
         {

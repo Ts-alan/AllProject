@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Common;
 using System.Threading;
-using VirusBlokAda.RemoteOperations.Threading;
-using VirusBlokAda.RemoteOperations.Net;
+using VirusBlokAda.CC.RemoteOperations.Threading;
+using VirusBlokAda.CC.RemoteOperations.Net;
 using System.Net;
-using VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo;
-using VirusBlokAda.RemoteOperations.RemoteScan;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
 {
     public class RemoteInstaller
     {

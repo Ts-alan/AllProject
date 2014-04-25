@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
@@ -50,7 +51,7 @@ namespace ARM2_dbcontrol.Tasks
 
         public String SaveToXml()
         {
-            ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("task");
+            XmlBuilder xml = new XmlBuilder("task");
 
             xml.AddNode("IsCheckMemory", IsCheckMemory ? "1" : "0");
             if (PathScan.Count > 0)

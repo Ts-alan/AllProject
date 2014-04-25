@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace ARM2_dbcontrol.Diagram
+namespace VirusBlokAda.CC.Diagram
 {
     /// <summary>
     /// Класс VisualReportCollection

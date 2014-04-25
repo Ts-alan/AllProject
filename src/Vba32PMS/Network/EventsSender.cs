@@ -20,7 +20,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
         /// <returns></returns>
         private static Socket ConnectSocket(String server, Int32 port)
         {
-            Logger.Debug("EventsSender.ConnectSocket()::Коннектимся к удаленному серверу");
+            LoggerPMS.log.Debug("EventsSender.ConnectSocket()::Коннектимся к удаленному серверу");
             Socket s = null;
             try
             {
@@ -56,13 +56,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Network
         /// <returns></returns>
         public static String SocketSendReceive(String server, Int32 port, String message)
         {
-            Logger.Debug("EventsSender.SocketSendReceive()::Посылаем пакет");
+            LoggerPMS.log.Debug("EventsSender.SocketSendReceive()::Посылаем пакет");
             //Если здесь поменяем кодировку, то необходимо внести соответствующие изменения
             //в EventsToControlAgentXml.Convert, т.к. иначе размер может здесь быть больше допустимого
             Byte[] mes = Encoding.UTF8.GetBytes(message);
             Byte[] bytesSent = new Byte[mes.Length+2];
-            Logger.Debug("Размер отсылаемого сообщения: "+mes.Length);
-            Logger.Debug("Размер отсылаемого пакета: "+bytesSent.Length);
+            LoggerPMS.log.Debug("Размер отсылаемого сообщения: "+mes.Length);
+            LoggerPMS.log.Debug("Размер отсылаемого пакета: "+bytesSent.Length);
             bytesSent[1] = Convert.ToByte(bytesSent.Length >> 8);
             bytesSent[0] = Convert.ToByte(bytesSent.Length & 255);
             for (Int32 i = 0; i < mes.Length; i++)

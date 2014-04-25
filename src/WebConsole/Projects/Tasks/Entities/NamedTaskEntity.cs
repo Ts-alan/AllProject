@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tasks.Entities
+namespace VirusBlokAda.CC.Tasks.Entities
 {
     public class NamedTaskEntity
     {

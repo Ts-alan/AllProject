@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using ARM2_dbcontrol.Tasks;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.RemoteOperations.MsiInfo;
+using VirusBlokAda.CC.RemoteOperations.MsiInfo;
 
 public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, ITask
 {
@@ -80,7 +80,7 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
         if (task.Type != TaskType.Uninstall)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
         Int32 value;
         try
         {
@@ -103,7 +103,7 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
         content.AppendFormat(@"<ProductType>{0}</ProductType>", ddlProduct.SelectedIndex);
         content.Append(@"</UninstallProduct>");
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("Uninstall");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("Uninstall");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ProductUninstall");

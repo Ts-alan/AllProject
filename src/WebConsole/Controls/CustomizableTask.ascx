@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CustomizableTask.ascx.cs"
     Inherits="Controls_CustomizableTask" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <script type="text/javascript" language="javascript">
     //ddlTask OnChange event handler - generates function name depending on ClientID
     function ddlTasks_<%=ClientID %>_OnChange() {

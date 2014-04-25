@@ -8,7 +8,7 @@ using System.Xml.Schema;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
-namespace VirusBlokAda.RemoteOperations.MsiInfo
+namespace VirusBlokAda.CC.RemoteOperations.MsiInfo
 {
     public static class Vba32MsiStorage
     {

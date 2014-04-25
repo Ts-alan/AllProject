@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using VirusBlokAda.Vba32CC.Policies.Devices;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using System.Configuration;
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.Policies.Devices.Policy;
 
 /// <summary>
 /// Summary description for DeviceDataContainer

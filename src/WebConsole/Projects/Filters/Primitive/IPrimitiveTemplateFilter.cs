@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Common;
 
-namespace Filters.Primitive
+namespace VirusBlokAda.CC.Filters.Primitive
 {
     public interface IPrimitiveTemplateFilter: IClearableFilter
     {

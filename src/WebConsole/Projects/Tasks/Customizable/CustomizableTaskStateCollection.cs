@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Common;
 using System.Web;
 using System.Configuration;
-using VirusBlokAda.Vba32CC.Common.Collection;
+using VirusBlokAda.CC.Common.Collection;
 using System.IO;
 using System.Xml.Serialization;
-using Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Entities;
 
-namespace Tasks.Customizable
+namespace VirusBlokAda.CC.Tasks.Customizable
 {
     internal class CustomizableTaskStateCollection
     {

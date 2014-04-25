@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 
-namespace VirusBlokAda.Vba32CC.JSON.Entities
+namespace VirusBlokAda.CC.JSON
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class CompAdditionalInfo

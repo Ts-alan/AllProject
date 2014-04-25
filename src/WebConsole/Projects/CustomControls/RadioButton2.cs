@@ -5,7 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Globalization;
 
-namespace CustomControls
+namespace VirusBlokAda.CC.CustomControls
 {
     [ToolboxData("<{0}:GroupRadioButton runat=server></{0}:GroupRadioButton>")]
     public class RadioButton2 : RadioButton, IPostBackDataHandler

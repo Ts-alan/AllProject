@@ -57,8 +57,7 @@ public partial class Controls_TaskConfigurePassword : System.Web.UI.UserControl,
 
         task.Type = TaskType.ConfigurePassword;
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml =
-     new ARM2_dbcontrol.Generation.XmlBuilder("password");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("password");
 
         string str = tboxPassword.Text;
         if (str != "")
@@ -86,7 +85,7 @@ public partial class Controls_TaskConfigurePassword : System.Web.UI.UserControl,
         if (task.Type != TaskType.ConfigurePassword)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
 
         tboxPassword.Text = pars.GetValue(tagPassword).Replace("reg_binary:", "");

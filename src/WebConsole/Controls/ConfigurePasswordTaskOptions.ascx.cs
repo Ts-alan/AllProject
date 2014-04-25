@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Tasks.Common;
-using Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Common;
+using VirusBlokAda.CC.Tasks.Entities;
 
 public partial class Controls_ConfigurePasswordTaskOptions : System.Web.UI.UserControl, ITaskOptions, ITaskOptionsHelper<ConfigurePasswordTaskEntity>
 {

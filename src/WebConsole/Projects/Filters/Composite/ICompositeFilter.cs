@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Common;
 
-namespace Filters.Composite
+namespace VirusBlokAda.CC.Filters.Composite
 {
     public interface ICompositeFilter: IClearableFilter, ISqlFilter
     {

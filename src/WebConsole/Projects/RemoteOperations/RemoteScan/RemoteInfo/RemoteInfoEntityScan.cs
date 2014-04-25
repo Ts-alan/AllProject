@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo
 {
     class RemoteInfoEntityScan:RemoteInfoEntityWrap
     {

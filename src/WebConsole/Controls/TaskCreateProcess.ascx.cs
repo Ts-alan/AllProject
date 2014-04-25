@@ -48,8 +48,7 @@ public partial class Controls_TaskCreateProcess : System.Web.UI.UserControl, ITa
 
         task.Type = TaskType.CreateProcess;
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml = 
-            new ARM2_dbcontrol.Generation.XmlBuilder("task");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("task");
         
         string str = String.Empty;
        
@@ -85,9 +84,9 @@ public partial class Controls_TaskCreateProcess : System.Web.UI.UserControl, ITa
     {
         if (task.Type != TaskType.CreateProcess)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
-       
-        
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+
+
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         cboxCommand.Checked = (pars.GetValue(tag_CommandSpec) == "1") ? true : false;
        

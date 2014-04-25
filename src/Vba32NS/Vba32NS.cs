@@ -6,7 +6,6 @@ using System.Data;
 using System.Diagnostics;
 using System.ServiceProcess;
 using System.Text;
-
 using System.IO;
 using System.Threading;
 using System.Runtime.Remoting;
@@ -15,15 +14,10 @@ using System.Runtime.Remoting.Channels.Ipc;
 using System.Security.Principal;
 using System.Security;
 using System.Security.AccessControl;
-
 using System.Collections;
 using System.Collections.Specialized;
-
 using System.Runtime.InteropServices;
-
 using agsXMPP;
-
-using Vba32.ControlCenter.NotificationService.Xml;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 
@@ -37,7 +31,7 @@ namespace Vba32.ControlCenter.NotificationService
 
         internal static string path;                            //путь
         internal static string machineName;                     //Имя компа. Под этим именем присылаются на родительский центр событияS
-        internal static Logger log;                             //Класс, позволяющий записывать в файл на диске строки-сообщения
+        
         //jabber
         internal static string jabberServer = String.Empty;
         internal static string jabberFromJID = String.Empty;
@@ -72,7 +66,7 @@ namespace Vba32.ControlCenter.NotificationService
         #region Constructor
         public Vba32NS()
         {
-            LogMessage("Vba32NS.Vba32NS():: Started",5);
+            LoggerNS.log.Info("Vba32NS.Vba32NS():: Started");
             InitializeComponent();
             try
             {
@@ -84,19 +78,18 @@ namespace Vba32.ControlCenter.NotificationService
 
                 machineName = Environment.MachineName;
                 path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName) + "\\";
-                log = new Logger(path + AppDomain.CurrentDomain.FriendlyName + ".log", Encoding.Default, true);
-                
+
                 list = GetNotifyEventList();
                 if (!ReadSettingsFromRegistry())
-                    LogError("Vba32NS.OnStop()::ReadSettingsFromRegistry returned false", EventLogEntryType.Error);
+                    LoggerNS.log.Error("Vba32NS.OnStop()::ReadSettingsFromRegistry returned false");
 
         
-                LogMessage("Vba32NS.Vba32NS()::Finished",5);
+                LoggerNS.log.Info("Vba32NS.Vba32NS()::Finished");
             }
             catch (Exception ex)
             {
                 string errorMessage = "" + ex.Message;
-                LogError(errorMessage, EventLogEntryType.Error);
+                LoggerNS.log.Error(errorMessage);
                 EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, EventLogEntryType.Error);
             }
         }
@@ -105,7 +98,7 @@ namespace Vba32.ControlCenter.NotificationService
         #region OnStart, OnStop
         protected override void OnStart(string[] args)
         {
-            LogMessage("Vba32NS.OnStart():: Started",5);
+            LoggerNS.log.Info("Vba32NS.OnStart():: Started");
             
             try
             {
@@ -119,8 +112,7 @@ namespace Vba32.ControlCenter.NotificationService
             }
             catch (Exception ex)
             {
-                LogError("Vba32NS::OnStart():" + ex.Message,
-                    EventLogEntryType.Error);
+                LoggerNS.log.Error("Vba32NS::OnStart():" + ex.Message);
             }
 
 
@@ -128,7 +120,7 @@ namespace Vba32.ControlCenter.NotificationService
 
         protected override void OnStop()
         {
-            LogMessage("Vba32NS.OnStop():: Started",5);
+            LoggerNS.log.Info("Vba32NS.OnStop():: Started");
             try
             {
                 jclient.CloseConnection();
@@ -144,22 +136,22 @@ namespace Vba32.ControlCenter.NotificationService
         /// </summary>
         public static void SelectXMPPLibrary()
         {
-            LogMessage("Vba32NS.SelectXMPPLibrary started",5);
-            LogMessage("xmppLibrary=" + xmppLibrary, 10);
+            LoggerNS.log.Info("Vba32NS.SelectXMPPLibrary started");
+            LoggerNS.log.Info("xmppLibrary=" + xmppLibrary);
             switch (xmppLibrary)
             {
                 case 1:
-                    LogMessage("JVlsXMPPClient", 10);
+                    LoggerNS.log.Info("JVlsXMPPClient");
                     jclient = new JVlsXMPPClient(jabberServer, jabberFromJID, jabberPassword);
                     break;
                 default:
-                    LogMessage("AgsXMPPClient", 10);
+                    LoggerNS.log.Info("AgsXMPPClient");
                     jclient = new AgsXMPPClient(jabberServer, jabberFromJID, jabberPassword);
                     break;
             }
             
             jclient.OpenConnection();
-            LogMessage("Jabber connection state: " + jclient.CheckConnectionState(), 6);
+            LoggerNS.log.Info("Jabber connection state: " + jclient.CheckConnectionState());
         }
 
 
@@ -209,46 +201,12 @@ namespace Vba32.ControlCenter.NotificationService
             }
             catch (Exception ex)
             {
-                LogError("Vba32NS::ConfigureIPC():" + ex.Message,
-                  EventLogEntryType.Error);
+                LoggerNS.log.Error("Vba32NS::ConfigureIPC():" + ex.Message);
                 return false;
             }
             return true;
         }
 
-        #endregion
-
-        #region Loging
-        internal static void LogError(string errorMessage, EventLogEntryType eventLogType)
-        {
-            try
-            {
-                Debug.WriteLine(errorMessage);
-                log.Write(errorMessage);
-                EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, eventLogType);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine("LogError ->"+ex);
-            }
-
-        }
-
-        internal static void LogMessage(string errorMessage, int level)
-        {
-            try
-            {
-                Debug.WriteLine(errorMessage);
-                if (logLevel >= level)
-                {
-                    log.Write(errorMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("LogMessage ->" + ex);
-            }
-        }
         #endregion
     }
 }

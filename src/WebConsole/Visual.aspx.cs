@@ -10,12 +10,12 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text;
 
-using ARM2_dbcontrol.Diagram;
+using VirusBlokAda.CC.Diagram;
 using ARM2_dbcontrol.Filters;
-using Filters.Primitive;
+using VirusBlokAda.CC.Filters.Primitive;
 using System.Web.Services;
-using Filters.Common;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.Filters.Common;
+using VirusBlokAda.CC.DataBase;
 using System.Collections.Generic;
 
 public partial class Visual : PageBase

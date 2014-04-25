@@ -5,9 +5,9 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Common;
 
-namespace CustomControls
+namespace VirusBlokAda.CC.CustomControls
 {
     [
         NonVisualControl,

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tasks.Attributes
+namespace VirusBlokAda.CC.Tasks.Attributes
 {
     public class TaskEntityStringPropertyAttribute : TaskEntityPropertyAttribute
     {

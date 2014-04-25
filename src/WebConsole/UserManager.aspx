@@ -2,7 +2,7 @@
     CodeFile="UserManager.aspx.cs" Inherits="UserManager" %>
 
 <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
     <div class="title">
         <%=Resources.Resource.UserManaging%></div>

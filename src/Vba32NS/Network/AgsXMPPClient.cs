@@ -24,7 +24,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public AgsXMPPClient(string server, string fromJID, string password)
         {
-            LogMessage("AgsXMPPClient.AgsXMPPClient started", 15);
+            LoggerNS.log.Info("AgsXMPPClient.AgsXMPPClient started");
             this.Server = server;
             this.FromJID = fromJID;
             this.Password = password;
@@ -32,8 +32,8 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public override void OpenConnection()
         {
-            LogMessage(String.Format("AgsXMPPClient.OpenConnection():: server={0}, jid={1}, pass={2}",
-                Server,FromJID,Password),10);
+            LoggerNS.log.Info(String.Format("AgsXMPPClient.OpenConnection():: server={0}, jid={1}, pass={2}",
+                Server,FromJID,Password));
             lock (this)
             {
                 OpenConnection(this.Server, this.FromJID, this.Password);
@@ -43,7 +43,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
         public override void OpenConnection(string server, string fromJID, string password)
         {
 
-            LogMessage("AgsXMPPClient.OpenConnection started",15);
+            LoggerNS.log.Info("AgsXMPPClient.OpenConnection started");
 
             ManualResetEvent onEvent = new ManualResetEvent(false);
             Exception exception = null;
@@ -54,7 +54,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
                 xmpp.OnAuthError += delegate(object sender, Element e)
                 {
-                    Vba32NS.LogMessage("AgsXMPPClient.OpenConnection:: OnAuthError: Ошибка при аутентификации. CloseConnection and throw exception ",15);
+                    LoggerNS.log.Info("AgsXMPPClient.OpenConnection:: OnAuthError: Ошибка при аутентификации. CloseConnection and throw exception ");
                     CloseConnection();
                     throw new Exception("AgsXMPPClient.OpenConnection::Ошибка при аутентификации ");
 
@@ -62,7 +62,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
                 xmpp.OnError += delegate(object sender, Exception ex)
                 {
-                    LogMessage("AgsXMPPClient.OpenConnection:: OnError:" + ex.Message,10);
+                    LoggerNS.log.Info("AgsXMPPClient.OpenConnection:: OnError:" + ex.Message);
                     onEvent.Set();
                     exception = ex;
                     CloseConnection();
@@ -74,13 +74,13 @@ namespace Vba32.ControlCenter.NotificationService.Network
                     //Но объект xmpp не будет равен null и вне этого метода
                     // будет считаться, что все ок и не будет пересоединяться.
                     //Поэтому присвоим тут явно null
-                    LogMessage("AgsXMPPClient.OnSocketError:: " + ex.Message,10);
+                    LoggerNS.log.Info("AgsXMPPClient.OnSocketError:: " + ex.Message);
                     CloseConnection();
                 };
 
                 xmpp.OnXmppError += delegate(object sender, Element e)
                 {
-                    LogMessage("AgsXMPPClient.OnXmppError",10);
+                    LoggerNS.log.Info("AgsXMPPClient.OnXmppError");
                     CloseConnection();
                 };
 
@@ -89,30 +89,30 @@ namespace Vba32.ControlCenter.NotificationService.Network
                 xmpp.OnLogin += delegate(object o)
                 {
                     onEvent.Set();
-                    LogMessage("Logged In",20);
+                    LoggerNS.log.Info("Logged In");
                 };
                 xmpp.Open(jidSender.User, password);
 
-                LogMessage("Wait for Login...",20);
+                LoggerNS.log.Info("Wait for Login...");
                 onEvent.WaitOne(TimeSpan.FromSeconds(20), false);
 
                 if (exception != null)
                 {
-                    LogMessage("AgsXMPPClient.OpenConnection:: Exception variably is not null",20);
+                    LoggerNS.log.Info("AgsXMPPClient.OpenConnection:: Exception variably is not null");
                     return;
                 }
                 onEvent.Reset();
             }
             catch (Exception ex)
             {
-                LogMessage("AgsXMPPClient.OpenConnection:: " + ex.Message,20);
+                LoggerNS.log.Info("AgsXMPPClient.OpenConnection:: " + ex.Message);
                 return;
             }
         }
 
         public override void CloseConnection()
         {
-            LogMessage("AgsXMPPClient.CloseConnection started", 15);
+            LoggerNS.log.Info("AgsXMPPClient.CloseConnection started");
             try
             {
                 if ((xmpp != null) ||
@@ -130,20 +130,20 @@ namespace Vba32.ControlCenter.NotificationService.Network
             }
             catch (Exception ex)
             {
-                LogMessage("AgsXMPPClient.CloseConnection:: " + ex.Message,10);
+                LoggerNS.log.Info("AgsXMPPClient.CloseConnection:: " + ex.Message);
             }
         }
 
         public override void Send(string toJID, string message)
         {
-            LogMessage("AgsXMPPClient.Send started", 15);
+            LoggerNS.log.Info("AgsXMPPClient.Send started");
             try
             {
                 xmpp.Send(new Message(new Jid(toJID), MessageType.chat, message));
             }
             catch (Exception ex)
             {
-                LogMessage("AgsXMPPClient.Send():: " + ex.Message,10);
+                LoggerNS.log.Info("AgsXMPPClient.Send():: " + ex.Message);
                 return ;
             }
             return ;
@@ -151,17 +151,12 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public override bool CheckConnectionState()
         {
-            LogMessage("AgsXMPPClient.CheckConnectionState started", 15);
+            LoggerNS.log.Info("AgsXMPPClient.CheckConnectionState started");
             if ((xmpp.XmppConnectionState == XmppConnectionState.SessionStarted) ||
                     (xmpp.XmppConnectionState == XmppConnectionState.Connected))
                 return true;
 
             return false;
-        }
-
-        protected void LogMessage(string body, int level)
-        {
-            Vba32NS.LogMessage(body, level);
         }
     }
 }

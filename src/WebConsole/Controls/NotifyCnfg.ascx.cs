@@ -14,6 +14,7 @@ using System.Collections.Generic;
 
 using ARM2_dbcontrol.Service.Vba32NS;
 using ARM2_dbcontrol.Filters;
+using VirusBlokAda.CC.Common.Xml;
 
 
 public partial class Controls_NotifyCnfg : System.Web.UI.UserControl

@@ -4,14 +4,14 @@ using System.Text;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using VirusBlokAda.RemoteOperations.Common;
-using VirusBlokAda.RemoteOperations.Wmi;
+using VirusBlokAda.CC.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Wmi;
 using System.Runtime.InteropServices;
-using VirusBlokAda.RemoteOperations.RemoteService;
-using VirusBlokAda.RemoteOperations.Net;
-using VirusBlokAda.RemoteOperations.RemoteScan.RemoteInfo;
+using VirusBlokAda.CC.RemoteOperations.RemoteService;
+using VirusBlokAda.CC.RemoteOperations.Net;
+using VirusBlokAda.CC.RemoteOperations.RemoteScan.RemoteInfo;
 
-namespace VirusBlokAda.RemoteOperations.RemoteScan
+namespace VirusBlokAda.CC.RemoteOperations.RemoteScan
 {
     class RemoteScanHelper
     {

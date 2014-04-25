@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Vba32CC.TaskAssignment.Tasks.AuxiliaryClasses;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace Vba32CC.TaskAssignment.Tasks
 {

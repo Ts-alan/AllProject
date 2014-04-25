@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using VirusBlokAda.Vba32CC.DataBase;
-using Filters.Composite;
+using VirusBlokAda.CC.DataBase;
+using VirusBlokAda.CC.Filters.Composite;
 using System.Drawing;
-using Filters.Common;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Filters.Common;
+using VirusBlokAda.CC.Common;
 
 public partial class Events : PageBase
 {

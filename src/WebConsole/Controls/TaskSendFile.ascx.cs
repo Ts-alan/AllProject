@@ -65,8 +65,8 @@ public partial class Controls_TaskSendFile : System.Web.UI.UserControl, ITask
 
         task.Type = TaskType.SendFile;
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml =
-            new ARM2_dbcontrol.Generation.XmlBuilder("task");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml =
+            new VirusBlokAda.CC.Common.Xml.XmlBuilder("task");
         xml.AddNode(tag_Details, lblDetails.Text);
         xml.AddNode(tag_Source,tboxSource.Text);
         xml.AddNode(tag_Destination, tboxDestination.Text);
@@ -84,7 +84,7 @@ public partial class Controls_TaskSendFile : System.Web.UI.UserControl, ITask
         if (task.Type != TaskType.SendFile)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         tboxSource.Text = pars.GetValue(tag_Source);
         tboxDestination.Text = pars.GetValue(tag_Destination);

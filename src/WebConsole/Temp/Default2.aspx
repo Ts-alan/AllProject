@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="<%$ Resources:resource,PageProcessTitle %>" Language="C#" MasterPageFile="~/mstrPageNew.master" AutoEventWireup="true"
     CodeFile="Default2.aspx.cs" Inherits="Default2" %>
-    <%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+    <%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
     <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
 
     <%@ Register Src="~/Controls/CompositeFilter.ascx" TagName="CompositeFilter" TagPrefix="flt" %>

@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" validateRequest="false" MaintainScrollPositionOnPostback="true" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" Title="Untitled Page" %>
+
+<%@ Register Assembly="CustomControls" Namespace="VirusBlokAda.CC.CustomControls" TagPrefix="cc1" %>
 <%@ OutputCache Location="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
@@ -10,7 +12,7 @@
                 <td  style="padding-left:5px">
                     <%= Resources.Resource.UserLogin %>:
                 </td>
-                <td style="width:50%">
+                <td style="width:50%">                    
                     <asp:LoginName ID="lgName" runat="server" />
                 </td>
             </tr>

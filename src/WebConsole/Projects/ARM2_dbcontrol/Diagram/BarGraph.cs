@@ -4,7 +4,7 @@ using System.Collections;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
-namespace ARM2_dbcontrol.Diagram
+namespace VirusBlokAda.CC.Diagram
 {
     /// <summary>
     /// Класс BarGraph

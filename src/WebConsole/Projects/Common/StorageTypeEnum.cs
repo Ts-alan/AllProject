@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.Vba32CC.Common
+namespace VirusBlokAda.CC.Common
 {
     public enum StorageTypeEnum
     {

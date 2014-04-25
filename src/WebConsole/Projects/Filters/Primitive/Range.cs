@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Filters.Primitive
+namespace VirusBlokAda.CC.Filters.Primitive
 {
     public class Range
     {

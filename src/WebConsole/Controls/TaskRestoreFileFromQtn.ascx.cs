@@ -53,8 +53,7 @@ public partial class Controls_TaskRestoreFileFromQtn : System.Web.UI.UserControl
 
         task.Type = TaskType.RestoreFileFromQtn;
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml =
-            new ARM2_dbcontrol.Generation.XmlBuilder("task");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("task");
 
         string str = tboxCreateProcess.Text;
 
@@ -86,7 +85,7 @@ public partial class Controls_TaskRestoreFileFromQtn : System.Web.UI.UserControl
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
 
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         string str = pars.GetValue(tagPath);
         //str = str.Replace(comSpecOption, "");

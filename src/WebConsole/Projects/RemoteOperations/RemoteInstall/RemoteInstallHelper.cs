@@ -2,18 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.RemoteOperations.Common;
-using VirusBlokAda.RemoteOperations.Net;
+using VirusBlokAda.CC.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Net;
 using System.IO;
-using VirusBlokAda.RemoteOperations.Wmi;
+using VirusBlokAda.CC.RemoteOperations.Wmi;
 using System.Runtime.InteropServices;
-using VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper;
-using VirusBlokAda.RemoteOperations.RemoteService;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall.MsiexecHelper;
+using VirusBlokAda.CC.RemoteOperations.RemoteService;
+using VirusBlokAda.CC.DataBase;
 using System.Configuration;
 using System.Diagnostics;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
 {
     class RemoteInstallHelper
     {

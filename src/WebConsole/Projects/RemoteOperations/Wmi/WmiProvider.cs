@@ -7,15 +7,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Diagnostics;
 using System.Web;
-using VirusBlokAda.RemoteOperations.MsiInfo;
-using VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper;
-using VirusBlokAda.RemoteOperations.RemoteInstall;
+using VirusBlokAda.CC.RemoteOperations.MsiInfo;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall.MsiexecHelper;
+using VirusBlokAda.CC.RemoteOperations.RemoteInstall;
 using System.Management;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Common;
 
-namespace VirusBlokAda.RemoteOperations.Wmi
+namespace VirusBlokAda.CC.RemoteOperations.Wmi
 {
     /// <summary>
     /// Helper class that provides methods needed to install msi using wmi on remote computer.

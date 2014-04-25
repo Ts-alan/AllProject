@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.Runtime.InteropServices;
 
-namespace Tasks.Service
+namespace VirusBlokAda.CC.Tasks.Service
 {
     /// <summary>
     /// Необходимые действия для подготовки выдачи задач сервису

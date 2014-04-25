@@ -119,53 +119,51 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\InformationListTypes.cs" />
-    <Compile Include="Common\KeyFileSettings.cs" />
-    <Compile Include="DataBase\ComponentsManager.cs" />
-    <Compile Include="DataBase\ComponentsEntity.cs" />
-    <Compile Include="DataBase\ComponentsProvider.cs" />
-    <Compile Include="DataBase\ComputerAdditionalEntity.cs" />
-    <Compile Include="DataBase\ComputerColorOptionsEntity.cs" />
-    <Compile Include="DataBase\ComputersEntity.cs">
+    <Compile Include="KeyFile\KeyFileSettings.cs" />
+    <Compile Include="DataBase\Managers\ComponentsManager.cs" />
+    <Compile Include="DataBase\Entities\ComponentsEntity.cs" />
+    <Compile Include="DataBase\Providers\ComponentsProvider.cs" />
+    <Compile Include="DataBase\Entities\ComputerAdditionalEntity.cs" />
+    <Compile Include="DataBase\Entities\ComputerColorOptionsEntity.cs" />
+    <Compile Include="DataBase\Entities\ComputersEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\ComputersEntityCollection.cs" />
-    <Compile Include="DataBase\ComputersEntityEx.cs" />
-    <Compile Include="DataBase\ComputersManager.cs">
+    <Compile Include="DataBase\Entities\ComputersEntityCollection.cs" />
+    <Compile Include="DataBase\Entities\ComputersEntityEx.cs" />
+    <Compile Include="DataBase\Managers\ComputersManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\ControlDeviceTypeEnum.cs" />
-    <Compile Include="DataBase\DataBaseEntity.cs" />
-    <Compile Include="DataBase\DataBaseManager.cs" />
-    <Compile Include="DataBase\EventsEntity.cs">
+    <Compile Include="DataBase\Entities\ControlDeviceTypeEnum.cs" />
+    <Compile Include="DataBase\Entities\DataBaseEntity.cs" />
+    <Compile Include="DataBase\Managers\DataBaseManager.cs" />
+    <Compile Include="DataBase\Entities\EventsEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\EventsManager.cs">
+    <Compile Include="DataBase\Managers\EventsManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\EventTypesEntity.cs">
+    <Compile Include="DataBase\Entities\EventTypesEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\EventTypesManager.cs">
+    <Compile Include="DataBase\Managers\EventTypesManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\GenerationData.cs" />
-    <Compile Include="DataBase\InstallationTaskEntity.cs" />
-    <Compile Include="DataBase\InstallationTaskManager.cs" />
-    <Compile Include="DataBase\InstallationTaskProvider.cs" />
-    <Compile Include="DataBase\OSTypesEntity.cs" />
-    <Compile Include="DataBase\OSTypesManager.cs" />
-    <Compile Include="DataBase\ProcessesEntity.cs" />
-    <Compile Include="DataBase\ProcessesManager.cs" />
-    <Compile Include="DataBase\ScanningObjectEntity.cs" />
-    <Compile Include="DataBase\ScanningObjectManager.cs" />
-    <Compile Include="DataBase\ScanningObjectProvider.cs" />
-    <Compile Include="DataBase\SelectedComputersForTask.cs" />
-    <Compile Include="DataBase\StatisticEntity.cs" />
-    <Compile Include="DataBase\TaskEntity.cs" />
-    <Compile Include="DataBase\TaskManager.cs" />
-    <Compile Include="DataBase\TemporaryGroupManager.cs" />
-    <Compile Include="DataBase\TemporaryGroupProvider.cs" />
+    <Compile Include="DataBase\Entities\InstallationTaskEntity.cs" />
+    <Compile Include="DataBase\Managers\InstallationTaskManager.cs" />
+    <Compile Include="DataBase\Providers\InstallationTaskProvider.cs" />
+    <Compile Include="DataBase\Entities\OSTypesEntity.cs" />
+    <Compile Include="DataBase\Managers\OSTypesManager.cs" />
+    <Compile Include="DataBase\Entities\ProcessesEntity.cs" />
+    <Compile Include="DataBase\Managers\ProcessesManager.cs" />
+    <Compile Include="DataBase\Entities\ScanningObjectEntity.cs" />
+    <Compile Include="DataBase\Managers\ScanningObjectManager.cs" />
+    <Compile Include="DataBase\Providers\ScanningObjectProvider.cs" />
+    <Compile Include="DataBase\Entities\SelectedComputersForTask.cs" />
+    <Compile Include="DataBase\Entities\StatisticEntity.cs" />
+    <Compile Include="DataBase\Entities\TaskEntity.cs" />
+    <Compile Include="DataBase\Managers\TaskManager.cs" />
+    <Compile Include="DataBase\Managers\TemporaryGroupManager.cs" />
+    <Compile Include="DataBase\Providers\TemporaryGroupProvider.cs" />
     <Compile Include="Diagram\BarGraph.cs" />
     <Compile Include="Diagram\Chart.cs" />
     <Compile Include="Diagram\ChartItem.cs" />
@@ -176,36 +174,33 @@
     <Compile Include="Filters\GroupFilterCollection.cs" />
     <Compile Include="Filters\GroupFilterEntity.cs" />
     <Compile Include="Filters\UnknownDevicesFilterEntity.cs" />
-    <Compile Include="Generation\Logger.cs" />
     <Compile Include="Generation\TranslateIPAddr.cs" />
-    <Compile Include="GroupEntities\BranchOfTree.cs" />
-    <Compile Include="GroupEntities\Group.cs" />
-    <Compile Include="GroupEntities\GroupCompEntity.cs" />
-    <Compile Include="GroupEntities\GroupEx.cs" />
-    <Compile Include="GroupEntities\GroupManager.cs" />
-    <Compile Include="GroupEntities\GroupProvider.cs" />
-    <Compile Include="GroupEntities\PolicyBranchOfTree.cs" />
+    <Compile Include="DataBase\Entities\Groups\BranchOfTree.cs" />
+    <Compile Include="DataBase\Entities\Groups\Group.cs" />
+    <Compile Include="DataBase\Entities\Groups\GroupCompEntity.cs" />
+    <Compile Include="DataBase\Entities\Groups\GroupEx.cs" />
+    <Compile Include="DataBase\Managers\GroupManager.cs" />
+    <Compile Include="DataBase\Providers\GroupProvider.cs" />
+    <Compile Include="DataBase\Entities\Groups\PolicyBranchOfTree.cs" />
     <Compile Include="JSON\Entities\CompAdditionalInfo.cs" />
     <Compile Include="JSON\Entities\ComponentJSONEntity.cs" />
     <Compile Include="JSON\Entities\TreeNodeEntity.cs" />
     <Compile Include="JSON\Entities\TreeNodeJSONEntity.cs" />
     <Compile Include="JSON\TreeJSONEntityConverter.cs" />
-    <Compile Include="PolicyEntities\Devices\Device.cs" />
-    <Compile Include="PolicyEntities\Devices\DeviceManager.cs" />
-    <Compile Include="PolicyEntities\Devices\DeviceType.cs" />
-    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicy.cs" />
-    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicyManager.cs" />
-    <Compile Include="PolicyEntities\Devices\Policy\DevicePolicyState.cs" />
-    <Compile Include="PolicyEntities\GeneralPolicy.cs" />
-    <Compile Include="PolicyEntities\General\Policy.cs" />
-    <Compile Include="PolicyEntities\General\PolicyManager.cs" />
-    <Compile Include="PolicyEntities\PolicyProvider.cs" />
-    <Compile Include="PolicyEntities\Xml\PolicyParser.cs" />
+    <Compile Include="DataBase\Entities\Device.cs" />
+    <Compile Include="DataBase\Managers\DeviceManager.cs" />
+    <Compile Include="DataBase\Entities\DeviceType.cs" />
+    <Compile Include="DataBase\Entities\DevicePolicy.cs" />
+    <Compile Include="DataBase\Managers\DevicePolicyManager.cs" />
+    <Compile Include="DataBase\Entities\DevicePolicyState.cs" />
+    <Compile Include="DataBase\Providers\GeneralPolicy.cs" />
+    <Compile Include="DataBase\Entities\Policy.cs" />
+    <Compile Include="DataBase\Managers\PolicyManager.cs" />
+    <Compile Include="DataBase\Providers\PolicyProvider.cs" />
     <Compile Include="Service\Vba32NS\IVba32Settings.cs" />
     <Compile Include="Service\Vba32NS\NotifyEvent.cs" />
     <Compile Include="Service\Vba32NS\NotifyType.cs" />
     <Compile Include="Service\Vba32NS\NotifyTypeAddrList.cs" />
-    <Compile Include="Service\Vba32NS\ObjectSerializer.cs" />
     <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
     <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
     <Compile Include="Service\VSIS\Settings.cs" />
@@ -231,7 +226,7 @@
     <Compile Include="Tasks\TaskUserCollection.cs" />
     <Compile Include="Tasks\TaskUserEntity.cs" />
     <Compile Include="Generation\ColorGenerator.cs" />
-    <Compile Include="DataBase\SettingsEntity.cs">
+    <Compile Include="DataBase\Entities\SettingsEntity.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataBase\VlslVConnection.cs">
@@ -249,8 +244,6 @@
     <Compile Include="Filters\Validation.cs" />
     <Compile Include="Generation\RandomGeneration.cs" />
     <Compile Include="Service\TaskAssignment\PreServAction.cs" />
-    <Compile Include="Generation\XmlBuilder.cs" />
-    <Compile Include="Tasks\XmlTaskParser.cs" />
     <Compile Include="Service\TaskAssignment\Vba32ControlCenterWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +279,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

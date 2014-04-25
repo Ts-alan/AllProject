@@ -82,7 +82,7 @@ public partial class Controls_TaskChangeDeviceProtect : System.Web.UI.UserContro
 
     private string BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("protect");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("protect");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "ChangeDeviceProtect");
@@ -109,7 +109,7 @@ public partial class Controls_TaskChangeDeviceProtect : System.Web.UI.UserContro
         if (task.Type != TaskType.ChangeDeviceProtect)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         string check = parser.GetXmlTagContent("DEVICE_PROTECT");
         check = check.Replace("reg_dword:", "");

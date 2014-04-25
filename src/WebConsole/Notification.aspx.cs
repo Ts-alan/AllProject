@@ -12,7 +12,7 @@ using System.Web.UI.HtmlControls;
 using System.Drawing;
 using Microsoft.Win32;
 
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 
 using Vba32.ControlCenter.SettingsService;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace ARM2_dbcontrol.Diagram
+namespace VirusBlokAda.CC.Diagram
 {
     /// <summary>
     /// Класс ChartItem

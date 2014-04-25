@@ -1,13 +1,11 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-
 using System.Threading;
-
 using System.Diagnostics;
 
 
-namespace Tasks.Service
+namespace VirusBlokAda.CC.Tasks.Service
 {
     /// <summary>
     /// Данный класс реализует выдачу задач через сервис VbaTaskAsigment

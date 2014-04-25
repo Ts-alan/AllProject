@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
 {
     /// <summary>
     /// Enumeration representing status of remote installation.

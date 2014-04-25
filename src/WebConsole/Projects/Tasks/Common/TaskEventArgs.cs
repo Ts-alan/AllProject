@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tasks.Common
+namespace VirusBlokAda.CC.Tasks.Common
 {
     public class TaskEventArgs: EventArgs
     {

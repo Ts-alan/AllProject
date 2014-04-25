@@ -7,7 +7,7 @@ using System.Web.Security;
 using System.Text.RegularExpressions;
 using System.Configuration;
 using Microsoft.Win32;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 using Vba32.ControlCenter.Service;
 

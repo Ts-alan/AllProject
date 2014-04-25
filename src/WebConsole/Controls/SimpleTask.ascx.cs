@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Tasks.Simple;
-using Tasks.Entities;
-using Tasks.Common;
+using VirusBlokAda.CC.Tasks.Simple;
+using VirusBlokAda.CC.Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Common;
 
 /// <summary>
 /// Control that represents simple tasks - task without options

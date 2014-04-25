@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LoggerSS.cs" />
     <Compile Include="IVba32Settings.cs" />
     <Compile Include="Vba32SettingsImplementation.cs" />
     <Compile Include="Vba32SettingsService.cs">
@@ -69,10 +70,15 @@
     <Compile Include="Vba32SSInstaller.Designer.cs">
       <DependentUpon>Vba32SSInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Xml\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SS.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

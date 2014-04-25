@@ -10,11 +10,11 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.RemoteOperations.Wmi;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Wmi;
+using VirusBlokAda.CC.RemoteOperations.Common;
 
-using Tasks.Common;
-using Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Common;
+using VirusBlokAda.CC.Tasks.Entities;
 
 public partial class Controls_UninstallTaskOptions : System.Web.UI.UserControl, ITaskOptions, ITaskOptionsHelper<UninstallTaskEntity>
 {

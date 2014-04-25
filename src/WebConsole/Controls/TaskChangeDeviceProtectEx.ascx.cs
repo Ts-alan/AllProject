@@ -156,7 +156,7 @@ public partial class Controls_TaskChangeDeviceProtectEx : System.Web.UI.UserCont
 
     private String BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("DailyDeviceProtect");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("DailyDeviceProtect");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "DailyDeviceProtect");
@@ -199,7 +199,7 @@ public partial class Controls_TaskChangeDeviceProtectEx : System.Web.UI.UserCont
         if (task.Type != TaskType.DailyDeviceProtect)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         String check = parser.GetXmlTagContent("DEVICE_PROTECT");
         check = check.Replace("reg_dword:", "");

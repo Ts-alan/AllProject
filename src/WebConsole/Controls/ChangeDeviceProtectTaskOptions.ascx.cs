@@ -10,8 +10,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using ARM2_dbcontrol.Tasks;
 using System.Text;
-using Tasks.Common;
-using Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Common;
+using VirusBlokAda.CC.Tasks.Entities;
 
 public partial class Controls_ChangeDeviceProtectTaskOptions : System.Web.UI.UserControl, ITaskOptions, ITaskOptionsHelper<ChangeDeviceProtectTaskEntity>
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Common;
 
-namespace Filters.TemporaryGroup
+namespace VirusBlokAda.CC.Filters.TemporaryGroup
 {
     public static class TemporaryGroupFilterHelper
     {

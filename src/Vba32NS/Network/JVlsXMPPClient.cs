@@ -17,7 +17,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public JVlsXMPPClient(string server, string fromJID, string password)
         {
-            LogMessage("JVlsXMPPClient.JVlsXMPPClient started", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.JVlsXMPPClient started");
             this.Server = server;
             this.FromJID = fromJID.Split('@')[0]; 
             this.Password = password;
@@ -25,12 +25,12 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public override void OpenConnection()
         {
-            LogMessage("JVlsXMPPClient.OpenConnection started. Object locked", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.OpenConnection started. Object locked");
             lock (this)
             {
                 OpenConnection(Server, FromJID, Password);
             }
-            LogMessage("JVlsXMPPClient.OpenConnection finished. Object unlocked", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.OpenConnection finished. Object unlocked");
         }
 
         public override void OpenConnection(string server, string fromJID, string password)
@@ -51,19 +51,19 @@ namespace Vba32.ControlCenter.NotificationService.Network
                 }
                 catch (Exception ex)
                 {
-                    LogMessage("Exception in StartSession: "+ex, 10);
+                    LoggerNS.log.Info("Exception in StartSession: "+ex);
                 }
 
             });
             thread.Start();
-            LogMessage("Wait 40 seconds for connection..", 20);
+            LoggerNS.log.Info("Wait 40 seconds for connection..");
             if (thread.Join(TimeSpan.FromSeconds(40)))
             {
-                LogMessage("Connection thread is successfully completed", 20);
+                LoggerNS.log.Info("Connection thread is successfully completed");
             }
             else
             {
-                LogMessage("Timeout expired. Aborting thread", 10);
+                LoggerNS.log.Info("Timeout expired. Aborting thread");
                 thread.Abort();
             }
 
@@ -72,32 +72,32 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         public override bool CheckConnectionState()
         {
-            LogMessage("JVlsXMPPClient.CheckConnectionState started", 15);
-            LogMessage("Current state is"+
-                xmpp.State.ToString(), 15);
+            LoggerNS.log.Info("JVlsXMPPClient.CheckConnectionState started");
+            LoggerNS.log.Info("Current state is"+
+                xmpp.State.ToString());
             return ((xmpp != null) && (xmpp.State == JabberClientState.SessionStarted)); ;
         }
 
         public override void CloseConnection()
         {
-            LogMessage("JVlsXMPPClient.CloseConnection started. Object locked", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.CloseConnection started. Object locked");
             lock (this)
             {
                 if (xmpp != null)
                     xmpp.Close();
             }
-            LogMessage("JVlsXMPPClient.CloseConnection finished. Object unlocked", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.CloseConnection finished. Object unlocked");
         }
 
         public override void Send(string toJID, string message)
         {
-            LogMessage("JVlsXMPPClient.Send started", 15);
+            LoggerNS.log.Info("JVlsXMPPClient.Send started");
             if (CheckConnectionState())
                 xmpp.Send(toJID, message);
             else
             {
-                LogMessage("JVlsXMPPClient.Send():: Connection state is "+
-                    xmpp.State.ToString() , 10);
+                LoggerNS.log.Info("JVlsXMPPClient.Send():: Connection state is "+
+                    xmpp.State.ToString());
             }
         }
 
@@ -105,27 +105,22 @@ namespace Vba32.ControlCenter.NotificationService.Network
 
         void xmpp_ReceiveMessage(MessageEventArgs e)
         {
-            LogMessage(String.Format("Ooops! I receive message='{1}' from '{0}' ",
-                e.From,e.Body), 66);
+            LoggerNS.log.Info(String.Format("Ooops! I receive message='{1}' from '{0}' ",
+                e.From,e.Body));
 
         }
 
         void xmpp_Error(JVlsEventArgs e)
         {
-            LogMessage("Error occured", 10);
+            LoggerNS.log.Info("Error occured");
         }
 
         void xmpp_Authenticate(object sender, EventArgs e)
         {
-            LogMessage("Authenticate success",20);
+            LoggerNS.log.Info("Authenticate success");
         }
 
         #endregion
-
-        protected void LogMessage(string body, int level)
-        {
-            Vba32NS.LogMessage(body, level);
-        }
 
     }
 }

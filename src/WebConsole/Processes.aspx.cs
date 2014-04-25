@@ -11,9 +11,9 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.Vba32CC.DataBase;
-using Filters.Composite;
-using Filters.Common;
+using VirusBlokAda.CC.DataBase;
+using VirusBlokAda.CC.Filters.Composite;
+using VirusBlokAda.CC.Filters.Common;
 
 /// <summary>
 /// Process list

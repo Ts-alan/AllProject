@@ -8,8 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
-using VirusBlokAda.Vba32CC.Policies;
+using VirusBlokAda.CC.DataBase;
 
 /// <summary>
 /// This page return policy to computer

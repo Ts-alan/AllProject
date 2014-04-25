@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Tasks.Entities;
+using VirusBlokAda.CC.Tasks.Entities;
 
-namespace Tasks.Customizable
+namespace VirusBlokAda.CC.Tasks.Customizable
 {
     public class CustomizableTaskStateSerializationInfo
     {

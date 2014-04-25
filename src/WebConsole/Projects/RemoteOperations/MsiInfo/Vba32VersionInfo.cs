@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Web;
 
-namespace VirusBlokAda.RemoteOperations.MsiInfo
+namespace VirusBlokAda.CC.RemoteOperations.MsiInfo
 {
     public static class Vba32VersionInfo
     {

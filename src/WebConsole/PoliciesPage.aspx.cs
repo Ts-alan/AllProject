@@ -14,13 +14,10 @@ using System.Collections.Generic;
 
 using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Generation;
-
-using VirusBlokAda.Vba32CC.Policies;
-using VirusBlokAda.Vba32CC.Policies.General;
-using VirusBlokAda.Vba32CC.Policies.Xml;
 using Microsoft.Win32;
+using VirusBlokAda.CC.Common.Xml;
 
 public partial class _PoliciesPage : PageBase
 {
@@ -196,7 +193,7 @@ public partial class _PoliciesPage : PageBase
             return;
         }
 
-        PolicyParser parser = new PolicyParser(policy);
+        PolicyParser parser = new PolicyParser(policy.Content);
 
         //init loader state
         TaskUserEntity loaderTask = new TaskUserEntity();
@@ -244,7 +241,7 @@ public partial class _PoliciesPage : PageBase
             TaskUserEntity taskQuarantine = new TaskUserEntity();
             taskQuarantine.Type = TaskType.ConfigureQuarantine;
 
-            ARM2_dbcontrol.Generation.XmlBuilder xmlBuil = new ARM2_dbcontrol.Generation.XmlBuilder("root");
+            VirusBlokAda.CC.Common.Xml.XmlBuilder xmlBuil = new VirusBlokAda.CC.Common.Xml.XmlBuilder("root");
             xmlBuil.Generate();
             taskQuarantine.Param = xmlBuil.Result;
 
@@ -295,7 +292,7 @@ public partial class _PoliciesPage : PageBase
     {
         TaskUserEntity task;        
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder();
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder();
         StringBuilder sb = new StringBuilder(1024);
 
         if (cblUsedTasks.Items[0].Selected)

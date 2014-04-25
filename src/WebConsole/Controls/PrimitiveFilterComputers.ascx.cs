@@ -5,8 +5,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using System.Web.UI.HtmlControls;
-using Filters.Primitive;
-using Filters.Common;
+using VirusBlokAda.CC.Filters.Primitive;
+using VirusBlokAda.CC.Filters.Common;
 
 public partial class Controls_PrimitiveFilterComputers : System.Web.UI.UserControl, IPrimitiveFilter
 {

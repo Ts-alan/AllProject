@@ -16,7 +16,8 @@ using System.IO;
 using System.Text;
 using ARM2_dbcontrol.Service.Vba32NS;
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
+using VirusBlokAda.CC.Common.Xml;
 
 public partial class Controls_TaskFirewall : System.Web.UI.UserControl, ITask
 {
@@ -110,7 +111,7 @@ public partial class Controls_TaskFirewall : System.Web.UI.UserControl, ITask
      /// <returns>xml строка</returns>
      private string BuildXml()
      {
-         ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("Firewall");
+         VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("Firewall");
          xml.AddNode("Vba32CCUser", String.Format("{0} ({1} {2})", Profile.UserName, Profile.FirstName == "" ? Profile.UserName : Profile.FirstName, Profile.LastName == "" ? Profile.UserName : Profile.LastName) );
          xml.AddNode("Type", "Firewall");
          xml.AddNode("Content", Server.HtmlEncode(ObjectSerializer.ObjToXmlStr(Firewall).Remove(0, 39)));
@@ -158,10 +159,10 @@ public partial class Controls_TaskFirewall : System.Web.UI.UserControl, ITask
      /// <returns></returns>
      public string BuildTask(string fullPath, string xmlParam)
      {
-         ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("CreateFile");
+         VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("CreateFile");
          xml.Top = String.Empty;
 
-         XmlTaskParser pars = new XmlTaskParser(xmlParam);
+         VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(xmlParam);
 
          xml.AddNode("FullPath", fullPath);
          xml.AddNode("Content", BuildConfig(Server.HtmlDecode(pars.GetValue("Content"))));
@@ -173,9 +174,9 @@ public partial class Controls_TaskFirewall : System.Web.UI.UserControl, ITask
     public void LoadState(TaskUserEntity task)
     {
         if (task == null || task.Type != TaskType.Firewall)
-            throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);        
-        
-        XmlTaskParser pars = new XmlTaskParser(task.Param);
+            throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
+
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser pars = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
         Firewall = ObjectSerializer.XmlStrToObj<RuleConfigureFirewall>(Server.HtmlDecode(pars.GetValue("Content")));
         
         UpdateData();        

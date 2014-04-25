@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall.MsiexecHelper
 {
     /// <summary>
     /// Logging level of msiexec

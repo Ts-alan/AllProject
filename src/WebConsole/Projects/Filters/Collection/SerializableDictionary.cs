@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml.Serialization;
 
 
-namespace Filters.Collection
+namespace VirusBlokAda.CC.Filters.Collection
 {
     [XmlRoot("dictionary")]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable

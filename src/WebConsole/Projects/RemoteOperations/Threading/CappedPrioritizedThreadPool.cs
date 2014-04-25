@@ -5,7 +5,7 @@ using System.Collections;
 using System.Threading;
 using System.Diagnostics;
 
-namespace VirusBlokAda.RemoteOperations.Threading
+namespace VirusBlokAda.CC.RemoteOperations.Threading
 {
     class CappedPrioritizedThreadPool
     {

@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LoggerNS.cs" />
     <Compile Include="INotification.cs" />
     <Compile Include="Network\AgsXMPPClient.cs" />
     <Compile Include="Network\JabberClient.cs" />
@@ -109,8 +110,6 @@
     <Compile Include="Vba32NSInstaller.Designer.cs">
       <DependentUpon>Vba32NSInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Xml\Logger.cs" />
-    <Compile Include="Xml\ObjectSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Library\agsXMPP.dll" />
@@ -133,6 +132,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

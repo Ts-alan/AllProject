@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
@@ -295,9 +296,9 @@ namespace ARM2_dbcontrol.Tasks
 
         public String SaveToXml()
         {
-            ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("monitor");
-            ARM2_dbcontrol.Generation.XmlBuilder xmlExclusions = new ARM2_dbcontrol.Generation.XmlBuilder("exclusions");
-            ARM2_dbcontrol.Generation.XmlBuilder xmlIdlecheck = new ARM2_dbcontrol.Generation.XmlBuilder("idlecheck");
+            XmlBuilder xml = new XmlBuilder("monitor");
+            XmlBuilder xmlExclusions = new XmlBuilder("exclusions");
+            XmlBuilder xmlIdlecheck = new XmlBuilder("idlecheck");
             xml.Top = String.Empty;
             xmlExclusions.Top = String.Empty;
             xmlIdlecheck.Top = String.Empty;

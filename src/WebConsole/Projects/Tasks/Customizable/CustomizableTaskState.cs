@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.Vba32CC.Common;
+using VirusBlokAda.CC.Common;
 using System.Web;
 using System.Reflection;
 using System.Xml.Serialization;
-using VirusBlokAda.Vba32CC.Common.Collection;
-using Tasks.Common;
-using Tasks.Entities;
+using VirusBlokAda.CC.Common.Collection;
+using VirusBlokAda.CC.Tasks.Common;
+using VirusBlokAda.CC.Tasks.Entities;
 
-namespace Tasks.Customizable
+namespace VirusBlokAda.CC.Tasks.Customizable
 {
     public class CustomizableTaskState :TaskState
     {

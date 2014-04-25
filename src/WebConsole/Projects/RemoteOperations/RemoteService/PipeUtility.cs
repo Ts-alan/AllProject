@@ -6,7 +6,7 @@ using Microsoft.Win32.SafeHandles;
 using System.Threading;
 using System.IO;
 
-namespace VirusBlokAda.RemoteOperations.RemoteService
+namespace VirusBlokAda.CC.RemoteOperations.RemoteService
 {
     class PipeUtility
     {

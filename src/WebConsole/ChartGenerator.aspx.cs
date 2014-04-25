@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-using ARM2_dbcontrol.Diagram;
+using VirusBlokAda.CC.Diagram;
 
 public partial class ChartGenerator : System.Web.UI.Page
 {

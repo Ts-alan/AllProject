@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CompositeFilter.ascx.cs"
     Inherits="Controls_CompositeFilter" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <%@ Register Src="~/Controls/TemporaryGroupFilter.ascx" TagName="TemporaryGroupFilter" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/CollapsiblePanelSwitch.ascx" TagName="CollapsiblePanelSwitch" TagPrefix="cc1" %>
 <%@ Register Src="~/Controls/SaveAsDialog.ascx" TagName="SaveAsDialog" TagPrefix="cc1" %>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using VirusBlokAda.Vba32CC.Common.Collection;
-using Filters.Primitive;
+using VirusBlokAda.CC.Common.Collection;
+using VirusBlokAda.CC.Filters.Primitive;
 
-namespace Filters.Composite
+namespace VirusBlokAda.CC.Filters.Composite
 {
     public class CompositeFilterState
     {

@@ -1,6 +1,6 @@
 <%@ Page Language="C#" MaintainScrollPositionOnPostback="false" EnableEventValidation="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Processes.aspx.cs" Inherits="Processes" Title="Untitled Page" %>
 <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
-<%@ Register TagPrefix="custom" Namespace="CustomControls" Assembly="CustomControls" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 
 <%@ Register Src="~/Controls/CompositeFilter.ascx" TagName="CompositeFilter" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterText.ascx" TagName="FilterText" TagPrefix="flt" %>

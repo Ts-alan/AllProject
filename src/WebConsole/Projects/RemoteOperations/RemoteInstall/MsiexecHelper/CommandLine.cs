@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using VirusBlokAda.RemoteOperations.Common;
+using VirusBlokAda.CC.RemoteOperations.Common;
 
-namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
+namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall.MsiexecHelper
 {
     /// <summary>
     /// Helper class to generate specific msiexec command line options
@@ -24,7 +24,7 @@ namespace VirusBlokAda.RemoteOperations.RemoteInstall.MsiexecHelper
         public static String Install(String installDirectory, String msiName, Boolean doRestart, LogLevel logLevel, String logName)
         {
             StringBuilder sb = new StringBuilder();
-            if (VirusBlokAda.RemoteOperations.MsiInfo.Vba32MsiStorage.IsMSI(msiName))
+            if (VirusBlokAda.CC.RemoteOperations.MsiInfo.Vba32MsiStorage.IsMSI(msiName))
             {
                 sb.Append("msiexec.exe ");
                 sb.Append("/i \"");

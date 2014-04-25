@@ -84,7 +84,7 @@ public partial class Controls_TaskAgentSettings : System.Web.UI.UserControl, ITa
         if (task.Type != TaskType.AgentSettings)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        XmlTaskParser parser = new XmlTaskParser(task.Param);
+        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
 
         String val = parser.GetXmlTagContent("StateSendInterval");
         val = val.Replace("reg_dword:", "");
@@ -105,7 +105,7 @@ public partial class Controls_TaskAgentSettings : System.Web.UI.UserControl, ITa
 
     private String BuildXml()
     {
-        ARM2_dbcontrol.Generation.XmlBuilder xml = new ARM2_dbcontrol.Generation.XmlBuilder("agentSettings");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("agentSettings");
         xml.Top = String.Empty;
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "AgentSettings");

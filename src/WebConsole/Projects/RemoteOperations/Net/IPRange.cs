@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 
-namespace VirusBlokAda.RemoteOperations.Net
+namespace VirusBlokAda.CC.RemoteOperations.Net
 {
     public class IPRange
     {

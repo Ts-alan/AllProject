@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Filters.Common
+namespace VirusBlokAda.CC.Filters.Common
 {
     public static class FilterHelper
     {

@@ -11,7 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 
 using ARM2_dbcontrol.Filters;
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 
 public partial class Controls_CompFiltersExtra : System.Web.UI.UserControl
 {

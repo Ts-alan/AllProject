@@ -4,9 +4,9 @@ using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 
-using VirusBlokAda.Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
 
-namespace ARM2_dbcontrol.Diagram
+namespace VirusBlokAda.CC.Diagram
 {
     /// <summary>
     /// Класс VisualReport

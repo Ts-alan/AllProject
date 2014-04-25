@@ -39,8 +39,8 @@ public partial class Controls_TaskDetachAgent : System.Web.UI.UserControl, ITask
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.DetachAgent;
 
-        ARM2_dbcontrol.Generation.XmlBuilder xml =
-             new ARM2_dbcontrol.Generation.XmlBuilder("task");
+        VirusBlokAda.CC.Common.Xml.XmlBuilder xml =
+             new VirusBlokAda.CC.Common.Xml.XmlBuilder("task");
         xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
         xml.AddNode("Type", "DetachAgent");
         xml.Generate();

@@ -6,7 +6,7 @@ using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Diagnostics;
 
-namespace VirusBlokAda.RemoteOperations.RemoteService
+namespace VirusBlokAda.CC.RemoteOperations.RemoteService
 {
     class RemoteClient
     {
