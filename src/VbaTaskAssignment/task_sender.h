@@ -16,7 +16,7 @@ struct TaskParam
 	INT64 id;
 };
 
-class VbaTaskSender : public vba::ActionQueue<TaskParam>
+class VbaTaskSender : public vba::deprecated::ActionQueue<TaskParam>
 {
 protected:
     struct TaskContainer :	public vba::ThreadNonPaged

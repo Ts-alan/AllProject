@@ -54,7 +54,7 @@ bool VbaTaskBuilder::SignPacket(std::tostringstream& source, vba::utf8_string& p
 	CryptSignature signature;
 	memset(&signature,0,sizeof(CryptSignature));
 
-	if (CryptSignDataBlock(temp_packet.c_str(), static_cast<long>(temp_packet.length()), &g_SD, &signature))
+	if (CryptSignDataBlock2(temp_packet.c_str(), static_cast<long>(temp_packet.length()), &g_SD, &signature))
 	{		
         packet = temp_packet + vba::utf8_string(reinterpret_cast<CHAR*>(signature.data),sizeof(signature.data));
 		return true;

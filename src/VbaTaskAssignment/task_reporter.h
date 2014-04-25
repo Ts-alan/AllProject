@@ -13,8 +13,9 @@
 #include <list>
 #include "windows.h"
 #include "common/log.h"
+#include "common/patterns/action_queue.h"
 
-class VbaTaskReporter :	public vba::ActionQueue<std::wstring>
+class VbaTaskReporter :	public vba::deprecated::ActionQueue<std::wstring>
 {
 public:
 	bool VbaTaskReporter::SaveTaskState(INT64 id_task, TASK_STATE task_state)

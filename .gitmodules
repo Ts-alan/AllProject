@@ -16,3 +16,9 @@
 [submodule "3rd/JetByteTools"]
 	path = 3rd/JetByteTools
 	url = git://git/arena/3rd/jet_byte_tools
+[submodule "deps/vsis"]
+	path = deps/vsis
+	url = git://git/arena/vsis
+[submodule "make/prop_sheets"]
+	path = make/prop_sheets
+	url = git://git/arena/fsz_prop_sheets

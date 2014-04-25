@@ -15,7 +15,7 @@ VbaTaskSender::~VbaTaskSender()
 
 bool VbaTaskSender::_Initialize()
 {
-    m_action_q_init = vba::ActionQueue<TaskParam>::Initialize();
+	m_action_q_init = vba::deprecated::ActionQueue<TaskParam>::Initialize();
 	
 	mp_thread_pool = vba::AutoSingleton<SenderThreadPool>::Instance();
 	mp_tasks_report = vba::AutoSingleton<ReportTasks>::Instance();
@@ -29,7 +29,7 @@ bool VbaTaskSender::_Initialize()
 bool VbaTaskSender::_Uninitialize()
 {
 	m_action_q_init = false;
-	vba::ActionQueue<TaskParam>::Uninitialize();
+	vba::deprecated::ActionQueue<TaskParam>::Uninitialize();
 	
 	mp_thread_pool->FreeInst();
 	mp_thread_pool = NULL;
