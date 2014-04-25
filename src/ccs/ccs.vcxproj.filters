@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d978c3e5-e32a-48e9-95b4-e89138363f8e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="ccs_plug.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ccs.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ccs_plug.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="cc_define.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
