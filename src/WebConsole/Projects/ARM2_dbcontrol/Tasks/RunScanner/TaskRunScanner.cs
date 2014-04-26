@@ -5,7 +5,7 @@ using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskRunScanner
+    public class TaskRunScanner: IConfigureTask
     {
         #region Fields
 
@@ -49,6 +49,35 @@ namespace ARM2_dbcontrol.Tasks
 
         #region Methods
 
+        public String GetTaskForVSIS()
+        {
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<VsisCommand>");
+            result.Append("<Args>");
+
+            result.Append(@"<command><arg><key>module-id</key><value>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</value></arg>");
+            result.Append(@"<arg><key>command</key><value>scan</value></arg><arg>");
+
+            if (IsCheckMemory)
+                result.Append(@"<key>memory</key><value />");
+
+            Int32 index = 0;
+            foreach (String path in PathScan)
+            {
+                result.AppendFormat(@"<key>path{0}</key><value>{1}</value>", index++, path.Replace('\\', '/'));
+            }
+
+            result.Append(@"</arg></command>");
+            result.Append(@"</Args>");
+            result.Append(@"<Async>0</Async>");
+            result.Append(@"</VsisCommand>");
+
+            return result.ToString();
+        }
+
+        #region IConfigureTask Members
+
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("task");
@@ -74,36 +103,9 @@ namespace ARM2_dbcontrol.Tasks
             return xml.Result;
         }
 
-        public String GetTaskForLoader()
+        public String GetTask()
         {
             return String.Empty;
-        }
-
-        public String GetTaskForVSIS()
-        {
-            StringBuilder result = new StringBuilder(256);
-
-            result.Append("<VsisCommand>");
-            result.Append("<Args>");
-
-            result.Append(@"<command><arg><key>module-id</key><value>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</value></arg>");
-            result.Append(@"<arg><key>command</key><value>scan</value></arg><arg>");
-
-            if(IsCheckMemory)
-            result.Append(@"<key>memory</key><value />");
-
-            Int32 index = 0;
-            foreach (String path in PathScan)
-            {
-                result.AppendFormat(@"<key>path{0}</key><value>{1}</value>", index++, path.Replace('\\', '/'));
-            }
-
-            result.Append(@"</arg></command>");
-            result.Append(@"</Args>");
-            result.Append(@"<Async>0</Async>");
-            result.Append(@"</VsisCommand>");
-
-            return result.ToString();
         }
 
         public void LoadFromXml(String xml)
@@ -120,6 +122,12 @@ namespace ARM2_dbcontrol.Tasks
             }
         }
 
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
         #endregion
     }
 }

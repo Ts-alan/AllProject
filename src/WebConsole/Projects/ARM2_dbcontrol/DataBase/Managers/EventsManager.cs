@@ -133,7 +133,17 @@ namespace VirusBlokAda.CC.DataBase
 
 			return (int)command.ExecuteScalar();
 		}
-		
+
+        public void ClearOldEvents(DateTime dt)
+        {
+            IDbCommand command = database.CreateCommand("DeleteOldEvents", true);
+
+            database.AddCommandParameter(command, "@Date",
+                DbType.Date, dt, ParameterDirection.Input);
+
+            command.ExecuteNonQuery();
+        }
+
 		#endregion
 	
 		

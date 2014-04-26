@@ -357,6 +357,7 @@ namespace VirusBlokAda.CC.DataBase
             reader.Close();
             return computers;
         }
+
         public SelectedComputersForTask GetSelectionComputerForTask(String where)
         {
             if (where == "") where = null;
@@ -380,6 +381,18 @@ namespace VirusBlokAda.CC.DataBase
             reader.Close();
             return selected;
         }
+
+        public void ClearOldComputers(DateTime dt)
+        {
+            IDbCommand command = database.CreateCommand("DeleteOldComputers", true);
+
+            if (DateTime.Now.Subtract(dt).Days > 0)
+                database.AddCommandParameter(command, "@Date",
+                    DbType.Date, dt, ParameterDirection.Input);
+
+            command.ExecuteNonQuery();
+        }
+
 		#endregion
 		
 	}		

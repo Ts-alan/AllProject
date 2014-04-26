@@ -83,6 +83,10 @@
       <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

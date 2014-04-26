@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Vba32CC.TaskAssignment.Tasks
+namespace ARM2_dbcontrol.Tasks
 {
     public interface IConfigureTask
     {
         String SaveToXml();
         void LoadFromXml(String xml);
         void LoadFromRegistry(String reg);
+        String GetTask();
     }
 }

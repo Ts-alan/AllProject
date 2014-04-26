@@ -68,17 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\LoggerPMS.cs" />
-    <Compile Include="DataBase\EventsEntity.cs" />
-    <Compile Include="DataBase\EventsFilterEntity.cs" />
-    <Compile Include="DataBase\EventsManager.cs" />
-    <Compile Include="DataBase\VlslVConnection.cs" />
     <Compile Include="Network\EventsSender.cs" />
-    <Compile Include="TaskAssignment\DataBase\TaskManager.cs" />
-    <Compile Include="TaskAssignment\Entities\TaskEntity.cs" />
-    <Compile Include="TaskAssignment\Entities\TaskInfo.cs" />
-    <Compile Include="TaskAssignment\PreServAction.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskConfigureAgent.cs" />
-    <Compile Include="TaskAssignment\Vba32ControlCenterWrapper.cs" />
     <Compile Include="Vba32PMS.DB.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PMS.ico" />
-    <Content Include="TaskAssignment\VbaTaskAssignment.idl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -129,9 +118,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebConsole\Projects\Filters\Filters.csproj">
+      <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
+      <Name>Filters</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

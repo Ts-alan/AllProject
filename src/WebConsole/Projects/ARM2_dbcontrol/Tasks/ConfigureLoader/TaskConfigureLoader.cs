@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Common;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskConfigureLoader
+    public class TaskConfigureLoader: IConfigureTask
     {
         #region Fields
 
@@ -211,14 +212,15 @@ namespace ARM2_dbcontrol.Tasks
 
         #endregion
 
-        #region Methods
+       
+        #region IConfigureTask Members
 
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("loader");
             xml.Top = String.Empty;
 
-            xml.AddNode("AUTO_START", "reg_dword:"+AUTO_START.ToString());
+            xml.AddNode("AUTO_START", "reg_dword:" + AUTO_START.ToString());
             xml.AddNode("MONITOR_AUTO_START", "reg_dword:" + MONITOR_AUTO_START.ToString());
             xml.AddNode("PROTECT_LOADER", "reg_dword:" + PROTECT_LOADER.ToString());
             xml.AddNode("SHOW_WINDOW", "reg_dword:" + SHOW_WINDOW.ToString());
@@ -238,7 +240,7 @@ namespace ARM2_dbcontrol.Tasks
             xml.AddNode("PROXY_AUTHORIZE", "reg_dword:" + PROXY_AUTHORIZE.ToString());
 
             xml.AddNode("LOG_NAME", "reg_sz:" + (String.IsNullOrEmpty(LOG_NAME) ? "Vba32Ldr.log" : LOG_NAME));
-            if (LOG_LIMIT_VALUE>-1)
+            if (LOG_LIMIT_VALUE > -1)
             {
                 xml.AddNode("LOG_LIMIT_VALUE", "reg_dword:" + LOG_LIMIT_VALUE.ToString());
             }
@@ -284,7 +286,7 @@ namespace ARM2_dbcontrol.Tasks
                         delta = Convert.ToByte(delta % 3 + 1);
                         xorValue += delta;
                     }
-                    xml.AddNode("PROXY_PASSWORD", "reg_binary:" + TaskHelper.ConvertToDumpString(bytes));
+                    xml.AddNode("PROXY_PASSWORD", "reg_binary:" + Anchor.ConvertToDumpString(bytes));
                 }
                 else
                 {
@@ -419,6 +421,11 @@ namespace ARM2_dbcontrol.Tasks
 
               
              */
+        }
+
+        public String GetTask()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

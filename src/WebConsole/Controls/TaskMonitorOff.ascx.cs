@@ -48,7 +48,7 @@ public partial class Controls_TaskMonitorOff : System.Web.UI.UserControl, ITask
 
     public String GetTaskForLoader()
     {
-        return GetTaskEntity().GetTaskForLoader();
+        return GetTaskEntity().GetTask();
     }
 
     private TaskMonitorOnOff GetTaskEntity()

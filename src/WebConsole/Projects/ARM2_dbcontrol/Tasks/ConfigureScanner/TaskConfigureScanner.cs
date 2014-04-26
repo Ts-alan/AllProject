@@ -5,7 +5,7 @@ using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskConfigureScanner
+    public class TaskConfigureScanner: IConfigureTask
     {
         #region Fields
 
@@ -368,6 +368,86 @@ namespace ARM2_dbcontrol.Tasks
 
         #region Methods
 
+        public String GetTaskForVSIS()
+        {
+            StringBuilder result = new StringBuilder(512);
+
+            result.Append("<VsisCommand>");
+            result.Append("<Args>");
+
+            result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
+            result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
+            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</id>");
+
+            #region Settings
+            Int32 index = 0;
+            result.Append(@"<param><id>RemoteScanClientSettings</id><type>stringmap</type><value>");
+            if (!String.IsNullOrEmpty(RemoteClientAddress))
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Address", RemoteClientAddress);
+            else
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val/></string>", index++, "Address");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Enable", IsRemoteClientEnabled ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Port", RemoteClientPort);
+            result.Append(@"</value></param>");
+
+            index = 0;
+            result.Append(@"<param><id>RemoteScanServerSettings</id><type>stringmap</type><value>");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Enable", IsRemoteServerEnabled ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Port", RemoteServerPort);
+            result.Append(@"</value></param>");
+
+            index = 0;
+            result.Append(@"<param><id>ScanSettings</id><type>stringmap</type><value>");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "AddSpyRiskWareAnalyze", IsDetectAdware ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ArchiveAnalyze", IsCheckArchives ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Authenticode", IsAuthenticode ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Cache", IsEnableCach ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Heuristic", HeuristicAnalysis == 0 ? "Off" : "On");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MailAnalyze", IsCheckMail ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MaxArchiveSize", String.IsNullOrEmpty(ArchiveSize) ? "0" : ArchiveSize);
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SfxAnalyze", IsSFX ? "On" : "Off");
+
+            if (IsCheckCure)
+            {
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", "Cure");
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
+            }
+            else
+            {
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", "None");
+            }
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdInfectedAction", "None");
+
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstSuspectedAction", SuspiciousMode == 2 ? "Delete" : "None");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondSuspectedAction", "None");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdSuspectedAction", "None");
+
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "InfectedQuarantine", IsSaveInfectedToQuarantine ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SuspectedQuarantine", IsSaveSusToQuarantine ? "On" : "Off");
+
+            if (IsSet && !String.IsNullOrEmpty(Set))
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ProcessedExtensions", Set);
+
+            if (IsExclude && !String.IsNullOrEmpty(Exclude))
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ExcludedExtensions", Exclude);
+            else
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val/></string>", index++, "ExcludedExtensions");
+            result.Append(@"</value></param>");
+
+            #endregion
+
+            result.Append(@"</module></config></value></arg></command>");
+
+            result.Append(@"</Args>");
+            result.Append(@"<Async>0</Async>");
+            result.Append(@"</VsisCommand>");
+
+            return result.ToString();
+        }
+
+        #region IConfigureTask Members
+
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("task");
@@ -446,7 +526,7 @@ namespace ARM2_dbcontrol.Tasks
             return xml.Result;
         }
 
-        public String GetTaskForLoader()
+        public String GetTask()
         {
             String fileName = IsUpdateBase ? "VbaControlAgent.exe\" LCSU" : "vba32w.exe\"";
 
@@ -527,84 +607,6 @@ namespace ARM2_dbcontrol.Tasks
             return commandLine.ToString();
         }
 
-        public String GetTaskForVSIS()
-        {
-            StringBuilder result = new StringBuilder(512);
-
-            result.Append("<VsisCommand>");
-            result.Append("<Args>");
-
-            result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
-            result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
-            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</id>");
-
-            #region Settings
-            Int32 index = 0;
-            result.Append(@"<param><id>RemoteScanClientSettings</id><type>stringmap</type><value>");
-            if (!String.IsNullOrEmpty(RemoteClientAddress))
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Address", RemoteClientAddress);
-            else 
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val/></string>", index++, "Address");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Enable", IsRemoteClientEnabled ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Port", RemoteClientPort);
-            result.Append(@"</value></param>");
-
-            index = 0;
-            result.Append(@"<param><id>RemoteScanServerSettings</id><type>stringmap</type><value>");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Enable", IsRemoteServerEnabled ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Port", RemoteServerPort);
-            result.Append(@"</value></param>");
-            
-            index = 0;
-            result.Append(@"<param><id>ScanSettings</id><type>stringmap</type><value>");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "AddSpyRiskWareAnalyze", IsDetectAdware ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ArchiveAnalyze", IsCheckArchives ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Authenticode", IsAuthenticode ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Cache", IsEnableCach ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Heuristic", HeuristicAnalysis == 0 ? "Off" : "On");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MailAnalyze", IsCheckMail ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MaxArchiveSize", String.IsNullOrEmpty(ArchiveSize) ? "0" : ArchiveSize);
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SfxAnalyze", IsSFX ? "On" : "Off");
-
-            if (IsCheckCure)
-            {
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", "Cure");
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
-            }
-            else
-            {
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", "None");
-            }
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdInfectedAction", "None");
-
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstSuspectedAction", SuspiciousMode == 2 ? "Delete" : "None");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondSuspectedAction", "None");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdSuspectedAction", "None");
-
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "InfectedQuarantine", IsSaveInfectedToQuarantine ? "On" : "Off");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SuspectedQuarantine", IsSaveSusToQuarantine ? "On" : "Off");
-
-            if(IsSet && !String.IsNullOrEmpty(Set))
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ProcessedExtensions", Set);
-            
-            if (IsExclude && !String.IsNullOrEmpty(Exclude))
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ExcludedExtensions", Exclude);
-            else
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val/></string>", index++, "ExcludedExtensions");
-            result.Append(@"</value></param>");
-
-            #endregion
-
-            result.Append(@"</module></config></value></arg></command>");
-
-            result.Append(@"</Args>");
-            result.Append(@"<Async>0</Async>");
-            result.Append(@"</VsisCommand>");
-
-            return result.ToString();
-        }
-
         public void LoadFromXml(String xml)
         {
             XmlTaskParser pars = new XmlTaskParser(xml);
@@ -666,6 +668,12 @@ namespace ARM2_dbcontrol.Tasks
             RemoteClientAddress = pars.GetValue("RemoteClientAddress");
         }
 
+        public void LoadFromRegistry(String reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
         #endregion
 
         struct RemoteScanSettings

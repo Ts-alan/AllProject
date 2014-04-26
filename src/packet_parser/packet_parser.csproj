@@ -48,35 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Anchor.cs" />
     <Compile Include="Common\LoggerPP.cs" />
-    <Compile Include="EventsEntity.cs" />
-    <Compile Include="EventsFlowManager.cs" />
     <Compile Include="notifications.cs" />
     <Compile Include="packet_parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskAssignment\AutomaticallyTasks.cs" />
-    <Compile Include="TaskAssignment\Entities\AutomaticallyTaskEntity.cs" />
-    <Compile Include="TaskAssignment\Entities\ComputersEntity.cs" />
-    <Compile Include="TaskAssignment\PreServAction.cs" />
-    <Compile Include="TaskAssignment\Entities\TaskEntity.cs" />
-    <Compile Include="TaskAssignment\Entities\TaskInfo.cs" />
-    <Compile Include="TaskAssignment\DataBase\TaskManager.cs" />
-    <Compile Include="TaskAssignment\Tasks\AuxiliaryClasses\HeuristicAnalysisEnum.cs" />
-    <Compile Include="TaskAssignment\Tasks\AuxiliaryClasses\ScanningModeEnum.cs" />
-    <Compile Include="TaskAssignment\Tasks\IConfigureTask.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskConfigureLoader.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskConfigureMonitor.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskConfigureQuarantine.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskHelper.cs" />
-    <Compile Include="TaskAssignment\Tasks\TaskRunScanner.cs" />
-    <Compile Include="TaskAssignment\Vba32ControlCenterWrapper.cs" />
-    <Compile Include="TaskAssignment\DataBase\VlslVConnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TaskAssignment\VbaTaskAssignment.idl" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>

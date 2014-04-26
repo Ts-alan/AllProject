@@ -65,7 +65,7 @@ public partial class Controls_TaskConfigurePassword : System.Web.UI.UserControl,
             //Вычисляем хэш и конвертим в base64
             MD5 md5Hasher = MD5.Create();
             byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(str));
-            str = "reg_binary:" + Anchor.ConvertToDumpString(data); //Convert.ToBase64String(data);
+            str = "reg_binary:" + VirusBlokAda.CC.Common.Anchor.ConvertToDumpString(data); //Convert.ToBase64String(data);
             //
         }
         else

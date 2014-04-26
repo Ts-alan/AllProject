@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vba32CC.DataBase
+namespace VirusBlokAda.CC.DataBase
 {
     public class AutomaticallyTaskEntity
     {

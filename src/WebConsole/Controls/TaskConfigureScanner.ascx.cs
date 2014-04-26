@@ -278,7 +278,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         TaskConfigureScanner tsk = new TaskConfigureScanner();
         tsk.LoadFromXml(task.Param);
 
-        return tsk.GetTaskForLoader();
+        return tsk.GetTask();
     }
 
     public TaskUserEntity GetCurrentState()

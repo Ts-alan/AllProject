@@ -7,9 +7,9 @@ using System.Net;
 using System.Diagnostics;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
-using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Network;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.DataBase;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {

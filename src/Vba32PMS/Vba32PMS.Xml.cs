@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Diagnostics;
 using System.IO;
-
-using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.DataBase;
+using VirusBlokAda.CC.Filters.Primitive;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {
@@ -30,7 +29,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 DateTime dtFrom = lastSelectDate; //new DateTime(2008, 10, 01);
                 DateTime dtTo = DateTime.Now;
                 LoggerPMS.log.Debug("Формируем строку фильтрации");
-                String where = "Send = 1 AND " + EventsFilterEntity.DateValue("EventTime", dtFrom, dtTo, "AND");
+                String where = "Send = 1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dtFrom, dtTo, "EventTime", false, false);
                 LoggerPMS.log.Debug(where);
                 LoggerPMS.log.Debug("Получаем события из базы");
 

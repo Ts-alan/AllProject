@@ -5,7 +5,7 @@ using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskMonitorOnOff
+    public class TaskMonitorOnOff: IConfigureTask
     {
         #region Fields
 
@@ -44,26 +44,6 @@ namespace ARM2_dbcontrol.Tasks
 
         #region Methods
 
-        public String SaveToXml()
-        {
-            XmlBuilder xml = new XmlBuilder("task");
-
-            xml.AddNode("IsMonitorOn", IsMonitorOn ? "1" : "0");
-            xml.AddNode("Vba32CCUser", Vba32CCUser);
-            xml.AddNode("Type", TaskType);
-
-            xml.Generate();
-
-            return xml.Result;
-        }
-
-        public String GetTaskForLoader()
-        {
-            return String.Format("\"%VBA32%Vba32ldr.exe\" /{0} /user", IsMonitorOn ? "mn" : "mf");
-            //str = str.Replace(" ", "&#160;");
-            //str = str.Replace("&", "&amp;");
-        }
-
         public String GetTaskForVSIS()
         {
             StringBuilder result = new StringBuilder(256);
@@ -83,12 +63,40 @@ namespace ARM2_dbcontrol.Tasks
             return result.ToString();
         }
 
+        #region IConfigureTask Members
+
+        public String SaveToXml()
+        {
+            XmlBuilder xml = new XmlBuilder("task");
+
+            xml.AddNode("IsMonitorOn", IsMonitorOn ? "1" : "0");
+            xml.AddNode("Vba32CCUser", Vba32CCUser);
+            xml.AddNode("Type", TaskType);
+
+            xml.Generate();
+
+            return xml.Result;
+        }
+
+        public String GetTask()
+        {
+            return String.Format("\"%VBA32%Vba32ldr.exe\" /{0} /user", IsMonitorOn ? "mn" : "mf");
+            //str = str.Replace(" ", "&#160;");
+            //str = str.Replace("&", "&amp;");
+        }
+
         public void LoadFromXml(String xml)
         {
             XmlTaskParser pars = new XmlTaskParser(xml);
             IsMonitorOn = pars.GetValue("IsMonitorOn") == "1";
         }
 
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
         #endregion
     }
 }

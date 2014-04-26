@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Common;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskConfigureQuarantine
+    public class TaskConfigureQuarantine: IConfigureTask
     {
         #region Fields
 
@@ -133,7 +134,7 @@ namespace ARM2_dbcontrol.Tasks
 
         #endregion
 
-        #region Methods
+        #region IConfigureTask Members
 
         public String SaveToXml()
         {
@@ -162,7 +163,7 @@ namespace ARM2_dbcontrol.Tasks
                         xorValue += delta;
                     }
 
-                    xml.AddNode("Password", "reg_binary:" + TaskHelper.ConvertToDumpString(bytes));
+                    xml.AddNode("Password", "reg_binary:" + Anchor.ConvertToDumpString(bytes));
                 }
                 else
                 {
@@ -265,6 +266,11 @@ namespace ARM2_dbcontrol.Tasks
 			<Value name="UseProxy" type="1" value="0"/>
 		</Key>
              */
+        }
+
+        public String GetTask()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

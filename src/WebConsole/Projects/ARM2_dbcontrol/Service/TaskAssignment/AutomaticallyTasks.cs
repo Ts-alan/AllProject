@@ -1,31 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Vba32CC.Service.TaskAssignment;
-using Vba32CC.TaskAssignment.Tasks;
-using Vba32CC.DataBase;
+using VirusBlokAda.CC.DataBase;
+using ARM2_dbcontrol.Tasks;
 
-namespace Vba32CC.TaskAssignment
+namespace ARM2_dbcontrol.Service.TaskAssignment
 {
     public static class AutomaticallyTasks
     {
         public static String ConnectionString = String.Empty;
         public const String UserName = "Automatically";
-        
-        /*
-        private static String AppPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(PacketParser)).Location) + @"\";
-        private static Logger log;
-        private static Logger Log
-        {
-            get
-            {
-                if (log == null)
-                    log = new Logger(AppPath + "AutomaticallyTasks.log");
-
-                return log;
-            }
-        }
-        */
 
         #region Events
         private const String VirusFound = "vba32.virus.found";
@@ -45,7 +29,7 @@ namespace Vba32CC.TaskAssignment
                     TaskManager db = new TaskManager(conn);
                     conn.OpenConnection();
 
-                    task = db.GetAutomaticallyTask(entity.Event);
+                    task = db.GetAutomaticallyTask(entity.EventName);
 
                     conn.CloseConnection();
                 }
@@ -70,10 +54,11 @@ namespace Vba32CC.TaskAssignment
                     List<Int64> taskId = new List<Int64>();
                     List<String> ipAddr = new List<String>();
 
-                    switch (entity.Event)
+                    switch (entity.EventName)
                     {
                         case VirusFound:
-                            TaskRunScanner taskScanner = new TaskRunScanner(task.TaskParams);
+                            TaskRunScanner taskScanner = new TaskRunScanner();
+                            taskScanner.LoadFromXml(task.TaskParams);
 
                             //change properties
 
@@ -83,10 +68,10 @@ namespace Vba32CC.TaskAssignment
                                 if (!IsRunning(compName[i], task.TaskID))
                                 {
                                     ipAddr.Add(ipAddress[i]);
-                                    taskId.Add(PreServAction.CreateTask(compName[i], taskScanner.TaskType, taskScanner.BuildXml(), UserName, ConnectionString));
+                                    taskId.Add(PreServAction.CreateTask(compName[i], TaskRunScanner.TaskType, taskScanner.SaveToXml(), UserName, ConnectionString));
                                 }
                             }
-                            control.PacketCreateProcess(taskId.ToArray(), ipAddr.ToArray(), taskScanner.GenerateCommandLine());
+                            control.PacketCreateProcess(taskId.ToArray(), ipAddr.ToArray(), taskScanner.GetTask());
 
                             break;
                     }

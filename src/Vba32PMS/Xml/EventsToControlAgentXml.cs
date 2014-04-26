@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Diagnostics;
 using System.Globalization;
-
-using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.DataBase;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 {
@@ -35,13 +33,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
             {
                 XmlBuilder childXml = new XmlBuilder();
                 childXml.AddNode("Computer", childArmComputerName);
-                childXml.AddNode("EventName", list[i].Event);
+                childXml.AddNode("EventName", list[i].EventName);
 
                 IFormatProvider culture = new CultureInfo("ru-RU");
                 childXml.AddNode("EventTime", list[i].EventTime.ToString(culture));
                 
-                childXml.AddNode("Component", list[i].Component);
-                childXml.AddNode("Object", list[i].Computer + ':' + list[i].Object);
+                childXml.AddNode("Component", list[i].ComponentName);
+                childXml.AddNode("Object", list[i].ComputerName + ':' + list[i].Object);
                 childXml.AddNode("Comment", list[i].Comment);
                 xml.AddNode("Event", childXml.Result);
             }

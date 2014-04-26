@@ -119,6 +119,8 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataBase\Entities\AutomaticallyTaskEntity.cs" />
+    <Compile Include="DataBase\Managers\EventsFlowManager.cs" />
     <Compile Include="KeyFile\KeyFileSettings.cs" />
     <Compile Include="DataBase\Managers\ComponentsManager.cs" />
     <Compile Include="DataBase\Entities\ComponentsEntity.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="DataBase\Entities\Policy.cs" />
     <Compile Include="DataBase\Managers\PolicyManager.cs" />
     <Compile Include="DataBase\Providers\PolicyProvider.cs" />
+    <Compile Include="Service\TaskAssignment\AutomaticallyTasks.cs" />
     <Compile Include="Service\Vba32NS\IVba32Settings.cs" />
     <Compile Include="Service\Vba32NS\NotifyEvent.cs" />
     <Compile Include="Service\Vba32NS\NotifyType.cs" />
@@ -217,6 +220,7 @@
     <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
+    <Compile Include="Tasks\IConfigureTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\MonitorOnOff\TaskMonitorOnOff.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
@@ -247,6 +251,7 @@
     <Compile Include="Service\TaskAssignment\Vba32ControlCenterWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Service\TaskAssignment\VbaTaskAssignment.idl" />
     <Content Include="Service\TaskAssignment\VbaTaskAssignment.idl" />
   </ItemGroup>
   <ItemGroup>

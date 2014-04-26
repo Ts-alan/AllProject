@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Vba32CC
+namespace VirusBlokAda.CC.DataBase
 {
     /// <summary>
     /// Организовывает интеллектуальную обработку потока уведомлений
@@ -17,7 +16,7 @@ namespace Vba32CC
     /// Limit - Порог-ограничитель событий
     /// TimeLimit - Временной порог-ограничитель событий
     /// </summary>
-    class EventsFlowManager
+    public class EventsFlowManager
     {
 
         #region Local hearth property
@@ -159,8 +158,8 @@ namespace Vba32CC
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@EventTime",
                 currEvent.EventTime.AddMinutes(0 - this.LocalHearthTimeLimit));
-            command.Parameters.AddWithValue("@ComputerName", currEvent.Computer);
-            command.Parameters.AddWithValue("@EventName", currEvent.Event);
+            command.Parameters.AddWithValue("@ComputerName", currEvent.ComputerName);
+            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
 
             result = (int)command.ExecuteScalar();
 
@@ -188,7 +187,7 @@ namespace Vba32CC
             command.Parameters.AddWithValue("@EventTime",
                 currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit));
             command.Parameters.AddWithValue("@Comment", currEvent.Comment);
-            command.Parameters.AddWithValue("@EventName", currEvent.Event);
+            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
 
             //result = (int)command.ExecuteScalar();
             SqlDataReader reader = command.ExecuteReader();
@@ -229,7 +228,7 @@ namespace Vba32CC
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@EventTime",
                 currEvent.EventTime.AddMinutes(0 - this.TimeLimit));
-            command.Parameters.AddWithValue("@EventName", currEvent.Event);
+            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
 
             return (int)command.ExecuteScalar() <= this.Limit;
         }

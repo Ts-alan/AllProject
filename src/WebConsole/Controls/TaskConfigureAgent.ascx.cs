@@ -58,9 +58,10 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
         if (task.Type != TaskType.ConfigureAgent)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        VirusBlokAda.CC.Common.Xml.XmlTaskParser parser = new VirusBlokAda.CC.Common.Xml.XmlTaskParser(task.Param);
+        TaskConfigureAgent tsk = new TaskConfigureAgent();
+        tsk.LoadFromXml(task.Param);
 
-        tboxConfigPath.Text = parser.GetXmlTagContent("ConfigPath");
+        tboxConfigPath.Text = tsk.ConfigFile;
     }
 
     #endregion
@@ -71,21 +72,18 @@ public partial class Controls_TaskConfigureAgent : System.Web.UI.UserControl, IT
     /// <returns></returns>
     private String BuildXml()
     {
-        VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder("ConfigureAgent");
-        xml.Top = String.Empty;
-        xml.AddNode("Vba32CCUser", Anchor.GetStringForTaskGivedUser());
-        xml.AddNode("Type", "ConfigureAgent");
-        String path = String.Format(@"<{0}>{1}</{0}>", "ConfigPath", tboxConfigPath.Text);
-        xml.AddNode("Content", path + BuildTask());
-        xml.Generate();
+        TaskConfigureAgent task = new TaskConfigureAgent();
 
-        return xml.Result;
+        task.ConfigFile = tboxConfigPath.Text;
+        task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
+
+        return task.SaveToXml();
     }
 
     public String BuildTask()
     {
         _task.ConfigFile = tboxConfigPath.Text;
-        return _task.BuildTask();
+        return _task.GetTask();
     }
     
     /// <summary>

@@ -7,7 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
@@ -18,7 +17,7 @@ using System.Security.Cryptography;
 /// </summary>
 public static class Anchor
 {
-    public static string GetStringForTaskGivedUser()
+    public static String GetStringForTaskGivedUser()
     {
         return String.Format("{0} ({1} {2}) {3}", 
             HttpContext.Current.Profile.UserName,
@@ -27,59 +26,18 @@ public static class Anchor
             HttpContext.Current.Request.UserHostAddress);
     }
 
-    public static string ConvertToDumpString(byte[] data)
-    {
-        string str = String.Empty;
-        foreach (byte b in data)
-        {
-            str += b.ToString("X2");
-        }
-        return str;
-    }
-
     /// <summary>
     /// Обрамляет строку в тег font с заданным цветом
     /// </summary>
     /// <param name="str">Исходная строка</param>
     /// <param name="color">Цвет текса</param>
     /// <returns></returns>
-    public static string SetColorToString(string str, string color)
+    public static String SetColorToString(String str, String color)
     {
         return String.Format("<font color={1}>{0}</font>",str,color);
     }
 
-   /* public static SettingsEntity GetSettings()
-    {
-        
-        SettingsEntity settings;
-        if (HttpContext.Current.Session["Settings"] == null)
-        {
-            settings = new SettingsEntity();
-            try
-            {
-                
-                settings = settings.Deserialize((string)HttpContext.Current.Profile.GetPropertyValue("Settings"));
-            }
-            catch
-            {
-                settings = new SettingsEntity();
-            }
-            finally
-            {
-                HttpContext.Current.Session["Settings"] = settings;
-            }
-        }
-        else
-        {
-            settings = (SettingsEntity)HttpContext.Current.Session["Settings"];
-        }
-
-        return settings;
-    }*/
-
-
-
-    public static void ScrollToObj(string controlId, Page _Page)
+    public static void ScrollToObj(String controlId, Page _Page)
     {
         if (!_Page.ClientScript.IsStartupScriptRegistered("obj"))
             _Page.ClientScript.RegisterStartupScript(typeof(Page), "obj", "document.getElementById('" + controlId + "').scrollIntoView(true);", true);
@@ -91,9 +49,9 @@ public static class Anchor
             _Page.ClientScript.RegisterStartupScript(typeof(Page), "top", "window.scrollTo(0,0);", true);
     }
 
-    public static string FixString(string source, int size)
+    public static String FixString(String source, int size)
     {
-        string dest = String.Empty;
+        String dest = String.Empty;
         int counter = 0;
         for (int i = 0; i < source.Length; i++)
         {
@@ -109,12 +67,12 @@ public static class Anchor
             return dest;
     }
 
-    public static string FixString(string source, int size, char symbol)
+    public static String FixString(String source, Int32 size, Char symbol)
     {
-        string dest = String.Empty;
-        int counter = 0;
-        bool change = false;
-        for (int i = 0; i < source.Length; i++)
+        String dest = String.Empty;
+        Int32 counter = 0;
+        Boolean change = false;
+        for (Int32 i = 0; i < source.Length; i++)
         {
             counter++;
             if (counter > size)
@@ -130,20 +88,14 @@ public static class Anchor
         }
         return dest;
     }
-
-    public static string FromBase64String(string source)
+    
+    public static String GetCommentFromSerial(String serial)
     {
-        byte[] bs = Convert.FromBase64String(source);
-        return Encoding.UTF8.GetString(bs);
-    }
-
-    public static string GetCommentFromSerial(string serial)
-    {
-        string comment = "";
+        String comment = "";
         try
         {
             comment = FixString(
-            HttpContext.Current.Server.HtmlEncode(FromBase64String(serial)), 30);
+            HttpContext.Current.Server.HtmlEncode(VirusBlokAda.CC.Common.Anchor.GetCommentFromSerial(serial)), 30);
         }
         catch
         {
@@ -152,9 +104,9 @@ public static class Anchor
     }
 
 
-    public static List<string> GetDateIntervals()
+    public static List<String> GetDateIntervals()
     {
-        List<string> list = new List<string>();
+        List<String> list = new List<String>();
         list.Add("1 " + Resources.Resource.Minute);
         list.Add("5 " + Resources.Resource.Minutes);
         list.Add("15 " + Resources.Resource.Minutes);
@@ -176,28 +128,5 @@ public static class Anchor
         list.Add("1 " + Resources.Resource.Year);
 
         return list;
-    }
-
-    public static string GetMd5Hash(string input)
-    {
-        // Create a new instance of the MD5CryptoServiceProvider object.
-        MD5 md5Hasher = MD5.Create();
-
-        // Convert the input string to a byte array and compute the hash.
-        byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-
-        // Create a new Stringbuilder to collect the bytes
-        // and create a string.
-        StringBuilder sBuilder = new StringBuilder();
-
-        // Loop through each byte of the hashed data 
-        // and format each one as a hexadecimal string.
-        for (int i = 0; i < data.Length; i++)
-        {
-            sBuilder.Append(data[i].ToString("x2"));
-        }
-
-        // Return the hexadecimal string.
-        return sBuilder.ToString();
     }
 }

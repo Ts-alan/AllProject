@@ -32,8 +32,10 @@ namespace Vba32CC
     using System.Reflection;
 
     using System.Diagnostics;
-    using Vba32CC.TaskAssignment;
-    using Vba32CC.TaskAssignment.Tasks;
+    using VirusBlokAda.CC.Common;
+    using VirusBlokAda.CC.DataBase;
+    using ARM2_dbcontrol.Service.TaskAssignment;
+    using ARM2_dbcontrol.Tasks;
 
     /// <summary>
     /// Event sinks class
@@ -1312,9 +1314,9 @@ namespace Vba32CC
 
             EventsEntity ev = new EventsEntity(dic);
 
-            Debug.WriteLine("Event is "+ev.Event);
+            Debug.WriteLine("Event is "+ev.EventName);
 
-            if (ev.Event == virusFoundEvent)
+            if (ev.EventName == virusFoundEvent)
             {
                 //Впервые обнаружена глобальная эпидемия
                 bool gResult = flow.IsGlobalEpidemy(ev);
@@ -1449,7 +1451,7 @@ namespace Vba32CC
                 command.Parameters[0].Value = ev.Object;
 
                 command.Parameters.Add("@ComputerName", SqlDbType.NVarChar, 64);
-                command.Parameters[1].Value = ev.Computer;
+                command.Parameters[1].Value = ev.ComputerName;
 
                 command.Parameters.Add("@Comment", SqlDbType.NVarChar, 128);
                 command.Parameters[2].Value = Anchor.GetCommentFromSerial(ev.Object);

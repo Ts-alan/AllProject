@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -48,22 +49,29 @@ namespace VirusBlokAda.CC.DataBase
 			this.comment = comment;
 		}
 
-       /* public EventsEntity(
-            string eventName,
-            string computerName,
-            DateTime eventTime,
-            string componentName,
-            string _object,
-            string comment)
+        public EventsEntity(StringDictionary name_value_map)
         {
-            this.eventName = eventName;
-            this.computerName = computerName;
-            this.componentName = componentName;
 
-            this.eventTime = eventTime;
-            this._object = _object;
-            this.comment = comment;
-        }*/
+            try
+            {
+                this.computerName = name_value_map["Computer"];
+                this.eventName = name_value_map["EventName"];
+                IFormatProvider format = new System.Globalization.CultureInfo("ru-RU");
+                DateTime date_time = DateTime.Parse(name_value_map["EventTime"], format);
+                this.eventTime = date_time;
+                if (name_value_map["Component"] == null)
+                {
+                    name_value_map["Component"] = "(unknown)";
+                }
+                this.componentName = name_value_map["Component"];
+                this._object = name_value_map["Object"];
+                this.comment = name_value_map["Comment"];
+            }
+            catch
+            {
+
+            }
+        }
 		
 		#region Public Properties
 		

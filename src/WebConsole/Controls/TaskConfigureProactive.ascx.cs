@@ -265,7 +265,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
 
         TaskConfigureProactive tsk = new TaskConfigureProactive();
         tsk.LoadFromXml(task.Param);
-        return tsk.BuildTaskXml();        
+        return tsk.GetTask();        
     }
 
     #region Change ListBoxes

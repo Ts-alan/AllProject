@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Common;
 
 namespace ARM2_dbcontrol.Tasks
 {
     /// <summary>
     /// Правило проактивной защиты
     /// </summary>
-    public class TaskConfigureProactive
+    public class TaskConfigureProactive: IConfigureTask
     {
         #region Fields
 
@@ -139,6 +140,111 @@ namespace ARM2_dbcontrol.Tasks
 
         #region Methods
 
+        private String GetXmlContent()
+        {
+            StringBuilder result = new StringBuilder(512);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (String str in TrustedApplications)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "TrustedApplications", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ProtectedApplications)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedApplications", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ReadOnlyFiles)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyFiles", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ProtectedFiles)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedFiles", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ExcludedFiles)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ExcludedFiles", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ReadOnlyFolders)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyFolders", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ProtectedFolders)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedFolders", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ExcludedFolders)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ExcludedFolders", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ReadOnlyRegistryKeys)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyRegistryKeys", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ProtectedRegistryKeys)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedRegistryKeys", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ReadOnlyRegistryValues)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyRegistryValues", Anchor.ToBase64String(sb.ToString()));
+
+            sb = new StringBuilder();
+            foreach (String str in ProtectedRegistryValues)
+            {
+                sb.AppendFormat("{0}{1}", str, '\0');
+            }
+            if (sb.Length > 0) sb.Append('\0');
+            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedRegistryValues", Anchor.ToBase64String(sb.ToString()));
+
+            return result.ToString();
+        }
+
+        #region IConfigureTask Members
+
         public String SaveToXml()
         {
             StringBuilder sb = new StringBuilder(512);
@@ -150,7 +256,7 @@ namespace ARM2_dbcontrol.Tasks
             return sb.ToString();
         }
 
-        public String BuildTaskXml()
+        public String GetTask()
         {
             StringBuilder result = new StringBuilder(256);
 
@@ -164,116 +270,13 @@ namespace ARM2_dbcontrol.Tasks
             return result.ToString();
         }
 
-        private String GetXmlContent()
-        {
-            StringBuilder result = new StringBuilder(512);
-            StringBuilder sb = new StringBuilder();
-
-            foreach (String str in TrustedApplications)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "TrustedApplications", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ProtectedApplications)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedApplications", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ReadOnlyFiles)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyFiles", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ProtectedFiles)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedFiles", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ExcludedFiles)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ExcludedFiles", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ReadOnlyFolders)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyFolders", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ProtectedFolders)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedFolders", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ExcludedFolders)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ExcludedFolders", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ReadOnlyRegistryKeys)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyRegistryKeys", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ProtectedRegistryKeys)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedRegistryKeys", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ReadOnlyRegistryValues)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ReadOnlyRegistryValues", TaskHelper.ToBase64String(sb.ToString()));
-
-            sb = new StringBuilder();
-            foreach (String str in ProtectedRegistryValues)
-            {
-                sb.AppendFormat("{0}{1}", str, '\0');
-            }
-            if (sb.Length > 0) sb.Append('\0');
-            result.AppendFormat(@"<{0}>reg_sz:{1}</{0}>", "ProtectedRegistryValues", TaskHelper.ToBase64String(sb.ToString()));
-
-            return result.ToString();
-        }
-
         public void LoadFromXml(String xml)
         {
             XmlTaskParser pars = new XmlTaskParser(xml);
 
             if (pars.GetValue("TrustedApplications", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("TrustedApplications", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("TrustedApplications", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _TrustedApplications.Add(str);
@@ -282,7 +285,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ProtectedApplications", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ProtectedApplications", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ProtectedApplications", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ProtectedApplications.Add(str);
@@ -291,7 +294,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ReadOnlyFiles", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ReadOnlyFiles", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ReadOnlyFiles", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ReadOnlyFiles.Add(str);
@@ -300,7 +303,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ProtectedFiles", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ProtectedFiles", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ProtectedFiles", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ProtectedFiles.Add(str);
@@ -309,7 +312,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ExcludedFiles", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ExcludedFiles", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ExcludedFiles", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ExcludedFiles.Add(str);
@@ -318,7 +321,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ReadOnlyFolders", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ReadOnlyFolders", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ReadOnlyFolders", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ReadOnlyFolders.Add(str);
@@ -327,7 +330,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ProtectedFolders", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ProtectedFolders", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ProtectedFolders", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ProtectedFolders.Add(str);
@@ -336,7 +339,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ExcludedFolders", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ExcludedFolders", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ExcludedFolders", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ExcludedFolders.Add(str);
@@ -345,7 +348,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ReadOnlyRegistryKeys", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ReadOnlyRegistryKeys", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ReadOnlyRegistryKeys", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ReadOnlyRegistryKeys.Add(str);
@@ -354,7 +357,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ProtectedRegistryKeys", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ProtectedRegistryKeys", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ProtectedRegistryKeys", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ProtectedRegistryKeys.Add(str);
@@ -363,7 +366,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ReadOnlyRegistryValues", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ReadOnlyRegistryValues", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ReadOnlyRegistryValues", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ReadOnlyRegistryValues.Add(str);
@@ -372,7 +375,7 @@ namespace ARM2_dbcontrol.Tasks
 
             if (pars.GetValue("ProtectedRegistryValues", "reg_sz:") != String.Empty)
             {
-                foreach (String str in TaskHelper.FromBase64String(pars.GetValue("ProtectedRegistryValues", "reg_sz:")).Split(new Char[] { '\0' }))
+                foreach (String str in Anchor.FromBase64String(pars.GetValue("ProtectedRegistryValues", "reg_sz:")).Split(new Char[] { '\0' }))
                 {
                     if (!String.IsNullOrEmpty(str))
                         _ProtectedRegistryValues.Add(str);
@@ -380,7 +383,12 @@ namespace ARM2_dbcontrol.Tasks
             }
         }
 
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
-        
+        #endregion
     }
 }

@@ -2,17 +2,35 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using VirusBlokAda.CC.Common.Xml;
 
 namespace ARM2_dbcontrol.Tasks
 {
-    public class TaskConfigureAgent
+    public class TaskConfigureAgent : IConfigureTask
     {
+        #region Fields
+
+        public const String TaskType = "ConfigureAgent";
+        private String _Vba32CCUser;
         private String _configFile = String.Empty;
+
+        #endregion
+
+        #region Properties
+
         public String ConfigFile
         {
             get { return _configFile; }
             set { _configFile = value; }
         }
+
+        public String Vba32CCUser
+        {
+            get { return _Vba32CCUser; }
+            set { _Vba32CCUser = value; }
+        }
+
+        #endregion
 
         #region Constructors
         public TaskConfigureAgent()
@@ -23,27 +41,7 @@ namespace ARM2_dbcontrol.Tasks
             _configFile = configFile;
         }
         #endregion
-
-        /// <summary>
-        /// Get XML for agent
-        /// </summary>
-        /// <returns></returns>
-        public String BuildTask()
-        {
-            StringBuilder result = new StringBuilder(256);
-            String[] args = new String[3];
-            if (!ParseConfigFile(ConfigFile, ref args))
-                throw new Exception("Config file isn't valid.");
-            result.Append("<ConfigureWithServer>");
-            result.AppendFormat(@"<Server>{0}</Server>", args[0]);
-            result.AppendFormat(@"<PublicKey>{0}</PublicKey>", args[1]);
-            if (!String.IsNullOrEmpty(args[2]))
-                result.AppendFormat(@"<ServerMask>{0}</ServerMask>", args[2]);
-            result.Append(@"</ConfigureWithServer>");
-
-            return result.ToString();
-        }
-
+        
         /// <summary>
         /// Parse config file
         /// </summary>
@@ -97,5 +95,54 @@ namespace ARM2_dbcontrol.Tasks
 
             return true;
         }
+
+        #region IConfigureTask Members
+
+        public String SaveToXml()
+        {
+            XmlBuilder xml = new XmlBuilder("ConfigureAgent");
+            xml.Top = String.Empty;
+            xml.AddNode("Vba32CCUser", Vba32CCUser);
+            xml.AddNode("Type", TaskType);
+            String path = String.Format(@"<{0}>{1}</{0}>", "ConfigPath", ConfigFile);
+            xml.AddNode("Content", path + GetTask());
+            xml.Generate();
+
+            return xml.Result;
+        }
+
+        public void LoadFromXml(String xml)
+        {
+            XmlTaskParser parser = new XmlTaskParser(xml);
+
+            ConfigFile = parser.GetXmlTagContent("ConfigPath");
+        }
+
+        public void LoadFromRegistry(String reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get XML for agent
+        /// </summary>
+        /// <returns></returns>
+        public String GetTask()
+        {
+            StringBuilder result = new StringBuilder(256);
+            String[] args = new String[3];
+            if (!ParseConfigFile(ConfigFile, ref args))
+                throw new Exception("Config file isn't valid.");
+            result.Append("<ConfigureWithServer>");
+            result.AppendFormat(@"<Server>{0}</Server>", args[0]);
+            result.AppendFormat(@"<PublicKey>{0}</PublicKey>", args[1]);
+            if (!String.IsNullOrEmpty(args[2]))
+                result.AppendFormat(@"<ServerMask>{0}</ServerMask>", args[2]);
+            result.Append(@"</ConfigureWithServer>");
+
+            return result.ToString();
+        }
+
+        #endregion
     }
 }

@@ -7,6 +7,7 @@ using System.Web;
 using System.Xml.Schema;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using VirusBlokAda.CC.Common;
 
 namespace VirusBlokAda.CC.RemoteOperations.MsiInfo
 {
@@ -228,24 +229,14 @@ namespace VirusBlokAda.CC.RemoteOperations.MsiInfo
         {
             if (String.IsNullOrEmpty(fileName))
                 return String.Empty;
-            String path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Installs\" + fileName);;
-            using (MD5 md5 = MD5.Create())
+
+            String result = String.Empty;
+            String path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Installs\" + fileName); ;
+            using (FileStream stream = File.OpenRead(path))
             {
-                Byte[] hash;
-                using (FileStream stream = File.OpenRead(path))
-                {
-                    hash = md5.ComputeHash(stream);
-                }
-
-                if (hash == null) 
-                    return String.Empty;
-
-                StringBuilder sBuilder = new StringBuilder();
-                for (Int32 i = 0; i < hash.Length; i++)
-                    sBuilder.Append(hash[i].ToString("x2"));
-
-                return sBuilder.ToString().ToUpper();
+                result = Anchor.GetMd5Hash(stream);
             }
+            return result;
         }
 
         /// <summary>

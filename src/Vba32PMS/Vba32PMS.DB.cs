@@ -6,9 +6,8 @@ using System.Diagnostics;
 using System.Data.SqlClient;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
-using Vba32.ControlCenter.PeriodicalMaintenanceService.DataBase;
-using Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment;
-using Vba32.ControlCenter.PeriodicalMaintenanceService.TaskAssignment.DataBase;
+using VirusBlokAda.CC.DataBase;
+using ARM2_dbcontrol.Service.TaskAssignment;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {
@@ -100,7 +99,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             {
                 using (VlslVConnection conn = new VlslVConnection(connStr))
                 {
-                    EventsManager db = new EventsManager(conn);
+                    TaskManager db = new TaskManager(conn);
                     conn.OpenConnection();
                     conn.CheckConnectionState(true);
 
@@ -186,7 +185,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             {
                 using (VlslVConnection conn = new VlslVConnection(connStr))
                 {
-                    EventsManager db = new EventsManager(conn);
+                    TaskManager db = new TaskManager(conn);
                     conn.OpenConnection();
                     conn.CheckConnectionState(true);
 
@@ -227,7 +226,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             {
                 using (VlslVConnection conn = new VlslVConnection(connStr))
                 {
-                    EventsManager db = new EventsManager(conn);
+                    ComputersManager db = new ComputersManager(conn);
                     conn.OpenConnection();
                     conn.CheckConnectionState(true);
 
@@ -256,7 +255,17 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
            
             try
             {
-                EventsManager.ShrinkDataBase(connStr, 10);
+                using (VlslVConnection conn = new VlslVConnection(connStr))
+                {
+                    DataBaseManager db = new DataBaseManager(conn);
+                    conn.OpenConnection();
+                    conn.CheckConnectionState(true);
+
+                    //Вызов соответствующей хранимой процедуры
+                    db.ShrinkDataBase(10);
+
+                    conn.CloseConnection();
+                }
             }
             catch (Exception ex)
             {
