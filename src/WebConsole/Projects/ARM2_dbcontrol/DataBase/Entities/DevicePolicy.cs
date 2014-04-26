@@ -6,15 +6,13 @@ using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
-
     public struct DevicePolicy
     {
-
         #region Property
 
-        private int _id;
+        private Int32 _id;
 
-        public int ID
+        public Int32 ID
         {
             get { return _id; }
             set { _id = value; }
@@ -48,17 +46,17 @@ namespace VirusBlokAda.CC.DataBase
             set { _state = value; }
         }
 
-        #endregion
-
         private DateTime? _latestInsert;
         public DateTime? LatestInsert
         {
             get { return _latestInsert; }
-            set { _latestInsert = value;}
+            set { _latestInsert = value; }
         }
 
+        #endregion
+
         public DevicePolicy(Device device, ComputersEntity computer,
-            DevicePolicyState type, int id)
+            DevicePolicyState type, Int32 id)
         {
             _device = device;
             _computer = computer;
@@ -70,17 +68,11 @@ namespace VirusBlokAda.CC.DataBase
         public DevicePolicy(Device device, ComputersEntity computer,
            DevicePolicyState type):this(device,computer,type,0)
         {
-
         }
 
         public DevicePolicy(Device device, ComputersEntity computer)
             : this(device, computer,DevicePolicyState.Undefined)
         {
-
         }
-
-
-        
-
     }
 }

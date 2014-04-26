@@ -8,17 +8,17 @@ namespace VirusBlokAda.CC.DataBase
 {
     public struct Device
     {
-        private int _id;
+        private Int32 _id;
 
-        public int ID
+        public Int32 ID
         {
             get { return _id; }
             set { _id = value; }
         }
 
-        private string _serialNo;
+        private String _serialNo;
 
-        public string SerialNo
+        public String SerialNo
         {
             get { return _serialNo; }
             set { _serialNo = value; }
@@ -32,17 +32,17 @@ namespace VirusBlokAda.CC.DataBase
             set { _type = value; }
         }
 
-        private string _comment;
+        private String _comment;
 
-        public string Comment
+        public String Comment
         {
             get { return _comment; }
             set { _comment = value; }
         }
 
-        private string _lastComputer;
+        private String _lastComputer;
 
-        public string LastComputer
+        public String LastComputer
         {
             get { return _lastComputer; }
             set { _lastComputer = value; }
@@ -58,22 +58,22 @@ namespace VirusBlokAda.CC.DataBase
 
         #region Constructions
 
-        public Device(string serialNo)
+        public Device(String serialNo)
             :this(0,serialNo,DeviceType.USB)
         { 
         }
 
-        public Device(string serialNo, DeviceType type)
+        public Device(String serialNo, DeviceType type)
             : this(0, serialNo, type)
         {
         }
 
-        public Device(int id, string serialNo, DeviceType type):
+        public Device(Int32 id, String serialNo, DeviceType type):
             this(id, serialNo, type,"")
         {
         }
 
-        public Device(int id, string serialNo, DeviceType type, string comment):
+        public Device(Int32 id, String serialNo, DeviceType type, String comment):
             this(id, serialNo, type, comment, DateTime.MinValue, "")
         {
             _id = id;
@@ -82,7 +82,7 @@ namespace VirusBlokAda.CC.DataBase
             _comment = comment;
         }
 
-        public Device(int id, string serialNo, DeviceType type, string comment, DateTime? lastInserted, string computerName)
+        public Device(Int32 id, String serialNo, DeviceType type, String comment, DateTime? lastInserted, String computerName)
         {
             _id = id;
             _serialNo = serialNo;
@@ -93,9 +93,5 @@ namespace VirusBlokAda.CC.DataBase
         }
 
         #endregion
-
-        
-
-
     }
 }

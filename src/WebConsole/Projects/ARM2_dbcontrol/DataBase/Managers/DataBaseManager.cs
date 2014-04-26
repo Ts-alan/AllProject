@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class DataBaseManager
+    internal sealed class DataBaseManager
     {
-        VlslVConnection database;
+        private VlslVConnection database;
 
         #region Constructors
         public DataBaseManager()
@@ -30,9 +30,8 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="database name">name</param>
         /// <returns>DataBaseEntity</returns>
-        public DataBaseEntity Get(string dbName)
+        internal DataBaseEntity Get(String dbName)
         {
-            database.OpenConnection();
             IDbCommand command = database.CreateCommand(String.Format("sp_helpfile '{0}'", dbName), false);
 
             DataBaseEntity db = new DataBaseEntity();
@@ -59,14 +58,9 @@ namespace VirusBlokAda.CC.DataBase
         /// —жатие базы данных
         /// </summary>
         /// <param name="targetPercent">Is the desired percentage of free space left in the database file after the database has been shrunk</param>
-        public void ShrinkDataBase(Int32 targetPercent)
+        internal void ShrinkDataBase(Int32 targetPercent)
         {
-            //Logger.Warning("ShrinkDataBase():: непроверенный функционал!");
-            database.OpenConnection();
-            System.Text.StringBuilder query = new System.Text.StringBuilder(64);
-            query.AppendFormat("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent);
-
-            IDbCommand command = database.CreateCommand(query.ToString(), false);
+            IDbCommand command = database.CreateCommand(String.Format("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent.ToString()), false);
             command.ExecuteScalar();
         }
 

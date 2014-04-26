@@ -6,21 +6,16 @@ using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    internal class DeviceManager
+    internal sealed class DeviceManager
     {
+        private VlslVConnection database;
 
-        private SqlConnection _connection;
-
-        public SqlConnection Connection
+        public DeviceManager(VlslVConnection conn)
         {
-            get { return _connection; }
-            set { _connection = value; }
+            database = conn;
         }
 
-        public DeviceManager(SqlConnection conn)
-        {
-            _connection = conn;
-        }
+        #region Methods
 
         /// <summary>
         /// Add new device to db 
@@ -29,37 +24,40 @@ namespace VirusBlokAda.CC.DataBase
         internal Device Add(Device device)
         {
             //query to db
-            SqlCommand command = new SqlCommand("GetDeviceID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDeviceID", true);
 
-            command.Parameters.AddWithValue("@SerialNo", device.SerialNo);
-            command.Parameters.AddWithValue("@Type", device.Type);
-            command.Parameters.AddWithValue("@Comment", device.Comment);
-            command.Parameters.AddWithValue("@InsertIfNotExists", 1);
+            database.AddCommandParameter(command, "@SerialNo",
+                DbType.String, device.SerialNo, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Type",
+                DbType.Int16, device.Type, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Comment",
+                DbType.String, device.Comment, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@InsertIfNotExists",
+                DbType.Byte, 1, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             if (reader.Read())
                 device.ID = reader.GetInt16(0);
             reader.Close();
 
-
-
-            Console.WriteLine("Query to DB from DevicePolicy.Add() args: deviceID={0} ", device.SerialNo);
-
             return device;
         }
 
+        /// <summary>
+        /// Update device
+        /// </summary>
+        /// <param name="device">New device version</param>
+        /// <returns>Updated device</returns>
         internal Device Edit(Device device)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("UpdateDevice", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("UpdateDevice", true);
 
-            command.Parameters.AddWithValue("@ID", device.ID);
-            command.Parameters.AddWithValue("@Comment", device.Comment);
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, device.ID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Comment",
+                DbType.String, device.Comment, ParameterDirection.Input);
 
             command.ExecuteScalar();
-
 
             return device;
         }
@@ -67,25 +65,30 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
         /// Remove device with this id from db
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="device">Device</param>
         internal void Delete(Device device)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("DeleteDevice", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@ID", device.ID);
-            command.ExecuteNonQuery();
+            IDbCommand command = database.CreateCommand("DeleteDevice", true);
 
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, device.ID, ParameterDirection.Input);
+
+            command.ExecuteNonQuery();
         }
 
-        internal Device GetDevice(int id)
+        /// <summary>
+        /// Get device by ID
+        /// </summary>
+        /// <param name="id">Device ID</param>
+        /// <returns>Device entity</returns>
+        internal Device GetDevice(Int32 id)
         {
-            SqlCommand command = new SqlCommand("GetDeviceByID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDeviceByID", true);
 
-            command.Parameters.AddWithValue("@ID", id);
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, id, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Device device = new Device();
             if (reader.Read())
             {
@@ -103,114 +106,114 @@ namespace VirusBlokAda.CC.DataBase
             return device;
         }
 
-        internal int GetDevicesCount(string where)
+        /// <summary>
+        /// Get device count by filter
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Device count</returns>
+        internal Int32 GetDevicesCount(String where)
         {
-            SqlCommand command = new SqlCommand("GetDevicesPageCount", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDevicesPageCount", true);
 
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-            return (int)command.ExecuteScalar();
+            return (Int32)command.ExecuteScalar();
         }
 
-        internal List<Device> GetDevicesList(int index, int pageCount,
-            string where, string orderBy)
+        /// <summary>
+        /// Get page of devices
+        /// </summary>
+        /// <param name="index">Page index</param>
+        /// <param name="pageCount">Page size</param>
+        /// <param name="where">Filter query</param>
+        /// <param name="orderBy">Sort query</param>
+        /// <returns></returns>
+        internal List<Device> GetDevicesList(Int32 index, Int32 pageCount, String where, String orderBy)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("GetDevicesPage", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDevicesPage", true);
 
-            command.Parameters.AddWithValue("@Page", index);
-            command.Parameters.AddWithValue("@RowCount", pageCount);
-            command.Parameters.AddWithValue("@OrderBy", orderBy);
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Page",
+                DbType.Int32, index, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@RowCount",
+                DbType.Int32, pageCount, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@OrderBy",
+                DbType.String, orderBy, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             List<Device> devices = new List<Device>();
             while (reader.Read())
             {
-                try
-                {
-                    Device device = new Device();
+                Device device = new Device();
 
-                    if (reader.GetValue(0) != DBNull.Value)
-                        device.ID = reader.GetInt16(0);
-                    if (reader.GetValue(1) != DBNull.Value)
-                        device.SerialNo = reader.GetString(1);
+                if (reader.GetValue(0) != DBNull.Value)
+                    device.ID = reader.GetInt16(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    device.SerialNo = reader.GetString(1);
 
-                    if (reader.GetValue(2) != DBNull.Value)
-                        device.Comment = reader.GetString(2);
+                if (reader.GetValue(2) != DBNull.Value)
+                    device.Comment = reader.GetString(2);
 
-                    devices.Add(device);
-                }
-                catch
-                {
-                }
+                devices.Add(device);
             }
+
             reader.Close();
 
             return devices;
-
         }
-        internal Int32 GetDeviceCount(string where)
+
+        /// <summary>
+        /// Get device count by filter
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Device count</returns>
+        internal Int32 GetDeviceCount(String where)
         {
-            SqlCommand command = new SqlCommand("GetCountDevices", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetCountDevices", true);
 
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Int32 count = 0;
             if (reader.Read())
             {
-                try
-                {
-                    if (reader.GetValue(0) != DBNull.Value)
-                        count = reader.GetInt32(0);
-                }
-                catch {}
+                if (reader.GetValue(0) != DBNull.Value)
+                    count = reader.GetInt32(0);
             }
             reader.Close();
 
             return count;
         }
 
-       
-       /* /// <summary>
-        /// Get Device by its ID
+        /// <summary>
+        /// Get device by serialNo
         /// </summary>
-        /// <param name="serial"></param>
-        /// <returns></returns>
-        internal Device GetDeviceBySerial(string serial)
+        /// <param name="serial">SerialNo</param>
+        /// <returns>Device entity</returns>
+        internal Device GetDeviceBySerial(String serial)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("GetDeviceBySerial", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDeviceBySerial", true);
 
-            command.Parameters.AddWithValue("@SerialNo", serial);
+            database.AddCommandParameter(command, "@SerialNo",
+                DbType.String, serial, ParameterDirection.Input);
 
-
-
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Device device = new Device();
             if (reader.Read())
             {
-                
-
                 device.ID = reader.GetInt16(0);
                 device.SerialNo = reader.GetString(1);
-                device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                    reader.GetString(2));
+                device.Type = DeviceTypeExtensions.Get(reader.GetString(2));
                 device.Comment = reader.GetString(3);
-
             }
             reader.Close();
 
             return device;
-
         }
-        */
-
+        
+        #endregion
     }
 }

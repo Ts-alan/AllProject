@@ -5,17 +5,11 @@ using System.Data;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class ScanningObjectManager
+    internal sealed class ScanningObjectManager
     {
-        VlslVConnection database; 
+        private VlslVConnection database; 
 		
 		#region Constructors
-		public ScanningObjectManager()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
         public ScanningObjectManager(VlslVConnection l_database)
 		{
 			database=l_database;
@@ -27,7 +21,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
         /// Add comment in database
         /// </summary>
-        public void AddComment(ScanningObjectEntity entity)
+        internal void AddComment(ScanningObjectEntity entity)
         {
             IDbCommand command = database.CreateCommand("AddCommentByIP", true);
 
@@ -43,7 +37,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
         /// Delete comment in database
         /// </summary>
-        public void DeleteComment(String ip)
+        internal void DeleteComment(String ip)
         {
             IDbCommand command = database.CreateCommand("DeleteCommentByIP", true);
 
@@ -58,7 +52,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public String GetComment(String ip)
+        internal String GetComment(String ip)
         {
             IDbCommand command = database.CreateCommand("GetCommentByIP", true);
 

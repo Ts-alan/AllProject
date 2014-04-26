@@ -9,9 +9,6 @@ namespace VirusBlokAda.CC.DataBase
         private readonly String connectionString;
         private ComponentsManager cmptMngr;
 
-        public ComponentsProvider()
-        { }
-
         public ComponentsProvider(String connectionString)
         {
             this.connectionString = connectionString;

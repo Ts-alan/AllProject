@@ -8,11 +8,11 @@ namespace VirusBlokAda.CC.DataBase
     /// <summary>
     /// Class to connect to database
     /// </summary>
-    public class VlslVConnection : IDisposable
+    internal sealed class VlslVConnection : IDisposable
     {
         private SqlConnection vlslvConnect;
         private IDbTransaction vlslvTransaction;
-        private static string connectionString;
+        private static String connectionString;
 
         public VlslVConnection()
         {
@@ -20,12 +20,12 @@ namespace VirusBlokAda.CC.DataBase
             // TODO: Add constructor logic here
             //
         }
-        public VlslVConnection(string connStr)
+        public VlslVConnection(String connStr)
         {
             vlslvConnect = CreateConnection(connStr);
         }
 
-        private static SqlConnection CreateConnection(string connStr)
+        private static SqlConnection CreateConnection(String connStr)
         {
             connectionString = connStr;
             return new System.Data.SqlClient.SqlConnection(connectionString);
@@ -55,7 +55,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Check connection state
         /// </summary>
         /// <param name="isOpen">State</param>
-        public void CheckConnectionState(bool isOpen)
+        public void CheckConnectionState(Boolean isOpen)
         {
             if (isOpen)
             {
@@ -78,8 +78,8 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="paramValue">Value of parameter</param>
         /// <param name="direction">Direction of parameter</param>
         /// <returns>Return newly created object of command parameter</returns>
-        public IDbDataParameter AddCommandParameter(IDbCommand cmd, string paramName,
-            DbType dbType, object paramValue, ParameterDirection direction)
+        public IDbDataParameter AddCommandParameter(IDbCommand cmd, String paramName,
+            DbType dbType, Object paramValue, ParameterDirection direction)
         {
             CheckConnectionState(true);
             IDbDataParameter parameter = cmd.CreateParameter();
@@ -116,7 +116,7 @@ namespace VirusBlokAda.CC.DataBase
                     case DbType.StringFixedLength:
                         {
                             parameter.Value =
-                                (string)paramValue == null ? DBNull.Value : paramValue;
+                                (String)paramValue == null ? DBNull.Value : paramValue;
                             break;
                         }
                     case DbType.Decimal:
@@ -135,7 +135,7 @@ namespace VirusBlokAda.CC.DataBase
                     case DbType.Boolean:
                         {
                             if (paramValue == null) parameter.Value = SqlBoolean.Null;
-                            else parameter.Value = new SqlBoolean((bool)paramValue);
+                            else parameter.Value = new SqlBoolean((Boolean)paramValue);
 
                             break;
                         }
@@ -185,7 +185,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="commandText">text of command</param>
         /// <param name="isStoredProc">true is stored procedure</param>
         /// <returns>Returns newly created command command objecty</returns>
-        public IDbCommand CreateCommand(string commandText, bool isStoredProc)
+        public IDbCommand CreateCommand(String commandText, Boolean isStoredProc)
         {
             CheckConnectionState(true);
 
@@ -218,7 +218,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Support to check transaction state...
         /// </summary>
         /// <param name="isOpen">State to check</param>
-        public void CheckTransactionState(bool isOpen)
+        public void CheckTransactionState(Boolean isOpen)
         {
             if (isOpen)
             {

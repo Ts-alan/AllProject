@@ -6,14 +6,11 @@ using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class TemporaryGroupManager
+    internal sealed class TemporaryGroupManager
     {
-        VlslVConnection database; 
+        private VlslVConnection database; 
 		
 		#region Constructors
-		public TemporaryGroupManager()
-		{
-		}
         public TemporaryGroupManager(VlslVConnection l_database)
 		{
 			database=l_database;
@@ -22,7 +19,13 @@ namespace VirusBlokAda.CC.DataBase
 		
 		#region Methods
 
-        public List<String> GetComputerNameList(String type, String where)
+        /// <summary>
+        /// Get computer name list by type
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
+        internal List<String> GetComputerNameList(String type, String where)
         {            
             switch (type)
             {
@@ -41,6 +44,11 @@ namespace VirusBlokAda.CC.DataBase
             return null;
         }
 
+        /// <summary>
+        /// Get computer name list from process
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromProcesses(String where)
 		{
             IDbCommand command = database.CreateCommand("GetComputerNameListFromProcesses", true);
@@ -60,6 +68,11 @@ namespace VirusBlokAda.CC.DataBase
 			return list;
 		}
 
+        /// <summary>
+        /// Get computer name list from event
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromEvents(String where)
         {
             IDbCommand command = database.CreateCommand("GetComputerNameListFromEvents", true);
@@ -79,6 +92,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
+        /// <summary>
+        /// Get computer name list from task
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromTasks(String where)
         {
             IDbCommand command = database.CreateCommand("GetComputerNameListFromTasks", true);
@@ -98,6 +116,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
+        /// <summary>
+        /// Get computer name list from component
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromComponents(String where)
         {
             IDbCommand command = database.CreateCommand("GetComputerNameListFromComponents", true);
@@ -117,6 +140,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
+        /// <summary>
+        /// Get computer name list from computer
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromComputers(String where)
         {
             IDbCommand command = database.CreateCommand("GetComputerNameListFromComputers", true);

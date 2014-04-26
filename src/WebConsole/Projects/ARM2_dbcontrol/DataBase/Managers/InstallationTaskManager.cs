@@ -7,17 +7,11 @@ using System.Collections.Generic;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class InstallationTaskManager
+    internal sealed class InstallationTaskManager
     {
-        VlslVConnection database; 
+        private VlslVConnection database; 
 		
 		#region Constructors
-		public InstallationTaskManager()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
         public InstallationTaskManager(VlslVConnection l_database)
 		{
 			database=l_database;
@@ -29,7 +23,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
 		/// Update task in database
 		/// </summary>
-		public void UpdateTask(InstallationTaskEntity task)
+        internal void UpdateTask(InstallationTaskEntity task)
 		{
             IDbCommand command = database.CreateCommand("UpdateInstallationTask", true);
 
@@ -51,7 +45,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
         /// Insert task in database
         /// </summary>
-        public Int64 InsertTask(InstallationTaskEntity task)
+        internal Int64 InsertTask(InstallationTaskEntity task)
         {
             IDbCommand command = database.CreateCommand("InsertInstallationTask", true);
 
@@ -79,8 +73,15 @@ namespace VirusBlokAda.CC.DataBase
             return Convert.ToInt64(command.ExecuteScalar());
         }
 
-
-        public List<InstallationTaskEntity> List(String where, String order, Int32 page, Int32 size)
+        /// <summary>
+        /// Get installation task page
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <param name="order">Sort query</param>
+        /// <param name="page">Page index</param>
+        /// <param name="size">Page size</param>
+        /// <returns></returns>
+        internal List<InstallationTaskEntity> List(String where, String order, Int32 page, Int32 size)
 		{
             IDbCommand command = database.CreateCommand("GetInstallationTasks", true);
 
@@ -129,19 +130,26 @@ namespace VirusBlokAda.CC.DataBase
 			
 		}
 
-		public Int32 Count(String where)
+        /// <summary>
+        /// Get installation task count
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Count of installation tasks</returns>
+        internal Int32 Count(String where)
 		{
-
             IDbCommand command = database.CreateCommand("GetInstallationTasksCount", true);
 
             database.AddCommandParameter(command, "@Where",
                 DbType.String, where, ParameterDirection.Input);
 
-
 			return (Int32)command.ExecuteScalar();
 		}
 
-        public List<String> GetTaskTypes()
+        /// <summary>
+        /// Get installation task type list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetTaskTypes()
         {
             IDbCommand command = database.CreateCommand("GetListInstallationTaskTypes", true);
 
@@ -157,7 +165,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-        public List<String> GetStatuses()
+        /// <summary>
+        /// Get installation task status list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetStatuses()
         {
             IDbCommand command = database.CreateCommand("GetListInstallationStatus", true);
 
@@ -173,7 +185,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-        public List<String> GetVba32Versions()
+        /// <summary>
+        /// Get Vba32 version list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetVba32Versions()
         {
             IDbCommand command = database.CreateCommand("GetListVba32Versions", true);
 
@@ -189,7 +205,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-        public List<String> GetComputerNames()
+        /// <summary>
+        /// Get computer name list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetComputerNames()
         {
             IDbCommand command = database.CreateCommand("GetListComputerNames", true);
 

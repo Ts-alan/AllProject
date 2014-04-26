@@ -4,63 +4,64 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using VirusBlokAda.CC.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    internal class DevicePolicyManager
+    internal sealed class DevicePolicyManager
     {
-        private SqlConnection _connection;
+        private VlslVConnection database;
 
-        public SqlConnection Connection
+        public DevicePolicyManager(VlslVConnection conn)
         {
-            get { return _connection; }
-            set { _connection = value; }
+            database = conn;
         }
 
+        #region Methods
 
-        public DevicePolicyManager(SqlConnection conn)
+        /// <summary>
+        /// Get policy to computer
+        /// </summary>
+        /// <param name="computerName">Computer name</param>
+        /// <returns>Policy string</returns>
+        internal String GetPolicyToComputer(String computerName)
         {
-            _connection = conn;
-        }
-
-        internal string GetPolicyToComputer(string computerName)
-        {
-
-            List<DevicePolicy> policies =
-                GetDeviceEntitiesFromComputer(computerName);
+            List<DevicePolicy> policies = GetDeviceEntitiesFromComputer(computerName);
 
             return ConvertDeviceEntitiesToPolicy(policies);
         }
 
+        /// <summary>
+        /// Add device policy
+        /// </summary>
+        /// <param name="devicePolicy">New device policy entity</param>
         internal void Add(DevicePolicy devicePolicy)
         {
+            IDbCommand command = database.CreateCommand("AddDevicePolicy", true);
 
-            //query to db
-           // try
-           // {
-                SqlCommand command = new SqlCommand("AddDevicePolicy", Connection);
-                command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@ComputerID",
+                DbType.Int16, devicePolicy.Computer.ID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int32, devicePolicy.Device.ID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, devicePolicy.State.ToString(), ParameterDirection.Input);
 
-                command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-                command.Parameters.AddWithValue("@DeviceID", devicePolicy.Device.ID);
-                command.Parameters.AddWithValue("@StateName", devicePolicy.State.ToString());
-
-                command.ExecuteScalar();
-            //}
-            //catch(Exception ex )
-            //{
-            //    System.Diagnostics.Debug.Write(ex);
-            //}
+            command.ExecuteScalar();
         }
 
-
-        internal DevicePolicy GetDevicePolicyByID(int id)
+        /// <summary>
+        /// Get device policy by ID
+        /// </summary>
+        /// <param name="id">Device policy ID</param>
+        /// <returns>Device policy entity</returns>
+        internal DevicePolicy GetDevicePolicyByID(Int32 id)
         {
-            SqlCommand command = new SqlCommand("GetDevicePolicyByID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDevicePolicyByID", true);
 
-            command.Parameters.AddWithValue("@ID", id);
-            SqlDataReader reader = command.ExecuteReader();
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, id, ParameterDirection.Input);
+
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             DevicePolicy dp = new DevicePolicy();
             if (reader.Read())
@@ -75,16 +76,14 @@ namespace VirusBlokAda.CC.DataBase
 
                 device.ID = reader.GetInt16(3);
 
-                dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                    reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
                 device.SerialNo = reader.GetString(5);
 
                 if (reader.GetValue(6) != DBNull.Value)
-                device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                    reader.GetString(6));
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
 
-            if (reader.GetValue(7) != DBNull.Value)
+                if (reader.GetValue(7) != DBNull.Value)
                     device.Comment = reader.GetString(7);
 
 
@@ -97,32 +96,48 @@ namespace VirusBlokAda.CC.DataBase
             return dp;
         }
 
-        internal void DeleteDevicePolicyByID(int id)
+        /// <summary>
+        /// Remove device policy by ID
+        /// </summary>
+        /// <param name="id">Device policy ID</param>
+        internal void DeleteDevicePolicyByID(Int32 id)
         {
+            IDbCommand command = database.CreateCommand("DeleteDevicePolicyByID", true);
 
-            SqlCommand command = new SqlCommand("DeleteDevicePolicyByID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, id, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@ID", id);
             command.ExecuteScalar();
         }
-        internal void RemoveDevicePolicyGroup(int devID,int groupID)
+
+        /// <summary>
+        /// Remove Device policy from group by device ID
+        /// </summary>
+        /// <param name="devID">Device ID</param>
+        /// <param name="groupID">Group ID</param>
+        internal void RemoveDevicePolicyGroup(Int32 devID,Int32 groupID)
         {
+            IDbCommand command = database.CreateCommand("RemoveDevicePolicyFromGroup", true);
 
-            SqlCommand command = new SqlCommand("RemoveDevicePolicyFromGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@GroupID",
+                DbType.Int32, groupID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int16, (Int16)devID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@GroupID", groupID);
-            command.Parameters.AddWithValue("@DeviceID",(Int16) devID);
             command.ExecuteScalar();
         }
-        internal void RemoveDevicePolicyWithoutGroup(int devID)
+
+        /// <summary>
+        /// Remove Device policy from without group by device ID
+        /// </summary>
+        /// <param name="devID">Device ID</param>
+        internal void RemoveDevicePolicyWithoutGroup(Int32 devID)
         {
+            IDbCommand command = database.CreateCommand("RemoveDevicePolicyFromWithoutGroup", true);
 
-            SqlCommand command = new SqlCommand("RemoveDevicePolicyFromWithoutGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int16, (Int16)devID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@DeviceID", (Int16)devID);
             command.ExecuteScalar();
         }
 
@@ -132,70 +147,61 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="computerName">Computer name</param>
         /// <param name="conn">Database connection</param>
         /// <returns></returns>
-        internal List<DevicePolicy>
-            GetDeviceEntitiesFromComputer(string computerName)
+        internal List<DevicePolicy> GetDeviceEntitiesFromComputer(String computerName)
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetDeviceEntitiesFromComputer", true);
 
-            SqlCommand command = new SqlCommand("GetDeviceEntitiesFromComputer", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@ComputerName",
+                DbType.String, computerName, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@ComputerName", computerName);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
-            try
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    DevicePolicy dp = new DevicePolicy();
+                DevicePolicy dp = new DevicePolicy();
 
-                    ComputersEntity comp = new ComputersEntity();
-                    Device device = new Device();
+                ComputersEntity comp = new ComputersEntity();
+                Device device = new Device();
 
-                    dp.ID = reader.GetInt32(0);
+                dp.ID = reader.GetInt32(0);
 
-                    comp.ID = reader.GetInt16(1);
-                    comp.ComputerName = reader.GetString(2);
+                comp.ID = reader.GetInt16(1);
+                comp.ComputerName = reader.GetString(2);
 
-                    device.ID = reader.GetInt16(3);
+                device.ID = reader.GetInt16(3);
 
-                    dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                                                              reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
-                    device.SerialNo = reader.GetString(5);
+                device.SerialNo = reader.GetString(5);
 
-                    if (reader.GetValue(6) != DBNull.Value)
-                        device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                                                              reader.GetString(6));
+                if (reader.GetValue(6) != DBNull.Value)
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
 
-                    if (reader.GetValue(7) != DBNull.Value)
-                        device.Comment = reader.GetString(7);
+                if (reader.GetValue(7) != DBNull.Value)
+                    device.Comment = reader.GetString(7);
 
-                    if (reader.GetValue(8) != DBNull.Value)
-                        dp.LatestInsert = reader.GetDateTime(8);
+                if (reader.GetValue(8) != DBNull.Value)
+                    dp.LatestInsert = reader.GetDateTime(8);
 
-                    dp.Computer = comp;
-                    dp.Device = device;
+                dp.Computer = comp;
+                dp.Device = device;
 
-                    devicePolicies.Add(dp);
+                devicePolicies.Add(dp);
 
-                }
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
 
             return devicePolicies;
         }
 
-        private string
-            ConvertDeviceEntitiesToPolicy(List<DevicePolicy> lists)
+        /// <summary>
+        /// Convert device policies to policy string
+        /// </summary>
+        /// <param name="lists">Device policy list</param>
+        /// <returns>Policy string</returns>
+        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> lists)
         {
-            //if (lists.Count == 0)
-            //    return "";
             StringBuilder policy = new StringBuilder(256);
             policy.Append("<Task>");
             policy.Append("<Content>");
@@ -209,14 +215,14 @@ namespace VirusBlokAda.CC.DataBase
             //Converting in internal driver format...
             foreach (DevicePolicy item in lists)
             {
-                string s = "";
+                String s = "";
                 switch (item.State)
                 {
                     case DevicePolicyState.Enabled:
-                        s = 'A' + GetHash(GetHash(item.Device.SerialNo)); 
+                        s = 'A' + Anchor.GetMd5Hash(Anchor.GetMd5Hash(item.Device.SerialNo)); 
                         break;
                     case DevicePolicyState.Disabled:
-                        s = 'D' + GetHash(item.Device.SerialNo);
+                        s = 'D' + Anchor.GetMd5Hash(item.Device.SerialNo);
                         break;
                     default:
                         continue;
@@ -242,24 +248,15 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("</Task>");
 
             return policy.ToString();
-
         }
 
-        private static string GetHash(string source)
-        {
-              MD5 md5Hasher = MD5.Create();
-                byte[] data = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(source));
-
-                StringBuilder sBuilder = new StringBuilder();
-                for (int i = 0; i < data.Length; i++)
-                    sBuilder.Append(data[i].ToString("x2"));
-
-            return sBuilder.ToString();
-        }
-
+        /// <summary>
+        /// Get computer list by device
+        /// </summary>
+        /// <param name="device">Device</param>
+        /// <returns>Computer list</returns>
         internal List<ComputersEntity> GetComputersByDevice(Device device)
         {
-
             List<DevicePolicy> deviceList = this.GetPoliciesByDevice(device);
 
             List<ComputersEntity> computers = new List<ComputersEntity>();
@@ -268,234 +265,213 @@ namespace VirusBlokAda.CC.DataBase
 
             return computers;
         }
-        #region new
+
         /// <summary>
         /// Return device policies to specific group
         /// </summary>
         /// <param name="groupID">Group ID</param>
         /// <param name="conn">Database connection</param>
         /// <returns></returns>
-        internal List<DevicePolicy>
-            GetDeviceEntitiesFromGroup(Int32 groupID)
+        internal List<DevicePolicy> GetDeviceEntitiesFromGroup(Int32 groupID)
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetDevicesPageForGroup", true);
 
-            SqlCommand command = new SqlCommand("GetDevicesPageForGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@GroupID",
+                DbType.Int32, groupID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@GroupID", groupID);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
-            try
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    DevicePolicy dp = new DevicePolicy();
+                DevicePolicy dp = new DevicePolicy();
 
-                    ComputersEntity comp = new ComputersEntity();
-                    Device device = new Device();
+                ComputersEntity comp = new ComputersEntity();
+                Device device = new Device();
 
-                    dp.ID = reader.GetInt32(0);
+                dp.ID = reader.GetInt32(0);
 
-                    comp.ID = reader.GetInt16(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        comp.ComputerName = reader.GetString(2);
+                comp.ID = reader.GetInt16(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    comp.ComputerName = reader.GetString(2);
 
-                    device.ID = reader.GetInt16(3);
+                device.ID = reader.GetInt16(3);
 
-                    dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                                                              reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
-                    device.SerialNo = reader.GetString(5);
+                device.SerialNo = reader.GetString(5);
 
-                    if (reader.GetValue(6) != DBNull.Value)
-                        device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                                                              reader.GetString(6));
+                if (reader.GetValue(6) != DBNull.Value)
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
 
-                    if (reader.GetValue(7) != DBNull.Value)
-                        device.Comment = reader.GetString(7);
+                if (reader.GetValue(7) != DBNull.Value)
+                    device.Comment = reader.GetString(7);
 
-                    if (reader.GetValue(8) != DBNull.Value)
-                        dp.LatestInsert = reader.GetDateTime(8);
-                    if (reader.GetValue(9) != DBNull.Value)
-                        device.LastComputer = reader.GetString(9);
+                if (reader.GetValue(8) != DBNull.Value)
+                    dp.LatestInsert = reader.GetDateTime(8);
+                if (reader.GetValue(9) != DBNull.Value)
+                    device.LastComputer = reader.GetString(9);
 
-                    dp.Computer = comp;
-                    dp.Device = device;
+                dp.Computer = comp;
+                dp.Device = device;
 
-                    devicePolicies.Add(dp);
+                devicePolicies.Add(dp);
 
-                }
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
 
             return devicePolicies;
         }
+       
         /// <summary>
         /// Return device policies without groups
         /// </summary>
         /// <param name="conn">Database connection</param>
         /// <returns></returns>
-        internal List<DevicePolicy>       GetDeviceEntitiesWithoutGroup()
+        internal List<DevicePolicy> GetDeviceEntitiesWithoutGroup()
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetDevicesPageWithoutGroup", true);
 
-            SqlCommand command = new SqlCommand("GetDevicesPageWithoutGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
-            try
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    DevicePolicy dp = new DevicePolicy();
+                DevicePolicy dp = new DevicePolicy();
 
-                    ComputersEntity comp = new ComputersEntity();
-                    Device device = new Device();
+                ComputersEntity comp = new ComputersEntity();
+                Device device = new Device();
 
-                    dp.ID = reader.GetInt32(0);
+                dp.ID = reader.GetInt32(0);
 
-                    comp.ID = reader.GetInt16(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        comp.ComputerName = reader.GetString(2);
+                comp.ID = reader.GetInt16(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    comp.ComputerName = reader.GetString(2);
 
-                    device.ID = reader.GetInt16(3);
+                device.ID = reader.GetInt16(3);
 
-                    dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                                                              reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
-                    device.SerialNo = reader.GetString(5);
+                device.SerialNo = reader.GetString(5);
 
-                    if (reader.GetValue(6) != DBNull.Value)
-                        device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                                                              reader.GetString(6));
+                if (reader.GetValue(6) != DBNull.Value)
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
 
-                    if (reader.GetValue(7) != DBNull.Value)
-                        device.Comment = reader.GetString(7);
+                if (reader.GetValue(7) != DBNull.Value)
+                    device.Comment = reader.GetString(7);
 
-                    if (reader.GetValue(8) != DBNull.Value)
-                        dp.LatestInsert = reader.GetDateTime(8);
+                if (reader.GetValue(8) != DBNull.Value)
+                    dp.LatestInsert = reader.GetDateTime(8);
 
-                    if (reader.GetValue(9) != DBNull.Value)
-                        device.LastComputer = reader.GetString(9);
+                if (reader.GetValue(9) != DBNull.Value)
+                    device.LastComputer = reader.GetString(9);
 
-                    dp.Computer = comp;
-                    dp.Device = device;
+                dp.Computer = comp;
+                dp.Device = device;
 
-                    devicePolicies.Add(dp);
+                devicePolicies.Add(dp);
 
-                }
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
 
             return devicePolicies;
         }
-
-        #endregion
-
-        #region Admin action at device policy
-
+        
+        /// <summary>
+        /// Change device policy status for all computers by device policy ID
+        /// </summary>
+        /// <param name="devicePolicy">Device entity</param>
         internal void ChangeDevicePolicyStatusForComputer(DevicePolicy devicePolicy)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("UpdateDevicePolicyStatusForComputer", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("UpdateDevicePolicyStatusForComputer", true);
 
-            //command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-            command.Parameters.AddWithValue("@ID", devicePolicy.ID);
-            command.Parameters.AddWithValue("@StateName", devicePolicy.State.ToString());
+            database.AddCommandParameter(command, "@ID",
+                DbType.Int32, devicePolicy.ID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, devicePolicy.State.ToString(), ParameterDirection.Input);
 
             command.ExecuteNonQuery();
         }
 
-
-        
-
-
+        /// <summary>
+        /// Change device policy status for computer
+        /// </summary>
+        /// <param name="deviceID">Device ID</param>
+        /// <param name="computerID">Computer ID</param>
+        /// <param name="state">New status</param>
         internal void ChangeDevicePolicyStatusForComputer(Int16 deviceID, Int16 computerID, String state)
         {
+            IDbCommand command = database.CreateCommand("UpdateDevicePolicyStatesToComputer", true);
 
-
-            //query to db
-            SqlCommand command = new SqlCommand("UpdateDevicePolicyStatesToComputer", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            //command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-            command.Parameters.AddWithValue("@DeviceID", deviceID);
-            command.Parameters.AddWithValue("@ComputerID", computerID);
-            command.Parameters.AddWithValue("@StateName", state);
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int16, deviceID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@ComputerID",
+                DbType.Int16, computerID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, state, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
-
-            Console.WriteLine("Query to DB from devicePolicy.ChangeDeviceStatusForComputer() args: Comp={0}, ID={1} State={2} ",
-                computerID, deviceID, state);
         }
 
-
-
-
-        internal void ChangeDevicePolicyStatusForGroup(Int16 deviceID,Int32 groupID,string state)
+        /// <summary>
+        /// Change device policy status for group
+        /// </summary>
+        /// <param name="deviceID">Device ID</param>
+        /// <param name="groupID">Group ID</param>
+        /// <param name="state">New status</param>
+        internal void ChangeDevicePolicyStatusForGroup(Int16 deviceID,Int32 groupID,String state)
         {
+            IDbCommand command = database.CreateCommand("UpdateDevicePolicyStatesToGroup", true);
 
-            //query to db
-            SqlCommand command = new SqlCommand("UpdateDevicePolicyStatesToGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            //command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-            command.Parameters.AddWithValue("@DeviceID", deviceID);
-            command.Parameters.AddWithValue("@GroupID", groupID);
-            command.Parameters.AddWithValue("@StateName", state);
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int16, deviceID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@GroupID",
+                DbType.Int32, groupID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, state, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
-
-            Console.WriteLine("Query to DB from devicePolicy.ChangeDeviceStatusForGroup()^ deviceID={0} groupID={1} State={2} ",
-                 deviceID,groupID,state);
         }
 
-        internal void ChangeDevicePolicyStatusToWithoutGroup(Int16 deviceID, string state)
+        /// <summary>
+        /// Change device policy status for without group
+        /// </summary>
+        /// <param name="deviceID">Device ID</param>
+        /// <param name="state">New status</param>
+        internal void ChangeDevicePolicyStatusToWithoutGroup(Int16 deviceID, String state)
         {
+            IDbCommand command = database.CreateCommand("UpdateDevicePolicyStatesToWithoutGroup", true);
 
-            //query to db
-            SqlCommand command = new SqlCommand("UpdateDevicePolicyStatesToWithoutGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            //command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-            command.Parameters.AddWithValue("@DeviceID", deviceID);
-            command.Parameters.AddWithValue("@StateName", state);
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int16, deviceID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, state, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
-
-            Console.WriteLine("Query to DB from devicePolicy.ChangeDeviceStatusToWithoutGroup()^ deviceID={0}  State={1} ",
-                 deviceID, state);
         }
-        #endregion
 
-        #region Statistics
-
-
-        internal List<DevicePolicy> GetDevicesPolicyPage(int index, int pageCount,
-            string where, string orderBy)
+        /// <summary>
+        /// Get device policy page
+        /// </summary>
+        /// <param name="index">Page index</param>
+        /// <param name="pageCount">Page size</param>
+        /// <param name="where">Filter query</param>
+        /// <param name="orderBy">Sort query</param>
+        /// <returns></returns>
+        internal List<DevicePolicy> GetDevicesPolicyPage(Int32 index, Int32 pageCount, String where, String orderBy)
         {
-            SqlCommand command = new SqlCommand("GetDevicesPolicyPage", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDevicesPolicyPage", true);
 
-            command.Parameters.AddWithValue("@Page", index);
-            command.Parameters.AddWithValue("@RowCount", pageCount);
-            command.Parameters.AddWithValue("@OrderBy", orderBy);
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Page",
+                DbType.Int32, index, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@RowCount",
+                DbType.Int32, pageCount, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@OrderBy",
+                DbType.String, orderBy, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
             while (reader.Read())
@@ -512,13 +488,11 @@ namespace VirusBlokAda.CC.DataBase
 
                 device.ID = reader.GetInt16(3);
 
-                dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                    reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
                 device.SerialNo = reader.GetString(5);
                 if (reader.GetValue(6) != DBNull.Value)
-                    device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                        reader.GetString(6));
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
                 if (reader.GetValue(7) != DBNull.Value)
                     device.Comment = reader.GetString(7);
 
@@ -536,27 +510,34 @@ namespace VirusBlokAda.CC.DataBase
             return devicePolicies;
         }
 
-
-        internal int GetDevicesPolicyPageCount(string where)
+        /// <summary>
+        /// Get device policy page count
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Count of device policy pages</returns>
+        internal Int32 GetDevicesPolicyPageCount(String where)
         {
-            SqlCommand command = new SqlCommand("GetDevicesPolicyPageCount", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetDevicesPolicyPageCount", true);
 
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-            return (int)command.ExecuteScalar();
-
+            return (Int32)command.ExecuteScalar();
         }
 
+        /// <summary>
+        /// Get policy list by device ID
+        /// </summary>
+        /// <param name="device">Device entity</param>
+        /// <returns>List of policies</returns>
         internal List<DevicePolicy> GetPoliciesByDevice(Device device)
         {
+            IDbCommand command = database.CreateCommand("GetPoliciesByDevice", true);
 
-            //query to db
-            SqlCommand command = new SqlCommand("GetPoliciesByDevice", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int32, device.ID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@DeviceID", device.ID);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
             while (reader.Read())
@@ -573,15 +554,13 @@ namespace VirusBlokAda.CC.DataBase
 
                 device.ID = reader.GetInt16(3);
 
-                dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                    reader.GetString(4));
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
 
                 device.SerialNo = reader.GetString(5);
 
                 if (reader.GetValue(6) != DBNull.Value)
-                    device.Type = (DeviceType)Enum.Parse(typeof(DeviceType),
-                    reader.GetString(6));
-                
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(6));
+
                 if (reader.GetValue(7) != DBNull.Value)
                     device.Comment = reader.GetString(7);
 
@@ -597,56 +576,44 @@ namespace VirusBlokAda.CC.DataBase
             reader.Close();
 
             return devicePolicies;
-
         }
 
-        #endregion
-
-        #region NEW
+        /// <summary>
+        /// Add device policy to computer
+        /// </summary>
+        /// <param name="devicePolicy">Device policy</param>
+        /// <returns></returns>
         internal DevicePolicy AddToComputer(DevicePolicy devicePolicy)
         {
-            SqlCommand command = new SqlCommand("AddDevicePolicyToComputer", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("AddDevicePolicyToComputer", true);
 
-            command.Parameters.AddWithValue("@ComputerID", devicePolicy.Computer.ID);
-            command.Parameters.AddWithValue("@SerialNo", devicePolicy.Device.SerialNo);
-            command.Parameters.AddWithValue("@StateName", devicePolicy.State.ToString());
+            database.AddCommandParameter(command, "@ComputerID",
+                DbType.Int16, devicePolicy.Computer.ID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@SerialNo",
+                DbType.String, devicePolicy.Device.SerialNo, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, devicePolicy.State.ToString(), ParameterDirection.Input);
 
             Device device = new Device();
             DevicePolicy dp = new DevicePolicy();
-            SqlDataReader reader = command.ExecuteReader();
-            try
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            if (reader.Read())
             {
-                if (reader.Read())
-                {
+                if (reader.GetValue(0) != DBNull.Value)
+                    device.ID = reader.GetInt16(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    device.SerialNo = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    device.Comment = reader.GetString(2);
 
-                    if (reader.GetValue(0) != DBNull.Value)
-                        device.ID = reader.GetInt16(0);
-                    if (reader.GetValue(1) != DBNull.Value)
-                        device.SerialNo = reader.GetString(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        device.Comment = reader.GetString(2);
-                    /*  String dpID="";*/
-                    decimal dpID = 0;
-                    try
-                    {
-                        if (reader.GetValue(3) != DBNull.Value)
-                            dpID = reader.GetDecimal(3);
-                        dp.ID = Convert.ToInt32(dpID);
-                        /*  dp.ID = reader.GetInt32(3);*/
-                    }
-                    catch (Exception e)
-                    { 
-                        
-                    }
-                    device.Type = DeviceType.USB;
-                }
+                Decimal dpID = 0;
+                if (reader.GetValue(3) != DBNull.Value)
+                    dpID = reader.GetDecimal(3);
+                dp.ID = Convert.ToInt32(dpID);
+
+                device.Type = DeviceType.USB;
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
 
             dp.Device = device;
             dp.Computer = devicePolicy.Computer;
@@ -654,114 +621,105 @@ namespace VirusBlokAda.CC.DataBase
 
             return dp;
         }
-        internal Device AddToGroup(int groupID,Device dev)
+
+        /// <summary>
+        /// Add device policy to group
+        /// </summary>
+        /// <param name="groupID">Group ID</param>
+        /// <param name="dev">Device</param>
+        /// <returns></returns>
+        internal Device AddToGroup(Int32 groupID, Device dev)
         {
-            SqlCommand command = new SqlCommand("AddDevicePolicyToGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@GroupID", groupID);
-            command.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-            command.Parameters.AddWithValue("@StateName", DevicePolicyState.Undefined.ToString());
+            IDbCommand command = database.CreateCommand("AddDevicePolicyToGroup", true);
+
+            database.AddCommandParameter(command, "@GroupID",
+                DbType.Int32, groupID, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@SerialNo",
+                DbType.String, dev.SerialNo, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, DevicePolicyState.Undefined.ToString(), ParameterDirection.Input);
+
             Device device = new Device();
-            SqlDataReader reader=null;
-
-            try
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            if (reader.Read())
             {
-                reader = command.ExecuteReader();
-                if (reader.Read())
-                {
+                if (reader.GetValue(0) != DBNull.Value)
+                    device.ID = reader.GetInt16(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    device.SerialNo = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    device.Comment = reader.GetString(2);
+                device.Type = DeviceType.USB;
+            }
+            reader.Close();
 
-                    if (reader.GetValue(0) != DBNull.Value)
-                        device.ID = reader.GetInt16(0);
-                    if (reader.GetValue(1) != DBNull.Value)
-                        device.SerialNo = reader.GetString(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        device.Comment = reader.GetString(2);
-                    device.Type = DeviceType.USB;
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
             return device;
         }
-        internal Device AddToWithoutGroup( Device dev)
+
+        /// <summary>
+        /// Add device policy to without group
+        /// </summary>
+        /// <param name="dev">Device</param>
+        /// <returns></returns>
+        internal Device AddToWithoutGroup(Device dev)
         {
-            SqlCommand command = new SqlCommand("AddDevicePolicyToWithoutGroup", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-            command.Parameters.AddWithValue("@StateName", DevicePolicyState.Undefined.ToString());
+            IDbCommand command = database.CreateCommand("AddDevicePolicyToWithoutGroup", true);
+
+            database.AddCommandParameter(command, "@SerialNo",
+                DbType.String, dev.SerialNo, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@StateName",
+                DbType.String, DevicePolicyState.Undefined.ToString(), ParameterDirection.Input);
             Device device = new Device();
-            SqlDataReader reader = null;
-
-            try
-            {
-                reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-
-                    if (reader.GetValue(0) != DBNull.Value)
-                        device.ID = reader.GetInt16(0);
-                    if (reader.GetValue(1) != DBNull.Value)
-                        device.SerialNo = reader.GetString(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        device.Comment = reader.GetString(2);
-                    device.Type = DeviceType.USB;
-                }
-            }
-            catch (Exception e)
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            if (reader.Read())
             {
 
+                if (reader.GetValue(0) != DBNull.Value)
+                    device.ID = reader.GetInt16(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    device.SerialNo = reader.GetString(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    device.Comment = reader.GetString(2);
+                device.Type = DeviceType.USB;
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
+
             return device;
         }
-        internal List<string> GetPolicyStates()
+
+        /// <summary>
+        /// Get list of policy states
+        /// </summary>
+        /// <returns>List of policy states</returns>
+        internal List<String> GetPolicyStates()
         {
+            IDbCommand command = database.CreateCommand("GetDevicePolicyStates", true);
 
-            SqlCommand command = new SqlCommand("GetDevicePolicyStates", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-            SqlDataReader reader = null;
-            List<string> policyStates = new List<string>();
-            try
+            List<String> policyStates = new List<String>();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            while (reader.Read())
             {
-                reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    if (reader.GetValue(0) != DBNull.Value)
-                        policyStates.Add(reader.GetString(0));
-                }
+                if (reader.GetValue(0) != DBNull.Value)
+                    policyStates.Add(reader.GetString(0));
+            }
+            reader.Close();
 
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
             return policyStates;
         }
+
+        /// <summary>
+        /// Get computer list by device ID
+        /// </summary>
+        /// <param name="device">Device</param>
+        /// <returns>Computer list</returns>
         internal List<DevicePolicy> GetComputerListByDeviceID(Device device)
         {
+            IDbCommand command = database.CreateCommand("GetComputerListByDeviceID", true);
 
-            //query to db
-            SqlCommand command = new SqlCommand("GetComputerListByDeviceID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@DeviceID",
+                DbType.Int32, device.ID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@DeviceID", device.ID);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
             while (reader.Read())
@@ -776,12 +734,7 @@ namespace VirusBlokAda.CC.DataBase
                 comp.ID = reader.GetInt16(1);
                 comp.ComputerName = reader.GetString(2);
 
-              
-
-                dp.State = (DevicePolicyState)Enum.Parse(typeof(DevicePolicyState),
-                    reader.GetString(3));
-
-
+                dp.State = DevicePolicyStateExtensions.Get(reader.GetString(3));
 
                 if (reader.GetValue(4) != DBNull.Value)
                     dp.LatestInsert = reader.GetDateTime(4);
@@ -792,7 +745,6 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     device.ID = reader.GetInt32(5);
                 }
-                
 
                 dp.Computer = comp;
                 dp.Device = device;
@@ -803,81 +755,85 @@ namespace VirusBlokAda.CC.DataBase
             reader.Close();
 
             return devicePolicies;
-
         }
-        internal List<DevicePolicy> GetUnknownDevicesList(int index, int pageCount,
-         string where, string orderBy)
+        
+        /// <summary>
+        /// Get unknown device page
+        /// </summary>
+        /// <param name="index">Page index</param>
+        /// <param name="pageCount">Page size</param>
+        /// <param name="where">Filter query</param>
+        /// <param name="orderBy">Sort query</param>
+        /// <returns></returns>
+        internal List<DevicePolicy> GetUnknownDevicesList(Int32 index, Int32 pageCount, String where, String orderBy)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("GetUnknownDevicesPage", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetUnknownDevicesPage", true);
 
-            command.Parameters.AddWithValue("@Page", index);
-            command.Parameters.AddWithValue("@RowCount", pageCount);
-            command.Parameters.AddWithValue("@OrderBy", orderBy);
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Page",
+                DbType.Int32, index, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@RowCount",
+                DbType.Int32, pageCount, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@OrderBy",
+                DbType.String, orderBy, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             List<DevicePolicy> devicePolicies = new List<DevicePolicy>();
             while (reader.Read())
             {
-                try
-                {
-                    DevicePolicy dp = new DevicePolicy();
-                    Device device = new Device();
-                    ComputersEntity comp = new ComputersEntity();
-                    
-                    if (reader.GetValue(0) != DBNull.Value)
-                        dp.ID = reader.GetInt32(0);
-                    if (reader.GetValue(1) != DBNull.Value)
-                        device.ID = reader.GetInt16(1);
-                    if (reader.GetValue(2) != DBNull.Value)
-                        device.SerialNo = reader.GetString(2);
+                DevicePolicy dp = new DevicePolicy();
+                Device device = new Device();
+                ComputersEntity comp = new ComputersEntity();
 
-                    if (reader.GetValue(3) != DBNull.Value)
-                        device.Comment = reader.GetString(3);
-                    if (reader.GetValue(4) != DBNull.Value)                    
-                        comp.ComputerName=reader.GetString(4);
-                    if (reader.GetValue(5) != DBNull.Value)
+                if (reader.GetValue(0) != DBNull.Value)
+                    dp.ID = reader.GetInt32(0);
+                if (reader.GetValue(1) != DBNull.Value)
+                    device.ID = reader.GetInt16(1);
+                if (reader.GetValue(2) != DBNull.Value)
+                    device.SerialNo = reader.GetString(2);
 
-                        dp.LatestInsert = reader.GetDateTime(5);
-                    dp.Device = device;
-                    dp.Computer = comp;
+                if (reader.GetValue(3) != DBNull.Value)
+                    device.Comment = reader.GetString(3);
+                if (reader.GetValue(4) != DBNull.Value)
+                    comp.ComputerName = reader.GetString(4);
+                if (reader.GetValue(5) != DBNull.Value)
 
-                    devicePolicies.Add(dp);
-                }
-                catch
-                {
-                }
+                    dp.LatestInsert = reader.GetDateTime(5);
+                dp.Device = device;
+                dp.Computer = comp;
+
+                devicePolicies.Add(dp);
             }
             reader.Close();
 
             return devicePolicies;
-
         }
-        internal Int32 GetUnknownDeviceCount(string where)
+
+        /// <summary>
+        /// Get unknown device count
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <returns>Count of unknown device</returns>
+        internal Int32 GetUnknownDeviceCount(String where)
         {
-            SqlCommand command = new SqlCommand("GetCountUnknownDevices", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetCountUnknownDevices", true);
 
-            command.Parameters.AddWithValue("@Where", where);
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Int32 count = 0;
             if (reader.Read())
             {
-                try
-                {
-                    if (reader.GetValue(0) != DBNull.Value)
-                        count = reader.GetInt32(0);
-                }
-                catch { }
+                if (reader.GetValue(0) != DBNull.Value)
+                    count = reader.GetInt32(0);
             }
             reader.Close();
 
             return count;
         }
-#endregion
+
+        #endregion
     }
 }

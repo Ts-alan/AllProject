@@ -16,35 +16,34 @@ namespace VirusBlokAda.CC.DataBase
     /// Limit - Порог-ограничитель событий
     /// TimeLimit - Временной порог-ограничитель событий
     /// </summary>
-    public class EventsFlowManager
+    internal sealed class EventsFlowManager
     {
-
         #region Local hearth property
-        private int _localHearthTimeLimit = 10;
+        private Int32 _localHearthTimeLimit = 10;
         /// <summary>
         /// Временной порог срабатывания на очаг
         /// </summary>
-        public int LocalHearthTimeLimit
+        public Int32 LocalHearthTimeLimit
         {
             get { return _localHearthTimeLimit; }
             set { _localHearthTimeLimit = value; }
         }
-        private int _localHearthLimit = 10;
+        private Int32 _localHearthLimit = 10;
         /// <summary>
         /// Порог срабатывания на очаг
         /// </summary>
-        public int LocalHearthLimit
+        public Int32 LocalHearthLimit
         {
             get { return _localHearthLimit; }
             set { _localHearthLimit = value; }
         }
 
-        private bool _isNeedSendLocalHearthWarning = false;
+        private Boolean _isNeedSendLocalHearthWarning = false;
         /// <summary>
         /// Сигнализирует о необходимости отсылки сообщения
         /// об очаге заражения
         /// </summary>
-        public bool IsNeedSendLocalHearthWarning
+        public Boolean IsNeedSendLocalHearthWarning
         {
             get { return _isNeedSendLocalHearthWarning; }
             set { _isNeedSendLocalHearthWarning = value; }
@@ -53,38 +52,38 @@ namespace VirusBlokAda.CC.DataBase
         #endregion
 
         #region Global epidemy property
-        private int _globalEpidemyTimeLimit = 10;
+        private Int32 _globalEpidemyTimeLimit = 10;
         /// <summary>
         /// Временной порог срабатывания глоб. эпидемии
         /// </summary>
-        public int GlobalEpidemyTimeLimit
+        public Int32 GlobalEpidemyTimeLimit
         {
             get { return _globalEpidemyTimeLimit; }
             set { _globalEpidemyTimeLimit = value; }
         }
-        private int _globalEpidemyLimit = 10;
+        private Int32 _globalEpidemyLimit = 10;
         /// <summary>
         /// Порог срабатывания глоб. эпидемии
         /// </summary>
-        public int GlobalEpidemyLimit
+        public Int32 GlobalEpidemyLimit
         {
             get { return _globalEpidemyLimit; }
             set { _globalEpidemyLimit = value; }
         }
 
-        private int _globalEpidemyCompCount = 5;
+        private Int32 _globalEpidemyCompCount = 5;
         /// <summary>
         /// Минимальное количество компов, удовлетворяющих критериям эпидемии
         /// </summary>
-        public int GlobalEpidemyCompCount
+        public Int32 GlobalEpidemyCompCount
         {
             get { return _globalEpidemyCompCount; }
             set { _globalEpidemyCompCount = value; }
         }
 
-        private string _epidemyCompList = "";
+        private String _epidemyCompList = "";
 
-        public string GlobalEpidemyCompList
+        public String GlobalEpidemyCompList
         {
             get { return _epidemyCompList; }
             set { _epidemyCompList = value; }
@@ -92,12 +91,12 @@ namespace VirusBlokAda.CC.DataBase
 
         
 
-        /*private bool _isNeedSendGlobalEpidemyWarning = false;
+        /*private Boolean _isNeedSendGlobalEpidemyWarning = false;
         /// <summary>
         /// Сигнализирует о необходимости послать уведомление 
         /// об эпидемии
         /// </summary>
-        public bool IsNeedSendGlobalEpidemyWarning
+        public Boolean IsNeedSendGlobalEpidemyWarning
         {
             get { return _isNeedSendGlobalEpidemyWarning; }
             set { _isNeedSendGlobalEpidemyWarning = value; }
@@ -108,21 +107,21 @@ namespace VirusBlokAda.CC.DataBase
 
         #region Other events
 
-        private int _limit = 10;
+        private Int32 _limit = 10;
         /// <summary>
         /// Порог блокировки
         /// </summary>
-        public int Limit
+        public Int32 Limit
         {
             get { return _limit; }
             set { _limit = value; }
         }
 
-        private int _timeLimit = 10;
+        private Int32 _timeLimit = 10;
         /// <summary>
         /// Временной порог
         /// </summary>
-        public int TimeLimit
+        public Int32 TimeLimit
         {
             get { return _timeLimit; }
             set { _timeLimit = value; }
@@ -130,81 +129,64 @@ namespace VirusBlokAda.CC.DataBase
 
         #endregion
 
+        private VlslVConnection database;
 
-        SqlConnection connection = null;
-
-
-        public EventsFlowManager(SqlConnection conn)
+        public EventsFlowManager(VlslVConnection conn)
         {
-            this.connection = conn;
+            this.database = conn;
         }
 
+        #region Methods
 
         /// <summary>
         /// Сигнализирует об очаге заражения
         /// </summary>
         /// <param name="currEvent"></param>
         /// <returns></returns>
-        public bool IsLocalHearth(EventsEntity currEvent)
+        internal Boolean IsLocalHearth(EventsEntity currEvent)
         {
-            int result = 0;
+            Int32 result = 0;
 
-            /*string query = "SELECT COUNT(*) FROM Events " +
-            "INNER JOIN Computers ON Computers.[ID]=Events.ComputerID " +
-            "INNER JOIN EventTypes ON EventTypes.[ID] = Events.[EventID] " +
-            "WHERE EventTime > @EventTime AND ComputerName = @ComputerName AND EventName = @EventName";
-            */
-            SqlCommand command = new SqlCommand("GetEventsCountByComputer", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@EventTime",
-                currEvent.EventTime.AddMinutes(0 - this.LocalHearthTimeLimit));
-            command.Parameters.AddWithValue("@ComputerName", currEvent.ComputerName);
-            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
+            IDbCommand command = database.CreateCommand("GetEventsCountByComputer", true);
 
-            result = (int)command.ExecuteScalar();
+            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.LocalHearthTimeLimit), ParameterDirection.Input);
+            database.AddCommandParameter(command, "@ComputerName", DbType.String, currEvent.ComputerName, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
+
+            result = (Int32)command.ExecuteScalar();
 
             this.IsNeedSendLocalHearthWarning = result == this.LocalHearthLimit;
             return result >= this.LocalHearthLimit;
         }
+        
         /// <summary>
         /// Сигнализирует об эпидемии
         /// Необходимо проверить еще на разность рабстанций
         /// </summary>
         /// <param name="currEvent"></param>
         /// <returns></returns>
-        public bool IsGlobalEpidemy(EventsEntity currEvent)
+        internal Boolean IsGlobalEpidemy(EventsEntity currEvent)
         {
-            System.Diagnostics.Debug.WriteLine("IsGlobalEpidemy called");
+            IDbCommand command = database.CreateCommand("GetEventsCountByComment", true);
 
-            /*string query = "SELECT ComputerName, Count(*) FROM Events " +
-            "INNER JOIN EventTypes ON EventTypes.[ID] = Events.[EventID] " +
-            "INNER JOIN Computers ON Computers.[ID] = Events.[ComputerID] " +
-            "WHERE EventTime > @EventTime AND Comment = @Comment AND EventName = @EventName "+
-            "GROUP BY ComputerName";*/
+            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit), ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Comment", DbType.String, currEvent.Comment, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
 
-            SqlCommand command = new SqlCommand("GetEventsCountByComment", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@EventTime",
-                currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit));
-            command.Parameters.AddWithValue("@Comment", currEvent.Comment);
-            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
-            //result = (int)command.ExecuteScalar();
-            SqlDataReader reader = command.ExecuteReader();
-
-            int sum = 0;
-            int compCount = 0;
+            Int32 sum = 0;
+            Int32 compCount = 0;
             while (reader.Read())
             {
-                int c = reader.GetInt32(1);
+                Int32 c = reader.GetInt32(1);
                 sum += c;
                 GlobalEpidemyCompList += String.Format("{0}({1}),", reader.GetString(0),c);
                 
                 compCount++;
             }
             reader.Close();
-            System.Diagnostics.Debug.WriteLine(String.Format("(compCount) {0} >= {1} (this.GlobalEpidemyCompCount); sum={2}. EpidemyLimit={3}",
-                compCount,GlobalEpidemyCompCount,sum,GlobalEpidemyLimit));
+            
             if (compCount >= this.GlobalEpidemyCompCount)
             {
                 return sum >= this.GlobalEpidemyLimit;
@@ -212,25 +194,22 @@ namespace VirusBlokAda.CC.DataBase
 
             return false;
         }
+        
         /// <summary>
         /// Определяет, находится ли поток уведомлений в допустимых пределах
         /// </summary>
         /// <param name="currEvent"></param>
         /// <returns></returns>
-        public bool FlowAnalysis(EventsEntity currEvent)
+        internal Boolean FlowAnalysis(EventsEntity currEvent)
         {
+            IDbCommand command = database.CreateCommand("GetEventsCountByName", true);
 
-            /*string query = "SELECT COUNT(*) FROM Events " +
-            "INNER JOIN EventTypes ON EventTypes.[ID] = Events.[EventID] " +
-            "WHERE EventTime > @EventTime AND EventName = @EventName";*/
+            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.TimeLimit), ParameterDirection.Input);
+            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
 
-            SqlCommand command = new SqlCommand("GetEventsCountByName", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@EventTime",
-                currEvent.EventTime.AddMinutes(0 - this.TimeLimit));
-            command.Parameters.AddWithValue("@EventName", currEvent.EventName);
-
-            return (int)command.ExecuteScalar() <= this.Limit;
+            return (Int32)command.ExecuteScalar() <= this.Limit;
         }
+
+        #endregion
     }
 }

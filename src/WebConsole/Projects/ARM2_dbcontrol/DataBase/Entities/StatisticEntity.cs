@@ -9,27 +9,27 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     public class StatisticEntity
     {
-        private string name = String.Empty;
-        private int count = Int32.MinValue;
+        private String name = String.Empty;
+        private Int32 count = Int32.MinValue;
 
         public StatisticEntity()
         {
 
         }
 
-        public StatisticEntity(string name, int count)
+        public StatisticEntity(String name, Int32 count)
         {
             this.name = name;
             this.count = count;
         }
 
-        public string Name
+        public String Name
         {
             get { return this.name; }
             set { this.name = value; }
         }
 
-        public int Count
+        public Int32 Count
         {
             get { return this.count; }
             set { this.count = value; }

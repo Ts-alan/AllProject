@@ -7,18 +7,11 @@ using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class GroupManager
+    internal sealed class GroupManager
     {
-        VlslVConnection database; 
+        private VlslVConnection database; 
 		
 		#region Constructors
-
-		public GroupManager()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
 
         public GroupManager(VlslVConnection l_database)
 		{
@@ -85,7 +78,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="where">where clause</param>
         /// <returns></returns>
-        public Int32 Count(String where)
+        internal Int32 Count(String where)
         {
             IDbCommand cmd = database.CreateCommand("GetListGroupsCount", true);
             database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
@@ -132,14 +125,13 @@ namespace VirusBlokAda.CC.DataBase
 
             cmd.ExecuteNonQuery();
         }
-
-                
+                        
         /// <summary>
         /// Get all computers by group
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        public List<String> GetAllComputersNameByGroup(Int32 groupID)
+        internal List<String> GetAllComputersNameByGroup(Int32 groupID)
         {
             List<String> list = new List<String>();
 
@@ -161,7 +153,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        public List<ComputersEntity> GetComputersByGroup(Int32 groupID)
+        internal List<ComputersEntity> GetComputersByGroup(Int32 groupID)
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
 
@@ -221,7 +213,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        public List<ComputersEntity> GetComputersByGroup(Int32 groupID, String where)
+        internal List<ComputersEntity> GetComputersByGroup(Int32 groupID, String where)
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
 
@@ -280,7 +272,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        public List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
+        internal List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
 
@@ -365,7 +357,6 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-
         /// <summary>
         /// Get subgroups types
         /// </summary>
@@ -397,8 +388,6 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-
-
         /// <summary>
         /// Get subgroups types
         /// </summary>
@@ -429,11 +418,12 @@ namespace VirusBlokAda.CC.DataBase
             reader.Close();
             return list;
         }
+        
         /// <summary>
         /// Get group types
         /// </summary>
         /// <returns></returns>
-        public List<GroupEx> List(String where, String order, Int32 page, Int32 size)
+        internal List<GroupEx> List(String where, String order, Int32 page, Int32 size)
         {
             List<GroupEx> list = new List<GroupEx>();
 
@@ -470,7 +460,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Get computers without group
         /// </summary>
         /// <returns></returns>
-        public List<ComputersEntity> GetComputersWithoutGroup()
+        internal List<ComputersEntity> GetComputersWithoutGroup()
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
             IDbCommand cmd = database.CreateCommand("GetComputersWithoutGroupPage", true);
@@ -525,7 +515,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Get computers without group
         /// </summary>
         /// <returns></returns>
-        public List<ComputersEntity> GetComputersWithoutGroup(String where)
+        internal List<ComputersEntity> GetComputersWithoutGroup(String where)
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
             IDbCommand cmd = database.CreateCommand("GetComputersWithoutGroupPageWithFilter", true);
@@ -581,7 +571,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Get computersEx without group
         /// </summary>
         /// <returns></returns>
-        public List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
+        internal List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
             IDbCommand cmd = database.CreateCommand("GetComputersExWithoutGroupPageWithFilter", true);
@@ -682,7 +672,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Get computers without group
         /// </summary>
         /// <returns></returns>
-        public List<ComputersEntity> GetComputersByGroupAndPolicy(Group? group, Policy? policy)
+        internal List<ComputersEntity> GetComputersByGroupAndPolicy(Group? group, Policy? policy)
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
             IDbCommand cmd = database.CreateCommand("GetComputersByGroupAndPolicy", true);
@@ -737,12 +727,11 @@ namespace VirusBlokAda.CC.DataBase
             return list;
         }
 
-
         /// <summary>
         /// Get group list by ComputerID
         /// </summary>
         /// <returns></returns>
-        public List<Group> GetGroupListByComputerID(Int16 compID)
+        internal List<Group> GetGroupListByComputerID(Int16 compID)
         {
             List<Group> list = new List<Group>();
             IDbCommand cmd = database.CreateCommand("GetGroupListByComputerID", true);

@@ -7,21 +7,16 @@ using Microsoft.Win32;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    internal class PolicyManager
+    internal sealed class PolicyManager
     {
+        private VlslVConnection database;
 
-        private SqlConnection _connection = null;
-
-        public SqlConnection Connection
+        public PolicyManager(VlslVConnection conn)
         {
-            get { return _connection; }
-            set { _connection = value; }
+            database = conn;
         }
 
-        public PolicyManager(SqlConnection conn)
-        {
-            _connection = conn;
-        }
+        #region Methods
 
         /// <summary>
         /// Add new policy to database
@@ -30,16 +25,14 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="content">Body of policy</param>
         internal Policy Add(Policy policy)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("GetPolicyID", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetPolicyID", true);
 
-            command.Parameters.AddWithValue("@TypeName", policy.Name);
-            command.Parameters.AddWithValue("@Params", policy.Content);
-            command.Parameters.AddWithValue("@Comment", policy.Comment);
-            command.Parameters.AddWithValue("@InsertIfNotExists", 1);
+            database.AddCommandParameter(command, "@TypeName", DbType.String, policy.Name, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@name", DbType.String, policy.Content, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Comment", DbType.String, policy.Comment, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@InsertIfNotExists", DbType.Byte, 1, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             if (reader.Read())
                 policy.ID = reader.GetInt16(0);
             reader.Close();
@@ -80,7 +73,7 @@ namespace VirusBlokAda.CC.DataBase
 
 
             command.ExecuteNonQuery();
-            
+
         }
 
         /// <summary>
@@ -100,8 +93,8 @@ namespace VirusBlokAda.CC.DataBase
             Policy policy = new Policy();
             try
             {
-                
-                
+
+
                 if (reader.Read())
                 {
                     policy.ID = reader.GetInt16(0);
@@ -124,13 +117,11 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="computers"></param>
-        internal void AddComputersToPolicy(Policy policy,
-            List<string> computers)
+        internal void AddComputersToPolicy(Policy policy,List<string> computers)
         {
 
             foreach (string compName in computers)
                 AddComputerToPolicy(policy, compName);
-
         }
 
         /// <summary>
@@ -170,8 +161,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Remove selected computers from policy
         /// </summary>
         /// <param name="computers"></param>
-        internal void
-            RemoveComputersFromPolicy(Policy policy, List<string> computers)
+        internal void RemoveComputersFromPolicy(Policy policy, List<string> computers)
         {
             foreach (string compName in computers)
                 RemoveComputerFromAllPolicies(compName);//Policy(compName);
@@ -193,7 +183,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             Policy policy = new Policy();
             policy.ID = 0;
-            RemoveComputerFromPolicy(policy,compName);
+            RemoveComputerFromPolicy(policy, compName);
         }
 
         internal List<ComputersEntity> GetComputersByPolicy(Policy policy)
@@ -224,8 +214,7 @@ namespace VirusBlokAda.CC.DataBase
         }
 
 
-        internal List<ComputersEntity> GetComputersByPolicyPage(int index, int pageCount,
-            string where, string orderBy)
+        internal List<ComputersEntity> GetComputersByPolicyPage(int index, int pageCount, string where, string orderBy)
         {
             //request to db
 
@@ -295,7 +284,7 @@ namespace VirusBlokAda.CC.DataBase
 
                 if (reader.GetValue(16) != DBNull.Value)
                     comp.Description = reader.GetString(16);
-                
+
                 if (reader.GetValue(17) != DBNull.Value)
                     comp.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
                 #endregion
@@ -308,7 +297,6 @@ namespace VirusBlokAda.CC.DataBase
             return computers;
         }
 
-
         internal int GetComputersByPolicyCount(string where)
         {
             //request to db
@@ -318,14 +306,13 @@ namespace VirusBlokAda.CC.DataBase
 
             command.Parameters.AddWithValue("@Where", where);
 
-            
-            return (int) command.ExecuteScalar();
+
+            return (int)command.ExecuteScalar();
 
         }
 
         //!OPTM - Шаблонный код. Нужно разбить отдельно парсинг IDataReader
-        internal List<ComputersEntity> GetComputersWithoutPolicyPage(int index, int pageCount,
-            string orderBy)
+        internal List<ComputersEntity> GetComputersWithoutPolicyPage(int index, int pageCount,string orderBy)
         {
             //request to db
 
@@ -427,7 +414,7 @@ namespace VirusBlokAda.CC.DataBase
             Policy policy = new Policy();
             try
             {
-                
+
                 if (reader.Read())
                 {
                     policy.ID = reader.GetInt16(0);
@@ -458,13 +445,13 @@ namespace VirusBlokAda.CC.DataBase
             RegistryKey key;
             //try
             //{
-                //!-OPTM Вынести такую проверку в App_Code и юзать один код
-                if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                    registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-                else
-                    registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
+            //!-OPTM Вынести такую проверку в App_Code и юзать один код
+            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
+                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
+            else
+                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
 
-                key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName); ;
+            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName); ;
 
             //}
             //catch (Exception ex)
@@ -479,7 +466,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             SqlCommand command = new SqlCommand("GetPolicyTypes", Connection);
             command.CommandType = CommandType.StoredProcedure;
-           
+
 
             SqlDataReader reader = command.ExecuteReader();
             List<Policy> policies = new List<Policy>();
@@ -506,6 +493,6 @@ namespace VirusBlokAda.CC.DataBase
 
             command.ExecuteNonQuery();
         }
-
+        #endregion
     }
 }

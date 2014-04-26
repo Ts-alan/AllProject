@@ -9,22 +9,16 @@ namespace VirusBlokAda.CC.DataBase
 	/// </summary>
 	public class EventsEntity : ICloneable
 	{
-				
-        //protected int iD = Int32.MinValue;
-		//protected short computerID = Int16.MinValue;
-		//protected short eventID = Int16.MinValue;
-        //protected short componentID = Int16.MinValue;
-
 		protected DateTime eventTime = DateTime.MinValue;	
-		protected string _object = String.Empty;
-		protected string comment = String.Empty;
+		protected String _object = String.Empty;
+		protected String comment = String.Empty;
 
-        protected string eventName = String.Empty;
-        protected string color = String.Empty;
-        protected string computerName = String.Empty;
-        protected string componentName = String.Empty;
-        protected string ipAddress = String.Empty;
-        protected string description = String.Empty;
+        protected String eventName = String.Empty;
+        protected String color = String.Empty;
+        protected String computerName = String.Empty;
+        protected String componentName = String.Empty;
+        protected String ipAddress = String.Empty;
+        protected String description = String.Empty;
 
 
 		//Default constructor
@@ -32,13 +26,9 @@ namespace VirusBlokAda.CC.DataBase
 		
 		//Constructor
 		public EventsEntity(
-            //int iD,
-            //short computerID,
-            //short eventID,
 			DateTime eventTime,
-            //short componentID,
-			string _object,
-			string comment) 
+			String _object,
+			String comment) 
 		{
             //this.iD = iD;
             //this.computerID = computerID;
@@ -51,7 +41,6 @@ namespace VirusBlokAda.CC.DataBase
 
         public EventsEntity(StringDictionary name_value_map)
         {
-
             try
             {
                 this.computerName = name_value_map["Computer"];
@@ -75,31 +64,13 @@ namespace VirusBlokAda.CC.DataBase
 		
 		#region Public Properties
 		
-        //public int ID
-        //{
-        //    get {return iD;}
-        //    set {iD = value;}
-        //}
-
-        //public short ComputerID
-        //{
-        //    get {return computerID;}
-        //    set {computerID = value;}
-        //}
-
-        public string ComputerName
+        public String ComputerName
         {
             get { return computerName; }
             set { computerName = value; }
         }
 
-        //public short EventID
-        //{
-        //    get {return eventID;}
-        //    set {eventID = value;}
-        //}
-
-        public string EventName
+        public String EventName
         {
             get { return eventName; }
             set { eventName = value; }
@@ -111,43 +82,37 @@ namespace VirusBlokAda.CC.DataBase
 			set {eventTime = value;}
 		}
 
-        //public short ComponentID
-        //{
-        //    get {return componentID;}
-        //    set {componentID = value;}
-        //}
-
-        public string ComponentName
+        public String ComponentName
         {
             get { return componentName; }
             set { componentName = value; }
         }
 
-		public string Object
+		public String Object
 		{
 			get {return _object;}
 			set {_object = value;}
 		}
 
-		public string Comment
+		public String Comment
 		{
 			get {return comment;}
 			set {comment = value;}
 		}
 
-        public string Color
+        public String Color
         {
             get { return color; }
             set { color = value; }
         }
 
-        public string IPAddress
+        public String IPAddress
         {
             get { return ipAddress; }
             set { ipAddress = value; }
         }
 
-        public string Description
+        public String Description
         {
             get { return description; }
             set { description = value; }
@@ -162,11 +127,7 @@ namespace VirusBlokAda.CC.DataBase
 		public virtual object Clone()
 		{
             return new EventsEntity(
-                    //this.iD,
-                    //this.computerID,
-                    //this.eventID,
 					this.eventTime,
-                    //this.componentID,
 					this._object,
 					this.comment);				
 		}
