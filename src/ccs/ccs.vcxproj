@@ -47,35 +47,35 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/release.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/base.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/common.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/release_dynamic_crt.props" />
-    <Import Project="..\..\make\prop_sheets_new\infrastructure.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/release.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/base.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/common.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/release_dynamic_crt.props" />
+    <Import Project="..\..\make\prop_sheets\infrastructure.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/debug.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\base.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\debug_dynamic_crt.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\common.props" />
-    <Import Project="..\..\make\prop_sheets_new\infrastructure.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/debug.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\base.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\debug_dynamic_crt.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\common.props" />
+    <Import Project="..\..\make\prop_sheets\infrastructure.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/release.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/base.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/common.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/release_dynamic_crt.props" />
-    <Import Project="..\..\make\prop_sheets_new\infrastructure.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/release.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/base.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/common.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/release_dynamic_crt.props" />
+    <Import Project="..\..\make\prop_sheets\infrastructure.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(SolutionDir)/prop_sheets_new/debug.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\base.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\debug_dynamic_crt.props" />
-    <Import Project="$(SolutionDir)/prop_sheets_new\common.props" />
-    <Import Project="..\..\make\prop_sheets_new\infrastructure.props" />
+    <Import Project="$(SolutionDir)/prop_sheets/debug.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\base.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\debug_dynamic_crt.props" />
+    <Import Project="$(SolutionDir)/prop_sheets\common.props" />
+    <Import Project="..\..\make\prop_sheets\infrastructure.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -89,6 +89,7 @@
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>ccs.def</ModuleDefinitionFile>
+      <AdditionalDependencies>common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,6 +107,7 @@
     </Lib>
     <Link>
       <ModuleDefinitionFile>ccs.def</ModuleDefinitionFile>
+      <AdditionalDependencies>common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,6 +121,7 @@
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>ccs.def</ModuleDefinitionFile>
+      <AdditionalDependencies>common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,6 +135,7 @@
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>ccs.def</ModuleDefinitionFile>
+      <AdditionalDependencies>common.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

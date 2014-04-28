@@ -98,7 +98,7 @@ bool CCPlug::Install(const SetupParams& param)
     }
 
     // HACK get old version from settings
-    ISettings* settings;
+    ObjectPtr<ISettings> settings;
     if(!param.p_service->GetInterfaceT<ISettings, &__uuidof(VBA_SETTINGS)>(&settings))
     {
         LOG_ERROR() % L"Fail to get Settings";
@@ -109,12 +109,9 @@ bool CCPlug::Install(const SetupParams& param)
     if(!settings->GetParameter(__uuidof(VBA_CC), cur_version_param))
     {
         LOG_ERROR() % L"Fail to get OldVersion";
-        settings->Release();
         return false;
     }
-    settings->DelParameter(__uuidof(VBA_CC), cur_version_param));
-    settings->Release();
-    settings = NULL;
+    settings->DelParameter(__uuidof(VBA_CC), cur_version_param);
 
     std::wstring old_version = boost::get<std::wstring>(cur_version_param.m_value);
 
@@ -151,7 +148,7 @@ bool CCPlug::Uninstall(const SetupParams& param)
         LOG_ERROR() % L"Fail to get version of VBA32AAW";
         return false;
     }
-    ISettings* settings;
+    ObjectPtr<ISettings> settings;
     if(!param.p_service->GetInterfaceT<ISettings, &__uuidof(VBA_SETTINGS)>(&settings))
     {
         LOG_ERROR() % L"Fail to get Settings";
@@ -162,12 +159,8 @@ bool CCPlug::Uninstall(const SetupParams& param)
     if(!settings->SetParameter(__uuidof(VBA_CC), cur_version_param))
     {
         LOG_ERROR() % L"Fail to set OldVersion";
-        settings->Release();
         return false;
     }
-
-    settings->Release();
-    settings = NULL;
     //
 
     std::wstring cmdline = install_path + L"\\Vba32ControlCenterUpdate.exe ActionBeforeReplaceFiles"; 
@@ -184,7 +177,7 @@ bool CCPlug::Initialize(const InterfaceId& interface_id, vba::IObject* p_object)
         LOG_ERROR() % L"Fail to base initialize";
         return false;
     }
-    ISettings* settings = NULL;
+    ObjectPtr<ISettings> settings;
     if(!mp_service->GetInterfaceT<ISettings, &__uuidof(VBA_SETTINGS)>(&settings))
     {
         LOG_ERROR() % L"Fail to get settings";
@@ -192,9 +185,7 @@ bool CCPlug::Initialize(const InterfaceId& interface_id, vba::IObject* p_object)
     }
 
     CCSettings cc_settings;
-    cc_settings.Initialize(settings);
-    settings->Release();
-    settings = NULL;
+    cc_settings.Initialize(settings.get());
 
     return true;
 }

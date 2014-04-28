@@ -6,12 +6,17 @@
 #include "update/base_setup.h"
 
 
+extern const wchar_t c_cc_setupdll_name[];
+
 namespace vba{
 namespace cc{
 
-extern const wchar_t c_cc_setupdll_name[];
+class Dummy
+{
 
-class CCPlug : public vba::plug::Plug<Object, &__uuidof(VBA_CC), 3000>,
+};
+
+class CCPlug : public vba::plug::Plug<Dummy, &__uuidof(VBA_CC), 3000>,
                public upd::BaseSetup<c_cc_setupdll_name>
 {
 public:
@@ -25,6 +30,10 @@ public:
         uint32_t& update_actions);
 
 
+    virtual bool GetRealizedInterfaces(InterfacesList& interfaces)
+    {
+        return true;
+    }
 
     virtual bool Initialize(const InterfaceId& interface_id, vba::IObject* p_object);
 };

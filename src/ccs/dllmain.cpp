@@ -1,11 +1,11 @@
-#include "ccs_setup.h"
+#include "ccs_plug.h"
 
-vba::cc::CCUpdateSetup* update_setup = NULL;
+vba::cc::CCPlug* cc_plug = NULL;
 
 
 bool GetInterface(vba::IObject** p_plugin)
 {
-    *p_plugin = update_setup;
+    *p_plugin = cc_plug;
     (*p_plugin)->AddRef();
     return true;
 }
@@ -19,8 +19,8 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
     switch (dwReason)
     {
     case DLL_PROCESS_ATTACH:
-        update_setup = new vba::cc::CCUpdateSetup();
-        update_setup->AddRef(); 
+        cc_plug = new vba::cc::CCPlug();
+        cc_plug->AddRef(); 
         break;
 
     case DLL_THREAD_ATTACH:
@@ -30,7 +30,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
         break;
 
     case DLL_PROCESS_DETACH:
-        update_setup->Release();
+        cc_plug->Release();
         break;
     }
     return TRUE;
