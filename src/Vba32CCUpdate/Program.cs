@@ -34,7 +34,7 @@ namespace Vba32ControlCenterUpdate
                 eventName = EventEnumExtensions.Get(args[0]);
                 currentVersion = ParseVersion(args[1]);
                 newVersion = ParseVersion(args[2]);
-                files = args[3].Split(new Char[] { ';' });                
+                files = args[3].Split(new Char[] { '|' });                
             }
             catch(Exception e)
             {
