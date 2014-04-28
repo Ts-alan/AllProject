@@ -13,3 +13,5 @@
 *.pdb
 *.sdf
 *.res
+*.opensdf
+*.ipch
