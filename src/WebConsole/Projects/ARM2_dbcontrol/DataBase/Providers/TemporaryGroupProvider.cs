@@ -7,33 +7,30 @@ namespace VirusBlokAda.CC.DataBase
     public class TemporaryGroupProvider
     {
         private readonly String connectionString;
-        private TemporaryGroupManager mngr;
+        private VlslVConnection connection;
 
-        public TemporaryGroupProvider()
-        { }
+        private TemporaryGroupManager mngr;
 
         public TemporaryGroupProvider(String connectionString)
         {
             this.connectionString = connectionString;
+            connection = new VlslVConnection(connectionString);
+
+            InitManagers();
+        }
+
+        private void InitManagers()
+        {
+            mngr = new TemporaryGroupManager(connection);
         }
 
         #region Methods
 
         public List<String> GetComputerNameList(String type, String where)
         {
-            List<String> list = null;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                mngr = new TemporaryGroupManager(conn);
-                conn.OpenConnection();
-
-                list = mngr.GetComputerNameList(type, where);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+                return mngr.GetComputerNameList(type, where);
         }
+
         #endregion
     }
 }

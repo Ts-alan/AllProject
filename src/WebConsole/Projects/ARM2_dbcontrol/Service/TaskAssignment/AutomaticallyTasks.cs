@@ -24,31 +24,16 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
                 Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper("VbaTaskAssignment.Service");
                 AutomaticallyTaskEntity task = null;
                 #region Get Task
-                using (VlslVConnection conn = new VlslVConnection(ConnectionString))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-
-                    task = db.GetAutomaticallyTask(entity.EventName);
-
-                    conn.CloseConnection();
-                }
+                TaskProvider db = new TaskProvider(ConnectionString);
+                task = db.GetAutomaticallyTask(entity.EventName);
                 #endregion
 
                 if (task != null && task.IsAllowed)
-                {                    
+                {
                     List<String> compName = new List<String>();
                     List<String> ipAddress = new List<String>();
                     #region Get computer names & IP-addresses
-                    using (VlslVConnection conn = new VlslVConnection(ConnectionString))
-                    {
-                        TaskManager db = new TaskManager(conn);
-                        conn.OpenConnection();
-
-                        db.GetComputersInfo(ref compName, ref ipAddress);
-
-                        conn.CloseConnection();
-                    }
+                    db.GetComputersInfo(ref compName, ref ipAddress);
                     #endregion
 
                     List<Int64> taskId = new List<Int64>();
@@ -85,15 +70,8 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
 
         private static Boolean IsRunning(String compName, Int16 taskID)
         {
-            Boolean res = false;
-            using (VlslVConnection conn = new VlslVConnection(ConnectionString))
-            {
-                TaskManager db = new TaskManager(conn);
-                conn.OpenConnection();
-                res = db.IsRunningTask(compName, taskID);
-                conn.CloseConnection();
-            }
-            return res;
+            TaskProvider db = new TaskProvider(ConnectionString);
+            return db.IsRunningTask(compName, taskID);
         }
     }
 }

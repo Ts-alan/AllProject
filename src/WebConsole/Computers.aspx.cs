@@ -396,128 +396,118 @@ public partial class Computers : PageBase
     void UpdateData()
     {
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        ///!-OPTM песдетс:)
+        ///Получше разобраться, что я тут хотел сделать и почему это так
+        if (Session["CheckBoxs"] != null)
         {
-            ComputersManager cmng = new ComputersManager(conn);
-
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-            ///!-OPTM песдетс:)
-            ///Получше разобраться, что я тут хотел сделать и почему это так
-            if (Session["CheckBoxs"] != null)
+            Hashtable htbl = (Hashtable)Session["CheckBoxs"];
+            Regex reg = new Regex(@"\$DataList1\$\w+");
+            ArrayList list = new ArrayList();
+            foreach (string str in Request.Form)
             {
-                Hashtable htbl = (Hashtable)Session["CheckBoxs"];
-                Regex reg = new Regex(@"\$DataList1\$\w+");
-                ArrayList list = new ArrayList();
-                foreach (string str in Request.Form)
+                if (str == null) continue;
+                Match match = reg.Match(str);
+                if ((match.Success) && (htbl.ContainsKey(match.Value)))
                 {
-                    if (str == null) continue;
-                    Match match = reg.Match(str);
-                    if ((match.Success) && (htbl.ContainsKey(match.Value)))
-                    {
-                        list.Add(htbl[match.Value]);
-                    }
+                    list.Add(htbl[match.Value]);
                 }
-                Session["CompsCheckedValues"] = list;
             }
+            Session["CompsCheckedValues"] = list;
+        }
 
-            Session["CheckBoxs"] = new Hashtable();				//list of id checkbox/computersid
+        Session["CheckBoxs"] = new Hashtable();				//list of id checkbox/computersid
 
 
-            CompFilterEntity filter = new CompFilterEntity(); ;
-            
-            int? showMode = (int?) Session["CompShowMode"];
-            if(!showMode.HasValue)
-                showMode = 0;
-            
-            int count = 0;
-            computers = new List<ComputersEntity>();
+        CompFilterEntity filter = new CompFilterEntity(); ;
 
-            //switch mode to data
-            switch(showMode)
-            {
-                    //use temporary group
-                case 1:
-                    if (Session["TempGroupComputers"] != null)
-                    {
-                        filter.GetSQLWhereStatement =
-                            ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
+        int? showMode = (int?)Session["CompShowMode"];
+        if (!showMode.HasValue)
+            showMode = 0;
 
-                        //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menuSelected");
-                        divPolicyMenu.Attributes.Add("class", "menu");
-                    }
-                    count = cmng.Count(filter.GetSQLWhereStatement);
-                    computers = cmng.List(filter.GetSQLWhereStatement,
-                            Convert.ToString(Session["CompSorting"]),
-                            pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
-                    break;
-                    //use policy
-                case 2:
+        int count = 0;
+        computers = new List<ComputersEntity>();
 
-                    string selectedPolicyName = "";
-                    if (ddlPolicyName.SelectedItem != null)
-                        selectedPolicyName = ddlPolicyName.SelectedItem.Text;
-                    if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
-                        break;
+        //switch mode to data
+        switch (showMode)
+        {
+            //use temporary group
+            case 1:
+                if (Session["TempGroupComputers"] != null)
+                {
+                    filter.GetSQLWhereStatement =
+                        ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
 
-                    PolicyProvider provider = PoliciesState;
-                    Policy policy = provider.GetPolicyByName(selectedPolicyName);
+                    //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menuSelected");
+                    divPolicyMenu.Attributes.Add("class", "menu");
+                }
+                count = cmng.Count(filter.GetSQLWhereStatement);
+                computers = cmng.List(filter.GetSQLWhereStatement,
+                        Convert.ToString(Session["CompSorting"]),
+                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
+                break;
+            //use policy
+            case 2:
 
-                    count = provider.GetComputerByPolicyCount(policy);
-                    computers = provider.GetComputersByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]),
-                        Convert.ToString(Session["CompSorting"]));
-
-                    divPolicyHeader.Attributes["class"] = "GiveButton1";
-                    divPolicyMenu.Attributes.Add("class", "menuSelected");
-                    //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
+                string selectedPolicyName = "";
+                if (ddlPolicyName.SelectedItem != null)
+                    selectedPolicyName = ddlPolicyName.SelectedItem.Text;
+                if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
                     break;
 
-                    //use filter
-                default:
-                    if (Session["CurrentCompFilter"] == null)
+                PolicyProvider provider = PoliciesState;
+                Policy policy = provider.GetPolicyByName(selectedPolicyName);
+
+                count = provider.GetComputerByPolicyCount(policy);
+                computers = provider.GetComputersByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]),
+                    Convert.ToString(Session["CompSorting"]));
+
+                divPolicyHeader.Attributes["class"] = "GiveButton1";
+                divPolicyMenu.Attributes.Add("class", "menuSelected");
+                //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
+                break;
+
+            //use filter
+            default:
+                if (Session["CurrentCompFilter"] == null)
+                {
+                    filter = new CompFilterEntity();
+                    filter.ComputerName = "*";
+                    filter.GenerateSQLWhereStatement();
+                }
+                else
+                {
+                    filter = (CompFilterEntity)Session["CurrentCompFilter"];
+                    //Костыль...
+                    if ((filter.LatestInfectedIntervalIndex != Int32.MinValue) ||
+                        (filter.LatestUpdateIntervalIndex != Int32.MinValue) ||
+                        (filter.RecentActiveIntervalIndex != Int32.MinValue))
                     {
-                        filter = new CompFilterEntity();
-                        filter.ComputerName = "*";
                         filter.GenerateSQLWhereStatement();
                     }
-                    else
-                    {
-                        filter = (CompFilterEntity)Session["CurrentCompFilter"];
-                        //Костыль...
-                        if ((filter.LatestInfectedIntervalIndex != Int32.MinValue) ||
-                            (filter.LatestUpdateIntervalIndex != Int32.MinValue) ||
-                            (filter.RecentActiveIntervalIndex != Int32.MinValue))
-                        {
-                            filter.GenerateSQLWhereStatement();
-                        }
-                    }
-                    count = cmng.Count(filter.GetSQLWhereStatement);
-                    computers = cmng.List(filter.GetSQLWhereStatement,
-                            Convert.ToString(Session["CompSorting"]),
-                            pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
-                    //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
-                    divPolicyMenu.Attributes.Add("class", "menu");
-                    break;
-            }
-
-            
-            int pageSize = Convert.ToInt32(Session["CompPageSize"]);
-            int pageCount = (int)Math.Ceiling((double)count / pageSize);
-
-            lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
-
-            pcPaging.PageCount = pageCount;
-            pcPagingTop.PageCount = pageCount;
-
-            Session["ComputersCurrentPageIndex"] = pcPaging.CurrentPageIndex;
-
-            DataList1.DataSource = computers;
-            DataList1.DataBind();
-
-
-            conn.CloseConnection();
+                }
+                count = cmng.Count(filter.GetSQLWhereStatement);
+                computers = cmng.List(filter.GetSQLWhereStatement,
+                        Convert.ToString(Session["CompSorting"]),
+                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
+                //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
+                divPolicyMenu.Attributes.Add("class", "menu");
+                break;
         }
+
+
+        int pageSize = Convert.ToInt32(Session["CompPageSize"]);
+        int pageCount = (int)Math.Ceiling((double)count / pageSize);
+
+        lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
+
+        pcPaging.PageCount = pageCount;
+        pcPagingTop.PageCount = pageCount;
+
+        Session["ComputersCurrentPageIndex"] = pcPaging.CurrentPageIndex;
+
+        DataList1.DataSource = computers;
+        DataList1.DataBind();
     }
 
     /// <summary>
@@ -1629,31 +1619,21 @@ public partial class Computers : PageBase
 
 
             //give computer list from db..
-            using (VlslVConnection conn = new VlslVConnection(
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+            ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+            int count = cmng.Count(filter.GetSQLWhereStatement);
+
+            List<ComputersEntity> compsList = cmng.List(filter.GetSQLWhereStatement,
+                Convert.ToString(Session["CompSorting"]), 1, count);
+
+            for (int i = 0; i < compsList.Count; i++)
             {
-                ComputersManager cmng = new ComputersManager(conn);
+                _set.AllComputers.Add(compsList[i]);
 
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-
-                int count = cmng.Count(filter.GetSQLWhereStatement);
-
-                List<ComputersEntity> compsList = cmng.List(filter.GetSQLWhereStatement,
-                    Convert.ToString(Session["CompSorting"]), 1, count);
-
-
-                conn.CloseConnection();
-
-                for (int i = 0; i < compsList.Count; i++)
-                {
-                    _set.AllComputers.Add(compsList[i]);
-                    
-                    if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
-                        _set.VSISComputers.Add(compsList[i]);
-                    else
-                        _set.OtherComputers.Add(compsList[i]);
-                }
+                if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
+                    _set.VSISComputers.Add(compsList[i]);
+                else
+                    _set.OtherComputers.Add(compsList[i]);
             }
         }
         else
@@ -3021,43 +3001,34 @@ public partial class Computers : PageBase
         GridView gvExcel = new GridView();
 
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+
+        ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+        CompFilterEntity filter;
+        if (Session["CurrentCompFilter"] == null)
         {
-            ComputersManager cmng = new ComputersManager(conn);
+            filter = new CompFilterEntity();
+            filter.ComputerName = "*";
+            filter.GenerateSQLWhereStatement();
+        }
+        else
+            filter = (CompFilterEntity)Session["CurrentCompFilter"];
 
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-         
-            CompFilterEntity filter;
-            if (Session["CurrentCompFilter"] == null)
-            {
-                filter = new CompFilterEntity();
-                filter.ComputerName = "*";
-                filter.GenerateSQLWhereStatement();
-            }
-            else
-                filter = (CompFilterEntity)Session["CurrentCompFilter"];
-
-            if (Session["TempGroupComputers"] != null)
-            {
-                filter.GetSQLWhereStatement =
-                    ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
-            }
-
-            int count = cmng.Count(filter.GetSQLWhereStatement);
-
-
-            gvExcel.DataSource = cmng.List(filter.GetSQLWhereStatement,
-                Convert.ToString(Session["CompSorting"]), 1, count);
-            gvExcel.DataBind();
-
-            conn.CloseConnection();
+        if (Session["TempGroupComputers"] != null)
+        {
+            filter.GetSQLWhereStatement =
+                ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
         }
 
+        int count = cmng.Count(filter.GetSQLWhereStatement);
+
+
+        gvExcel.DataSource = cmng.List(filter.GetSQLWhereStatement,
+            Convert.ToString(Session["CompSorting"]), 1, count);
+        gvExcel.DataBind();
+
         DataGridToExcel.Export("Computers.xls", gvExcel);
- 
+
     }
 
     /// <summary>
@@ -3089,8 +3060,8 @@ public partial class Computers : PageBase
         }
 
         //Не было ничего выбранно
-       // if (list.Count == 0)
-       //     throw new Exception(Resources.Resource.NoSelectedComputers);
+        // if (list.Count == 0)
+        //     throw new Exception(Resources.Resource.NoSelectedComputers);
 
         Session["SelectedID"] = list;
 
@@ -3098,22 +3069,15 @@ public partial class Computers : PageBase
         string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
 
         //if (Session["SelectedID"] == null)
-         //   throw new Exception(Resources.Resource.ErrorCriticalError + ": Session['SelectedID'] == null ");
+        //   throw new Exception(Resources.Resource.ErrorCriticalError + ": Session['SelectedID'] == null ");
 
-        using (VlslVConnection conn = new VlslVConnection(connStr))
+        ComputerProvider db = new ComputerProvider(connStr);
+        foreach (Int16 id in list)
         {
-            ComputersManager db = new ComputersManager(conn);
-            conn.OpenConnection();
-            foreach (Int16 id in list)
-            {
-                db.Delete(id);
-            }
-            conn.CloseConnection();
-           
+            db.Delete(id);
         }
 
         UpdateData();
-
     }
 
 

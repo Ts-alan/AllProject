@@ -12,60 +12,48 @@ namespace VirusBlokAda.CC.DataBase
     {
         private SqlConnection vlslvConnect;
         private IDbTransaction vlslvTransaction;
-        private static String connectionString;
+        private String connectionString;
+        private readonly Object lockToken = new Object();
 
-        public VlslVConnection()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
         public VlslVConnection(String connStr)
         {
-            vlslvConnect = CreateConnection(connStr);
-        }
-
-        private static SqlConnection CreateConnection(String connStr)
-        {
             connectionString = connStr;
-            return new System.Data.SqlClient.SqlConnection(connectionString);
+            CheckConnectionState();
         }
 
-        /// <summary>
-        /// Open connection to database
-        /// </summary>
-        public void OpenConnection()
-        {
-            CheckConnectionState(false);
-            vlslvConnect.Open();
-        }
         /// <summary>
         /// Close Connection to database
         /// </summary>
-        public void CloseConnection()
+        private void CloseConnection()
         {
             if (vlslvConnect != null)
             {
-                CheckConnectionState(true);
-                vlslvConnect.Close();
+                if (vlslvConnect.State == ConnectionState.Open)
+                    vlslvConnect.Close();
             }
         }
 
         /// <summary>
         /// Check connection state
         /// </summary>
-        /// <param name="isOpen">State</param>
-        public void CheckConnectionState(Boolean isOpen)
+        public void CheckConnectionState()
         {
-            if (isOpen)
+            lock (lockToken)
             {
-                if ((vlslvConnect.State & ConnectionState.Open) != ConnectionState.Open)
-                    throw new InvalidOperationException("Connection is not open.");
-            }
-            else
-            {
-                if ((vlslvConnect.State & ConnectionState.Open) == ConnectionState.Open)
-                    throw new InvalidOperationException("Connection is already open.");
+                if (vlslvConnect == null)
+                {
+                    vlslvConnect = new System.Data.SqlClient.SqlConnection(connectionString);
+                    vlslvConnect.Open();
+                }
+
+                if ((vlslvConnect.State == ConnectionState.Closed) ||
+                    (vlslvConnect.State == ConnectionState.Broken))
+                {
+                    if (vlslvConnect.State == ConnectionState.Broken)
+                        vlslvConnect.Close();
+                    //SqlConnection.ClearPool(_connection); //??
+                    vlslvConnect.Open();
+                }
             }
         }
 
@@ -81,7 +69,6 @@ namespace VirusBlokAda.CC.DataBase
         public IDbDataParameter AddCommandParameter(IDbCommand cmd, String paramName,
             DbType dbType, Object paramValue, ParameterDirection direction)
         {
-            CheckConnectionState(true);
             IDbDataParameter parameter = cmd.CreateParameter();
             parameter.ParameterName = paramName;
             parameter.Direction = direction;
@@ -187,7 +174,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Returns newly created command command objecty</returns>
         public IDbCommand CreateCommand(String commandText, Boolean isStoredProc)
         {
-            CheckConnectionState(true);
+            CheckConnectionState();
 
             IDbCommand cmd = vlslvConnect.CreateCommand();
             cmd.CommandText = commandText;
@@ -230,8 +217,14 @@ namespace VirusBlokAda.CC.DataBase
 
         public void Dispose()
         {
+            CloseConnection();
             if (vlslvConnect != null)
                 vlslvConnect.Dispose();
+        }
+
+        ~VlslVConnection()
+        {
+            Dispose();
         }
     }
 

@@ -34,38 +34,16 @@ public static class EventsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventsManager db = new EventsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-            conn.CloseConnection();
-        }
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
 
         return list;
     }
 
     public static Int32 Count(String where)
     {
-        Int32 count = 0;
-
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventsManager db = new EventsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            count = db.Count(where);
-
-            conn.CloseConnection();
-        }
-
-        return count;
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.Count(where);
     }
 
     #region Notification
@@ -94,54 +72,28 @@ public static class EventsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventTypesManager db = new EventTypesManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            list = db.List("EventName like '%'", orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-            conn.CloseConnection();
-        }
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        list = db.GetEventTypeList("EventName like '%'", orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
 
         return list;
     }
 
     public static Int32 CountForNotification()
     {
-        Int32 count = 0;
-
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventTypesManager db = new EventTypesManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            count = db.Count("EventName like '%'");
-
-            conn.CloseConnection();
-        }
-
-        return count;
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.GetEventTypesCount("EventName like '%'");
     }
 
     public static Boolean UpdateNotify(EventTypesEntity ent)
     {
         Boolean isSuccess = false;
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        try
         {
-            EventTypesManager db = new EventTypesManager(conn);
-
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-            
+            EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
             db.UpdateNotify(ent);
             isSuccess = true;
-            conn.CloseConnection();
         }
+        catch { }
 
         return isSuccess;
     }

@@ -181,7 +181,7 @@ namespace VirusBlokAda.CC.JSON
         public CompAdditionalInfo(ComputersEntityEx comp)
             : this(comp as ComputersEntity)
         {
-            this._policyName = comp.PolicyName;
+            this._policyName = comp.Policy.Name;
 
             if (comp.Components == null) return;
             this._components = new List<ComponentJSONEntity>();

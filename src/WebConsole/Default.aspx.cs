@@ -61,11 +61,11 @@ public partial class _Default : PageBase
 
         DataBaseEntity dbEntity;
         DataBaseEntity dbEntityLog;
+
+        DataBaseProvider db = new DataBaseProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         try
         {
-            VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            DataBaseManager dbManager = new DataBaseManager(conn);
-            dbEntity = dbManager.Get("vbaCCDB");
+            dbEntity = db.Get("vbaCCDB");
         }
         catch
         {
@@ -74,9 +74,7 @@ public partial class _Default : PageBase
 
         try
         {
-            VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            DataBaseManager dbManager = new DataBaseManager(conn);
-            dbEntityLog = dbManager.Get("vbaCCLog");
+            dbEntityLog = db.Get("vbaCCLog");
         }
         catch
         {   
@@ -144,7 +142,7 @@ public partial class _Default : PageBase
             registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
 
         try
-        {            
+        {
             RegistryKey key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "Signature");
 
             byte[] authInfo = (byte[])key.GetValue("AuthInfo");
@@ -152,21 +150,15 @@ public partial class _Default : PageBase
 
             //получаем кол-во зарегистрированных рабочих станций
             int count;
-            using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-            {
-                ComputersManager cm = new ComputersManager(conn);
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
 
-                CompFilterEntity filter = new CompFilterEntity();
-                filter.ComputerName = "*";
-                filter.GenerateSQLWhereStatement();
+            ComputerProvider cm = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-                count = cm.Count(filter.GetSQLWhereStatement);
+            CompFilterEntity filter = new CompFilterEntity();
+            filter.ComputerName = "*";
+            filter.GenerateSQLWhereStatement();
 
-                conn.CloseConnection();
-            }
-            
+            count = cm.Count(filter.GetSQLWhereStatement);
+
             switch (auth.KeyState)
             {
                 case VbaKeyState.Success:
@@ -188,7 +180,7 @@ public partial class _Default : PageBase
             }
 
             lblLicenseNumber.Text = string.Format("{0:D9}", auth.LicenseNumber);
-                        
+
             lblExpirationDate.Text = auth.ExpirationDate.ToString();
             if (TimeSpan.Compare(auth.ExpirationDate.Subtract(DateTime.Now), new TimeSpan(3, 0, 0, 0)) > 0)
             {
@@ -197,7 +189,7 @@ public partial class _Default : PageBase
             else
             {
                 rowExpirationDate.Attributes.Add("class", "stateKeyPrecarious");
-            }            
+            }
         }
         catch
         {

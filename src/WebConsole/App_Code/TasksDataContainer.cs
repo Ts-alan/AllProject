@@ -34,62 +34,27 @@ public static class TasksDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+        foreach (TaskEntity ent in db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows))
         {
-            TaskManager db = new TaskManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            foreach (TaskEntity ent in db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows))
-            {
-                list.Add(new TaskEntityShow(ent.ID, ent.TaskName, ent.ComputerName, DatabaseNameLocalization.GetNameForCurrentCulture(ent.TaskState), ent.DateIssued, ent.DateComplete, ent.DateUpdated, ent.TaskParams, ent.TaskUser, ent.TaskDescription));
-            }
-
-            conn.CloseConnection();
+            list.Add(new TaskEntityShow(ent.ID, ent.TaskName, ent.ComputerName, DatabaseNameLocalization.GetNameForCurrentCulture(ent.TaskState), ent.DateIssued, ent.DateComplete, ent.DateUpdated, ent.TaskParams, ent.TaskUser, ent.TaskDescription));
         }
-        
+
         return list;
     }
 
     public static Int32 Count(String where)
     {
-        Int32 count = 0;
-
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            TaskManager db = new TaskManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            count = db.Count(where);
-
-            conn.CloseConnection();
-        }
-
-        return count;
+        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.Count(where);
     }
 
     public static List<String> GetTaskStates()
     {
-        List<String> list = new List<String>();
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            TaskManager db = new TaskManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            list = db.ListTaskStates();
-
-            conn.CloseConnection();
-        }
-
-        return list;
-    }
-
-    
+        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.ListTaskStates();
+    }    
 }
 
 public class TaskEntityShow : TaskEntity

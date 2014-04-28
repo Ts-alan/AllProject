@@ -90,29 +90,24 @@ public partial class Computers2 : PageBase
         Int16 compID = Convert.ToInt16(id);
         ComputersEntityEx comp = new ComputersEntityEx();
         CompAdditionalInfo info;
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComputersManager cmg = new ComputersManager(conn);
-            ComponentsManager cmptMngr = new ComponentsManager(conn);
-            conn.OpenConnection();
+        ComputerProvider compDb = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        ComponentsProvider cmptDb = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-            comp = cmg.GetComputerEx(compID);
-            comp = new ComputersEntityEx(comp, comp.PolicyName, cmptMngr.GetComponentsPageByComputerID(comp.ID));
-            info = new CompAdditionalInfo(comp);
-            conn.CloseConnection();
-            return Newtonsoft.Json.JsonConvert.SerializeObject(info);
+        comp = compDb.GetComputerEx(compID);
+        comp = new ComputersEntityEx(comp, comp.Group, comp.Policy, cmptDb.GetComponentsPageByComputerID(comp.ID));
 
-        }
+        info = new CompAdditionalInfo(comp);
+        return Newtonsoft.Json.JsonConvert.SerializeObject(info);
     }
     #endregion
-    
+
     #region Tasks
     protected void CompositeTaskPanel_TaskAssign(object sender, TaskEventArgs e)
     {
         //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
-        SelectedComputersForTask selectedComps=GetSelectedCompsForTasks(e.AssignToAll); 
-       
-       
+        SelectedComputersForTask selectedComps = GetSelectedCompsForTasks(e.AssignToAll);
+
+
         Int64[] taskId = new Int64[selectedComps.Names.Count];
 
         String userName = Anchor.GetStringForTaskGivedUser();
@@ -125,7 +120,7 @@ public partial class Computers2 : PageBase
         {
             taskId[i] = PreServAction.CreateTask(selectedComps.Names[i], e.TaskName, e.Xml, userName, connStr);
         }
-        control.PacketCustomAction(taskId,selectedComps.IpAddresses.ToArray(), e.TaskXml);
+        control.PacketCustomAction(taskId, selectedComps.IpAddresses.ToArray(), e.TaskXml);
     }
 
     private SelectedComputersForTask GetSelectedCompsForTasks(bool all)
@@ -139,18 +134,9 @@ public partial class Computers2 : PageBase
         }
         else
         {
-            string where=FilterContainer1.GenerateSQL();
-            using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-            {
-                ComputersManager cmng = new ComputersManager(conn);
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-                selected=cmng.GetSelectionComputerForTask(where);
-                
-                
-                conn.CloseConnection();
-            }
+            string where = FilterContainer1.GenerateSQL();
+            ComputerProvider compDb = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+            selected = compDb.GetSelectionComputerForTask(where);
         }
         return selected;
     }

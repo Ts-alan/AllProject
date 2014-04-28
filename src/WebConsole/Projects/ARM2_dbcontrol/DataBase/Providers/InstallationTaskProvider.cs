@@ -7,14 +7,21 @@ namespace VirusBlokAda.CC.DataBase
     public class InstallationTaskProvider
     {
         private readonly String connectionString;
-        private InstallationTaskManager installMngr;
+        private VlslVConnection connection;
 
-        public InstallationTaskProvider()
-        { }
+        private InstallationTaskManager installMngr;
 
         public InstallationTaskProvider(String connectionString)
         {
             this.connectionString = connectionString;
+            connection = new VlslVConnection(connectionString);
+
+            InitManagers();
+        }
+
+        private void InitManagers()
+        {
+            installMngr = new InstallationTaskManager(connection);
         }
 
         #region Methods
@@ -24,15 +31,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         public void UpdateTask(InstallationTaskEntity task)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                installMngr.UpdateTask(task);
-
-                conn.CloseConnection();
-            }            
+            installMngr.UpdateTask(task);
         }
 
         /// <summary>
@@ -40,117 +39,40 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         public Int64 InsertTask(InstallationTaskEntity task)
         {
-            Int64 id = Int64.MinValue;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                id = installMngr.InsertTask(task);
-
-                conn.CloseConnection();
-            }
-
-            return id;
+            return installMngr.InsertTask(task);
         }
 
 
         public List<InstallationTaskEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            List<InstallationTaskEntity> list = new List<InstallationTaskEntity>();
-            
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                list = installMngr.List(where, order, page, size);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return installMngr.List(where, order, page, size);
         }
 
         public Int32 Count(String where)
         {
-            Int32 count = Int32.MinValue;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                count = installMngr.Count(where);
-
-                conn.CloseConnection();
-            }
-
-            return count;
+            return installMngr.Count(where);
         }
 
         public List<String> GetVba32Versions()
         {
-            List<String> list = new List<String>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                list = installMngr.GetVba32Versions();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return installMngr.GetVba32Versions();
         }
 
         public List<String> GetTaskTypes()
         {
-            List<String> list = new List<String>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                list = installMngr.GetTaskTypes();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return installMngr.GetTaskTypes();
         }
 
         public List<String> GetStatuses()
         {
-            List<String> list = new List<String>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                list = installMngr.GetStatuses();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return installMngr.GetStatuses();
         }
 
         public List<String> GetComputerNames()
         {
-            List<String> list = new List<String>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                installMngr = new InstallationTaskManager(conn);
-                conn.OpenConnection();
-
-                list = installMngr.GetComputerNames();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return installMngr.GetComputerNames();
         }
+
         #endregion
     }
 }

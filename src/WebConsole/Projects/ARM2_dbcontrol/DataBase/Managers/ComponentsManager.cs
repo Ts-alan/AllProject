@@ -32,6 +32,46 @@ namespace VirusBlokAda.CC.DataBase
         #region Methods
 
         /// <summary>
+        /// Get component from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static ComponentsEntity GetComponentFromReader(IDataReader reader)
+        {
+            ComponentsEntity component = new ComponentsEntity();
+
+            if (reader.GetValue(0) != DBNull.Value)
+                component.ComputerName = reader.GetString(0);
+            if (reader.GetValue(1) != DBNull.Value)
+                component.ComponentName = reader.GetString(1);
+            if (reader.GetValue(2) != DBNull.Value)
+                component.ComponentState = reader.GetString(2);
+            if (reader.GetValue(3) != DBNull.Value)
+                component.Version = reader.GetString(3);
+            if (reader.GetValue(4) != DBNull.Value)
+                component.Name = reader.GetString(4);
+
+            return component;
+        }
+
+        /// <summary>
+        /// Get components from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static List<ComponentsEntity> GetComponentsFromReader(IDataReader reader)
+        {
+            List<ComponentsEntity> components = new List<ComponentsEntity>();
+
+            while (reader.Read())
+            {
+                components.Add(GetComponentFromReader(reader));
+            }
+
+            return components;
+        }
+
+        /// <summary>
         /// Get page with sorting and filter
         /// </summary>
         /// <param name="where">where clause</param>
@@ -57,24 +97,7 @@ namespace VirusBlokAda.CC.DataBase
 
 
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<ComponentsEntity> list = new List<ComponentsEntity>();
-            while (reader.Read())
-            {
-                ComponentsEntity component = new ComponentsEntity();
-
-                if (reader.GetValue(0) != DBNull.Value)
-                    component.ComputerName = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    component.ComponentName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    component.ComponentState = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    component.Version = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    component.Name = reader.GetString(4);
-
-                list.Add(component);
-            }
+            List<ComponentsEntity> list = GetComponentsFromReader(reader);
             reader.Close();
             return list;
         }
@@ -92,24 +115,7 @@ namespace VirusBlokAda.CC.DataBase
                 DbType.Int16, ID, ParameterDirection.Input);
 
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<ComponentsEntity> list = new List<ComponentsEntity>();
-            while (reader.Read())
-            {
-                ComponentsEntity component = new ComponentsEntity();
-
-                if (reader.GetValue(0) != DBNull.Value)
-                    component.ComputerName = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    component.ComponentName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    component.ComponentState = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    component.Version = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    component.Name = reader.GetString(4);
-
-                list.Add(component);
-            }
+            List<ComponentsEntity> list = GetComponentsFromReader(reader);
             reader.Close();
             return list;
         }

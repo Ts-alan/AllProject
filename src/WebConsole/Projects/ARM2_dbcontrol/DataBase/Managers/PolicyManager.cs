@@ -19,6 +19,44 @@ namespace VirusBlokAda.CC.DataBase
         #region Methods
 
         /// <summary>
+        /// Get policy from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static Policy GetPolicyFromReader(IDataReader reader)
+        {
+            Policy p = new Policy();
+
+            if (reader.GetValue(0) != DBNull.Value)
+                p.ID = reader.GetInt16(0);
+            if (reader.GetValue(1) != DBNull.Value)
+                p.Name = reader.GetString(1);
+            if (reader.GetValue(2) != DBNull.Value)
+                p.Content = reader.GetString(2);
+            if (reader.GetValue(3) != DBNull.Value)
+                p.Comment = reader.GetString(3);
+
+            return p;
+        }
+
+        /// <summary>
+        /// Get policies from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static List<Policy> GetPoliciesFromReader(IDataReader reader)
+        {
+            List<Policy> p = new List<Policy>();
+
+            while (reader.Read())
+            {
+                p.Add(GetPolicyFromReader(reader));
+            }
+
+            return p;
+        }
+
+        /// <summary>
         /// Add new policy to database
         /// </summary>
         /// <param name="policy">Policy name</param>
@@ -46,13 +84,11 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="policy">policy name</param>
         internal void Delete(Policy policy)
         {
+            IDbCommand command = database.CreateCommand("DeletePolicy", true);
 
-            //query to db
-            SqlCommand command = new SqlCommand("DeletePolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@ID", policy.ID);
+            database.AddCommandParameter(command, "@ID", DbType.Int32, policy.ID, ParameterDirection.Input);
+            
             command.ExecuteNonQuery();
-
         }
 
         /// <summary>
@@ -62,18 +98,13 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="content">Body of policy</param>
         internal void Edit(Policy policy)
         {
-            //query to db
+            IDbCommand command = database.CreateCommand("UpdatePolicy", true);
 
-            SqlCommand command = new SqlCommand("UpdatePolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@TypeName", policy.Name);
-            command.Parameters.AddWithValue("@Params", policy.Content);
-            command.Parameters.AddWithValue("@Comment", policy.Comment);
-
+            database.AddCommandParameter(command, "@TypeName", DbType.String, policy.Name, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Params", DbType.String, policy.Content, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Comment", DbType.String, policy.Comment, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
-
         }
 
         /// <summary>
@@ -81,33 +112,19 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        internal Policy GetPolicyByName(string name)
+        internal Policy GetPolicyByName(String name)
         {
-            //query to db
-            SqlCommand command = new SqlCommand("GetPolicyByName", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetPolicyByName", true);
 
-            command.Parameters.AddWithValue("@TypeName", name);
+            database.AddCommandParameter(command, "@TypeName", DbType.String, name, ParameterDirection.Input);
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Policy policy = new Policy();
-            try
+            if (reader.Read())
             {
-
-
-                if (reader.Read())
-                {
-                    policy.ID = reader.GetInt16(0);
-                    policy.Name = reader.GetString(1);
-                    policy.Content = reader.GetString(2);
-                    policy.Comment = reader.GetString(3);
-                }
+                policy = GetPolicyFromReader(reader);
             }
-            finally
-            {
-                if (!reader.IsClosed)
-                    reader.Close();
-            }
+            reader.Close();
 
             return policy;
         }
@@ -117,10 +134,9 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="computers"></param>
-        internal void AddComputersToPolicy(Policy policy,List<string> computers)
+        internal void AddComputersToPolicy(Policy policy,List<String> computers)
         {
-
-            foreach (string compName in computers)
+            foreach (String compName in computers)
                 AddComputerToPolicy(policy, compName);
         }
 
@@ -129,30 +145,35 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="policy"></param>
         /// <param name="compName"></param>
-        private void AddComputerToPolicy(Policy policy, string compName)
+        private void AddComputerToPolicy(Policy policy, String compName)
         {
-            SqlCommand command = new SqlCommand("AddComputerToPolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("AddComputerToPolicy", true);
 
-            command.Parameters.AddWithValue("@ComputerName", compName);
-            command.Parameters.AddWithValue("@PolicyID", policy.ID);
+            database.AddCommandParameter(command, "@ComputerName", DbType.String, compName, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@PolicyID", DbType.Int32, policy.ID, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
         }
 
-
-        internal void RemoveComputersFromAllPolicies(List<string> computers)
+        /// <summary>
+        /// Remove computers from all policies
+        /// </summary>
+        /// <param name="computers">List of computers</param>
+        internal void RemoveComputersFromAllPolicies(List<String> computers)
         {
-            foreach (string compName in computers)
+            foreach (String compName in computers)
                 RemoveComputerFromAllPolicies(compName);
         }
 
-        internal void RemoveComputerFromAllPolicies(string compName)
+        /// <summary>
+        /// Remove computer from all policies
+        /// </summary>
+        /// <param name="compName"></param>
+        internal void RemoveComputerFromAllPolicies(String compName)
         {
-            SqlCommand command = new SqlCommand("RemoveComputerFromAllPolicies", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("RemoveComputerFromAllPolicies", true);
 
-            command.Parameters.AddWithValue("@ComputerName", compName);
+            database.AddCommandParameter(command, "@ComputerName", DbType.String, compName, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
         }
@@ -160,292 +181,132 @@ namespace VirusBlokAda.CC.DataBase
         /// <summary>
         /// Remove selected computers from policy
         /// </summary>
-        /// <param name="computers"></param>
-        internal void RemoveComputersFromPolicy(Policy policy, List<string> computers)
+        internal void RemoveComputersFromPolicy(Policy policy, List<String> computers)
         {
-            foreach (string compName in computers)
-                RemoveComputerFromAllPolicies(compName);//Policy(compName);
-
+            foreach (String compName in computers)
+                RemoveComputerFromAllPolicies(compName);
         }
 
-        private void RemoveComputerFromPolicy(Policy policy, string compName)
+        /// <summary>
+        /// Remove Computer from policy
+        /// </summary>
+        /// <param name="policy">Policy</param>
+        /// <param name="compName">Computer name</param>
+        private void RemoveComputerFromPolicy(Policy policy, String compName)
         {
-            SqlCommand command = new SqlCommand("RemoveComputerFromPolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("RemoveComputerFromPolicy", true);
 
-            command.Parameters.AddWithValue("@ComputerName", compName);
-            command.Parameters.AddWithValue("@PolicyID", policy.ID);
+            database.AddCommandParameter(command, "@ComputerName", DbType.String, compName, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@PolicyID", DbType.Int32, policy.ID, ParameterDirection.Input);
 
             command.ExecuteNonQuery();
         }
 
-        private void RemoveComputerFromPolicy(string compName)
+        /// <summary>
+        /// Remove computer from policy
+        /// </summary>
+        /// <param name="compName"></param>
+        private void RemoveComputerFromPolicy(String compName)
         {
             Policy policy = new Policy();
             policy.ID = 0;
             RemoveComputerFromPolicy(policy, compName);
         }
 
+        /// <summary>
+        /// Get computers by policy
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <returns></returns>
         internal List<ComputersEntity> GetComputersByPolicy(Policy policy)
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetComputersByPolicy", true);
 
-            SqlCommand command = new SqlCommand("GetComputersByPolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@PolicyID", DbType.Int32, policy.ID, ParameterDirection.Input);
 
-            command.Parameters.AddWithValue("@PolicyID", policy.ID);
+            List<ComputersEntity> computers = null;
 
-            List<ComputersEntity> computers = new List<ComputersEntity>();
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                ComputersEntity comp = new ComputersEntity();
-                comp.ID = reader.GetInt16(0);
-                comp.ComputerName = reader.GetString(1);
-
-                computers.Add(comp);
-            }
-            reader.Close();
-
-
-            return computers;
-        }
-
-
-        internal List<ComputersEntity> GetComputersByPolicyPage(int index, int pageCount, string where, string orderBy)
-        {
-            //request to db
-
-            SqlCommand command = new SqlCommand("GetComputersByPolicyPage", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@Page", index);
-            command.Parameters.AddWithValue("@RowCount", pageCount);
-            command.Parameters.AddWithValue("@OrderBy", orderBy);
-            command.Parameters.AddWithValue("@Where", where);
-
-            List<ComputersEntity> computers = new List<ComputersEntity>();
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                #region Fill entity
-                ComputersEntity comp = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    comp.ID = reader.GetInt16(0);
-
-                if (reader.GetValue(1) != DBNull.Value)
-                    comp.ComputerName = reader.GetString(1);
-
-                if (reader.GetValue(2) != DBNull.Value)
-                    comp.IPAddress = reader.GetString(2);
-
-                if (reader.GetValue(3) != DBNull.Value)
-                    comp.ControlCenter = reader.GetBoolean(3);
-
-                if (reader.GetValue(4) != DBNull.Value)
-                    comp.DomainName = reader.GetString(4);
-
-                if (reader.GetValue(5) != DBNull.Value)
-                    comp.UserLogin = reader.GetString(5);
-
-                if (reader.GetValue(6) != DBNull.Value)
-                    comp.OSName = reader.GetString(6);
-
-                if (reader.GetValue(7) != DBNull.Value)
-                    comp.RAM = reader.GetInt16(7);
-
-                if (reader.GetValue(8) != DBNull.Value)
-                    comp.CPUClock = reader.GetInt16(8);
-
-                if (reader.GetValue(9) != DBNull.Value)
-                    comp.RecentActive = reader.GetDateTime(9);
-
-                if (reader.GetValue(10) != DBNull.Value)
-                    comp.LatestUpdate = reader.GetDateTime(10);
-
-                if (reader.GetValue(11) != DBNull.Value)
-                    comp.Vba32Version = reader.GetString(11);
-
-                if (reader.GetValue(12) != DBNull.Value)
-                    comp.LatestInfected = reader.GetDateTime(12);
-
-                if (reader.GetValue(13) != DBNull.Value)
-                    comp.LatestMalware = reader.GetString(13);
-
-                if (reader.GetValue(14) != DBNull.Value)
-                    comp.Vba32Integrity = reader.GetBoolean(14);
-
-                if (reader.GetValue(15) != DBNull.Value)
-                    comp.Vba32KeyValid = reader.GetBoolean(15);
-
-                if (reader.GetValue(16) != DBNull.Value)
-                    comp.Description = reader.GetString(16);
-
-                if (reader.GetValue(17) != DBNull.Value)
-                    comp.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
-                #endregion
-                computers.Add(comp);
-
-            }
-            reader.Close();
-
-
-            return computers;
-        }
-
-        internal int GetComputersByPolicyCount(string where)
-        {
-            //request to db
-
-            SqlCommand command = new SqlCommand("GetComputersByPolicyCount", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@Where", where);
-
-
-            return (int)command.ExecuteScalar();
-
-        }
-
-        //!OPTM - Шаблонный код. Нужно разбить отдельно парсинг IDataReader
-        internal List<ComputersEntity> GetComputersWithoutPolicyPage(int index, int pageCount,string orderBy)
-        {
-            //request to db
-
-            SqlCommand command = new SqlCommand("GetComputersWithoutPolicyPage", Connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@Page", index);
-            command.Parameters.AddWithValue("@RowCount", pageCount);
-            command.Parameters.AddWithValue("@OrderBy", orderBy);
-
-            List<ComputersEntity> computers = new List<ComputersEntity>();
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
-            {
-                #region Fill entity
-                ComputersEntity comp = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    comp.ID = reader.GetInt16(0);
-
-                if (reader.GetValue(1) != DBNull.Value)
-                    comp.ComputerName = reader.GetString(1);
-
-                if (reader.GetValue(2) != DBNull.Value)
-                    comp.IPAddress = reader.GetString(2);
-
-                if (reader.GetValue(3) != DBNull.Value)
-                    comp.ControlCenter = reader.GetBoolean(3);
-
-                if (reader.GetValue(4) != DBNull.Value)
-                    comp.DomainName = reader.GetString(4);
-
-                if (reader.GetValue(5) != DBNull.Value)
-                    comp.UserLogin = reader.GetString(5);
-
-                if (reader.GetValue(6) != DBNull.Value)
-                    comp.OSName = reader.GetString(6);
-
-                if (reader.GetValue(7) != DBNull.Value)
-                    comp.RAM = reader.GetInt16(7);
-
-                if (reader.GetValue(8) != DBNull.Value)
-                    comp.CPUClock = reader.GetInt16(8);
-
-                if (reader.GetValue(9) != DBNull.Value)
-                    comp.RecentActive = reader.GetDateTime(9);
-
-                if (reader.GetValue(10) != DBNull.Value)
-                    comp.LatestUpdate = reader.GetDateTime(10);
-
-                if (reader.GetValue(11) != DBNull.Value)
-                    comp.Vba32Version = reader.GetString(11);
-
-                if (reader.GetValue(12) != DBNull.Value)
-                    comp.LatestInfected = reader.GetDateTime(12);
-
-                if (reader.GetValue(13) != DBNull.Value)
-                    comp.LatestMalware = reader.GetString(13);
-
-                if (reader.GetValue(14) != DBNull.Value)
-                    comp.Vba32Integrity = reader.GetBoolean(14);
-
-                if (reader.GetValue(15) != DBNull.Value)
-                    comp.Vba32KeyValid = reader.GetBoolean(15);
-
-                if (reader.GetValue(16) != DBNull.Value)
-                    comp.Description = reader.GetString(16);
-                #endregion
-                computers.Add(comp);
-
-            }
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            computers = ComputersManager.GetComputersFromReader(reader);
             reader.Close();
 
             return computers;
         }
 
-        internal int GetComputersWithoutPolicyCount()
+        /// <summary>
+        /// Get computers page without policy
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="pageCount"></param>
+        /// <param name="orderBy"></param>
+        /// <returns></returns>
+        internal List<ComputersEntity> GetComputersWithoutPolicyPage(Int32 index, Int32 pageCount,String orderBy)
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetComputersWithoutPolicyPage", true);
 
-            SqlCommand command = new SqlCommand("GetComputersWithoutPolicyPageCount", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            database.AddCommandParameter(command, "@Page", DbType.Int32, index, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@RowCount", DbType.Int32, pageCount, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@OrderBy", DbType.Int32, orderBy, ParameterDirection.Input);
 
-            return (int)command.ExecuteScalar();
+            List<ComputersEntity> computers = null;
 
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            computers = ComputersManager.GetComputersFromReader(reader);
+            reader.Close();
+
+            return computers;
         }
 
-        internal Policy GetPolicyToComputer(string computerName)
+        /// <summary>
+        /// Get computer count without policy
+        /// </summary>
+        /// <returns></returns>
+        internal Int32 GetComputersWithoutPolicyCount()
         {
-            //request to db
+            IDbCommand command = database.CreateCommand("GetComputersWithoutPolicyPageCount", true);
 
-            SqlCommand command = new SqlCommand("GetPoliciesToComputer", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            return (Int32)command.ExecuteScalar();
+        }
 
-            command.Parameters.AddWithValue("@ComputerName", computerName);
+        /// <summary>
+        /// Get policies to computer by computer name
+        /// </summary>
+        /// <param name="computerName"></param>
+        /// <returns></returns>
+        internal Policy GetPolicyToComputer(String computerName)
+        {
+            IDbCommand command = database.CreateCommand("GetPoliciesToComputer", true);
 
-            SqlDataReader reader = command.ExecuteReader();
+            database.AddCommandParameter(command, "@ComputerName", DbType.String, computerName, ParameterDirection.Input);
+
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             Policy policy = new Policy();
-            try
-            {
 
-                if (reader.Read())
-                {
-                    policy.ID = reader.GetInt16(0);
-                    policy.Name = reader.GetString(1);
-                    policy.Content = reader.GetString(2);
-                    policy.Comment = reader.GetString(3);
-                }
-                else
-                {
-                    reader.Close();
-                    string defaultPolicy = GetDefaultPolicyName();
-                    if (!String.IsNullOrEmpty(defaultPolicy))
-                        policy = GetPolicyByName(defaultPolicy);
-                }
-            }
-            finally
+            if (reader.Read())
             {
-                if (!reader.IsClosed)
-                    reader.Close();
+                policy = GetPolicyFromReader(reader);
+                reader.Close();
+            }
+            else
+            {
+                reader.Close();
+                String defaultPolicy = GetDefaultPolicyName();
+                if (!String.IsNullOrEmpty(defaultPolicy))
+                    policy = GetPolicyByName(defaultPolicy);
             }
 
             return policy;
         }
 
-        internal string GetDefaultPolicyName()
+        /// <summary>
+        /// Get default policy name
+        /// </summary>
+        /// <returns></returns>
+        internal static String GetDefaultPolicyName()
         {
-            string registryControlCenterKeyName;
+            String registryControlCenterKeyName;
             RegistryKey key;
-            //try
-            //{
-            //!-OPTM Вынести такую проверку в App_Code и юзать один код
+            
             if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
                 registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
             else
@@ -453,46 +314,34 @@ namespace VirusBlokAda.CC.DataBase
 
             key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName); ;
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Diagnostics.Debug.Write("Registry open 'ControlCenter' key error: " + ex.Message);
-            //}
-
-            return (string)key.GetValue("DefaultPolicy");
+            return (String)key.GetValue("DefaultPolicy");
         }
 
+        /// <summary>
+        /// Get policy type list
+        /// </summary>
+        /// <returns></returns>
         internal List<Policy> GetPolicyType()
         {
-            SqlCommand command = new SqlCommand("GetPolicyTypes", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("GetPolicyTypes", true);
 
-
-            SqlDataReader reader = command.ExecuteReader();
-            List<Policy> policies = new List<Policy>();
-            while (reader.Read())
-            {
-                Policy policy = new Policy();
-                policy.ID = reader.GetInt16(0);
-                policy.Name = reader.GetString(1);
-                policy.Content = reader.GetString(2);
-                policy.Comment = reader.GetString(3);
-
-                policies.Add(policy);
-            }
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            List<Policy> policies = GetPoliciesFromReader(reader);
             reader.Close();
 
             return policies;
-
         }
 
+        /// <summary>
+        /// Remove all policies
+        /// </summary>
         internal void ClearAllPolicy()
         {
-            SqlCommand command = new SqlCommand("ClearAllPolicy", Connection);
-            command.CommandType = CommandType.StoredProcedure;
+            IDbCommand command = database.CreateCommand("ClearAllPolicy", true);
 
             command.ExecuteNonQuery();
         }
+
         #endregion
     }
 }

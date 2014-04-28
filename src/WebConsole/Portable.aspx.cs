@@ -533,18 +533,9 @@ public partial class Portable : PageBase
             //„то это за строчка и зачем она нужна была???
             // if (!tasktypes.Contains( upComp))
             {
-                using (VlslVConnection conn = new VlslVConnection(
-                   ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-
+                    TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
                     tasktypes = db.ListTaskTypes();
-
                     db.GetTaskTypeID(upComp.Name, true);
-
-                    conn.CloseConnection();
-                }
             }
 
             collection.Add(upComp);

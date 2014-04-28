@@ -153,66 +153,6 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="groupID"></param>
         /// <returns></returns>
-        internal List<ComputersEntity> GetComputersByGroup(Int32 groupID)
-        {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-
-            IDbCommand cmd = database.CreateCommand("GetComputersByGroup", true);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            ComputersEntity ent;
-            while (reader.Read())
-            {
-                ent = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    ent.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
-
-                list.Add(ent);
-            }
-            reader.Close();
-            return list;
-        }
-
-        /// <summary>
-        /// Get computers by group
-        /// </summary>
-        /// <param name="groupID"></param>
-        /// <returns></returns>
         internal List<ComputersEntity> GetComputersByGroup(Int32 groupID, String where)
         {
             List<ComputersEntity> list = new List<ComputersEntity>();
@@ -320,7 +260,7 @@ namespace VirusBlokAda.CC.DataBase
                 if (reader.GetValue(16) != DBNull.Value)
                     ent.Description = reader.GetString(16);
                 if (reader.GetValue(17) != DBNull.Value)
-                    ent.PolicyName = reader.GetString(17);
+                    ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
 
                 list.Add(ent);
             }
@@ -617,7 +557,7 @@ namespace VirusBlokAda.CC.DataBase
                 if (reader.GetValue(16) != DBNull.Value)
                     ent.Description = reader.GetString(16);
                 if (reader.GetValue(17) != DBNull.Value)
-                    ent.PolicyName = reader.GetString(17);
+                    ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
                 list.Add(ent);
             }
             reader.Close();

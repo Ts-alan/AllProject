@@ -29,21 +29,14 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             List<EventsEntity> list = new List<EventsEntity>();
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    EventsManager db = new EventsManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    list = db.List(sortExpression, "EventTime ASC", 1, count);
-                    conn.CloseConnection();
-                }
+                EventProvider db = new EventProvider(connStr);
+                list = db.List(sortExpression, "EventTime ASC", 1, count);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LoggerPMS.log.Error("Vba32PMS.GetEventsFromDb()::Ошибка при попытке получить данные из БД: " + ex.Message);
                 return null;
-            
+
             }
             return list;
         }
@@ -97,17 +90,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    //Вызов соответствующей хранимой процедуры
-                    db.ChangeDeliveryState(dtTo);
-
-                    conn.CloseConnection();
-                }
+                TaskProvider db = new TaskProvider(connStr);
+                db.ChangeDeliveryState(dtTo);
             }
             catch (Exception ex)
             {
@@ -139,17 +123,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    EventsManager db = new EventsManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    //Вызов соответствующей хранимой процедуры
-                    db.ClearOldEvents(dtTo);
-
-                    conn.CloseConnection();
-                }
+                EventProvider db = new EventProvider(connStr);
+                db.ClearOldEvents(dtTo);
             }
             catch (Exception ex)
             {
@@ -183,17 +158,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    //Вызов соответствующей хранимой процедуры
-                    db.ClearOldTasks(dtTo);
-
-                    conn.CloseConnection();
-                }
+                TaskProvider db = new TaskProvider(connStr);
+                db.ClearOldTasks(dtTo);
             }
             catch (Exception ex)
             {
@@ -224,17 +190,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    ComputersManager db = new ComputersManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    //Вызов соответствующей хранимой процедуры
-                    db.ClearOldComputers(dtTo);
-
-                    conn.CloseConnection();
-                }
+                ComputerProvider db = new ComputerProvider(connStr);
+                db.ClearOldComputers(dtTo);
             }
             catch (Exception ex)
             {
@@ -252,20 +209,11 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         private Boolean CompressDB(String connStr)
         {
             LoggerPMS.log.Debug("Vba32PMS.CompressDB()::Сжатие базы данных");
-           
+
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connStr))
-                {
-                    DataBaseManager db = new DataBaseManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    //Вызов соответствующей хранимой процедуры
-                    db.ShrinkDataBase(10);
-
-                    conn.CloseConnection();
-                }
+                DataBaseProvider db = new DataBaseProvider(connStr);
+                db.ShrinkDataBase(10);
             }
             catch (Exception ex)
             {
@@ -288,16 +236,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             List<String> list = null;
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connectionString))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
-
-                    list = db.GetIPAddressListForConfigure();
-
-                    conn.CloseConnection();
-                }
+                TaskProvider db = new TaskProvider(connectionString);
+                list = db.GetIPAddressListForConfigure();
             }
             catch (Exception ex)
             {

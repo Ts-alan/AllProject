@@ -24,6 +24,13 @@ namespace VirusBlokAda.CC.DataBase
             set { computerName = value; }
         }
 
+        protected String macAddress = String.Empty;
+        public String MacAddress
+        {
+            get { return macAddress; }
+            set { macAddress = value; }
+        }
+
         protected String iPAddress = String.Empty;
         public String IPAddress
         {
@@ -148,27 +155,35 @@ namespace VirusBlokAda.CC.DataBase
         #region Constructors
 
         public ComputersEntity()
-            : this(0, String.Empty, String.Empty, false, String.Empty, String.Empty, 0, 0, 0, DateTime.MinValue, DateTime.MinValue, String.Empty,
-                DateTime.MinValue, String.Empty, false, false, String.Empty)
+            : this(String.Empty, String.Empty, String.Empty, false, String.Empty, String.Empty,
+            String.Empty, 0, 0, 0, DateTime.MinValue, DateTime.MinValue, String.Empty,
+                DateTime.MinValue, String.Empty, false, false, String.Empty, null)
         { }
 
-        public ComputersEntity(Int16 iD, String computerName, String iPAddress, Boolean controlCenter, String domainName, String userLogin, Int16 oSTypeID,
-            Int16 rAM, Int16 cPUClock, DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
-            Boolean vba32Integrity, Boolean vba32KeyValid, String description)
-            : this(iD, computerName, iPAddress, controlCenter, domainName, userLogin, oSTypeID, rAM, cPUClock, recentActive, latestUpdate,
-                vba32Version, latestInfected, latestMalware, vba32Integrity, vba32KeyValid, description, new ComputerAdditionalEntity())
-        { }
+        public ComputersEntity(String computerName, String macAddress, String iPAddress, Boolean controlCenter,
+            String domainName, String userLogin, String osName, Int16 oSTypeID, Int16 rAM, Int16 cPUClock,
+            DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
+            Boolean vba32Integrity, Boolean vba32KeyValid, String description, ComputerAdditionalEntity additionalInfo)
+            : this(0, computerName, macAddress, iPAddress, controlCenter,
+            domainName, userLogin, osName, oSTypeID, rAM, cPUClock,
+            recentActive, latestUpdate, vba32Version, latestInfected,
+            latestMalware, vba32Integrity, vba32KeyValid, description, additionalInfo)
+        {
+        }
 
-        public ComputersEntity(Int16 iD, String computerName, String iPAddress, Boolean controlCenter, String domainName, String userLogin, Int16 oSTypeID,
-            Int16 rAM, Int16 cPUClock, DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
+        public ComputersEntity(Int16 iD, String computerName, String macAddress, String iPAddress, Boolean controlCenter,
+            String domainName, String userLogin, String osName, Int16 oSTypeID, Int16 rAM, Int16 cPUClock,
+            DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
             Boolean vba32Integrity, Boolean vba32KeyValid, String description, ComputerAdditionalEntity additionalInfo)
         {
             this.iD = iD;
             this.computerName = computerName;
+            this.macAddress = macAddress;
             this.iPAddress = iPAddress;
             this.controlCenter = controlCenter;
             this.domainName = domainName;
             this.userLogin = userLogin;
+            this.oSName = osName;
             this.oSTypeID = oSTypeID;
             this.rAM = rAM;
             this.cPUClock = cPUClock;
@@ -180,7 +195,15 @@ namespace VirusBlokAda.CC.DataBase
             this.vba32Integrity = vba32Integrity;
             this.vba32KeyValid = vba32KeyValid;
             this.description = description;
-            this._additionalInfo = additionalInfo;
+            this._additionalInfo = (additionalInfo != null) ? additionalInfo : new ComputerAdditionalEntity();
+        }
+
+        public ComputersEntity(ComputersEntity comp)
+            : this(comp.ID, comp.ComputerName, comp.MacAddress, comp.IPAddress, comp.ControlCenter,
+            comp.DomainName, comp.UserLogin, comp.OSName, comp.OSTypeID, comp.RAM, comp.CPUClock,
+            comp.RecentActive, comp.LatestUpdate, comp.Vba32Version, comp.LatestInfected,
+            comp.LatestMalware, comp.Vba32Integrity, comp.Vba32KeyValid, comp.Description, comp.AdditionalInfo)
+        {
         }
 
         #endregion
@@ -191,24 +214,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Clone object</returns>
         public virtual object Clone()
         {
-            return new ComputersEntity(
-                    this.iD,
-                    this.computerName,
-                    this.iPAddress,
-                    this.controlCenter,
-                    this.domainName,
-                    this.userLogin,
-                    this.oSTypeID,
-                    this.rAM,
-                    this.cPUClock,
-                    this.recentActive,
-                    this.latestUpdate,
-                    this.vba32Version,
-                    this.latestInfected,
-                    this.latestMalware,
-                    this.vba32Integrity,
-                    this.vba32KeyValid,
-                    this.description);
+            return new ComputersEntity(this);
         }
 
     }

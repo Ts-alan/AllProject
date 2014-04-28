@@ -17,12 +17,6 @@ namespace VirusBlokAda.CC.DataBase
 		private VlslVConnection database; 
 		
 		#region Constructors
-		public ComputersManager()
-		{
-			//
-			// TODO: Add constructor logic here
-			//
-		}
 		public ComputersManager(VlslVConnection l_database)
 		{
 			database=l_database;
@@ -30,67 +24,143 @@ namespace VirusBlokAda.CC.DataBase
 		#endregion
 		
 		#region Methods
-		
-		/// <summary>
-		/// Select entity from database with this id
-		/// </summary>
-		/// <param name="computersID">ID</param>
-		/// <returns>id</returns>
-        internal ComputersEntity Get(Int16 computersID)
-		{
-			IDbCommand command=database.CreateCommand("GetComputer",true);
-			
-			database.AddCommandParameter(command,"@ID",
-				DbType.Int16,(Int16)computersID,ParameterDirection.Input);
-				
-			ComputersEntity computers = new ComputersEntity();
-			SqlDataReader reader=command.ExecuteReader() as SqlDataReader;
-			
-			if(reader.Read())
-			{
-                if (reader.GetValue(0) != DBNull.Value)
-                    computers.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    computers.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    computers.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    computers.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    computers.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    computers.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    computers.OSTypeID = reader.GetInt16(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    computers.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    computers.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    computers.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    computers.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    computers.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    computers.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    computers.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    computers.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    computers.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    computers.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    computers.OSName = reader.GetString(17);
-                if (reader.GetValue(18) != DBNull.Value)
-                    computers.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(18));
 
-			}
-			reader.Close();
-			return computers;
-		}
+        /// <summary>
+        /// Get computer from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static ComputersEntity GetComputerFromReader(IDataReader reader)
+        {
+            ComputersEntity comp = new ComputersEntity();
+            if (reader.GetValue(0) != DBNull.Value)
+                comp.ID = reader.GetInt16(0);
+
+            if (reader.GetValue(1) != DBNull.Value)
+                comp.ComputerName = reader.GetString(1);
+
+            if (reader.GetValue(2) != DBNull.Value)
+                comp.MacAddress = reader.GetString(2);
+
+            if (reader.GetValue(3) != DBNull.Value)
+                comp.IPAddress = reader.GetString(3);
+
+            if (reader.GetValue(4) != DBNull.Value)
+                comp.ControlCenter = reader.GetBoolean(4);
+
+            if (reader.GetValue(5) != DBNull.Value)
+                comp.DomainName = reader.GetString(5);
+
+            if (reader.GetValue(6) != DBNull.Value)
+                comp.UserLogin = reader.GetString(6);
+
+            if (reader.GetValue(7) != DBNull.Value)
+                comp.OSTypeID = reader.GetInt16(7);
+
+            if (reader.GetValue(8) != DBNull.Value)
+                comp.RAM = reader.GetInt16(8);
+
+            if (reader.GetValue(9) != DBNull.Value)
+                comp.CPUClock = reader.GetInt16(9);
+
+            if (reader.GetValue(10) != DBNull.Value)
+                comp.RecentActive = reader.GetDateTime(10);
+
+            if (reader.GetValue(11) != DBNull.Value)
+                comp.LatestUpdate = reader.GetDateTime(11);
+
+            if (reader.GetValue(12) != DBNull.Value)
+                comp.Vba32Version = reader.GetString(12);
+
+            if (reader.GetValue(13) != DBNull.Value)
+                comp.LatestInfected = reader.GetDateTime(13);
+
+            if (reader.GetValue(14) != DBNull.Value)
+                comp.LatestMalware = reader.GetString(14);
+
+            if (reader.GetValue(15) != DBNull.Value)
+                comp.Vba32Integrity = reader.GetBoolean(15);
+
+            if (reader.GetValue(16) != DBNull.Value)
+                comp.Vba32KeyValid = reader.GetBoolean(16);
+
+            if (reader.GetValue(17) != DBNull.Value)
+                comp.Description = reader.GetString(17);
+
+            if (reader.GetValue(18) != DBNull.Value)
+                comp.OSName = reader.GetString(18);
+
+            if (reader.GetValue(19) != DBNull.Value)
+                comp.AdditionalInfo.IsControllable = reader.GetBoolean(19);
+
+            if (reader.GetValue(20) != DBNull.Value)
+                comp.AdditionalInfo.IsRenamed = reader.GetBoolean(20);
+
+            if (reader.GetValue(21) != DBNull.Value)
+                comp.AdditionalInfo.PreviousComputerName = reader.GetString(21);
+
+            if (reader.GetValue(22) != DBNull.Value)
+                comp.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(22));
+
+            return comp;
+        }
+
+        /// <summary>
+        /// Get computers from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static List<ComputersEntity> GetComputersFromReader(IDataReader reader)
+        {
+            List<ComputersEntity> computers = new List<ComputersEntity>();
+
+            while (reader.Read())
+            {
+                computers.Add(GetComputerFromReader(reader));
+            }
+
+            return computers;
+        }
+
+        /// <summary>
+        /// Get computer extended from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static ComputersEntityEx GetComputerExFromReader(IDataReader reader)
+        {
+            Group group = new Group();
+            Policy policy = new Policy();
+
+            ComputersEntity comp = GetComputerFromReader(reader);
+            if (reader.GetValue(23) != DBNull.Value)
+                group.ID = reader.GetInt32(23);
+            if (reader.GetValue(24) != DBNull.Value)
+                group.Name = reader.GetString(24);
+            if (reader.GetValue(25) != DBNull.Value)
+                policy.ID = reader.GetInt32(25);
+            if (reader.GetValue(26) != DBNull.Value)
+                policy.Name = reader.GetString(26);
+
+            return new ComputersEntityEx(comp, group, policy, null);
+        }
+
+        /// <summary>
+        /// Get computers extended from SqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        internal static List<ComputersEntityEx> GetComputersExFromReader(IDataReader reader)
+        {
+            List<ComputersEntityEx> computers = new List<ComputersEntityEx>();
+
+            while (reader.Read())
+            {
+                computers.Add(GetComputerExFromReader(reader));
+            }
+
+            return computers;
+        }
 
         /// <summary>
 		/// Delete entity from database with this id
@@ -132,48 +202,7 @@ namespace VirusBlokAda.CC.DataBase
 				DbType.String,order,ParameterDirection.Input);
 
 			SqlDataReader reader=command.ExecuteReader() as SqlDataReader;
-            List<ComputersEntity> list = new List<ComputersEntity>();
-			while(reader.Read())
-			{
-				ComputersEntity computers = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    computers.ID = reader.GetInt16(0);
-				if(reader.GetValue(1)!= DBNull.Value)
-					computers.ComputerName = reader.GetString(1);
-				if(reader.GetValue(2)!= DBNull.Value)
-					computers.IPAddress = reader.GetString(2);
-				if(reader.GetValue(3)!= DBNull.Value)
-					computers.ControlCenter = reader.GetBoolean(3);
-				if(reader.GetValue(4)!= DBNull.Value)
-					computers.DomainName = reader.GetString(4);
-				if(reader.GetValue(5)!= DBNull.Value)
-					computers.UserLogin = reader.GetString(5);
-				if(reader.GetValue(6)!= DBNull.Value)
-					computers.OSName = reader.GetString(6);
-				if(reader.GetValue(7)!= DBNull.Value)
-					computers.RAM = reader.GetInt16(7);
-				if(reader.GetValue(8)!= DBNull.Value)
-					computers.CPUClock = reader.GetInt16(8);
-				if(reader.GetValue(9)!= DBNull.Value)
-					computers.RecentActive = reader.GetDateTime(9);
-				if(reader.GetValue(10)!= DBNull.Value)
-					computers.LatestUpdate = reader.GetDateTime(10);
-				if(reader.GetValue(11)!= DBNull.Value)
-					computers.Vba32Version = reader.GetString(11);
-				if(reader.GetValue(12)!= DBNull.Value)
-					computers.LatestInfected = reader.GetDateTime(12);
-				if(reader.GetValue(13)!= DBNull.Value)
-					computers.LatestMalware = reader.GetString(13);
-				if(reader.GetValue(14)!= DBNull.Value)
-					computers.Vba32Integrity = reader.GetBoolean(14);
-				if(reader.GetValue(15)!= DBNull.Value)
-					computers.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    computers.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    computers.AdditionalInfo.ControlDeviceType = ControlDeviceTypeEnumExtensions.Get(reader.GetString(17));
-				list.Add(computers);
-			}
+            List<ComputersEntity> list = GetComputersFromReader(reader);
 			reader.Close();
 			return list;			
 		}
@@ -185,7 +214,6 @@ namespace VirusBlokAda.CC.DataBase
 		/// <returns></returns>
         internal Int32 Count(String where)
 		{
-
             IDbCommand command = database.CreateCommand("GetComputersCount", true);
 
 			database.AddCommandParameter(command,"@where",
@@ -193,6 +221,50 @@ namespace VirusBlokAda.CC.DataBase
 
 			return (Int32)command.ExecuteScalar();
 		}
+
+        /// <summary>
+        /// Get computer list
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <param name="orderBy">Sort query</param>
+        /// <returns></returns>
+        internal List<ComputersEntity> GetComputers(String where, String orderBy)
+        {
+            IDbCommand command = database.CreateCommand("GetComputers", true);
+
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
+
+            database.AddCommandParameter(command, "@OrderBy",
+                DbType.String, orderBy, ParameterDirection.Input);
+
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            List<ComputersEntity> list = GetComputersFromReader(reader);
+            reader.Close();
+            return list;
+        }
+
+        /// <summary>
+        /// Get computer extended list without components
+        /// </summary>
+        /// <param name="where">Filter query</param>
+        /// <param name="orderBy">Sort query</param>
+        /// <returns></returns>
+        internal List<ComputersEntityEx> GetComputersEx(String where, String orderBy)
+        {
+            IDbCommand command = database.CreateCommand("GetComputers", true);
+
+            database.AddCommandParameter(command, "@Where",
+                DbType.String, where, ParameterDirection.Input);
+
+            database.AddCommandParameter(command, "@OrderBy",
+                DbType.String, orderBy, ParameterDirection.Input);
+
+            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
+            List<ComputersEntityEx> list = GetComputersExFromReader(reader);
+            reader.Close();
+            return list;
+        }
 
         /// <summary>
         /// Update computer's description
@@ -245,49 +317,15 @@ namespace VirusBlokAda.CC.DataBase
             database.AddCommandParameter(command, "@ID",
                 DbType.Int16, (Int16)id, ParameterDirection.Input);
 
-            command.CommandType = CommandType.StoredProcedure;
-
+            ComputersEntity computer = null;
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            ComputersEntity computers = new ComputersEntity();
+
             if (reader.Read())
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    computers.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    computers.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    computers.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    computers.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    computers.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    computers.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    computers.OSTypeID = reader.GetInt16(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    computers.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    computers.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    computers.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    computers.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    computers.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    computers.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    computers.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    computers.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    computers.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    computers.Description = reader.GetString(16);
+                computer = GetComputerFromReader(reader);
             }
-
-            return computers;
+            reader.Close();
+            return computer;
         }
 
         /// <summary>
@@ -312,7 +350,7 @@ namespace VirusBlokAda.CC.DataBase
         }
 
         /// <summary>
-        /// Get extension version of computer entity by ID
+        /// Get extension version of computer entity by ID without components
         /// </summary>
         /// <param name="computersID">Computer ID</param>
         /// <returns>Extension version of computer entity</returns>
@@ -323,50 +361,15 @@ namespace VirusBlokAda.CC.DataBase
             database.AddCommandParameter(command, "@ID",
                 DbType.Int16, (Int16)computersID, ParameterDirection.Input);
 
-            ComputersEntityEx computers = new ComputersEntityEx();
+            ComputersEntityEx computer = null;
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
 
             if (reader.Read())
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    computers.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    computers.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    computers.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    computers.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    computers.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    computers.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    computers.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    computers.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    computers.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    computers.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    computers.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    computers.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    computers.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    computers.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    computers.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    computers.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    computers.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    computers.PolicyName = reader.GetString(17);
+                computer = GetComputerExFromReader(reader); 
             }
             reader.Close();
-            return computers;
+            return computer;
         }
 
         /// <summary>
@@ -415,7 +418,6 @@ namespace VirusBlokAda.CC.DataBase
         }
 
 		#endregion
-		
 	}		
 }
 

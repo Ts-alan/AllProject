@@ -1258,21 +1258,8 @@ public partial class AsynchLanScan : PageBase
         List<IPAddress> ipList = new List<IPAddress>();
         List<string> list = null;
 
-        using (VlslVConnection conn =
-            new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            try
-            {
-                ComputersManager cmg = new ComputersManager(conn);
-                conn.OpenConnection();
-
-                list = cmg.GetRegisteredCompList(true);
-            }
-            finally
-            {
-                conn.CloseConnection();
-            }
-        }
+        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        list = db.GetRegisteredCompList();
 
         foreach (string item in list)
         {

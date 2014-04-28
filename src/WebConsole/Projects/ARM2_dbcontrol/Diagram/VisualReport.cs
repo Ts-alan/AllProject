@@ -29,20 +29,8 @@ namespace VirusBlokAda.CC.Diagram
 
         public List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
-            List<StatisticEntity> list = new List<StatisticEntity>();
-
-            using (VlslVConnection conn = new VlslVConnection(_connectionString))
-            {
-                EventsManager db = new EventsManager(conn);
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-
-                list = db.GetStatistics(groupBy, where, size);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            EventProvider db = new EventProvider(ConnectionString);
+                return db.GetStatistics(groupBy, where, size);
         }
     }
 }

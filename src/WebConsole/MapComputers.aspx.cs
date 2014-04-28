@@ -76,16 +76,9 @@ public partial class MapComputers : PageBase
         TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);
         if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 3) return "vbagrey";
         List<ComponentsEntity> list;
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComponentsManager cmng = new ComponentsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
+        
+        ComponentsProvider cmng = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
             list = cmng.List(String.Format("ComputerName = \'{0}\' AND (ComponentName = \'Vba32 Loader\' OR ComponentName = \'Vba32 Monitor\')", entity.ComputerName), null, 1, Int16.MaxValue);
-
-            conn.CloseConnection();
-        }
         
         if (list != null && list.Count == 2)        
         {

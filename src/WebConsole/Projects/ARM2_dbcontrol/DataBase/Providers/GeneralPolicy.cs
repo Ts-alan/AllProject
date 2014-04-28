@@ -7,25 +7,23 @@ using VirusBlokAda.CC.Common.Xml;
 
 namespace VirusBlokAda.CC.DataBase
 {
-    public class GeneralPolicy
+    internal class GeneralPolicy
     {
-        private string _generalizePolicy = String.Empty;
-
-        public string GeneralizePolicy
+        private String _generalizePolicy = String.Empty;
+        public String GeneralizePolicy
         {
             get { return _generalizePolicy; }
             set { _generalizePolicy = value; }
         }
 
-        private string _hash = String.Empty;
-
-        public string Hash
+        private String _hash = String.Empty;
+        public String Hash
         {
             get { return _hash; }
             set { _hash = value; }
         }
 
-        public GeneralPolicy(string computerName, string ip, SqlConnection conn)
+        public GeneralPolicy(String computerName, String ip, VlslVConnection conn)
         {
             VerifyComputer(computerName, ip);
 
@@ -33,7 +31,7 @@ namespace VirusBlokAda.CC.DataBase
             DevicePolicyManager dpm = new DevicePolicyManager(conn);
 
             Policy policy;
-            string devicePolicy;
+            String devicePolicy;
             ///to try to fix 0007326
 
             //conn isn't thread-safe
@@ -77,7 +75,7 @@ namespace VirusBlokAda.CC.DataBase
 
         }
 
-        private bool VerifyComputer(string computerName, string ip)
+        private bool VerifyComputer(String computerName, String ip)
         {
             //ћожет здесь стоит создать свой словарь computerName - IP
 

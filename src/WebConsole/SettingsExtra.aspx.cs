@@ -79,28 +79,20 @@ public partial class SettingsExtra : PageBase
     /// </summary>
     private void UpdateData()
     {
-        using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventTypesManager db = new EventTypesManager(conn);
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
+        string filter = "EventName like '%'";
+        string sort = "EventName ASC";
 
-            string filter = "EventName like '%'";
-            string sort = "EventName ASC";
+        int count = db.Count(filter);
+        int pageSize = 20;
+        int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
-            int count = db.Count(filter);
-            int pageSize = 20;
-            int pageCount = (int)Math.Ceiling((double)count / pageSize);
+        pcPaging.PageCount = pageCount;
 
-            pcPaging.PageCount = pageCount;
+        dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
 
-            dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
-
-            dlEvents.DataBind();
-            conn.CloseConnection();
-        }
+        dlEvents.DataBind();
         //LoadStateFromDataBase();
     }
 
@@ -147,31 +139,21 @@ public partial class SettingsExtra : PageBase
 
             case "UpdateCommand":
 
-                using (VlslVConnection conn = new VlslVConnection(
-                    ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                {
-                    EventTypesManager db = new EventTypesManager(conn);
+                EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-                    conn.OpenConnection();
-                    conn.CheckConnectionState(true);
+                EventTypesEntity event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
+                        (e.Item.FindControl("lblName") as Label).Text, (e.Item.FindControl("ddlMultiColor") as DropDownList).SelectedValue, false, false, false);
 
-                    EventTypesEntity event_ = new EventTypesEntity( Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                            (e.Item.FindControl("lblName") as Label).Text, (e.Item.FindControl("ddlMultiColor") as DropDownList).SelectedValue,false,false,false);
-
-                    db.UpdateColor(event_);
-                    conn.CloseConnection();
-                }
+                db.UpdateColor(event_);
                 //Label lbtn = (Label)e.Item.FindControl("lblName");
                 //if (lbtn != null)
                 //    Anchor.ScrollToObj(lbtn.ClientID, Page);
 
                 dlEvents.EditItemIndex = -1;
                 UpdateData();
-                
+
                 break;
-
         }
-
     }
 
     /// <summary>

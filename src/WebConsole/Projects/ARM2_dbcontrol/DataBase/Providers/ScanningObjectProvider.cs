@@ -7,32 +7,31 @@ namespace VirusBlokAda.CC.DataBase
     public class ScanningObjectProvider
     {
         private readonly String connectionString;
-        private ScanningObjectManager scanMngr;
+        private VlslVConnection connection;
 
-        public ScanningObjectProvider()
-        { }
+        private ScanningObjectManager scanMngr;
 
         public ScanningObjectProvider(String connectionString)
         {
             this.connectionString = connectionString;
+            connection = new VlslVConnection(connectionString);
+
+            InitManagers();
+        }
+
+        private void InitManagers()
+        {
+            scanMngr = new ScanningObjectManager(connection);
         }
 
         #region Methods
-                
+
         /// <summary>
         /// Add comment in database
         /// </summary>
         public void AddComment(ScanningObjectEntity entity)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                scanMngr = new ScanningObjectManager(conn);
-                conn.OpenConnection();
-
-                scanMngr.AddComment(entity);
-
-                conn.CloseConnection();
-            }
+            scanMngr.AddComment(entity);
         }
 
         /// <summary>
@@ -40,15 +39,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         public void DeleteComment(String ip)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                scanMngr = new ScanningObjectManager(conn);
-                conn.OpenConnection();
-
-                scanMngr.DeleteComment(ip);
-
-                conn.CloseConnection();
-            }
+            scanMngr.DeleteComment(ip);
         }
 
         /// <summary>
@@ -58,18 +49,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public String GetComment(String ip)
         {
-            String comment = String.Empty;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                scanMngr = new ScanningObjectManager(conn);
-                conn.OpenConnection();
-
-                comment = scanMngr.GetComment(ip);
-
-                conn.CloseConnection();
-            }
-
-            return comment;
+            return scanMngr.GetComment(ip);
         }
 
         #endregion

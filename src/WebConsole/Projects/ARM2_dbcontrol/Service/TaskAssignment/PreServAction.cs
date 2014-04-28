@@ -45,31 +45,24 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         {
             string[] strIP = new string[list.Count];
             for (int i = 0; i < list.Count; i++)
-                strIP[i] = GetComputerById(list[i],connStr).IPAddress;
+                strIP[i] = GetComputerById(list[i], connStr).IPAddress;
 
             return strIP;
         }
 
 
 
-        public static string[] GetIPArrayByTaskID(Int64[] taskId, string connStr)
+        public static String[] GetIPArrayByTaskID(Int64[] taskId, String connStr)
         {
             string[] strIP = new string[taskId.Length];
-            using (VlslVConnection conn = new VlslVConnection(connStr))
+            TaskProvider db = new TaskProvider(connStr);
+            for (int i = 0; i < taskId.Length; i++)
             {
-                TaskManager db = new TaskManager(conn);
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-                for (int i = 0; i < taskId.Length; i++)
-                {
-                    strIP[i] = db.GetIPAddressByTaskID(taskId[i]);
-                }
-                conn.CloseConnection();
+                strIP[i] = db.GetIPAddressByTaskID(taskId[i]);
             }
 
             return strIP;
         }
-
 
         /// <summary>
         /// Returns computernam array
@@ -81,15 +74,11 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
             string[] strComp = new string[list.Count];
             for (int i = 0; i < list.Count; i++)
             {
-                strComp[i] = GetComputerById(list[i],connStr).ComputerName;
+                strComp[i] = GetComputerById(list[i], connStr).ComputerName;
             }
 
             return strComp;
         }
-
-
-
-
 
         /// <summary>
         /// Return computer name by id
@@ -98,17 +87,8 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <returns></returns>
         public static ComputersEntity GetComputerById(Int16 id, string connStr)
         {
-            ComputersEntity comp = new ComputersEntity();
-            using (VlslVConnection conn = new VlslVConnection(connStr))
-            {
-                ComputersManager cmng = new ComputersManager(conn);
-                conn.OpenConnection();
-
-                comp = cmng.Get(id);
-
-                conn.CloseConnection();
-            }
-            return comp;
+            ComputerProvider db = new ComputerProvider(connStr);
+            return db.GetComputer(id);
         }
 
         /// <summary>
@@ -120,19 +100,9 @@ namespace ARM2_dbcontrol.Service.TaskAssignment
         /// <returns></returns>
         public static Int64 CreateTask(string computerName, string taskName, string taskParams, string taskUser, string connStr)
         {
-            Int64 ret = 0;
-            using (VlslVConnection conn = new VlslVConnection(connStr))
-            {
-                TaskManager db = new TaskManager(conn);
-                conn.OpenConnection();
+            TaskProvider db = new TaskProvider(connStr);
 
-                ret = Convert.ToInt64(db.CreateTask(computerName, taskName, taskParams, taskUser));
-
-                conn.CloseConnection();
-            }
-
-            return ret;
-
+            return Convert.ToInt64(db.CreateTask(computerName, taskName, taskParams, taskUser));
         }
 
         /// <summary>

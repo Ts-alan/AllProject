@@ -7,14 +7,21 @@ namespace VirusBlokAda.CC.DataBase
     public class GroupProvider
     {
         private readonly String connectionString;
-        private GroupManager groupMngr;
+        private VlslVConnection connection;
 
-        public GroupProvider()
-        { }
+        private GroupManager groupMngr;
 
         public GroupProvider(String connectionString)
         {
             this.connectionString = connectionString;
+            connection = new VlslVConnection(connectionString);
+
+            InitManagers();
+        }
+
+        private void InitManagers()
+        {
+            groupMngr = new GroupManager(connection);
         }
 
         #region Methods
@@ -27,18 +34,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public Int32 Add(Group group)
         {
-            Int32 id = Int32.MinValue;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                id = groupMngr.Add(group);
-
-                conn.CloseConnection();
-            }
-
-            return id;
+            return groupMngr.Add(group);
         }
 
         /// <summary>
@@ -47,15 +43,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group"></param>
         public void Delete(Group group)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                groupMngr.Delete(group);
-
-                conn.CloseConnection();
-            }
+            groupMngr.Delete(group);
         }
 
         /// <summary>
@@ -65,15 +53,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="newGroupName"></param>
         public void Update(String groupName, String newGroupName, String newComment, Int32? newParentID)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                groupMngr.Update(groupName, newGroupName, newComment, newParentID);
-
-                conn.CloseConnection();
-            }
+            groupMngr.Update(groupName, newGroupName, newComment, newParentID);
         }
 
         /// <summary>
@@ -83,15 +63,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="NewGroupID"></param>
         public void MoveComputerBetweenGroups(Int32 compID, Int32 NewGroupID)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                groupMngr.MoveComputerBetweenGroups(compID, NewGroupID);
-
-                conn.CloseConnection();
-            }
+            groupMngr.MoveComputerBetweenGroups(compID, NewGroupID);
         }
 
         /// <summary>
@@ -100,15 +72,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="compID"></param>
         public void DeleteComputerFromGroup(Int32 compID)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                groupMngr.DeleteComputerFromGroup(compID);
-
-                conn.CloseConnection();
-            }
+            groupMngr.DeleteComputerFromGroup(compID);
         }
 
         /// <summary>
@@ -118,15 +82,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="groupID"></param>
         public void AddComputerInGroup(Int32 compID, Int32 groupID)
         {
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                groupMngr.AddComputerInGroup(compID, groupID);
-
-                conn.CloseConnection();
-            }
+            groupMngr.AddComputerInGroup(compID, groupID);
         }
 
         /// <summary>
@@ -136,18 +92,8 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<ComputersEntity> GetComputersByGroup(Int32 groupID)
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetComputersByGroup(groupID);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            ComputersManager compMngr = new ComputersManager(connection);
+            return compMngr.GetComputers(String.Format("GroupID = {0}", groupID.ToString()), null);
         }
 
         /// <summary>
@@ -156,18 +102,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<Group> GetGroups()
         {
-            List<Group> list = new List<Group>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetGroups();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetGroups();
         }
 
         /// <summary>
@@ -176,18 +111,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<Group> GetSubgroups(Group? group)
         {
-            List<Group> list = new List<Group>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetSubgroups(group);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetSubgroups(group);
         }
 
 
@@ -197,18 +121,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<Group> GetSubgroups(int groupId)
         {
-            List<Group> list = new List<Group>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetSubgroups(groupId);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetSubgroups(groupId);
         }
 
 
@@ -223,19 +136,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<GroupEx> List(String where, String order, Int32 page, Int32 size)
         {
-            List<GroupEx> list = new List<GroupEx>();
-
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.List(where, order, page, size);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.List(where, order, page, size);
         }
 
         /// <summary>
@@ -245,18 +146,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public Int32 Count(String where)
         {
-            Int32 count = 0;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                count = groupMngr.Count(where);
-
-                conn.CloseConnection();
-            }
-
-            return count;
+            return groupMngr.Count(where);
         }
 
         /// <summary>
@@ -265,18 +155,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<ComputersEntity> GetComputersWithoutGroup()
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetComputersWithoutGroup();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetComputersWithoutGroup();
         }
 
         /// <summary>
@@ -286,18 +165,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public Int32 GetComputersWithoutGroupCount()
         {
-            Int32 count = 0;
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                count = groupMngr.GetComputersWithoutGroupCount();
-
-                conn.CloseConnection();
-            }
-
-            return count;
+            return groupMngr.GetComputersWithoutGroupCount();
         }
 
         /// <summary>
@@ -306,18 +174,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<ChildParentEntity> GetComputersWithGroups()
         {
-            List<ChildParentEntity> list = new List<ChildParentEntity>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetComputersWithGroups();
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetComputersWithGroups();
         }
 
         /// <summary>
@@ -327,18 +184,11 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExWithoutGroup()
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            ComponentsManager cmptMngr = new ComponentsManager(connection);
+
+            foreach (ComputersEntity comp in groupMngr.GetComputersWithoutGroup())
             {
-                groupMngr = new GroupManager(conn);
-                ComponentsManager cmptMngr = new ComponentsManager(conn);
-                conn.OpenConnection();
-
-                foreach (ComputersEntity comp in groupMngr.GetComputersWithoutGroup())
-                {
-                    list.Add(new ComputersEntityEx(comp, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
-                }
-
-                conn.CloseConnection();
+                list.Add(new ComputersEntityEx(comp, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
             }
 
             return list;
@@ -351,18 +201,11 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            ComponentsManager cmptMngr = new ComponentsManager(connection);
+
+            foreach (ComputersEntityEx comp in groupMngr.GetComputersExWithoutGroup(where))
             {
-                groupMngr = new GroupManager(conn);
-                ComponentsManager cmptMngr = new ComponentsManager(conn);
-                conn.OpenConnection();
-
-                foreach (ComputersEntityEx comp in groupMngr.GetComputersExWithoutGroup(where))
-                {
-                    list.Add(new ComputersEntityEx(comp, comp.PolicyName, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
-                }
-
-                conn.CloseConnection();
+                list.Add(new ComputersEntityEx(comp, comp.Group, comp.Policy, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
             }
 
             return list;
@@ -376,18 +219,12 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            ComponentsManager cmptMngr = new ComponentsManager(connection);
+            ComputersManager compMngr = new ComputersManager(connection);
+
+            foreach (ComputersEntity comp in compMngr.GetComputers(String.Format("GroupID = {0}", groupID), null))
             {
-                groupMngr = new GroupManager(conn);
-                ComponentsManager cmptMngr = new ComponentsManager(conn);
-                conn.OpenConnection();
-
-                foreach (ComputersEntity comp in groupMngr.GetComputersByGroup(groupID))
-                {
-                    list.Add(new ComputersEntityEx(comp, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
-                }
-
-                conn.CloseConnection();
+                list.Add(new ComputersEntityEx(comp, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
             }
 
             return list;
@@ -401,18 +238,11 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
+            ComponentsManager cmptMngr = new ComponentsManager(connection);
+
+            foreach (ComputersEntityEx comp in groupMngr.GetComputersExByGroup(groupID, where))
             {
-                groupMngr = new GroupManager(conn);
-                ComponentsManager cmptMngr = new ComponentsManager(conn);
-                conn.OpenConnection();
-
-                foreach (ComputersEntityEx comp in groupMngr.GetComputersExByGroup(groupID, where))
-                {
-                    list.Add(new ComputersEntityEx(comp, comp.PolicyName, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
-                }
-
-                conn.CloseConnection();
+                list.Add(new ComputersEntityEx(comp, comp.Group, comp.Policy, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
             }
 
             return list;
@@ -428,18 +258,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<ComputersEntity> GetComputersByGroupAndPolicy(Group? group, Policy? policy)
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetComputersByGroupAndPolicy(group, policy);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetComputersByGroupAndPolicy(group, policy);
         }
 
         /// <summary>
@@ -448,18 +267,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<Group> GetGroupListByComputerID(Int16 computerID)
         {
-            List<Group> list = new List<Group>();
-            using (VlslVConnection conn = new VlslVConnection(connectionString))
-            {
-                groupMngr = new GroupManager(conn);
-                conn.OpenConnection();
-
-                list = groupMngr.GetGroupListByComputerID(computerID);
-
-                conn.CloseConnection();
-            }
-
-            return list;
+            return groupMngr.GetGroupListByComputerID(computerID);
         }
 
         #endregion

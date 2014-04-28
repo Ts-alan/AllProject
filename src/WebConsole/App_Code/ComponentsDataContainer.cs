@@ -18,7 +18,7 @@ public static class ComponentsDataContainer
         String orderBy = "ComputerName ASC";
         String[] parts = SortExpression.Split(' ');
         Boolean descending = false;
-                
+
         if (parts.Length > 0 && parts[0] != "")
         {
             if (parts.Length > 1)
@@ -34,17 +34,8 @@ public static class ComponentsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComponentsManager db = new ComponentsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-            conn.CloseConnection();
-        }
+        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
 
         for (Int32 i = 0; i < list.Count; i++)
         {
@@ -56,39 +47,18 @@ public static class ComponentsDataContainer
 
     public static Int32 Count(String where)
     {
-        Int32 count = 0;
-
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComponentsManager db = new ComponentsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            count = db.Count(where);
-
-            conn.CloseConnection();
-        }
-
-        return count;
+        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.Count(where);
     }
 
     public static List<String> GetTypes()
     {
         List<String> list = new List<String>();
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+        foreach (ComponentsEntity ent in db.ListComponentType())
         {
-            ComponentsManager db = new ComponentsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            foreach (ComponentsEntity ent in db.ListComponentType())
-            {
-                list.Add(ent.ComponentName);
-            }
-
-            conn.CloseConnection();
+            list.Add(ent.ComponentName);
         }
 
         return list;
@@ -97,19 +67,11 @@ public static class ComponentsDataContainer
     public static List<String> GetStates()
     {
         List<String> list = new List<String>();
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+        foreach (ComponentsEntity ent in db.ListComponentState())
         {
-            ComponentsManager db = new ComponentsManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            foreach (ComponentsEntity ent in db.ListComponentState())
-            {
-                list.Add(ent.ComponentState);
-            }
-
-            conn.CloseConnection();
+            list.Add(ent.ComponentState);
         }
 
         return list;

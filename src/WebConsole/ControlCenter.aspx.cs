@@ -218,33 +218,22 @@ public partial class ControlCenter : PageBase
     private void UpdateData()
     {
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            EventTypesManager db = new EventTypesManager(conn);
+        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
+        string filter = "EventName like '%'";
+        string sort = (string)Session["ControlCenterSortExp"];
 
-            string filter = "EventName like '%'";
-            string sort = (string)Session["ControlCenterSortExp"];
+        int count = db.Count(filter);
+        int pageSize = 20;
+        int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
-           
+        pcPaging.PageCount = pageCount;
+        pcPagingTop.PageCount = pageCount;
 
-            int count = db.Count(filter);
-            int pageSize = 20;
-            int pageCount = (int)Math.Ceiling((double)count / pageSize);
+        dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
 
-            pcPaging.PageCount = pageCount;
-            pcPagingTop.PageCount = pageCount;
-
-            dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
-
-            dlEvents.DataBind();
-            conn.CloseConnection();
-        }
+        dlEvents.DataBind();
     }
-
 
 
     private void InitDdlList(int selectedItem)
@@ -336,40 +325,22 @@ public partial class ControlCenter : PageBase
     {
         if (e.CommandName == "SelectCommand")
         {
+            EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+            EventTypesEntity event_;
             switch ((string)e.CommandArgument)
             {
-
                 case "Send":
-                    using (VlslVConnection conn = new VlslVConnection(
-                        ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                    {
-                        EventTypesManager db = new EventTypesManager(conn);
 
-                        conn.OpenConnection();
-                        conn.CheckConnectionState(true);
-
-                        EventTypesEntity event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                                "", "", (e.Item.FindControl("ibtnSend") as ImageButton).ImageUrl.Contains("disabled.gif"), false,false);
-                        db.UpdateSend(event_);
-                        conn.CloseConnection();
-                    }
+                    event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
+                            "", "", (e.Item.FindControl("ibtnSend") as ImageButton).ImageUrl.Contains("disabled.gif"), false, false);
+                    db.UpdateSend(event_);
 
                     break;
 
                 case "NoDelete":
-                    using (VlslVConnection conn = new VlslVConnection(
-                        ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                    {
-                        EventTypesManager db = new EventTypesManager(conn);
-
-                        conn.OpenConnection();
-                        conn.CheckConnectionState(true);
-
-                        EventTypesEntity event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                                "", "", false, (e.Item.FindControl("ibtnNoDelete") as ImageButton).ImageUrl.Contains("disabled.gif"),false);
-                        db.UpdateNoDelete(event_);
-                        conn.CloseConnection();
-                    }
+                    event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
+                            "", "", false, (e.Item.FindControl("ibtnNoDelete") as ImageButton).ImageUrl.Contains("disabled.gif"), false);
+                    db.UpdateNoDelete(event_);
                     break;
 
             }
@@ -388,8 +359,6 @@ public partial class ControlCenter : PageBase
         }
         UpdateData();
     }
-
-   
 
     protected void dlEvents_ItemDataBound(object sender, DataListItemEventArgs e)
     {

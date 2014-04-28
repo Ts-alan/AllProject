@@ -139,16 +139,8 @@ public partial class Logins : System.Web.UI.Page
     private void CheckConnection()
     {
         lblError.Visible = false;
-        try
-        {
-            using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString))
-            {
-                conn.OpenConnection();
-                conn.CloseConnection();
-            }
-        }
-        catch (SqlException ex)
+        Exception error;
+        if (!DataBaseProvider.CheckConnection(ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString, out error))
         {
             lgLogin.Enabled = false;
             lblError.Visible = true;
@@ -161,8 +153,7 @@ public partial class Logins : System.Web.UI.Page
                     break;
             }
 
-
-            lblError.Text = errorText + ex.Message;
+            lblError.Text = errorText + error.Message;
             return;
         }
     }

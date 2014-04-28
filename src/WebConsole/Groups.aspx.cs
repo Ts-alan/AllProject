@@ -167,9 +167,9 @@ public partial class Groups : PageBase
         lbtnFilter.Text = Resources.Resource.Create;
         WebPartManager1.WebParts[0].Title = Resources.Resource.Main;
 
-            WebPartManager1.Zones[0].MinimizeVerb.Text = Resources.Resource.Minimize;
-            WebPartManager1.Zones[0].RestoreVerb.Text = Resources.Resource.Restore;
-            WebPartManager1.Zones[0].CloseVerb.Text = Resources.Resource.Close;
+        WebPartManager1.Zones[0].MinimizeVerb.Text = Resources.Resource.Minimize;
+        WebPartManager1.Zones[0].RestoreVerb.Text = Resources.Resource.Restore;
+        WebPartManager1.Zones[0].CloseVerb.Text = Resources.Resource.Close;
 
         UpdateData();
 
@@ -247,92 +247,82 @@ public partial class Groups : PageBase
     void UpdateData()
     {
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+
+        ///Получше разобраться, что я тут хотел сделать и почему это так
+        if (Session["GroupCheckBoxs"] != null)
         {
-
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-            ///!-OPTM песдетс:)
-            ///Получше разобраться, что я тут хотел сделать и почему это так
-            if (Session["GroupCheckBoxs"] != null)
+            Hashtable htbl = (Hashtable)Session["GroupCheckBoxs"];
+            Regex reg = new Regex(@"\$DataList1\$\w+");
+            ArrayList list = new ArrayList();
+            foreach (string str in Request.Form)
             {
-                Hashtable htbl = (Hashtable)Session["GroupCheckBoxs"];
-                Regex reg = new Regex(@"\$DataList1\$\w+");
-                ArrayList list = new ArrayList();
-                foreach (string str in Request.Form)
+                if (str == null) continue;
+                Match match = reg.Match(str);
+                if ((match.Success) && (htbl.ContainsKey(match.Value)))
                 {
-                    if (str == null) continue;
-                    Match match = reg.Match(str);
-                    if ((match.Success) && (htbl.ContainsKey(match.Value)))
-                    {
-                        list.Add(htbl[match.Value]);
-                    }
+                    list.Add(htbl[match.Value]);
                 }
-                Session["GroupCheckedValues"] = list;
             }
-
-            Session["GroupCheckBoxs"] = new Hashtable();				//list of id checkbox/computersid
-
-
-            GroupFilterEntity filter = new GroupFilterEntity(); ;
-
-            int? showMode = (int?)Session["GroupShowMode"];
-            if (!showMode.HasValue)
-                showMode = 0;
-
-            int count = 0;
-            groups = new List<GroupEx>();
-
-            GroupManager gmng = new GroupManager(conn);
-            //switch mode to data
-            switch (showMode)
-            {                
-                //use filter
-                default:
-                    if (Session["CurrentGroupFilter"] == null)
-                    {
-                        filter = new GroupFilterEntity();
-                        filter.ComputerName = "*";
-                        filter.GenerateSQLWhereStatement();
-                    }
-                    else
-                    {
-                        filter = (GroupFilterEntity)Session["CurrentGroupFilter"];
-                        filter.GenerateSQLWhereStatement();
-                    } 
-                    conn.CheckConnectionState(true);
-                    count = gmng.Count(filter.GetSQLWhereStatement);
-                    groups = gmng.List(filter.GetSQLWhereStatement,
-                            Convert.ToString(Session["GroupSorting"]),
-                            pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]));  
-                    
-                    ////заглушка
-                    //provider = PoliciesState;
-                    //policy = new Policy();
-                    //count = provider.GetGroupsByPolicyCount(policy);
-                    //groups = provider.GetGroupsByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]),
-                    //    Convert.ToString(Session["GroupSorting"]));
-                    break;
-            }
-
-
-            int pageSize = Convert.ToInt32(Session["GroupPageSize"]);
-            int pageCount = (int)Math.Ceiling((double)count / pageSize);
-
-            lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
-
-            pcPaging.PageCount = pageCount;
-            pcPagingTop.PageCount = pageCount;
-
-            Session["GroupsCurrentPageIndex"] = pcPaging.CurrentPageIndex;
-
-            DataList1.DataSource = groups;
-            DataList1.DataBind();
-
-
-            conn.CloseConnection();
+            Session["GroupCheckedValues"] = list;
         }
+
+        Session["GroupCheckBoxs"] = new Hashtable();				//list of id checkbox/computersid
+
+
+        GroupFilterEntity filter = new GroupFilterEntity(); ;
+
+        int? showMode = (int?)Session["GroupShowMode"];
+        if (!showMode.HasValue)
+            showMode = 0;
+
+        int count = 0;
+        groups = new List<GroupEx>();
+
+        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        //switch mode to data
+        switch (showMode)
+        {
+            //use filter
+            default:
+                if (Session["CurrentGroupFilter"] == null)
+                {
+                    filter = new GroupFilterEntity();
+                    filter.ComputerName = "*";
+                    filter.GenerateSQLWhereStatement();
+                }
+                else
+                {
+                    filter = (GroupFilterEntity)Session["CurrentGroupFilter"];
+                    filter.GenerateSQLWhereStatement();
+                }
+
+                count = gmng.Count(filter.GetSQLWhereStatement);
+                groups = gmng.List(filter.GetSQLWhereStatement,
+                        Convert.ToString(Session["GroupSorting"]),
+                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]));
+
+                ////заглушка
+                //provider = PoliciesState;
+                //policy = new Policy();
+                //count = provider.GetGroupsByPolicyCount(policy);
+                //groups = provider.GetGroupsByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]),
+                //    Convert.ToString(Session["GroupSorting"]));
+                break;
+        }
+
+
+        int pageSize = Convert.ToInt32(Session["GroupPageSize"]);
+        int pageCount = (int)Math.Ceiling((double)count / pageSize);
+
+        lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
+
+        pcPaging.PageCount = pageCount;
+        pcPagingTop.PageCount = pageCount;
+
+        Session["GroupsCurrentPageIndex"] = pcPaging.CurrentPageIndex;
+
+        DataList1.DataSource = groups;
+        DataList1.DataBind();
     }
 
     /// <summary>
@@ -508,27 +498,27 @@ public partial class Groups : PageBase
                 s += "<td align='center' width=100 bgcolor='" + argbColor + "'>" + ((GroupEx)e.Item.DataItem).Name + "</td>";
 
 
-                    s += "<td align='center' width=100 bgcolor='" + argbColor + "'>" + ((GroupEx)e.Item.DataItem).TotalCount + "</td>";
-                    s += "<td align='center' width=100 bgcolor='" + argbColor + "'>" + ((GroupEx)e.Item.DataItem).ActiveCount + "</td>";
-                    
-                    (e.Item.FindControl("tdParentName") as HtmlTableCell).BgColor = argbColor;
-                    (e.Item.FindControl("lbtnParentName") as Label).Text = String.IsNullOrEmpty(((GroupEx)e.Item.DataItem).ParentName) ? "-" : ((GroupEx)e.Item.DataItem).ParentName;
+                s += "<td align='center' width=100 bgcolor='" + argbColor + "'>" + ((GroupEx)e.Item.DataItem).TotalCount + "</td>";
+                s += "<td align='center' width=100 bgcolor='" + argbColor + "'>" + ((GroupEx)e.Item.DataItem).ActiveCount + "</td>";
+
+                (e.Item.FindControl("tdParentName") as HtmlTableCell).BgColor = argbColor;
+                (e.Item.FindControl("lbtnParentName") as Label).Text = String.IsNullOrEmpty(((GroupEx)e.Item.DataItem).ParentName) ? "-" : ((GroupEx)e.Item.DataItem).ParentName;
 
 
 
-                    (e.Item.FindControl("lbtnGroupComment") as Label).Visible = true;
-                    (e.Item.FindControl("lbtnGroupComment") as Label).BackColor = System.Drawing.Color.FromName(argbColor);
-                    (e.Item.FindControl("tdDescription") as HtmlTableCell).BgColor = argbColor;
-                    string comment = ((GroupEx)e.Item.DataItem).Comment;
-                    if (comment == null) comment = String.Empty;
-                    (e.Item.FindControl("lbtnGroupComment") as Label).Text = Anchor.FixString(comment, 16);
+                (e.Item.FindControl("lbtnGroupComment") as Label).Visible = true;
+                (e.Item.FindControl("lbtnGroupComment") as Label).BackColor = System.Drawing.Color.FromName(argbColor);
+                (e.Item.FindControl("tdDescription") as HtmlTableCell).BgColor = argbColor;
+                string comment = ((GroupEx)e.Item.DataItem).Comment;
+                if (comment == null) comment = String.Empty;
+                (e.Item.FindControl("lbtnGroupComment") as Label).Text = Anchor.FixString(comment, 16);
 
-                    if ((e.Item.FindControl("lbtnGroupComment") as Label).Text == String.Empty)
-                        (e.Item.FindControl("lbtnGroupComment") as Label).Text = '[' + Resources.Resource.Empty + ']';
+                if ((e.Item.FindControl("lbtnGroupComment") as Label).Text == String.Empty)
+                    (e.Item.FindControl("lbtnGroupComment") as Label).Text = '[' + Resources.Resource.Empty + ']';
 
 
 
-                    if (Session["GroupsCheckedValues"] != null)
+                if (Session["GroupsCheckedValues"] != null)
                 {
                     ArrayList list = (ArrayList)Session["GroupsCheckedValues"];
                     if (list.Contains(((GroupEx)e.Item.DataItem).ID))
@@ -721,7 +711,7 @@ public partial class Groups : PageBase
         //    filter.FilterName = ddlFilter.SelectedValue;
 
         Session["CurrentGroupFilter"] = filter;
-        
+
         Response.Redirect("GroupFilters.aspx");
     }
 
@@ -945,6 +935,8 @@ public partial class Groups : PageBase
         if ((Session["SelectedGroupID"] == null) && (!isAllSelected))
             throw new Exception(Resources.Resource.ErrorCriticalError + ": Session['SelectedGroupID'] == null ");
 
+        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
         //All computers who matches current filter
         if (isAllSelected)
         {
@@ -967,75 +959,54 @@ public partial class Groups : PageBase
             }
 
 
-            //give computer list from db..
-            using (VlslVConnection conn = new VlslVConnection(
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+            //give computer list from db..                
+            int count = gmng.Count(filter.GetSQLWhereStatement);
+
+            List<GroupEx> groupsList = gmng.List(filter.GetSQLWhereStatement,
+                Convert.ToString(Session["GroupSorting"]), 1, count);
+
+            List<ComputersEntity> compsList = new List<ComputersEntity>();
+
+
+
+            foreach (GroupEx nextGroup in groupsList)
             {
-                GroupManager gmng = new GroupManager(conn);
-
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-
-                int count = gmng.Count(filter.GetSQLWhereStatement);
-
-                List<GroupEx> groupsList = gmng.List(filter.GetSQLWhereStatement,
-                    Convert.ToString(Session["GroupSorting"]), 1, count);
-
-                List<ComputersEntity> compsList = new List<ComputersEntity>();
-
-                
-
-                foreach (GroupEx nextGroup in groupsList)
+                foreach (ComputersEntity nextComp in gmng.GetComputersByGroup(nextGroup.ID))
                 {
-                    foreach(ComputersEntity nextComp in gmng.GetComputersByGroup(nextGroup.ID))
-                    {
-                        compsList.Add(nextComp);
-                    }
+                    compsList.Add(nextComp);
                 }
+            }
 
-                conn.CloseConnection();
+            for (int i = 0; i < compsList.Count; i++)
+            {
+                _set.AllComputers.Add(compsList[i]);
 
-                for (int i = 0; i < compsList.Count; i++)
-                {
-                    _set.AllComputers.Add(compsList[i]);
-
-                    if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
-                        _set.VSISComputers.Add(compsList[i]);
-                    else
-                        _set.OtherComputers.Add(compsList[i]);
-                }
+                if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
+                    _set.VSISComputers.Add(compsList[i]);
+                else
+                    _set.OtherComputers.Add(compsList[i]);
             }
         }
         else
         {
-            using (VlslVConnection conn = new VlslVConnection(
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+            List<ComputersEntity> compsList = new List<ComputersEntity>();
+
+            foreach (Int16 next in (List<Int16>)Session["SelectedGroupID"])
             {
-                GroupManager gmng = new GroupManager(conn);
-
-                conn.OpenConnection();
-                conn.CheckConnectionState(true);
-                
-                List<ComputersEntity> compsList = new List<ComputersEntity>();
-
-                foreach (Int16 next in (List<Int16>)Session["SelectedGroupID"])
+                foreach (ComputersEntity nextComp in gmng.GetComputersByGroup(next))
                 {
-                    foreach (ComputersEntity nextComp in gmng.GetComputersByGroup(next))
-                    {
-                        compsList.Add(nextComp);
-                    }
+                    compsList.Add(nextComp);
                 }
-                conn.CloseConnection();
+            }
 
-                for (int i = 0; i < compsList.Count; i++)
-                {
-                    _set.AllComputers.Add(compsList[i]);
+            for (int i = 0; i < compsList.Count; i++)
+            {
+                _set.AllComputers.Add(compsList[i]);
 
-                    if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
-                        _set.VSISComputers.Add(compsList[i]);
-                    else
-                        _set.OtherComputers.Add(compsList[i]);
-                }
+                if (compsList[i].AdditionalInfo.ControlDeviceType == ControlDeviceTypeEnum.Vsis)
+                    _set.VSISComputers.Add(compsList[i]);
+                else
+                    _set.OtherComputers.Add(compsList[i]);
             }
         }
 
@@ -1178,7 +1149,7 @@ public partial class Groups : PageBase
                 tskConfigureMonitor.ValidateFields();
                 //!--
                 XmlTaskParser xml = new XmlTaskParser(task.Param);
-                                
+
                 string strtask = task.Param;
                 string s = @"<Type>ConfigureMonitor</Type>";
                 strtask = strtask.Replace(s, "");
@@ -2212,39 +2183,26 @@ public partial class Groups : PageBase
         GridView gvExcel = new GridView();
 
         InitializeSession();
-        using (VlslVConnection conn = new VlslVConnection(
-            ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+        GroupFilterEntity filter;
+        if (Session["CurrentGroupFilter"] == null)
         {
-            //заглушка
-
-            GroupManager gmng = new GroupManager(conn);
-
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-
-            GroupFilterEntity filter;
-            if (Session["CurrentGroupFilter"] == null)
-            {
-                filter = new GroupFilterEntity();
-                filter.GroupName = "*";
-                filter.GenerateSQLWhereStatement();
-            }
-            else
-                filter = (GroupFilterEntity)Session["CurrentGroupFilter"];
-
-            
-            int count = gmng.Count(filter.GetSQLWhereStatement);
-
-
-            gvExcel.DataSource = gmng.List(filter.GetSQLWhereStatement,
-                Convert.ToString(Session["GroupSorting"]), 1, count);
-            gvExcel.DataBind();
-
-            conn.CloseConnection();
+            filter = new GroupFilterEntity();
+            filter.GroupName = "*";
+            filter.GenerateSQLWhereStatement();
         }
+        else
+            filter = (GroupFilterEntity)Session["CurrentGroupFilter"];
+
+
+        int count = gmng.Count(filter.GetSQLWhereStatement);
+
+
+        gvExcel.DataSource = gmng.List(filter.GetSQLWhereStatement,
+            Convert.ToString(Session["GroupSorting"]), 1, count);
+        gvExcel.DataBind();
 
         DataGridToExcel.Export("Groups.xls", gvExcel);
-
     }
 }

@@ -8,23 +8,59 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     public class ComponentsEntity : ICloneable
     {
+        protected String computerName;
+        protected String componentName;
+        protected String componentState;
+        protected String version;
+        protected String name;
 
-        protected string computerName = String.Empty;
-        protected string componentName = String.Empty;
-        protected string componentState = String.Empty;
-        protected string version = String.Empty;
-        protected string name = String.Empty;
+        #region Public Properties
 
+        public String ComputerName
+        {
+            get { return computerName; }
+            set { computerName = value; }
+        }
+
+        public String ComponentName
+        {
+            get { return componentName; }
+            set { componentName = value; }
+        }
+
+        public String ComponentState
+        {
+            get { return componentState; }
+            set { componentState = value; }
+        }
+
+        public String Version
+        {
+            get { return version; }
+            set { version = value; }
+        }
+
+        public String Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        #endregion
+
+        #region Constructors
         //Default constructor
-        public ComponentsEntity() { }
+        public ComponentsEntity()
+            : this(String.Empty, String.Empty, String.Empty, String.Empty, String.Empty)
+        {
+        }
 
         //Constructor
         public ComponentsEntity(
-            string computerName,
-            string componentName,
-            string componentState,
-            string version,
-            string name)
+            String computerName,
+            String componentName,
+            String componentState,
+            String version,
+            String name)
         {
             this.computerName = computerName;
             this.componentName = componentName;
@@ -33,37 +69,11 @@ namespace VirusBlokAda.CC.DataBase
             this.name = name;
         }
 
-        #region Public Properties
-
-        public string ComputerName
+        public ComponentsEntity(ComponentsEntity cmpt)
+            : this(cmpt.ComputerName, cmpt.ComponentName, cmpt.ComponentState, cmpt.Version, cmpt.Name)
         {
-            get { return computerName; }
-            set { computerName = value; }
         }
 
-        public string ComponentName
-        {
-            get { return componentName; }
-            set { componentName = value; }
-        }
-
-        public string ComponentState
-        {
-            get { return componentState; }
-            set { componentState = value; }
-        }
-
-        public string Version
-        {
-            get { return version; }
-            set { version = value; }
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
         #endregion
 
         /// <summary>
@@ -72,12 +82,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Clone object</returns>
         public virtual object Clone()
         {
-            return new ComponentsEntity(
-                    this.computerName,
-                    this.componentName,
-                    this.ComponentState,
-                    this.version,
-                    this.name);
+            return new ComponentsEntity(this);
 
         }
 

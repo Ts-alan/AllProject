@@ -18,7 +18,7 @@ public static class ProcessDataContainer
         String orderBy = "ComputerName ASC";
         String[] parts = SortExpression.Split(' ');
         Boolean descending = false;
-                
+
         if (parts.Length > 0 && parts[0] != "")
         {
             if (parts.Length > 1)
@@ -34,37 +34,15 @@ public static class ProcessDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ProcessesManager db = new ProcessesManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-            conn.CloseConnection();
-        }
+        ProcessProvider db = new ProcessProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
 
         return list;
     }
 
     public static Int32 Count(String where)
     {
-        Int32 count = 0;
-
-        using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ProcessesManager db = new ProcessesManager(conn);
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-
-            count = db.Count(where);
-
-            conn.CloseConnection();
-        }
-
-        return count;
+        ProcessProvider db = new ProcessProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        return db.Count(where);
     }
 }

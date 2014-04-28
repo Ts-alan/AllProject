@@ -74,22 +74,13 @@ public partial class CompInfo : PageBase
     private void WriteCompInfo(String computerName)
     {
         ComputersEntity comp;
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComputersManager db = new ComputersManager(conn);
-            OSTypesManager os_db = new OSTypesManager(conn);
+        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-            conn.OpenConnection();
-            conn.CheckConnectionState(true);
-            
-            //Get id
-            Int16 id = db.GetComputerID(computerName);
-            if (id == -1) 
-                throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
-            comp = db.Get(id);
-            comp.OSName = os_db.GetOSName(comp.OSTypeID);
-            conn.CloseConnection();
-        }
+        //Get id
+        Int16 id = db.GetComputerID(computerName);
+        if (id == -1)
+            throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
+        comp = db.GetComputer(id);
 
         lblComputerName.Text = comp.ComputerName;
 
@@ -495,18 +486,12 @@ public partial class CompInfo : PageBase
         if ((!vld.CheckStringToDescription()) && (newDescription != ""))
             throw new ArgumentException(Resources.Resource.ErrorDescription);
 
+        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-        using (VlslVConnection conn = new VlslVConnection(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-        {
-            ComputersManager cmng = new ComputersManager(conn);
-            conn.OpenConnection();
-            
-            Int16 id = cmng.GetComputerID(computerName);
-            if (id == 0)
-                throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
-            cmng.UpdateDescription(id, newDescription);
-            conn.CloseConnection();
-        }
+        Int16 id = db.GetComputerID(computerName);
+        if (id == 0)
+            throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
+        db.UpdateDescription(id, newDescription);
 
         //!-OPTM Как-нить иначе сделать это, что ли..
         Response.Redirect("CompInfo.aspx?CompName=" + computerName);

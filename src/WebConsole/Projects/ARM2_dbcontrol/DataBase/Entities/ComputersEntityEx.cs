@@ -8,11 +8,18 @@ namespace VirusBlokAda.CC.DataBase
     {
         #region Properties
 
-        private String policyName;
-        public String PolicyName
+        private Group group;
+        public Group Group
         {
-            get { return policyName; }
-            set { policyName = value; }
+            get { return group; }
+            set { group = value; }
+        }
+
+        private Policy policy;
+        public Policy Policy
+        {
+            get { return policy; }
+            set { policy = value; }
         }
 
         private List<ComponentsEntity> components;
@@ -24,51 +31,33 @@ namespace VirusBlokAda.CC.DataBase
         #endregion
 
         #region Constructors
-        public ComputersEntityEx() { }
-
-        public ComputersEntityEx(Int16 iD, String computerName, String iPAddress, Boolean controlCenter, String domainName, String userLogin, Int16 oSTypeID,
-            Int16 rAM, Int16 cPUClock, DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
-            Boolean vba32Integrity, Boolean vba32KeyValid, String description, List<ComponentsEntity> components)
-            : base(iD, computerName, iPAddress, controlCenter, domainName, userLogin, oSTypeID, rAM, cPUClock, recentActive,
-                latestUpdate, vba32Version, latestInfected, latestMalware, vba32Integrity, vba32KeyValid, description)
-        {
-            this.components = components;
-        }
-
-        public ComputersEntityEx(Int16 iD, String computerName, String iPAddress, Boolean controlCenter, String domainName, String userLogin, Int16 oSTypeID,
-            Int16 rAM, Int16 cPUClock, DateTime recentActive, DateTime latestUpdate, String vba32Version, DateTime latestInfected, String latestMalware,
-            Boolean vba32Integrity, Boolean vba32KeyValid, String description, ComputerAdditionalEntity additionalInfo, List<ComponentsEntity> components)
-            : base(iD, computerName, iPAddress, controlCenter, domainName, userLogin, oSTypeID, rAM, cPUClock, recentActive,
-                latestUpdate, vba32Version, latestInfected, latestMalware, vba32Integrity, vba32KeyValid, description, additionalInfo)
-        {
-            this.components = components;
-        }
+        public ComputersEntityEx()
+        :this(new ComputersEntity(), null)
+        { }
 
         public ComputersEntityEx(ComputersEntity comp, List<ComponentsEntity> components)
-            : base(comp.ID, comp.ComputerName, comp.IPAddress, comp.ControlCenter, comp.DomainName, comp.UserLogin, comp.OSTypeID,
-                   comp.RAM, comp.CPUClock, comp.RecentActive, comp.LatestUpdate, comp.Vba32Version, comp.LatestInfected,
-                   comp.LatestMalware, comp.Vba32Integrity, comp.Vba32KeyValid, comp.Description, comp.AdditionalInfo)
+            : this(comp, new Group(), new Policy(), components)
         {
-            this.OSName = comp.OSName;
-            this.components = components;
         }
 
-        public ComputersEntityEx(ComputersEntity comp, String policyName, List<ComponentsEntity> components)
-            : base(comp.ID, comp.ComputerName, comp.IPAddress, comp.ControlCenter, comp.DomainName, comp.UserLogin, comp.OSTypeID,
-                   comp.RAM, comp.CPUClock, comp.RecentActive, comp.LatestUpdate, comp.Vba32Version, comp.LatestInfected,
-                   comp.LatestMalware, comp.Vba32Integrity, comp.Vba32KeyValid, comp.Description, comp.AdditionalInfo)
+        public ComputersEntityEx(ComputersEntity comp, Group group, Policy policy, List<ComponentsEntity> components)
+            : base(comp)
         {
-            this.OSName = comp.OSName;
-            this.policyName = policyName;
-            this.components = components;
+            this.group = group;
+            this.policy = policy;
+            this.components = (components != null) ? components : new List<ComponentsEntity>();
         }
+
+        public ComputersEntityEx(ComputersEntityEx comp)
+            : this(comp as ComputersEntity, comp.Group, comp.Policy, comp.Components)
+        {
+        }
+
         #endregion
 
         public override object Clone()
         {
-            return new ComputersEntityEx(this.iD, this.computerName, this.iPAddress, this.controlCenter, this.domainName, this.userLogin, this.oSTypeID,
-                    this.rAM, this.cPUClock, this.recentActive, this.latestUpdate, this.vba32Version, this.latestInfected, this.latestMalware,
-                    this.vba32Integrity, this.vba32KeyValid, this.description, this._additionalInfo, this.components);
+            return new ComputersEntityEx(this);
         }
     }
 }

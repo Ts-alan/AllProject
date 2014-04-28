@@ -103,25 +103,18 @@ public partial class TaskCreate : PageBase
                 }
 
                 TaskEntity task = new TaskEntity();
-                using (VlslVConnection conn = new VlslVConnection(
-           ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
+                TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+
+                try
                 {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
-
-                    try
-                    {
-                        task = db.Get(id);
-                    }
-                    catch
-                    {
-                        Response.Redirect("ErrorSql.aspx");
-                        return;
-                    }
-
-
-                    conn.CloseConnection();
+                    task = db.Get(id);
                 }
+                catch
+                {
+                    Response.Redirect("ErrorSql.aspx");
+                    return;
+                }
+
 
                 TaskUserEntity taskUserType = new TaskUserEntity();
 
@@ -194,8 +187,8 @@ public partial class TaskCreate : PageBase
 
                 string mode = "";
                 //if ((Request.QueryString["Mode"] != null) && (Request.QueryString["Mode"] == "Edit"))
-                    mode = "&Mode=Edit";
-                    Response.Redirect("TaskCreate.aspx?Type=" + taskUserType.Type+mode);
+                mode = "&Mode=Edit";
+                Response.Redirect("TaskCreate.aspx?Type=" + taskUserType.Type + mode);
 
             }
         }
@@ -537,16 +530,9 @@ public partial class TaskCreate : PageBase
             else
             {
                 //!-OPTM нафига здесь это?
-                using (VlslVConnection conn = new VlslVConnection(
-                ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString))
-                {
-                    TaskManager db = new TaskManager(conn);
-                    conn.OpenConnection();
+                TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+                db.GetTaskTypeID(task.Name, true);
 
-                    db.GetTaskTypeID(task.Name, true);
-
-                    conn.CloseConnection();
-                }
                 collection.Add(task);
             }
 
