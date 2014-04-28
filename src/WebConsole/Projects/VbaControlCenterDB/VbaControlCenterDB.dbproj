@@ -38,7 +38,7 @@
     <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
     <DeployToDatabase>False</DeployToDatabase>
     <RunCodeAnalysis>False</RunCodeAnalysis>
-    <DBSchemaFileName>VbaControlCenterDB.dbproj</DBSchemaFileName>
+    <DBSchemaFileName>VbaControlCenterDB</DBSchemaFileName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <BuildScriptName>VbaControlCenterDB.sql</BuildScriptName>
@@ -51,7 +51,7 @@
     <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
     <SqlCommandVariablesFile>Properties\Database.sqlcmdvars</SqlCommandVariablesFile>
     <DeployToDatabase>False</DeployToDatabase>
-    <DBSchemaFileName>VbaControlCenterDB.dbproj</DBSchemaFileName>
+    <DBSchemaFileName>VbaControlCenterDB</DBSchemaFileName>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
