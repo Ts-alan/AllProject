@@ -36,13 +36,13 @@
       <Project>{4B1FCD41-E001-41BE-97B1-E67D79300466}</Project>
       <Name>AjaxControlToolkitX</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
-      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
-      <Name>ARM2_dbcontrol</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\CustomControls\CustomControls.csproj">
       <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
