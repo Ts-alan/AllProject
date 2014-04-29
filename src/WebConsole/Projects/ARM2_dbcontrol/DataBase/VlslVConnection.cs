@@ -26,10 +26,13 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         private void CloseConnection()
         {
-            if (vlslvConnect != null)
+            lock (lockToken)
             {
-                if (vlslvConnect.State == ConnectionState.Open)
-                    vlslvConnect.Close();
+                if (vlslvConnect != null)
+                {
+                    if (vlslvConnect.State == ConnectionState.Open)
+                        vlslvConnect.Close();
+                }
             }
         }
 
@@ -220,11 +223,6 @@ namespace VirusBlokAda.CC.DataBase
             CloseConnection();
             if (vlslvConnect != null)
                 vlslvConnect.Dispose();
-        }
-
-        ~VlslVConnection()
-        {
-            Dispose();
         }
     }
 
