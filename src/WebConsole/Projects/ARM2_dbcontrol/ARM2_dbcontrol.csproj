@@ -94,6 +94,10 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.vsisLib">
+      <HintPath>..\..\bin\Interop.vsisLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.3.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Newtonsoft.Json.dll</HintPath>
@@ -278,17 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service\VSIS\vsis.tlb" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="vsisLib">
-      <Guid>{B3EF5DD1-AD74-4187-89AC-944641FE17FB}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
