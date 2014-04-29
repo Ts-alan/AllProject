@@ -477,7 +477,7 @@
     </table>
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Always">
         <ContentTemplate>
-            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Get" TypeName="VirusBlokAda.RemoteOperations.RemoteScan.ScanResultDataSource"
+            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Get" TypeName="VirusBlokAda.CC.RemoteOperations.RemoteScan.ScanResultDataSource"
                 SelectCountMethod="Count" SortParameterName="sortExpression" EnablePaging="True"
                 OnObjectCreating="ObjectDataSource1_ObjectCreating"></asp:ObjectDataSource>
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1"
