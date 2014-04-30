@@ -23,7 +23,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         protected static TimeSpan PollingTime = new TimeSpan(0, 0, 10);
         protected static TimeSpan Timeout = new TimeSpan(0, 10, 0);
         
-        protected static InstallationTaskProvider taskProvider = new InstallationTaskProvider(connectionString);
+        protected static InstallationTaskProvider taskProvider = null;
         protected static String connectionString = "";
         public static String ConnectionString
         {
