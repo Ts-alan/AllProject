@@ -33,7 +33,7 @@ namespace VirusBlokAda.CC.DataBase
             database.AddCommandParameter(command, "@Comment",
                 DbType.String, device.Comment, ParameterDirection.Input);
             database.AddCommandParameter(command, "@InsertIfNotExists",
-                DbType.Byte, 1, ParameterDirection.Input);
+                DbType.Boolean, true, ParameterDirection.Input);
 
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             if (reader.Read())

@@ -66,9 +66,9 @@ namespace VirusBlokAda.CC.DataBase
             IDbCommand command = database.CreateCommand("GetPolicyID", true);
 
             database.AddCommandParameter(command, "@TypeName", DbType.String, policy.Name, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@name", DbType.String, policy.Content, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@Params", DbType.String, policy.Content, ParameterDirection.Input);
             database.AddCommandParameter(command, "@Comment", DbType.String, policy.Comment, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@InsertIfNotExists", DbType.Byte, 1, ParameterDirection.Input);
+            database.AddCommandParameter(command, "@InsertIfNotExists", DbType.Boolean, true, ParameterDirection.Input);
 
             SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
             if (reader.Read())
