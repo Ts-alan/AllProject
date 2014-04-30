@@ -36,6 +36,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~PolicyProvider()
+        {
+            _connection.Dispose();
+        }
+
         private void InitManagers()
         {
             policyMng = new PolicyManager(_connection);

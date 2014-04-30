@@ -19,6 +19,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~InstallationTaskProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             installMngr = new InstallationTaskManager(connection);

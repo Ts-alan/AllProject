@@ -18,6 +18,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~DataBaseProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             dbMngr = new DataBaseManager(connection);

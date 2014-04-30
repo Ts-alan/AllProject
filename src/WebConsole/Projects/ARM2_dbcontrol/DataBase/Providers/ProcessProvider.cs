@@ -18,6 +18,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~ProcessProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             prcMngr = new ProcessesManager(connection);

@@ -19,6 +19,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~ComponentsProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             cmptMngr = new ComponentsManager(connection);

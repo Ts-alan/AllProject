@@ -19,6 +19,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~ScanningObjectProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             scanMngr = new ScanningObjectManager(connection);

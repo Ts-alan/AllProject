@@ -19,6 +19,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~GroupProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             groupMngr = new GroupManager(connection);

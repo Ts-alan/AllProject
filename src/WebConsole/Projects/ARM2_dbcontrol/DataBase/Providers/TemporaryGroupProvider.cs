@@ -19,6 +19,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~TemporaryGroupProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             mngr = new TemporaryGroupManager(connection);

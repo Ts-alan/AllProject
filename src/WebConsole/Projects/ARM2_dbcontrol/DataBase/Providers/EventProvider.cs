@@ -20,6 +20,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~EventProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             eventMngr = new EventsManager(connection);

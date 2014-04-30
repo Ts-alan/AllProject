@@ -18,6 +18,11 @@ namespace VirusBlokAda.CC.DataBase
             InitManagers();
         }
 
+        ~TaskProvider()
+        {
+            connection.Dispose();
+        }
+
         private void InitManagers()
         {
             taskMngr = new TaskManager(connection);
