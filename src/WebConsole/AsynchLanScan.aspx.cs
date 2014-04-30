@@ -390,7 +390,7 @@ public partial class AsynchLanScan : PageBase
                 RemoteInfoEntityShow rie = e.Row.DataItem as RemoteInfoEntityShow;
                 Image imgAgent = e.Row.FindControl("imgAgent") as Image;
                 imgAgent.ImageUrl = String.Format("~/App_Themes/{0}/Images/{1}", Profile.Theme,
-                    rie.IsLoaderPortOpen ? "enabled.gif" : "disabled.gif");
+                    rie.IsAgentPortOpen ? "enabled.gif" : "disabled.gif");
                 CheckBox cboxIsSelected = e.Row.FindControl("cboxIsSelected") as CheckBox;
                 cboxIsSelected.Checked = rie.IsSelected;
                 displayedIdsList.Add(rie.Id);
