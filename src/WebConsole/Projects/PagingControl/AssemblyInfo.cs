@@ -13,7 +13,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("Vba32 Control Center")]
 [assembly: AssemblyCopyright("Copyright (c) 2008-2009 VirusBlokAda Ltd.")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("en-US")]	
 
 //
 // Version information for an assembly consists of the following four values:
