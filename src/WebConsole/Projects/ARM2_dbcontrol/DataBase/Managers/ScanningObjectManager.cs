@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class ScanningObjectManager
     {
-        private VlslVConnection database; 
+        private readonly String connectionString;
 		
 		#region Constructors
-        public ScanningObjectManager(VlslVConnection l_database)
+        public ScanningObjectManager(String connectionString)
 		{
-			database=l_database;
+            this.connectionString = connectionString;
 		}
 		#endregion
 		
@@ -23,15 +24,17 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void AddComment(ScanningObjectEntity entity)
         {
-            IDbCommand command = database.CreateCommand("AddCommentByIP", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("AddCommentByIP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@IP",
-                DbType.String, entity.IPAddress, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@IP", entity.IPAddress);
+                cmd.Parameters.AddWithValue("@Comment", entity.Comment);
 
-            database.AddCommandParameter(command, "@Comment",
-                DbType.String, entity.Comment, ParameterDirection.Input);
-                        
-            command.ExecuteScalar();
+                con.Open();
+                cmd.ExecuteScalar();
+            }
         }
 
         /// <summary>
@@ -39,12 +42,16 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void DeleteComment(String ip)
         {
-            IDbCommand command = database.CreateCommand("DeleteCommentByIP", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteCommentByIP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@IP",
-                DbType.String, ip, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@IP", ip);
 
-            command.ExecuteScalar();
+                con.Open();
+                cmd.ExecuteScalar();
+            }
         }
 
         /// <summary>
@@ -54,12 +61,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal String GetComment(String ip)
         {
-            IDbCommand command = database.CreateCommand("GetCommentByIP", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetCommentByIP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@IP",
-                DbType.String, ip, ParameterDirection.Input);
-            Object res = command.ExecuteScalar();
-            return res != null ? res.ToString() : String.Empty;
+                cmd.Parameters.AddWithValue("@IP", ip);
+
+                con.Open();
+                Object res = cmd.ExecuteScalar();
+                return res != null ? res.ToString() : String.Empty;
+            }
         }
 		
 		#endregion

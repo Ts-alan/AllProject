@@ -242,9 +242,6 @@
     <Compile Include="DataBase\Entities\SettingsEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataBase\VlslVConnection.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Filters\CompFilterCollection.cs">
       <SubType>Code</SubType>
     </Compile>

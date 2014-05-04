@@ -14,12 +14,12 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     internal sealed class ProcessesManager
     {
-        private VlslVConnection database;
+        private readonly String connectionString;
 
         #region Constructors
-        public ProcessesManager(VlslVConnection l_database)
+        public ProcessesManager(String connectionString)
         {
-            database = l_database;
+            this.connectionString = connectionString;
         }
         #endregion
 
@@ -35,40 +35,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ProcessesEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            IDbCommand command = database.CreateCommand("GetProcessesPage", true);
-
-            database.AddCommandParameter(command, "@page",
-                DbType.Int32, (Int32)page, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@rowcount",
-                DbType.Int32, (Int32)size, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@where",
-                DbType.String, where, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@orderby",
-                DbType.String, order, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<ProcessesEntity> list = new List<ProcessesEntity>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ProcessesEntity process = new ProcessesEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    process.ComputerName = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    process. ProcessName= reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    process.MemorySize = reader.GetInt32(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    process.LastDate = reader.GetDateTime(3);
+                SqlCommand cmd = new SqlCommand("GetProcessesPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@page", page);
+                cmd.Parameters.AddWithValue("@rowcount", size);
+                cmd.Parameters.AddWithValue("@where", where);
+                cmd.Parameters.AddWithValue("@orderby", order);
 
-                list.Add(process);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ProcessesEntity> list = new List<ProcessesEntity>();
+                while (reader.Read())
+                {
+                    ProcessesEntity process = new ProcessesEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        process.ComputerName = reader.GetString(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        process.ProcessName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        process.MemorySize = reader.GetInt32(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        process.LastDate = reader.GetDateTime(3);
+
+                    list.Add(process);
+                }
+
+                reader.Close();
+                return list;
             }
-
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -78,12 +75,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            IDbCommand command = database.CreateCommand("GetProcessesCount", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetProcessesCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@where",
-                DbType.String, where, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@where", where);
 
-            return (Int32)command.ExecuteScalar();
+                con.Open();
+                return (Int32)cmd.ExecuteScalar();
+            }
         }
 
         #endregion

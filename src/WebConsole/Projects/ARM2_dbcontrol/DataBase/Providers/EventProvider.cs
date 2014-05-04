@@ -5,31 +5,20 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class EventProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private EventsManager eventMngr;
         //private EventsFlowManager evFlowMngr;
         private EventTypesManager etMngr;
 
         public EventProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~EventProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            eventMngr = new EventsManager(connection);
+            eventMngr = new EventsManager(connectionString);
             //evFlowMngr = new EventsFlowManager(connection);
-            etMngr = new EventTypesManager(connection);
+            etMngr = new EventTypesManager(connectionString);
         }
 
         #region Methods
@@ -159,7 +148,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="page">Page index</param>
         /// <param name="size">Page size</param>
         /// <returns></returns>
-        public List<EventTypesEntity> GetEventTypeList(String where, String order, Int32 page, Int32 size)
+        public List<EventTypesEntity> GetEventTypeList(String where, String order, Int16 page, Int16 size)
         {
             return etMngr.List(where, order, page, size);
         }

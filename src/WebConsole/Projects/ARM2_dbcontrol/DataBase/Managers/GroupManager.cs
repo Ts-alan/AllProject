@@ -9,13 +9,13 @@ namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class GroupManager
     {
-        private VlslVConnection database; 
+        private readonly String connectionString;
 		
 		#region Constructors
 
-        public GroupManager(VlslVConnection l_database)
+        public GroupManager(String connectionString)
 		{
-			database=l_database;
+            this.connectionString = connectionString;
 		}
 
 		#endregion
@@ -31,17 +31,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Add(Group group)
         {
-            IDbCommand cmd = database.CreateCommand("AddGroup", true);
-            //cmd.Parameters.Add("@GroupName", SqlDbType.NVarChar).Value = groupName;
-            database.AddCommandParameter(cmd, "@GroupName",
-                DbType.String, group.Name, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@Comment",
-                DbType.String, group.Comment, ParameterDirection.Input);
-            if (group.ParentID != null)
-                database.AddCommandParameter(cmd, "@ParentID",
-                    DbType.Int32, group.ParentID, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("AddGroup", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.Parameters.AddWithValue("@GroupName", group.Name);
+                cmd.Parameters.AddWithValue("@Comment", group.Comment);
+                if (group.ParentID != null)
+                cmd.Parameters.AddWithValue("@ParentID", group.ParentID);
+
+                con.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
         }
 
         /// <summary>
@@ -50,10 +52,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group"></param>
         internal void Delete(Group group)
         {
-            IDbCommand cmd = database.CreateCommand("RemoveGroupByName", true);
-            database.AddCommandParameter(cmd, "@GroupName", DbType.String, group.Name, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("RemoveGroupByName", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@GroupName", group.Name);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -63,14 +71,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="newGroupName"></param>
         internal void Update(String groupName, String newGroupName, String newComment, Int32? newParentID)
         {
-            IDbCommand cmd = database.CreateCommand("UpdateGroup", true);
-            database.AddCommandParameter(cmd, "@GroupName", DbType.String, groupName, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@NewGroupName", DbType.String, newGroupName, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@NewComment", DbType.String, newComment, ParameterDirection.Input);
-            if (newParentID != null)
-                database.AddCommandParameter(cmd, "@NewParentID", DbType.Int32, newParentID, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateGroup", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@GroupName", groupName);
+                cmd.Parameters.AddWithValue("@NewGroupName", newGroupName);
+                cmd.Parameters.AddWithValue("@NewComment", newComment);
+                if (newParentID != null)
+                cmd.Parameters.AddWithValue("@NewParentID", newParentID);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -80,10 +94,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            IDbCommand cmd = database.CreateCommand("GetListGroupsCount", true);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetListGroupsCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
         }
 
         /// <summary>
@@ -91,25 +111,37 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="compID"></param>
         /// <param name="NewGroupID"></param>
-        internal void MoveComputerBetweenGroups(Int32 compID, Int32 NewGroupID)
+        internal void MoveComputerBetweenGroups(Int16 compID, Int32 NewGroupID)
         {
-            IDbCommand cmd = database.CreateCommand("MoveComputerBetweenGroups", true);
-            database.AddCommandParameter(cmd, "@ComputerID", DbType.Int16, Convert.ToInt16(compID), ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, NewGroupID, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("MoveComputerBetweenGroups", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@ComputerID", compID);
+                cmd.Parameters.AddWithValue("@GroupID", NewGroupID);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
         /// Delete computer from group
         /// </summary>
         /// <param name="compID"></param>
-        internal void DeleteComputerFromGroup(Int32 compID)
+        internal void DeleteComputerFromGroup(Int16 compID)
         {
-            IDbCommand cmd = database.CreateCommand("RemoveComputerFromGroup", true);
-            database.AddCommandParameter(cmd, "@ComputerID", DbType.Int16, Convert.ToInt16(compID), ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("RemoveComputerFromGroup", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@ComputerID", compID);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -117,13 +149,19 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="compID"></param>
         /// <param name="groupID"></param>
-        internal void AddComputerInGroup(Int32 compID, Int32 groupID)
+        internal void AddComputerInGroup(Int16 compID, Int32 groupID)
         {
-            IDbCommand cmd = database.CreateCommand("AddComputerInGroup", true);
-            database.AddCommandParameter(cmd, "@ComputerID", DbType.Int16, Convert.ToInt16(compID), ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("AddComputerInGroup", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@ComputerID", compID);
+                cmd.Parameters.AddWithValue("@GroupID", groupID);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
                         
         /// <summary>
@@ -133,19 +171,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> GetAllComputersNameByGroup(Int32 groupID)
         {
-            List<String> list = new List<String>();
-
-            IDbCommand cmd = database.CreateCommand("GetAllComputersByGroup", true);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;            
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
+                SqlCommand cmd = new SqlCommand("GetAllComputersByGroup", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@GroupID", groupID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -155,56 +198,61 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersByGroup(Int32 groupID, String where)
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-
-            IDbCommand cmd = database.CreateCommand("GetComputersByGroupWithFilter", true);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            ComputersEntity ent;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
+                SqlCommand cmd = new SqlCommand("GetComputersByGroupWithFilter", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                list.Add(ent);
+                cmd.Parameters.AddWithValue("@GroupID", groupID);
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntity> list = new List<ComputersEntity>();
+                ComputersEntity ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+
+                    list.Add(ent);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -214,58 +262,63 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
         {
-            List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-
-            IDbCommand cmd = database.CreateCommand("GetComputersExByGroupWithFilter", true);
-            database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, groupID, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            ComputersEntityEx ent;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntityEx();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
+                SqlCommand cmd = new SqlCommand("GetComputersExByGroupWithFilter", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                list.Add(ent);
+                cmd.Parameters.AddWithValue("@GroupID", groupID);
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntityEx> list = new List<ComputersEntityEx>();
+                ComputersEntityEx ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntityEx();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+                    if (reader.GetValue(17) != DBNull.Value)
+                        ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
+
+                    list.Add(ent);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -274,58 +327,67 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetGroups()
         {
-            List<Group> list = new List<Group>();
-
-            IDbCommand cmd = database.CreateCommand("GetGroupTypes", true);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            Group gr;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                gr = new Group();
-                if (reader.GetValue(0) != DBNull.Value)
-                    gr.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    gr.Name = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    gr.Comment = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    gr.ParentID = reader.GetInt32(3);
-                list.Add(gr);
+                SqlCommand cmd = new SqlCommand("GetGroupTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Group> list = new List<Group>();
+                Group gr;
+                while (reader.Read())
+                {
+                    gr = new Group();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        gr.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        gr.Name = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        gr.Comment = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        gr.ParentID = reader.GetInt32(3);
+                    list.Add(gr);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
         /// Get subgroups types
         /// </summary>
         /// <returns></returns>
-        internal List<Group> GetSubgroups(int groupId)
+        internal List<Group> GetSubgroups(Int32 groupId)
         {
-            List<Group> list = new List<Group>();
-
-            IDbCommand cmd = database.CreateCommand("GetSubgroupTypes", true);
-            if (groupId != 0)
-                database.AddCommandParameter(cmd, "@ParentID", DbType.Int32, groupId, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            Group gr;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                gr = new Group();
-                if (reader.GetValue(0) != DBNull.Value)
-                    gr.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    gr.Name = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    gr.Comment = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    gr.ParentID = reader.GetInt32(3);
-                list.Add(gr);
+                SqlCommand cmd = new SqlCommand("GetSubgroupTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                if (groupId != 0)
+                cmd.Parameters.AddWithValue("@ParentID", groupId);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Group> list = new List<Group>();
+                Group gr;
+                while (reader.Read())
+                {
+                    gr = new Group();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        gr.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        gr.Name = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        gr.Comment = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        gr.ParentID = reader.GetInt32(3);
+                    list.Add(gr);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -334,29 +396,34 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetSubgroups(Group? group)
         {
-            List<Group> list = new List<Group>();
-
-            IDbCommand cmd = database.CreateCommand("GetSubgroupTypes", true);
-            if (group != null)
-                database.AddCommandParameter(cmd, "@ParentID", DbType.Int32, ((Group)group).ID, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            Group gr;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                gr = new Group();
-                if (reader.GetValue(0) != DBNull.Value)
-                    gr.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    gr.Name = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    gr.Comment = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    gr.ParentID = reader.GetInt32(3);
-                list.Add(gr);
+                SqlCommand cmd = new SqlCommand("GetSubgroupTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                if (group != null)
+                cmd.Parameters.AddWithValue("@ParentID", ((Group)group).ID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Group> list = new List<Group>();
+                Group gr;
+                while (reader.Read())
+                {
+                    gr = new Group();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        gr.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        gr.Name = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        gr.Comment = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        gr.ParentID = reader.GetInt32(3);
+                    list.Add(gr);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
         
         /// <summary>
@@ -365,35 +432,40 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<GroupEx> List(String where, String order, Int32 page, Int32 size)
         {
-            List<GroupEx> list = new List<GroupEx>();
-
-            IDbCommand cmd = database.CreateCommand("GetListGroups", true);
-            database.AddCommandParameter(cmd, "@Page", DbType.Int32, page, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@RowCount", DbType.Int32, size, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@OrderBy", DbType.String, order, ParameterDirection.Input);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            GroupEx gr;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                gr = new GroupEx();
-                if (reader.GetValue(0) != DBNull.Value)
-                    gr.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    gr.Name = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    gr.Comment = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    gr.ParentName = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    gr.TotalCount = reader.GetInt32(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    gr.ActiveCount = reader.GetInt32(5);
-                list.Add(gr);
+                SqlCommand cmd = new SqlCommand("GetListGroups", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Page", page);
+                cmd.Parameters.AddWithValue("@RowCount", size);
+                cmd.Parameters.AddWithValue("@OrderBy", order);
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<GroupEx> list = new List<GroupEx>();
+                GroupEx gr;
+                while (reader.Read())
+                {
+                    gr = new GroupEx();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        gr.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        gr.Name = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        gr.Comment = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        gr.ParentName = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        gr.TotalCount = reader.GetInt32(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        gr.ActiveCount = reader.GetInt32(5);
+                    list.Add(gr);
+                }
+                reader.Close();
+                return list;
             }
-            reader.Close();
-            return list;
         }
 
         /// <summary>
@@ -402,53 +474,58 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersWithoutGroup()
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            IDbCommand cmd = database.CreateCommand("GetComputersWithoutGroupPage", true);
-
-            ComputersEntity ent;
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                list.Add(ent);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntity> list = new List<ComputersEntity>();
+                ComputersEntity ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         /// <summary>
@@ -457,54 +534,60 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersWithoutGroup(String where)
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            IDbCommand cmd = database.CreateCommand("GetComputersWithoutGroupPageWithFilter", true);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
-
-            ComputersEntity ent;
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                list.Add(ent);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPageWithFilter", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntity> list = new List<ComputersEntity>();
+                ComputersEntity ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         /// <summary>
@@ -513,56 +596,62 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
         {
-            List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            IDbCommand cmd = database.CreateCommand("GetComputersExWithoutGroupPageWithFilter", true);
-            database.AddCommandParameter(cmd, "@Where", DbType.String, where, ParameterDirection.Input);
-
-            ComputersEntityEx ent;
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntityEx();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                if (reader.GetValue(17) != DBNull.Value)
-                    ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
-                list.Add(ent);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetComputersExWithoutGroupPageWithFilter", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntityEx> list = new List<ComputersEntityEx>();
+                ComputersEntityEx ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntityEx();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+                    if (reader.GetValue(17) != DBNull.Value)
+                        ent.Policy = new Policy(reader.GetString(17), String.Empty, String.Empty);
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         /// <summary>
@@ -571,9 +660,14 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 GetComputersWithoutGroupCount()
         {
-            IDbCommand cmd = database.CreateCommand("GetComputersWithoutGroupPageCount", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPageCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+                con.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
         }
 
         /// <summary>
@@ -582,26 +676,31 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ChildParentEntity> GetComputersWithGroups()
         {
-            List<ChildParentEntity> list = new List<ChildParentEntity>();
-            IDbCommand cmd = database.CreateCommand("GetComputersWithGroupPage", true);
-
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            ChildParentEntity ent;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ChildParentEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ChildID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ChildName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.ParentID = reader.GetInt32(2);
+                SqlCommand cmd = new SqlCommand("GetComputersWithGroupPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                list.Add(ent);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ChildParentEntity> list = new List<ChildParentEntity>();
+                ChildParentEntity ent;
+                while (reader.Read())
+                {
+                    ent = new ChildParentEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ChildID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ChildName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.ParentID = reader.GetInt32(2);
+
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
             }
-            reader.Close();
-
-            return list;
         }
 
         #endregion
@@ -614,57 +713,63 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersByGroupAndPolicy(Group? group, Policy? policy)
         {
-            List<ComputersEntity> list = new List<ComputersEntity>();
-            IDbCommand cmd = database.CreateCommand("GetComputersByGroupAndPolicy", true);
-            if (group != null)
-                database.AddCommandParameter(cmd, "@GroupID", DbType.Int32, ((Group)group).ID, ParameterDirection.Input);
-            if (policy != null)
-                database.AddCommandParameter(cmd, "@PolicyID", DbType.Int16, ((Policy)policy).ID, ParameterDirection.Input);
-
-            ComputersEntity ent;
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new ComputersEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.ComputerName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.IPAddress = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.ControlCenter = reader.GetBoolean(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    ent.DomainName = reader.GetString(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    ent.UserLogin = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    ent.OSName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    ent.RAM = reader.GetInt16(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    ent.CPUClock = reader.GetInt16(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    ent.RecentActive = reader.GetDateTime(9);
-                if (reader.GetValue(10) != DBNull.Value)
-                    ent.LatestUpdate = reader.GetDateTime(10);
-                if (reader.GetValue(11) != DBNull.Value)
-                    ent.Vba32Version = reader.GetString(11);
-                if (reader.GetValue(12) != DBNull.Value)
-                    ent.LatestInfected = reader.GetDateTime(12);
-                if (reader.GetValue(13) != DBNull.Value)
-                    ent.LatestMalware = reader.GetString(13);
-                if (reader.GetValue(14) != DBNull.Value)
-                    ent.Vba32Integrity = reader.GetBoolean(14);
-                if (reader.GetValue(15) != DBNull.Value)
-                    ent.Vba32KeyValid = reader.GetBoolean(15);
-                if (reader.GetValue(16) != DBNull.Value)
-                    ent.Description = reader.GetString(16);
-                list.Add(ent);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetComputersByGroupAndPolicy", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                if (group != null)
+                cmd.Parameters.AddWithValue("@GroupID", ((Group)group).ID);
+                if (policy != null)
+                cmd.Parameters.AddWithValue("@PolicyID", ((Policy)policy).ID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<ComputersEntity> list = new List<ComputersEntity>();
+                ComputersEntity ent;
+                while (reader.Read())
+                {
+                    ent = new ComputersEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.ComputerName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.IPAddress = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.ControlCenter = reader.GetBoolean(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        ent.DomainName = reader.GetString(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        ent.UserLogin = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        ent.OSName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        ent.RAM = reader.GetInt16(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        ent.CPUClock = reader.GetInt16(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        ent.RecentActive = reader.GetDateTime(9);
+                    if (reader.GetValue(10) != DBNull.Value)
+                        ent.LatestUpdate = reader.GetDateTime(10);
+                    if (reader.GetValue(11) != DBNull.Value)
+                        ent.Vba32Version = reader.GetString(11);
+                    if (reader.GetValue(12) != DBNull.Value)
+                        ent.LatestInfected = reader.GetDateTime(12);
+                    if (reader.GetValue(13) != DBNull.Value)
+                        ent.LatestMalware = reader.GetString(13);
+                    if (reader.GetValue(14) != DBNull.Value)
+                        ent.Vba32Integrity = reader.GetBoolean(14);
+                    if (reader.GetValue(15) != DBNull.Value)
+                        ent.Vba32KeyValid = reader.GetBoolean(15);
+                    if (reader.GetValue(16) != DBNull.Value)
+                        ent.Description = reader.GetString(16);
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         /// <summary>
@@ -673,28 +778,34 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetGroupListByComputerID(Int16 compID)
         {
-            List<Group> list = new List<Group>();
-            IDbCommand cmd = database.CreateCommand("GetGroupListByComputerID", true);
-            database.AddCommandParameter(cmd, "@ComputerID", DbType.Int16, compID, ParameterDirection.Input);
-
-            Group ent;
-            SqlDataReader reader = cmd.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                ent = new Group();
-                if (reader.GetValue(0) != DBNull.Value)
-                    ent.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    ent.Name = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    ent.ParentID = reader.GetInt32(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    ent.Comment = reader.GetString(3);
-                list.Add(ent);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetGroupListByComputerID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                cmd.Parameters.AddWithValue("@ComputerID", compID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Group> list = new List<Group>();
+                Group ent;
+                while (reader.Read())
+                {
+                    ent = new Group();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ent.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ent.Name = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        ent.ParentID = reader.GetInt32(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        ent.Comment = reader.GetString(3);
+                    list.Add(ent);
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         #endregion

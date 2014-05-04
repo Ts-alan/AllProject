@@ -14,12 +14,12 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     internal sealed class OSTypesManager
     {
-        private VlslVConnection database;
+        private readonly String connectionString;
 
         #region Constructors
-        public OSTypesManager(VlslVConnection l_database)
+        public OSTypesManager(String connectionString)
         {
-            database = l_database;
+            this.connectionString = connectionString;
         }
         #endregion
 
@@ -30,22 +30,26 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Result command</returns>
         internal List<OSTypesEntity> List()
         {
-            IDbCommand command = database.CreateCommand("GetOSTypesList", true);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<OSTypesEntity> list = new List<OSTypesEntity>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                OSTypesEntity oSTypes = new OSTypesEntity();
-                oSTypes.ID = reader.GetInt16(0);
-                oSTypes.OSName = reader.GetString(1);
-                list.Add(oSTypes);
+                SqlCommand cmd = new SqlCommand("GetOSTypesList", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<OSTypesEntity> list = new List<OSTypesEntity>();
+                while (reader.Read())
+                {
+                    OSTypesEntity oSTypes = new OSTypesEntity();
+                    oSTypes.ID = reader.GetInt16(0);
+                    oSTypes.OSName = reader.GetString(1);
+                    list.Add(oSTypes);
+                }
+
+                reader.Close();
+                return list;
             }
-
-            reader.Close();
-            return list;
         }
-
 
         /// <summary>
         /// Select OSName from database with this id
@@ -54,12 +58,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>id</returns>
         internal string GetOSName(Int16 oSTypesID)
         {
-            IDbCommand command = database.CreateCommand("GetOSName", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetOSName", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int16,(Int16) oSTypesID, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@ID", oSTypesID);
 
-            return Convert.ToString(command.ExecuteScalar());
+                con.Open();
+                return Convert.ToString(cmd.ExecuteScalar());
+            }
         }
 
         #endregion

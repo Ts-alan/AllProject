@@ -5,27 +5,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ProcessProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private ProcessesManager prcMngr;
 
         public ProcessProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~ProcessProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            prcMngr = new ProcessesManager(connection);
+            prcMngr = new ProcessesManager(connectionString);
         }
 
         #region Methods

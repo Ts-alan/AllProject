@@ -6,27 +6,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class TemporaryGroupProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private TemporaryGroupManager mngr;
 
         public TemporaryGroupProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~TemporaryGroupProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            mngr = new TemporaryGroupManager(connection);
+            mngr = new TemporaryGroupManager(connectionString);
         }
 
         #region Methods

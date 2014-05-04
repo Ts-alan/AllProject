@@ -39,7 +39,7 @@ public static class InstallTasksDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        List<InstallationTaskEntity> list = provider.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
+        List<InstallationTaskEntity> list = provider.List(where, orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
         for (Int32 i = 0; i < list.Count; i++)
         {
             list[i].Status = DatabaseNameLocalization.GetNameForCurrentCulture(list[i].Status);

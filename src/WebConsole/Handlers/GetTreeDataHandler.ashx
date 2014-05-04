@@ -117,18 +117,18 @@ public class GetTreeDataHandler : IHttpHandler
                 //Delete comp from group
                 if (newParentID == null)
                 {
-                    provider.DeleteComputerFromGroup(comp.ChildID);
+                    provider.DeleteComputerFromGroup((Int16)comp.ChildID);
                 }
                 else
                 {
                     //Add computer in group
                     if (comp.ParentID == null)
                     {
-                        provider.AddComputerInGroup(comp.ChildID, (Int32)newParentID);
+                        provider.AddComputerInGroup((Int16)comp.ChildID, (Int32)newParentID);
                     }
                     else
                     {
-                        provider.MoveComputerBetweenGroups(comp.ChildID, (Int32)newParentID);
+                        provider.MoveComputerBetweenGroups((Int16)comp.ChildID, (Int32)newParentID);
                     }
                 }
             }

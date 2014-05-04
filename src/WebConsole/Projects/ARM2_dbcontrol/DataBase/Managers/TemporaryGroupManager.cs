@@ -8,16 +8,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class TemporaryGroupManager
     {
-        private VlslVConnection database; 
-		
-		#region Constructors
-        public TemporaryGroupManager(VlslVConnection l_database)
-		{
-			database=l_database;
-		}
-		#endregion
-		
-		#region Methods
+        private readonly String connectionString;
+
+        #region Constructors
+        public TemporaryGroupManager(String connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Get computer name list by type
@@ -26,7 +26,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="where">Filter query</param>
         /// <returns>Computer name list</returns>
         internal List<String> GetComputerNameList(String type, String where)
-        {            
+        {
             switch (type)
             {
                 case "COMPONENTS":
@@ -50,23 +50,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="where">Filter query</param>
         /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromProcesses(String where)
-		{
-            IDbCommand command = database.CreateCommand("GetComputerNameListFromProcesses", true);
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetComputerNameListFromProcesses", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@Where", where);
 
-			SqlDataReader reader=command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-			while(reader.Read())
-			{
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-			}
-			
-			reader.Close();
-			return list;
-		}
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
+        }
 
         /// <summary>
         /// Get computer name list from event
@@ -75,21 +79,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromEvents(String where)
         {
-            IDbCommand command = database.CreateCommand("GetComputerNameListFromEvents", true);
-
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetComputerNameListFromEvents", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
         /// <summary>
@@ -99,21 +107,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromTasks(String where)
         {
-            IDbCommand command = database.CreateCommand("GetComputerNameListFromTasks", true);
-
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetComputerNameListFromTasks", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
         /// <summary>
@@ -123,21 +135,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromComponents(String where)
         {
-            IDbCommand command = database.CreateCommand("GetComputerNameListFromComponents", true);
-
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetComputerNameListFromComponents", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
         /// <summary>
@@ -147,23 +163,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer name list</returns>
         private List<String> GetComputerNameListFromComputers(String where)
         {
-            IDbCommand command = database.CreateCommand("GetComputerNameListFromComputers", true);
-
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetComputerNameListFromComputers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
-		#endregion
+        #endregion
     }
 }

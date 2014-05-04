@@ -444,7 +444,7 @@ public partial class Computers : PageBase
                 count = cmng.Count(filter.GetSQLWhereStatement);
                 computers = cmng.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
-                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
+                        (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
                 break;
             //use policy
             case 2:
@@ -459,7 +459,7 @@ public partial class Computers : PageBase
                 Policy policy = provider.GetPolicyByName(selectedPolicyName);
 
                 count = provider.GetComputerByPolicyCount(policy);
-                computers = provider.GetComputersByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]),
+                computers = provider.GetComputersByPolicyPage(policy, (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]),
                     Convert.ToString(Session["CompSorting"]));
 
                 divPolicyHeader.Attributes["class"] = "GiveButton1";
@@ -489,7 +489,7 @@ public partial class Computers : PageBase
                 count = cmng.Count(filter.GetSQLWhereStatement);
                 computers = cmng.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
-                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["CompPageSize"]));
+                        (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
                 //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
                 divPolicyMenu.Attributes.Add("class", "menu");
                 break;
@@ -1624,7 +1624,7 @@ public partial class Computers : PageBase
             int count = cmng.Count(filter.GetSQLWhereStatement);
 
             List<ComputersEntity> compsList = cmng.List(filter.GetSQLWhereStatement,
-                Convert.ToString(Session["CompSorting"]), 1, count);
+                Convert.ToString(Session["CompSorting"]), 1, (Int16)count);
 
             for (int i = 0; i < compsList.Count; i++)
             {
@@ -3024,7 +3024,7 @@ public partial class Computers : PageBase
 
 
         gvExcel.DataSource = cmng.List(filter.GetSQLWhereStatement,
-            Convert.ToString(Session["CompSorting"]), 1, count);
+            Convert.ToString(Session["CompSorting"]), 1, (Int16)count);
         gvExcel.DataBind();
 
         DataGridToExcel.Export("Computers.xls", gvExcel);

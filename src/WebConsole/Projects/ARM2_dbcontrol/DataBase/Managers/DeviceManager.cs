@@ -8,11 +8,11 @@ namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class DeviceManager
     {
-        private VlslVConnection database;
+        private readonly String connectionString;
 
-        public DeviceManager(VlslVConnection conn)
+        public DeviceManager(String connectionString)
         {
-            database = conn;
+            this.connectionString = connectionString;
         }
 
         #region Methods
@@ -23,24 +23,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="id"></param>
         internal Device Add(Device device)
         {
-            //query to db
-            IDbCommand command = database.CreateCommand("GetDeviceID", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetDeviceID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@SerialNo",
-                DbType.String, device.SerialNo, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@Type",
-                DbType.Int16, device.Type, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@Comment",
-                DbType.String, device.Comment, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@InsertIfNotExists",
-                DbType.Boolean, true, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@SerialNo", device.SerialNo);
+                cmd.Parameters.AddWithValue("@Type", device.Type);
+                cmd.Parameters.AddWithValue("@Comment", device.Comment);
+                cmd.Parameters.AddWithValue("@InsertIfNotExists", true);
 
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            if (reader.Read())
-                device.ID = reader.GetInt16(0);
-            reader.Close();
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (reader.Read())
+                    device.ID = reader.GetInt16(0);
+                reader.Close();
 
-            return device;
+                return device;
+            }
         }
 
         /// <summary>
@@ -50,16 +50,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Updated device</returns>
         internal Device Edit(Device device)
         {
-            IDbCommand command = database.CreateCommand("UpdateDevice", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateDevice", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int32, device.ID, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@Comment",
-                DbType.String, device.Comment, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@ID", device.ID);
+                cmd.Parameters.AddWithValue("@Comment", device.Comment);
 
-            command.ExecuteScalar();
+                con.Open();
+                cmd.ExecuteScalar();
 
-            return device;
+                return device;
+            }
         }
 
         /// <summary>
@@ -68,12 +71,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="device">Device</param>
         internal void Delete(Device device)
         {
-            IDbCommand command = database.CreateCommand("DeleteDevice", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteDevice", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int32, device.ID, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@ID", device.ID);
 
-            command.ExecuteNonQuery();
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -83,27 +90,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Device entity</returns>
         internal Device GetDevice(Int32 id)
         {
-            IDbCommand command = database.CreateCommand("GetDeviceByID", true);
-
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int32, id, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            Device device = new Device();
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                try
+                SqlCommand cmd = new SqlCommand("GetDeviceByID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                Device device = new Device();
+                if (reader.Read())
                 {
                     device.ID = reader.GetInt16(0);
                     device.SerialNo = reader.GetString(1);
                     if (reader.GetValue(2) != DBNull.Value)
                         device.Comment = reader.GetString(2);
                 }
-                catch { }
-            }
-            reader.Close();
+                reader.Close();
 
-            return device;
+                return device;
+            }
         }
 
         /// <summary>
@@ -113,12 +120,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Device count</returns>
         internal Int32 GetDevicesCount(String where)
         {
-            IDbCommand command = database.CreateCommand("GetDevicesPageCount", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetDevicesPageCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@Where", where);
 
-            return (Int32)command.ExecuteScalar();
+                con.Open();
+                return (Int32)cmd.ExecuteScalar();
+            }
         }
 
         /// <summary>
@@ -131,37 +142,38 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Device> GetDevicesList(Int32 index, Int32 pageCount, String where, String orderBy)
         {
-            IDbCommand command = database.CreateCommand("GetDevicesPage", true);
-
-            database.AddCommandParameter(command, "@Page",
-                DbType.Int32, index, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@RowCount",
-                DbType.Int32, pageCount, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@OrderBy",
-                DbType.String, orderBy, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<Device> devices = new List<Device>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                Device device = new Device();
+                SqlCommand cmd = new SqlCommand("GetDevicesPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                if (reader.GetValue(0) != DBNull.Value)
-                    device.ID = reader.GetInt16(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    device.SerialNo = reader.GetString(1);
+                cmd.Parameters.AddWithValue("@Page", index);
+                cmd.Parameters.AddWithValue("@RowCount", pageCount);
+                cmd.Parameters.AddWithValue("@OrderBy", orderBy);
+                cmd.Parameters.AddWithValue("@Where", where);
 
-                if (reader.GetValue(2) != DBNull.Value)
-                    device.Comment = reader.GetString(2);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Device> devices = new List<Device>();
+                while (reader.Read())
+                {
+                    Device device = new Device();
 
-                devices.Add(device);
+                    if (reader.GetValue(0) != DBNull.Value)
+                        device.ID = reader.GetInt16(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        device.SerialNo = reader.GetString(1);
+
+                    if (reader.GetValue(2) != DBNull.Value)
+                        device.Comment = reader.GetString(2);
+
+                    devices.Add(device);
+                }
+
+                reader.Close();
+
+                return devices;
             }
-
-            reader.Close();
-
-            return devices;
         }
 
         /// <summary>
@@ -171,21 +183,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Device count</returns>
         internal Int32 GetDeviceCount(String where)
         {
-            IDbCommand command = database.CreateCommand("GetCountDevices", true);
-
-            database.AddCommandParameter(command, "@Where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            Int32 count = 0;
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    count = reader.GetInt32(0);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetCountDevices", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return count;
+                cmd.Parameters.AddWithValue("@Where", where);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                Int32 count = 0;
+                if (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        count = reader.GetInt32(0);
+                }
+                reader.Close();
+
+                return count;
+            }
         }
 
         /// <summary>
@@ -195,25 +211,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Device entity</returns>
         internal Device GetDeviceBySerial(String serial)
         {
-            IDbCommand command = database.CreateCommand("GetDeviceBySerial", true);
-
-            database.AddCommandParameter(command, "@SerialNo",
-                DbType.String, serial, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            Device device = new Device();
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                device.ID = reader.GetInt16(0);
-                device.SerialNo = reader.GetString(1);
-                device.Type = DeviceTypeExtensions.Get(reader.GetString(2));
-                device.Comment = reader.GetString(3);
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetDeviceBySerial", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return device;
+                cmd.Parameters.AddWithValue("@SerialNo", serial);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                Device device = new Device();
+                if (reader.Read())
+                {
+                    device.ID = reader.GetInt16(0);
+                    device.SerialNo = reader.GetString(1);
+                    device.Type = DeviceTypeExtensions.Get(reader.GetString(2));
+                    device.Comment = reader.GetString(3);
+                }
+                reader.Close();
+
+                return device;
+            }
         }
-        
+
         #endregion
     }
 }

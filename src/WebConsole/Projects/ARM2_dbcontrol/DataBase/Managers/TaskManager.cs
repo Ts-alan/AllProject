@@ -14,12 +14,12 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     internal sealed class TaskManager
     {
-        private VlslVConnection database;
+        private readonly String connectionString; 
 
         #region Constructors
-        public TaskManager(VlslVConnection l_database)
+        public TaskManager(String connectionString)
         {
-            database = l_database;
+            this.connectionString = connectionString;
         }
         #endregion
 
@@ -35,73 +35,76 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<TaskEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            IDbCommand command = database.CreateCommand("GetTasksPage", true);
-
-            database.AddCommandParameter(command, "@page",
-                DbType.Int64, (Int64)page, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@rowcount",
-                DbType.Int64, (Int64)size, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@where",
-                DbType.String, where, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@orderby",
-                DbType.String, order, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<TaskEntity> list = new List<TaskEntity>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                TaskEntity tasks = new TaskEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    tasks.ID = reader.GetInt64(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    tasks.TaskName = reader.GetString(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    tasks.ComputerName = reader.GetString(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    tasks.TaskState = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    tasks.DateIssued = reader.GetDateTime(4);
-                if (reader.GetValue(5) != DBNull.Value)
-                    tasks.DateComplete = reader.GetDateTime(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    tasks.DateUpdated = reader.GetDateTime(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    tasks.TaskParams = reader.GetString(7);
-                if (reader.GetValue(8) != DBNull.Value)
-                    tasks.TaskUser = reader.GetString(8);
-                if (reader.GetValue(9) != DBNull.Value)
-                    tasks.TaskDescription = reader.GetString(9);
+                SqlCommand cmd = new SqlCommand("GetTasksPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                list.Add(tasks);
+                cmd.Parameters.AddWithValue("@page", (Int64)page);
+                cmd.Parameters.AddWithValue("@rowcount", (Int64)size);
+                cmd.Parameters.AddWithValue("@where", where);
+                cmd.Parameters.AddWithValue("@orderby", order);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<TaskEntity> list = new List<TaskEntity>();
+                while (reader.Read())
+                {
+                    TaskEntity tasks = new TaskEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        tasks.ID = reader.GetInt64(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        tasks.TaskName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        tasks.ComputerName = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        tasks.TaskState = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        tasks.DateIssued = reader.GetDateTime(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        tasks.DateComplete = reader.GetDateTime(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        tasks.DateUpdated = reader.GetDateTime(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        tasks.TaskParams = reader.GetString(7);
+                    if (reader.GetValue(8) != DBNull.Value)
+                        tasks.TaskUser = reader.GetString(8);
+                    if (reader.GetValue(9) != DBNull.Value)
+                        tasks.TaskDescription = reader.GetString(9);
+
+                    list.Add(tasks);
+                }
+
+                reader.Close();
+                return list;
             }
-
-            reader.Close();
-            return list;
         }
+
         /// <summary>
         /// Task types list
         /// </summary>
         /// <returns></returns>
         internal List<TaskEntity> ListTaskTypes()
         {
-            IDbCommand command = database.CreateCommand("GetTaskTypesList", true);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<TaskEntity> list = new List<TaskEntity>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                TaskEntity task = new TaskEntity();
-                task.ID = reader.GetInt16(0);
-                task.TaskName = reader.GetString(1);
-                list.Add(task);
+                SqlCommand cmd = new SqlCommand("GetTaskTypesList", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<TaskEntity> list = new List<TaskEntity>();
+                while (reader.Read())
+                {
+                    TaskEntity task = new TaskEntity();
+                    task.ID = reader.GetInt16(0);
+                    task.TaskName = reader.GetString(1);
+                    list.Add(task);
+                }
+
+                reader.Close();
+                return list;
             }
-
-            reader.Close();
-            return list;
-
         }
 
         /// <summary>
@@ -113,20 +116,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Object CreateTask(String computerName, String taskName, String taskParams, String taskUser)
         {
-            IDbCommand command = database.CreateCommand("CreateTask", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("CreateTask", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@ComputerName",
-                DbType.String, computerName, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@ComputerName", computerName);
+                cmd.Parameters.AddWithValue("@TaskName", taskName);
+                cmd.Parameters.AddWithValue("@TaskParams", taskParams);
+                cmd.Parameters.AddWithValue("@TaskUser", taskUser);
 
-            database.AddCommandParameter(command, "@TaskName",
-                DbType.String, taskName, ParameterDirection.Input);
+                con.Open();
 
-            database.AddCommandParameter(command, "@TaskParams",
-                DbType.String, taskParams, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@TaskUser",
-                DbType.String, taskUser, ParameterDirection.Input);
-
-            return command.ExecuteScalar();
+                return cmd.ExecuteScalar();
+            }
         }
 
         /// <summary>
@@ -137,22 +140,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Int16> GetTaskTypeID(String taskName, Boolean insertIfNotExists)
         {
-            IDbCommand command = database.CreateCommand("GetTaskTypeID", true);
-
-            database.AddCommandParameter(command, "@TaskName",
-                DbType.String, taskName, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@InsertIfNotExists",
-                DbType.Boolean, insertIfNotExists, ParameterDirection.Input);
-
-            List<Int16> list = new List<Int16>();
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                list.Add(reader.GetInt16(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetTaskTypeID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                cmd.Parameters.AddWithValue("@TaskName", taskName);
+                cmd.Parameters.AddWithValue("@InsertIfNotExists", insertIfNotExists);
+
+                con.Open();                
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<Int16> list = new List<Int16>();
+                while (reader.Read())
+                {
+                    list.Add(reader.GetInt16(0));
+                }
+
+                return list;
+            }
         }
 
         /// <summary>
@@ -162,29 +167,30 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>id</returns>
         internal TaskEntity Get(Int64 tasksID)
         {
-            IDbCommand command = database.CreateCommand("GetTaskByID", true);
-
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int64, (Int64)tasksID, ParameterDirection.Input);
-
-            TaskEntity task = new TaskEntity();
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
+                SqlCommand cmd = new SqlCommand("GetTaskByID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                if (reader.GetValue(0) != DBNull.Value)
-                    task.ID = reader.GetInt64(0);
-                if (reader.GetValue(5) != DBNull.Value)
-                    task.TaskParams = reader.GetString(5);
-                if (reader.GetValue(6) != DBNull.Value)
-                    task.TaskName = reader.GetString(6);
-                if (reader.GetValue(7) != DBNull.Value)
-                    task.TaskUser = reader.GetString(7);
-             
+                cmd.Parameters.AddWithValue("@ID", tasksID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                TaskEntity task = new TaskEntity();
+                if (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        task.ID = reader.GetInt64(0);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        task.TaskParams = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        task.TaskName = reader.GetString(6);
+                    if (reader.GetValue(7) != DBNull.Value)
+                        task.TaskUser = reader.GetString(7);
+                }
+                reader.Close();
+                return task;
             }
-            reader.Close();
-            return task;
         }
 
         /// <summary>
@@ -194,22 +200,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal String GetIPAddressByTaskID(Int64 tasksID)
         {
-            IDbCommand command = database.CreateCommand("GetIPAddressByTaskID", true);
-
-            database.AddCommandParameter(command, "@ID",
-                DbType.Int64, (Int64)tasksID, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            String ip = String.Empty;
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
+                SqlCommand cmd = new SqlCommand("GetIPAddressByTaskID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                if (reader.GetValue(0) != DBNull.Value)
-                    ip = reader.GetString(0);
+                cmd.Parameters.AddWithValue("@ID", tasksID);
 
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                String ip = String.Empty;
+                if (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        ip = reader.GetString(0);
+                }
+                reader.Close();
+                return ip;
             }
-            reader.Close();
-            return ip;
         }
 
         /// <summary>
@@ -219,14 +227,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetTasksCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            IDbCommand command = database.CreateCommand("GetTasksCount", true);
+                cmd.Parameters.AddWithValue("@where", where);
 
-            database.AddCommandParameter(command, "@where",
-                DbType.String, where, ParameterDirection.Input);
-
-
-            return (Int32)command.ExecuteScalar();
+                con.Open();
+                return (Int32)cmd.ExecuteScalar();
+            }
         }
 
         /// <summary>
@@ -235,18 +245,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> ListTaskStates()
         {
-            IDbCommand command = database.CreateCommand("GetTaskStatesList", true);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
+                SqlCommand cmd = new SqlCommand("GetTaskStatesList", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
         /// <summary>
@@ -256,29 +271,32 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal AutomaticallyTaskEntity GetAutomaticallyTask(String eventName)
         {
-            IDbCommand command = database.CreateCommand("GetTaskByEventType", true);
-
-            database.AddCommandParameter(command, "@EventName",
-                DbType.String, eventName, ParameterDirection.Input);
-
-            AutomaticallyTaskEntity task = new AutomaticallyTaskEntity();
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    task.ID = reader.GetInt32(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    task.EventID = reader.GetInt16(1);
-                if (reader.GetValue(2) != DBNull.Value)
-                    task.TaskID = reader.GetInt16(2);
-                if (reader.GetValue(3) != DBNull.Value)
-                    task.TaskParams = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    task.IsAllowed = reader.GetBoolean(4);
+                SqlCommand cmd = new SqlCommand("GetTaskByEventType", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@EventName", eventName);
+
+                con.Open();                                
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                AutomaticallyTaskEntity task = new AutomaticallyTaskEntity();
+                if (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        task.ID = reader.GetInt32(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        task.EventID = reader.GetInt16(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        task.TaskID = reader.GetInt16(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        task.TaskParams = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        task.IsAllowed = reader.GetBoolean(4);
+                }
+                reader.Close();
+                return task;
             }
-            reader.Close();
-            return task;
         }
 
         /// <summary>
@@ -288,21 +306,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal void GetComputersInfo(ref List<String> compNames, ref List<String> ipAddresses)
         {
-            IDbCommand command = database.CreateCommand("GetComputerNamesAndIP", true);
-
-            compNames.Clear();
-            ipAddresses.Clear();
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    compNames.Add(reader.GetString(0));
-                if (reader.GetValue(1) != DBNull.Value)
-                    ipAddresses.Add(reader.GetString(1));
+                SqlCommand cmd = new SqlCommand("GetComputerNamesAndIP", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                                
+                compNames.Clear();
+                ipAddresses.Clear();
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        compNames.Add(reader.GetString(0));
+                    if (reader.GetValue(1) != DBNull.Value)
+                        ipAddresses.Add(reader.GetString(1));
+                }
+                reader.Close();
             }
-            reader.Close();
         }
 
         /// <summary>
@@ -313,31 +335,32 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean IsRunningTask(String computerName, Int16 taskID)
         {
-            IDbCommand command = database.CreateCommand("IsRunningTask", true);
-
-            database.AddCommandParameter(command, "@ComputerName",
-                DbType.String, computerName, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@TaskID",
-                DbType.Int16, taskID, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            String state = String.Empty;
-            Int32 minuteDiff = Int32.MaxValue;
-
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    state = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    minuteDiff = reader.GetInt32(1);
-            }
-            reader.Close();
-            if (state == "Execution" || state == "Delivery" || minuteDiff < 30)
-                return true;
+                SqlCommand cmd = new SqlCommand("IsRunningTask", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return false;
+                cmd.Parameters.AddWithValue("@ComputerName", computerName);
+                cmd.Parameters.AddWithValue("@TaskID", taskID);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                String state = String.Empty;
+                Int32 minuteDiff = Int32.MaxValue;                
+
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        state = reader.GetString(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        minuteDiff = reader.GetInt32(1);
+                }
+                reader.Close();
+                if (state == "Execution" || state == "Delivery" || minuteDiff < 30)
+                    return true;
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -347,12 +370,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal void ChangeDeliveryState(DateTime dt)
         {
-            IDbCommand command = database.CreateCommand("UpdateDeliveryState", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateDeliveryState", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@Date",
-                DbType.Date, dt, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@Date", dt);
 
-            command.ExecuteNonQuery();
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -361,12 +388,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="dt"></param>
         internal void ClearOldTasks(DateTime dt)
         {
-            IDbCommand command = database.CreateCommand("DeleteOldTasks", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteOldTasks", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@Date",
-                DbType.Date, dt, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@Date", dt);
 
-            command.ExecuteNonQuery();
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
         
         /// <summary>
@@ -375,19 +406,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> GetIPAddressListForConfigure()
         {
-            IDbCommand command = database.CreateCommand("GetIPAddressListForConfigure", true);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            List<String> list = new List<String>();
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                if (reader.GetValue(0) != DBNull.Value)
-                    list.Add(reader.GetString(0));
-            }
-            reader.Close();
+                SqlCommand cmd = new SqlCommand("GetIPAddressListForConfigure", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return list;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<String> list = new List<String>();
+                while (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+                reader.Close();
+
+                return list;
+            }
         }
 
         #endregion

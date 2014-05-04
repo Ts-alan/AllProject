@@ -282,7 +282,7 @@ public partial class DevicesPolicy : PageBase
     {
         System.Diagnostics.Debug.Write("GetComputersData:" + id);
         return ConvertComputerDataForClient(id,
-            PolicyState.GetDevicesPoliciesByComputer(id)); ;
+            PolicyState.GetDevicesPoliciesByComputer((Int16)id)); ;
     }
     private static String ConvertComputerDataForClient(int id, List<DevicePolicy> list)
     {
@@ -513,12 +513,12 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     public static void RemoveDevicePolicyGroup(int devid, int groupid)
     {
-        PolicyState.RemoveDevicePolicyGroup(devid, groupid);
+        PolicyState.RemoveDevicePolicyGroup((Int16)devid, groupid);
     }
     [WebMethod]
     public static void RemoveDevicePolicyWithoutGroup(int id)
     {
-        PolicyState.RemoveDevicePolicyWithoutGroup(id);
+        PolicyState.RemoveDevicePolicyWithoutGroup((Int16)id);
     }
     #endregion
 

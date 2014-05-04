@@ -5,27 +5,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class TaskProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private TaskManager taskMngr;
 
         public TaskProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~TaskProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            taskMngr = new TaskManager(connection);
+            taskMngr = new TaskManager(connectionString);
         }
 
         #region Methods

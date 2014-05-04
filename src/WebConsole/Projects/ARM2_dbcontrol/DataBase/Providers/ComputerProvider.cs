@@ -5,27 +5,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ComputerProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private ComputersManager compMngr;
 
         public ComputerProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~ComputerProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            compMngr = new ComputersManager(connection);
+            compMngr = new ComputersManager(connectionString);
         }
 
         #region Methods
@@ -48,7 +37,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="page">page number</param>
         /// <param name="size">records per page</param>
         /// <returns></returns>
-        public List<ComputersEntity> List(String where, String order, Int32 page, Int32 size)
+        public List<ComputersEntity> List(String where, String order, Int16 page, Int16 size)
         {
             return compMngr.List(where, order, page, size);
         }
@@ -110,7 +99,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="id">Computer ID</param>
         /// <returns>Computer entity</returns>
-        public ComputersEntity GetComputer(Int32 id)
+        public ComputersEntity GetComputer(Int16 id)
         {
             return compMngr.GetComputer(id);
         }

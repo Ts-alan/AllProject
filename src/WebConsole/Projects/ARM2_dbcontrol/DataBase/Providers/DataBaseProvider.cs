@@ -1,31 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace VirusBlokAda.CC.DataBase
 {
     public class DataBaseProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private DataBaseManager dbMngr;
 
         public DataBaseProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~DataBaseProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            dbMngr = new DataBaseManager(connection);
+            dbMngr = new DataBaseManager(connectionString);
         }
 
         #region Methods
@@ -60,8 +50,9 @@ namespace VirusBlokAda.CC.DataBase
             error = null;
             try
             {
-                using (VlslVConnection conn = new VlslVConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
+                    conn.Open();
                 }
             }
             catch(Exception e)

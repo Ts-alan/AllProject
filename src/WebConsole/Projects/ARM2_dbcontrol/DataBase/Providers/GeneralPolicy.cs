@@ -9,6 +9,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     internal class GeneralPolicy
     {
+        private readonly Object lockToken = new Object();
+
         private String _generalizePolicy = String.Empty;
         public String GeneralizePolicy
         {
@@ -23,56 +25,55 @@ namespace VirusBlokAda.CC.DataBase
             set { _hash = value; }
         }
 
-        public GeneralPolicy(String computerName, String ip, VlslVConnection conn)
+        public GeneralPolicy(String computerName, String ip, String connectionString)
         {
             VerifyComputer(computerName, ip);
 
-            PolicyManager pm = new PolicyManager(conn);
-            DevicePolicyManager dpm = new DevicePolicyManager(conn);
+            PolicyManager pm = new PolicyManager(connectionString);
+            DevicePolicyManager dpm = new DevicePolicyManager(connectionString);
 
             Policy policy;
             String devicePolicy;
             ///to try to fix 0007326
 
             //conn isn't thread-safe
-            lock (conn)
+            lock (lockToken)
             {
                 try
                 {
                     //get policy and usb settings
                     policy = pm.GetPolicyToComputer(computerName);
-                    devicePolicy = dpm.GetPolicyToComputer(computerName);    
+                    devicePolicy = dpm.GetPolicyToComputer(computerName);
                 }
                 catch
                 {
                     //if exception has occured we force to recreate connection in next request
-                    conn = null;
                     throw new Exception("Unable to get policy from database. Connection will be zero");
                 }
-            }
-            if ((String.IsNullOrEmpty(policy.Content)) && (String.IsNullOrEmpty(devicePolicy)))
+
+                if ((String.IsNullOrEmpty(policy.Content)) && (String.IsNullOrEmpty(devicePolicy)))
                     return;
-            
-
-            //build policy
-            StringBuilder sb = new StringBuilder(2048);
-            XmlBuilder xml = new XmlBuilder();
-
-            sb.Append(xml.Top);
-            sb.Append(@"<Tasks>");
-
-            sb.Append(policy.Content);
-            sb.Append(devicePolicy);
-
-            sb.Append(@"</Tasks>");
-
-            GeneralizePolicy = sb.ToString();
 
 
-            EncryptPolicy();
+                //build policy
+                StringBuilder sb = new StringBuilder(2048);
+                XmlBuilder xml = new XmlBuilder();
 
-            CalculateHash();
+                sb.Append(xml.Top);
+                sb.Append(@"<Tasks>");
 
+                sb.Append(policy.Content);
+                sb.Append(devicePolicy);
+
+                sb.Append(@"</Tasks>");
+
+                GeneralizePolicy = sb.ToString();
+
+
+                EncryptPolicy();
+
+                CalculateHash();
+            }
         }
 
         private bool VerifyComputer(String computerName, String ip)

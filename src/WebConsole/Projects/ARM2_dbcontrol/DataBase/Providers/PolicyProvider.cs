@@ -9,12 +9,13 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class PolicyProvider
     {
-        private String _connectionString;
-        private VlslVConnection _connection;
+        private readonly String connectionString;
 
         private PolicyManager policyMng;
         private DeviceManager deviceMng;
         private DevicePolicyManager devicePolicyMng;
+        private ComputersManager cm;
+        private GroupManager gm;
 
         #region Dictionary
 
@@ -31,21 +32,17 @@ namespace VirusBlokAda.CC.DataBase
 
         public PolicyProvider(String connectionString)
         {
-            this._connectionString = connectionString;
-            _connection = new VlslVConnection(_connectionString);
-            InitManagers();
+            this.connectionString = connectionString;
+            InitManagers(connectionString);
         }
 
-        ~PolicyProvider()
+        private void InitManagers(String connectionString)
         {
-            _connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            policyMng = new PolicyManager(_connection);
-            deviceMng = new DeviceManager(_connection);
-            devicePolicyMng = new DevicePolicyManager(_connection);
+            policyMng = new PolicyManager(connectionString);
+            deviceMng = new DeviceManager(connectionString);
+            devicePolicyMng = new DevicePolicyManager(connectionString);
+            cm = new ComputersManager(connectionString);
+            gm = new GroupManager(connectionString);
         }
 
         #endregion
@@ -77,7 +74,7 @@ namespace VirusBlokAda.CC.DataBase
                 }
                 //Getting policy to this computer..
                 //Here we call database stored procedure
-                GeneralPolicy gp = new GeneralPolicy(computerName, ip, _connection);
+                GeneralPolicy gp = new GeneralPolicy(computerName, ip, connectionString);
                 policy = gp.GeneralizePolicy;
                 hash = gp.Hash;
                 lock (_computerPolicy)
@@ -131,12 +128,6 @@ namespace VirusBlokAda.CC.DataBase
 
         #region Change object logic
 
-        public ComputersEntity GetComputerByID(Int32 id)
-        {
-                ComputersManager cm = new ComputersManager(_connection);
-                return cm.GetComputer(id);
-        }
-
         /// <summary>
         /// Clear cache values that use this policy
         /// </summary>
@@ -165,8 +156,7 @@ namespace VirusBlokAda.CC.DataBase
         }
 
         private void ChangeDevicePolicyByGroup()
-        {
-            GroupManager gm = new GroupManager(_connection);
+        {   
             List<ComputersEntity> list= gm.GetComputersWithoutGroup();
 
             if (list == null) return;
@@ -181,7 +171,6 @@ namespace VirusBlokAda.CC.DataBase
 
         private void ChangeDevicePolicyByGroup(Int32 groupId)
         {
-               GroupManager gm = new GroupManager(_connection);
             List<String> list = gm.GetAllComputersNameByGroup(groupId);
 
             if (list == null) return;
@@ -356,7 +345,7 @@ namespace VirusBlokAda.CC.DataBase
         public void ChangeDevicePolicyStatusForComputer(Int16 deviceID ,Int16 computerID ,String  state)
         {
             devicePolicyMng.ChangeDevicePolicyStatusForComputer(deviceID ,computerID ,state);
-            ChangeDevicePolicy(GetComputerByID(computerID).ComputerName);
+            ChangeDevicePolicy(cm.GetComputer(computerID).ComputerName);
         }
 
         public DevicePolicy GetDevicePolicyByID(Int32 id)
@@ -371,13 +360,13 @@ namespace VirusBlokAda.CC.DataBase
             ChangeDevicePolicy(dp.Computer.ComputerName);
         }
 
-        public void RemoveDevicePolicyGroup(Int32 devID, Int32 groupID)
+        public void RemoveDevicePolicyGroup(Int16 devID, Int32 groupID)
         {
             devicePolicyMng.RemoveDevicePolicyGroup(devID, groupID);
             ChangeDevicePolicyByGroup(groupID);
         }
 
-        public void RemoveDevicePolicyWithoutGroup(Int32 devID)
+        public void RemoveDevicePolicyWithoutGroup(Int16 devID)
         {
             devicePolicyMng.RemoveDevicePolicyWithoutGroup(devID);
             ChangeDevicePolicyByGroup();
@@ -430,10 +419,9 @@ namespace VirusBlokAda.CC.DataBase
             return devicePolicyMng.GetDeviceEntitiesFromComputer(computerName);
         }
 
-        public List<DevicePolicy> GetDevicesPoliciesByComputer(Int32 id)
+        public List<DevicePolicy> GetDevicesPoliciesByComputer(Int16 id)
         {
-            ComputersManager cmng = new ComputersManager(_connection);
-            return GetDevicesPoliciesByComputer(cmng.GetComputer(id).ComputerName);
+            return GetDevicesPoliciesByComputer(cm.GetComputer(id).ComputerName);
         }
         
         public List<Device> GetDevicesList(Int32 index, Int32 pageCount, String where, String orderBy)
@@ -471,18 +459,14 @@ namespace VirusBlokAda.CC.DataBase
             return names;
         }
 
-        public List<ComputersEntity> GetComputersByPolicyPage(Policy policy, Int32 index, Int32 pageCount, String orderBy)
+        public List<ComputersEntity> GetComputersByPolicyPage(Policy policy, Int16 index, Int16 pageCount, String orderBy)
         {
-            ComputersManager compMng = new ComputersManager(_connection);
-
-            return compMng.List(String.Format("[PolicyID] = {0}", policy.ID), orderBy, index, pageCount);
+            return cm.List(String.Format("[PolicyID] = {0}", policy.ID), orderBy, index, pageCount);
         }
 
         public Int32 GetComputerByPolicyCount(Policy policy)
         {
-            ComputersManager compMng = new ComputersManager(_connection);
-
-            return compMng.Count(String.Format("[PolicyID] = {0}", policy.ID));
+            return cm.Count(String.Format("[PolicyID] = {0}", policy.ID));
         }
 
         public List<ComputersEntity> GetComputersWithoutPolicyPage(Int32 index, Int32 pageCount, String orderBy)

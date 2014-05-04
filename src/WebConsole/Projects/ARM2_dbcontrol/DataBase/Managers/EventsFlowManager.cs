@@ -129,11 +129,11 @@ namespace VirusBlokAda.CC.DataBase
 
         #endregion
 
-        private VlslVConnection database;
+        private readonly String connectionString;
 
-        public EventsFlowManager(VlslVConnection conn)
+        public EventsFlowManager(String connectionString)
         {
-            this.database = conn;
+            this.connectionString = connectionString;
         }
 
         #region Methods
@@ -145,18 +145,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean IsLocalHearth(EventsEntity currEvent)
         {
-            Int32 result = 0;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetEventsCountByComputer", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            IDbCommand command = database.CreateCommand("GetEventsCountByComputer", true);
+                cmd.Parameters.AddWithValue("@EventTime", currEvent.EventTime.AddMinutes(0 - this.LocalHearthTimeLimit));
+                cmd.Parameters.AddWithValue("@ComputerName", currEvent.ComputerName);
+                cmd.Parameters.AddWithValue("@EventName", currEvent.EventName);
 
-            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.LocalHearthTimeLimit), ParameterDirection.Input);
-            database.AddCommandParameter(command, "@ComputerName", DbType.String, currEvent.ComputerName, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
+                con.Open();
 
-            result = (Int32)command.ExecuteScalar();
+                Int32 result = 0;
+                result = (Int32)cmd.ExecuteScalar();
 
-            this.IsNeedSendLocalHearthWarning = result == this.LocalHearthLimit;
-            return result >= this.LocalHearthLimit;
+                this.IsNeedSendLocalHearthWarning = result == this.LocalHearthLimit;
+                return result >= this.LocalHearthLimit;
+            }
         }
         
         /// <summary>
@@ -167,32 +172,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean IsGlobalEpidemy(EventsEntity currEvent)
         {
-            IDbCommand command = database.CreateCommand("GetEventsCountByComment", true);
-
-            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit), ParameterDirection.Input);
-            database.AddCommandParameter(command, "@Comment", DbType.String, currEvent.Comment, ParameterDirection.Input);
-            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            Int32 sum = 0;
-            Int32 compCount = 0;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                Int32 c = reader.GetInt32(1);
-                sum += c;
-                GlobalEpidemyCompList += String.Format("{0}({1}),", reader.GetString(0),c);
-                
-                compCount++;
-            }
-            reader.Close();
-            
-            if (compCount >= this.GlobalEpidemyCompCount)
-            {
-                return sum >= this.GlobalEpidemyLimit;
-            }
+                SqlCommand cmd = new SqlCommand("GetEventsCountByComment", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return false;
+                cmd.Parameters.AddWithValue("@EventTime", currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit));
+                cmd.Parameters.AddWithValue("@Comment", currEvent.Comment);
+                cmd.Parameters.AddWithValue("@EventName", currEvent.EventName);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                Int32 sum = 0;
+                Int32 compCount = 0;
+                while (reader.Read())
+                {
+                    Int32 c = reader.GetInt32(1);
+                    sum += c;
+                    GlobalEpidemyCompList += String.Format("{0}({1}),", reader.GetString(0), c);
+
+                    compCount++;
+                }
+                reader.Close();
+
+                if (compCount >= this.GlobalEpidemyCompCount)
+                {
+                    return sum >= this.GlobalEpidemyLimit;
+                }
+
+                return false;
+            }
         }
         
         /// <summary>
@@ -202,12 +212,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean FlowAnalysis(EventsEntity currEvent)
         {
-            IDbCommand command = database.CreateCommand("GetEventsCountByName", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetEventsCountByName", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@EventTime", DbType.DateTime, currEvent.EventTime.AddMinutes(0 - this.TimeLimit), ParameterDirection.Input);
-            database.AddCommandParameter(command, "@EventName", DbType.String, currEvent.EventName, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@EventTime", currEvent.EventTime.AddMinutes(0 - this.TimeLimit));
+                cmd.Parameters.AddWithValue("@EventName", currEvent.EventName);
 
-            return (Int32)command.ExecuteScalar() <= this.Limit;
+                con.Open();
+                return (Int32)cmd.ExecuteScalar() <= this.Limit;
+            }
         }
 
         #endregion

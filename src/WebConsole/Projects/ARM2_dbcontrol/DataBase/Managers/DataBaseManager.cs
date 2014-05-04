@@ -8,18 +8,12 @@ namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class DataBaseManager
     {
-        private VlslVConnection database;
+        private readonly String connectionString;
 
         #region Constructors
-        public DataBaseManager()
+        public DataBaseManager(String connectionString)
         {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-        public DataBaseManager(VlslVConnection l_database)
-        {
-            database = l_database;
+            this.connectionString = connectionString;
         }
         #endregion
 
@@ -32,26 +26,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>DataBaseEntity</returns>
         internal DataBaseEntity Get(String dbName)
         {
-            IDbCommand command = database.CreateCommand(String.Format("sp_helpfile '{0}'", dbName), false);
-
-            DataBaseEntity db = new DataBaseEntity();
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-
-            if (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
+                SqlCommand cmd = new SqlCommand(String.Format("sp_helpfile '{0}'", dbName), con);
 
-                if (reader.GetValue(0) != DBNull.Value)
-                    db.Name = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    db.Path = reader.GetString(1);
-                if (reader.GetValue(3) != DBNull.Value)
-                    db.Size = reader.GetString(3);
-                if (reader.GetValue(4) != DBNull.Value)
-                    db.MaxSize = reader.GetString(4);
-             
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                DataBaseEntity db = new DataBaseEntity();
+                if (reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        db.Name = reader.GetString(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        db.Path = reader.GetString(1);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        db.Size = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        db.MaxSize = reader.GetString(4);
+
+                }
+                reader.Close();
+                return db;
             }
-            reader.Close();
-            return db;
         }
 
         /// <summary>
@@ -60,8 +56,13 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="targetPercent">Is the desired percentage of free space left in the database file after the database has been shrunk</param>
         internal void ShrinkDataBase(Int32 targetPercent)
         {
-            IDbCommand command = database.CreateCommand(String.Format("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent.ToString()), false);
-            command.ExecuteScalar();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(String.Format("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent.ToString()), con);
+
+                con.Open();
+                cmd.ExecuteScalar();
+            }
         }
 
         #endregion

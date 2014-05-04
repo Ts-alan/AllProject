@@ -6,27 +6,20 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class GroupProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private GroupManager groupMngr;
+        private ComponentsManager cmptMngr;
+        private ComputersManager compMngr;
 
         public GroupProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~GroupProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            groupMngr = new GroupManager(connection);
+            groupMngr = new GroupManager(connectionString);
+            cmptMngr = new ComponentsManager(connectionString);
+            compMngr = new ComputersManager(connectionString);
         }
 
         #region Methods
@@ -66,7 +59,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="compID"></param>
         /// <param name="NewGroupID"></param>
-        public void MoveComputerBetweenGroups(Int32 compID, Int32 NewGroupID)
+        public void MoveComputerBetweenGroups(Int16 compID, Int32 NewGroupID)
         {
             groupMngr.MoveComputerBetweenGroups(compID, NewGroupID);
         }
@@ -75,7 +68,7 @@ namespace VirusBlokAda.CC.DataBase
         /// Delete computer from group
         /// </summary>
         /// <param name="compID"></param>
-        public void DeleteComputerFromGroup(Int32 compID)
+        public void DeleteComputerFromGroup(Int16 compID)
         {
             groupMngr.DeleteComputerFromGroup(compID);
         }
@@ -85,7 +78,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="compID"></param>
         /// <param name="groupID"></param>
-        public void AddComputerInGroup(Int32 compID, Int32 groupID)
+        public void AddComputerInGroup(Int16 compID, Int32 groupID)
         {
             groupMngr.AddComputerInGroup(compID, groupID);
         }
@@ -97,7 +90,6 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         public List<ComputersEntity> GetComputersByGroup(Int32 groupID)
         {
-            ComputersManager compMngr = new ComputersManager(connection);
             return compMngr.GetComputers(String.Format("GroupID = {0}", groupID.ToString()), null);
         }
 
@@ -189,7 +181,6 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExWithoutGroup()
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            ComponentsManager cmptMngr = new ComponentsManager(connection);
 
             foreach (ComputersEntity comp in groupMngr.GetComputersWithoutGroup())
             {
@@ -206,8 +197,7 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            ComponentsManager cmptMngr = new ComponentsManager(connection);
-
+            
             foreach (ComputersEntityEx comp in groupMngr.GetComputersExWithoutGroup(where))
             {
                 list.Add(new ComputersEntityEx(comp, comp.Group, comp.Policy, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
@@ -224,9 +214,7 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            ComponentsManager cmptMngr = new ComponentsManager(connection);
-            ComputersManager compMngr = new ComputersManager(connection);
-
+            
             foreach (ComputersEntity comp in compMngr.GetComputers(String.Format("GroupID = {0}", groupID), null))
             {
                 list.Add(new ComputersEntityEx(comp, cmptMngr.GetComponentsPageByComputerID(comp.ID)));
@@ -243,7 +231,6 @@ namespace VirusBlokAda.CC.DataBase
         public List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
         {
             List<ComputersEntityEx> list = new List<ComputersEntityEx>();
-            ComponentsManager cmptMngr = new ComponentsManager(connection);
 
             foreach (ComputersEntityEx comp in groupMngr.GetComputersExByGroup(groupID, where))
             {

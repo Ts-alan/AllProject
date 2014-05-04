@@ -14,12 +14,12 @@ namespace VirusBlokAda.CC.DataBase
 	/// </summary>
     internal sealed class EventsManager
 	{
-		private VlslVConnection database; 
+        private readonly String connectionString;
 		
 		#region Constructors
-		public EventsManager(VlslVConnection l_database)
+        internal EventsManager(String connectionString)
 		{
-			database=l_database;
+            this.connectionString = connectionString;
 		}
 		#endregion
 		
@@ -34,59 +34,57 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="size">Page size</param>
         /// <returns></returns>
         internal List<EventsEntity> List(String where, String order, Int32 page, Int32 size)
-		{
-			IDbCommand command=database.CreateCommand("GetEventsPage",true);
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetEventsPage", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-			database.AddCommandParameter(command,"@page",
-				DbType.Int32,(Int32)page,ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@page", page);
+                cmd.Parameters.AddWithValue("@rowcount", size);
+                cmd.Parameters.AddWithValue("@where", where);
+                cmd.Parameters.AddWithValue("@orderby", order);
 
-			database.AddCommandParameter(command,"@rowcount",
-                DbType.Int32, (Int32)size, ParameterDirection.Input);
-
-			database.AddCommandParameter(command,"@where",
-				DbType.String,where,ParameterDirection.Input);
-
-			database.AddCommandParameter(command,"@orderby",
-				DbType.String,order,ParameterDirection.Input);
-
-			SqlDataReader reader=command.ExecuteReader() as SqlDataReader;
-            List<EventsEntity> list = new List<EventsEntity>();
-			while(reader.Read())
-			{
-				EventsEntity events = new EventsEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    events.ComputerName = reader.GetString(0);
-				if(reader.GetValue(1)!= DBNull.Value)
-					events.EventName = reader.GetString(1);
-				if(reader.GetValue(2)!= DBNull.Value)
-					events.Color = reader.GetString(2);
-				if(reader.GetValue(3)!= DBNull.Value)
-					events.ComponentName = reader.GetString(3);
-				if(reader.GetValue(4)!= DBNull.Value)
-					events.EventTime = reader.GetDateTime(4);
-				if(reader.GetValue(5)!= DBNull.Value)
-					events.Object = reader.GetString(5);
-				if(reader.GetValue(6)!= DBNull.Value)
-					events.Comment = reader.GetString(6);
-                try
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<EventsEntity> list = new List<EventsEntity>();
+                while (reader.Read())
                 {
-                    if (reader.GetValue(7) != DBNull.Value)
-                        events.IPAddress = reader.GetString(7);
-                    if (reader.GetValue(8) != DBNull.Value)
-                        events.Description = reader.GetString(8);
+                    EventsEntity events = new EventsEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        events.ComputerName = reader.GetString(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        events.EventName = reader.GetString(1);
+                    if (reader.GetValue(2) != DBNull.Value)
+                        events.Color = reader.GetString(2);
+                    if (reader.GetValue(3) != DBNull.Value)
+                        events.ComponentName = reader.GetString(3);
+                    if (reader.GetValue(4) != DBNull.Value)
+                        events.EventTime = reader.GetDateTime(4);
+                    if (reader.GetValue(5) != DBNull.Value)
+                        events.Object = reader.GetString(5);
+                    if (reader.GetValue(6) != DBNull.Value)
+                        events.Comment = reader.GetString(6);
+                    try
+                    {
+                        if (reader.GetValue(7) != DBNull.Value)
+                            events.IPAddress = reader.GetString(7);
+                        if (reader.GetValue(8) != DBNull.Value)
+                            events.Description = reader.GetString(8);
+                    }
+                    catch
+                    {
+                        events.IPAddress = "-";
+                        events.Description = "-";
+                    }
+
+                    list.Add(events);
                 }
-                catch
-                {
-                    events.IPAddress = "-";
-                    events.Description = "-";
-                }
-                
-				list.Add(events);		
-			}
-			
-			reader.Close();
-			return list;
-		}
+
+                reader.Close();
+                return list;
+            }
+        }
 
         /// <summary>
         /// Get statistic list
@@ -97,31 +95,33 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
-            IDbCommand command = database.CreateCommand("GetStatistics", true);
-
-            database.AddCommandParameter(command, "@OrderBy",
-               DbType.String, groupBy, ParameterDirection.Input);
-
-            database.AddCommandParameter(command, "@where",
-                DbType.String, where, ParameterDirection.Input);
-
-            SqlDataReader reader = command.ExecuteReader() as SqlDataReader;
-            List<StatisticEntity> list = new List<StatisticEntity>();
-            Int32 i = 0;
-            while (reader.Read())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                i++;
-                StatisticEntity stat = new StatisticEntity();
-                if (reader.GetValue(0) != DBNull.Value)
-                    stat.Name = reader.GetString(0);
-                if (reader.GetValue(1) != DBNull.Value)
-                    stat.Count = reader.GetInt32(1);
-                list.Add(stat);
-                if (i == size) break;
-            }
+                SqlCommand cmd = new SqlCommand("GetStatistics", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            reader.Close();
-            return list;
+                cmd.Parameters.AddWithValue("@where", where);
+                cmd.Parameters.AddWithValue("@OrderBy", groupBy);
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                List<StatisticEntity> list = new List<StatisticEntity>();
+                Int32 i = 0;
+                while (reader.Read())
+                {
+                    i++;
+                    StatisticEntity stat = new StatisticEntity();
+                    if (reader.GetValue(0) != DBNull.Value)
+                        stat.Name = reader.GetString(0);
+                    if (reader.GetValue(1) != DBNull.Value)
+                        stat.Count = reader.GetInt32(1);
+                    list.Add(stat);
+                    if (i == size) break;
+                }
+
+                reader.Close();
+                return list;
+            }
         }
 
 		/// <summary>
@@ -130,14 +130,18 @@ namespace VirusBlokAda.CC.DataBase
 		/// <param name="where">Filter query</param>
 		/// <returns></returns>
         internal Int32 Count(String where)
-		{
-            IDbCommand command = database.CreateCommand("GetEventsCount", true);
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetEventsCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-			database.AddCommandParameter(command,"@where",
-				DbType.String,where,ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@where", where);
 
-			return (Int32)command.ExecuteScalar();
-		}
+                con.Open();
+                return (Int32)cmd.ExecuteScalar();
+            }
+        }
 
         /// <summary>
         /// Clear old events
@@ -145,12 +149,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="dt">Date</param>
         internal void ClearOldEvents(DateTime dt)
         {
-            IDbCommand command = database.CreateCommand("DeleteOldEvents", true);
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteOldEvents", con);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            database.AddCommandParameter(command, "@Date",
-                DbType.Date, dt, ParameterDirection.Input);
+                cmd.Parameters.AddWithValue("@Date", dt);
 
-            command.ExecuteNonQuery();
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
 		#endregion

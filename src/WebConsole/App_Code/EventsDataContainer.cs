@@ -73,7 +73,7 @@ public static class EventsDataContainer
         }
 
         EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.GetEventTypeList("EventName like '%'", orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
+        list = db.GetEventTypeList("EventName like '%'", orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
 
         return list;
     }

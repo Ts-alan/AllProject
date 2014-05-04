@@ -6,27 +6,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ComponentsProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private ComponentsManager cmptMngr;
 
         public ComponentsProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~ComponentsProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            cmptMngr = new ComponentsManager(connection);
+            cmptMngr = new ComponentsManager(connectionString);
         }
 
         #region Methods

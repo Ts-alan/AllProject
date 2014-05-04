@@ -6,27 +6,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ScanningObjectProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private ScanningObjectManager scanMngr;
 
         public ScanningObjectProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~ScanningObjectProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            scanMngr = new ScanningObjectManager(connection);
+            scanMngr = new ScanningObjectManager(connectionString);
         }
 
         #region Methods

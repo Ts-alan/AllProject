@@ -6,27 +6,16 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class InstallationTaskProvider
     {
-        private readonly String connectionString;
-        private VlslVConnection connection;
-
         private InstallationTaskManager installMngr;
 
         public InstallationTaskProvider(String connectionString)
         {
-            this.connectionString = connectionString;
-            connection = new VlslVConnection(connectionString);
-
-            InitManagers();
+            InitManagers(connectionString);
         }
 
-        ~InstallationTaskProvider()
+        private void InitManagers(String connectionString)
         {
-            connection.Dispose();
-        }
-
-        private void InitManagers()
-        {
-            installMngr = new InstallationTaskManager(connection);
+            installMngr = new InstallationTaskManager(connectionString);
         }
 
         #region Methods
@@ -48,7 +37,7 @@ namespace VirusBlokAda.CC.DataBase
         }
 
 
-        public List<InstallationTaskEntity> List(String where, String order, Int32 page, Int32 size)
+        public List<InstallationTaskEntity> List(String where, String order, Int16 page, Int16 size)
         {
             return installMngr.List(where, order, page, size);
         }
