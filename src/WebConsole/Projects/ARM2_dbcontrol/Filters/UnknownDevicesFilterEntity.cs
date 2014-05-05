@@ -10,7 +10,6 @@ namespace ARM2_dbcontrol.Filters
     public class UnknownDevicesFilterEntity: FilterEntity
     {
         private string serialNumber = String.Empty;
-        private string computerName = String.Empty;
         private string comment = String.Empty;
         private DateTime dateInsertedFrom = DateTime.MinValue;
         private DateTime dateInsertedTo = DateTime.MinValue;
@@ -21,11 +20,6 @@ namespace ARM2_dbcontrol.Filters
         {
             get { return serialNumber; }
             set { serialNumber = value; }
-        }
-        public string ComputerName
-        {
-            get { return computerName; }
-            set { computerName = value; }
         }
         public string Comment
         {
@@ -54,7 +48,6 @@ namespace ARM2_dbcontrol.Filters
         }
 
         private string termSerialNumber = "AND";
-        private string termComputerName = "AND";
         private string termComment = "AND";
         private string termDateInserted = "AND";
 
@@ -62,11 +55,6 @@ namespace ARM2_dbcontrol.Filters
         {
             get { return termSerialNumber; }
             set { termSerialNumber = value; }
-        }
-        public string TermComputerName
-        {
-            get { return termComputerName; }
-            set { termComputerName = value; }
         }
         public string TermComment
         {

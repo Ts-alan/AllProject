@@ -73,7 +73,6 @@ namespace ARM2_dbcontrol.Filters
 		private string controlCenter = String.Empty;
         private string description = String.Empty;
 
-        private string termComputerName = "AND";
         private string termUserLogin = "AND";
         private string termIPAddress = "AND";
         private string termLatestMalware = "AND";
@@ -477,12 +476,6 @@ namespace ARM2_dbcontrol.Filters
         {
             set { this.description = value; }
             get { return this.description; }
-        }
-
-        public string TermComputerName
-        {
-            set { this.termComputerName = value; }
-            get { return this.termComputerName; }
         }
 
         public string TermCpu

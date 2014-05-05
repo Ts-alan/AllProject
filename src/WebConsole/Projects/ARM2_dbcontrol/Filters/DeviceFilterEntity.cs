@@ -11,7 +11,6 @@ namespace ARM2_dbcontrol.Filters
     {
         private string serialNumber = String.Empty;
         private string nameDevice = String.Empty;
-        private string computerName = String.Empty;
 
         private DateTime dateInsertedFrom = DateTime.MinValue;
         private DateTime dateInsertedTo = DateTime.MinValue;
@@ -28,12 +27,6 @@ namespace ARM2_dbcontrol.Filters
         {
             get { return nameDevice; }
             set { nameDevice = value; }
-        }
-
-        public string ComputerName
-        {
-            get { return computerName; }
-            set { computerName = value; }
         }
 
         public DateTime DateInsertedFrom
@@ -59,7 +52,6 @@ namespace ARM2_dbcontrol.Filters
 
         private string termSerialNumber = "AND";
         private string termNameDevice = "AND";
-        private string termComputerName = "AND";
         private string termDateInserted = "AND";
 
         public string TermSerialNumber
@@ -71,11 +63,6 @@ namespace ARM2_dbcontrol.Filters
         {
             get { return termNameDevice; }
             set { termNameDevice = value; }
-        }
-        public string TermComputerName
-        {
-            get { return termComputerName; }
-            set { termComputerName = value; }
         }
         public string TermDateInserted
         {

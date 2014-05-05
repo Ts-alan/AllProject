@@ -28,7 +28,7 @@
             }
             
         }
-        catch (Exception ex)
+        catch
         {
             //Application["SqlExceptOccured"] = new Exception("vbaMembership");
         }

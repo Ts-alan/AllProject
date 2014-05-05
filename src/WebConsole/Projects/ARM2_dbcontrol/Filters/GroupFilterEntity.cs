@@ -83,17 +83,6 @@ namespace ARM2_dbcontrol.Filters
 
 
         #region property
-        public string GetSQLWhereStatement
-        {
-            get
-            {
-                if (this.sqlWhereStatement != "")
-                    return this.sqlWhereStatement;
-                else
-                    return null;
-            }
-            set { this.sqlWhereStatement = value; }
-        }
 
         public string Description
         {
