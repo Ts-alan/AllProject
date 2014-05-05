@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Vba32 Control Center")]
 [assembly: AssemblyCopyright("Copyright (c) 2008-2009 VirusBlokAda Ltd.")]
 [assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 //
 // Version information for an assembly consists of the following four values:

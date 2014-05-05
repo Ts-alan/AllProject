@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Vba32 Control Center")]
 [assembly: AssemblyCopyright("Copyright © VirusBLokAda Ltd. 2008-2009")]
 [assembly: AssemblyTrademark("Vba32")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
