@@ -70,7 +70,7 @@ namespace VirusBlokAda.CC.Common
         }
 
         public Logger(String path, LogLevel level, String user)
-            : this(path, level, Encoding.Default, true, user)
+            : this(path, level, Encoding.Unicode, true, user)
         {
         }
 
