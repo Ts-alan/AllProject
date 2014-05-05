@@ -11,75 +11,75 @@ namespace VirusBlokAda.CC.DataBase
 	/// </summary>
 	public class SettingsEntity : ICloneable
 	{				
-		protected bool showComputerID;
-        protected bool showIPAdress = true;
-		protected bool showComputerName=true;
-        protected bool showControlCenter = true;
-        protected bool showDomainName = true;
-        protected bool showUserLogin = true;
-        protected bool showOSType = true;
-        protected bool showRAM = true;
-        protected bool showCPUClock = true;
-        protected bool showRecentActive = true;
-        protected bool showLatestUpdate = true;
-        protected bool showVba32Version = true;
-        protected bool showLatestInfected = true;
-        protected bool showLatestMalware = true;
-        protected bool showVba32Integrity = true;
-        protected bool showVba32KeyValid = true;
-        protected bool showDescription = true;
-        protected bool showPolicyName = true;
+		protected Boolean showComputerID;
+        protected Boolean showIPAdress = true;
+		protected Boolean showComputerName=true;
+        protected Boolean showControlCenter = true;
+        protected Boolean showDomainName = true;
+        protected Boolean showUserLogin = true;
+        protected Boolean showOSType = true;
+        protected Boolean showRAM = true;
+        protected Boolean showCPUClock = true;
+        protected Boolean showRecentActive = true;
+        protected Boolean showLatestUpdate = true;
+        protected Boolean showVba32Version = true;
+        protected Boolean showLatestInfected = true;
+        protected Boolean showLatestMalware = true;
+        protected Boolean showVba32Integrity = true;
+        protected Boolean showVba32KeyValid = true;
+        protected Boolean showDescription = true;
+        protected Boolean showPolicyName = true;
 		//
 
-        protected int intervalAutoUpdateComputers = 3600;
-        protected int intervalAutoUpdateEvents = 300;
-        protected int intervalAutoUpdateTasks = 600;
-        protected int intervalAutoUpdateProcesses = 600;
-        protected int intervalAutoUpdateComponents = 600;
-        protected int intervalAutoUpdateTasksInstall = 600;
+        protected Int32 intervalAutoUpdateComputers = 3600;
+        protected Int32 intervalAutoUpdateEvents = 300;
+        protected Int32 intervalAutoUpdateTasks = 600;
+        protected Int32 intervalAutoUpdateProcesses = 600;
+        protected Int32 intervalAutoUpdateComponents = 600;
+        protected Int32 intervalAutoUpdateTasksInstall = 600;
 
-        protected bool enableAutoUpdateComputers = true;
-        protected bool enableAutoUpdateEvents = true;
-        protected bool enableAutoUpdateTasks = true;
-        protected bool enableAutoUpdateProcesses = true;
-        protected bool enableAutoUpdateComponents = true;
-        protected bool enableAutoUpdateTasksInstall = true;
+        protected Boolean enableAutoUpdateComputers = true;
+        protected Boolean enableAutoUpdateEvents = true;
+        protected Boolean enableAutoUpdateTasks = true;
+        protected Boolean enableAutoUpdateProcesses = true;
+        protected Boolean enableAutoUpdateComponents = true;
+        protected Boolean enableAutoUpdateTasksInstall = true;
 		
 		//Default constructor
 		public SettingsEntity() {}
 		
 		//Constructor
 		public SettingsEntity(
-			bool showComputerID,
-			bool showIPAdress,
-			bool showComputerName,
-			bool showControlCenter,
-			bool showDomainName,
-			bool showUserLogin,
-			bool showOSType,
-			bool showRAM,
-			bool showCPUClock,
-            bool showRecentActive,
-			bool showLatestUpdate,
-			bool showVba32Version,
-			bool showLatestInfected,
-			bool showLatestMalware,
-			bool showVba32Integrity,
-			bool showVba32KeyValid,
-            bool showPolicyName,
-            bool showDescription,
-            int intervalAutoUpdateComputers,
-            int intervalAutoUpdateEvents,
-            int intervalAutoUpdateTasks,
-            int intervalAutoUpdateProcesses,
-            int intervalAutoUpdateComponents,
-            int intervalAutoUpdateTasksInstall,
-            bool enableAutoUpdateComputers,
-            bool enableAutoUpdateEvents,
-            bool enableAutoUpdateTasks,
-            bool enableAutoUpdateProcesses,
-            bool enableAutoUpdateComponents,
-            bool enableAutoUpdateTasksInstall
+			Boolean showComputerID,
+			Boolean showIPAdress,
+			Boolean showComputerName,
+			Boolean showControlCenter,
+			Boolean showDomainName,
+			Boolean showUserLogin,
+			Boolean showOSType,
+			Boolean showRAM,
+			Boolean showCPUClock,
+            Boolean showRecentActive,
+			Boolean showLatestUpdate,
+			Boolean showVba32Version,
+			Boolean showLatestInfected,
+			Boolean showLatestMalware,
+			Boolean showVba32Integrity,
+			Boolean showVba32KeyValid,
+            Boolean showPolicyName,
+            Boolean showDescription,
+            Int32 intervalAutoUpdateComputers,
+            Int32 intervalAutoUpdateEvents,
+            Int32 intervalAutoUpdateTasks,
+            Int32 intervalAutoUpdateProcesses,
+            Int32 intervalAutoUpdateComponents,
+            Int32 intervalAutoUpdateTasksInstall,
+            Boolean enableAutoUpdateComputers,
+            Boolean enableAutoUpdateEvents,
+            Boolean enableAutoUpdateTasks,
+            Boolean enableAutoUpdateProcesses,
+            Boolean enableAutoUpdateComponents,
+            Boolean enableAutoUpdateTasksInstall
 			//
 			) 
 		{
@@ -119,180 +119,180 @@ namespace VirusBlokAda.CC.DataBase
 		
 		#region Public Properties	
 
-		public bool ShowComputerID
+		public Boolean ShowComputerID
 		{
 			get {return showComputerID;}
 			set {showComputerID = value;}
 		}
 
-		public bool ShowIPAdress
+		public Boolean ShowIPAdress
 		{
 			get {return showIPAdress;}
 			set {showIPAdress = value;}
 		}
 
-		public bool ShowComputerName
+		public Boolean ShowComputerName
 		{
 			get {return showComputerName;}
 			set {showComputerName = value;}
 		}
 
-		public bool ShowControlCenter
+		public Boolean ShowControlCenter
 		{
 			get {return showControlCenter;}
 			set {showControlCenter = value;}
 		}
 
-		public bool ShowDomainName
+		public Boolean ShowDomainName
 		{
 			get {return showDomainName;}
 			set {showDomainName = value;}
 		}
 
-		public bool ShowUserLogin
+		public Boolean ShowUserLogin
 		{
 			get {return showUserLogin;}
 			set {showUserLogin = value;}
 		}
 
-		public bool ShowOSType
+		public Boolean ShowOSType
 		{
 			get {return showOSType;}
 			set {showOSType = value;}
 		}
 
-		public bool ShowRAM
+		public Boolean ShowRAM
 		{
 			get {return showRAM;}
 			set {showRAM = value;}
 		}
 
-		public bool ShowCPUClock
+		public Boolean ShowCPUClock
 		{
 			get {return showCPUClock;}
 			set {showCPUClock = value;}
 		}
 
-		public bool ShowRecentActive
+		public Boolean ShowRecentActive
 		{
 			get {return showRecentActive;}
 			set {showRecentActive = value;}
 		}
 
-		public bool ShowLatestUpdate
+		public Boolean ShowLatestUpdate
 		{
 			get {return showLatestUpdate;}
 			set {showLatestUpdate = value;}
 		}
 
-		public bool ShowVba32Version
+		public Boolean ShowVba32Version
 		{
 			get {return showVba32Version;}
 			set {showVba32Version = value;}
 		}
 
-		public bool ShowLatestInfected
+		public Boolean ShowLatestInfected
 		{
 			get {return showLatestInfected;}
 			set {showLatestInfected = value;}
 		}
 
-		public bool ShowLatestMalware
+		public Boolean ShowLatestMalware
 		{
 			get {return showLatestMalware;}
 			set {showLatestMalware = value;}
 		}
 
-		public bool ShowVba32Integrity
+		public Boolean ShowVba32Integrity
 		{
 			get {return showVba32Integrity;}
 			set {showVba32Integrity = value;}
 		}
 
-		public bool ShowVba32KeyValid
+		public Boolean ShowVba32KeyValid
 		{
 			get {return showVba32KeyValid;}
 			set {showVba32KeyValid = value;}
 		}
 
-        public bool ShowPolicyName
+        public Boolean ShowPolicyName
         {
             get { return showPolicyName; }
             set { showPolicyName = value; }
         }
 
-        public bool ShowDescription
+        public Boolean ShowDescription
         {
             get { return showDescription; }
             set { showDescription = value; }
         }
 
-        public int IntervalAutoUpdateComputers
+        public Int32 IntervalAutoUpdateComputers
         {
             get{return intervalAutoUpdateComputers;}
             set{intervalAutoUpdateComputers = value;}
         }
 
-         public int IntervalAutoUpdateEvents
+         public Int32 IntervalAutoUpdateEvents
         {
             get{return intervalAutoUpdateEvents;}
             set{intervalAutoUpdateEvents = value;}
         }
 
-         public int IntervalAutoUpdateTasks
+         public Int32 IntervalAutoUpdateTasks
         {
             get{return intervalAutoUpdateTasks;}
             set{intervalAutoUpdateTasks = value;}
         }
 
-         public int IntervalAutoUpdateProcesses
+         public Int32 IntervalAutoUpdateProcesses
         {
             get{return intervalAutoUpdateProcesses;}
             set{intervalAutoUpdateProcesses = value;}
         }
 
-         public int IntervalAutoUpdateComponents
+         public Int32 IntervalAutoUpdateComponents
         {
             get{return intervalAutoUpdateComponents;}
             set{intervalAutoUpdateComponents = value;}
         }
 
-         public int IntervalAutoUpdateTasksInstall
+         public Int32 IntervalAutoUpdateTasksInstall
          {
              get { return intervalAutoUpdateTasksInstall; }
              set { intervalAutoUpdateTasksInstall = value; }
          }
 
-        public bool EnableAutoUpdateComputers
+        public Boolean EnableAutoUpdateComputers
         {
             get { return enableAutoUpdateComputers; }
             set { enableAutoUpdateComputers = value; }
         }
 
-        public bool EnableAutoUpdateEvents
+        public Boolean EnableAutoUpdateEvents
         {
             get { return enableAutoUpdateEvents; }
             set { enableAutoUpdateEvents = value; }
         }
 
-        public bool EnableAutoUpdateTasks
+        public Boolean EnableAutoUpdateTasks
         {
             get { return enableAutoUpdateTasks; }
             set { enableAutoUpdateTasks = value; }
         }
 
-        public bool EnableAutoUpdateProcesses
+        public Boolean EnableAutoUpdateProcesses
         {
             get { return enableAutoUpdateProcesses; }
             set { enableAutoUpdateProcesses = value; }
         }
 
-        public bool EnableAutoUpdateComponents
+        public Boolean EnableAutoUpdateComponents
         {
             get { return enableAutoUpdateComponents; }
             set { enableAutoUpdateComponents = value; }
         }
-        public bool EnableAutoUpdateTasksInstall
+        public Boolean EnableAutoUpdateTasksInstall
         {
             get { return enableAutoUpdateTasksInstall; }
             set { enableAutoUpdateTasksInstall = value; }
@@ -347,7 +347,7 @@ namespace VirusBlokAda.CC.DataBase
 		/// <summary>
 		/// Преобразует объект в строку для  сохранения в базе
 		/// </summary>
-		public string Serialize() 
+		public String Serialize() 
 		{    
 			StringWriter writer = new StringWriter();
 			XmlSerializer serializer = new XmlSerializer(this.GetType());
@@ -359,8 +359,10 @@ namespace VirusBlokAda.CC.DataBase
 		/// Извлекает хмлину из базы данных и преобразует в объект
 		/// </summary>
 		/// <returns>settings entity</returns>
-		public SettingsEntity Deserialize(string settings)
+		public SettingsEntity Deserialize(String settings)
 		{
+            if(String.IsNullOrEmpty(settings))
+                return new SettingsEntity();
 			XmlSerializer xmlser = new XmlSerializer(this.GetType());
 			StringReader reader = new StringReader(settings);			
 			return (SettingsEntity)xmlser.Deserialize(reader);
