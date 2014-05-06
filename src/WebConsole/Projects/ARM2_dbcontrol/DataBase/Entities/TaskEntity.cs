@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -46,6 +47,14 @@ namespace VirusBlokAda.CC.DataBase
             this.taskParams = taskParams;
             this.taskUser = taskUser;
             this.taskDescription = description;
+        }
+
+        public TaskEntity(StringDictionary name_value_map)
+        {
+            this.iD= Convert.ToInt64(name_value_map["ID"]);
+            this.taskState = name_value_map["State"];
+            this.dateUpdated = DateTime.Parse(name_value_map["Date"], new System.Globalization.CultureInfo("ru-RU"));
+            this.taskDescription = name_value_map["Description"];
         }
 
         #region Public Properties

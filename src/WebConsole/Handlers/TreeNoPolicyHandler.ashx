@@ -14,21 +14,20 @@ public class TreeNoPolicyHandler : IHttpHandler {
     public void ProcessRequest(HttpContext context)
     {
         context.Response.ContentType = "text/plain";
-        GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        List<Group> list = provider.GetGroups();
+        List<Group> list = DBProviders.Group.GetGroups();
 
         //with groups
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
             tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, false, false, true, true));
-            RecursiveAddChildren(tree[tree.Count - 1], provider, list, index);
+            RecursiveAddChildren(tree[tree.Count - 1], list, index);
             index++;
         }
 
         //without group
         tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, false, false, true, true));
-        foreach (ComputersEntity comp in provider.GetComputersByGroupAndPolicy(null, null))
+        foreach (ComputersEntity comp in DBProviders.Group.GetComputersByGroupAndPolicy(null, null))
         {
             tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
         }
@@ -74,18 +73,18 @@ public class TreeNoPolicyHandler : IHttpHandler {
         return false;
     }
 
-    private void RecursiveAddChildren(TreeNodeJSONEntity node, GroupProvider provider, List<Group> list, Int32 indexList)
+    private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList)
     {
         //Groups
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, false, false, true, true));
-            RecursiveAddChildren(node.Children[node.Children.Count - 1], provider, list, i);
+            RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i);
             i++;
         }
         //Comps
-        foreach (ComputersEntity comp in provider.GetComputersByGroupAndPolicy(list[indexList], null))
+        foreach (ComputersEntity comp in DBProviders.Group.GetComputersByGroupAndPolicy(list[indexList], null))
         {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
         }

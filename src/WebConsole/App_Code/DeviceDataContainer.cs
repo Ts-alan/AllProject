@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using VirusBlokAda.CC.DataBase;
 using System.Configuration;
+using VirusBlokAda.CC.DataBase;
 
 /// <summary>
 /// Summary description for DeviceDataContainer
@@ -33,7 +33,7 @@ public static class DeviceDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        list = PoliciesState.GetDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, where, orderBy);
+        list = DBProviders.Policy.GetDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, where, orderBy);
 
         return list;
     }
@@ -42,10 +42,11 @@ public static class DeviceDataContainer
     {
         Int32 count = 0;
 
-        count = PoliciesState.GetDeviceCount(where);
+        count = DBProviders.Policy.GetDeviceCount(where);
 
         return count;
     }
+
     public static List<DevicePolicy> GetUnknown(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<DevicePolicy> list = new List<DevicePolicy>();
@@ -70,10 +71,11 @@ public static class DeviceDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        list = PoliciesState.GetUnknownDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, where, orderBy);
+        list = DBProviders.Policy.GetUnknownDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, where, orderBy);
 
         return list;
     }
+
     public static object FollowPropertyPath(Type currentType, string path)
     {
        /* Type currentType = value.GetType();*/
@@ -87,27 +89,13 @@ public static class DeviceDataContainer
         }
         return property;
     }
+
     public static Int32 CountUnknown(String where)
     {
         Int32 count = 0;
 
-        count = PoliciesState.GetUnknownDeviceCount(where);
+        count = DBProviders.Policy.GetUnknownDeviceCount(where);
 
         return count;
     }
-    public static PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = HttpContext.Current.Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-    }
-
 }

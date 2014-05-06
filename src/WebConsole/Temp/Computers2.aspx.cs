@@ -44,38 +44,21 @@ public partial class Computers2 : PageBase
         fltVBA32KeyValid.DataSource = list;
         fltVBA32KeyValid.DataBind();
 
-        //get default policy name
-        PolicyProvider provider = PoliciesState;
+        //get default policy name        
         try
         {
-            hdnDefaultPolicyName.Value = provider.GetDefaultPolicyName();
+            hdnDefaultPolicyName.Value = DBProviders.Policy.GetDefaultPolicyName();
         }
         catch { }
 
         //policy list
         list.Clear();
-        foreach (String policyName in provider.GetAllPolicyTypesNames())
+        foreach (String policyName in DBProviders.Policy.GetAllPolicyTypesNames())
         {
             list.Add(new DDLPair(policyName, policyName));
         }
         fltPolicy.DataSource = list;
         fltPolicy.DataBind();
-    }
-
-    public PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-
     }
 
     protected void FilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
@@ -90,11 +73,9 @@ public partial class Computers2 : PageBase
         Int16 compID = Convert.ToInt16(id);
         ComputersEntityEx comp = new ComputersEntityEx();
         CompAdditionalInfo info;
-        ComputerProvider compDb = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        ComponentsProvider cmptDb = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-        comp = compDb.GetComputerEx(compID);
-        comp = new ComputersEntityEx(comp, comp.Group, comp.Policy, cmptDb.GetComponentsPageByComputerID(comp.ID));
+        comp = DBProviders.Computer.GetComputerEx(compID);
+        comp = new ComputersEntityEx(comp, comp.Group, comp.Policy, DBProviders.Component.GetComponentsPageByComputerID(comp.ID));
 
         info = new CompAdditionalInfo(comp);
         return Newtonsoft.Json.JsonConvert.SerializeObject(info);
@@ -135,8 +116,7 @@ public partial class Computers2 : PageBase
         else
         {
             string where = FilterContainer1.GenerateSQL();
-            ComputerProvider compDb = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            selected = compDb.GetSelectionComputerForTask(where);
+            selected = DBProviders.Computer.GetSelectionComputerForTask(where);
         }
         return selected;
     }

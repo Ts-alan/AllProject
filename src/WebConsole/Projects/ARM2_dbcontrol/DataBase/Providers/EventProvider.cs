@@ -5,6 +5,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class EventProvider
     {
+        public const String ProviderName = "EventProvider";
+
         private EventsManager eventMngr;
         //private EventsFlowManager evFlowMngr;
         private EventTypesManager etMngr;

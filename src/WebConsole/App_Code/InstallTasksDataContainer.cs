@@ -10,15 +10,10 @@ using System.Configuration;
 
 public static class InstallTasksDataContainer
 {
-    private static InstallationTaskProvider provider;
-
-    static InstallTasksDataContainer()
-    {
-        provider = new InstallationTaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-    }
     public static List<InstallationTaskEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
-        if (maximumRows < 1) return new List<InstallationTaskEntity>();
+        if (maximumRows < 1) 
+            return new List<InstallationTaskEntity>();
 
         String orderBy = "InstallationDate DESC";
         String[] parts = SortExpression.Split(' ');
@@ -39,7 +34,7 @@ public static class InstallTasksDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        List<InstallationTaskEntity> list = provider.List(where, orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
+        List<InstallationTaskEntity> list = DBProviders.InstallationTask.List(where, orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
         for (Int32 i = 0; i < list.Count; i++)
         {
             list[i].Status = DatabaseNameLocalization.GetNameForCurrentCulture(list[i].Status);
@@ -51,21 +46,21 @@ public static class InstallTasksDataContainer
 
     public static Int32 Count(String where)
     {
-        return provider.Count(where);
+        return DBProviders.InstallationTask.Count(where);
     }
 
     public static List<String> GetTaskTypes()
     {
-        return provider.GetTaskTypes();
+        return DBProviders.InstallationTask.GetTaskTypes();
     }
 
     public static List<String> GetStatuses()
     {
-        return provider.GetStatuses();
+        return DBProviders.InstallationTask.GetStatuses();
     }
 
     public static List<String> GetVba32Versions()
     {
-        return provider.GetVba32Versions();
+        return DBProviders.InstallationTask.GetVba32Versions();
     }
 }

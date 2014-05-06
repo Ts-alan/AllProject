@@ -125,9 +125,11 @@
     </Compile>
     <Compile Include="DataBase\Entities\AutomaticallyTaskEntity.cs" />
     <Compile Include="DataBase\Managers\EventsFlowManager.cs" />
+    <Compile Include="DataBase\Managers\PParserManager.cs" />
     <Compile Include="DataBase\Providers\ComputerProvider.cs" />
     <Compile Include="DataBase\Providers\DataBaseProvider.cs" />
     <Compile Include="DataBase\Providers\EventProvider.cs" />
+    <Compile Include="DataBase\Providers\PParserProvider.cs" />
     <Compile Include="DataBase\Providers\ProcessProvider.cs" />
     <Compile Include="DataBase\Providers\TaskProvider.cs" />
     <Compile Include="KeyFile\KeyFileSettings.cs" />

@@ -5,6 +5,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ProcessProvider
     {
+        public const String ProviderName = "ProcessProvider";
+
         private ProcessesManager prcMngr;
 
         public ProcessProvider(String connectionString)

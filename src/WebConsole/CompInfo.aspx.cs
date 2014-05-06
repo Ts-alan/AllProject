@@ -74,13 +74,12 @@ public partial class CompInfo : PageBase
     private void WriteCompInfo(String computerName)
     {
         ComputersEntity comp;
-        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+        
         //Get id
-        Int16 id = db.GetComputerID(computerName);
+        Int16 id = DBProviders.Computer.GetComputerID(computerName);
         if (id == -1)
             throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
-        comp = db.GetComputer(id);
+        comp = DBProviders.Computer.GetComputer(id);
 
         lblComputerName.Text = comp.ComputerName;
 
@@ -91,13 +90,12 @@ public partial class CompInfo : PageBase
             imgControlCenter.ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/disabled.gif";
 
 
-        PolicyProvider provider = PoliciesState;
         Policy policy;
         String defaultPolicyName = String.Empty;
         try
         {
-            policy = provider.GetPolicyToComputer(comp.ComputerName);
-            defaultPolicyName = provider.GetDefaultPolicyName();
+            policy = DBProviders.Policy.GetPolicyToComputer(comp.ComputerName);
+            defaultPolicyName = DBProviders.Policy.GetDefaultPolicyName();
         }
         catch
         {
@@ -219,8 +217,7 @@ public partial class CompInfo : PageBase
     protected void WriteComponentState(String compName)
     {
         List<ComponentsEntity> list;
-        ComponentsProvider provider = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = provider.List("ComponentID > -1 " + PrimitiveFilterHelper.GenerateSqlForTextValue(compName, "ComputerName", false, false), "ComponentName ASC", 1, Int16.MaxValue);
+        list = DBProviders.Component.List("ComponentID > -1 " + PrimitiveFilterHelper.GenerateSqlForTextValue(compName, "ComputerName", false, false), "ComponentName ASC", 1, Int16.MaxValue);
                 
         foreach (ComponentsEntity cmpt in list)
         {            
@@ -293,7 +290,7 @@ public partial class CompInfo : PageBase
         task.Type = taskType;
         try
         {
-            task.Param = ComponentState.GetCurrentSettings(compID, ComponentName);
+            task.Param = DBProviders.Component.GetCurrentSettings(compID, ComponentName);
         }
         catch (Exception e)
         {
@@ -486,42 +483,12 @@ public partial class CompInfo : PageBase
         if ((!vld.CheckStringToDescription()) && (newDescription != ""))
             throw new ArgumentException(Resources.Resource.ErrorDescription);
 
-        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        Int16 id = db.GetComputerID(computerName);
+        Int16 id = DBProviders.Computer.GetComputerID(computerName);
         if (id == 0)
             throw new InvalidOperationException(Resources.Resource.ErrorCompNameNotExist);
-        db.UpdateDescription(id, newDescription);
+        DBProviders.Computer.UpdateDescription(id, newDescription);
 
         //!-OPTM Как-нить иначе сделать это, что ли..
         Response.Redirect("CompInfo.aspx?CompName=" + computerName);
-    }
-
-    public PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                Application["PoliciesState"] = provider;
-            }
-            return provider;
-        }
-    }
-
-    public ComponentsProvider ComponentState
-    {
-        get
-        {
-            ComponentsProvider provider = Application["ComponentState"] as ComponentsProvider;
-            if (provider == null)
-            {
-                provider = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                Application["ComponentState"] = provider;
-            }
-            return provider;
-        }
     }
 }

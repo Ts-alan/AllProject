@@ -10,7 +10,6 @@ using System.Configuration;
 using System.IO;
 public class GetTreeDataHandler : IHttpHandler
 {
-
     public void ProcessRequest(HttpContext context)
     {
         String groupTreeArray = context.Request.Params.Get("groupTreeArray");
@@ -43,8 +42,7 @@ public class GetTreeDataHandler : IHttpHandler
     private void SaveChanges(String groupTreeArray)
     {
         List<TreeNodeEntity> groupList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(groupTreeArray);
-        GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        List<Group> groups = provider.GetGroups();
+        List<Group> groups = DBProviders.Group.GetGroups();
         #region Groups
         //Add and rename  groups
         for (Int32 i = groupList.Count - 1; i >= 0; i--)
@@ -58,7 +56,7 @@ public class GetTreeDataHandler : IHttpHandler
                 if (groupList[i].NodeID.Contains("GroupNew_"))
                 {
                     // Add new group                    
-                    id = provider.Add(new Group(groupList[i].NodeName, groupList[i].Comment, parentID == 0 ? (Int32?)null : parentID));
+                    id = DBProviders.Group.Add(new Group(groupList[i].NodeName, groupList[i].Comment, parentID == 0 ? (Int32?)null : parentID));
                     ChangeParentID(ref groupList, groupList[i].NodeID, String.Format("Group_{0}", id));
                     groupList[i] = new TreeNodeEntity(String.Format("Group_{0}", id), groupList[i].NodeName, groupList[i].ParentID, groupList[i].Comment, groupList[i].IsLeaf);
                 }
@@ -89,7 +87,7 @@ public class GetTreeDataHandler : IHttpHandler
                         //New parentID
                         Int32? newParentID = null;
                         newParentID = parentID;
-                        provider.Update(groups[index].Name, newGroupName, newComment, newParentID);
+                        DBProviders.Group.Update(groups[index].Name, newGroupName, newComment, newParentID);
                     }
                     else
                     {
@@ -103,13 +101,13 @@ public class GetTreeDataHandler : IHttpHandler
         foreach (Group group in groups)
         {
             if (FindGroupIndexByID(groupList, group.ID) == -1)
-                provider.Delete(group);
+                DBProviders.Group.Delete(group);
         }
         #endregion
 
         #region Computers
         List<String> list = new List<String>();
-        foreach (ChildParentEntity comp in provider.GetComputersWithGroups())
+        foreach (ChildParentEntity comp in DBProviders.Group.GetComputersWithGroups())
         {
             Int32? newParentID = GetParentID(comp.ChildID, groupList);
             if (newParentID != comp.ParentID)
@@ -117,18 +115,18 @@ public class GetTreeDataHandler : IHttpHandler
                 //Delete comp from group
                 if (newParentID == null)
                 {
-                    provider.DeleteComputerFromGroup((Int16)comp.ChildID);
+                    DBProviders.Group.DeleteComputerFromGroup((Int16)comp.ChildID);
                 }
                 else
                 {
                     //Add computer in group
                     if (comp.ParentID == null)
                     {
-                        provider.AddComputerInGroup((Int16)comp.ChildID, (Int32)newParentID);
+                        DBProviders.Group.AddComputerInGroup((Int16)comp.ChildID, (Int32)newParentID);
                     }
                     else
                     {
-                        provider.MoveComputerBetweenGroups((Int16)comp.ChildID, (Int32)newParentID);
+                        DBProviders.Group.MoveComputerBetweenGroups((Int16)comp.ChildID, (Int32)newParentID);
                     }
                 }
             }

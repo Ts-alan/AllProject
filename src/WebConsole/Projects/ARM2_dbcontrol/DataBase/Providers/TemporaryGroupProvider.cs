@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class TemporaryGroupProvider
     {
+        public const String ProviderName = "TemporaryGroupProvider";
+
         private TemporaryGroupManager mngr;
 
         public TemporaryGroupProvider(String connectionString)

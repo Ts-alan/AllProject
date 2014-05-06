@@ -34,8 +34,7 @@ public static class ComponentsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
+        list = DBProviders.Component.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
 
         for (Int32 i = 0; i < list.Count; i++)
         {
@@ -47,16 +46,13 @@ public static class ComponentsDataContainer
 
     public static Int32 Count(String where)
     {
-        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.Count(where);
+        return DBProviders.Component.Count(where);
     }
 
     public static List<String> GetTypes()
     {
         List<String> list = new List<String>();
-        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        foreach (ComponentsEntity ent in db.ListComponentType())
+        foreach (ComponentsEntity ent in DBProviders.Component.ListComponentType())
         {
             list.Add(ent.ComponentName);
         }
@@ -67,9 +63,7 @@ public static class ComponentsDataContainer
     public static List<String> GetStates()
     {
         List<String> list = new List<String>();
-        ComponentsProvider db = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        foreach (ComponentsEntity ent in db.ListComponentState())
+        foreach (ComponentsEntity ent in DBProviders.Component.ListComponentState())
         {
             list.Add(ent.ComponentState);
         }

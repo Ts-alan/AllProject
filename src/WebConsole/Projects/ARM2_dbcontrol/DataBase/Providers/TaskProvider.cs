@@ -5,6 +5,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class TaskProvider
     {
+        public const String ProviderName = "TaskProvider";
+
         private TaskManager taskMngr;
 
         public TaskProvider(String connectionString)

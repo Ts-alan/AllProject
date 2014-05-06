@@ -12,19 +12,15 @@ public class TreeWithPolicyHandler : IHttpHandler
     public int idCount = 0;
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
-        GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        PolicyProvider providerPolicy = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         List<TreeNodeJSONEntity> tree = new List<TreeNodeJSONEntity>();
-        List<Policy> policyList = providerPolicy.GetPolicyTypes();
         TreeNodeJSONEntity policyNode;
         String policyId;
-        foreach (Policy policy in policyList)
+        foreach (Policy policy in DBProviders.Policy.GetPolicyTypes())
         {
             policyId = policy.ID.ToString();
-            policyNode = BuildPolicyNode(policy, providerPolicy.GetComputersByPolicyPage(policy, 1, Int16.MaxValue, null), provider);
+            policyNode = BuildPolicyNode(policy, DBProviders.Policy.GetComputersByPolicyPage(policy, 1, Int16.MaxValue, null));
             UpdateGroupId(policyNode.Children, policyId);
-            tree.Add(policyNode);
-  
+            tree.Add(policyNode);  
         }
         
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(tree));
@@ -53,14 +49,14 @@ public class TreeWithPolicyHandler : IHttpHandler
         }
     }
 
-    private TreeNodeJSONEntity BuildPolicyNode(Policy policy, List<ComputersEntity> comps, GroupProvider provider)
+    private TreeNodeJSONEntity BuildPolicyNode(Policy policy, List<ComputersEntity> comps)
     {
         List<Group> list;
         PolicyBranchOfTree policyBranch = new PolicyBranchOfTree(policy);
 
         foreach (ComputersEntity comp in comps)
         {
-            list = provider.GetGroupListByComputerID(comp.ID);
+            list = DBProviders.Group.GetGroupListByComputerID(comp.ID);
             if (list.Count == 0)
             {
                 policyBranch.AddComputer(comp);

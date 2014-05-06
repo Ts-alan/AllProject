@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class GroupProvider
     {
+        public const String ProviderName = "GroupProvider";
+
         private GroupManager groupMngr;
         private ComponentsManager cmptMngr;
         private ComputersManager compMngr;

@@ -37,9 +37,7 @@ public partial class Statistic : PageBase
     protected override void InitFields()
     {
         //Service information:
-        ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        Int32 countAll = cmng.Count("ComputerName LIKE '%'");
+        Int32 countAll = DBProviders.Computer.Count("ComputerName LIKE '%'");
 
         DateTime dy = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
            DateTime.Now.Day, 0, 0, 0);
@@ -47,15 +45,13 @@ public partial class Statistic : PageBase
         DateTime dt = new DateTime(DateTime.Now.Year + 1, DateTime.Now.Month,
            DateTime.Now.Day, 0, 0, 0);
 
-        Int32 countActiveToday = cmng.Count("ComputerName LIKE '%' " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "RecentActive", false, false));//"ComputerName LIKE '%'");
+        Int32 countActiveToday = DBProviders.Computer.Count("ComputerName LIKE '%' " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "RecentActive", false, false));//"ComputerName LIKE '%'");
 
         lblCountOfCompActiveToday.Text = countActiveToday.ToString();
         lblCountOfCompRegistred.Text = countAll.ToString();
 
-        EventProvider evnt = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        countAll = evnt.Count("EventID > -1");
-        countActiveToday = evnt.Count("EventID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "EventTime", false, false));
+        countAll = DBProviders.Event.Count("EventID > -1");
+        countActiveToday = DBProviders.Event.Count("EventID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "EventTime", false, false));
 
         lblCountOfEventRegistred.Text = countAll.ToString();
         lblCountOfEventToday.Text = countActiveToday.ToString();
@@ -63,12 +59,10 @@ public partial class Statistic : PageBase
         //Отобразим лишь администратору или оператору информацию по задачам
         if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("Operator")))
         {
-            TaskProvider tskm = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-            lblCountOfTaskRegistred.Text = tskm.Count("TaskID > -1").ToString();
-            lblCountOfTaskTodayIssued.Text = tskm.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateIssued", false, false)).ToString();
-            lblCountOfTaskTodayUpdated.Text = tskm.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateUpdated", false, false)).ToString();
-            lblCountOfTaskTodayCompleted.Text = tskm.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateComplete", false, false)).ToString();
+            lblCountOfTaskRegistred.Text = DBProviders.Task.Count("TaskID > -1").ToString();
+            lblCountOfTaskTodayIssued.Text = DBProviders.Task.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateIssued", false, false)).ToString();
+            lblCountOfTaskTodayUpdated.Text = DBProviders.Task.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateUpdated", false, false)).ToString();
+            lblCountOfTaskTodayCompleted.Text = DBProviders.Task.Count("TaskID > -1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dy, dt, "DateComplete", false, false)).ToString();
         }
         Page.Title = Resources.Resource.PageStatisticTitle;
     }

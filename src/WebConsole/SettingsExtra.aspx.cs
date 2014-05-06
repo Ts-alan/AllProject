@@ -78,19 +78,17 @@ public partial class SettingsExtra : PageBase
     /// Update data
     /// </summary>
     private void UpdateData()
-    {
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+    {   
         string filter = "EventName like '%'";
         string sort = "EventName ASC";
 
-        int count = db.Count(filter);
+        int count = DBProviders.Event.Count(filter);
         int pageSize = 20;
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         pcPaging.PageCount = pageCount;
 
-        dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
+        dlEvents.DataSource = DBProviders.Event.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
 
         dlEvents.DataBind();
         //LoadStateFromDataBase();
@@ -139,12 +137,10 @@ public partial class SettingsExtra : PageBase
 
             case "UpdateCommand":
 
-                EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
                 EventTypesEntity event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
                         (e.Item.FindControl("lblName") as Label).Text, (e.Item.FindControl("ddlMultiColor") as DropDownList).SelectedValue, false, false, false);
 
-                db.UpdateColor(event_);
+                DBProviders.Event.UpdateColor(event_);
                 //Label lbtn = (Label)e.Item.FindControl("lblName");
                 //if (lbtn != null)
                 //    Anchor.ScrollToObj(lbtn.ClientID, Page);

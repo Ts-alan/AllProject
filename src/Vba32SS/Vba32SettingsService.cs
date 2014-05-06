@@ -24,7 +24,7 @@ namespace Vba32.ControlCenter.SettingsService
 
         public Vba32SettingsService()
         {
-            LoggerSS.log.Info("Vba32SettingsService.Vba32SettingsService():: Вызван");
+            LoggerSS.log.Info("Vba32SettingsService.Vba32SettingsService():: Enter.");
             InitializeComponent();
             try
             {
@@ -41,7 +41,7 @@ namespace Vba32.ControlCenter.SettingsService
 
         protected override void OnStart(string[] args)
         {
-            LoggerSS.log.Info("Vba32SettingsService::OnStart() Вызван");
+            LoggerSS.log.Info("Vba32SettingsService::OnStart() Enter.");
             try
             {
                 //Регистрируем тип для .NET Remoting
@@ -57,7 +57,7 @@ namespace Vba32.ControlCenter.SettingsService
 
         protected override void OnStop()
         {
-           LoggerSS.log.Info("Vba32SettingsService::OnStop() Вызван");
+           LoggerSS.log.Info("Vba32SettingsService::OnStop() Enter.");
        }
 
         #endregion

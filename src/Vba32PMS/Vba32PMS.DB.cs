@@ -25,7 +25,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private List<EventsEntity> GetEventsFromDb(String connStr, String sortExpression, Int32 count)
         {
-            LoggerPMS.log.Debug("Vba32PMS.GetEventsFromDb()::Получаем события из базы данных");
+            LoggerPMS.log.Debug("Vba32PMS.GetEventsFromDb():: Get events from database.");
             List<EventsEntity> list = new List<EventsEntity>();
             try
             {
@@ -34,7 +34,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.GetEventsFromDb()::Ошибка при попытке получить данные из БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.GetEventsFromDb():: " + ex.Message);
                 return null;
 
             }
@@ -64,7 +64,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.GenerateConnectionString()::Ошибка при формировании строки подключения: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.GenerateConnectionString():: " + ex.Message);
             }
             return str;
         }
@@ -76,7 +76,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean CheckDeliveryState(String connStr)
         {
-            LoggerPMS.log.Debug("Vba32PMS.CheckDeliveryState()::Меняем статус зависших задач");
+            LoggerPMS.log.Debug("Vba32PMS.CheckDeliveryState():: Change state for buzz tasks.");
             DateTime dtTo = DateTime.Now;
             try
             {
@@ -84,7 +84,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.CheckDeliveryState()::Ошибка при формировании строки-фильтра: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.CheckDeliveryState():: Format filter string error: " + ex.Message);
                 return false;
             }
 
@@ -95,7 +95,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.CheckDeliveryState()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.CheckDeliveryState():: " + ex.Message);
                 return false;
             }
             return true;
@@ -108,7 +108,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean ClearOldEvents(String connStr)
         {
-            LoggerPMS.log.Debug("Vba32PMS.ClearOldEvents()::Удаляем старые события");
+            LoggerPMS.log.Debug("Vba32PMS.ClearOldEvents():: Delete old events.");
             DateTime dtTo = DateTime.Now;
             try
             {
@@ -117,7 +117,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldEvents()::Ошибка при формировании строки-фильтра: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldEvents():: Format filter string error: " + ex.Message);
                 return false;
             }
 
@@ -128,7 +128,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldEvents()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldEvents():: " + ex.Message);
                 return false;
             }
             return true;
@@ -143,7 +143,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean ClearOldTasks(String connStr)
         {
-            LoggerPMS.log.Debug("Vba32PMS.ClearOldTasks()::Удаляем старые задачи");
+            LoggerPMS.log.Debug("Vba32PMS.ClearOldTasks():: Delete old tasks.");
             DateTime dtTo = DateTime.Now;
             try
             {
@@ -152,7 +152,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldTasks()::Ошибка при формировании строки-фильтра: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldTasks():: Format filter string error: " + ex.Message);
                 return false;
             }
 
@@ -163,7 +163,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldTasks()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldTasks():: " + ex.Message);
                 return false;
             }
             return true;
@@ -175,7 +175,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <param name="connectionString"></param>
         private Boolean ClearOldComputers(String connStr)
         {
-            LoggerPMS.log.Debug("Vba32PMS.ClearOldComputers()::Удаляем старые компьютеры");
+            LoggerPMS.log.Debug("Vba32PMS.ClearOldComputers():: Delete old computers.");
             DateTime dtTo = DateTime.Now;
             try
             {                
@@ -184,7 +184,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldComputers()::Ошибка при формировании строки-фильтра: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldComputers():: Format filter string error: " + ex.Message);
                 return false;
             }
 
@@ -195,7 +195,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ClearOldComputers()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ClearOldComputers():: " + ex.Message);
                 return false;
             }
             return true;
@@ -208,7 +208,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean CompressDB(String connStr)
         {
-            LoggerPMS.log.Debug("Vba32PMS.CompressDB()::Сжатие базы данных");
+            LoggerPMS.log.Debug("Vba32PMS.CompressDB():: Shrink database.");
 
             try
             {
@@ -217,7 +217,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.CompressDB()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.CompressDB():: " + ex.Message);
                 return false;
             }
             return true;
@@ -230,9 +230,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean ConfigureAgent(String connectionString)
         {
-            LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: Конфигурируем агентов");
+            LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: Configure arents.");
 
-            LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: Получаем список IP адресов");
+            LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: Get IP-addresses list.");
             List<String> list = null;
             try
             {
@@ -241,13 +241,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             }
             catch (Exception ex)
             {
-                LoggerPMS.log.Error("Vba32PMS.ConfigureAgent()::Ошибка при запросе к БД: " + ex.Message);
+                LoggerPMS.log.Error("Vba32PMS.ConfigureAgent():: " + ex.Message);
                 return false;
             }
 
             if (list == null || list.Count == 0)
             {
-                LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: агенты для конфигурации не найдены");
+                LoggerPMS.log.Debug("Vba32PMS.ConfigureAgent():: Agents for configure isn't found.");
                 return true;
             }
 

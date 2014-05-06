@@ -49,9 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\LoggerPP.cs" />
-    <Compile Include="DataBase\EventsFlowManager.cs" />
     <Compile Include="notifications.cs" />
     <Compile Include="packet_parser.cs" />
+    <Compile Include="packet_parser.notify.cs" />
+    <Compile Include="packet_parser.parser.cs" />
+    <Compile Include="packet_parser.registry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

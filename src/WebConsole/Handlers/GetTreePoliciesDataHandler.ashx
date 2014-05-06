@@ -38,18 +38,12 @@ public class GetTreePoliciesDataHandler : IHttpHandler
     {
         List<TreeNodeEntity> policyList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(policyTreeArray);
 
-        PolicyProvider providerPolicy = HttpContext.Current.Application["PoliciesState"] as PolicyProvider;
-        if (providerPolicy == null)
-        {
-            providerPolicy = new PolicyProvider(System.Configuration.ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            HttpContext.Current.Application["PoliciesState"] = providerPolicy;
-        }
         //remove all computers from all policies
-        providerPolicy.ClearAllPolicy();
-        foreach (Policy policy in providerPolicy.GetPolicyTypes())
+        DBProviders.Policy.ClearAllPolicy();
+        foreach (Policy policy in DBProviders.Policy.GetPolicyTypes())
         {
             //add computers into policy
-            providerPolicy.AddComputersToPolicy(policy, GetComputersByPolicy(policy, policyList));            
+            DBProviders.Policy.AddComputersToPolicy(policy, GetComputersByPolicy(policy, policyList));            
         }
     }
 

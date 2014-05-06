@@ -39,16 +39,14 @@ public partial class MapComputers : PageBase
         List<ComputersEntity> list = new List<ComputersEntity>();
         ItemsMap.InnerHtml = String.Empty;
 
-        GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        
-        list = provider.GetComputersWithoutGroup();
+        list = DBProviders.Group.GetComputersWithoutGroup();
         ItemsMap.InnerHtml += String.Format("<div style=\"float:left;width: 99%;\">{0}</div>", GenerateHtmlForListComputers(list));
         
         bool isIncluded = (list.Count != 0);
 
-        foreach (Group group in provider.GetGroups())
+        foreach (Group group in DBProviders.Group.GetGroups())
         {
-            list = provider.GetComputersByGroup(group.ID);
+            list = DBProviders.Group.GetComputersByGroup(group.ID);
             ItemsMap.InnerHtml += String.Format("<div class=\"title\" style=\"float:left;width: 99%;margin-top: {0}px;\">{1}</div><div style=\"width: 99%;\">{2}</div>", isIncluded ? 30 : 5, group.Name, GenerateHtmlForListComputers(list));
             isIncluded = (list.Count != 0);
         }
@@ -76,9 +74,8 @@ public partial class MapComputers : PageBase
         TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);
         if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 3) return "vbagrey";
         List<ComponentsEntity> list;
-        
-        ComponentsProvider cmng = new ComponentsProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            list = cmng.List(String.Format("ComputerName = \'{0}\' AND (ComponentName = \'Vba32 Loader\' OR ComponentName = \'Vba32 Monitor\')", entity.ComputerName), null, 1, Int16.MaxValue);
+
+        list = DBProviders.Component.List(String.Format("ComputerName = \'{0}\' AND (ComponentName = \'Vba32 Loader\' OR ComponentName = \'Vba32 Monitor\')", entity.ComputerName), null, 1, Int16.MaxValue);
         
         if (list != null && list.Count == 2)        
         {

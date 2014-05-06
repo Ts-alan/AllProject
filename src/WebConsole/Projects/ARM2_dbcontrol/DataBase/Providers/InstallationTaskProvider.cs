@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class InstallationTaskProvider
     {
+        public const String ProviderName = "InstallationTaskProvider";
+
         private InstallationTaskManager installMngr;
 
         public InstallationTaskProvider(String connectionString)

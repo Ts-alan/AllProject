@@ -9,6 +9,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class PolicyProvider
     {
+        public const String ProviderName = "PolicyProvider";
+
         private readonly String connectionString;
 
         private PolicyManager policyMng;

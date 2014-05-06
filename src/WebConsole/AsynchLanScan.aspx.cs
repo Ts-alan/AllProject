@@ -405,7 +405,7 @@ public partial class AsynchLanScan : PageBase
 
                 if (String.IsNullOrEmpty(rie.OSVersion))
                 {
-                    String comment = ScanningObjectState.GetComment(rie.IPAddress.ToString());
+                    String comment = DBProviders.ScanningObject.GetComment(rie.IPAddress.ToString());
                     if (String.IsNullOrEmpty(comment))
                         (e.Row.FindControl("lblInformation") as Label).Text = rie.ErrorInfo;
                     else
@@ -809,21 +809,6 @@ public partial class AsynchLanScan : PageBase
                 SettingsStorageCollection.Add(scanComputerListKey, null);
             }
             SettingsStorageCollection[scanComputerListKey] = value;
-        }
-    }
-
-    public static ScanningObjectProvider ScanningObjectState
-    {
-        get
-        {
-            ScanningObjectProvider provider = HttpContext.Current.Application["ScanningObjectState"] as ScanningObjectProvider;
-            if (provider == null)
-            {
-                provider = new ScanningObjectProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["ScanningObjectState"] = provider;
-            }
-
-            return provider;
         }
     }
 
@@ -1258,8 +1243,7 @@ public partial class AsynchLanScan : PageBase
         List<IPAddress> ipList = new List<IPAddress>();
         List<string> list = null;
 
-        ComputerProvider db = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.GetRegisteredCompList();
+        list = DBProviders.Computer.GetRegisteredCompList();
 
         foreach (string item in list)
         {
@@ -1364,9 +1348,9 @@ public partial class AsynchLanScan : PageBase
         try
         {
             if (String.IsNullOrEmpty(text.Replace(" ", "")))
-                ScanningObjectState.DeleteComment(ip);
+                DBProviders.ScanningObject.DeleteComment(ip);
             else
-                ScanningObjectState.AddComment(new ScanningObjectEntity(ip, text));
+                DBProviders.ScanningObject.AddComment(new ScanningObjectEntity(ip, text));
         }
         catch (Exception e)
         {

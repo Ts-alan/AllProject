@@ -27,7 +27,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService.Xml
 
         public String Convert()
         {
-            LoggerPMS.log.Debug("EventsToControlAgentXml.Convert::Конвертируем в формат пакета агента");
+            LoggerPMS.log.Debug("EventsToControlAgentXml.Convert:: Convert to agent package format.");
             XmlBuilder xml = new XmlBuilder(rootTag);   //Коллекция событий
             for (Int32 i = 0; i < list.Count; i++)
             {

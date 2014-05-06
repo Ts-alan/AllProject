@@ -41,25 +41,18 @@ namespace VirusBlokAda.CC.DataBase
 
         public EventsEntity(StringDictionary name_value_map)
         {
-            try
+            this.computerName = name_value_map["Computer"];
+            this.eventName = name_value_map["EventName"];
+            IFormatProvider format = new System.Globalization.CultureInfo("ru-RU");
+            DateTime date_time = DateTime.Parse(name_value_map["EventTime"], format);
+            this.eventTime = date_time;
+            if (name_value_map["Component"] == null)
             {
-                this.computerName = name_value_map["Computer"];
-                this.eventName = name_value_map["EventName"];
-                IFormatProvider format = new System.Globalization.CultureInfo("ru-RU");
-                DateTime date_time = DateTime.Parse(name_value_map["EventTime"], format);
-                this.eventTime = date_time;
-                if (name_value_map["Component"] == null)
-                {
-                    name_value_map["Component"] = "(unknown)";
-                }
-                this.componentName = name_value_map["Component"];
-                this._object = name_value_map["Object"];
-                this.comment = name_value_map["Comment"];
+                name_value_map["Component"] = "(unknown)";
             }
-            catch
-            {
-
-            }
+            this.componentName = name_value_map["Component"];
+            this._object = name_value_map["Object"];
+            this.comment = name_value_map["Comment"];
         }
 		
 		#region Public Properties

@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class DataBaseProvider
     {
+        public const String ProviderName = "DataBaseProvider";
+
         private DataBaseManager dbMngr;
 
         public DataBaseProvider(String connectionString)

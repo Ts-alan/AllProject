@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ComponentsProvider
     {
+        public const String ProviderName = "ComponentsProvider";
+
         private ComponentsManager cmptMngr;
 
         public ComponentsProvider(String connectionString)

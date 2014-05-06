@@ -29,13 +29,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             Boolean retVal = true;
             try
             {
-                LoggerPMS.log.Debug("SendEventsFromFiles::Отсылаем все события из файлов");
-                LoggerPMS.log.Debug("Поиск файлов..");
+                LoggerPMS.log.Debug("SendEventsFromFiles:: Send all events from files.");
+                LoggerPMS.log.Debug("Files searching...");
                 DirectoryInfo di = new DirectoryInfo(path);
                 foreach (FileInfo file in di.GetFiles(filePrefix + "*.xml"))
                 {
                     if (isShutdown) return false;
-                    LoggerPMS.log.Debug("Найден файл: " + file.FullName + ". Размер " + file.Length);
+                    LoggerPMS.log.Debug("File is found: " + file.FullName + ". Size " + file.Length);
                     if (!SendAllEventsFromFile(file.FullName))
                         retVal = false;
                 }
@@ -57,18 +57,18 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             Boolean retVal = false;
             try
             {
-                LoggerPMS.log.Debug("SendAllEventsFromFile::Отсылаем все события порциями из файла "+fileName);
+                LoggerPMS.log.Debug("SendAllEventsFromFile:: Send all events parts from file " + fileName);
 
-                LoggerPMS.log.Debug("Проверяем наличие файла с данными на диске. ");
+                LoggerPMS.log.Debug("Check file existence with date on disk. ");
                 if (!File.Exists(fileName))
                 {
-                    LoggerPMS.log.Error("SendAllEventsFromFile()::Не найден файл: " + fileName);
+                    LoggerPMS.log.Error("SendAllEventsFromFile()::File isn't found: " + fileName);
                     return false;
                 }
 
                 //Возможно, с точки зрения производительности, лучше было бы использовать
                 //класс Dictionary<Tkey,TValue>
-                LoggerPMS.log.Debug("Десериализуем");
+                LoggerPMS.log.Debug("Deserialize");
                 List<EventsEntity> list = new List<EventsEntity>();
                 try
                 {
@@ -79,56 +79,56 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 }
                 catch(Exception ex)
                 {
-                    LoggerPMS.log.Error("SendAllEventsFromFile():: Ошибка при попытке десериализовать данные из файла. " + ex.Message + " " + ex.GetType().ToString());
+                    LoggerPMS.log.Error("SendAllEventsFromFile():: Deserialize error. " + ex.Message + " " + ex.GetType().ToString());
                     File.Delete(fileName);
                     return false;
                 }
 
                 if (list.Count == 0)
                 {
-                    LoggerPMS.log.Debug("Отсылка не требуется");
+                    LoggerPMS.log.Debug("Sending isn't needed.");
                     return true;
                 }
 
                 Int32 itemsCount = maxCountToSend;
                 while (list.Count > 0)
                 {
-                    LoggerPMS.log.Debug("Текущий размер коллекции: " + list.Count);
-                    LoggerPMS.log.Debug("Текущий размер количества отсылаемого: " + itemsCount);
+                    LoggerPMS.log.Debug("Current collection size: " + list.Count);
+                    LoggerPMS.log.Debug("Current sending items size: " + itemsCount);
                     if (list.Count < itemsCount)
                     {
-                        LoggerPMS.log.Debug("Размер коллекции меньше количества отсылаемого. Исправляем..");
+                        LoggerPMS.log.Debug("Collection size less than sending items size. Fixing...");
                         itemsCount = list.Count;
                     }
 
-                    LoggerPMS.log.Debug("Получим порцию данных");
+                    LoggerPMS.log.Debug("Get date package");
                     EventsToControlAgentXml ggg = new EventsToControlAgentXml(list.GetRange(0, itemsCount), machineName);
-                    LoggerPMS.log.Debug("Сформируем пакет");
+                    LoggerPMS.log.Debug("Convert data package");
                     String packet = ggg.Convert();
                     if (packet == String.Empty)
                     {
-                        LoggerPMS.log.Debug("Пакет больше допустимого.. Уменьшаем..");
+                        LoggerPMS.log.Debug("Data package size bigger than permissible size. Decrease...");
                         itemsCount -= 20;
                         if (itemsCount < 0) itemsCount = 1; //Маловероятно, но все же
                         continue;
                     }
 
-                    LoggerPMS.log.Debug("Отсылаем...");
+                    LoggerPMS.log.Debug("Sending...");
                     String dataSend = EventsSender.SocketSendReceive(server, port, packet);
 
                     if (dataSend != "OK")
                     {
-                        LoggerPMS.log.Debug("Не получилось отослать: " + dataSend);
+                        LoggerPMS.log.Debug("Can't send: " + dataSend);
                         break;
                     }
                     else
                     {
-                        LoggerPMS.log.Debug("Отослано. Сохраняем дату последней успешной отсылки");
+                        LoggerPMS.log.Debug("Sended. Saving the latest successful sending date.");
                         lastSendDate = DateTime.Now;
                         WriteSettingsToRegistry();
                     }
 
-                    LoggerPMS.log.Debug("Удаляем записи");
+                    LoggerPMS.log.Debug("Delete events.");
                     list.RemoveRange(0, itemsCount);
                     //!--
                     //Выйдем. Оставшиеся данные должны быть сериализованы в файл
@@ -138,24 +138,24 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     itemsCount = maxCountToSend;
                 }
 
-                LoggerPMS.log.Debug("Отсылка сообщений из файла " + fileName + " закончена. Текущий размер коллекции: " + list.Count.ToString());
+                LoggerPMS.log.Debug("Send messages from file " + fileName + " was finished. Current collection size: " + list.Count.ToString());
                 if (list.Count == 0)
                 {
                     retVal = true;
-                    LoggerPMS.log.Debug("Все события из файла " + fileName + " отосланы. Удаляем его.");
+                    LoggerPMS.log.Debug("All events from file " + fileName + " were sended. Delete file.");
                     File.Delete(fileName);
                     if (File.Exists(fileName))
                     {
-                        LoggerPMS.log.Error("SendAllEventsFromFile()::Файл не удалился! Возможна повторная отправка сообщений!");
+                        LoggerPMS.log.Error("SendAllEventsFromFile()::File wasn't deleted! Repeated message sending is possible!");
                     }
                 }
                 else
                 {
-                    LoggerPMS.log.Debug("Остались события для отсылки. Сохраним в тот же файл.");
+                    LoggerPMS.log.Debug("Events for sending is stayed. Save into file.");
                     ObjectSerializer.ObjToXmlStr(fileName, list);
                     if (!File.Exists(fileName))
                     {
-                        LoggerPMS.log.Error("SendAllEventsFromFile()::Файла после сериализации с событиями нет!");
+                        LoggerPMS.log.Error("SendAllEventsFromFile():: File after serialization is not exist!");
                         return false;
                     }
                 }
@@ -176,7 +176,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         {
             try
             {
-                LoggerPMS.log.Debug("Vba32PMS.SendSystemInfo::Посылаем пакет с установленным CC флагом");
+                LoggerPMS.log.Debug("Vba32PMS.SendSystemInfo:: Send package with setting 'CC' flag.");
 
                 if (ipAddress == String.Empty)
                     ipAddress = GetIP(machineName);

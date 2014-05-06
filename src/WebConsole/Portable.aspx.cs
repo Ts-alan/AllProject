@@ -530,14 +530,10 @@ public partial class Portable : PageBase
             }
 
             List<TaskEntity> tasktypes = new List<TaskEntity>();
-            //„то это за строчка и зачем она нужна была???
-            // if (!tasktypes.Contains( upComp))
-            {
-                    TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                    tasktypes = db.ListTaskTypes();
-                    db.GetTaskTypeID(upComp.Name, true);
-            }
 
+            tasktypes = DBProviders.Task.ListTaskTypes();
+            DBProviders.Task.GetTaskTypeID(upComp.Name, true);
+            
             collection.Add(upComp);
 
         }

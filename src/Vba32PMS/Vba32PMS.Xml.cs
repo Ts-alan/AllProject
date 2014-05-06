@@ -23,25 +23,25 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         {
             try
             {
-                LoggerPMS.log.Debug("Vba32PMS.DataBaseToXml::Из базы данных в xml-файл");
+                LoggerPMS.log.Debug("Vba32PMS.DataBaseToXml::From database to xml file");
 
-                LoggerPMS.log.Debug("Время последней выборки: " + lastSelectDate);
+                LoggerPMS.log.Debug("Last selection time: " + lastSelectDate);
                 DateTime dtFrom = lastSelectDate; //new DateTime(2008, 10, 01);
                 DateTime dtTo = DateTime.Now;
-                LoggerPMS.log.Debug("Формируем строку фильтрации");
+                LoggerPMS.log.Debug("Generate filter string");
                 String where = "Send = 1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dtFrom, dtTo, "EventTime", false, false);
                 LoggerPMS.log.Debug(where);
-                LoggerPMS.log.Debug("Получаем события из базы");
+                LoggerPMS.log.Debug("Select events from DB");
 
                 List<EventsEntity> list = GetEventsFromDb(connectionString, where, Int32.MaxValue);
                 if (list == null)
                     return false;
 
-                LoggerPMS.log.Debug("Количество элементов в списке " + list.Count);
+                LoggerPMS.log.Debug("List count " + list.Count);
 
                 if (list.Count == 0)
                 {
-                    LoggerPMS.log.Debug("Нет записей для сохранения. Выходим");
+                    LoggerPMS.log.Debug("No have items for saving. Exit");
                     lastSelectDate = DateTime.Now;
                     WriteSettingsToRegistry();
                     return true;
@@ -60,7 +60,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     //Может засунем в существующий
                     if (File.Exists(fileName))
                     {
-                        LoggerPMS.log.Debug("Извлекаем ранее сохраненные данные");
+                        LoggerPMS.log.Debug("Select saved data");
                         List<EventsEntity> oldList = new List<EventsEntity>();
                         try
                         {
@@ -68,7 +68,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                         }
                         catch
                         {
-                            LoggerPMS.log.Error("Vba32PMS.DataBaseToXml()::Попытка при считать ранее сохраненные события. Файл будет удален");
+                            LoggerPMS.log.Error("Vba32PMS.DataBaseToXml():: Try read saved events. File will be deleted.");
                             File.Delete(fileName);
                         }
 
@@ -78,19 +78,19 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
                         if (tempInt + oldList.Count != list.Count)
                         {
-                            LoggerPMS.log.Error("Vba32PMS.DataBaseToXml()::Общее количество элементов после объединения списков не совпадает");
+                            LoggerPMS.log.Error("Vba32PMS.DataBaseToXml()::Total element count after union lists is not match.");
                             return false;
                         }
                     }
 
-                    LoggerPMS.log.Debug("Vba32PMS.Сериализуем в файл " + fileName+ " . Количество событий сериализуется: "+countToXml.ToString());
+                    LoggerPMS.log.Debug("Vba32PMS. Serialize to file " + fileName+ " . Count events serialize: "+countToXml.ToString());
                     ObjectSerializer.ObjToXmlStr(fileName, list.GetRange(0,countToXml));
                     list.RemoveRange(0, countToXml);
                 }
 
                 lastSelectDate = DateTime.Now;
                 WriteSettingsToRegistry();
-                LoggerPMS.log.Debug("Время последней выборки: " + lastSelectDate);
+                LoggerPMS.log.Debug("Last selection time: " + lastSelectDate);
                 //LoggerPMS.log.Debug("Имя сгенерированного файла: " + GetFileNameToSave(1000));
             }
             catch(Exception ex)
@@ -110,14 +110,14 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             String newFileName;
             try
             {
-                LoggerPMS.log.Debug("Vba32PMS.GetFileNameToSave::Ищем файлы для сохранения");
+                LoggerPMS.log.Debug("Vba32PMS.GetFileNameToSave:: Find files for saving.");
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
                 DirectoryInfo di = new DirectoryInfo(path);
                 foreach (FileInfo file in di.GetFiles(filePrefix + '*'))
                 {
-                    LoggerPMS.log.Debug("Найден файл: " + file.FullName + ". Размер " + file.Length + ". Допустимый размер: " + maxFileLength);
+                    LoggerPMS.log.Debug("File is found: " + file.FullName + ". Size " + file.Length + ". Permissible size: " + maxFileLength);
                     if (file.Length < maxFileLength)
                         return file.FullName;
                 }

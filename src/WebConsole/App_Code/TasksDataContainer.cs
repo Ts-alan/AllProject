@@ -34,9 +34,7 @@ public static class TasksDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
-        foreach (TaskEntity ent in db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows))
+        foreach (TaskEntity ent in DBProviders.Task.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows))
         {
             list.Add(new TaskEntityShow(ent.ID, ent.TaskName, ent.ComputerName, DatabaseNameLocalization.GetNameForCurrentCulture(ent.TaskState), ent.DateIssued, ent.DateComplete, ent.DateUpdated, ent.TaskParams, ent.TaskUser, ent.TaskDescription));
         }
@@ -46,14 +44,12 @@ public static class TasksDataContainer
 
     public static Int32 Count(String where)
     {
-        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.Count(where);
+        return DBProviders.Task.Count(where);
     }
 
     public static List<String> GetTaskStates()
     {
-        TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.ListTaskStates();
+        return DBProviders.Task.ListTaskStates();
     }    
 }
 

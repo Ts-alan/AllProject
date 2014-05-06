@@ -11,21 +11,6 @@ using VirusBlokAda.CC.Filters.Common;
 
 public partial class DevicesPolicy : PageBase
 {
-    public static GroupProvider GroupState
-    {
-        get
-        {
-            GroupProvider provider = HttpContext.Current.Application["GroupState"] as GroupProvider;
-            if (provider == null)
-            {
-                provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["GroupState"] = provider;
-            }
-
-            return provider;
-        }
-    }
-
     private static Dictionary<Int32, Group> GroupDictionary;
 
     protected void Page_Init(object sender, EventArgs e)
@@ -104,8 +89,6 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     public static String GetListRootGroup()
     {
-        GroupProvider provider = GroupState;
-
         String str = ConvertListRootGroup();
         str += ConvertGroupData(null);
         return str;
@@ -114,8 +97,7 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     private static String ConvertListRootGroup()
     {
-        GroupProvider provider = GroupState;
-        List<Group> groupList = provider.GetSubgroups(null);
+        List<Group> groupList = DBProviders.Group.GetSubgroups(null);
         String groupListData = "";
         for (int i = 0; i < groupList.Count; i++)
         {
@@ -129,8 +111,7 @@ public partial class DevicesPolicy : PageBase
     public static String GetData(String id)
     {
         String str = "";
-        int groupID = Convert.ToInt32(id);
-        GroupProvider provider = GroupState;
+        int groupID = Convert.ToInt32(id);        
         str += "{";
         if (id == null)
         {
@@ -147,8 +128,7 @@ public partial class DevicesPolicy : PageBase
     //конвертирует список компьютеров для группы с id
     private static String ConvertCompListData(int groupID, bool isEmpty)
     {
-        GroupProvider provider = GroupState;
-        List<ComputersEntity> compList = provider.GetComputersByGroup(groupID);
+        List<ComputersEntity> compList = DBProviders.Group.GetComputersByGroup(groupID);
         if (compList.Count == 0)
         {
             if(isEmpty)
@@ -172,10 +152,9 @@ public partial class DevicesPolicy : PageBase
     //конвертирует список подгрупп для группы с id
     private static String ConvertSubGroupData(int groupID, out Boolean isEmpty)
     {
-        isEmpty = true;
-        GroupProvider provider = GroupState;
+        isEmpty = true;        
         String subGroupData = "\"acc\":\"";
-        List<Group> groupList = provider.GetSubgroups(groupID);
+        List<Group> groupList = DBProviders.Group.GetSubgroups(groupID);
         if (groupList.Count > 0)
         {
             isEmpty = false;
@@ -223,8 +202,7 @@ public partial class DevicesPolicy : PageBase
     //без групп
     private static String ConvertWithoutGroupData()
     {
-        GroupProvider provider = GroupState;
-        List<ComputersEntity> compList = provider.GetComputersWithoutGroup();
+        List<ComputersEntity> compList = DBProviders.Group.GetComputersWithoutGroup();
         String withoutGroupData = "\"acc\":\"null\",\"text\":\"";
         if (compList.Count == 0)
         {
@@ -260,21 +238,6 @@ public partial class DevicesPolicy : PageBase
 
 
     #region Computers
-
-    public static PolicyProvider PolicyState
-    {
-        get
-        {
-            PolicyProvider provider = HttpContext.Current.Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-    }
     
     /* получение данных о компьютере */
     [WebMethod]
@@ -282,7 +245,7 @@ public partial class DevicesPolicy : PageBase
     {
         System.Diagnostics.Debug.Write("GetComputersData:" + id);
         return ConvertComputerDataForClient(id,
-            PolicyState.GetDevicesPoliciesByComputer((Int16)id)); ;
+            DBProviders.Policy.GetDevicesPoliciesByComputer((Int16)id)); ;
     }
     private static String ConvertComputerDataForClient(int id, List<DevicePolicy> list)
     {
@@ -338,17 +301,13 @@ public partial class DevicesPolicy : PageBase
     public static void ChangeDevicePolicyStateComputer(int dp, int cp, String state)// deviceId,compId,state
     {
         System.Diagnostics.Debug.Write("ChangeDevicePolicyState with id:" + dp + ", state:" + state);
-
-
-        PolicyState.ChangeDevicePolicyStatusForComputer((Int16)dp, (Int16)cp, state);
-
-
+        DBProviders.Policy.ChangeDevicePolicyStatusForComputer((Int16)dp, (Int16)cp, state);
     }
     [WebMethod]
     /* изменение комментария*/
     public static String GetChangeCommentDialog(int id)
     {
-        Device device = PolicyState.GetDevice(id);
+        Device device = DBProviders.Policy.GetDevice(id);
         if (String.IsNullOrEmpty(device.Comment))
             device.Comment = Anchor.GetCommentFromSerial(device.SerialNo);
         String label = "<div>" + ResourceControl.GetStringForCurrentCulture("DeviceComment") + "</div>";
@@ -364,7 +323,7 @@ public partial class DevicesPolicy : PageBase
         device.ID = id;
         device.Comment = comment;
 
-        PolicyState.EditDevice(device);
+        DBProviders.Policy.EditDevice(device);
     }
     /* добавление нового устройства к компьютеру*/
     [WebMethod]
@@ -384,7 +343,7 @@ public partial class DevicesPolicy : PageBase
         computer.ID = id;
         DevicePolicy dp = new DevicePolicy(device, computer);
         dp.State = DevicePolicyState.Undefined;
-        DevicePolicy policy = PolicyState.AddDevicePolicyToComputer(dp);
+        DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
         if (policy.Device.ID != 0)
         {
             return ConvertDevicePolicy(policy);
@@ -399,7 +358,7 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     public static void RemoveDevicePolicy(int id)
     {
-        PolicyState.DeleteDevicePolicyByID(id);
+        DBProviders.Policy.DeleteDevicePolicyByID(id);
     }
     #endregion
 
@@ -411,9 +370,9 @@ public partial class DevicesPolicy : PageBase
 
         System.Diagnostics.Debug.Write("GetGroupDeviceData" + id);
         if (id < 0)
-            return ConvertGroupDataForClient(id, PolicyState.GetDevicesPoliciesWithoutGroup());
+            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesWithoutGroup());
         else
-            return ConvertGroupDataForClient(id, PolicyState.GetDevicesPoliciesByGroup(id));
+            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesByGroup(id));
     }
 
     private static String ConvertGroupDataForClient(int groupID, List<DevicePolicy> list)
@@ -478,9 +437,9 @@ public partial class DevicesPolicy : PageBase
     public static void ChangeDevicePolicyStateGroup(int dp, int gp, String state)//device,group,state
     {
         System.Diagnostics.Debug.Write("ChangeDevicePolicyStateForGroup with Id:" + dp + ", state:" + state);
-        if (gp <= 0) PolicyState.ChangeDevicePolicyStatusWithoutGroup((Int16)dp, state);
+        if (gp <= 0) DBProviders.Policy.ChangeDevicePolicyStatusWithoutGroup((Int16)dp, state);
         else
-            PolicyState.ChangeDevicePolicyStatusForGroup((Int16)dp, gp, state);
+            DBProviders.Policy.ChangeDevicePolicyStatusForGroup((Int16)dp, gp, state);
     }
     //добавление устройства в группу
     [WebMethod]
@@ -495,8 +454,8 @@ public partial class DevicesPolicy : PageBase
         Device device = new Device(serial, DeviceType.USB);
         Device newDevice;
         if (id < 0)
-            newDevice = PolicyState.AddDeviceToWithoutGroup(device);
-        else newDevice = PolicyState.AddDeviceToGroup(id, device);
+            newDevice = DBProviders.Policy.AddDeviceToWithoutGroup(device);
+        else newDevice = DBProviders.Policy.AddDeviceToGroup(id, device);
 
         String row = newDevice.ID + " " + newDevice.Comment + " " + newDevice.SerialNo;
 
@@ -513,12 +472,12 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     public static void RemoveDevicePolicyGroup(int devid, int groupid)
     {
-        PolicyState.RemoveDevicePolicyGroup((Int16)devid, groupid);
+        DBProviders.Policy.RemoveDevicePolicyGroup((Int16)devid, groupid);
     }
     [WebMethod]
     public static void RemoveDevicePolicyWithoutGroup(int id)
     {
-        PolicyState.RemoveDevicePolicyWithoutGroup((Int16)id);
+        DBProviders.Policy.RemoveDevicePolicyWithoutGroup((Int16)id);
     }
     #endregion
 
@@ -528,8 +487,7 @@ public partial class DevicesPolicy : PageBase
     [WebMethod]
     public static String GetAllDevices()
     {
-        List<Device> DevicesList = PolicyState.GetDevicesList();
-        return ConvertDevicesList(DevicesList);
+        return ConvertDevicesList(DBProviders.Policy.GetDevicesList());
     }
     private static String ConvertDevicesList(List<Device> list)
     {
@@ -564,15 +522,13 @@ public partial class DevicesPolicy : PageBase
 
         Device device = new Device();
         device.ID = id;
-        PolicyState.DeleteDevice(device);
+        DBProviders.Policy.DeleteDevice(device);
     }
     #endregion
 
     public static void GetDictionaryOfGroups(Group? root)
     {
-        GroupProvider provider = GroupState;
-        List<Group> groupList = provider.GetSubgroups(root);
-        foreach (Group group in groupList)
+        foreach (Group group in DBProviders.Group.GetSubgroups(root))
         {
             GroupDictionary.Add(group.ID, group);
             GetDictionaryOfGroups(group);
@@ -580,14 +536,12 @@ public partial class DevicesPolicy : PageBase
     }
 
     public static BranchOfTree GetBranchOfTree(Group? root)
-    {
-        GroupProvider provider = GroupState;
+    {        
         BranchOfTree tree;
         if (root == null) tree = new BranchOfTree();
         else tree = new BranchOfTree((Group)root);
-        List<Group> groupList = provider.GetSubgroups(root);
 
-        foreach (Group group in groupList)
+        foreach (Group group in DBProviders.Group.GetSubgroups(root))
         {
             BranchOfTree branch = GetBranchOfTree(group);
             tree.AddBranch(branch);
@@ -644,11 +598,10 @@ public partial class DevicesPolicy : PageBase
     /* Дерево с компьютерами для устройства */
     [WebMethod]
     public static String GetDeviceTreeDialog(int id, String serial)
-    {
-        GroupProvider provider = GroupState;
+    {        
         Device device = new Device();
         device.ID = id;
-        List<DevicePolicy> compList = PolicyState.GetComputerListByDeviceID(device);
+        List<DevicePolicy> compList = DBProviders.Policy.GetComputerListByDeviceID(device);
         BranchOfTree tree = GetBranchOfTreeByDevice(compList);
         String treeDialog = ConvertDeviceTreeDialog(compList, tree, id);
         String addButton = "<button addcompdev='" + serial + "'>" + Resources.Resource.Add + "</button>";
@@ -785,7 +738,7 @@ public partial class DevicesPolicy : PageBase
             computer.ID = id;
             DevicePolicy dp = new DevicePolicy(device, computer);
             dp.State = DevicePolicyState.Undefined;
-            DevicePolicy policy = PolicyState.AddDevicePolicyToComputer(dp);
+            DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
             if (policy.Device.ID != 0) isSuccess = true;
 
         }
@@ -805,7 +758,7 @@ public partial class DevicesPolicy : PageBase
         else
             dp.State = DevicePolicyState.Disabled;
 
-        PolicyState.ChangeDevicePolicyStatusForComputer(dp);
+        DBProviders.Policy.ChangeDevicePolicyStatusForComputer(dp);
     }
 
     [WebMethod]

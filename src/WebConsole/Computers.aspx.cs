@@ -396,7 +396,7 @@ public partial class Computers : PageBase
     void UpdateData()
     {
         InitializeSession();
-        ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+                
         ///!-OPTM песдетс:)
         ///Получше разобраться, что я тут хотел сделать и почему это так
         if (Session["CheckBoxs"] != null)
@@ -441,8 +441,8 @@ public partial class Computers : PageBase
                     //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menuSelected");
                     divPolicyMenu.Attributes.Add("class", "menu");
                 }
-                count = cmng.Count(filter.GetSQLWhereStatement);
-                computers = cmng.List(filter.GetSQLWhereStatement,
+                count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
+                computers = DBProviders.Computer.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
                         (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
                 break;
@@ -455,11 +455,10 @@ public partial class Computers : PageBase
                 if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
                     break;
 
-                PolicyProvider provider = PoliciesState;
-                Policy policy = provider.GetPolicyByName(selectedPolicyName);
+                Policy policy = DBProviders.Policy.GetPolicyByName(selectedPolicyName);
 
-                count = provider.GetComputerByPolicyCount(policy);
-                computers = provider.GetComputersByPolicyPage(policy, (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]),
+                count = DBProviders.Policy.GetComputerByPolicyCount(policy);
+                computers = DBProviders.Policy.GetComputersByPolicyPage(policy, (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]),
                     Convert.ToString(Session["CompSorting"]));
 
                 divPolicyHeader.Attributes["class"] = "GiveButton1";
@@ -486,8 +485,8 @@ public partial class Computers : PageBase
                         filter.GenerateSQLWhereStatement();
                     }
                 }
-                count = cmng.Count(filter.GetSQLWhereStatement);
-                computers = cmng.List(filter.GetSQLWhereStatement,
+                count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
+                computers = DBProviders.Computer.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
                         (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
                 //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
@@ -928,12 +927,11 @@ public partial class Computers : PageBase
 
                     //PolicyName
                     if (settings.ShowPolicyName)
-                    {
-                        PolicyProvider provider = PoliciesState;
+                    {                        
                         Policy policy;
                         try
                         {
-                            policy = provider.GetPolicyToComputer(((ComputersEntity)e.Item.DataItem).ComputerName);
+                            policy = DBProviders.Policy.GetPolicyToComputer(((ComputersEntity)e.Item.DataItem).ComputerName);
                         }
                         catch
                         {
@@ -1617,13 +1615,10 @@ public partial class Computers : PageBase
                     ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
             }
 
-
             //give computer list from db..
-            ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+            int count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
 
-            int count = cmng.Count(filter.GetSQLWhereStatement);
-
-            List<ComputersEntity> compsList = cmng.List(filter.GetSQLWhereStatement,
+            List<ComputersEntity> compsList = DBProviders.Computer.List(filter.GetSQLWhereStatement,
                 Convert.ToString(Session["CompSorting"]), 1, (Int16)count);
 
             for (int i = 0; i < compsList.Count; i++)
@@ -3002,8 +2997,6 @@ public partial class Computers : PageBase
 
         InitializeSession();
 
-        ComputerProvider cmng = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
         CompFilterEntity filter;
         if (Session["CurrentCompFilter"] == null)
         {
@@ -3020,10 +3013,10 @@ public partial class Computers : PageBase
                 ((FilterEntity)Session["TempGroup"]).GetSQLWhereStatement;
         }
 
-        int count = cmng.Count(filter.GetSQLWhereStatement);
+        int count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
 
 
-        gvExcel.DataSource = cmng.List(filter.GetSQLWhereStatement,
+        gvExcel.DataSource = DBProviders.Computer.List(filter.GetSQLWhereStatement,
             Convert.ToString(Session["CompSorting"]), 1, (Int16)count);
         gvExcel.DataBind();
 
@@ -3065,16 +3058,13 @@ public partial class Computers : PageBase
 
         Session["SelectedID"] = list;
 
-
-        string connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
-
+        
         //if (Session["SelectedID"] == null)
         //   throw new Exception(Resources.Resource.ErrorCriticalError + ": Session['SelectedID'] == null ");
 
-        ComputerProvider db = new ComputerProvider(connStr);
         foreach (Int16 id in list)
         {
-            db.Delete(id);
+            DBProviders.Computer.Delete(id);
         }
 
         UpdateData();
@@ -3089,9 +3079,8 @@ public partial class Computers : PageBase
     private void InitPoliciesList()
     {
         try
-        {
-            PolicyProvider provider = PoliciesState;
-            List<string> policyList = provider.GetAllPolicyTypesNames();
+        {            
+            List<string> policyList = DBProviders.Policy.GetAllPolicyTypesNames();
             policyList.Sort();
             ddlPolicyName.DataSource = policyList;
             ddlPolicyName.DataBind();
@@ -3122,8 +3111,7 @@ public partial class Computers : PageBase
         if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
             return;
 
-        PolicyProvider provider = PoliciesState;
-        provider.RemovePolicy(selectedPolicyName);
+        DBProviders.Policy.RemovePolicy(selectedPolicyName);
 
         Session["CompShowMode"] = null;
 
@@ -3148,13 +3136,11 @@ public partial class Computers : PageBase
         SelectedComputersSet _set = new SelectedComputersSet();
         if (!InitSelectedComputers(_set)) return;
         
-        PolicyProvider provider = PoliciesState;
-
         //Get selected policy
-        Policy policy = provider.GetPolicyByName(selectedPolicyName);
+        Policy policy = DBProviders.Policy.GetPolicyByName(selectedPolicyName);
 
         //Add computers to policy
-        provider.AddComputersToPolicy(policy, _set.AllComputers.GetComputerNames());
+        DBProviders.Policy.AddComputersToPolicy(policy, _set.AllComputers.GetComputerNames());
 
         lblMessage.Text = selectedPolicyName + ": " + Resources.Resource.PolicyApplied;
         mpPicture.Attributes["class"] = "ModalPopupPictureSuccess";        
@@ -3200,32 +3186,14 @@ public partial class Computers : PageBase
         SelectedComputersSet _set = new SelectedComputersSet();
         if (!InitSelectedComputers(_set)) return;
 
-        PolicyProvider provider = PoliciesState;
-
         //Get selected policy
-        Policy policy = provider.GetPolicyByName(selectedPolicyName);
+        Policy policy = DBProviders.Policy.GetPolicyByName(selectedPolicyName);
 
         //Add computers to policy
-        provider.RemoveComputersFromPolicy(policy, _set.AllComputers.GetComputerNames());
+        DBProviders.Policy.RemoveComputersFromPolicy(policy, _set.AllComputers.GetComputerNames());
 
         InitFields();
-    }
-
-    public PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-
-    }
+    }   
 
     protected void lbtnPolicyPanel_Click(object sender, ImageClickEventArgs e)
     {
@@ -3321,7 +3289,7 @@ public partial class Computers : PageBase
         if (!retVal)
             throw new ArgumentException("Reread: Vba32SS return false!");
 
-        PoliciesState.ClearCache();
+        DBProviders.Policy.ClearCache();
 
         InitDefaultPolicy();
     }

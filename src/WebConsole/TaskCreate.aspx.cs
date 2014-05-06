@@ -103,11 +103,10 @@ public partial class TaskCreate : PageBase
                 }
 
                 TaskEntity task = new TaskEntity();
-                TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+                
                 try
                 {
-                    task = db.Get(id);
+                    task = DBProviders.Task.Get(id);
                 }
                 catch
                 {
@@ -530,8 +529,7 @@ public partial class TaskCreate : PageBase
             else
             {
                 //!-OPTM нафига здесь это?
-                TaskProvider db = new TaskProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                db.GetTaskTypeID(task.Name, true);
+                DBProviders.Task.GetTaskTypeID(task.Name, true);
 
                 collection.Add(task);
             }

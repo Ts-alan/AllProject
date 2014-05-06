@@ -135,7 +135,7 @@ public partial class _PoliciesPage : PageBase
                     List<string> policyList;
                     try
                     {
-                        policyList = PoliciesState.GetAllPolicyTypesNames();
+                        policyList = DBProviders.Policy.GetAllPolicyTypesNames();
                     }
                     catch
                     {
@@ -185,7 +185,7 @@ public partial class _PoliciesPage : PageBase
         Policy policy;
         try
         {
-            policy = PoliciesState.GetPolicyByName(policyName);
+            policy = DBProviders.Policy.GetPolicyByName(policyName);
         }
         catch
         {
@@ -377,19 +377,17 @@ public partial class _PoliciesPage : PageBase
         if (!ValidatePolicy()) return;
         Validation val = new Validation(tboxPolicyName.Text.Replace(" ", ""));
         if (!val.CheckStringValue()) return;
-
-        PolicyProvider provider = PoliciesState;
-
+        
         string content = GetPolicyString();
         Policy policy = new Policy(tboxPolicyName.Text,content,"");
 
         if (Request.QueryString["Mode"] == "Edit")
         {
-            policy.ID = PoliciesState.GetPolicyByName(tboxPolicyName.Text).ID;
-            provider.EditPolicy(policy);
+            policy.ID = DBProviders.Policy.GetPolicyByName(tboxPolicyName.Text).ID;
+            DBProviders.Policy.EditPolicy(policy);
         }
         else
-            provider.AddPolicy(policy);
+            DBProviders.Policy.AddPolicy(policy);
 
         /*
         lblMessage.Text = Resources.Resource.PolicySaved;
@@ -439,7 +437,7 @@ public partial class _PoliciesPage : PageBase
             string mode = Request.QueryString["Mode"];
             if (mode != "Edit")
             {
-                if (PoliciesState.GetPolicyByName(tboxPolicyName.Text).ID != 0)
+                if (DBProviders.Policy.GetPolicyByName(tboxPolicyName.Text).ID != 0)
                     throw new ArgumentException(Resources.Resource.ErrorPolicyExistInCollection);
             }
         }
@@ -461,21 +459,6 @@ public partial class _PoliciesPage : PageBase
         return true;
     }
     #endregion
-
-    public static PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = HttpContext.Current.Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                HttpContext.Current.Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-    }
 
     private void EditPolicy(string policyName)
     {
@@ -518,7 +501,7 @@ public partial class _PoliciesPage : PageBase
         if (!retVal)
             throw new ArgumentException("Reread: Vba32SS return false!");
 
-        PoliciesState.ClearCache();
+        DBProviders.Policy.ClearCache();
 
         InitDefaultPolicy();
     }
@@ -593,8 +576,7 @@ public partial class _PoliciesPage : PageBase
         if ((selectedPolicyName == "(undefined)") || (String.IsNullOrEmpty(selectedPolicyName)))
             return;
 
-        PolicyProvider provider = PoliciesState;
-        provider.RemovePolicy(selectedPolicyName);
+        DBProviders.Policy.RemovePolicy(selectedPolicyName);
 
         Response.Redirect("PoliciesPage.aspx");
     }

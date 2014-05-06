@@ -23,7 +23,7 @@ public partial class GetPolicy : System.Web.UI.Page
             string compName = Request.QueryString["CompName"];
             string hash = Request.QueryString["Hash"];
 
-            string policyResponse = PoliciesState.GetResponse(compName,
+            string policyResponse = DBProviders.Policy.GetResponse(compName,
                 Request.UserHostAddress, hash);
             
             Response.Write(policyResponse);
@@ -43,20 +43,4 @@ public partial class GetPolicy : System.Web.UI.Page
         catch { }
 
     }
-
-    public PolicyProvider PoliciesState
-    {
-        get
-        {
-            PolicyProvider provider = Application["PoliciesState"] as PolicyProvider;
-            if (provider == null)
-            {
-                provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-                Application["PoliciesState"] = provider;
-            }
-
-            return provider;
-        }
-    }
-
 }

@@ -66,7 +66,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName)+"\\";
                                 
                 path += "PMSDeferredEvents\\";
-                LoggerPMS.log.Info("Vba32PMS.Constructor()::Отработал");
+                LoggerPMS.log.Info("Vba32PMS.Constructor():: Done.");
             }
             catch (Exception ex)
             {
@@ -78,19 +78,19 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         {
             try
             {
-                LoggerPMS.log.Info("Vba32PMS.OnStart()::запущен");
+                LoggerPMS.log.Info("Vba32PMS.OnStart()::Enter.");
 
                 machineName = Environment.MachineName;
                 ipAddress = GetIP(machineName);
 
                 //Выведем инфу в лог
                 StringBuilder builder = new StringBuilder(128);
-                builder.AppendFormat("NetBIOS имя: {0}, IP-адрес: {1}", machineName, ipAddress);
+                builder.AppendFormat("NetBIOS name: {0}, IP-address: {1}", machineName, ipAddress);
                 LoggerPMS.log.Info(builder.ToString());
 
                 if (!ReadSettingsFromRegistry())
                 {
-                    LoggerPMS.log.Fatal("Vba32PMS.OnStart()::Ошибка при загрузке настроек из реестра. Дальнейшая инициализация невозможна");
+                    LoggerPMS.log.Fatal("Vba32PMS.OnStart():: Load settings from registry error. Initialization is impossible.");
                     return;
                 }
 
@@ -109,7 +109,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         protected override void OnStop()
         {
-            LoggerPMS.log.Info("Vba32PMS.OnStop():: запущен");
+            LoggerPMS.log.Info("Vba32PMS.OnStop():: Enter.");
 
             StopService();
             base.OnStop();
@@ -117,7 +117,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         protected override void OnShutdown()
         {
-            LoggerPMS.log.Info("Vba32PMS.OnShutdown():: запущен");
+            LoggerPMS.log.Info("Vba32PMS.OnShutdown():: Enter.");
 
             StopService();
             base.OnShutdown();
@@ -125,7 +125,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         private void StopService()
         {
-            LoggerPMS.log.Debug("StopService():: запущен");
+            LoggerPMS.log.Debug("StopService():: Enter.");
             isShutdown = true;
 
             if (shutdownEvent != null)
@@ -139,18 +139,18 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         protected void ServiceMain()
         {
-            LoggerPMS.log.Debug("Vba32PMS.ServiceMain():: Запущен");
+            LoggerPMS.log.Debug("Vba32PMS.ServiceMain():: Enter.");
             Boolean signaled = false;
             Boolean returnCode = false;
 
             while (true)
             {
                 returnCode = Execute();
-                LoggerPMS.log.Debug("Ожидаем...");
+                LoggerPMS.log.Debug("Wait...");
                 signaled = shutdownEvent.WaitOne(delay, true);
                 if (signaled == true)
                 {
-                    LoggerPMS.log.Debug("Пришел сигнал о завершении, выходим из цикла");
+                    LoggerPMS.log.Debug("Came completion signal, exit from the loop.");
                     break;
                 }
             }
@@ -160,7 +160,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         {
             try
             {
-                LoggerPMS.log.Debug("Проверяем необходимость считывания настроек");
+                LoggerPMS.log.Debug("Check the read settings necessity.");
                 if (IsReRead())
                     if (ReadSettingsFromRegistry())
                         SkipReRead();//Настройки успешно считаны, удаляем флаг
@@ -172,20 +172,20 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
                 if (maintenanceEnabled)
                 {
-                    LoggerPMS.log.Debug("2. Проверяем необходимость отсылки событий.. ");
+                    LoggerPMS.log.Debug("2. Check the send events necessity. ");
                     LoggerPMS.log.Debug("DateTime.Now=" + DateTime.Now + " nextSendDate=" + nextSendDate);
                     if (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
                     {
-                        LoggerPMS.log.Debug("Необходимо отослать события");
+                        LoggerPMS.log.Debug("Need to send events.");
                         if (!DataBaseToXml())
-                            LoggerPMS.log.Debug("Метод DataBaseToXml вернул false");
+                            LoggerPMS.log.Debug("Method DataBaseToXml() return false.");
                         if (SendSystemInfo())
                         {
                             if (!SendEventsFromFiles())
-                                LoggerPMS.log.Debug("Метод SendEventsFromFiles вернул false");
+                                LoggerPMS.log.Debug("Method SendEventsFromFiles() return false");
                             else
                             {
-                                LoggerPMS.log.Debug("Необходимо изменить дату следующей отсылки");
+                                LoggerPMS.log.Debug("Need to change the next sending date.");
                                 while (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
                                 {
                                     switch (dataSendInterval)
@@ -211,33 +211,33 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                             }
                         }
                         else
-                            LoggerPMS.log.Debug("Метод SendSystemInfo вернул false");
+                            LoggerPMS.log.Debug("Method SendSystemInfo() return false");
                     }
                     else
                     {
-                        LoggerPMS.log.Debug("Необходимости в отсылке событий нет");
+                        LoggerPMS.log.Debug("No need to send events.");
                     }
                 }
 
-                LoggerPMS.log.Debug("3. Отправляем задачи на конфигурирование агента..");
+                LoggerPMS.log.Debug("3. Send configure agent tasks.");
                 if (!isShutdown)
                     ConfigureAgent(connectionString);
                 else
                     return false;
 
-                LoggerPMS.log.Debug("4. Чистим от старых событий.. ");
+                LoggerPMS.log.Debug("4. Clear old events. ");
                 if (!isShutdown)
                     ClearOldEvents(connectionString);
                 else
                     return false;
 
-                LoggerPMS.log.Debug("5. Чистим от старых задач.. ");
+                LoggerPMS.log.Debug("5. Clear old tasks. ");
                 if (!isShutdown)
                     ClearOldTasks(connectionString);
                 else
                     return false;
 
-                LoggerPMS.log.Debug("6. Чистим от старых компьютеров.. ");
+                LoggerPMS.log.Debug("6. Clear old computers. ");
                 if (!isShutdown)
                     ClearOldComputers(connectionString);
                 else

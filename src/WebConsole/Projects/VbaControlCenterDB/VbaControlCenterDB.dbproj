@@ -953,6 +953,9 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetComputers.proc.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetDeviceBySN.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="Schema Objects\Schemas\master.dbschema">

@@ -12,8 +12,8 @@ public static class ProcessDataContainer
 {
     public static List<ProcessesEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
-        List<ProcessesEntity> list = new List<ProcessesEntity>();
-        if (maximumRows < 1) return list;
+        if (maximumRows < 1) 
+            return new List<ProcessesEntity>();
 
         String orderBy = "ComputerName ASC";
         String[] parts = SortExpression.Split(' ');
@@ -34,15 +34,11 @@ public static class ProcessDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        ProcessProvider db = new ProcessProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-        return list;
+        return DBProviders.Process.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
     }
 
     public static Int32 Count(String where)
     {
-        ProcessProvider db = new ProcessProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.Count(where);
+        return DBProviders.Process.Count(where);
     }
 }

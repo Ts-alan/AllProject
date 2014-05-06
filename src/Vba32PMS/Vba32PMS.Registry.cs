@@ -24,17 +24,17 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// </summary>
         private Boolean ReadSettingsFromRegistry()
         {
-            LoggerPMS.log.Info("Vba32PMS.ReadSettingsFromRegistry()::Пробуем считать настройки из реестра");
+            LoggerPMS.log.Info("Vba32PMS.ReadSettingsFromRegistry():: Try read settings from registry.");
             try
             {
 
-                LoggerPMS.log.Info("1. Считываем настройки из PeriodicalMaintenance");
+                LoggerPMS.log.Info("1. Read settings from 'PeriodicalMaintenance'.");
 
                 RegistryKey key =
                     Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
                 if (key == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ PeriodicalMaintenance");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'PeriodicalMaintenance'.");
                     return false;
                 }
 
@@ -42,19 +42,19 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 if (t_allowLog == null)
                 {
                     LoggerPMS.Level = LogLevel.Debug;
-                    LoggerPMS.log.Warning("Уровень логгирования не установлен");
+                    LoggerPMS.log.Warning("Log level isn't set.");
                 }
                 else
                 {
                     try
                     {
                         LoggerPMS.Level = (LogLevel)((Int32)t_allowLog);
-                        LoggerPMS.log.Info("Уровень логгирования: " + LoggerPMS.Level.ToString());
+                        LoggerPMS.log.Info("Log level: " + LoggerPMS.Level.ToString());
                     }
                     catch
                     {
                         LoggerPMS.Level = LogLevel.Debug;
-                        LoggerPMS.log.Warning("Недопустимый уровень логгирования");
+                        LoggerPMS.log.Warning("Inadmissible log level.");
                     }
                 }
 
@@ -63,163 +63,163 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 server = (String)key.GetValue("Server");
                 if (server == null)
                 {
-                    LoggerPMS.log.Error("Vba32PMS.ReadSettingsFromRegistry()::Не удалось получить ключ Server");
+                    LoggerPMS.log.Error("Vba32PMS.ReadSettingsFromRegistry()::Can't get key 'Server'.");
                     return false;
                 }
-                LoggerPMS.log.Info("Полученное значение Server: " + server);
+                LoggerPMS.log.Info("Get value 'Server': " + server);
 
                 Object tmp = key.GetValue("Port");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ Port");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'Port'.");
                     return false;
                 }
                 else
                     port = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение Port: " + port);
+                LoggerPMS.log.Info("Get value 'Port': " + port);
 
                 tmp = key.GetValue("MaxFileLength");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ MaxFileLength");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'MaxFileLength'.");
                     return false;
                 }
                 else
                     maxFileLength = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение MaxFileLength: " + maxFileLength);
+                LoggerPMS.log.Info("Get value 'MaxFileLength': " + maxFileLength);
 
                 IFormatProvider culture = new CultureInfo("ru-RU");
 
                 lastSelectDate = Convert.ToDateTime(key.GetValue("LastSelectDate"), culture);
                 if ((lastSelectDate == null) || (lastSelectDate == DateTime.MinValue))
                 {
-                    LoggerPMS.log.Warning("Нет сведений об прошлой выборке сообщений. Инициализируем значением по умолчанию");
+                    LoggerPMS.log.Warning("No information about the last selection messages. Initialize default.");
                     lastSelectDate = DateTime.Now;
                 }
-                LoggerPMS.log.Info("Полученное значение LastSelectDate: " + lastSelectDate);
+                LoggerPMS.log.Info("Get value 'LastSelectDate': " + lastSelectDate);
 
 
                 lastSendDate = Convert.ToDateTime(key.GetValue("LastSendDate"),culture);
                 if ((lastSendDate == null) || (lastSendDate == DateTime.MinValue))
                 {
-                    LoggerPMS.log.Warning("Нет сведений об прошлой отсылке сообщений. Инициализируем значением по умолчанию");
+                    LoggerPMS.log.Warning("No information about the last sending messages. Initialize default.");
                     lastSendDate = DateTime.Now;
                 }
-                LoggerPMS.log.Info("Полученное значение LastSendDate: " + lastSendDate);
+                LoggerPMS.log.Info("Get value 'LastSendDate': " + lastSendDate);
 
                 nextSendDate = Convert.ToDateTime(key.GetValue("NextSendDate"), culture);
                 if ((nextSendDate == null) || (nextSendDate == DateTime.MinValue))
                 {
-                    LoggerPMS.log.Warning("Нет сведений об дате необходимой отсылки сообщений. Инициализируем значением по умолчанию");
+                    LoggerPMS.log.Warning("No information about the date of last sending messages. Initialize default.");
                     nextSendDate = DateTime.Now;
                 }
-                LoggerPMS.log.Info("Полученное значение NextSendDate: " + nextSendDate);
+                LoggerPMS.log.Info("Get value 'NextSendDate': " + nextSendDate);
 
 
                 tmp = key.GetValue("DeliveryTimeoutCheck");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ DeliveryTimeoutCheck");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DeliveryTimeoutCheck'.");
                     return false;
                 }
                 else
                     deliveryTimeoutCheck = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение DeliveryTimeoutCheck: " + deliveryTimeoutCheck);
+                LoggerPMS.log.Info("Get value 'DeliveryTimeoutCheck': " + deliveryTimeoutCheck);
 
                 tmp = key.GetValue("DataSendInterval");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ DataSendInterval");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DataSendInterval'.");
                     return false;
                 }
                 else
                     dataSendInterval = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение DataSendInterval: " + dataSendInterval);
+                LoggerPMS.log.Info("Get value 'DataSendInterval': " + dataSendInterval);
 
 
                 tmp = key.GetValue("DaysToDelete");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ DaysToDelete");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DaysToDelete'.");
                     return false;
                 }
                 else
                     daysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение DaysToDelete: " + daysToDelete);
+                LoggerPMS.log.Info("Get value 'DaysToDelete': " + daysToDelete);
 
 
                 tmp = key.GetValue("TaskDaysToDelete");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry()::Не удалось получить ключ TaskDaysToDelete. Инициализируем по умолчанию");
+                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'TaskDaysToDelete'. Initialize default.");
                     taskDaysToDelete = 180;
                 }
                 else
                     taskDaysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение TaskDaysToDelete: " + taskDaysToDelete);
+                LoggerPMS.log.Info("Get value 'TaskDaysToDelete': " + taskDaysToDelete);
 
                 tmp = key.GetValue("ComputerDaysToDelete");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry()::Не удалось получить ключ ComputerDaysToDelete. Инициализируем по умолчанию");
+                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'ComputerDaysToDelete'. Initialize default.");
                     compDaysToDelete = 0;
                 }
                 else
                     compDaysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение ComputerDaysToDelete: " + compDaysToDelete);
+                LoggerPMS.log.Info("Get value 'ComputerDaysToDelete': " + compDaysToDelete);
 
                 tmp = key.GetValue("HourIntervalToSend");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry()::Не удалось получить ключ HourIntervalToSend. Инициализируем по умолчанию");
+                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'HourIntervalToSend'. Initialize default.");
                     hourIntervalToSend = 4;
                 }
                 else
                     hourIntervalToSend = (Int32)tmp;
-                LoggerPMS.log.Info("Полученное значение HourIntervalToSend: " + hourIntervalToSend);
+                LoggerPMS.log.Info("Get value 'HourIntervalToSend': " + hourIntervalToSend);
 
                 tmp = key.GetValue("MaintenanceEnabled");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry()::Не удалось получить ключ MaintenanceEnabled. Инициализируем по умолчанию.");
+                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'MaintenanceEnabled'. Initialize default.");
                     maintenanceEnabled = true;
                 }
                 else
                     maintenanceEnabled = Convert.ToBoolean(tmp);
-                LoggerPMS.log.Info("Состояние периодического обновления: " + (maintenanceEnabled?"Разрешено":"Запрещено"));
+                LoggerPMS.log.Info("Periodically update state: " + (maintenanceEnabled ? "Allowed" : "Denied"));
 
                 key.Close();
 
-                LoggerPMS.log.Info("2. Считываем настройки из DataBase");
+                LoggerPMS.log.Info("2. Read settings from DataBase");
                 key =
                    Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\DataBase");
 
                 if (key == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Не удалось открыть ключ реестра DataBase");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't open registry key 'DataBase'.");
                     return false;
                 }
 
                 String dataSource = (String)key.GetValue("DataSource");
                 if (dataSource == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ DataSource");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DataSource'.");
                     return false;
                 }
-                LoggerPMS.log.Info("Полученное значение DataSource: " + dataSource);
+                LoggerPMS.log.Info("Get value 'DataSource': " + dataSource);
 
                 String userName = (String)key.GetValue("UserName");
                 if (userName == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ UserName");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'UserName'.");
                     return false;
                 }
-                LoggerPMS.log.Info("Полученное значение UserName: " + userName);
+                LoggerPMS.log.Info("Get value 'UserName': " + userName);
 
                 Byte[] passBytes = (Byte[])key.GetValue("Password");
                 if (passBytes == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ Password");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'Password'.");
                     return false;
                 }
                 //Дешифруем пароль
@@ -230,7 +230,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 }
                 String password = System.Text.Encoding.UTF8.GetString(passBytes);
 
-                LoggerPMS.log.Info("Формируем строку подсоединения к БД.");
+                LoggerPMS.log.Info("Generate connection string.");
                 connectionString = GenerateConnectionString(dataSource, userName, password);
             }
             catch (Exception ex)
@@ -246,7 +246,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// </summary>
         private Boolean WriteSettingsToRegistry()
         {
-            LoggerPMS.log.Debug("Vba32PMS.WriteSettingsToRegistry()::Пробуем записать настройки в реестр");
+            LoggerPMS.log.Debug("Vba32PMS.WriteSettingsToRegistry():: Try write settings to registry.");
             try
             {
                 RegistryKey key =
@@ -274,7 +274,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean IsReRead()
         {
-            LoggerPMS.log.Debug("Vba32PMS.IsReRead():: Вызван");
+            LoggerPMS.log.Debug("Vba32PMS.IsReRead():: Enter");
             Int32 isReRead = 0;
             try
             {
@@ -284,7 +284,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 Object tmp = key.GetValue("ReRead");
                 if (tmp == null)
                 {
-                    LoggerPMS.log.Warning("Vba32NS.IsReRead()::Не удалось получить ключ ReRead");
+                    LoggerPMS.log.Warning("Vba32NS.IsReRead():: Can't get key 'ReRead'.");
                     return false;
                 }
                 else
@@ -306,7 +306,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         /// <returns></returns>
         private Boolean SkipReRead()
         {
-            LoggerPMS.log.Debug("Vba32PMS.SkipReRead():: Вызван");
+            LoggerPMS.log.Debug("Vba32PMS.SkipReRead():: Enter");
             try
             {
                 RegistryKey key =

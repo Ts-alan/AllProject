@@ -20,7 +20,7 @@ namespace Vba32.ControlCenter.SettingsService
         /// <returns></returns>
         public bool ChangeRegistry(string xml)
         {
-            LoggerSS.log.Info("Vba32SettingsImplementation.ChangeRegistry()::Вызван");
+            LoggerSS.log.Info("Vba32SettingsImplementation.ChangeRegistry():: Enter.");
             try
             {
                 if((xml[0]!='<')&&(xml[1]!='?'))

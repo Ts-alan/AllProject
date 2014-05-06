@@ -62,10 +62,9 @@ public partial class _Default : PageBase
         DataBaseEntity dbEntity;
         DataBaseEntity dbEntityLog;
 
-        DataBaseProvider db = new DataBaseProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         try
         {
-            dbEntity = db.Get("vbaCCDB");
+            dbEntity = DBProviders.DataBase.Get("vbaCCDB");
         }
         catch
         {
@@ -74,7 +73,7 @@ public partial class _Default : PageBase
 
         try
         {
-            dbEntityLog = db.Get("vbaCCLog");
+            dbEntityLog = DBProviders.DataBase.Get("vbaCCLog");
         }
         catch
         {   
@@ -151,13 +150,11 @@ public partial class _Default : PageBase
             //получаем кол-во зарегистрированных рабочих станций
             int count;
 
-            ComputerProvider cm = new ComputerProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
             CompFilterEntity filter = new CompFilterEntity();
             filter.ComputerName = "*";
             filter.GenerateSQLWhereStatement();
 
-            count = cm.Count(filter.GetSQLWhereStatement);
+            count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
 
             switch (auth.KeyState)
             {

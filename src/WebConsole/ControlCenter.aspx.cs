@@ -218,19 +218,18 @@ public partial class ControlCenter : PageBase
     private void UpdateData()
     {
         InitializeSession();
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+        
         string filter = "EventName like '%'";
         string sort = (string)Session["ControlCenterSortExp"];
 
-        int count = db.Count(filter);
+        int count = DBProviders.Event.Count(filter);
         int pageSize = 20;
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         pcPaging.PageCount = pageCount;
         pcPagingTop.PageCount = pageCount;
 
-        dlEvents.DataSource = db.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
+        dlEvents.DataSource = DBProviders.Event.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
 
         dlEvents.DataBind();
     }
@@ -324,8 +323,7 @@ public partial class ControlCenter : PageBase
     protected void dlEvents_ItemCommand(object source, DataListCommandEventArgs e)
     {
         if (e.CommandName == "SelectCommand")
-        {
-            EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        {            
             EventTypesEntity event_;
             switch ((string)e.CommandArgument)
             {
@@ -333,14 +331,14 @@ public partial class ControlCenter : PageBase
 
                     event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
                             "", "", (e.Item.FindControl("ibtnSend") as ImageButton).ImageUrl.Contains("disabled.gif"), false, false);
-                    db.UpdateSend(event_);
+                    DBProviders.Event.UpdateSend(event_);
 
                     break;
 
                 case "NoDelete":
                     event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
                             "", "", false, (e.Item.FindControl("ibtnNoDelete") as ImageButton).ImageUrl.Contains("disabled.gif"), false);
-                    db.UpdateNoDelete(event_);
+                    DBProviders.Event.UpdateNoDelete(event_);
                     break;
 
             }

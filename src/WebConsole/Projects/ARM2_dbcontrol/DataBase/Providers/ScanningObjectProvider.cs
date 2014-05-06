@@ -6,6 +6,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public class ScanningObjectProvider
     {
+        public const String ProviderName = "ScanningObjectProvider";
+
         private ScanningObjectManager scanMngr;
 
         public ScanningObjectProvider(String connectionString)

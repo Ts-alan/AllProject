@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Specialized;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -204,6 +205,24 @@ namespace VirusBlokAda.CC.DataBase
             comp.RecentActive, comp.LatestUpdate, comp.Vba32Version, comp.LatestInfected,
             comp.LatestMalware, comp.Vba32Integrity, comp.Vba32KeyValid, comp.Description, comp.AdditionalInfo)
         {
+        }
+
+        public ComputersEntity(StringDictionary name_value_map)
+        {
+            this.computerName = name_value_map["ComputerName"];
+            this.iPAddress = name_value_map["IPAddress"];
+            this.domainName = name_value_map["DomainName"];
+            this.userLogin = name_value_map["UserLogin"];
+            this.oSName = name_value_map["OSName"];
+            this.rAM = Convert.ToInt16(name_value_map["RAM"]);
+            this.cPUClock = Convert.ToInt16(name_value_map["CPUClock"]);
+            this.vba32Version = name_value_map["Vba32Version"];
+            this.vba32Integrity = Convert.ToBoolean(Convert.ToInt32(name_value_map["Vba32Integrity"]));
+            this.vba32KeyValid = Convert.ToBoolean(Convert.ToInt32(name_value_map["Vba32KeyValid"]));
+            this.controlCenter = Convert.ToBoolean(Convert.ToInt32(name_value_map["ControlCenter"]));            
+            this.macAddress = name_value_map["MACAddress"];
+            this.AdditionalInfo=new ComputerAdditionalEntity();
+            this.AdditionalInfo.ControlDeviceType= ControlDeviceTypeEnumExtensions.Get(name_value_map["Observable"]);
         }
 
         #endregion

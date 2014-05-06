@@ -278,7 +278,6 @@ public partial class Groups : PageBase
         int count = 0;
         groups = new List<GroupEx>();
 
-        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         //switch mode to data
         switch (showMode)
         {
@@ -296,17 +295,12 @@ public partial class Groups : PageBase
                     filter.GenerateSQLWhereStatement();
                 }
 
-                count = gmng.Count(filter.GetSQLWhereStatement);
-                groups = gmng.List(filter.GetSQLWhereStatement,
+                count = DBProviders.Group.Count(filter.GetSQLWhereStatement);
+                groups = DBProviders.Group.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["GroupSorting"]),
                         pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]));
 
-                ////заглушка
-                //provider = PoliciesState;
-                //policy = new Policy();
-                //count = provider.GetGroupsByPolicyCount(policy);
-                //groups = provider.GetGroupsByPolicyPage(policy, pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]),
-                //    Convert.ToString(Session["GroupSorting"]));
+                
                 break;
         }
 
@@ -935,8 +929,6 @@ public partial class Groups : PageBase
         if ((Session["SelectedGroupID"] == null) && (!isAllSelected))
             throw new Exception(Resources.Resource.ErrorCriticalError + ": Session['SelectedGroupID'] == null ");
 
-        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
         //All computers who matches current filter
         if (isAllSelected)
         {
@@ -960,9 +952,9 @@ public partial class Groups : PageBase
 
 
             //give computer list from db..                
-            int count = gmng.Count(filter.GetSQLWhereStatement);
+            int count = DBProviders.Group.Count(filter.GetSQLWhereStatement);
 
-            List<GroupEx> groupsList = gmng.List(filter.GetSQLWhereStatement,
+            List<GroupEx> groupsList = DBProviders.Group.List(filter.GetSQLWhereStatement,
                 Convert.ToString(Session["GroupSorting"]), 1, count);
 
             List<ComputersEntity> compsList = new List<ComputersEntity>();
@@ -971,7 +963,7 @@ public partial class Groups : PageBase
 
             foreach (GroupEx nextGroup in groupsList)
             {
-                foreach (ComputersEntity nextComp in gmng.GetComputersByGroup(nextGroup.ID))
+                foreach (ComputersEntity nextComp in DBProviders.Group.GetComputersByGroup(nextGroup.ID))
                 {
                     compsList.Add(nextComp);
                 }
@@ -993,7 +985,7 @@ public partial class Groups : PageBase
 
             foreach (Int16 next in (List<Int16>)Session["SelectedGroupID"])
             {
-                foreach (ComputersEntity nextComp in gmng.GetComputersByGroup(next))
+                foreach (ComputersEntity nextComp in DBProviders.Group.GetComputersByGroup(next))
                 {
                     compsList.Add(nextComp);
                 }
@@ -2183,8 +2175,7 @@ public partial class Groups : PageBase
         GridView gvExcel = new GridView();
 
         InitializeSession();
-        GroupProvider gmng = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+        
         GroupFilterEntity filter;
         if (Session["CurrentGroupFilter"] == null)
         {
@@ -2196,10 +2187,10 @@ public partial class Groups : PageBase
             filter = (GroupFilterEntity)Session["CurrentGroupFilter"];
 
 
-        int count = gmng.Count(filter.GetSQLWhereStatement);
+        int count = DBProviders.Group.Count(filter.GetSQLWhereStatement);
 
 
-        gvExcel.DataSource = gmng.List(filter.GetSQLWhereStatement,
+        gvExcel.DataSource = DBProviders.Group.List(filter.GetSQLWhereStatement,
             Convert.ToString(Session["GroupSorting"]), 1, count);
         gvExcel.DataBind();
 

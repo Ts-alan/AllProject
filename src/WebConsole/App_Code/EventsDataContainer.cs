@@ -12,8 +12,8 @@ public static class EventsDataContainer
 {
     public static List<EventsEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
-        List<EventsEntity> list = new List<EventsEntity>();
-        if (maximumRows < 1) return list;
+        if (maximumRows < 1) 
+            return new List<EventsEntity>();
 
         String orderBy = "EventTime DESC";
         String[] parts = SortExpression.Split(' ');
@@ -34,24 +34,20 @@ public static class EventsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
-
-        return list;
+        return DBProviders.Event.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
     }
 
     public static Int32 Count(String where)
     {
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.Count(where);
+        return DBProviders.Event.Count(where);
     }
 
     #region Notification
 
     public static List<EventTypesEntity> GetForNotification(String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
-        List<EventTypesEntity> list = new List<EventTypesEntity>();
-        if (maximumRows < 1) return list;
+        if (maximumRows < 1) 
+            return new List<EventTypesEntity>();
 
         String orderBy = "EventName DESC";
         String[] parts = SortExpression.Split(' ');
@@ -72,16 +68,12 @@ public static class EventsDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        list = db.GetEventTypeList("EventName like '%'", orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
-
-        return list;
+        return DBProviders.Event.GetEventTypeList("EventName like '%'", orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
     }
 
     public static Int32 CountForNotification()
     {
-        EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-        return db.GetEventTypesCount("EventName like '%'");
+        return DBProviders.Event.GetEventTypesCount("EventName like '%'");
     }
 
     public static Boolean UpdateNotify(EventTypesEntity ent)
@@ -89,8 +81,7 @@ public static class EventsDataContainer
         Boolean isSuccess = false;
         try
         {
-            EventProvider db = new EventProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-            db.UpdateNotify(ent);
+            DBProviders.Event.UpdateNotify(ent);
             isSuccess = true;
         }
         catch { }
