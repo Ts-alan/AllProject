@@ -217,9 +217,9 @@ namespace VirusBlokAda.CC.DataBase
             this.rAM = Convert.ToInt16(name_value_map["RAM"]);
             this.cPUClock = Convert.ToInt16(name_value_map["CPUClock"]);
             this.vba32Version = name_value_map["Vba32Version"];
-            this.vba32Integrity = Convert.ToBoolean(Convert.ToInt32(name_value_map["Vba32Integrity"]));
-            this.vba32KeyValid = Convert.ToBoolean(Convert.ToInt32(name_value_map["Vba32KeyValid"]));
-            this.controlCenter = Convert.ToBoolean(Convert.ToInt32(name_value_map["ControlCenter"]));            
+            this.vba32Integrity = Convert.ToBoolean(name_value_map["Vba32Integrity"]);
+            this.vba32KeyValid = Convert.ToBoolean(name_value_map["Vba32KeyValid"]);
+            this.controlCenter = Convert.ToBoolean(name_value_map["ControlCenter"]);            
             this.macAddress = name_value_map["MACAddress"];
             this.AdditionalInfo=new ComputerAdditionalEntity();
             this.AdditionalInfo.ControlDeviceType= ControlDeviceTypeEnumExtensions.Get(name_value_map["Observable"]);
