@@ -30,8 +30,7 @@
     <BuildScriptName>VbaControlCenterDB.sql</BuildScriptName>
     <TargetConnectionString>
     </TargetConnectionString>
-    <TargetDatabase>
-    </TargetDatabase>
+    <TargetDatabase>VbaControlCenterDB</TargetDatabase>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <SuppressWarnings>03159</SuppressWarnings>
     <DeploymentConfigFile>Properties\Database.sqldeployment</DeploymentConfigFile>
