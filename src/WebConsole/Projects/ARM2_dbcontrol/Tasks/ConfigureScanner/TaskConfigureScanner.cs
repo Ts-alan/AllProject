@@ -377,7 +377,7 @@ namespace ARM2_dbcontrol.Tasks
 
             result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
-            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</id>");
+            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{2E406790-5472-4E0C-9EBF-88D081AA09AC}</id>");
 
             #region Settings
             Int32 index = 0;

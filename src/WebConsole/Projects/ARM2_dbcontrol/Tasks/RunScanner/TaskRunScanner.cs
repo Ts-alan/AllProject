@@ -56,7 +56,7 @@ namespace ARM2_dbcontrol.Tasks
             result.Append("<VsisCommand>");
             result.Append("<Args>");
 
-            result.Append(@"<command><arg><key>module-id</key><value>{323C6C00-4FF9-4ADB-8F9A-1E394265E6FF}</value></arg>");
+            result.Append(@"<command><arg><key>module-id</key><value>{2E406790-5472-4E0C-9EBF-88D081AA09AC}</value></arg>");
             result.Append(@"<arg><key>command</key><value>scan</value></arg><arg>");
 
             if (IsCheckMemory)
