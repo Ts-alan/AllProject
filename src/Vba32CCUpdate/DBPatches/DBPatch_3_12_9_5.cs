@@ -4,17 +4,16 @@ using System.Text;
 
 namespace Vba32ControlCenterUpdate.DBPatches
 {
-    internal sealed class DBPatch_3_12_3_13: DBPatchBase
+    internal sealed class DBPatch_3_12_9_5 : DBPatchBase
     {
-        public DBPatch_3_12_3_13()
-            : base("3.12.3.13")
+        public DBPatch_3_12_9_5()
+            : base("3.12.9.5")
         {
         }
 
         protected override String GetUpdateScript()
         {
-            base.GetUpdateScript();
-            return "script v. 3.12.3.13";
+            return "script v. 3.12.9.5";
         }
     }
 }

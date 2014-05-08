@@ -10,8 +10,8 @@ namespace Vba32ControlCenterUpdate
         #region Fields
 
         private readonly String _version;
-        private readonly IPatchUpdate _previous;
-        private readonly IPatchUpdate _next;
+        private readonly String _previousVersion;
+        private readonly String _nextVersion;
 
         #endregion
 
@@ -22,16 +22,16 @@ namespace Vba32ControlCenterUpdate
         {
         }
 
-        internal DBPatchBase(String version, IPatchUpdate previous)
-            : this(version, previous, null)
+        internal DBPatchBase(String version, String previousVersion)
+            : this(version, previousVersion, null)
         {
         }
 
-        internal DBPatchBase(String version, IPatchUpdate previous, IPatchUpdate next)
+        internal DBPatchBase(String version, String previousVersion, String nextVersion)
         {
             _version = version;
-            _previous = previous;
-            _next = next;
+            _previousVersion = previousVersion;
+            _nextVersion = nextVersion;
         }
 
         #endregion
@@ -45,11 +45,15 @@ namespace Vba32ControlCenterUpdate
 
         public Boolean Update(String currentVersion, String connectionString, out String errorVersion)
         {
-            if (this.Version != currentVersion && _previous != null)
+            if (this.Version != currentVersion && !String.IsNullOrEmpty(_previousVersion))
             {
-                if (!_previous.Update(currentVersion, connectionString, out errorVersion))
+                IPatchUpdate prev = DBPatchFactory.GetPatch(_previousVersion);
+                if (_previousVersion != null)
                 {
-                    return false;
+                    if (!prev.Update(currentVersion, connectionString, out errorVersion))
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -63,9 +67,7 @@ namespace Vba32ControlCenterUpdate
                 SqlCommand cmd = new SqlCommand(GetUpdateScript(), con);
                 con.Open();
 
-                //раскомментить!!!!!!
-                //cmd.ExecuteNonQuery();
-
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
