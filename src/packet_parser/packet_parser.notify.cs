@@ -68,6 +68,7 @@ namespace Vba32CC
             catch (Exception exception)
             {
                 m_error_info = exception.Message;
+                LoggerPP.log.Error(m_error_info);
                 result = false;
             }
             return result;

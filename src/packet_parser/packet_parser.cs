@@ -44,6 +44,7 @@ namespace Vba32CC
         public PacketParser()
         {
             AppPath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(PacketParser)).Location) + @"\";
+            LoggerPP.Path = Path.Combine(AppPath, "packet_parser.log");
 
             CheckDBProvider();
             CheckConnectDB();

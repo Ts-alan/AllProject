@@ -72,6 +72,7 @@ namespace Vba32CC
             catch (Exception e)
             {
                 m_error_info = e.Message;
+                LoggerPP.log.Error("ParseXmlFragment():: " + m_error_info);
                 result = false;
             }
             return result;
@@ -148,6 +149,7 @@ namespace Vba32CC
                             catch (Exception e)
                             {
                                 m_error_info = e.Message;
+                                LoggerPP.log.Error("ParseComponentSettings() :: " + m_error_info);
                                 result = false;
                             }
                             if (!result)
@@ -271,6 +273,7 @@ namespace Vba32CC
                     catch (Exception e)
                     {
                         m_error_info = e.Message;
+                        LoggerPP.log.Error("ParseComponentState() :: " + m_error_info);
                         result = false;
                     }
                     if (!result)
@@ -299,6 +302,7 @@ namespace Vba32CC
                     catch (Exception e)
                     {
                         m_error_info = e.Message;
+                        LoggerPP.log.Error("ParseEvents() :: " + m_error_info);
                         result = false;
                     }
                     if (!result)
@@ -325,6 +329,7 @@ namespace Vba32CC
                 catch (Exception e1)
                 {
                     m_error_info = e1.Message;
+                    LoggerPP.log.Error("ParseProcessInfo() :: delete process info: " + m_error_info);
                     result = false;
                 }
             }
@@ -348,6 +353,7 @@ namespace Vba32CC
                     catch (Exception e2)
                     {
                         m_error_info = e2.Message;
+                        LoggerPP.log.Error("ParseProcessInfo() :: insert process info: " + m_error_info);
                         result = false;
                     }
                     if (!result)
@@ -372,6 +378,7 @@ namespace Vba32CC
             catch (Exception e)
             {
                 m_error_info = e.Message;
+                LoggerPP.log.Error("ParseSystemInfo() :: " + m_error_info);
                 result = false;
             }
             return result;
@@ -409,6 +416,7 @@ namespace Vba32CC
             catch (Exception e)
             {
                 m_error_info = e.Message;
+                LoggerPP.log.Error("ParseTaskState() :: " + m_error_info);
                 result = false;                
             }
             return result;
