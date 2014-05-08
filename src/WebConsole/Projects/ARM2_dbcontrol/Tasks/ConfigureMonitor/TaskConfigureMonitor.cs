@@ -356,6 +356,14 @@ namespace ARM2_dbcontrol.Tasks
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "FirstSuspectedAction", ((MonitorActionsEnum)SuspiciousAction1).ToString());
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "SecondSuspectedAction", ((MonitorActionsEnum)SuspiciousAction2).ToString());
 
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ArchiveAnalyze", "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "Authenticode", "On");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "MailAnalyze", "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "MaxArchiveSize", 0);
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "SfxAnalyze", "On");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "ThirdSuspectedAction", "None");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", id++, "DefaultExtensions", DefaultFilters);
+
             result.Append(@"</value></param>");
             
             #endregion
