@@ -82,13 +82,13 @@ public partial class SettingsExtra : PageBase
         string filter = "EventName like '%'";
         string sort = "EventName ASC";
 
-        int count = DBProviders.Event.Count(filter);
+        int count = DBProviders.Event.GetEventTypesCount(filter);
         int pageSize = 20;
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         pcPaging.PageCount = pageCount;
 
-        dlEvents.DataSource = DBProviders.Event.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
+        dlEvents.DataSource = DBProviders.Event.GetEventTypeList(filter, sort, (Int16)pcPaging.CurrentPageIndex, (Int16)pageSize);
 
         dlEvents.DataBind();
         //LoadStateFromDataBase();

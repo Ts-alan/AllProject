@@ -8,7 +8,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
 {
     [Serializable]
     [TaskEntity("loader")]
-    public class ConfigureLoaderTaskEntity: TaskEntity
+    public class ConfigureLoaderTaskEntity : TaskEntity
     {
         private bool _launchLoaderAtStart;
         [TaskEntityBooleanProperty("AUTO_START", format = "reg_dword:{0}")]
@@ -147,14 +147,14 @@ namespace VirusBlokAda.CC.Tasks.Entities
         }
 
         private string _timeIntervalsValue;
-        [TaskEntityStringProperty("UPDATE_TIME_VALUE", format = "reg_sz:{0}", allowNullOrEmpty = false, 
+        [TaskEntityStringProperty("UPDATE_TIME_VALUE", format = "reg_sz:{0}", allowNullOrEmpty = false,
             dependOnTrueProperty = "TimeIntervals")]
         public string TimeIntervalsValue
         {
             get { return _timeIntervalsValue; }
             set { _timeIntervalsValue = value; }
         }
-        
+
         private string _updateFolder;
         [TaskEntityStringProperty("UPDATE_FOLDER", format = "reg_sz:{0}", allowNullOrEmpty = false)]
         public string UpdateFolder
@@ -172,7 +172,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
         }
 
         private string _proxyAddress;
-        [TaskEntityStringProperty("PROXY_ADDRESS", format = "reg_sz:{0}", 
+        [TaskEntityStringProperty("PROXY_ADDRESS", format = "reg_sz:{0}",
             dependOnTrueProperty = "UseProxyServer")]
         public string ProxyAddress
         {
@@ -180,9 +180,9 @@ namespace VirusBlokAda.CC.Tasks.Entities
             set { _proxyAddress = value; }
         }
 
-        
+
         private int _proxyPort;
-        [TaskEntityInt32Property("PROXY_PORT", format = "reg_dword:{0}", 
+        [TaskEntityInt32Property("PROXY_PORT", format = "reg_dword:{0}",
             dependOnTrueProperty = "UseProxyServer")]
         public int ProxyPort
         {
@@ -191,7 +191,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
         }
 
         private string _proxyUser;
-        [TaskEntityStringProperty("PROXY_USER", format = "reg_sz:{0}", 
+        [TaskEntityStringProperty("PROXY_USER", format = "reg_sz:{0}",
             dependOnTrueProperty = "UseAccount")]
         public string ProxyUser
         {
@@ -200,7 +200,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
         }
 
         private string _proxyPassword;
-        [TaskEntityStringProperty("PROXY_PASSWORD", format = "reg_binary:{0}", 
+        [TaskEntityStringProperty("PROXY_PASSWORD", format = "reg_binary:{0}",
             dependOnTrueProperty = "UseAccount")]
         public string ProxyPassword
         {
@@ -230,10 +230,10 @@ namespace VirusBlokAda.CC.Tasks.Entities
 
             result.Append("<TaskConfigureSettings>");
             result.Append("<loader>");
-            result.AppendFormat("<AUTO_START>reg_dword:{0}</AUTO_START>", (LaunchLoaderAtStart==true)?"1":"0");
+            result.AppendFormat("<AUTO_START>reg_dword:{0}</AUTO_START>", (LaunchLoaderAtStart == true) ? "1" : "0");
             result.AppendFormat("<MONITOR_AUTO_START>reg_dword:{0}</MONITOR_AUTO_START>", (EnableMonitorAtStart == true) ? "1" : "0");
             result.AppendFormat("<PROTECT_LOADER>reg_dword:{0}</PROTECT_LOADER>", (ProtectProcess == true) ? "1" : "0");
-            result.AppendFormat("<SHOW_WINDOW>reg_dword:{0}</SHOW_WINDOW>", (DisplayLoadingProgress== true) ? "1" : "0");
+            result.AppendFormat("<SHOW_WINDOW>reg_dword:{0}</SHOW_WINDOW>", (DisplayLoadingProgress == true) ? "1" : "0");
             result.AppendFormat("<AUTO_CHECK_MEMORY>reg_dword:{0}</AUTO_CHECK_MEMORY>", (ScanMemory == true) ? "1" : "0");
             if (ScanMemoryMode > -1)
             {
@@ -249,11 +249,11 @@ namespace VirusBlokAda.CC.Tasks.Entities
             result.AppendFormat("<PROXY_USAGE>reg_dword:{0}</PROXY_USAGE>", (UseProxyServer == true) ? "1" : "0");
             result.AppendFormat("<PROXY_AUTHORIZE>reg_dword:{0}</PROXY_AUTHORIZE>", (UseAccount == true) ? "1" : "0");
 
-            
-            result.AppendFormat("<LOG_NAME>reg_sz:{0}</LOG_NAME>",String.IsNullOrEmpty(LogFile) ? "Vba32Ldr.log" : LogFile);
-            if (MaximumSizeLog == true &&MaximumSizeLogValue>-1)
+
+            result.AppendFormat("<LOG_NAME>reg_sz:{0}</LOG_NAME>", String.IsNullOrEmpty(LogFile) ? "Vba32Ldr.log" : LogFile);
+            if (MaximumSizeLog == true && MaximumSizeLogValue > -1)
             {
-                result.AppendFormat("<LOG_LIMIT_VALUE>reg_dword:{0}</LOG_LIMIT_VALUE>",MaximumSizeLogValue.ToString());
+                result.AppendFormat("<LOG_LIMIT_VALUE>reg_dword:{0}</LOG_LIMIT_VALUE>", MaximumSizeLogValue.ToString());
             }
             if (TimeIntervalsValue != String.Empty)
             {
@@ -263,7 +263,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
             {
                 result.AppendFormat("<UPDATE_FOLDER>reg_sz:{0}</UPDATE_FOLDER>", UpdateFolder);
             }
-            if (UpdateFolderList!=String.Empty)
+            if (UpdateFolderList != String.Empty)
             {
                 result.AppendFormat("<UPDATE_FOLDER_LIST>reg_multi_sz:{0}</UPDATE_FOLDER_LIST>", UpdateFolderList);
             }
@@ -289,11 +289,11 @@ namespace VirusBlokAda.CC.Tasks.Entities
                         delta = Convert.ToByte(delta % 3 + 1);
                         xorValue += delta;
                     }
-                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>",PreServAction.ConvertToDumpString(bytes) );
+                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>", VirusBlokAda.CC.Common.Anchor.ConvertToDumpString(bytes));
                 }
                 else
                 {
-                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>", ProxyPassword.Replace(PassPrefix,""));
+                    result.AppendFormat("<PROXY_PASSWORD>reg_sz:{0}</PROXY_PASSWORD>", ProxyPassword.Replace(PassPrefix, ""));
                 }
             }
             result.AppendFormat("<SCAN_USB>reg_dword:{0}</SCAN_USB>", (ScanUsb == true) ? "1" : "0");
@@ -303,9 +303,9 @@ namespace VirusBlokAda.CC.Tasks.Entities
 
             result.Append("</loader>");
             result.AppendFormat("</TaskConfigureSettings>");
-            
+
             return result.ToString();
-  
+
         }
     }
 }

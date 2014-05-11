@@ -210,12 +210,10 @@
     <Compile Include="DataBase\Entities\Policy.cs" />
     <Compile Include="DataBase\Managers\PolicyManager.cs" />
     <Compile Include="DataBase\Providers\PolicyProvider.cs" />
-    <Compile Include="Service\TaskAssignment\AutomaticallyTasks.cs" />
     <Compile Include="Service\Vba32NS\IVba32Settings.cs" />
     <Compile Include="Service\Vba32NS\NotifyEvent.cs" />
     <Compile Include="Service\Vba32NS\NotifyType.cs" />
     <Compile Include="Service\Vba32NS\NotifyTypeAddrList.cs" />
-    <Compile Include="Service\TaskAssignment\TaskInfo.cs" />
     <Compile Include="Service\Vba32ServiceControllerInfo.cs" />
     <Compile Include="Service\VSIS\Settings.cs" />
     <Compile Include="Service\VSIS\UpdateEvents.cs" />
@@ -255,12 +253,6 @@
     </Compile>
     <Compile Include="Filters\Validation.cs" />
     <Compile Include="Generation\RandomGeneration.cs" />
-    <Compile Include="Service\TaskAssignment\PreServAction.cs" />
-    <Compile Include="Service\TaskAssignment\Vba32ControlCenterWrapper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Service\TaskAssignment\VbaTaskAssignment.idl" />
-    <Content Include="Service\TaskAssignment\VbaTaskAssignment.idl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

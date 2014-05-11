@@ -43,7 +43,7 @@ namespace VirusBlokAda.CC.Tasks.Entities
                 //Вычисляем хэш и конвертим в base64
                 MD5 md5Hasher = MD5.Create();
                 byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(str));
-                str = "reg_binary:" + PreServAction.ConvertToDumpString(data); //Convert.ToBase64String(data);
+                str = "reg_binary:" + VirusBlokAda.CC.Common.Anchor.ConvertToDumpString(data); //Convert.ToBase64String(data);
                 //
             }
             else

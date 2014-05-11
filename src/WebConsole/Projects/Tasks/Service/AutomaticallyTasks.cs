@@ -4,7 +4,8 @@ using System.Text;
 using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Tasks;
 
-namespace ARM2_dbcontrol.Service.TaskAssignment
+
+namespace VirusBlokAda.CC.Tasks.Service
 {
     public static class AutomaticallyTasks
     {

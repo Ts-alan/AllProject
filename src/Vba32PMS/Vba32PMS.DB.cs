@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using VirusBlokAda.CC.DataBase;
-using ARM2_dbcontrol.Service.TaskAssignment;
+using VirusBlokAda.CC.Tasks.Service;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {

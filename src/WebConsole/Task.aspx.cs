@@ -14,11 +14,11 @@ using System.Text.RegularExpressions;
 
 using ARM2_dbcontrol.Filters;
 using VirusBlokAda.CC.DataBase;
-using ARM2_dbcontrol.Service.TaskAssignment;
 using ARM2_dbcontrol.Tasks;
 using VirusBlokAda.CC.Filters.Composite;
 using VirusBlokAda.CC.Filters.Common;
 using VirusBlokAda.CC.Common;
+using VirusBlokAda.CC.Tasks.Service;
 
 /// <summary>
 /// Task list page

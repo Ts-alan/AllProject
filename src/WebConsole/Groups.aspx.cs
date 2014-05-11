@@ -17,8 +17,8 @@ using Microsoft.Win32;
 using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 using ARM2_dbcontrol.Tasks;
-using ARM2_dbcontrol.Service.TaskAssignment;
 using Vba32.ControlCenter.SettingsService;
+using VirusBlokAda.CC.Tasks.Service;
 
 using System.Drawing;
 using System.Text;

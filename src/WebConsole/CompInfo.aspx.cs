@@ -16,9 +16,8 @@ using ARM2_dbcontrol.Filters;
 using VirusBlokAda.CC.Filters.Primitive;
 using ARM2_dbcontrol.Tasks;
 
-
-using ARM2_dbcontrol.Service.TaskAssignment;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Tasks.Service;
 
 /// <summary>
 /// Info about computer

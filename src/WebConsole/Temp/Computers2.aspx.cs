@@ -9,8 +9,8 @@ using System.Configuration;
 using VirusBlokAda.CC.DataBase;
 using System.Web.Services;
 using VirusBlokAda.CC.Tasks.Common;
-using ARM2_dbcontrol.Service.TaskAssignment;
 using System.Threading;
+using VirusBlokAda.CC.Tasks.Service;
 
 /// <summary>
 /// Computers page

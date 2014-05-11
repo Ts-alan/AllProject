@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using ARM2_dbcontrol.Filters;
 using VirusBlokAda.CC.DataBase;
-using ARM2_dbcontrol.Service.TaskAssignment;
+using VirusBlokAda.CC.Tasks.Service;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using ARM2_dbcontrol.Tasks;
