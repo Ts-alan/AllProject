@@ -45,14 +45,11 @@
   <ItemGroup>
     <Compile Include="Code\DBPatchBase.cs" />
     <Compile Include="Code\DBPatchFactory.cs" />
-    <Compile Include="DBPatches\DBPatch_3_12_3_13.cs" />
-    <Compile Include="DBPatches\DBPatch_3_12_4_24.cs" />
-    <Compile Include="DBPatches\DBPatch_3_12_4_25.cs" />
     <Compile Include="Code\EventEnum.cs" />
     <Compile Include="Code\IPatchUpdate.cs" />
     <Compile Include="Code\Logger.cs" />
     <Compile Include="Code\LogLevel.cs" />
-    <Compile Include="DBPatches\DBPatch_3_12_7_4.cs" />
+    <Compile Include="DBPatches\DBPatch_3_12_9_5.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Code\UpdateActions.cs" />
