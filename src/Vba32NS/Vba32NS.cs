@@ -125,6 +125,10 @@ namespace Vba32.ControlCenter.NotificationService
             {
                 jclient.CloseConnection();
             }
+            catch (Exception ex)
+            {
+                LoggerNS.log.Error("Vba32NS.OnStop():: " + ex.Message);
+            }
             finally
             {
             }
