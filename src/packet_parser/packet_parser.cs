@@ -43,8 +43,25 @@ namespace Vba32CC
         // Constructor.
         public PacketParser()
         {
-            AppPath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(PacketParser)).Location) + @"\";
-            LoggerPP.Path = Path.Combine(AppPath, "packet_parser.log");
+            try
+            {
+                AppPath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(PacketParser)).Location) + @"\";
+                LoggerPP.Path = Path.Combine(AppPath, "packet_parser.log");
+
+                //Проверка на битность ОС
+                if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
+                    registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
+                else
+                    registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
+                
+                gc_database_regkey = registryControlCenterKeyName + "\\DataBase";
+
+                ReadSettingsFromRegistry();
+            }
+            catch (Exception ex)
+            {
+                LoggerPP.log.Error("PacketParser() :: " + ex.Message);
+            }
 
             CheckDBProvider();
             CheckConnectDB();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
+using VirusBlokAda.CC.Common;
 
 namespace Vba32CC
 {
@@ -9,7 +10,8 @@ namespace Vba32CC
     {
         #region Registry Reading Functions
 
-        private const String gc_database_regkey = "SOFTWARE\\Vba32\\ControlCenter\\DataBase";
+        private String gc_database_regkey;
+        private String registryControlCenterKeyName;     //путь к настройкам центра управления 
 
         private String ReadRegistryValue(RegistryKey registry_key, String sub_key, String var_name)
         {
@@ -62,6 +64,53 @@ namespace Vba32CC
         private String ReadPassword()
         {
             return DecryptBinaryToString(Registry.LocalMachine, gc_database_regkey, "Password");
+        }
+
+        /// <summary>
+        /// Считывает необходимые настройки из реестра
+        /// </summary>
+        private Boolean ReadSettingsFromRegistry()
+        {
+            LoggerPP.log.Info("Vba32SS.ReadSettingsFromRegistry():: Try read settings from registry.");
+            try
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName);
+                if (key == null)
+                {
+                    LoggerPP.log.Error("ReadSettingsFromRegistry()::Can't get key 'ControlCenter'.");
+                    return false;
+                }
+
+                Object t_allowLog = key.GetValue("AllowLog");
+                if (t_allowLog == null)
+                {
+                    LoggerPP.Level = LogLevel.Debug;
+                    LoggerPP.log.Warning("Log level isn't set.");
+                }
+                else
+                {
+                    try
+                    {
+                        LoggerPP.Level = (LogLevel)((Int32)t_allowLog);
+                        LoggerPP.log.Info("Log level: " + LoggerPP.Level.ToString());
+                    }
+                    catch
+                    {
+                        LoggerPP.Level = LogLevel.Debug;
+                        LoggerPP.log.Warning("Inadmissible log level.");
+                    }
+                }
+
+                LoggerPP.log.LoggingLevel = LoggerPP.Level;
+
+                key.Close();
+            }
+            catch (Exception ex)
+            {
+                LoggerPP.log.Error("Vba32SS.ReadSettingsFromRegistry()::" + ex.Message);
+                return false;
+            }
+            return true;
         }
 
         #endregion

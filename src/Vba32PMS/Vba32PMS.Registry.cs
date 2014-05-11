@@ -31,10 +31,10 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 LoggerPMS.log.Info("1. Read settings from 'PeriodicalMaintenance'.");
 
                 RegistryKey key =
-                    Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
+                    Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName);
                 if (key == null)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'PeriodicalMaintenance'.");
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'ControlCenter'.");
                     return false;
                 }
 
@@ -59,6 +59,14 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 }
 
                 LoggerPMS.log.LoggingLevel = LoggerPMS.Level;
+                key.Close();
+
+                key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
+                if (key == null)
+                {
+                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'PeriodicalMaintenance'.");
+                    return false;
+                }
 
                 server = (String)key.GetValue("Server");
                 if (server == null)

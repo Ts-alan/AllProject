@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Common;
 
 namespace Vba32.ControlCenter.NotificationService
 {
@@ -114,19 +115,43 @@ namespace Vba32.ControlCenter.NotificationService
             LoggerNS.log.Info("Vba32NS.ReadSettingsFromRegistry():: Started");
             try
             {
-                RegistryKey key =
-                          Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\Notification");
-
                 lock (synch)
                 {
-                    //Logging
-                    int? tmp = (int?)key.GetValue("AllowLog");
-                    logLevel = tmp.HasValue ? tmp.Value : 0;
+                    RegistryKey key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName);
+                    if (key == null)
+                    {
+                        LoggerNS.log.Error("ReadSettingsFromRegistry()::Can't get key 'ControlCenter'.");
+                        return false;
+                    }
 
-                    LoggerNS.log.Info("AllowLog=" + logLevel);
-                    
+                    Object t_allowLog = key.GetValue("AllowLog");
+                    if (t_allowLog == null)
+                    {
+                        LoggerNS.Level = LogLevel.Debug;
+                        LoggerNS.log.Warning("Log level isn't set.");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            LoggerNS.Level = (LogLevel)((Int32)t_allowLog);
+                            LoggerNS.log.Info("Log level: " + LoggerNS.Level.ToString());
+                        }
+                        catch
+                        {
+                            LoggerNS.Level = LogLevel.Debug;
+                            LoggerNS.log.Warning("Inadmissible log level.");
+                        }
+                    }
+
+                    LoggerNS.log.LoggingLevel = LoggerNS.Level;
+
+                    key.Close();
+
+                    key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\Notification");
+
                     //xmpp library type
-                    tmp = (int?)key.GetValue("XMPPLibrary");
+                    int? tmp = (int?)key.GetValue("XMPPLibrary");
                     xmppLibrary = tmp.HasValue ? tmp.Value : 0;
 
                     LoggerNS.log.Info("XMPPLibrary=" + xmppLibrary);
@@ -138,7 +163,7 @@ namespace Vba32.ControlCenter.NotificationService
                     {
                         LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry()::Cannot get JabberServer value");
 
-                       // return false;
+                        // return false;
                     }
                     else
                     {
@@ -215,7 +240,7 @@ namespace Vba32.ControlCenter.NotificationService
             catch (Exception ex)
             {
                 LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry():: Key: " + registryControlCenterKeyName +
-                    " Error:"+ ex.Message);
+                    " Error:" + ex.Message);
                 return false;
             }
 
