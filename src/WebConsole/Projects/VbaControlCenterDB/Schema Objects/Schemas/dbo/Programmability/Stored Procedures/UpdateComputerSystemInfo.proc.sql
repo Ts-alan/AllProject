@@ -43,10 +43,17 @@
 				--Insert new comp
 					--Check license count
 					IF (SELECT COUNT([ID]) FROM [Computers]) >= @LicenseCount
-						RETURN
+							BEGIN
+								RAISERROR(N'All licenses are used.Computer can not be added %s', 16, 1, @ComputerName)
+								RETURN
+							END
+						
 
 					IF EXISTS(SELECT [ID] FROM [Computers] WHERE [ComputerName] = @ComputerName)
-						RETURN
+						BEGIN
+							RAISERROR(N'Computer with same name is in database.Computer can not be added %s', 16, 1, @ComputerName)
+							RETURN
+						END
 
 					-- Clearing same IPs in the database
 					UPDATE [Computers]
