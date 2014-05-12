@@ -13,15 +13,15 @@ namespace WebConsoleTests.ARM2_DbControl.Database.Provider
     [TestFixture]
     class PPacketProviderTests
     {
-        string connectionString = "server=localhost;user=sa;password=1234qwer!;initial catalog=VbaControlCenterDB;";
         INDbUnitTest database;
         DataSet ds;
         PParserProvider provider;
+        
         [SetUp]
         public void Init()
         {
-            provider = new PParserProvider(connectionString);
-            database = new NDbUnit.Core.SqlClient.SqlDbUnitTest(connectionString);
+            provider = new PParserProvider(System.Configuration.ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+            database = new NDbUnit.Core.SqlClient.SqlDbUnitTest(System.Configuration.ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
             database.ReadXmlSchema(@"ARM2_DbControl\DataBase\TestXML\DataBase.xsd");
           //  database.PerformDbOperation(NDbUnit.Core.DbOperationFlag.CleanInsert);
             ds = database.GetDataSetFromDb();
