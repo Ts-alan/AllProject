@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\LoggerSS.cs" />
-    <Compile Include="IVba32Settings.cs" />
     <Compile Include="Vba32SettingsImplementation.cs" />
     <Compile Include="Vba32SettingsService.cs">
       <SubType>Component</SubType>
@@ -78,6 +77,10 @@
     <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebConsole\Projects\Settings\Settings.csproj">
+      <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
+      <Name>Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

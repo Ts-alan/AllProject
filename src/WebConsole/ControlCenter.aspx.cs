@@ -19,7 +19,8 @@ using Microsoft.Win32;
 using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 
-using Vba32.ControlCenter.SettingsService;
+using VirusBlokAda.CC.Settings.Common;
+using VirusBlokAda.CC.Settings.Entities;
 
 public partial class ControlCenter : PageBase
 {
@@ -97,116 +98,99 @@ public partial class ControlCenter : PageBase
 
         lbtnSaveBoxes.Text = Resources.Resource.Save;
 
-        string registryControlCenterKeyName;
-        if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-            registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
+
+        PMSSettingsEntity settings = VirusBlokAda.CC.Settings.SettingsProvider.GetPMSSettings();
+
+        //Labels
+        if (settings.LastSelectDate == null)
+            lblLastSelectDate.Text = Resources.Resource.NotAvailable;
         else
-            registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
+            lblLastSelectDate.Text = settings.LastSelectDate.ToString();
+
+        if (settings.LastSendDate == null)
+            lblLastSendDate.Text = Resources.Resource.NotAvailable;
+        else
+            lblLastSendDate.Text = settings.LastSendDate.ToString();
+
+        if (settings.NextSendDate == null)
+            lblNextSendDate.Text = Resources.Resource.NotAvailable;
+        else
+            lblNextSendDate.Text = settings.NextSendDate.ToString();
+
+        //TextBoxes
+        tboxServer.Text = settings.Server;
+
+        if (settings.DeliveryTimeoutCheck == null)
+            tboxDeliveryTimeoutCheck.Text = Resources.Resource.NotAvailable;
+        else
+            tboxDeliveryTimeoutCheck.Text = settings.DeliveryTimeoutCheck.ToString();
 
 
-        RegistryKey key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName+ "PeriodicalMaintenance"); ;
-        
-        try
+        cboxMaintenanceEnabled.Checked = settings.MaintenanceEnabled;
+        if (cboxMaintenanceEnabled.Checked)
         {
-            //Labels
-            IFormatProvider culture = new CultureInfo("ru-RU");
-
-            dt = Convert.ToDateTime(key.GetValue("LastSelectDate"), culture);
-            if ((dt == null) || (dt == DateTime.MinValue))
-                lblLastSelectDate.Text = Resources.Resource.NotAvailable;
-            else
-                lblLastSelectDate.Text = dt.ToString();
-
-            dt = Convert.ToDateTime(key.GetValue("LastSendDate"), culture);
-            if ((dt == null) || (dt == DateTime.MinValue))
-                lblLastSendDate.Text = Resources.Resource.NotAvailable;
-            else
-                lblLastSendDate.Text = dt.ToString();
-
-            dt = Convert.ToDateTime(key.GetValue("NextSendDate"), culture);
-            if ((dt == null) || (dt == DateTime.MinValue))
-                lblNextSendDate.Text = Resources.Resource.NotAvailable;
-            else
-                lblNextSendDate.Text = dt.ToString();
-
-            //TextBoxes
-            tboxServer.Text = (string)key.GetValue("Server");
-
-            //object tmp = key.GetValue("Port");
-            //if (tmp == null)
-            //    tboxPort.Text = Resources.Resource.NotAvailable;
-            //else
-            //    tboxPort.Text = tmp.ToString();
-
-            //tmp = key.GetValue("MaxFileLength");
-            //if (tmp == null)
-            //    tboxMaxFileLength.Text = Resources.Resource.NotAvailable;
-            //else
-            //    tboxMaxFileLength.Text = Convert.ToString((Convert.ToInt32(tmp) / 1024));
-
-            object tmp = key.GetValue("DeliveryTimeoutCheck");
-            if (tmp == null)
-                tboxDeliveryTimeoutCheck.Text = Resources.Resource.NotAvailable;
-            else
-                tboxDeliveryTimeoutCheck.Text = tmp.ToString();
-
-
-            tmp = key.GetValue("MaintenanceEnabled");
-            if (tmp == null)
-                tmp = true;
-
-            cboxMaintenanceEnabled.Checked = Convert.ToBoolean(tmp);
-            if (cboxMaintenanceEnabled.Checked)
-            {
-                tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = true;
-            }
-            else
-            {
-                tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = false;
-            }
-
-            tmp = key.GetValue("DaysToDelete");
-            if (tmp == null)
-                tboxDaysToDelete.Text = Resources.Resource.NotAvailable;
-            else
-                tboxDaysToDelete.Text = tmp.ToString();
-
-            tmp = key.GetValue("TaskDaysToDelete");
-            if (tmp == null)
-                tboxTasksDaysToDelete.Text = Resources.Resource.NotAvailable;
-            else
-                tboxTasksDaysToDelete.Text = tmp.ToString();
-
-            tmp = key.GetValue("ComputerDaysToDelete");
-            if (tmp == null)
-                tboxComputersDaysToDelete.Text = Resources.Resource.NotAvailable;
-            else
-                tboxComputersDaysToDelete.Text = tmp.ToString();
-
-
-            if (ddlEvery.Items.Count == 0)
-            {
-
-                ddlEvery.Items.Add(Resources.Resource.Daily);
-                ddlEvery.Items.Add(Resources.Resource.Weekly);
-                ddlEvery.Items.Add(Resources.Resource.Monthly);
-                ddlEvery.Items.Add(Resources.Resource.Once);
-            }
-            if (ddlTime.Items.Count == 0)
-            {
-                for (int i = 0; i <= 23; i++)
-                    ddlTime.Items.Add(i.ToString());                
-            }
-
-            ReadDdlSettings(key);
-
-            key.Close();
+            tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = true;
         }
-        catch
+        else
         {
-
+            tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = false;
         }
 
+        if (settings.DaysToDelete == null)
+            tboxDaysToDelete.Text = Resources.Resource.NotAvailable;
+        else
+            tboxDaysToDelete.Text = settings.DaysToDelete.ToString();
+
+        if (settings.TaskDaysToDelete == null)
+            tboxTasksDaysToDelete.Text = Resources.Resource.NotAvailable;
+        else
+            tboxTasksDaysToDelete.Text = settings.TaskDaysToDelete.ToString();
+
+        if (settings.ComputerDaysToDelete == null)
+            tboxComputersDaysToDelete.Text = Resources.Resource.NotAvailable;
+        else
+            tboxComputersDaysToDelete.Text = settings.ComputerDaysToDelete.ToString();
+
+
+        if (ddlEvery.Items.Count == 0)
+        {
+            ddlEvery.Items.Add(Resources.Resource.Daily);
+            ddlEvery.Items.Add(Resources.Resource.Weekly);
+            ddlEvery.Items.Add(Resources.Resource.Monthly);
+            ddlEvery.Items.Add(Resources.Resource.Once);
+        }
+        if (ddlTime.Items.Count == 0)
+        {
+            for (Int32 i = 0; i <= 23; i++)
+                ddlTime.Items.Add(i.ToString());
+        }
+
+        ddlEvery.SelectedIndex = (Int32)settings.DataSendInterval;
+        InitDdlList(ddlEvery.SelectedIndex);
+        switch (ddlEvery.SelectedIndex)
+        {
+            case 0:
+                ddlTime.SelectedIndex = dt.Hour;
+                break;
+
+            case 1:
+                ddlDay.SelectedIndex = (Int32)dt.DayOfWeek;
+                ddlTime.SelectedIndex = dt.Hour;
+                break;
+
+            case 2:
+                ddlDay.SelectedIndex = dt.Day - 1;
+                ddlTime.SelectedIndex = dt.Hour;
+                break;
+            case 3:
+                if (settings.HourIntervalToSend == null)
+                    ddlTime.SelectedIndex = 0;
+                else
+                {
+                    ddlTime.SelectedIndex = (Int32)settings.HourIntervalToSend - 1;
+                }
+                break;
+        }
     }
 
     private void InitializeSession()
@@ -222,14 +206,14 @@ public partial class ControlCenter : PageBase
         string filter = "EventName like '%'";
         string sort = (string)Session["ControlCenterSortExp"];
 
-        int count = DBProviders.Event.Count(filter);
+        int count = DBProviders.Event.GetEventTypesCount(filter);
         int pageSize = 20;
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         pcPaging.PageCount = pageCount;
         pcPagingTop.PageCount = pageCount;
 
-        dlEvents.DataSource = DBProviders.Event.List(filter, sort, pcPaging.CurrentPageIndex, pageSize);
+        dlEvents.DataSource = DBProviders.Event.GetEventTypeList(filter, sort, (Int16)pcPaging.CurrentPageIndex, (Int16)pageSize);
 
         dlEvents.DataBind();
     }
@@ -455,8 +439,8 @@ public partial class ControlCenter : PageBase
             bool retVal = false;
             try
             {
-                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
                 // онечно, взаимодействовать между собой приложени€м .NET из одного программного продукта
@@ -516,48 +500,7 @@ public partial class ControlCenter : PageBase
         InitDdlList(ddlEvery.SelectedIndex);
     }
 
-    private void ReadDdlSettings(RegistryKey key)
-    {
-        object tmp = key.GetValue("DataSendInterval");
-        if (tmp == null)
-            throw new Exception("Cannot read DataSendInterval from registry");
-
-        DateTime dt = Convert.ToDateTime(key.GetValue("NextSendDate"));
-        if ((dt == null) || (dt == DateTime.MinValue))
-            throw new Exception("Cannot read NextSendDate from registry");
-
-        ddlEvery.SelectedIndex = (int)tmp;
-        InitDdlList(ddlEvery.SelectedIndex);
-        switch (ddlEvery.SelectedIndex)
-        {
-            case 0:
-                ddlTime.SelectedIndex = dt.Hour;
-                break;
-
-            case 1:
-                ddlDay.SelectedIndex = (int)dt.DayOfWeek;
-                ddlTime.SelectedIndex = dt.Hour;
-                break;
-
-            case 2:
-                ddlDay.SelectedIndex = dt.Day-1;
-                ddlTime.SelectedIndex = dt.Hour;
-                break;
-            case 3:
-                object tmpHour = key.GetValue("HourIntervalToSend");
-                if (tmpHour == null)
-                    ddlTime.SelectedIndex = 0;
-                else
-                {
-                    ddlTime.SelectedIndex = (int)tmpHour - 1;
-                }
-                break;
-        }
-
-        
-    }
-
-    protected void pcPaging_NextPage(object sender, EventArgs e)
+       protected void pcPaging_NextPage(object sender, EventArgs e)
     {
         int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
         pcPaging.CurrentPageIndex = index;

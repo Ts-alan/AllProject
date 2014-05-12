@@ -10,7 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text;
 using Microsoft.Win32;
-using Vba32.ControlCenter.SettingsService;
+using VirusBlokAda.CC.Settings.Common;
 using ARM2_dbcontrol.Filters;
 using VirusBlokAda.Vba32CC.Service.VSIS;
 

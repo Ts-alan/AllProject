@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Vba32.ControlCenter.SettingsService
+namespace VirusBlokAda.CC.Settings.Common
 {
     public interface IVba32Settings
     {
-        bool ChangeRegistry(string xml);
+        Boolean ChangeRegistry(String xml);
     }
 }

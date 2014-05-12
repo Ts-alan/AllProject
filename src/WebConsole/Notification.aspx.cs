@@ -15,7 +15,7 @@ using Microsoft.Win32;
 using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Filters;
 
-using Vba32.ControlCenter.SettingsService;
+using VirusBlokAda.CC.Settings.Common;
 using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Collections.Generic;
@@ -343,8 +343,8 @@ public partial class Notification : PageBase
         Boolean retVal = true;
         try
         {
-            IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+            IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
             String xml = "<VbaSettings><ControlCenter><Notification>" +
@@ -383,8 +383,8 @@ public partial class Notification : PageBase
             Boolean retVal = true;
             try
             {
-                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
                 System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
@@ -419,8 +419,8 @@ public partial class Notification : PageBase
             Boolean retVal = true;
             try
             {
-                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
                 System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
@@ -459,8 +459,8 @@ public partial class Notification : PageBase
             Boolean retVal = true;
             try
             {
-                IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+                IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
                 System.Text.StringBuilder builder = new System.Text.StringBuilder(256);

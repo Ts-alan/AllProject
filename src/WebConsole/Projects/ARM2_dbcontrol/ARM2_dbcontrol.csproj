@@ -210,7 +210,6 @@
     <Compile Include="DataBase\Entities\Policy.cs" />
     <Compile Include="DataBase\Managers\PolicyManager.cs" />
     <Compile Include="DataBase\Providers\PolicyProvider.cs" />
-    <Compile Include="Service\Vba32NS\IVba32Settings.cs" />
     <Compile Include="Service\Vba32NS\NotifyEvent.cs" />
     <Compile Include="Service\Vba32NS\NotifyType.cs" />
     <Compile Include="Service\Vba32NS\NotifyTypeAddrList.cs" />

@@ -6,6 +6,7 @@ using System.Xml;
 using System.Diagnostics;
 
 using Microsoft.Win32;
+using VirusBlokAda.CC.Settings.Common;
 
 namespace Vba32.ControlCenter.SettingsService
 {

@@ -18,6 +18,7 @@ using VirusBlokAda.CC.DataBase;
 using ARM2_dbcontrol.Generation;
 using Microsoft.Win32;
 using VirusBlokAda.CC.Common.Xml;
+using VirusBlokAda.CC.Settings.Common;
 
 public partial class _PoliciesPage : PageBase
 {
@@ -482,8 +483,8 @@ public partial class _PoliciesPage : PageBase
 
         try
         {
-            Vba32.ControlCenter.SettingsService.IVba32Settings remoteObject = (Vba32.ControlCenter.SettingsService.IVba32Settings)Activator.GetObject(
-                       typeof(Vba32.ControlCenter.SettingsService.IVba32Settings),
+            IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
+                       typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
             string xml = String.Format("<VbaSettings><ControlCenter>" +
