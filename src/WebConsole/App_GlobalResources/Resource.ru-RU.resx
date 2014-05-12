@@ -2922,4 +2922,7 @@
   <data name="TotallySelected" xml:space="preserve">
     <value>Всего выбрано</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Поле должно быть заполнено.</value>
+  </data>
 </root>

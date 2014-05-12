@@ -8,24 +8,24 @@ namespace Settings.Entities
     {
         #region Fields
 
-        private String _MailServer;
-        private String _MailFrom;
-        private String _MailDisplayName;
+        private String _MailServer = null;
+        private String _MailFrom = null;
+        private String _MailDisplayName = null;
 
-        private String _JabberServer;
-        private String _JabberPassword;
-        private String _JabberFromJID;
+        private String _JabberServer = null;
+        private String _JabberPassword = null;
+        private String _JabberFromJID = null;
 
-        private Int32? _TimeLimit;
-        private Int32? _UseFlowAnalysis;
-        private Int32? _Limit;
+        private Int32? _TimeLimit = null;
+        private Int32? _UseFlowAnalysis = null;
+        private Int32? _Limit = null;
 
-        private Int32? _LocalHearthLimit;
-        private Int32? _LocalHearthTimeLimit;
+        private Int32? _LocalHearthLimit = null;
+        private Int32? _LocalHearthTimeLimit = null;
 
-        private Int32? _GlobalEpidemyCompCount;
-        private Int32? _GlobalEpidemyLimit;
-        private Int32? _GlobalEpidemyTimeLimit;
+        private Int32? _GlobalEpidemyCompCount = null;
+        private Int32? _GlobalEpidemyLimit = null;
+        private Int32? _GlobalEpidemyTimeLimit = null;
                 
         private Boolean _ReRead;
         

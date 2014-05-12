@@ -8,21 +8,21 @@ namespace VirusBlokAda.CC.Settings.Entities
     {
         #region Fields
 
-        private String _Server;
-        private Int32? _Port;
-        private Int32? _TaskDaysToDelete;
-        private Int32? _ComputerDaysToDelete;
-        private Int32? _DaysToDelete;
+        private String _Server = null;
+        private Int32? _Port = null;
+        private Int32? _TaskDaysToDelete = null;
+        private Int32? _ComputerDaysToDelete = null;
+        private Int32? _DaysToDelete = null;
 
-        private Int32? _DataSendInterval;
-        private Int32? _DeliveryTimeoutCheck;
-        private Int32? _HourIntervalToSend;
+        private Int32? _DataSendInterval = null;
+        private Int32? _DeliveryTimeoutCheck = null;
+        private Int32? _HourIntervalToSend = null;
         private Boolean _MaintenanceEnabled;
-        private Int32? _MaxFileLength;
+        private Int32? _MaxFileLength = null;
 
-        private DateTime? _LastSelectDate;
-        private DateTime? _LastSendDate;
-        private DateTime? _NextSendDate;
+        private DateTime? _LastSelectDate = null;
+        private DateTime? _LastSendDate = null;
+        private DateTime? _NextSendDate = null;
         
         private Boolean _ReRead;
         
@@ -119,6 +119,49 @@ namespace VirusBlokAda.CC.Settings.Entities
         #region Constructors
 
         public PMSSettingsEntity() { }
+
+        #endregion
+
+        #region Methods
+
+        public String GenerateXML()
+        {
+            StringBuilder xml = new StringBuilder(1024);
+            xml.Append("<VbaSettings><ControlCenter><PeriodicalMaintenance>");
+            if (DeliveryTimeoutCheck.HasValue)
+                xml.AppendFormat("<DeliveryTimeoutCheck type=" + "\"reg_dword\"" + ">{0}</DeliveryTimeoutCheck>", DeliveryTimeoutCheck);
+
+            if (DaysToDelete.HasValue)
+                xml.AppendFormat("<DaysToDelete type=" + "\"reg_dword\"" + ">{0}</DaysToDelete>", DaysToDelete);
+            if (TaskDaysToDelete.HasValue)
+                xml.AppendFormat("<TaskDaysToDelete type=" + "\"reg_dword\"" + ">{0}</TaskDaysToDelete>", TaskDaysToDelete);
+            if (ComputerDaysToDelete.HasValue)
+                xml.AppendFormat("<ComputerDaysToDelete type=" + "\"reg_dword\"" + ">{0}</ComputerDaysToDelete>", ComputerDaysToDelete);
+            
+            xml.AppendFormat("<MaintenanceEnabled type=" + "\"reg_dword\"" + ">{0}</MaintenanceEnabled>", MaintenanceEnabled ? "1" : "0");
+
+            if (MaintenanceEnabled)
+            {
+                xml.AppendFormat("<Server type=" + "\"reg_sz\"" + ">{0}</Server>", Server);
+
+                if (HourIntervalToSend.HasValue)
+                    xml.AppendFormat("<HourIntervalToSend type=" + "\"reg_dword\"" + ">{0}</HourIntervalToSend>", HourIntervalToSend);
+                if (DataSendInterval.HasValue)
+                    xml.AppendFormat("<DataSendInterval type=" + "\"reg_dword\"" + ">{0}</DataSendInterval>", DataSendInterval);
+                if (NextSendDate.HasValue)
+                    xml.AppendFormat("<NextSendDate type=" + "\"reg_sz\"" + ">{0}</NextSendDate>", NextSendDate.Value.ToString(new System.Globalization.CultureInfo("ru-RU")));
+                if (LastSelectDate.HasValue)
+                    xml.AppendFormat("<LastSelectDate type=" + "\"reg_sz\"" + ">{0}</LastSelectDate>", LastSelectDate.Value.ToString(new System.Globalization.CultureInfo("ru-RU")));
+                if (LastSendDate.HasValue)
+                    xml.AppendFormat("<LastSendDate type=" + "\"reg_sz\"" + ">{0}</LastSendDate>", LastSendDate.Value.ToString(new System.Globalization.CultureInfo("ru-RU")));
+            }
+
+            xml.AppendFormat("<Reread type=" + "\"reg_dword\"" + ">{0}</Reread>", ReRead ? "1" : "0");
+
+            xml.Append("</PeriodicalMaintenance></ControlCenter></VbaSettings>");
+
+            return xml.ToString();
+        }
 
         #endregion
     }

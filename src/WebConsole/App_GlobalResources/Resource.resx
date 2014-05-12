@@ -2934,4 +2934,7 @@ system administrator.</value>
   <data name="TotallySelected" xml:space="preserve">
     <value>Totally Selected</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field.</value>
+  </data>
 </root>

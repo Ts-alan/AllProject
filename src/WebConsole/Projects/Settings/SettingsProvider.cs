@@ -27,6 +27,8 @@ namespace VirusBlokAda.CC.Settings
             DBKeyName = RegistryControlCenterKeyName + "DataBase";
         }
 
+        #region Methods
+
         public static PMSSettingsEntity GetPMSSettings()
         {
             lock (lockToken)
@@ -114,5 +116,7 @@ namespace VirusBlokAda.CC.Settings
 
             return result;
         }
+
+        #endregion
     }
 }
