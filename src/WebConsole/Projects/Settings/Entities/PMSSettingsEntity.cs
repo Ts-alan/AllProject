@@ -157,7 +157,7 @@ namespace VirusBlokAda.CC.Settings.Entities
                     xml.AppendFormat("<LastSendDate type=" + "\"reg_sz\"" + ">{0}</LastSendDate>", LastSendDate.Value.ToString(new System.Globalization.CultureInfo("ru-RU")));
             }
 
-            xml.AppendFormat("<ReRead type=" + "\"reg_dword\"" + ">{0}</Reread>", ReRead ? "1" : "0");
+            xml.AppendFormat("<ReRead type=" + "\"reg_dword\"" + ">{0}</ReRead>", ReRead ? "1" : "0");
 
             xml.Append("</PeriodicalMaintenance></ControlCenter></VbaSettings>");
 

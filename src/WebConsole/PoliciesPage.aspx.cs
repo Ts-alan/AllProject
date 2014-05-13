@@ -473,13 +473,12 @@ public partial class _PoliciesPage : PageBase
 
     protected void imbtnIsDefaultPolicy_Click(object sender, ImageClickEventArgs e)
     {
-        bool retVal = true;        
+        bool retVal = true;
 
-        string currentDefaultPolicy = GetDefaultPolicyNameFromRegistry();
+        string currentDefaultPolicy = VirusBlokAda.CC.Settings.SettingsProvider.GetDefaultPolicy();
 
         string newDefaultPolicyName =
             currentDefaultPolicy == ddlPolicyNames.SelectedItem.Text ? "" : ddlPolicyNames.SelectedItem.Text;
-
 
         try
         {
@@ -487,7 +486,7 @@ public partial class _PoliciesPage : PageBase
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-            string xml = String.Format("<VbaSettings><ControlCenter>" +
+            String xml = String.Format("<VbaSettings><ControlCenter>" +
                 "<DefaultPolicy type=" + "\"reg_sz\"" + ">{0}</DefaultPolicy>" +
                 "</ControlCenter></VbaSettings>", newDefaultPolicyName);
 
@@ -507,35 +506,10 @@ public partial class _PoliciesPage : PageBase
         InitDefaultPolicy();
     }
 
-    private string GetDefaultPolicyNameFromRegistry()
-    {
-        string registryControlCenterKeyName;
-        RegistryKey key;
-        try
-        {
-            //!-OPTM Вынести такую проверку в App_Code и юзать один код
-            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-            else
-                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName); ;
-
-        }
-        catch
-        {
-            //throw new ArgumentException("Registry open 'ControlCenter' key error: " + ex.Message);
-            return String.Empty;
-        }
-
-        return (string)key.GetValue("DefaultPolicy");
-
-    }
-
     private void InitDefaultPolicy()
     {
         string url = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/";
-        string defaultPolicy = GetDefaultPolicyNameFromRegistry();
+        string defaultPolicy = VirusBlokAda.CC.Settings.SettingsProvider.GetDefaultPolicy();
         if (ddlPolicyNames.SelectedItem != null)
         {
             if ((String.IsNullOrEmpty(defaultPolicy)) || (defaultPolicy != ddlPolicyNames.SelectedItem.Text))

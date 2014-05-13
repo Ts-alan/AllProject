@@ -19,12 +19,10 @@ using VirusBlokAda.CC.Settings.Common;
 using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Collections.Generic;
+using VirusBlokAda.CC.Settings.Entities;
 
 public partial class Notification : PageBase
 {
-    private const String  GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
-    private const String LocalHearthEvent = "vba32.cc.LocalHearth";
-
     protected void Page_Init(Object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
@@ -73,25 +71,36 @@ public partial class Notification : PageBase
             rangeLimit.ErrorMessage = rangeLocalHearthLimit.ErrorMessage = rangeLocalHearthTimeLimit.ErrorMessage =
             rangeTimeLimit.ErrorMessage = String.Format(Resources.Resource.ValueBetween, "0", "1000");
 
-        RegistryKey key = GetRegisterKey();
-        InitMailFields(key);
-        InitJabberFields(key);
-        InitFlowAnalysisFields(key);
+        InitSettingFields();
     }
 
-    private void InitJabberFields(RegistryKey key)
+    private void InitSettingFields()
     {
-        Boolean isChecked = true;
+        NSSettingsEntity ent = null;
         try
         {
-            tboxJabberServer.Text = (String)key.GetValue("JabberServer");
-            tboxJabberFrom.Text = (String)key.GetValue("JabberFromJID");
-            tboxJabberPassword.Attributes.Add("value", (String)key.GetValue("JabberPassword"));
+            ent = VirusBlokAda.CC.Settings.SettingsProvider.GetNSSettings();
         }
-        catch
+        catch{}
+
+        InitMailFields(ent);
+        InitJabberFields(ent);
+        InitFlowAnalysisFields(ent);
+    }
+
+    private void InitJabberFields(NSSettingsEntity ent)
+    {
+        Boolean isChecked = true;         
+        if (ent == null)
         {
             tboxJabberServer.Text = tboxJabberFrom.Text = tboxJabberPassword.Text = String.Empty;
             isChecked = false;
+        }
+        else
+        {
+            tboxJabberServer.Text = ent.JabberServer;
+            tboxJabberFrom.Text = ent.JabberFromJID;
+            tboxJabberPassword.Attributes.Add("value", ent.JabberPassword);
         }
 
         if (isChecked && String.IsNullOrEmpty(tboxJabberServer.Text))
@@ -100,19 +109,19 @@ public partial class Notification : PageBase
         cboxUseJabber.Checked = tboxJabberServer.Enabled = tboxJabberFrom.Enabled = tboxJabberPassword.Enabled = isChecked;
     }
 
-    private void InitMailFields(RegistryKey key)
+    private void InitMailFields(NSSettingsEntity ent)
     {
-        Boolean isChecked = true;
-        try
+        Boolean isChecked = true;         
+        if (ent == null)
         {
-            tboxMailServer.Text = (String)key.GetValue("MailServer");
-            tboxMailFrom.Text = (String)key.GetValue("MailFrom");
-            tboxMailDisplayName.Text = (String)key.GetValue("MailDisplayName");
-        }
-        catch
-        {            
             tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
             isChecked = false;
+        }
+        else
+        {
+            tboxMailServer.Text = ent.MailServer;
+            tboxMailFrom.Text = ent.MailFrom;
+            tboxMailDisplayName.Text = ent.MailDisplayName;
         }
 
         if (isChecked && String.IsNullOrEmpty(tboxMailServer.Text))
@@ -124,41 +133,25 @@ public partial class Notification : PageBase
     /// <summary>
     /// Инициализирует поля, связанные с обработкой потока уведомлений
     /// </summary>
-    private void InitFlowAnalysisFields(RegistryKey key)
+    private void InitFlowAnalysisFields(NSSettingsEntity ent)
     {
         Boolean isChecked = true;
-        try
-        {
-            Int32? tmp = (Int32?)key.GetValue("GlobalEpidemyLimit");
-            tboxGlobalEpidemyLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("GlobalEpidemyTimeLimit");
-            tboxGlobalEpidemyTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("GlobalEpidemyCompCount");
-            tboxGlobalEpidemyCompCount.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("LocalHearthLimit");
-            tboxLocalHearthLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("LocalHearthTimeLimit");
-            tboxLocalHearthTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("Limit");
-            tboxLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("TimeLimit");
-            tboxTimeLimit.Text = tmp.HasValue ? tmp.Value.ToString() : "10";
-
-            tmp = (Int32?)key.GetValue("UseFlowAnalysis");
-            cboxUseFlowAnalysis.Checked = tmp.HasValue ? tmp.Value > 0 : false;
-
-        }
-        catch
+        if (ent == null)
         {
             isChecked = false;
             tboxGlobalEpidemyLimit.Text = tboxGlobalEpidemyTimeLimit.Text = tboxGlobalEpidemyCompCount.Text =
                 tboxLocalHearthLimit.Text = tboxLocalHearthTimeLimit.Text = tboxLimit.Text = tboxTimeLimit.Text = "10";
+        }
+        else
+        {
+            tboxGlobalEpidemyTimeLimit.Text = ent.GlobalEpidemyTimeLimit.HasValue ? ent.GlobalEpidemyTimeLimit.Value.ToString() : "10";
+            tboxGlobalEpidemyLimit.Text = ent.GlobalEpidemyLimit.HasValue ? ent.GlobalEpidemyLimit.Value.ToString() : "10";
+            tboxGlobalEpidemyCompCount.Text = ent.GlobalEpidemyCompCount.HasValue ? ent.GlobalEpidemyCompCount.Value.ToString() : "10";
+            tboxLocalHearthLimit.Text = ent.LocalHearthLimit.HasValue ? ent.LocalHearthLimit.Value.ToString() : "10";
+            tboxLocalHearthTimeLimit.Text = ent.LocalHearthTimeLimit.HasValue ? ent.LocalHearthTimeLimit.Value.ToString() : "10";
+            tboxLimit.Text = ent.Limit.HasValue ? ent.Limit.Value.ToString() : "10";
+            tboxTimeLimit.Text = ent.TimeLimit.HasValue ? ent.TimeLimit.Value.ToString() : "10";
+            cboxUseFlowAnalysis.Checked = ent.UseFlowAnalysis.HasValue ? ent.UseFlowAnalysis.Value > 0 : false;
         }
 
         if (isChecked)
@@ -166,29 +159,6 @@ public partial class Notification : PageBase
 
         tboxGlobalEpidemyLimit.Enabled = tboxGlobalEpidemyTimeLimit.Enabled = tboxGlobalEpidemyCompCount.Enabled =
                 tboxLocalHearthLimit.Enabled = tboxLocalHearthTimeLimit.Enabled = tboxLimit.Enabled = tboxTimeLimit.Enabled = isChecked;
-    }
-
-    private RegistryKey GetRegisterKey()
-    {
-        String registryControlCenterKeyName;
-        RegistryKey key;
-        try
-        {
-            //!-OPTM Вынести такую проверку в App_Code и юзать один код
-            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-            else
-                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "Notification"); ;
-
-        }
-        catch (Exception ex)
-        {
-            throw new ArgumentException("Registry open 'Notification' key error: " + ex.Message);
-        }
-
-        return key;
     }
 
     private Boolean ValidateMailFields()
@@ -283,7 +253,6 @@ public partial class Notification : PageBase
         return true;
     }
 
-
     // Вынести эту логику в WebMethod и диалог JQuery!!!!!!!!!!!!
     protected void GridView1_RowCommand(Object source, GridViewCommandEventArgs e)
     {
@@ -306,7 +275,6 @@ public partial class Notification : PageBase
                 }
         }
     }
-
 
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -347,11 +315,10 @@ public partial class Notification : PageBase
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-            String xml = "<VbaSettings><ControlCenter><Notification>" +
-                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>" +
-                "</Notification></ControlCenter></VbaSettings>";
+            NSSettingsEntity ent = new NSSettingsEntity();
+            ent.ReRead = true;
 
-            retVal = remoteObject.ChangeRegistry(xml);
+            retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
         }
         catch (Exception ex)
         {
@@ -387,24 +354,17 @@ public partial class Notification : PageBase
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-                System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
+                NSSettingsEntity ent = new NSSettingsEntity();
+                ent.ReRead = true;
+                ent.MailServer = tboxMailServer.Text;
+                ent.MailFrom = tboxMailFrom.Text;
+                ent.MailDisplayName = tboxMailDisplayName.Text;
 
-                builder.Append("<VbaSettings><ControlCenter><Notification>");
-                builder.AppendFormat("<MailServer type=" + "\"reg_sz\"" + ">{0}</MailServer>" +
-                                "<MailFrom type=" + "\"reg_sz\"" + ">{1}</MailFrom>" +
-                                "<MailDisplayName type=" + "\"reg_sz\"" + ">{2}</MailDisplayName>" +
-                                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",
-                                 tboxMailServer.Text, tboxMailFrom.Text, tboxMailDisplayName.Text);
-                
-
-                builder.Append("</Notification></ControlCenter></VbaSettings>");
-
-                retVal = remoteObject.ChangeRegistry(builder.ToString());
+                retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
             }
-            catch (Exception ex)
+            catch
             {
-                throw new InvalidOperationException("SaveSettings: " +
-                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
+                throw new InvalidOperationException(Resources.Resource.Vba32SSUnavailable);
             }
 
             if (!retVal)
@@ -423,28 +383,17 @@ public partial class Notification : PageBase
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-                System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
+                NSSettingsEntity ent = new NSSettingsEntity();
+                ent.ReRead = true;
+                ent.JabberServer = tboxJabberServer.Text;
+                ent.JabberFromJID = tboxJabberFrom.Text;
+                ent.JabberPassword = tboxJabberPassword.Text;
 
-                builder.Append("<VbaSettings><ControlCenter><Notification>");
-                builder.AppendFormat("<JabberServer type=" + "\"reg_sz\"" + ">{0}</JabberServer>" +
-                                "<JabberFromJID type=" + "\"reg_sz\"" + ">{1}</JabberFromJID>" +
-                                "<Reread type=" + "\"reg_dword\"" + ">1</Reread>",
-                                tboxJabberServer.Text, tboxJabberFrom.Text);
-
-                if (!String.IsNullOrEmpty(tboxJabberPassword.Text))
-                {
-                    builder.AppendFormat("<JabberPassword type=" + "\"reg_sz\"" + ">{0}</JabberPassword>",
-                        tboxJabberPassword.Text);
-                }
-
-                builder.Append("</Notification></ControlCenter></VbaSettings>");
-
-                retVal = remoteObject.ChangeRegistry(builder.ToString());
+                retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
             }
-            catch (Exception ex)
+            catch
             {
-                throw new InvalidOperationException("SaveSettings: " +
-                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
+                throw new InvalidOperationException(Resources.Resource.Vba32SSUnavailable);
             }
 
             if (!retVal)
@@ -463,37 +412,35 @@ public partial class Notification : PageBase
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-                System.Text.StringBuilder builder = new System.Text.StringBuilder(256);
+                NSSettingsEntity ent = new NSSettingsEntity();
+                ent.ReRead = true;
+                ent.UseFlowAnalysis = cboxUseFlowAnalysis.Checked ? 1 : 0;
+                if (cboxUseFlowAnalysis.Checked)
+                {
+                    ent.LocalHearthTimeLimit = Convert.ToInt32(tboxLocalHearthTimeLimit.Text);
+                    ent.LocalHearthLimit = Convert.ToInt32(tboxLocalHearthLimit.Text);
+                    ent.GlobalEpidemyTimeLimit = Convert.ToInt32(tboxGlobalEpidemyTimeLimit.Text);
+                    ent.GlobalEpidemyLimit = Convert.ToInt32(tboxGlobalEpidemyLimit.Text);
+                    ent.Limit = Convert.ToInt32(tboxLimit.Text);
+                    ent.TimeLimit = Convert.ToInt32(tboxTimeLimit.Text);
+                    ent.GlobalEpidemyCompCount = Convert.ToInt32(tboxGlobalEpidemyCompCount.Text);
+                }
+                else
+                {
+                    ent.LocalHearthTimeLimit = 10;
+                    ent.LocalHearthLimit = 10;
+                    ent.GlobalEpidemyTimeLimit = 10;
+                    ent.GlobalEpidemyLimit = 10;
+                    ent.Limit = 10;
+                    ent.TimeLimit = 10;
+                    ent.GlobalEpidemyCompCount = 10;
+                }
 
-                builder.Append("<VbaSettings><ControlCenter><Notification>");
-                builder.AppendFormat(
-                                "<LocalHearthTimeLimit type=" + "\"reg_dword\"" + ">{0}</LocalHearthTimeLimit>" +
-                                "<LocalHearthLimit type=" + "\"reg_dword\"" + ">{1}</LocalHearthLimit>" +
-                                "<GlobalEpidemyTimeLimit type=" + "\"reg_dword\"" + ">{2}</GlobalEpidemyTimeLimit>" +
-                                "<GlobalEpidemyLimit type=" + "\"reg_dword\"" + ">{3}</GlobalEpidemyLimit>" +
-                                "<Limit type=" + "\"reg_dword\"" + ">{4}</Limit>" +
-                                "<TimeLimit type=" + "\"reg_dword\"" + ">{5}</TimeLimit>" +
-                                "<UseFlowAnalysis type=" + "\"reg_dword\"" + ">{6}</UseFlowAnalysis>" +
-                                "<GlobalEpidemyCompCount type=" + "\"reg_dword\"" + ">{7}</GlobalEpidemyCompCount>" +
-                                "<ReRead type=" + "\"reg_dword\"" + ">1</ReRead>",
-                                cboxUseFlowAnalysis.Checked ? tboxLocalHearthTimeLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? tboxLocalHearthLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyTimeLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? tboxLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? tboxTimeLimit.Text : "10",
-                                cboxUseFlowAnalysis.Checked ? "1" : "0",
-                                cboxUseFlowAnalysis.Checked ? tboxGlobalEpidemyCompCount.Text : "10");
-
-
-                builder.Append("</Notification></ControlCenter></VbaSettings>");
-
-                retVal = remoteObject.ChangeRegistry(builder.ToString());
+                retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
             }
-            catch (Exception ex)
+            catch
             {
-                throw new InvalidOperationException("FlowSave: " +
-                    ex.Message + " " + Resources.Resource.Vba32SSUnavailable);
+                throw new InvalidOperationException(Resources.Resource.Vba32SSUnavailable);
             }
 
             if (!retVal)
@@ -503,8 +450,21 @@ public partial class Notification : PageBase
 
     protected void lbtnSaveAll_Click(Object sender, EventArgs e)
     {
-        lbtnFlowSave_Click(sender, e);
-        lbtnJabberSave_Click(sender, e);
-        lbtnSaveRegistry_Click(sender, e);
+        String message = Resources.Resource.SuccessStatus;
+        try
+        {
+            lbtnFlowSave_Click(sender, e);
+            lbtnJabberSave_Click(sender, e);
+            lbtnSaveRegistry_Click(sender, e);
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        }
+
+        String key = "SaveNSSettingsCallbackScript";
+        String script = "alert('" + message + "');";
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);
     }
 }

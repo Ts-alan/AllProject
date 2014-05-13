@@ -3123,9 +3123,6 @@ public partial class Computers : PageBase
         Response.Redirect("PoliciesPage.aspx?Mode=Create");
     }
 
-
-
-
     protected void lbtnApplyPolicyToComps_Click(object sender, EventArgs e)
     {
         //get selected policy name
@@ -3208,37 +3205,10 @@ public partial class Computers : PageBase
         UpdateData();
     }
 
-
-    private string GetDefaultPolicyNameFromRegistry()
-    {
-        string registryControlCenterKeyName;
-        RegistryKey key;
-        try
-        {
-            //!-OPTM Вынести такую проверку в App_Code и юзать один код
-            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-            else
-                registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
-            key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName); ;
-
-        }
-        catch
-        {
-            return String.Empty;
-            //throw new ArgumentException("Registry open 'ControlCenter' key error: " + ex.Message);
-        }
-       
-       return (string)key.GetValue("DefaultPolicy");
-
-    }
-
-
     private void InitDefaultPolicy()
     {
         string url = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/";
-        string defaultPolicy = GetDefaultPolicyNameFromRegistry();
+        string defaultPolicy = VirusBlokAda.CC.Settings.SettingsProvider.GetDefaultPolicy();
         if (ddlPolicyName.SelectedItem != null)
         {
             if ((String.IsNullOrEmpty(defaultPolicy)) || (defaultPolicy != ddlPolicyName.SelectedItem.Text))
@@ -3251,8 +3221,7 @@ public partial class Computers : PageBase
             imbtnIsDefaultPolicy.Visible = false;
         }     
     }
-
-
+    
     /// <summary>
     /// Говнокод
     /// </summary>
@@ -3260,21 +3229,20 @@ public partial class Computers : PageBase
     /// <param name="e"></param>
     protected void imbtnIsDefaultPolicy_Click(object sender, ImageClickEventArgs e)
     {
-        bool retVal = true;
-        
-        string currentDefaultPolicy =  GetDefaultPolicyNameFromRegistry();
+        Boolean retVal = true;
 
-        string newDefaultPolicyName = 
+        String currentDefaultPolicy = VirusBlokAda.CC.Settings.SettingsProvider.GetDefaultPolicy();
+
+        String newDefaultPolicyName = 
             currentDefaultPolicy == ddlPolicyName.SelectedItem.Text ? "" : ddlPolicyName.SelectedItem.Text;
-
-
+        
         try
         {
             IVba32Settings remoteObject = (IVba32Settings)Activator.GetObject(
                        typeof(IVba32Settings),
                        ConfigurationManager.AppSettings["Vba32SS"]);
 
-            string xml = String.Format("<VbaSettings><ControlCenter>" +
+            String xml = String.Format("<VbaSettings><ControlCenter>" +
                 "<DefaultPolicy type=" + "\"reg_sz\"" + ">{0}</DefaultPolicy>" +
                 "</ControlCenter></VbaSettings>", newDefaultPolicyName);
 
@@ -3305,9 +3273,4 @@ public partial class Computers : PageBase
     }
 
     #endregion
-
-
-
-
-    
 }

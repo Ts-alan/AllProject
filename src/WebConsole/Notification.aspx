@@ -460,11 +460,15 @@
         </table>
     </div>
     
-    <asp:LinkButton ID="lbtnSaveAll" runat="server" OnClientClick="return SaveAll();" OnClick="lbtnSaveAll_Click" 
-    CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-    style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 100px;" >
-        <%=Resources.Resource.Save%>
-    </asp:LinkButton>
+    <asp:UpdatePanel runat="server" ID="upnlSave">
+    <ContentTemplate>
+        <asp:LinkButton ID="lbtnSaveAll" runat="server" OnClientClick="return SaveAll();" OnClick="lbtnSaveAll_Click" 
+        CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+        style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 100px;" >
+            <%=Resources.Resource.Save%>
+        </asp:LinkButton>
+    </ContentTemplate>
+    </asp:UpdatePanel>
 
 </div>
 

@@ -138,5 +138,52 @@ namespace VirusBlokAda.CC.Settings.Entities
         public NSSettingsEntity() { }
 
         #endregion
+
+        #region Methods
+
+        public String GenerateXML()
+        {
+            StringBuilder xml = new StringBuilder(1024);
+            xml.Append("<VbaSettings><ControlCenter><Notification>");
+
+            if(!String.IsNullOrEmpty(MailServer))
+                xml.AppendFormat("<MailServer type=" + "\"reg_sz\"" + ">{0}</MailServer>", MailServer);
+            if (!String.IsNullOrEmpty(MailFrom))
+                xml.AppendFormat("<MailFrom type=" + "\"reg_sz\"" + ">{0}</MailFrom>", MailFrom);
+            if (!String.IsNullOrEmpty(MailDisplayName))
+                xml.AppendFormat("<MailDisplayName type=" + "\"reg_sz\"" + ">{0}</MailDisplayName>", MailDisplayName);
+
+            if (!String.IsNullOrEmpty(JabberServer))
+                xml.AppendFormat("<JabberServer type=" + "\"reg_sz\"" + ">{0}</JabberServer>", JabberServer);
+            if (!String.IsNullOrEmpty(JabberFromJID))
+                xml.AppendFormat("<JabberFromJID type=" + "\"reg_sz\"" + ">{0}</JabberFromJID>", JabberFromJID);
+            if (!String.IsNullOrEmpty(JabberPassword))
+                xml.AppendFormat("<JabberPassword type=" + "\"reg_sz\"" + ">{0}</JabberPassword>", JabberPassword);
+
+            if (LocalHearthTimeLimit.HasValue)
+                xml.AppendFormat("<LocalHearthTimeLimit type=" + "\"reg_dword\"" + ">{0}</LocalHearthTimeLimit>", LocalHearthTimeLimit);
+            if (LocalHearthLimit.HasValue)
+                xml.AppendFormat("<LocalHearthLimit type=" + "\"reg_dword\"" + ">{0}</LocalHearthLimit>", LocalHearthLimit);
+            if (GlobalEpidemyTimeLimit.HasValue)
+                xml.AppendFormat("<GlobalEpidemyTimeLimit type=" + "\"reg_dword\"" + ">{0}</GlobalEpidemyTimeLimit>", GlobalEpidemyTimeLimit);
+            if (GlobalEpidemyLimit.HasValue)
+                xml.AppendFormat("<GlobalEpidemyLimit type=" + "\"reg_dword\"" + ">{0}</GlobalEpidemyLimit>", GlobalEpidemyLimit);
+            if (Limit.HasValue)
+                xml.AppendFormat("<Limit type=" + "\"reg_dword\"" + ">{0}</Limit>", Limit);
+            if (TimeLimit.HasValue)
+                xml.AppendFormat("<TimeLimit type=" + "\"reg_dword\"" + ">{0}</TimeLimit>", TimeLimit);
+            if (UseFlowAnalysis.HasValue)
+                xml.AppendFormat("<UseFlowAnalysis type=" + "\"reg_dword\"" + ">{0}</UseFlowAnalysis>", UseFlowAnalysis);
+            if (GlobalEpidemyCompCount.HasValue)
+                xml.AppendFormat("<GlobalEpidemyCompCount type=" + "\"reg_dword\"" + ">{0}</GlobalEpidemyCompCount>", GlobalEpidemyCompCount);
+            
+            xml.AppendFormat("<ReRead type=" + "\"reg_dword\"" + ">{0}</ReRead>", ReRead ? "1" : "0");
+
+            xml.Append("</Notification></ControlCenter></VbaSettings>");
+
+            return xml.ToString();
+        }
+
+        #endregion
     }
 }

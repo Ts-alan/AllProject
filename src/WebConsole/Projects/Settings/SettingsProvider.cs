@@ -134,6 +134,28 @@ namespace VirusBlokAda.CC.Settings
             }
         }
 
+        public static String GetDefaultPolicy()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(RegistryControlCenterKeyName);
+                    return GetString(key, "DefaultPolicy");
+                }
+                catch
+                {
+                    return String.Empty;
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
         public static PMSSettingsEntity GetPMSSettings()
         {
             lock (lockToken)
@@ -219,6 +241,15 @@ namespace VirusBlokAda.CC.Settings
                 ent.MailServer = GetString(key, "MailServer");
                 ent.MailFrom = GetString(key, "MailFrom");
                 ent.MailDisplayName = GetString(key, "MailDisplayName");
+
+                ent.GlobalEpidemyLimit=GetNumber(key,"GlobalEpidemyLimit");
+                ent.GlobalEpidemyTimeLimit=GetNumber(key,"GlobalEpidemyTimeLimit");
+                ent.GlobalEpidemyCompCount=GetNumber(key,"GlobalEpidemyCompCount");
+                ent.LocalHearthLimit=GetNumber(key,"LocalHearthLimit");
+                ent.LocalHearthTimeLimit=GetNumber(key,"LocalHearthTimeLimit");
+                ent.Limit=GetNumber(key,"Limit");
+                ent.TimeLimit=GetNumber(key,"TimeLimit");
+                ent.UseFlowAnalysis=GetNumber(key,"UseFlowAnalysis");
                 
                 ent.ReRead = GetBoolean(key, "ReRead");
 
