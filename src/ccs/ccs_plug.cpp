@@ -108,8 +108,8 @@ bool CCPlug::Install(const SetupParams& param)
     Param cur_version_param(L"OldVersion", NormalParam);
     if(!settings->GetParameter(__uuidof(VBA_CC), cur_version_param))
     {
-        LOG_ERROR() % L"Fail to get OldVersion";
-        return false;
+        LOG_WARN() % L"OldVersion Not Finded";
+        return true;
     }
     settings->DelParameter(__uuidof(VBA_CC), cur_version_param);
 

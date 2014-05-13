@@ -32,6 +32,9 @@ public:
 
     virtual bool GetRealizedInterfaces(InterfacesList& interfaces)
     {
+        interfaces.push_back(__uuidof(ISetup));
+        interfaces.push_back(__uuidof(upd::IUpdateSetup));
+        interfaces.push_back(__uuidof(plug::IPlug));
         return true;
     }
 
