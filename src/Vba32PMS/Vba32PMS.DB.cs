@@ -42,34 +42,6 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         }
 
         /// <summary>
-        /// Генерирует строку подключения к базе данных
-        /// </summary>
-        /// <param name="server">Сервер БД</param>
-        /// <param name="user">Пользователь БД</param>
-        /// <param name="password">Пароль пользователя</param>
-        /// <returns>Строка подключения</returns>
-        private String GenerateConnectionString(String server, String user, String password)
-        {
-            String str = String.Empty;
-            try
-            {
-                SqlConnectionStringBuilder connStr = new SqlConnectionStringBuilder();
-                connStr.UserID = user;
-                connStr.Password = password;
-                connStr.DataSource = server;
-                connStr.PersistSecurityInfo = false;
-                connStr.InitialCatalog = "vbaControlCenterDB";
-                str = connStr.ConnectionString;
-            
-            }
-            catch (Exception ex)
-            {
-                LoggerPMS.log.Error("Vba32PMS.GenerateConnectionString():: " + ex.Message);
-            }
-            return str;
-        }
-
-        /// <summary>
         /// Меняет статус задачи c Delivery на DeliveryTimeout
         /// </summary>
         /// <param name="connStr">Строка подключения</param>
@@ -112,7 +84,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             DateTime dtTo = DateTime.Now;
             try
             {
-                Int32 tmp = 0 - daysToDelete;
+                Int32 tmp = 0 - settingsPMS.DaysToDelete.Value;
                 dtTo = dtTo.AddDays(tmp);
             }
             catch (Exception ex)
@@ -147,7 +119,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             DateTime dtTo = DateTime.Now;
             try
             {
-                Int32 tmp = 0 - taskDaysToDelete;
+                Int32 tmp = 0 - settingsPMS.TaskDaysToDelete.Value;
                 dtTo = dtTo.AddDays(tmp);
             }
             catch (Exception ex)
@@ -179,7 +151,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             DateTime dtTo = DateTime.Now;
             try
             {                
-                Int32 tmp = 0 - compDaysToDelete;
+                Int32 tmp = 0 - settingsPMS.ComputerDaysToDelete.Value;
                 dtTo = dtTo.AddDays(tmp);
             }
             catch (Exception ex)

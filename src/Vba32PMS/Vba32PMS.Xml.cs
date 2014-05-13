@@ -25,8 +25,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             {
                 LoggerPMS.log.Debug("Vba32PMS.DataBaseToXml::From database to xml file");
 
-                LoggerPMS.log.Debug("Last selection time: " + lastSelectDate);
-                DateTime dtFrom = lastSelectDate; //new DateTime(2008, 10, 01);
+                LoggerPMS.log.Debug("Last selection time: " + settingsPMS.LastSelectDate);
+                DateTime dtFrom = settingsPMS.LastSelectDate.Value;
                 DateTime dtTo = DateTime.Now;
                 LoggerPMS.log.Debug("Generate filter string");
                 String where = "Send = 1 " + PrimitiveFilterHelper.GenerateSqlForRangeDateTimeValue(dtFrom, dtTo, "EventTime", false, false);
@@ -42,7 +42,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 if (list.Count == 0)
                 {
                     LoggerPMS.log.Debug("No have items for saving. Exit");
-                    lastSelectDate = DateTime.Now;
+                    settingsPMS.LastSelectDate = DateTime.Now;
                     WriteSettingsToRegistry();
                     return true;
                 }
@@ -88,9 +88,9 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     list.RemoveRange(0, countToXml);
                 }
 
-                lastSelectDate = DateTime.Now;
+                settingsPMS.LastSelectDate = DateTime.Now;
                 WriteSettingsToRegistry();
-                LoggerPMS.log.Debug("Last selection time: " + lastSelectDate);
+                LoggerPMS.log.Debug("Last selection time: " + settingsPMS.LastSelectDate);
                 //LoggerPMS.log.Debug("Имя сгенерированного файла: " + GetFileNameToSave(1000));
             }
             catch(Exception ex)
@@ -117,8 +117,8 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 DirectoryInfo di = new DirectoryInfo(path);
                 foreach (FileInfo file in di.GetFiles(filePrefix + '*'))
                 {
-                    LoggerPMS.log.Debug("File is found: " + file.FullName + ". Size " + file.Length + ". Permissible size: " + maxFileLength);
-                    if (file.Length < maxFileLength)
+                    LoggerPMS.log.Debug("File is found: " + file.FullName + ". Size " + file.Length + ". Permissible size: " + settingsPMS.MaxFileLength);
+                    if (file.Length < settingsPMS.MaxFileLength)
                         return file.FullName;
                 }
 

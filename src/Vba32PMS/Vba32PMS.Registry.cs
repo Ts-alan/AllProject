@@ -9,6 +9,8 @@ using System.Globalization;
 using Microsoft.Win32;
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using VirusBlokAda.CC.Common;
+using VirusBlokAda.CC.Settings;
+using VirusBlokAda.CC.Settings.Entities;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {
@@ -27,219 +29,58 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             LoggerPMS.log.Info("Vba32PMS.ReadSettingsFromRegistry():: Try read settings from registry.");
             try
             {
+                LoggerPMS.log.Info("1. Read LogLevel settings.");
 
-                LoggerPMS.log.Info("1. Read settings from 'PeriodicalMaintenance'.");
+                LoggerPMS.Level = SettingsProvider.GetLogLevel();
+                LoggerPMS.log.Info("Log level: " + LoggerPMS.Level.ToString());
 
-                RegistryKey key =
-                    Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName);
-                if (key == null)
+                LoggerPMS.log.Info("2. Read settings from 'PeriodicalMaintenance'.");
+
+                settingsPMS = SettingsProvider.GetPMSSettings();
+                
+                LoggerPMS.log.Info("Get value 'Server': " + settingsPMS.Server);
+                LoggerPMS.log.Info("Get value 'Port': " + settingsPMS.Port);
+                LoggerPMS.log.Info("Get value 'MaxFileLength': " + settingsPMS.MaxFileLength);
+                LoggerPMS.log.Info("Get value 'LastSelectDate': " + settingsPMS.LastSelectDate);
+                LoggerPMS.log.Info("Get value 'LastSendDate': " + settingsPMS.LastSendDate);
+                LoggerPMS.log.Info("Get value 'NextSendDate': " + settingsPMS.NextSendDate);
+                LoggerPMS.log.Info("Get value 'DeliveryTimeoutCheck': " + settingsPMS.DeliveryTimeoutCheck);
+                LoggerPMS.log.Info("Get value 'DataSendInterval': " + settingsPMS.DataSendInterval);
+                LoggerPMS.log.Info("Get value 'DaysToDelete': " + settingsPMS.DaysToDelete);
+                LoggerPMS.log.Info("Get value 'TaskDaysToDelete': " + settingsPMS.TaskDaysToDelete);
+                LoggerPMS.log.Info("Get value 'ComputerDaysToDelete': " + settingsPMS.ComputerDaysToDelete);
+                LoggerPMS.log.Info("Get value 'HourIntervalToSend': " + settingsPMS.HourIntervalToSend);
+                LoggerPMS.log.Info("Periodically update state: " + (settingsPMS.MaintenanceEnabled ? "Allowed" : "Denied"));
+
+                if (settingsPMS.MaintenanceEnabled)
                 {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'ControlCenter'.");
-                    return false;
+                    if (String.IsNullOrEmpty(settingsPMS.Server))
+                        return false;
                 }
 
-                Object t_allowLog = key.GetValue("AllowLog");
-                if (t_allowLog == null)
-                {
-                    LoggerPMS.Level = LogLevel.Debug;
-                    LoggerPMS.log.Warning("Log level isn't set.");
-                }
-                else
-                {
-                    try
-                    {
-                        LoggerPMS.Level = (LogLevel)((Int32)t_allowLog);
-                        LoggerPMS.log.Info("Log level: " + LoggerPMS.Level.ToString());
-                    }
-                    catch
-                    {
-                        LoggerPMS.Level = LogLevel.Debug;
-                        LoggerPMS.log.Warning("Inadmissible log level.");
-                    }
-                }
-
-                LoggerPMS.log.LoggingLevel = LoggerPMS.Level;
-                key.Close();
-
-                key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
-                if (key == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'PeriodicalMaintenance'.");
-                    return false;
-                }
-
-                server = (String)key.GetValue("Server");
-                if (server == null)
-                {
-                    LoggerPMS.log.Error("Vba32PMS.ReadSettingsFromRegistry()::Can't get key 'Server'.");
-                    return false;
-                }
-                LoggerPMS.log.Info("Get value 'Server': " + server);
-
-                Object tmp = key.GetValue("Port");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'Port'.");
-                    return false;
-                }
-                else
-                    port = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'Port': " + port);
-
-                tmp = key.GetValue("MaxFileLength");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry()::Can't get key 'MaxFileLength'.");
-                    return false;
-                }
-                else
-                    maxFileLength = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'MaxFileLength': " + maxFileLength);
-
-                IFormatProvider culture = new CultureInfo("ru-RU");
-
-                lastSelectDate = Convert.ToDateTime(key.GetValue("LastSelectDate"), culture);
-                if ((lastSelectDate == null) || (lastSelectDate == DateTime.MinValue))
-                {
-                    LoggerPMS.log.Warning("No information about the last selection messages. Initialize default.");
-                    lastSelectDate = DateTime.Now;
-                }
-                LoggerPMS.log.Info("Get value 'LastSelectDate': " + lastSelectDate);
-
-
-                lastSendDate = Convert.ToDateTime(key.GetValue("LastSendDate"),culture);
-                if ((lastSendDate == null) || (lastSendDate == DateTime.MinValue))
-                {
-                    LoggerPMS.log.Warning("No information about the last sending messages. Initialize default.");
-                    lastSendDate = DateTime.Now;
-                }
-                LoggerPMS.log.Info("Get value 'LastSendDate': " + lastSendDate);
-
-                nextSendDate = Convert.ToDateTime(key.GetValue("NextSendDate"), culture);
-                if ((nextSendDate == null) || (nextSendDate == DateTime.MinValue))
-                {
-                    LoggerPMS.log.Warning("No information about the date of last sending messages. Initialize default.");
-                    nextSendDate = DateTime.Now;
-                }
-                LoggerPMS.log.Info("Get value 'NextSendDate': " + nextSendDate);
-
-
-                tmp = key.GetValue("DeliveryTimeoutCheck");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DeliveryTimeoutCheck'.");
-                    return false;
-                }
-                else
-                    deliveryTimeoutCheck = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'DeliveryTimeoutCheck': " + deliveryTimeoutCheck);
-
-                tmp = key.GetValue("DataSendInterval");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DataSendInterval'.");
-                    return false;
-                }
-                else
-                    dataSendInterval = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'DataSendInterval': " + dataSendInterval);
-
-
-                tmp = key.GetValue("DaysToDelete");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DaysToDelete'.");
-                    return false;
-                }
-                else
-                    daysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'DaysToDelete': " + daysToDelete);
-
-
-                tmp = key.GetValue("TaskDaysToDelete");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'TaskDaysToDelete'. Initialize default.");
-                    taskDaysToDelete = 180;
-                }
-                else
-                    taskDaysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'TaskDaysToDelete': " + taskDaysToDelete);
-
-                tmp = key.GetValue("ComputerDaysToDelete");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'ComputerDaysToDelete'. Initialize default.");
-                    compDaysToDelete = 0;
-                }
-                else
-                    compDaysToDelete = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'ComputerDaysToDelete': " + compDaysToDelete);
-
-                tmp = key.GetValue("HourIntervalToSend");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'HourIntervalToSend'. Initialize default.");
-                    hourIntervalToSend = 4;
-                }
-                else
-                    hourIntervalToSend = (Int32)tmp;
-                LoggerPMS.log.Info("Get value 'HourIntervalToSend': " + hourIntervalToSend);
-
-                tmp = key.GetValue("MaintenanceEnabled");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Warning("ReadSettingsFromRegistry():: Can't get key 'MaintenanceEnabled'. Initialize default.");
-                    maintenanceEnabled = true;
-                }
-                else
-                    maintenanceEnabled = Convert.ToBoolean(tmp);
-                LoggerPMS.log.Info("Periodically update state: " + (maintenanceEnabled ? "Allowed" : "Denied"));
-
-                key.Close();
-
-                LoggerPMS.log.Info("2. Read settings from DataBase");
-                key =
-                   Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\DataBase");
-
-                if (key == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't open registry key 'DataBase'.");
-                    return false;
-                }
-
-                String dataSource = (String)key.GetValue("DataSource");
-                if (dataSource == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'DataSource'.");
-                    return false;
-                }
-                LoggerPMS.log.Info("Get value 'DataSource': " + dataSource);
-
-                String userName = (String)key.GetValue("UserName");
-                if (userName == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'UserName'.");
-                    return false;
-                }
-                LoggerPMS.log.Info("Get value 'UserName': " + userName);
-
-                Byte[] passBytes = (Byte[])key.GetValue("Password");
-                if (passBytes == null)
-                {
-                    LoggerPMS.log.Error("ReadSettingsFromRegistry():: Can't get key 'Password'.");
-                    return false;
-                }
-                //Äורטפנףול ןאנמכü
-                Int32 length = passBytes.Length;
-                for (Int32 i = 0; i < length; ++i)
-                {
-                    passBytes[i] ^= 0x17;
-                }
-                String password = System.Text.Encoding.UTF8.GetString(passBytes);
-
-                LoggerPMS.log.Info("Generate connection string.");
-                connectionString = GenerateConnectionString(dataSource, userName, password);
+                if (!settingsPMS.MaxFileLength.HasValue)
+                    settingsPMS.MaxFileLength = 8000666;
+                if (!settingsPMS.LastSelectDate.HasValue)
+                    settingsPMS.LastSelectDate = DateTime.Now;
+                if (!settingsPMS.LastSendDate.HasValue)
+                    settingsPMS.LastSendDate = DateTime.Now;
+                if (!settingsPMS.NextSendDate.HasValue)
+                    settingsPMS.NextSendDate = DateTime.Now;
+                if (!settingsPMS.HourIntervalToSend.HasValue)
+                    settingsPMS.HourIntervalToSend = 4;
+                if (!settingsPMS.ComputerDaysToDelete.HasValue)
+                    settingsPMS.ComputerDaysToDelete = 0;
+                if (!settingsPMS.TaskDaysToDelete.HasValue)
+                    settingsPMS.TaskDaysToDelete = 180;
+                if (!settingsPMS.DaysToDelete.HasValue)
+                    settingsPMS.DaysToDelete = 180;
+                if (!settingsPMS.DeliveryTimeoutCheck.HasValue)
+                    settingsPMS.DeliveryTimeoutCheck = 60;
+                if (!settingsPMS.Port.HasValue)
+                    settingsPMS.Port = 17001;
+                
+                LoggerPMS.log.Info("3. Read settings from DataBase");
+                connectionString = SettingsProvider.GetConnectionString();
             }
             catch (Exception ex)
             {
@@ -257,15 +98,13 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             LoggerPMS.log.Debug("Vba32PMS.WriteSettingsToRegistry():: Try write settings to registry.");
             try
             {
-                RegistryKey key =
-                   Registry.LocalMachine.CreateSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
+                PMSSettingsEntity ent = new PMSSettingsEntity();
+                ent.LastSelectDate = settingsPMS.LastSelectDate;
+                ent.LastSendDate = settingsPMS.LastSendDate;
+                ent.NextSendDate = settingsPMS.NextSendDate;
+                ent.MaintenanceEnabled = settingsPMS.MaintenanceEnabled;
 
-                IFormatProvider culture = new CultureInfo("ru-RU");
-
-                key.SetValue("LastSelectDate", lastSelectDate.ToString(culture), RegistryValueKind.String);
-                key.SetValue("LastSendDate", lastSendDate.ToString(culture), RegistryValueKind.String);
-                key.SetValue("NextSendDate", nextSendDate.ToString(culture), RegistryValueKind.String);
-             
+                SettingsProvider.WriteSettings(ent.GenerateXML());
             }
             catch (Exception ex)
             {
@@ -283,29 +122,15 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
         private Boolean IsReRead()
         {
             LoggerPMS.log.Debug("Vba32PMS.IsReRead():: Enter");
-            Int32 isReRead = 0;
             try
             {
-                RegistryKey key =
-                        Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
-
-                Object tmp = key.GetValue("ReRead");
-                if (tmp == null)
-                {
-                    LoggerPMS.log.Warning("Vba32NS.IsReRead():: Can't get key 'ReRead'.");
-                    return false;
-                }
-                else
-                    isReRead = (int)tmp;
-
-                key.Close();
+                return SettingsProvider.GetReRead_PMS();
             }
             catch (Exception ex)
             {
                 LoggerPMS.log.Error("Vba32PMS.IsReRead()::" + ex.Message);
                 return false;
             }
-            return (isReRead > 0 ? true : false);
         }
 
         /// <summary>
@@ -317,10 +142,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             LoggerPMS.log.Debug("Vba32PMS.SkipReRead():: Enter");
             try
             {
-                RegistryKey key =
-                           Registry.LocalMachine.CreateSubKey(registryControlCenterKeyName + "\\PeriodicalMaintenance");
-
-                key.DeleteValue("Reread");
+                SettingsProvider.SkipReRead_PMS();                
             }
             catch (Exception ex)
             {

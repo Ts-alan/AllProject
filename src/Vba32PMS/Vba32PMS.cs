@@ -12,6 +12,7 @@ using System.IO;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using VirusBlokAda.CC.Common;
+using VirusBlokAda.CC.Settings.Entities;
 
 namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 {
@@ -24,27 +25,10 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
 
         #region Variables
         private Boolean isShutdown = false;
-        private Boolean maintenanceEnabled = true;
+        private PMSSettingsEntity settingsPMS;
         private String connectionString = String.Empty; //строка подключения
-        private String path;                            //путь к файлам
-        private String server;                          //вышестоящий сервер
-        private Int32 port=666;                           //порт
-        private Int32 maxFileLength=8000666;              //максимальный размер файлов с событиями(впрочем, при большой выборке он может быть больше)
+        private String path;                            //путь к файлам        
         private String filePrefix = "ETS-";             //префикс файлов
-
-
-        private DateTime lastSelectDate;                //время последней выборки
-        private DateTime lastSendDate;                  //время последней успешной отсылки данных
-        private DateTime nextSendDate;                  //время отсылки по расписанию 
-
-        private Int32 deliveryTimeoutCheck=30;            //интервал опроса
-        private Int32 dataSendInterval = 66;              //интервал отсылки сообщений
-        private Int32 daysToDelete = 66;
-        private Int32 taskDaysToDelete = 66;
-        private Int32 compDaysToDelete = 0;        
-        private Int32 hourIntervalToSend = 4;             //интервал отсылки сообщений в часах
-
-        private String registryControlCenterKeyName;     //путь к настройкам центра управления 
         private String machineName;                     //Имя компа. Под этим именем присылаются на родительский центр события
         private String ipAddress = String.Empty;        //IP адрес в пакет SystemInfo
         
@@ -57,12 +41,6 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             InitializeComponent();
             try
             {
-                //Проверка на битность ОС
-                if (Marshal.SizeOf(typeof(IntPtr)) == 8)
-                    registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-                else
-                    registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
                 path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName)+"\\";
                                 
                 path += "PMSDeferredEvents\\";
@@ -83,10 +61,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 machineName = Environment.MachineName;
                 ipAddress = GetIP(machineName);
 
-                //Выведем инфу в лог
-                StringBuilder builder = new StringBuilder(128);
-                builder.AppendFormat("NetBIOS name: {0}, IP-address: {1}", machineName, ipAddress);
-                LoggerPMS.log.Info(builder.ToString());
+                LoggerPMS.log.Info(String.Format("NetBIOS name: {0}, IP-address: {1}", machineName, ipAddress));
 
                 if (!ReadSettingsFromRegistry())
                 {
@@ -94,7 +69,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     return;
                 }
 
-                delay = new TimeSpan(0, 0, deliveryTimeoutCheck);
+                delay = new TimeSpan(0, 0, settingsPMS.DeliveryTimeoutCheck.Value);
 
                 ThreadStart ts = new ThreadStart(this.ServiceMain);
                 shutdownEvent = new ManualResetEvent(false);
@@ -170,11 +145,11 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 else
                     return false;
 
-                if (maintenanceEnabled)
+                if (settingsPMS.MaintenanceEnabled)
                 {
                     LoggerPMS.log.Debug("2. Check the send events necessity. ");
-                    LoggerPMS.log.Debug("DateTime.Now=" + DateTime.Now + " nextSendDate=" + nextSendDate);
-                    if (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
+                    LoggerPMS.log.Debug("DateTime.Now=" + DateTime.Now + " nextSendDate=" + settingsPMS.NextSendDate);
+                    if (DateTime.Compare(DateTime.Now, settingsPMS.NextSendDate.Value) == 1)
                     {
                         LoggerPMS.log.Debug("Need to send events.");
                         if (!DataBaseToXml())
@@ -186,24 +161,24 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                             else
                             {
                                 LoggerPMS.log.Debug("Need to change the next sending date.");
-                                while (DateTime.Compare(DateTime.Now, nextSendDate) == 1)
+                                while (DateTime.Compare(DateTime.Now, settingsPMS.NextSendDate.Value) == 1)
                                 {
-                                    switch (dataSendInterval)
+                                    switch (settingsPMS.DataSendInterval.Value)
                                     {
                                         case 0:
-                                            nextSendDate = nextSendDate.AddDays(1);
+                                            settingsPMS.NextSendDate = settingsPMS.NextSendDate.Value.AddDays(1);
                                             break;
                                         case 1:
-                                            nextSendDate = nextSendDate.AddDays(7);
+                                            settingsPMS.NextSendDate = settingsPMS.NextSendDate.Value.AddDays(7);
                                             break;
                                         case 2:
-                                            nextSendDate = nextSendDate.AddMonths(1);
+                                            settingsPMS.NextSendDate = settingsPMS.NextSendDate.Value.AddMonths(1);
                                             break;
                                         case 3:
-                                            nextSendDate = nextSendDate.AddHours(hourIntervalToSend);
+                                            settingsPMS.NextSendDate = settingsPMS.NextSendDate.Value.AddHours(settingsPMS.HourIntervalToSend.Value);
                                             break;
                                         default:
-                                            nextSendDate = nextSendDate.AddDays(1);
+                                            settingsPMS.NextSendDate = settingsPMS.NextSendDate.Value.AddDays(1);
                                             break;
                                     }
                                 }

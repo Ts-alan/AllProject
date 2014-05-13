@@ -31,6 +31,75 @@ namespace VirusBlokAda.CC.Settings
 
         #region Methods
 
+        #region ConnectionString
+
+        /// <summary>
+        /// Get connectionString
+        /// </summary>
+        /// <returns></returns>
+        public static String GetConnectionString()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(DBKeyName);
+                    return GenerateConnectionString(ReadServerName(key), ReadUserName(key), ReadPassword(key));
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Генерирует строку подключения к базе данных
+        /// </summary>
+        /// <param name="server">Сервер БД</param>
+        /// <param name="user">Пользователь БД</param>
+        /// <param name="password">Пароль пользователя</param>
+        /// <returns>Строка подключения</returns>
+        private static String GenerateConnectionString(String server, String user, String password)
+        {
+            System.Data.SqlClient.SqlConnectionStringBuilder connStr = new System.Data.SqlClient.SqlConnectionStringBuilder();
+            connStr.UserID = user;
+            connStr.Password = password;
+            connStr.DataSource = server;
+            connStr.PersistSecurityInfo = false;
+            connStr.InitialCatalog = "vbaControlCenterDB";
+            return connStr.ConnectionString;
+        }
+
+        private static String DecryptBinaryToString(Byte[] data)
+        {
+            Int32 buffer_length = data.Length;
+            for (Int32 i = 0; i < buffer_length; ++i)
+            {
+                data[i] ^= 0x17;
+            }
+            return System.Text.Encoding.UTF8.GetString(data);
+        }
+
+        private static String ReadServerName(RegistryKey key)
+        {
+            return GetString(key, "DataSource");
+        }
+
+        private static String ReadUserName(RegistryKey key)
+        {
+            return GetString(key, "UserName");
+        }
+
+        private static String ReadPassword(RegistryKey key)
+        {
+            return DecryptBinaryToString(GetBinary(key, "Password"));
+        }
+
+        #endregion
+
         /// <summary>
         /// Считывает настройки уровня логгирования
         /// </summary>
@@ -98,11 +167,52 @@ namespace VirusBlokAda.CC.Settings
             }
         }
 
+        public static Boolean GetReRead_PMS()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(PMSKeyName);
+                    return GetBoolean(key, "ReRead");
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
+        public static void SkipReRead_PMS()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(PMSKeyName);
+                    key.DeleteValue("Reread");
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
         #region Reading registry data
 
         private static String GetString(RegistryKey key, String name)
         {
             return (String)key.GetValue(name);
+        }
+
+        private static Byte[] GetBinary(RegistryKey key, String name)
+        {
+            return (Byte[])key.GetValue(name);
         }
 
         private static DateTime? GetDateTime(RegistryKey key, String name)

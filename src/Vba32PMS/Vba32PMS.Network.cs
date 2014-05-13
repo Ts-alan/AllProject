@@ -114,7 +114,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     }
 
                     LoggerPMS.log.Debug("Sending...");
-                    String dataSend = EventsSender.SocketSendReceive(server, port, packet);
+                    String dataSend = EventsSender.SocketSendReceive(settingsPMS.Server, settingsPMS.Port.Value, packet);
 
                     if (dataSend != "OK")
                     {
@@ -124,7 +124,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                     else
                     {
                         LoggerPMS.log.Debug("Sended. Saving the latest successful sending date.");
-                        lastSendDate = DateTime.Now;
+                        settingsPMS.LastSendDate = DateTime.Now;
                         WriteSettingsToRegistry();
                     }
 
@@ -184,7 +184,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
                 build.AppendFormat("<SystemInfo><ComputerName>{0}</ComputerName><IPAddress>{1}</IPAddress><ControlCenter>true</ControlCenter></SystemInfo>",
                                     machineName, ipAddress);
                 
-                String dataSend = EventsSender.SocketSendReceive(server, port, build.ToString());
+                String dataSend = EventsSender.SocketSendReceive(settingsPMS.Server, settingsPMS.Port.Value, build.ToString());
                 if (dataSend != "OK")
                 {
                     LoggerPMS.log.Debug("Vba32PMS.SendSystemInfo():: dataSend=" + dataSend);

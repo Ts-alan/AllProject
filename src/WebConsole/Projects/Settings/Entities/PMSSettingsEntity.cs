@@ -24,7 +24,7 @@ namespace VirusBlokAda.CC.Settings.Entities
         private DateTime? _LastSendDate = null;
         private DateTime? _NextSendDate = null;
         
-        private Boolean _ReRead;
+        private Boolean _ReRead = false;
         
         #endregion
 
@@ -142,7 +142,8 @@ namespace VirusBlokAda.CC.Settings.Entities
 
             if (MaintenanceEnabled)
             {
-                xml.AppendFormat("<Server type=" + "\"reg_sz\"" + ">{0}</Server>", Server);
+                if (!String.IsNullOrEmpty(Server))
+                    xml.AppendFormat("<Server type=" + "\"reg_sz\"" + ">{0}</Server>", Server);
 
                 if (HourIntervalToSend.HasValue)
                     xml.AppendFormat("<HourIntervalToSend type=" + "\"reg_dword\"" + ">{0}</HourIntervalToSend>", HourIntervalToSend);

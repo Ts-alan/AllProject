@@ -130,6 +130,10 @@
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebConsole\Projects\Settings\Settings.csproj">
+      <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebConsole\Projects\Tasks\Tasks.csproj">
       <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
       <Name>Tasks</Name>
