@@ -8,11 +8,11 @@ namespace Vba32.ControlCenter.NotificationService.Notification
     {
         #region Variables
         
-        private string eventName = String.Empty;
-        private bool isNotify = false;
-        private NotifyTypeAddrList netSend = new NotifyTypeAddrList(NotifyType.NetSend, false, new List<string>(), String.Empty, "net send message");
-        private NotifyTypeAddrList jabber = new NotifyTypeAddrList(NotifyType.Jabber, false, new List<string>(), String.Empty,"jabber message");
-        private NotifyTypeAddrList mail = new NotifyTypeAddrList(NotifyType.Mail, false, new List<string>(), "Event", "mail message");
+        private String eventName = String.Empty;
+        private Boolean isNotify = false;
+        private NotifyTypeAddrList netSend = new NotifyTypeAddrList(NotifyType.NetSend, false, new List<String>(), String.Empty, "net send message");
+        private NotifyTypeAddrList jabber = new NotifyTypeAddrList(NotifyType.Jabber, false, new List<String>(), String.Empty,"jabber message");
+        private NotifyTypeAddrList mail = new NotifyTypeAddrList(NotifyType.Mail, false, new List<String>(), "Event", "mail message");
         
         #endregion
 
@@ -21,7 +21,7 @@ namespace Vba32.ControlCenter.NotificationService.Notification
 
         }
 
-        public NotifyEvent(string eventName, bool isNotify, NotifyTypeAddrList netSend,
+        public NotifyEvent(String eventName, Boolean isNotify, NotifyTypeAddrList netSend,
             NotifyTypeAddrList jabber, NotifyTypeAddrList mail)
         {
             this.eventName = eventName;
@@ -32,13 +32,13 @@ namespace Vba32.ControlCenter.NotificationService.Notification
         }
 
         #region Property
-        public string EventName
+        public String EventName
         {
             get { return this.eventName; }
             set { this.eventName = value; }
         }
 
-        public bool IsNotify
+        public Boolean IsNotify
         {
             get { return this.isNotify; }
             set { this.isNotify = value; }

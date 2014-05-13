@@ -15,10 +15,10 @@ namespace Vba32.ControlCenter.NotificationService.Network
     public class SMTPMessage
     {
         private ManualResetEvent onEvent = new ManualResetEvent(false);
-        static bool mailSent = true;
+        static Boolean mailSent = true;
 
-        public bool Send(string server, string fromMail,string displayName,
-            string toMail, string  subject, string body, MailPriority priority)
+        public Boolean Send(String server, String fromMail,String displayName,
+            String toMail, String  subject, String body, MailPriority priority)
         {
             LoggerNS.log.Info("SMTPMessage.Send():: Started ");
 
@@ -45,7 +45,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
                 mailSent = true;
             }
 
-            string userState = "Successfully";
+            String userState = "Successfully";
             client.SendAsync(message, userState);
 
             if(!onEvent.WaitOne(TimeSpan.FromSeconds(6),false))
@@ -60,7 +60,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
         {
             LoggerNS.log.Info("SMTPMessage.SendCompletedCallback():: Started ");
             // Get the unique identifier for this asynchronous operation.
-            String token = (string)e.UserState;
+            String token = (String)e.UserState;
 
             if (e.Error != null)
             {

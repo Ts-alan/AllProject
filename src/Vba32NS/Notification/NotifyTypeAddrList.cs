@@ -10,20 +10,20 @@ namespace Vba32.ControlCenter.NotificationService.Notification
     public class NotifyTypeAddrList
     {
         private NotifyType type = NotifyType.NetSend;          //тип уведомления
-        private bool isUse = false;
-        private List<string> addrList = new List<string>();    //список адресов
+        private Boolean isUse = false;
+        private List<String> addrList = new List<String>();    //список адресов
 
-        private int priority = 0;                               //приоритет уведомления
+        private Int32 priority = 0;                               //приоритет уведомления
 
-        private string subject = String.Empty;
-        private string message = String.Empty;
+        private String subject = String.Empty;
+        private String message = String.Empty;
 
         #region Constructors    
         public NotifyTypeAddrList()
         {
         }
 
-        public NotifyTypeAddrList(NotifyType type, bool isUse, List<string> addrList, string message)
+        public NotifyTypeAddrList(NotifyType type, Boolean isUse, List<String> addrList, String message)
         {
             this.type = type;
             this.isUse = isUse;
@@ -31,7 +31,7 @@ namespace Vba32.ControlCenter.NotificationService.Notification
             this.message = message;
         }
 
-        public NotifyTypeAddrList(NotifyType type, bool isUse, List<string> addrList, string subject, string message)
+        public NotifyTypeAddrList(NotifyType type, Boolean isUse, List<String> addrList, String subject, String message)
         {
             this.type = type;
             this.isUse = isUse;
@@ -40,7 +40,7 @@ namespace Vba32.ControlCenter.NotificationService.Notification
             this.message = message;
         }
 
-        public NotifyTypeAddrList(NotifyType type, bool isUse, List<string> addrList, string subject, string message, int priority)
+        public NotifyTypeAddrList(NotifyType type, Boolean isUse, List<String> addrList, String subject, String message, Int32 priority)
         {
             this.type = type;
             this.isUse = isUse;
@@ -60,30 +60,30 @@ namespace Vba32.ControlCenter.NotificationService.Notification
             //set { this.type = value; }
         }
 
-        public bool IsUse
+        public Boolean IsUse
         {
             get { return this.isUse; }
             set { this.isUse = value; }
         }
 
-        public List<string> AddrList
+        public List<String> AddrList
         {
             get { return this.addrList; }
             set { this.addrList = value; }
         }
 
-        public string Subject
+        public String Subject
         {
             get { return this.subject; }
             set { this.subject = value; }
         }
 
-        public string Message
+        public String Message
         {
             get { return this.message; }
             set { this.message = value; }
         }
-        public int Priority
+        public Int32 Priority
         {
             get { return this.priority; }
             set { this.priority = value; }

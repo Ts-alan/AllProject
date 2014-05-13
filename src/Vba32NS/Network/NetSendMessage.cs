@@ -8,7 +8,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
 {
     public static class NetSendMessage
     {
-        public static bool Send(string toAddr, string message)
+        public static Boolean Send(String toAddr, String message)
         {
             LoggerNS.log.Info("NetSendMessage.Send():: Started ");
             try

@@ -11,23 +11,23 @@ namespace Vba32.ControlCenter.NotificationService.Network
     {
         #region Property
 
-        private string server;
+        private String server;
 
-        public string Server
+        public String Server
         {
             get { return server; }
             set { server = value; }
         }
-        private string fromJID;
+        private String fromJID;
 
-        public string FromJID
+        public String FromJID
         {
             get { return fromJID; }
             set { fromJID = value; }
         }
-        private string password;
+        private String password;
 
-        public string Password
+        public String Password
         {
             get { return password; }
             set { password = value; }
@@ -36,12 +36,12 @@ namespace Vba32.ControlCenter.NotificationService.Network
         #endregion
 
         public abstract void OpenConnection();
-        public abstract void OpenConnection(string server, string fromJID, string password);
-        public abstract bool CheckConnectionState();
+        public abstract void OpenConnection(String server, String fromJID, String password);
+        public abstract Boolean CheckConnectionState();
         public abstract void CloseConnection();
-        public abstract void Send(string toJID, string message);
+        public abstract void Send(String toJID, String message);
 
-        public bool IsNeedReconnect(string server, string jid, string password)
+        public Boolean IsNeedReconnect(String server, String jid, String password)
         {
             return !((Server == server) && (FromJID == jid) && (Password == password));
         }

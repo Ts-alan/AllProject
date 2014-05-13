@@ -17,9 +17,9 @@ namespace Vba32.ControlCenter.NotificationService.Notification
         /// <param name="message">событие</param>
         /// <param name="template">шаблон</param>
         /// <returns></returns>
-        public static string BuildBody(StringDictionary message, string template)
+        public static String BuildBody(StringDictionary message, String template)
         {
-            string tmp = template.Replace("{Computer}", message["Computer"]);
+            String tmp = template.Replace("{Computer}", message["Computer"]);
             tmp = tmp.Replace("{EventName}", message["EventName"]);
             tmp = tmp.Replace("{EventTime}", message["EventTime"]);
             tmp = tmp.Replace("{Component}", message["Component"]);
@@ -36,7 +36,7 @@ namespace Vba32.ControlCenter.NotificationService.Notification
         /// <param name="message">Событие</param>
         /// <param name="template">Шаблон</param>
         /// <returns></returns>
-        public static string BuildSubject(StringDictionary message, string template)
+        public static String BuildSubject(StringDictionary message, String template)
         {
             //Вдруг захочется определить особым образом
             return BuildBody(message, template);

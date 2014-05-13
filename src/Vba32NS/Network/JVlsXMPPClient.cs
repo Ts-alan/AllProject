@@ -15,7 +15,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
     {
         private JVlsClient xmpp;
 
-        public JVlsXMPPClient(string server, string fromJID, string password)
+        public JVlsXMPPClient(String server, String fromJID, String password)
         {
             LoggerNS.log.Info("JVlsXMPPClient.JVlsXMPPClient started");
             this.Server = server;
@@ -33,9 +33,9 @@ namespace Vba32.ControlCenter.NotificationService.Network
             LoggerNS.log.Info("JVlsXMPPClient.OpenConnection finished. Object unlocked");
         }
 
-        public override void OpenConnection(string server, string fromJID, string password)
+        public override void OpenConnection(String server, String fromJID, String password)
         {
-            string jid = fromJID.Split('@')[0];
+            String jid = fromJID.Split('@')[0];
 
             xmpp = new JVlsClient(server, jid, password);
             xmpp.Resource = "";
@@ -89,7 +89,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
             LoggerNS.log.Info("JVlsXMPPClient.CloseConnection finished. Object unlocked");
         }
 
-        public override void Send(string toJID, string message)
+        public override void Send(String toJID, String message)
         {
             LoggerNS.log.Info("JVlsXMPPClient.Send started");
             if (CheckConnectionState())

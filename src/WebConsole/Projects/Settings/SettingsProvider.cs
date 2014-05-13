@@ -193,7 +193,68 @@ namespace VirusBlokAda.CC.Settings
                 try
                 {
                     key = Registry.LocalMachine.OpenSubKey(PMSKeyName);
-                    key.DeleteValue("Reread");
+                    key.DeleteValue("ReRead");
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
+        public static NSSettingsEntity GetNSSettings()
+        {
+            lock (lockToken)
+            {
+                NSSettingsEntity ent = new NSSettingsEntity();
+
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(NSKeyName);
+
+                ent.XMPPLibrary = GetBoolean(key, "XMPPLibrary");
+                ent.JabberServer = GetString(key, "JabberServer");
+                ent.JabberFromJID = GetString(key, "JabberFromJID");
+                ent.JabberPassword = GetString(key, "JabberPassword");
+
+                ent.MailServer = GetString(key, "MailServer");
+                ent.MailFrom = GetString(key, "MailFrom");
+                ent.MailDisplayName = GetString(key, "MailDisplayName");
+                
+                ent.ReRead = GetBoolean(key, "ReRead");
+
+                key.Close();
+
+                return ent;
+            }
+        }
+
+        public static Boolean GetReRead_NS()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(NSKeyName);
+                    return GetBoolean(key, "ReRead");
+                }
+                finally
+                {
+                    if (key != null)
+                        key.Close();
+                }
+            }
+        }
+
+        public static void SkipReRead_NS()
+        {
+            lock (lockToken)
+            {
+                RegistryKey key = null;
+                try
+                {
+                    key = Registry.LocalMachine.OpenSubKey(NSKeyName);
+                    key.DeleteValue("ReRead");
                 }
                 finally
                 {

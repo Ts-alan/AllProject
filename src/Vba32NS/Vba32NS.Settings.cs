@@ -12,6 +12,7 @@ using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 using VirusBlokAda.CC.Common.Xml;
 using VirusBlokAda.CC.Common;
+using VirusBlokAda.CC.Settings;
 
 namespace Vba32.ControlCenter.NotificationService
 {
@@ -31,7 +32,7 @@ namespace Vba32.ControlCenter.NotificationService
             List<NotifyEvent> tlist = new List<NotifyEvent>();
             try
             {
-                string settingsFileName = path + "webconsole\\settings\\Vba32NS.xml";
+                String settingsFileName = path + "webconsole\\settings\\Vba32NS.xml";
                
                 tlist = ObjectSerializer.XmlStrToObj<List<NotifyEvent>>(settingsFileName);
 
@@ -55,47 +56,30 @@ namespace Vba32.ControlCenter.NotificationService
         /// Использует ключ реестра IsReRead
         /// </summary>
         /// <returns></returns>
-        internal static bool IsReRead()
+        internal static Boolean IsReRead()
         {
             LoggerNS.log.Info("Vba32NS.IsReRead():: Started");
-            int isReRead = 0;
             try
             {
-                RegistryKey key =
-                        Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\Notification");
-
-                object tmp = key.GetValue("ReRead");
-                if (tmp == null)
-                {
-                    LoggerNS.log.Info("Vba32NS.IsReRead()::Cannot get ReRead value");
-                    return false;
-                }
-                else
-                    isReRead = (int)tmp;
-
-                key.Close();
+                return SettingsProvider.GetReRead_NS();
             }
             catch (Exception ex)
             {
                 LoggerNS.log.Error("Vba32NS.IsReRead()::" + ex.Message);
                 return false;
             }
-            return (isReRead > 0 ? true : false);
         }
 
         /// <summary>
         /// Удаляет ReRead ключ
         /// </summary>
         /// <returns></returns>
-        internal static bool SkipReRead()
+        internal static Boolean SkipReRead()
         {
             LoggerNS.log.Info("Vba32NS.SkipReRead():: Started");
             try
             {
-                RegistryKey key =
-                           Registry.LocalMachine.CreateSubKey(registryControlCenterKeyName + "\\Notification");
-
-                key.DeleteValue("ReRead");
+                SettingsProvider.SkipReRead_NS();
             }
             catch (Exception ex)
             {
@@ -110,137 +94,74 @@ namespace Vba32.ControlCenter.NotificationService
         /// Считывает необходимые настройки для уведомлений по почте, jabber.
         /// </summary>
         /// <returns></returns>
-        internal static bool ReadSettingsFromRegistry()
+        internal static Boolean ReadSettingsFromRegistry()
         {
             LoggerNS.log.Info("Vba32NS.ReadSettingsFromRegistry():: Started");
             try
             {
-                lock (synch)
-                {
-                    RegistryKey key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName);
-                    if (key == null)
-                    {
-                        LoggerNS.log.Error("ReadSettingsFromRegistry()::Can't get key 'ControlCenter'.");
-                        return false;
-                    }
+                LoggerNS.log.Info("1. Read LogLevel settings.");
 
-                    Object t_allowLog = key.GetValue("AllowLog");
-                    if (t_allowLog == null)
-                    {
-                        LoggerNS.Level = LogLevel.Debug;
-                        LoggerNS.log.Warning("Log level isn't set.");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            LoggerNS.Level = (LogLevel)((Int32)t_allowLog);
-                            LoggerNS.log.Info("Log level: " + LoggerNS.Level.ToString());
-                        }
-                        catch
-                        {
-                            LoggerNS.Level = LogLevel.Debug;
-                            LoggerNS.log.Warning("Inadmissible log level.");
-                        }
-                    }
+                LoggerNS.Level = SettingsProvider.GetLogLevel();
+                LoggerNS.log.Info("Log level: " + LoggerNS.Level.ToString());
 
-                    LoggerNS.log.LoggingLevel = LoggerNS.Level;
+                LoggerNS.log.Info("2. Read settings from 'Notification'.");
 
-                    key.Close();
+                settingsNS = SettingsProvider.GetNSSettings();
 
-                    key = Registry.LocalMachine.OpenSubKey(registryControlCenterKeyName + "\\Notification");
-
-                    //xmpp library type
-                    int? tmp = (int?)key.GetValue("XMPPLibrary");
-                    xmppLibrary = tmp.HasValue ? tmp.Value : 0;
-
-                    LoggerNS.log.Info("XMPPLibrary=" + xmppLibrary);
-
+                    LoggerNS.log.Info("XMPPLibrary=" + settingsNS.XMPPLibrary);
 
                     //Jabber
-                    jabberServer = (string)key.GetValue("JabberServer");
-                    if (String.IsNullOrEmpty(jabberServer))
+                    if (String.IsNullOrEmpty(settingsNS.JabberServer))
                     {
                         LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry()::Cannot get JabberServer value");
-
-                        // return false;
                     }
                     else
                     {
-                        LoggerNS.log.Info("JabberServer=" + jabberServer);
+                        LoggerNS.log.Info("JabberServer=" + settingsNS.JabberServer);
 
-                        jabberFromJID = (string)key.GetValue("JabberFromJID");
-                        if (jabberFromJID == null)
+                        if (String.IsNullOrEmpty(settingsNS.JabberFromJID))
                         {
                             LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry():: Cannot get JabberFromJID value");
-
                             return false;
                         }
-                        LoggerNS.log.Info("JabberFromJID=" + jabberFromJID);
+                        LoggerNS.log.Info("JabberFromJID=" + settingsNS.JabberFromJID);
 
-                        /*byte[] passBytes = (byte[])key.GetValue("JabberPassword");
-                        if (passBytes == null)
-                        {
-                            LoggerNS.log.Error("ReadSettingsFromRegistry()::Не удалось получить ключ JabberPassword",
-                               EventLogEntryType.Error);
-
-                            return false;
-                        }
-                        //Дешифруем пароль
-                        int length = passBytes.Length;
-                        for (int i = 0; i < length; ++i)
-                        {
-                            passBytes[i] ^= 0x0D;
-                        }
-                        jabberPassword = System.Text.Encoding.UTF8.GetString(passBytes);
-                        */
-
-                        jabberPassword = (string)key.GetValue("JabberPassword");
-                        if (jabberPassword == null)
+                        if (String.IsNullOrEmpty(settingsNS.JabberPassword))
                         {
                             LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry():: Cannot get JabberPassword value");
-
                             return false;
                         }
-                        LoggerNS.log.Info("JabberPassword=" + jabberPassword);
+                        LoggerNS.log.Info("JabberPassword=" + settingsNS.JabberPassword);
                     }
 
                     //Mail
-                    mailServer = (string)key.GetValue("MailServer");
-                    if (String.IsNullOrEmpty(mailServer))
+                    if (String.IsNullOrEmpty(settingsNS.MailServer))
                     {
                         LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry()::Cannot get MailServer value");
-
-                        //return false;
                     }
                     else
                     {
-                        LoggerNS.log.Info("MailServer=" + mailServer);
+                        LoggerNS.log.Info("MailServer=" + settingsNS.MailServer);
 
-                        mailFrom = (string)key.GetValue("MailFrom");
-                        if (mailFrom == null)
+                        if (String.IsNullOrEmpty(settingsNS.MailFrom))
                         {
                             LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry()::Cannot get MailFrom value");
-
                             return false;
                         }
-                        LoggerNS.log.Info("MailFrom=" + mailFrom);
+                        LoggerNS.log.Info("MailFrom=" + settingsNS.MailFrom);
 
-                        mailDisplayName = (string)key.GetValue("MailDisplayName");
-                        if (mailDisplayName == null)
+                        if (String.IsNullOrEmpty(settingsNS.MailDisplayName))
                         {
                             LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry()::Cannot get MailDisplayName value");
 
                             return false;
                         }
-                        LoggerNS.log.Info("MailDisplayName=" + mailDisplayName);
+                        LoggerNS.log.Info("MailDisplayName=" + settingsNS.MailDisplayName);
                     }
-                }
             }
             catch (Exception ex)
             {
-                LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry():: Key: " + registryControlCenterKeyName +
-                    " Error:" + ex.Message);
+                LoggerNS.log.Error("Vba32NS.ReadSettingsFromRegistry():: Error:" + ex.Message);
                 return false;
             }
 

@@ -20,9 +20,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
     {
         private XmppClientConnection xmpp;
 
-
-
-        public AgsXMPPClient(string server, string fromJID, string password)
+        public AgsXMPPClient(String server, String fromJID, String password)
         {
             LoggerNS.log.Info("AgsXMPPClient.AgsXMPPClient started");
             this.Server = server;
@@ -40,7 +38,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
             }
         }
 
-        public override void OpenConnection(string server, string fromJID, string password)
+        public override void OpenConnection(String server, String fromJID, String password)
         {
 
             LoggerNS.log.Info("AgsXMPPClient.OpenConnection started");
@@ -134,7 +132,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
             }
         }
 
-        public override void Send(string toJID, string message)
+        public override void Send(String toJID, String message)
         {
             LoggerNS.log.Info("AgsXMPPClient.Send started");
             try
@@ -149,7 +147,7 @@ namespace Vba32.ControlCenter.NotificationService.Network
             return ;
         }
 
-        public override bool CheckConnectionState()
+        public override Boolean CheckConnectionState()
         {
             LoggerNS.log.Info("AgsXMPPClient.CheckConnectionState started");
             if ((xmpp.XmppConnectionState == XmppConnectionState.SessionStarted) ||

@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using agsXMPP;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
+using VirusBlokAda.CC.Settings.Entities;
 
 namespace Vba32.ControlCenter.NotificationService
 {
@@ -29,25 +30,14 @@ namespace Vba32.ControlCenter.NotificationService
 
         internal static List<NotifyEvent> evList = new List<NotifyEvent>();
 
-        internal static string path;                            //путь
-        internal static string machineName;                     //Имя компа. Под этим именем присылаются на родительский центр событияS
-        
-        //jabber
-        internal static string jabberServer = String.Empty;
-        internal static string jabberFromJID = String.Empty;
-        internal static string jabberPassword = String.Empty;
-        //mail
-        internal static string mailServer = String.Empty;
-        internal static string mailFrom = String.Empty;
-        internal static string mailDisplayName = String.Empty;
-        //registry
-        internal static string registryControlCenterKeyName;
-        //loging level
-        internal static int logLevel = 0;
+        internal static String path;                            //путь
+        internal static String machineName;                     //Имя компа. Под этим именем присылаются на родительский центр событияS
+
+        internal static NSSettingsEntity settingsNS;
         //notify event list
         internal static List<NotifyEvent> list = null;
 
-        private static int xmppLibrary = 0;
+        private static Int32 xmppLibrary = 0;
 
         private static JabberClient jclient = null;
         /// <summary>
@@ -59,50 +49,41 @@ namespace Vba32.ControlCenter.NotificationService
             set { Vba32NS.jclient = value; }
         }
 
-        internal static object synch = new object();
-
         #endregion
 
         #region Constructor
         public Vba32NS()
         {
-            LoggerNS.log.Info("Vba32NS.Vba32NS():: Started");
             InitializeComponent();
             try
             {
-                //Проверка на битность ОС
-                if (Marshal.SizeOf(typeof(IntPtr)) == 8)
-                    registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-                else
-                    registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-
-                machineName = Environment.MachineName;
                 path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName) + "\\";
-
+                
                 list = GetNotifyEventList();
-                if (!ReadSettingsFromRegistry())
-                    LoggerNS.log.Error("Vba32NS.OnStop()::ReadSettingsFromRegistry returned false");
-
         
                 LoggerNS.log.Info("Vba32NS.Vba32NS()::Finished");
             }
             catch (Exception ex)
             {
-                string errorMessage = "" + ex.Message;
-                LoggerNS.log.Error(errorMessage);
-                EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, errorMessage, EventLogEntryType.Error);
+                LoggerNS.log.Error(ex.Message);
+                EventLog.WriteEntry(AppDomain.CurrentDomain.FriendlyName, ex.Message, EventLogEntryType.Error);
             }
         }
         #endregion
 
         #region OnStart, OnStop
-        protected override void OnStart(string[] args)
+        protected override void OnStart(String[] args)
         {
             LoggerNS.log.Info("Vba32NS.OnStart():: Started");
             
             try
             {
-                if (!String.IsNullOrEmpty(jabberServer))
+                machineName = Environment.MachineName;
+
+                if (!ReadSettingsFromRegistry())
+                    LoggerNS.log.Error("Vba32NS.OnStart()::ReadSettingsFromRegistry returned false");
+
+                if (!String.IsNullOrEmpty(settingsNS.JabberServer))
                     SelectXMPPLibrary();
 
                 //Регистрируем тип для .NET Remoting
@@ -146,11 +127,11 @@ namespace Vba32.ControlCenter.NotificationService
             {
                 case 1:
                     LoggerNS.log.Info("JVlsXMPPClient");
-                    jclient = new JVlsXMPPClient(jabberServer, jabberFromJID, jabberPassword);
+                    jclient = new JVlsXMPPClient(settingsNS.JabberServer, settingsNS.JabberFromJID, settingsNS.JabberPassword);
                     break;
                 default:
                     LoggerNS.log.Info("AgsXMPPClient");
-                    jclient = new AgsXMPPClient(jabberServer, jabberFromJID, jabberPassword);
+                    jclient = new AgsXMPPClient(settingsNS.JabberServer, settingsNS.JabberFromJID, settingsNS.JabberPassword);
                     break;
             }
             
@@ -165,7 +146,7 @@ namespace Vba32.ControlCenter.NotificationService
         /// Настраивает .NET Remoting на использование IPC-канала
         /// </summary>
         /// <returns></returns>
-        private bool ConfigureIPC()
+        private Boolean ConfigureIPC()
         {
             try
             {

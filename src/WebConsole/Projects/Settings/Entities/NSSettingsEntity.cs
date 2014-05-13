@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Settings.Entities
+namespace VirusBlokAda.CC.Settings.Entities
 {
-    public class NSSettings
+    public class NSSettingsEntity
     {
         #region Fields
 
@@ -26,6 +26,8 @@ namespace Settings.Entities
         private Int32? _GlobalEpidemyCompCount = null;
         private Int32? _GlobalEpidemyLimit = null;
         private Int32? _GlobalEpidemyTimeLimit = null;
+
+        private Boolean _XMPPLibrary = false;
                 
         private Boolean _ReRead;
         
@@ -117,6 +119,12 @@ namespace Settings.Entities
             set { _GlobalEpidemyTimeLimit = value; }
         }
 
+        public Boolean XMPPLibrary
+        {
+            get { return _XMPPLibrary; }
+            set { _XMPPLibrary = value; }
+        }
+
         public Boolean ReRead
         {
             get { return _ReRead; }
@@ -127,7 +135,7 @@ namespace Settings.Entities
         
         #region Constructors
 
-        public NSSettings() { }
+        public NSSettingsEntity() { }
 
         #endregion
     }

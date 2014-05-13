@@ -27,10 +27,10 @@ namespace Vba32.ControlCenter.NotificationService
         /// <param name="to">Кому</param>
         /// <param name="message">Сообщение</param>
         /// <returns></returns>
-        internal static bool SendJabber(string to, string message)
+        internal static Boolean SendJabber(String to, String message)
         {
             LoggerNS.log.Info("Vba32NS.SendJabber():: Started");
-            bool retValue = false;
+            Boolean retValue = false;
             Thread thread = new Thread(delegate()
             {
                 jclient.Send(to, message);
@@ -62,8 +62,8 @@ namespace Vba32.ControlCenter.NotificationService
         /// <param name="to">Кому</param>
         /// <param name="body">Текст письма</param>
         /// <returns></returns>
-        internal static bool SendMail(string server, string from, string displayName,
-            string subject, string to, string body, int priority)
+        internal static Boolean SendMail(String server, String from, String displayName,
+            String subject, String to, String body, Int32 priority)
         {
             LoggerNS.log.Info("Vba32NS.SendMail():: Started");
             SMTPMessage ob = new SMTPMessage();
@@ -92,10 +92,10 @@ namespace Vba32.ControlCenter.NotificationService
         /// <param name="to">Кому</param>
         /// <param name="message">Сообщение</param>
         /// <returns></returns>
-        internal static bool SendNetSend(string to, string message)
+        internal static Boolean SendNetSend(String to, String message)
         {
             LoggerNS.log.Info("Vba32NS.SendNetSend():: Started");
-            bool retValue = false;
+            Boolean retValue = false;
             Thread thread = new Thread(delegate()
             {
                 retValue = NetSendMessage.Send(to, message);
