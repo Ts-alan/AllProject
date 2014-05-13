@@ -24,9 +24,6 @@ using VirusBlokAda.CC.Settings.Entities;
 
 public partial class ControlCenter : PageBase
 {
-    private const string GlobalEpidemyEvent = "vba32.cc.GlobalEpidemy";
-    private const string LocalHearthEvent = "vba32.cc.LocalHearth";
-
     protected void Page_Init(object sender, EventArgs e)
     {
         base.Page_Init(sender, e);
@@ -34,7 +31,6 @@ public partial class ControlCenter : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!Roles.IsUserInRole("Administrator"))
         {
             Response.Redirect("Default.aspx");
@@ -42,24 +38,18 @@ public partial class ControlCenter : PageBase
 
         RegisterScript(@"js/jQuery/jquery.cookie.js");
 
-        //RegisterLink("~/App_Themes/" + Profile.Theme + @"\ui.all.css");
-
         Page.Title = Resources.Resource.SettingsForMaintenanceService;
         if (!IsPostBack)
         {
-            InitializeSession();
             InitFields();
-            UpdateData();
         }
 
         if (cboxMaintenanceEnabled.Checked)
-        {
             tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = true;
-        }
         else
-        {
             tboxServer.Enabled = ddlDay.Enabled = ddlEvery.Enabled = ddlTime.Enabled = false;
-        }
+
+        Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
     }
 
     /// <summary>
@@ -67,152 +57,58 @@ public partial class ControlCenter : PageBase
     /// </summary>
     protected override void InitFields()
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPaging.PageCount = 1;
-        pcPaging.PageText = Resources.Resource.Page;
-        pcPaging.OfText = Resources.Resource.Of;
-        pcPaging.NextText = Resources.Resource.Next;
-        pcPaging.PrevText = Resources.Resource.Prev;
-
-        pcPaging.HomeText = Resources.Resource.HomePaging;
-        pcPaging.LastText = Resources.Resource.LastPaging;
-
-        pcPagingTop.CurrentPageIndex = 1;
-        pcPagingTop.PageCount = 1;
-        pcPagingTop.PageText = Resources.Resource.Page;
-        pcPagingTop.OfText = Resources.Resource.Of;
-        pcPagingTop.NextText = Resources.Resource.Next;
-        pcPagingTop.PrevText = Resources.Resource.Prev;
-
-        pcPagingTop.HomeText = Resources.Resource.HomePaging;
-        pcPagingTop.LastText = Resources.Resource.LastPaging;
-
         cboxMaintenanceEnabled.Text = Resources.Resource.MaintenanceEnable;
         rangeComputersDaysToDelete.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 0, 360);
         RangeTasksDaysToDelete.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 0, 360);
         RangeDaysToDelete.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 0, 360);
+        RangeDeliveryTimeoutCheck.ErrorMessage = String.Format(Resources.Resource.ValueBetween, 60, 14400);
         RegularExpressionServer.ValidationExpression = RegularExpressions.IPAddress;
 
         InitSettings();
     }
 
-    private void InitializeSession()
+    protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        if (Session["ControlCenterSortExp"] == null)
-            Session["ControlCenterSortExp"] = "EventName ASC";
-    }
-
-    private void UpdateData()
-    {
-        InitializeSession();
-
-        string filter = "EventName like '%'";
-        string sort = (string)Session["ControlCenterSortExp"];
-
-        int count = DBProviders.Event.GetEventTypesCount(filter);
-        int pageSize = 20;
-        int pageCount = (int)Math.Ceiling((double)count / pageSize);
-
-        pcPaging.PageCount = pageCount;
-        pcPagingTop.PageCount = pageCount;
-
-        dlEvents.DataSource = DBProviders.Event.GetEventTypeList(filter, sort, (Int16)pcPaging.CurrentPageIndex, (Int16)pageSize);
-
-        dlEvents.DataBind();
-    }
-
-    protected void dlEvents_ItemCommand(object source, DataListCommandEventArgs e)
-    {
-        if (e.CommandName == "SelectCommand")
+        if (e.CommandName == "Select")
         {
+            ImageButton im = e.CommandSource as ImageButton;
             EventTypesEntity event_;
-            switch ((string)e.CommandArgument)
+            switch ((String)e.CommandArgument)
             {
                 case "Send":
-
-                    event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                            "", "", (e.Item.FindControl("ibtnSend") as ImageButton).ImageUrl.Contains("disabled.gif"), false, false);
+                    
+                    event_ = new EventTypesEntity(Convert.ToInt16(im.Attributes["eventID"]),
+                            "", "", im.ImageUrl.Contains("disabled.gif"), false, false);
                     DBProviders.Event.UpdateSend(event_);
 
                     break;
 
                 case "NoDelete":
-                    event_ = new EventTypesEntity(Convert.ToInt16((e.Item.FindControl("lblID") as Label).Text),
-                            "", "", false, (e.Item.FindControl("ibtnNoDelete") as ImageButton).ImageUrl.Contains("disabled.gif"), false);
+                    event_ = new EventTypesEntity(Convert.ToInt16(im.Attributes["eventID"]),
+                            "", "", false, im.ImageUrl.Contains("disabled.gif"), false);
                     DBProviders.Event.UpdateNoDelete(event_);
                     break;
 
             }
+
+            GridView1.DataBind();
         }
-        if (e.CommandName == "SortCommand")
-        {
-            if (Session["ControlCenterSortExp"] == null)
-                Session["ControlCenterSortExp"] = e.CommandArgument.ToString() + " ASC";
-            else
-            {
-                if (((string)Session["ControlCenterSortExp"]).Contains("ASC"))
-                    Session["ControlCenterSortExp"] = e.CommandArgument.ToString() + " DESC";
-                else
-                    Session["ControlCenterSortExp"] = e.CommandArgument.ToString() + " ASC";
-            }
-        }
-        UpdateData();
     }
 
-    protected void dlEvents_ItemDataBound(object sender, DataListItemEventArgs e)
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //Item
-        if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            (e.Item.FindControl("lblName") as Label).Text = ((EventTypesEntity)e.Item.DataItem).EventName;
+            EventTypesEntity ent = (EventTypesEntity)e.Row.DataItem;
 
-            Color clr = Color.FromName(((EventTypesEntity)e.Item.DataItem).Color);
-            Color clr2 = Color.FromArgb((byte)~clr.R, (byte)~clr.G, (byte)~clr.B);
+            Color clr = Color.FromName(ent.Color);
+            Color clr2 = Color.FromArgb((Byte)~clr.R, (Byte)~clr.G, (Byte)~clr.B);
 
-            (e.Item.FindControl("lblName") as Label).Attributes.Add("style", "color:" + "#" + clr2.R.ToString()
+            e.Row.Cells[2].Attributes.Add("style", "color:" + "#" + clr2.R.ToString()
                 + clr2.G.ToString() + clr2.B.ToString() + ";" + "background-color:" + clr.Name);
 
-            //if ((((EventTypesEntity)e.Item.DataItem).EventName != GlobalEpidemyEvent)
-            //   && (((EventTypesEntity)e.Item.DataItem).EventName != LocalHearthEvent))
-            {
-                string strBool = "";
-                if (((EventTypesEntity)e.Item.DataItem).Send)
-                    strBool = "enabled.gif";
-                else
-                    strBool = "disabled.gif";
-
-                (e.Item.FindControl("ibtnSend") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + strBool;
-
-                if (((EventTypesEntity)e.Item.DataItem).NoDelete)
-                    strBool = "enabled.gif";
-                else
-                    strBool = "disabled.gif";
-
-                (e.Item.FindControl("ibtnNoDelete") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + strBool;
-            }
-            //else
-            //{
-            //    (e.Item.FindControl("ibtnSend") as ImageButton).Visible = false;
-            //    (e.Item.FindControl("ibtnNoDelete") as ImageButton).Visible = false;
-            //}
-        }
-        //Header
-        if (e.Item.ItemType == ListItemType.Header)
-        {
-            (e.Item.FindControl("lbtnSend") as LinkButton).Text = Resources.Resource.Send;
-            (e.Item.FindControl("lbtnNoDelete") as LinkButton).Text = Resources.Resource.NoDelete;
-            (e.Item.FindControl("lbtnEventName") as LinkButton).Text = Resources.Resource.EventName;
-
-            string currentSorting = (string)Session["ControlCenterSortExp"];
-            string[] name = currentSorting.Split(' ');
-            if (name[1] == "ASC")
-            {
-                (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += " \u2193";
-            }
-            else
-            {
-                (e.Item.FindControl("lbtn" + name[0]) as LinkButton).Text += " \u2191";
-            }
+            (e.Row.Cells[0].FindControl("ibtnSend") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + (ent.Send ? "enabled.gif" : "disabled.gif");
+            (e.Row.Cells[1].FindControl("ibtnNoDelete") as ImageButton).ImageUrl = Request.ApplicationPath + "/App_Themes/" + Profile.Theme + "/Images/" + (ent.NoDelete ? "enabled.gif" : "disabled.gif");
         }
     }
 
@@ -497,38 +393,4 @@ public partial class ControlCenter : PageBase
     }
 
     #endregion
-
-    protected void pcPaging_NextPage(object sender, EventArgs e)
-    {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-        UpdateData();
-
-    }
-    protected void pcPaging_PrevPage(object sender, EventArgs e)
-    {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-        UpdateData();
-    }
-
-    protected void pcPaging_HomePage(object sender, EventArgs e)
-    {
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
-
-        UpdateData();
-    }
-
-    protected void pcPaging_LastPage(object sender, EventArgs e)
-    {
-        int index = ((PagingControls.PagingControl)sender).PageCount;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
-        UpdateData();
-    }
-
 }

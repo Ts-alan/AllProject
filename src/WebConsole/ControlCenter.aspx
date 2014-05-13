@@ -1,5 +1,6 @@
 <%@ Page Language="C#" validateRequest="false" MaintainScrollPositionOnPostback="true" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="ControlCenter.aspx.cs" Inherits="ControlCenter" Title="Untitled Page" %>
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
+<%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 
 <%@ OutputCache Location="None" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
@@ -63,42 +64,45 @@
         </table>
       </div>
       <div id='1'>
-        <table class="ListContrastTableMain">
-			<tr>
-				<td><cc1:PagingControl ID="pcPagingTop" runat="server" OnNextPage="pcPaging_NextPage" OnPrevPage="pcPaging_PrevPage" OnHomePage="pcPaging_HomePage" OnLastPage="pcPaging_LastPage"/>
-				<asp:datalist id="dlEvents" Width="100%" border="0" runat="server" Height="80px" OnItemCommand="dlEvents_ItemCommand" OnItemDataBound="dlEvents_ItemDataBound">
-						<HeaderTemplate>
-							<tr class="subsection" >
-							<td style="width: 100px;">
-                                <asp:LinkButton ID="lbtnSend" runat="server" CommandName="SortCommand" CommandArgument="Send"></asp:LinkButton>
-							</td>
-							<td style="width: 100px;">
-							    <asp:LinkButton ID="lbtnNoDelete" runat="server" CommandName="SortCommand" CommandArgument="NoDelete"></asp:LinkButton>
-							</td>
-							<td>
-							    <asp:LinkButton ID="lbtnEventName" runat="server" CommandName="SortCommand" CommandArgument="EventName"></asp:LinkButton>
-							</td>
-							</tr>
-						</HeaderTemplate>
-						<ItemTemplate>
-							<tr>
-							<td align="center">
-								<asp:Label id="lblID" runat="server" Visible="False" Text='<%# DataBinder.Eval(Container.DataItem, "ID")%>'></asp:Label>
-								<asp:ImageButton ID="ibtnSend" runat="server" CommandName="SelectCommand" CommandArgument="Send" />
-							</td>
-							<td align="center">
-								<asp:ImageButton ID="ibtnNoDelete" runat="server" CommandName="SelectCommand" CommandArgument="NoDelete" />
-							</td>
-							<td>								
-								<asp:Label id="lblName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:Label>
-							</td>
-						    </tr>
-						</ItemTemplate>
-					</asp:datalist>  
-					<cc1:PagingControl ID="pcPaging" runat="server" OnNextPage="pcPaging_NextPage" OnPrevPage="pcPaging_PrevPage" OnHomePage="pcPaging_HomePage" OnLastPage="pcPaging_LastPage"/>          
-				</td>
-			</tr>
-		</table>
+        <div class="divSettings">
+            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True"
+                SelectCountMethod="CountForNotification" SelectMethod="GetForNotification" TypeName="EventsDataContainer" SortParameterName="SortExpression">
+            </asp:ObjectDataSource>
+        
+            <asp:UpdatePanel runat="server" ID="updatePanelComponentsGrid">
+            <ContentTemplate>
+                <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
+                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" OnRowDataBound="GridView1_RowDataBound"
+                    EnableModelValidation="True" CssClass="gridViewStyle" OnRowCommand="GridView1_RowCommand"
+                    StorageType="Session" StorageName="EventTypes" EmptyDataText='<%$ Resources:Resource, EmptyMessage %>'>
+                <Columns>     
+                    <asp:TemplateField SortExpression="Send" HeaderText='<%$Resources:Resource, Send%>'>
+                    <ItemTemplate>
+                        <asp:ImageButton ID="ibtnSend" runat="server" CommandName="Select" CommandArgument="Send" eventID='<%# DataBinder.Eval(Container.DataItem, "ID")%>' />
+                    </ItemTemplate>
+                    <HeaderStyle Width="70px" />
+                    </asp:TemplateField>
+                    <asp:TemplateField SortExpression="NoDelete" HeaderText='<%$Resources:Resource, NoDelete%>'>
+                    <ItemTemplate>
+                        <asp:ImageButton ID="ibtnNoDelete" runat="server" CommandName="Select" CommandArgument="NoDelete" eventID='<%# DataBinder.Eval(Container.DataItem, "ID")%>' />
+                    </ItemTemplate>
+                    <HeaderStyle Width="70px" />
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="EventName" SortExpression="EventName" 
+                        HeaderText='<%$Resources:Resource, EventName%>'>
+                    </asp:BoundField>
+                </Columns> 
+                <PagerSettings Position="TopAndBottom" Visible="true" />           
+                <PagerTemplate>
+                        <paging:Paging runat="server" ID="Paging1" />
+                </PagerTemplate>
+                <HeaderStyle CssClass="gridViewHeader" ForeColor="White"  />
+                <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
+                <RowStyle CssClass="gridViewRow" />
+                </custom:GridViewExtended>
+            </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
       </div>
       <div id='2'>
         <asp:UpdatePanel runat="server" ID="upnlSettings">
