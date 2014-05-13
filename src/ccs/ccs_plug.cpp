@@ -90,6 +90,7 @@ bool CCPlug::ReactionOnUpdate(const WStringList& files, const std::wstring& vers
 
 bool CCPlug::Install(const SetupParams& param)
 {
+    LOG() % "Install";
     WStringMap params = param.parameters;
     std::wstring install_path = params[L"path"];
     if(install_path.empty())
@@ -133,6 +134,7 @@ bool CCPlug::Install(const SetupParams& param)
 
 bool CCPlug::Uninstall(const SetupParams& param)
 {
+    LOG() % "Uninstall";
     WStringMap params = param.parameters;
     std::wstring install_path = params[L"path"];
     if(install_path.empty())
@@ -172,6 +174,8 @@ bool CCPlug::Uninstall(const SetupParams& param)
 
 bool CCPlug::Initialize(const InterfaceId& interface_id, vba::IObject* p_object)
 {
+    LOG() % "Initialize";
+
     if(!__super::Initialize(interface_id, p_object))
     {
         LOG_ERROR() % L"Fail to base initialize";
