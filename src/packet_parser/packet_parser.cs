@@ -1,14 +1,14 @@
 using System.Text;
+using System;
+using System.Runtime.InteropServices;
+using VirusBlokAda.CC.DataBase;
+using System.IO;
+using System.Xml;
+using System.Reflection;
+using VirusBlokAda.CC.Settings;
 
 namespace Vba32CC
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using VirusBlokAda.CC.DataBase;
-    using System.IO;
-    using System.Xml;
-    using System.Reflection;
-
     /// <summary>
     /// Event sinks class
     /// </summary>
@@ -47,16 +47,7 @@ namespace Vba32CC
             {
                 AppPath = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(PacketParser)).Location) + @"\";
                 LoggerPP.Path = Path.Combine(AppPath, "packet_parser.log");
-
-                //Проверка на битность ОС
-                if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
-                    registryControlCenterKeyName = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\";
-                else
-                    registryControlCenterKeyName = "SOFTWARE\\Vba32\\ControlCenter\\";
-                
-                gc_database_regkey = registryControlCenterKeyName + "\\DataBase";
-
-                ReadSettingsFromRegistry();
+                LoggerPP.Level = SettingsProvider.GetLogLevel();
             }
             catch (Exception ex)
             {
@@ -66,16 +57,13 @@ namespace Vba32CC
             CheckDBProvider();
             CheckConnectDB();
 
-            m_server_name = ReadServerName();
-            m_user_name = ReadUserName();
-
             ParseKeyFile();
         }
 
         private void CheckDBProvider()
         {
             if (db == null)
-                db = new PParserProvider(GetConnectionString());
+                db = new PParserProvider(SettingsProvider.GetConnectionString());
         }
 
         /// <summary>
@@ -173,7 +161,7 @@ namespace Vba32CC
                 if (!CheckConnectDB())
                 {
                     m_error_info = "Connection is not established";
-                        NotifyFalseConnection();
+                    NotifyFalseConnection();
                     return false;
                 }
 
@@ -223,25 +211,13 @@ namespace Vba32CC
         private Boolean CheckConnectDB()
         {
             Exception e;
-            if(!DataBaseProvider.CheckConnection(GetConnectionString(), out e))
+            if(!DataBaseProvider.CheckConnection(SettingsProvider.GetConnectionString(), out e))
             {
                 m_error_info = e.Message;
                 LoggerPP.log.Error(e.Message);
                 return false;
             }
             return true;
-        }
-
-        private String GetConnectionString()
-        {
-            String connection_string = "SERVER=";
-            connection_string += ReadServerName();
-            connection_string += ";DATABASE=vbaControlCenterDB;UID=";
-            connection_string += ReadUserName();
-            connection_string += ";PWD=";
-            connection_string += ReadPassword();
-
-            return connection_string;
         }
 
         #endregion              
@@ -288,8 +264,6 @@ namespace Vba32CC
 
         #endregion
 
-        private string m_server_name = "";
-        private string m_user_name = "";
         private string m_error_info = "Operation successfully";
     }
 }
