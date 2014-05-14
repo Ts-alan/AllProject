@@ -50,7 +50,7 @@ bool GetVersionFromIni(const std::wstring& file_path, std::wstring& version)
 }
 
 
-class CCSettings: public vba::settings::SettingsUse<&__uuidof(VBA_SETTINGS)>
+class CCSettings: public vba::settings::SettingsUse<&__uuidof(VBA_CC)>
 {
     WStringList c_update_groups;
 
@@ -191,7 +191,7 @@ bool CCPlug::Initialize(const InterfaceId& interface_id, vba::IObject* p_object)
     }
 
     CCSettings cc_settings;
-    cc_settings.Initialize(settings.get());
+    IF_NOT_RETURN_AND_LOG(cc_settings.Initialize(settings.get()), false, L"Fail to init setttings");
 
     return true;
 }
