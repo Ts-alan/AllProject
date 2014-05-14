@@ -196,5 +196,11 @@ bool CCPlug::Initialize(const InterfaceId& interface_id, vba::IObject* p_object)
     return true;
 }
 
+bool CCPlug::Uninitialize(const InterfaceId& interface_id, vba::IObject* p_object)
+{
+    LOG() % L"Uninitialize";
+    return __super::Uninitialize(interface_id, p_object);
+}
+
 }
 }

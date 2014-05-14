@@ -39,6 +39,7 @@ public:
     }
 
     virtual bool Initialize(const InterfaceId& interface_id, vba::IObject* p_object);
+    virtual bool Uninitialize(const InterfaceId& interface_id, vba::IObject* p_object);
 };
 
 
