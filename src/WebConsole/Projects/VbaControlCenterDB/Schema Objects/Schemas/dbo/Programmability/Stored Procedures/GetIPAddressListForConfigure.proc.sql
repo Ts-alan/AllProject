@@ -12,6 +12,6 @@ AS
 		INNER JOIN InstallationStatus AS s ON s.[ID] = t.[StatusID]
 		WHERE [IPAddress] NOT IN (SELECT [IPAddress] FROM Computers) AND (s.[Status] = 'Success' OR s.[Status] = 'Installed')
 
-	DELETE FROM InstallationTasks WHERE [Status] = 'Installed'
+	DELETE FROM InstallationTasks WHERE StatusID = (SELECT [ID] FROM InstallationStatus WHERE [Status] = 'Installed')
 	
 	SELECT [IPAddress], [Status] FROM @IPListTable
