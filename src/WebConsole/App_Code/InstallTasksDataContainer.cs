@@ -38,8 +38,6 @@ public static class InstallTasksDataContainer
         for (Int32 i = 0; i < list.Count; i++)
         {
             list[i].Status = DatabaseNameLocalization.GetNameForCurrentCulture(list[i].Status);
-            list[i].TaskType = DatabaseNameLocalization.GetNameForCurrentCulture(list[i].TaskType);
-            list[i].Vba32Version = DatabaseNameLocalization.GetNameForCurrentCulture(list[i].Vba32Version);
         }
         return list;
     }
@@ -49,18 +47,8 @@ public static class InstallTasksDataContainer
         return DBProviders.InstallationTask.Count(where);
     }
 
-    public static List<String> GetTaskTypes()
-    {
-        return DBProviders.InstallationTask.GetTaskTypes();
-    }
-
     public static List<String> GetStatuses()
     {
         return DBProviders.InstallationTask.GetStatuses();
-    }
-
-    public static List<String> GetVba32Versions()
-    {
-        return DBProviders.InstallationTask.GetVba32Versions();
     }
 }

@@ -1182,12 +1182,6 @@
   <data name="Install" xml:space="preserve">
     <value>Install</value>
   </data>
-  <data name="InstallUninstallTasks" xml:space="preserve">
-    <value>Install/Uninstall tasks</value>
-  </data>
-  <data name="InstallUninstallTasksPage" xml:space="preserve">
-    <value>Install/Uninstall</value>
-  </data>
   <data name="Integrity" xml:space="preserve">
     <value>Integrity</value>
   </data>
@@ -2718,9 +2712,6 @@ system administrator.</value>
   <data name="ErrorTaskNameRestricted" xml:space="preserve">
     <value>Can not save task with given name.</value>
   </data>
-  <data name="InstallUninstallTasksFilters" xml:space="preserve">
-    <value>Task filters for "install/uninstall"</value>
-  </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>More info...</value>
   </data>
@@ -2936,5 +2927,11 @@ system administrator.</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Required field.</value>
+  </data>
+  <data name="AttachTasks" xml:space="preserve">
+    <value>Attach tasks</value>
+  </data>
+  <data name="AttachTasksFilters" xml:space="preserve">
+    <value>Attach task filters</value>
   </data>
 </root>

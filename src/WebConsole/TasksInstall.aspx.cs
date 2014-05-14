@@ -44,8 +44,6 @@ public partial class TasksInstall : PageBase
     {
         fltStatus.DataSource = InstallTasksDataContainer.GetStatuses();
         fltStatus.DataBind();
-        fltTaskType.DataSource = InstallTasksDataContainer.GetTaskTypes();
-        fltTaskType.DataBind();
     }
 
     protected void FilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)

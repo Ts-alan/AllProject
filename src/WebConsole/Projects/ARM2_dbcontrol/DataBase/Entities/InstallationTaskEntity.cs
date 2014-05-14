@@ -6,8 +6,6 @@ namespace VirusBlokAda.CC.DataBase
     {        	
 		protected string computerName = String.Empty;
 		protected string ipAddress = String.Empty;
-        protected string taskType = String.Empty;
-        protected string vba32Version = String.Empty;
         protected string status = String.Empty;
         protected DateTime installationDate = DateTime.MinValue;
         protected Int16? exitCode;
@@ -20,18 +18,16 @@ namespace VirusBlokAda.CC.DataBase
 		
 		//Constructor
         public InstallationTaskEntity(
-            Int64 id, string computerName, string ipAddress, string taskType, string vba32Version, string status, Int16? exitCode, string error): this(computerName, ipAddress, taskType, vba32Version, status, exitCode, error)
+            Int64 id, string computerName, string ipAddress, string status, Int16? exitCode, string error): this(computerName, ipAddress, status, exitCode, error)
         {
             this.id = id;
         }
 
         public InstallationTaskEntity(
-           string computerName, string ipAddress, string taskType, string vba32Version, string status, Int16? exitCode, string error)
+           string computerName, string ipAddress, string status, Int16? exitCode, string error)
         {            
             this.computerName = computerName;
             this.ipAddress = ipAddress;
-            this.taskType = taskType;
-            this.vba32Version = vba32Version;
             this.status = status;
             this.exitCode = exitCode;
             this.error = error;
@@ -57,22 +53,10 @@ namespace VirusBlokAda.CC.DataBase
             set { ipAddress = value; }
         }
 
-        public string TaskType
-        {
-            get { return taskType; }
-            set { taskType = value; }
-        }
-
         public DateTime InstallationDate
         {
             get { return installationDate; }
             set { installationDate = value; }
-        }
-
-        public string Vba32Version
-        {
-            get { return vba32Version; }
-            set { vba32Version = value; }
         }
 
 		public string Status
@@ -105,8 +89,6 @@ namespace VirusBlokAda.CC.DataBase
                     this.id,
                     this.computerName,
                     this.ipAddress,
-                    this.taskType,
-                    this.vba32Version,
                     this.status,
                     this.exitCode,
                     this.error);				

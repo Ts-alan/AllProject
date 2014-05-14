@@ -1182,12 +1182,6 @@
   <data name="Install" xml:space="preserve">
     <value>Установка</value>
   </data>
-  <data name="InstallUninstallTasks" xml:space="preserve">
-    <value>Задачи установки/удаления</value>
-  </data>
-  <data name="InstallUninstallTasksPage" xml:space="preserve">
-    <value>Установка/Удаление</value>
-  </data>
   <data name="Integrity" xml:space="preserve">
     <value>Целостность</value>
   </data>
@@ -2706,9 +2700,6 @@
   <data name="ErrorTaskNameRestricted" xml:space="preserve">
     <value>Нельзя сохранить задание с данным именем.</value>
   </data>
-  <data name="InstallUninstallTasksFilters" xml:space="preserve">
-    <value>Фильтры задач "установка/удаление"</value>
-  </data>
   <data name="MoreInfo" xml:space="preserve">
     <value>Подробнее...</value>
   </data>
@@ -2924,5 +2915,11 @@
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Поле должно быть заполнено.</value>
+  </data>
+  <data name="AttachTasks" xml:space="preserve">
+    <value>Задачи подключения</value>
+  </data>
+  <data name="AttachTasksFilters" xml:space="preserve">
+    <value>Фильтры для задач подключения</value>
   </data>
 </root>

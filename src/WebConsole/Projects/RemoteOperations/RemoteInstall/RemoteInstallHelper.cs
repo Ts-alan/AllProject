@@ -43,8 +43,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
                 rie.ErrorInfo = errorInfo;
                 rie.Status = InstallationStatusEnum.Error;
 
-                taskProvider.UpdateTask(new InstallationTaskEntity(rie.ID, "", "", "",
-                    "", rie.Status.ToString(), (Int16?)rie.ExitCode, rie.ErrorInfo));
+                taskProvider.UpdateTask(new InstallationTaskEntity(rie.ID, "", "", rie.Status.ToString(), (Int16?)rie.ExitCode, rie.ErrorInfo));
             }
             catch (Exception e)
             {
@@ -59,8 +58,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
                 rie.Status = status;
                 rie.ExitCode = exitCode;
 
-                taskProvider.UpdateTask(new InstallationTaskEntity(rie.ID, "", "", "",
-                    "", rie.Status.ToString(), (Int16?)rie.ExitCode, ""));
+                taskProvider.UpdateTask(new InstallationTaskEntity(rie.ID, "", "", rie.Status.ToString(), (Int16?)rie.ExitCode, ""));
             }
             catch (Exception ex)
             {
@@ -73,8 +71,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         }
         protected static void InsertIntoBase(ref RemoteInstallEntity rie, String taskType)
         {
-            rie.ID = taskProvider.InsertTask(new InstallationTaskEntity(rie.ComputerName, rie.IP, taskType,
-                rie.VbaVersion, rie.Status.ToString(), null, ""));            
+            rie.ID = taskProvider.InsertTask(new InstallationTaskEntity(rie.ComputerName, rie.IP, rie.Status.ToString(), null, ""));            
         }
 
         protected static Boolean InstallWithWmi(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)

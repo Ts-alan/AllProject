@@ -152,15 +152,6 @@ PRINT N'[dbo].[InstallationStatus]: successfully.';
 GO
 
 
-PRINT N'[dbo].[InstallationTaskType]...';
-GO
-INSERT INTO [dbo].[InstallationTaskType]([TaskType]) VALUES(N'Install');
-INSERT INTO [dbo].[InstallationTaskType]([TaskType]) VALUES(N'Uninstall');
-GO
-PRINT N'[dbo].[InstallationTaskType]: successfully.';
-GO
-
-
 PRINT N'[dbo].[ControlDeviceType]...';
 GO
 INSERT INTO [dbo].[ControlDeviceType] ([ControlName]) VALUES ('Unknown');

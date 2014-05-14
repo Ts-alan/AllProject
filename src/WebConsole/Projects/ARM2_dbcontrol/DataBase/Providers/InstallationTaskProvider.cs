@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace VirusBlokAda.CC.DataBase
 {
     public class InstallationTaskProvider
     {
         public const String ProviderName = "InstallationTaskProvider";
-
+        
         private InstallationTaskManager installMngr;
 
         public InstallationTaskProvider(String connectionString)
@@ -17,7 +16,7 @@ namespace VirusBlokAda.CC.DataBase
 
         private void InitManagers(String connectionString)
         {
-            installMngr = new InstallationTaskManager(connectionString);
+            installMngr = new InstallationTaskManager(connectionString);            
         }
 
         #region Methods
@@ -52,11 +51,6 @@ namespace VirusBlokAda.CC.DataBase
         public List<String> GetVba32Versions()
         {
             return installMngr.GetVba32Versions();
-        }
-
-        public List<String> GetTaskTypes()
-        {
-            return installMngr.GetTaskTypes();
         }
 
         public List<String> GetStatuses()

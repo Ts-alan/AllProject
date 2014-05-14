@@ -415,9 +415,6 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetListInstallationStatus.proc.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetListInstallationTaskTypes.proc.sql">
-      <SubType>Code</SubType>
-    </Build>
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\UpdateInstallationTask.proc.sql">
       <SubType>Code</SubType>
     </Build>
@@ -431,9 +428,6 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetVba32VersionID.proc.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetInstallationTaskTypeID.proc.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetStatusID.proc.sql">
@@ -629,9 +623,6 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\InstallationTasks.table.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\InstallationTaskType.table.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Vba32Versions.table.sql">
@@ -860,18 +851,6 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\InstallationTasks.FK_InstallationTasks_InstallationStatus.fkey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\InstallationTasks.FK_InstallationTasks_Vba32Versions.fkey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\InstallationTasks.FK_InstallationTasks_InstallationTaskType.fkey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\InstallationTaskType.PK_InstallationTaskType.pkey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\InstallationTaskType.U_InstallationTaskType.ukey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\OSTypes.PK_OSTypes.pkey.sql">

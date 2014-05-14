@@ -8,7 +8,7 @@
       <siteMapNode url="MapComputers.aspx" title="$resources:Resource,Map"  description="$resources:Resource,ComputersMap"/>
       <siteMapNode url="Events.aspx"  title="$resources:Resource,Events"  description="$resources:Resource,PageEventsTitle"/>
       <siteMapNode url="Task.aspx" title="$resources:Resource,Tasks"  description="$resources:Resource,PageTaskTitle" />
-      <siteMapNode url="TasksInstall.aspx" title="$resources:Resource,InstallUninstallTasksPage"  description="$resources:Resource,InstallUninstallTasks" />
+      <siteMapNode url="TasksInstall.aspx" title="$resources:Resource,AttachTasks"  description="$resources:Resource,AttachTasks" />
       <siteMapNode url="Components.aspx" title="$resources:Resource,Components"  description="$resources:Resource,PageComponentsTitle" />
       <siteMapNode url="Processes.aspx" title="$resources:Resource,Processes"  description="$resources:Resource,PageProcessTitle" />
     </siteMapNode>

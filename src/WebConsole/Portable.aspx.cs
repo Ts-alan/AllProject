@@ -55,7 +55,7 @@ public partial class Portable : PageBase
 
         if ((Roles.IsUserInRole("Administrator")) && (!Roles.IsUserInRole("Operator")))
         {
-            cbList.Items.Add(Resources.Resource.InstallUninstallTasksFilters);
+            cbList.Items.Add(Resources.Resource.AttachTasksFilters);
             cbList.Items.Add(Resources.Resource.PageTasksFilterTitle);
             cbList.Items.Add(Resources.Resource.UsersTasks);
         }

@@ -1,4 +1,4 @@
-<%@ Page Language="C#" EnableEventValidation="false" validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="TasksInstall.aspx.cs" Inherits="TasksInstall" Title="<%$ Resources:resource,InstallUninstallTasks %>" %>
+<%@ Page Language="C#" EnableEventValidation="false" validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="TasksInstall.aspx.cs" Inherits="TasksInstall" Title="<%$ Resources:resource,AttachTasks %>" %>
 
 <%@ Register Src="~/Controls/PagerUserControl.ascx" TagName="Paging" TagPrefix="paging" %>
 <%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
@@ -16,7 +16,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
-<div class="title"><%=Resources.Resource.InstallUninstallTasks %></div>
+<div class="title"><%=Resources.Resource.AttachTasks%></div>
 
 <asp:UpdatePanel runat="server" ID="updatePanelComponentFilter">
      <ContentTemplate>
@@ -29,10 +29,9 @@
                     <td valign="top">
                         <flt:FilterComputers runat="server" ID="fltComputers" NameFieldDB="ComputerName" Mode="InstallComputers" TextFilter='<%$ Resources:Resource, ComputerName %>' />
                         <flt:FilterIP runat="server" ID="fltIPAddress" NameFieldDB="IPAddress" TextFilter='<%$ Resources:Resource, IPAddress %>' />
-                        <flt:FilterList runat="server" ID="fltTaskType" NameFieldDB="TaskType" TextFilter="<%$ Resources:Resource, TaskType %>" />
-                    </td>
-                    <td valign="top" style="padding-left: 20px;">
                         <flt:FilterList runat="server" ID="fltStatus" NameFieldDB="Status" TextFilter="<%$ Resources:Resource, Status %>" />
+                    </td>
+                    <td valign="top" style="padding-left: 20px;">                        
                         <flt:FilterDate runat="server" ID="fltDate" NameFieldDB="InstallationDate" TextFilter="<%$ Resources:Resource, DateIssued %>" />
                     </td>
                 </tr>
@@ -65,10 +64,6 @@
                     <asp:BoundField DataField="IPAddress" SortExpression="IPAddress" 
                         HeaderText='<%$ Resources:Resource, IPAddress %>'>
                         <HeaderStyle Width="150px" />
-                    </asp:BoundField>
-                    <asp:BoundField DataField="TaskType" SortExpression="TaskType" 
-                        HeaderText='<%$ Resources:Resource, TaskType %>'>
-                        <HeaderStyle Width="100px" />
                     </asp:BoundField>
                     <asp:BoundField DataField="InstallationDate" SortExpression="InstallationDate" 
                         HeaderText='<%$ Resources:Resource, DateIssued %>'>

@@ -10,21 +10,17 @@ AS
 			[ID] int,
 			[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[IPAddress] nvarchar(16) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[TaskType] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[Vba32Version] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[Status] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[InstallationDate] smalldatetime NOT NULL,
 			[ExitCode] smallint
 		)
 	
 		INSERT INTO @TasksPage(
-			[ID], [ComputerName], [IPAddress], [TaskType], [Vba32Version], [Status], [InstallationDate], [ExitCode])
+			[ID], [ComputerName], [IPAddress], [Status], [InstallationDate], [ExitCode])
 		SELECT
-			t.[ID], t.[ComputerName], t.[IPAddress], tt.[TaskType], v.[Vba32Version], s.[Status], t.[InstallationDate], t.[ExitCode]
+			t.[ID], t.[ComputerName], t.[IPAddress], s.[Status], t.[InstallationDate], t.[ExitCode]
 		FROM InstallationTasks AS t
-		INNER JOIN InstallationStatus AS s ON t.[StatusID] = s.[ID]
-		INNER JOIN Vba32Versions AS v ON t.[Vba32VersionID] = v.[ID]
-		INNER JOIN InstallationTaskType AS tt ON t.[TaskTypeID] = tt.[ID]'
+		INNER JOIN InstallationStatus AS s ON t.[StatusID] = s.[ID]'
 
 	SET @Query = @Query + N';
 		SELECT COUNT(*)

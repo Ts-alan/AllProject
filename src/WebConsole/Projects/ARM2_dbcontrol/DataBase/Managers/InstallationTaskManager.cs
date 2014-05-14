@@ -52,8 +52,6 @@ namespace VirusBlokAda.CC.DataBase
 
                 cmd.Parameters.AddWithValue("@ComputerName", task.ComputerName);
                 cmd.Parameters.AddWithValue("@IPAddress", task.IPAddress);
-                cmd.Parameters.AddWithValue("@TaskType", task.TaskType);
-                cmd.Parameters.AddWithValue("@Vba32Version", task.Vba32Version);
                 cmd.Parameters.AddWithValue("@Status", task.Status);
                 cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@Exitcode", task.ExitCode);
@@ -96,17 +94,13 @@ namespace VirusBlokAda.CC.DataBase
                     if (reader.GetValue(2) != DBNull.Value)
                         task.IPAddress = reader.GetString(2);
                     if (reader.GetValue(3) != DBNull.Value)
-                        task.TaskType = reader.GetString(3);
+                        task.Status = reader.GetString(3);
                     if (reader.GetValue(4) != DBNull.Value)
-                        task.Vba32Version = reader.GetString(4);
+                        task.InstallationDate = reader.GetDateTime(4);
                     if (reader.GetValue(5) != DBNull.Value)
-                        task.Status = reader.GetString(5);
+                        task.ExitCode = reader.GetInt16(5);
                     if (reader.GetValue(6) != DBNull.Value)
-                        task.InstallationDate = reader.GetDateTime(6);
-                    if (reader.GetValue(7) != DBNull.Value)
-                        task.ExitCode = reader.GetInt16(7);
-                    if (reader.GetValue(8) != DBNull.Value)
-                        task.Error = reader.GetString(8);
+                        task.Error = reader.GetString(6);
 
                     list.Add(task);
                 }
@@ -132,31 +126,6 @@ namespace VirusBlokAda.CC.DataBase
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
-            }
-        }
-
-        /// <summary>
-        /// Get installation task type list
-        /// </summary>
-        /// <returns></returns>
-        internal List<String> GetTaskTypes()
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("GetListInstallationTaskTypes", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                List<String> list = new List<String>();
-                while (reader.Read())
-                {
-                    if (reader.GetValue(0) != DBNull.Value)
-                        list.Add(reader.GetString(0));
-                }
-
-                reader.Close();
-                return list;
             }
         }
 
