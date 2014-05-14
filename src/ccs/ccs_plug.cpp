@@ -129,6 +129,7 @@ bool CCPlug::Install(const SetupParams& param)
     cmdline += L" " + new_version; 
     cmdline += L" " + params[L"files"]; // <file_path>|<file_path>|...
 
+    LOG() % cmdline;
     return vba::LaunchApp(L"", cmdline, true);
 }
 
@@ -168,6 +169,7 @@ bool CCPlug::Uninstall(const SetupParams& param)
     std::wstring cmdline = install_path + L"\\Vba32ControlCenterUpdate.exe ActionBeforeReplaceFiles"; 
     cmdline += L" " + params[L"files"]; // <file_path>|<file_path>|...
 
+    LOG() % cmdline;
     return vba::LaunchApp(L"", cmdline, true);
 }
 
