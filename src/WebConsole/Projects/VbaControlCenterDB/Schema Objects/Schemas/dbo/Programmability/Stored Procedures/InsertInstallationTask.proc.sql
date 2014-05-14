@@ -3,7 +3,7 @@
 	@IPAddress nvarchar(16),
 	@Status nvarchar(64),
 	@Date datetime,
-	@Exitcode smallint
+	@Exitcode smallint = NULL
 WITH ENCRYPTION
 AS
 	-- Retrieving StatusID
