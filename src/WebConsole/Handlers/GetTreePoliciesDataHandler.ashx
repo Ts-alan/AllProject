@@ -6,6 +6,7 @@ using VirusBlokAda.CC.JSON;
 using System.Collections.Generic;
 using VirusBlokAda.CC.DataBase;
 using Newtonsoft.Json;
+using System.Configuration;
 
 public class GetTreePoliciesDataHandler : IHttpHandler
 {
@@ -37,13 +38,13 @@ public class GetTreePoliciesDataHandler : IHttpHandler
     private void SaveChanges(String policyTreeArray)
     {
         List<TreeNodeEntity> policyList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(policyTreeArray);
-
+        PolicyProvider provider = new PolicyProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         //remove all computers from all policies
-        DBProviders.Policy.ClearAllPolicy();
-        foreach (Policy policy in DBProviders.Policy.GetPolicyTypes())
+        provider.ClearAllPolicy();
+        foreach (Policy policy in provider.GetPolicyTypes())
         {
             //add computers into policy
-            DBProviders.Policy.AddComputersToPolicy(policy, GetComputersByPolicy(policy, policyList));            
+            provider.AddComputersToPolicy(policy, GetComputersByPolicy(policy, policyList));            
         }
     }
 

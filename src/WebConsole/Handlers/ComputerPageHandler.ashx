@@ -16,22 +16,22 @@ public class ComputerPageHandler : IHttpHandler {
     /*    if(!String.IsNullOrEmpty(where))
             where = where.Substring(1, where.Length - 2);*/
         if (String.IsNullOrEmpty(where)) where = null;
-
+        GroupProvider provider = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         context.Response.ContentType = "text/plain";
-        List<Group> list = DBProviders.Group.GetGroups();
+        List<Group> list = provider.GetGroups();
 
         //with groups
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
             tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false, false, false, false));
-            RecursiveAddChildren(tree[tree.Count - 1], list, index, where);
+            RecursiveAddChildren(tree[tree.Count - 1], list, index, where, provider);
             index++;
         }
 
         //without group
         tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, Resources.Resource.CompWithoutGroup, null), false, false, false, false, false, false));
-        foreach (ComputersEntityEx comp in DBProviders.Group.GetComputersExWithoutGroup(where))
+        foreach (ComputersEntityEx comp in provider.GetComputersExWithoutGroup(where))
         {
             for (index = 0; index < comp.Components.Count; index++)
             {
@@ -80,18 +80,18 @@ public class ComputerPageHandler : IHttpHandler {
         return false;
     }
 
-    private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, String where)
+    private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, String where, GroupProvider provider)
     {
         //Groups
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], false, false, false, false, true, false));
-            RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, where);
+            RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, where, provider);
             i++;
         }
         //Comps
-        foreach (ComputersEntityEx comp in DBProviders.Group.GetComputersExByGroup(list[indexList].ID, where))
+        foreach (ComputersEntityEx comp in provider.GetComputersExByGroup(list[indexList].ID, where))
         {
             for (Int16 index = 0; index < comp.Components.Count; index++)
             {

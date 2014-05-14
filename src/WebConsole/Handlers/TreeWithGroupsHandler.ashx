@@ -13,13 +13,14 @@ public class TreeWithGroupsHandler : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
-        List<Group> list = DBProviders.Group.GetGroups();
+        GroupProvider providerGroup = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
+        List<Group> list = providerGroup.GetGroups();
 
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
             tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, true, false, true, true));
-            RecursiveAddChildren(tree[tree.Count - 1], list, index);
+            RecursiveAddChildren(tree[tree.Count - 1], list, index, providerGroup);
             index++;
         }
         
@@ -32,18 +33,18 @@ public class TreeWithGroupsHandler : IHttpHandler {
         }
     }
 
-    private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList)
+    private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, GroupProvider providerGroup)
     {
         //Groups
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, true, false, true, true));
-            RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i);
+            RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, providerGroup);
             i++;
         }
         //Comps
-        foreach (ComputersEntity comp in DBProviders.Group.GetComputersByGroup(list[indexList].ID))
+        foreach (ComputersEntity comp in providerGroup.GetComputersByGroup(list[indexList].ID))
         {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
         }

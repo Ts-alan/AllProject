@@ -13,8 +13,9 @@ public class TreeNoGroupsHandler : IHttpHandler {
         context.Response.ContentType = "text/plain";
 
         List<TreeNodeJSONEntity> tree = new List<TreeNodeJSONEntity>();
+        GroupProvider providerGroup = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
 
-        foreach (ComputersEntity comp in DBProviders.Group.GetComputersWithoutGroup())
+        foreach (ComputersEntity comp in providerGroup.GetComputersWithoutGroup())
         {
             tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, false, true));
         }
