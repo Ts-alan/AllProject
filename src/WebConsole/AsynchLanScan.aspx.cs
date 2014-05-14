@@ -1214,16 +1214,16 @@ public partial class AsynchLanScan : PageBase
 
         foreach (RemoteInfoEntityShow next in  scanResultDict.Values)
         {
-            if (next.IsSelected)
+            if (next.IsSelected && !next.IsDisabled)
             {
-                next.IsDisabled = false;
+                next.IsDisabled = true;
                 /*next.IsSelected = false;*/
                 RemoteInstallEntity rie = new RemoteInstallEntity();
+                rie.IsInstalled = next.IsAgentPortOpen;
                 rie.IP = next.IPAddress.ToString();
                 rie.ComputerName = next.Name;
                 rie.VbaVersion = Vba32VersionInfo.Vba32RemoteControlAgent;
-                rie.SourceFullPath = pathDir + Vba32MsiStorage.GetPathMSI(rie.VbaVersion);
-                rie.ConfigPath = pathConfig;
+                rie.SourceFullPath = pathDir + Vba32MsiStorage.GetPathMSI(rie.VbaVersion);                
                 installEntities.Add(rie);
             }
             ReloadGridView();
@@ -1233,6 +1233,9 @@ public partial class AsynchLanScan : PageBase
         installer.MethodType = GetRemoteMethod();
         installer.InstallAll(installEntities, rebootAfterInstall);
         //Response.Redirect("~/TasksInstall.aspx");
+        String key = "InstallClickCallbackScript";
+        String script = "alert('" + Resources.Resource.InstallGived + "');";
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);
     }
 
     #endregion

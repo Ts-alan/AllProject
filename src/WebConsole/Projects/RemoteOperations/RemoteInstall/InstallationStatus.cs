@@ -16,6 +16,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         Parsing,
         Success,
         Fail,
-        Error
+        Error,
+        Installed
     }
 }

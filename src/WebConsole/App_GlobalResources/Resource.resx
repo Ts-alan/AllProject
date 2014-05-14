@@ -2934,4 +2934,10 @@ system administrator.</value>
   <data name="AttachTasksFilters" xml:space="preserve">
     <value>Attach task filters</value>
   </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="InstallGived" xml:space="preserve">
+    <value>Enqueued for attaching. Details on the page "Attach tasks".</value>
+  </data>
 </root>

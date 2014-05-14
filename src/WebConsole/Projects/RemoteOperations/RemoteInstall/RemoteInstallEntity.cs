@@ -12,12 +12,12 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         private String ip;
         private String guid;
         private String sourceFullPath;
-        private String configPath;
         private Nullable<Int32> exitCode;
         private String errorInfo;
         private InstallationStatusEnum status;
         private Int64 id;
         private String vbaVersion;
+        private Boolean isInstalled;
 
         public Int64 ID
         {
@@ -53,11 +53,6 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
             get { return sourceFullPath; }
             set { sourceFullPath = value; }
         }
-        public String ConfigPath
-        {
-            get { return configPath; }
-            set { configPath = value; }
-        }
         public Nullable<Int32> ExitCode 
         {
             get { return exitCode; }
@@ -72,6 +67,12 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         {
             get { return status; }
             set { status = value; }
+        }
+
+        public Boolean IsInstalled
+        {
+            get { return isInstalled; }
+            set { isInstalled = value; }
         }
     }
 }

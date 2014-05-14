@@ -27,6 +27,7 @@ public static class DatabaseNameLocalization
         _dict.Add("Fail", "Fail");
         _dict.Add("Error", "Error");
         _dict.Add("Parsing", "Parsing");
+        _dict.Add("Installed", "Installed");
 
         _dict.Add("Delivery", "TaskStateDelivery");
         _dict.Add("Execution", "TaskStateExecution");

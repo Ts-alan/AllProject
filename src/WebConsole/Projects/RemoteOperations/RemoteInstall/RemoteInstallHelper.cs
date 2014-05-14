@@ -153,6 +153,13 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         protected static Boolean InstallWithRemoteService(RemoteInstallEntity rie, Credentials credentials, Boolean doRestart)
         {
             InsertIntoBase(ref rie, "Install");
+
+            if (rie.IsInstalled)
+            {
+                SetStatus(rie, InstallationStatusEnum.Installed);
+                return true;
+            }
+
             SetStatus(rie, InstallationStatusEnum.Initializing);
 
             Boolean usedComputerName;

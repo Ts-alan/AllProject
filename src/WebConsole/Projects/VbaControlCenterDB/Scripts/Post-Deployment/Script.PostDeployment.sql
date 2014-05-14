@@ -147,6 +147,7 @@ INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Success');
 INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Fail');
 INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Error');
 INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Parsing');
+INSERT INTO [dbo].[InstallationStatus]([Status]) VALUES(N'Installed');
 GO
 PRINT N'[dbo].[InstallationStatus]: successfully.';
 GO

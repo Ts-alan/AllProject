@@ -2922,4 +2922,10 @@
   <data name="AttachTasksFilters" xml:space="preserve">
     <value>Фильтры для задач подключения</value>
   </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Установлен</value>
+  </data>
+  <data name="InstallGived" xml:space="preserve">
+    <value>Поставлено в очередь на подключение. Подробности на странице "Задачи подключения".</value>
+  </data>
 </root>
