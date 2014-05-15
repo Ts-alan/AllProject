@@ -45,6 +45,7 @@
     <Compile Include="Entities\PMSSettingsEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsProvider.cs" />
+    <Compile Include="SettingTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

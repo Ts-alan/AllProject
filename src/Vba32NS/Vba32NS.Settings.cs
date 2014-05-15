@@ -61,7 +61,7 @@ namespace Vba32.ControlCenter.NotificationService
             LoggerNS.log.Info("Vba32NS.IsReRead():: Started");
             try
             {
-                return SettingsProvider.GetReRead_NS();
+                return SettingsProvider.GetReRead(SettingTypes.NS);
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace Vba32.ControlCenter.NotificationService
             LoggerNS.log.Info("Vba32NS.SkipReRead():: Started");
             try
             {
-                SettingsProvider.SkipReRead_NS();
+                SettingsProvider.SkipReRead(SettingTypes.NS);
             }
             catch (Exception ex)
             {

@@ -124,7 +124,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             LoggerPMS.log.Debug("Vba32PMS.IsReRead():: Enter");
             try
             {
-                return SettingsProvider.GetReRead_PMS();
+                return SettingsProvider.GetReRead(SettingTypes.PMS);
             }
             catch (Exception ex)
             {
@@ -142,7 +142,7 @@ namespace Vba32.ControlCenter.PeriodicalMaintenanceService
             LoggerPMS.log.Debug("Vba32PMS.SkipReRead():: Enter");
             try
             {
-                SettingsProvider.SkipReRead_PMS();                
+                SettingsProvider.SkipReRead(SettingTypes.PMS);                
             }
             catch (Exception ex)
             {

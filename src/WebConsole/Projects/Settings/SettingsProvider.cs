@@ -189,39 +189,29 @@ namespace VirusBlokAda.CC.Settings
             }
         }
 
-        public static Boolean GetReRead_PMS()
+        public static Boolean GetReRead(SettingTypes type)
         {
-            lock (lockToken)
+            switch (type)
             {
-                RegistryKey key = null;
-                try
-                {
-                    key = Registry.LocalMachine.OpenSubKey(PMSKeyName);
-                    return GetBoolean(key, "ReRead");
-                }
-                finally
-                {
-                    if (key != null)
-                        key.Close();
-                }
+                case SettingTypes.PMS:
+                    return GetReReadKey(PMSKeyName);
+                case SettingTypes.NS:
+                    return GetReReadKey(NSKeyName);
+                default:
+                    return false;
             }
         }
 
-        public static void SkipReRead_PMS()
+        public static void SkipReRead(SettingTypes type)
         {
-            lock (lockToken)
+            switch (type)
             {
-                RegistryKey key = null;
-                try
-                {
-                    key = Registry.LocalMachine.OpenSubKey(PMSKeyName);
-                    key.DeleteValue("ReRead");
-                }
-                finally
-                {
-                    if (key != null)
-                        key.Close();
-                }
+                case SettingTypes.PMS:
+                    SkipReReadKey(PMSKeyName);
+                    break;
+                case SettingTypes.NS:
+                    SkipReReadKey(NSKeyName);
+                    break;
             }
         }
 
@@ -259,14 +249,14 @@ namespace VirusBlokAda.CC.Settings
             }
         }
 
-        public static Boolean GetReRead_NS()
+        private static Boolean GetReReadKey(String keyName)
         {
             lock (lockToken)
             {
                 RegistryKey key = null;
                 try
                 {
-                    key = Registry.LocalMachine.OpenSubKey(NSKeyName);
+                    key = Registry.LocalMachine.OpenSubKey(keyName);
                     return GetBoolean(key, "ReRead");
                 }
                 finally
@@ -277,14 +267,14 @@ namespace VirusBlokAda.CC.Settings
             }
         }
 
-        public static void SkipReRead_NS()
+        private static void SkipReReadKey(String keyName)
         {
             lock (lockToken)
             {
                 RegistryKey key = null;
                 try
                 {
-                    key = Registry.LocalMachine.OpenSubKey(NSKeyName);
+                    key = Registry.LocalMachine.OpenSubKey(keyName);
                     key.DeleteValue("ReRead");
                 }
                 finally
