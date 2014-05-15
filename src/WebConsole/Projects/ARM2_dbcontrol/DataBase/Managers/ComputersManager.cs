@@ -376,7 +376,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("GetComputerEx", con);
+                SqlCommand cmd = new SqlCommand("GetComputer", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@ID", computersID);
