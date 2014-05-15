@@ -84,3 +84,4 @@ IF NOT EXIST %1Sql (
 
 ECHO SQL files copying...
 COPY "%bindir%\Sql\%config%\VbaControlCenterDB.dbproj.sql"  %1\Sql\VbaControlCenterDB.sql /Y /V
+COPY "%bindir%\Sql\%config%\Vba32ControlCenterUpdate.exe"  %1\Sql\Vba32ControlCenterUpdate.exe /Y /V
