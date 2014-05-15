@@ -129,6 +129,6 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
                 break;
         }
 
-        return String.Format("msiexec.exe /x \"{0}\" /q /norestart", Vba32VersionInfo.GetGuid(version));
+        return String.Format("<UninstallProduct><GUID>{0}</GUID></UninstallProduct>", Vba32VersionInfo.GetGuid(version));
     }
 }

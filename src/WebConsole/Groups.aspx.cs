@@ -1440,7 +1440,7 @@ public partial class Groups : PageBase
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
-                    control.PacketCreateProcess(new Int64[] { taskId[i] }, new String[] { _set.AllComputers[i].IPAddress }, tskUninstall.BuildTask(_set.AllComputers[i].OSName));
+                    control.PacketCustomAction(new Int64[] { taskId[i] }, new String[] { _set.AllComputers[i].IPAddress }, tskUninstall.BuildTask(_set.AllComputers[i].OSName));
                 }
             }
 
