@@ -2928,4 +2928,40 @@
   <data name="InstallGived" xml:space="preserve">
     <value>Поставлено в очередь на подключение. Подробности на странице "Задачи подключения".</value>
   </data>
+  <data name="BlockWrite" xml:space="preserve">
+    <value>Запрещена запись</value>
+  </data>
+  <data name="InputUID" xml:space="preserve">
+    <value>Введите UID</value>
+  </data>
+  <data name="ApplyNotForAll" xml:space="preserve">
+    <value>Применено не для всех</value>
+  </data>
+  <data name="NoFoundUID" xml:space="preserve">
+    <value>UID не найден</value>
+  </data>
+  <data name="DeviceClassManagment" xml:space="preserve">
+    <value>Управление классами устройств</value>
+  </data>
+  <data name="ClassName" xml:space="preserve">
+    <value>Имя класса</value>
+  </data>
+  <data name="IndicatesRequiredField" xml:space="preserve">
+    <value>поля, обязательные для заполнения</value>
+  </data>
+  <data name="AddNewDeviceClass" xml:space="preserve">
+    <value>Добавить новый класс устройств</value>
+  </data>
+  <data name="DeviceClassComment" xml:space="preserve">
+    <value>Комментарий для класса устройств</value>
+  </data>
+  <data name="ErrorFieldIsEmpty" xml:space="preserve">
+    <value>поле пустое</value>
+  </data>
+  <data name="GuidRegexErrorMessage" xml:space="preserve">
+    <value>UID должен быть в формате {00cd27b6-f21b-11df-a7c8-806e6f6e6963}</value>
+  </data>
+  <data name="ErrorExistPolicy" xml:space="preserve">
+    <value>Политика уже существует</value>
+  </data>
 </root>

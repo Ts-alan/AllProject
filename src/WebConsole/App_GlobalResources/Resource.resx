@@ -2940,4 +2940,40 @@ system administrator.</value>
   <data name="InstallGived" xml:space="preserve">
     <value>Enqueued for attaching. Details on the page "Attach tasks".</value>
   </data>
+  <data name="BlockWrite" xml:space="preserve">
+    <value>Block write</value>
+  </data>
+  <data name="InputUID" xml:space="preserve">
+    <value>Input UID</value>
+  </data>
+  <data name="ApplyNotForAll" xml:space="preserve">
+    <value>Applied not for all</value>
+  </data>
+  <data name="NoFoundUID" xml:space="preserve">
+    <value>UID isn't found</value>
+  </data>
+  <data name="DeviceClassManagment" xml:space="preserve">
+    <value>Device class managment</value>
+  </data>
+  <data name="ClassName" xml:space="preserve">
+    <value>Class name</value>
+  </data>
+  <data name="AddNewDeviceClass" xml:space="preserve">
+    <value>Add a new device class</value>
+  </data>
+  <data name="DeviceClassComment" xml:space="preserve">
+    <value>Comment for device class</value>
+  </data>
+  <data name="ErrorFieldIsEmpty" xml:space="preserve">
+    <value>field is empty</value>
+  </data>
+  <data name="GuidRegexErrorMessage" xml:space="preserve">
+    <value>UID must be in format {00cd27b6-f21b-11df-a7c8-806e6f6e6963}</value>
+  </data>
+  <data name="IndicatesRequiredField" xml:space="preserve">
+    <value>indicates a required field</value>
+  </data>
+  <data name="ErrorExistPolicy" xml:space="preserve">
+    <value>Policy already exists</value>
+  </data>
 </root>

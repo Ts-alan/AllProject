@@ -163,6 +163,31 @@ GO
 PRINT N'[dbo].[ControlDeviceType]: successfully.';
 GO
 
+PRINT N'[dbo].[DeviceClassMode]...';
+GO
+INSERT INTO [dbo].[DeviceClassMode] ([ModeName]) VALUES('Undefined');
+GO
+PRINT N'[dbo].[DeviceClassMode]: successfully.';
+GO
+
+PRINT N'[dbo].[DeviceClass]...';
+GO
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{36FC9E60-C465-11CF-8056-444553540000}', 'USB');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E965-E325-11CE-BFC1-08002BE10318}', 'CDROM');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E969-E325-11CE-BFC1-08002BE10318}', 'fdc');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E96A-E325-11CE-BFC1-08002BE10318}', 'hdc');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E96D-E325-11CE-BFC1-08002BE10318}', 'Modem');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E970-E325-11CE-BFC1-08002BE10318}', 'MTD');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E972-E325-11CE-BFC1-08002BE10318}', 'Net');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E977-E325-11CE-BFC1-08002BE10318}', 'PCMCIA');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E978-E325-11CE-BFC1-08002BE10318}', 'Ports');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{4D36E980-E325-11CE-BFC1-08002BE10318}', 'FloppyDisk');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{6BDD1FC1-810F-11D0-BEC7-08002BE2092F}', '1394');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{6BDD1FC5-810F-11D0-BEC7-08002BE2092F}', 'Infrared');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{E0CBF06C-CD8B-4647-BB8A-263B43F0F974}', 'Bluetooth');
+GO
+PRINT N'[dbo].[DeviceClass]: successfully.';
+GO
 
 PRINT N'Inserting update info...';
 GO

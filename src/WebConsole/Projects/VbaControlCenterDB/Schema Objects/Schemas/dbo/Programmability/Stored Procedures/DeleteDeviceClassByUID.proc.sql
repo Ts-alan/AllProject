@@ -1,0 +1,6 @@
+﻿CREATE PROCEDURE [dbo].[DeleteDeviceClassByUID]
+	@UID nvarchar(38)
+WITH ENCRYPTION
+AS
+	DELETE FROM DeviceClass
+	WHERE [UID] = @UID

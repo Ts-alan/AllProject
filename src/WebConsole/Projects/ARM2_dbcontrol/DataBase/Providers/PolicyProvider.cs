@@ -18,6 +18,7 @@ namespace VirusBlokAda.CC.DataBase
         private DevicePolicyManager devicePolicyMng;
         private ComputersManager cm;
         private GroupManager gm;
+        private DeviceClassManager deviceClassMng;
 
         #region Dictionary
 
@@ -45,6 +46,7 @@ namespace VirusBlokAda.CC.DataBase
             devicePolicyMng = new DevicePolicyManager(connectionString);
             cm = new ComputersManager(connectionString);
             gm = new GroupManager(connectionString);
+            deviceClassMng = new DeviceClassManager(connectionString);
         }
 
         #endregion
@@ -563,6 +565,138 @@ namespace VirusBlokAda.CC.DataBase
             return devicePolicyMng.GetUnknownDevicesList(index, pageCount,
                 null, null);
         }
+        #endregion
+
+        #region Admins action at device class
+
+        public DeviceClass GetDeviceClass(String uid)
+        {
+            return deviceClassMng.GetDeviceClass(uid);
+        }
+
+        public DeviceClass AddDeviceClass(DeviceClass dc)
+        {
+            return deviceClassMng.Add(dc);
+        }
+
+        public void DeleteDeviceClass(DeviceClass dc)
+        {
+            deviceClassMng.Delete(dc);
+        }
+
+        public void ChangeCommentToDeviceClass(DeviceClass dc)
+        {
+            deviceClassMng.ChangeComment(dc);
+        }
+
+        public List<DeviceClass> GetDeviceClassList()
+        {
+            return deviceClassMng.GetDeviceClassList();
+        }
+
+        public List<DeviceClass> GetDeviceClassListByFilter(String where, String orderBy, Int32 index, Int32 pageCount)
+        {
+            return deviceClassMng.GetDeviceClassListByFilter(where, orderBy, index, pageCount);
+        }
+
+        public Int32 GetDeviceClassCount(String where)
+        {
+            return deviceClassMng.GetDeviceClassCount(where);
+        }
+
+        #endregion
+
+        #region Admins action at device class policy
+
+        public DeviceClassPolicy AddDeviceClassPolicy(DeviceClassPolicy dcp)
+        {
+            return deviceClassMng.AddPolicy(dcp);
+        }
+
+        public Int32 AddDeviceClassPolicy(DeviceClassPolicy dcp, Group gr)
+        {
+            return deviceClassMng.AddPolicy(dcp, gr);
+        }
+
+        public Int32 AddDeviceClassPolicyWithoutGroup(DeviceClassPolicy dcp)
+        {
+            return deviceClassMng.AddPolicyWithoutGroup(dcp);
+        }
+
+        public void ChangeModeToDeviceClassPolicy(DeviceClassPolicy dcp, Group gr)
+        {
+            deviceClassMng.ChangeMode(dcp, gr);
+        }
+
+        public Int32 ChangeModeToDeviceClassPolicy(DeviceClassPolicy dcp)
+        {
+            return deviceClassMng.ChangeMode(dcp);
+        }
+
+        public void ChangeModeToDeviceClassPolicyWithoutGroup(DeviceClassPolicy dcp)
+        {
+            deviceClassMng.ChangeModeWithoutGroup(dcp);
+        }
+
+        public void DeleteDeviceClassPolicy(ComputersEntity comp)
+        {
+            deviceClassMng.DeletePolicy(comp);
+        }
+
+        public void DeleteDeviceClassPolicy(DeviceClass dc)
+        {
+            deviceClassMng.DeletePolicy(dc);
+        }
+
+        public void DeleteDeviceClassPolicy(DeviceClassPolicy dcp)
+        {
+            deviceClassMng.DeletePolicy(dcp);
+        }
+
+        public void DeleteDeviceClassPolicy(Group gr)
+        {
+            deviceClassMng.DeletePolicy(gr);
+        }
+
+        public void DeleteDeviceClassPolicy(DeviceClass dc, Group gr)
+        {
+            deviceClassMng.DeletePolicy(dc, gr);
+        }
+
+        public void DeleteDeviceClassPolicyWithoutGroup(DeviceClass dc)
+        {
+            deviceClassMng.DeletePolicyWithoutGroup(dc);
+        }
+
+        public List<DeviceClassPolicy> GetDeviceClassComputerList(DeviceClass dc)
+        {
+            return deviceClassMng.GetComputerList(dc);
+        }
+
+        public List<DeviceClassPolicy> GetDeviceClassPolicyList(ComputersEntity comp)
+        {
+            return deviceClassMng.GetPolicyList(comp);
+        }
+
+        public List<DeviceClassPolicy> GetDeviceClassPolicyList(Group gr)
+        {
+            return deviceClassMng.GetPolicyList(gr);
+        }
+
+        /// <summary>
+        /// Get list of device class policy without groups
+        /// </summary>
+        /// <returns></returns>
+        public List<DeviceClassPolicy> GetDeviceClassPolicyList()
+        {
+            return deviceClassMng.GetPolicyList();
+        }
+
+        public List<String> GetDeviceClassModeList()
+        {
+            return deviceClassMng.GetDeviceClassModeList();
+        }
+
         #endregion
     }
 }

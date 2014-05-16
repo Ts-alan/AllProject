@@ -13,5 +13,6 @@ public enum InformationListTypes
     TasksInstall,
     Devices,
     UnknownDevices,
-    Diagrams
+    Diagrams,
+    DeviceClass
 }

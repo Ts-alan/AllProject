@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[DeviceClass]
+    ADD CONSTRAINT [U_DeviceClass_UID]
+    UNIQUE NONCLUSTERED ([UID])

@@ -124,6 +124,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataBase\Entities\AutomaticallyTaskEntity.cs" />
+    <Compile Include="DataBase\Entities\DeviceClass.cs" />
+    <Compile Include="DataBase\Entities\DeviceClassMode.cs" />
+    <Compile Include="DataBase\Entities\DeviceClassPolicy.cs" />
+    <Compile Include="DataBase\Managers\DeviceClassManager.cs" />
     <Compile Include="DataBase\Managers\EventsFlowManager.cs" />
     <Compile Include="DataBase\Managers\PParserManager.cs" />
     <Compile Include="DataBase\Providers\ComputerProvider.cs" />

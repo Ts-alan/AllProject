@@ -38,6 +38,10 @@ public static class DatabaseNameLocalization
         _dict.Add("Execution timeout", "TaskStateExecutionTimeout");
         _dict.Add("In queue", "TaskStateInQueue");
         _dict.Add("Sended", "TaskStateSended");
+
+        _dict.Add("BlockWrite", "BlockWrite");
+        _dict.Add("Enabled", "Enabled");
+        _dict.Add("Disabled", "Disabled");
 	}
 
     public static String GetNameForCurrentCulture(String name)
