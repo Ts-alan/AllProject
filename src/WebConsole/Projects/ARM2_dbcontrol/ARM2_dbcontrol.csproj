@@ -225,6 +225,7 @@
     <Compile Include="Service\VSIS\VSISWrapper.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
     <Compile Include="Tasks\ConfigureFirewall\TaskConfigureFirewall.cs" />
+    <Compile Include="Tasks\ConfigureIntegrityCheck\TaskConfigureIntegrityCheck.cs" />
     <Compile Include="Tasks\ConfigureJournalEvent\JournalEvent.cs" />
     <Compile Include="Tasks\ConfigureLoader\TaskConfigureLoader.cs" />
     <Compile Include="Tasks\ConfigureMonitor\MonitorActionsEnum.cs" />

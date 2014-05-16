@@ -69,6 +69,7 @@ public partial class TaskCreate : PageBase
                 tskRequestPolicy.Visible = false;
                 tskConfigureScheduler.Visible = false;
                 tskRunScanner.Visible = false;
+                tskConfigureIntegrityCheck.Visible = false;
 
                 LoadStateTask(task);
 
@@ -179,6 +180,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "ChangeDeviceProtect":
                         taskUserType.Type = TaskType.ChangeDeviceProtect;
+                        break;
+                    case "IntegrityCheck":
+                        taskUserType.Type = TaskType.ConfigureIntegrityCheck;
                         break;
                 }
 
@@ -343,7 +347,13 @@ public partial class TaskCreate : PageBase
                 lblTaskName.Visible = false;
 
                 break;
+            case TaskType.ConfigureIntegrityCheck:
+                tskConfigureIntegrityCheck.InitFields();
+                tskConfigureIntegrityCheck.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
+                tskConfigureIntegrityCheck.Visible = true;
 
+                break;
         }
     }
 
@@ -455,6 +465,11 @@ public partial class TaskCreate : PageBase
                     task = tskConfigureScheduler.GetCurrentState();
                     tskConfigureScheduler.ValidateFields();
                     break;
+                case "ConfigureIntegrityCheck":
+                    task.Type = TaskType.ConfigureIntegrityCheck;
+                    task = tskConfigureIntegrityCheck.GetCurrentState();
+                    tskConfigureIntegrityCheck.ValidateFields();
+                    break;
 
                 default:
                     break;
@@ -505,7 +520,9 @@ public partial class TaskCreate : PageBase
                 (resctrl.IsExist("TaskNameVba32MonitorDisable", task.Name)) ||
                 (resctrl.IsExist("TaskNameVba32ProgramAndDataBaseUpdate", task.Name)) ||
                 (resctrl.IsExist("TaskNameRestoreFileFromQtn", task.Name)) ||
-                (resctrl.IsExist("TaskNameConfigurePassword", task.Name)))
+                (resctrl.IsExist("TaskNameConfigurePassword", task.Name)) ||
+                (resctrl.IsExist("TaskConfigureIntegrityCheck", task.Name))
+                )
             {
                 throw new Exception(Resources.Resource.ErrorCreateTaskWithBaseName);
             }

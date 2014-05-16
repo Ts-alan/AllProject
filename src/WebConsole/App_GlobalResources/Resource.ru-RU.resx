@@ -3312,4 +3312,22 @@
   <data name="WindowsJournal" xml:space="preserve">
     <value>Журнал Windows</value>
   </data>
+  <data name="Change" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="CheckState" xml:space="preserve">
+    <value>Проверить состояние</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>Сохранить состояние</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="TaskNameIntegrityCheck" xml:space="preserve">
+    <value>Проверить целостность</value>
+  </data>
 </root>

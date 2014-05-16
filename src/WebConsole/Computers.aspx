@@ -31,6 +31,7 @@
 <%@ Register Src="~/Controls/TaskMonitorOn.ascx" TagName="TaskUser" TagPrefix="tskMonitorOn" %>
 <%@ Register Src="~/Controls/TaskMonitorOff.ascx" TagName="TaskUser" TagPrefix="tskMonitorOff" %>
 <%@ Register Src="~/Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
+<%@ Register Src="~/Controls/TaskConfigureIntegrityCheck.ascx" TagName="TaskUser" TagPrefix="tskConfigureIntegrityCheck" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" ScriptMode="Release"/>
@@ -292,6 +293,7 @@
                           <tskMonitorOn:TaskUser ID="tskMonitorOn" runat="server" Visible="false" />
                           <tskMonitorOff:TaskUser ID="tskMonitorOff" runat="server" Visible="false" />
                           <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true" />
+                          <tskConfigureIntegrityCheck:TaskUser ID="tskConfigureIntegrityCheck" runat="server" Visible="false" />
                     </asp:Panel>
                 </td>
             </tr>

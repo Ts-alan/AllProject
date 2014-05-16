@@ -34,6 +34,7 @@ namespace ARM2_dbcontrol.Tasks
         AgentSettings,
         ConfigureScanner,
         MonitorOn,
-        MonitorOff
+        MonitorOff,
+	ConfigureIntegrityCheck
     }
 }

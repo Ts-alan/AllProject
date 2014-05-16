@@ -3324,4 +3324,22 @@ system administrator.</value>
   <data name="WindowsJournal" xml:space="preserve">
     <value>Windows journal</value>
   </data>
+  <data name="Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CheckState" xml:space="preserve">
+    <value>Check State</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>Save State</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="TaskNameIntegrityCheck" xml:space="preserve">
+    <value>Check integrity</value>
+  </data>
 </root>

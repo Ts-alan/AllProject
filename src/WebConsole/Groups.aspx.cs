@@ -816,6 +816,7 @@ public partial class Groups : PageBase
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
         taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
         taskName.Add(Resources.Resource.TaskRequestPolicy);
+        taskName.Add(Resources.Resource.TaskNameIntegrityCheck);
 
         taskName.Add(Resources.Resource.TaskSeparator);
 
@@ -1456,6 +1457,20 @@ public partial class Groups : PageBase
                 }
                 control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), task.Param);
             }
+
+            if (tskConfigureIntegrityCheck.Visible == true)
+            {
+                task = tskConfigureIntegrityCheck.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskConfigureIntegrityCheck.ValidateFields();
+
+                for (int i = 0; i < _set.AllComputers.Count; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureIntegrityCheck.BuildTask());
+            }
         }
         catch (ArgumentException argEx)
         {
@@ -1837,16 +1852,25 @@ public partial class Groups : PageBase
                                                                                                         lbtnDelete.Visible = false;
                                                                                                     }
                                                                                                     else
-                                                                                                    {
-                                                                                                        //User task
-                                                                                                        collection = (TaskUserCollection)Session["TaskUser"];
-                                                                                                        foreach (TaskUserEntity tsk in collection)
+                                                                                                        if (name == Resources.Resource.TaskNameIntegrityCheck)
                                                                                                         {
-                                                                                                            if (tsk.Name == name)
-                                                                                                                task = tsk;
+                                                                                                            task.Type = TaskType.ConfigureIntegrityCheck;
+                                                                                                            task.Name = name;
+                                                                                                            task.Param = String.Empty;
+
+                                                                                                            lbtnDelete.Visible = false;
                                                                                                         }
-                                                                                                        lbtnDelete.Visible = true;
-                                                                                                    }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            //User task
+                                                                                                            collection = (TaskUserCollection)Session["TaskUser"];
+                                                                                                            foreach (TaskUserEntity tsk in collection)
+                                                                                                            {
+                                                                                                                if (tsk.Name == name)
+                                                                                                                    task = tsk;
+                                                                                                            }
+                                                                                                            lbtnDelete.Visible = true;
+                                                                                                        }
 
         tskCreateProcess.Visible = false;
         tskSendFile.Visible = false;
@@ -1870,6 +1894,7 @@ public partial class Groups : PageBase
         tskMonitorOn.Visible = false;
         tskMonitorOff.Visible = false;
         tskRunScanner.Visible = false;
+        tskConfigureIntegrityCheck.Visible = false;
 
         switch (task.Type)
         {
@@ -1992,6 +2017,11 @@ public partial class Groups : PageBase
             case TaskType.MonitorOff:
                 tskMonitorOff.LoadState(task);
                 tskMonitorOff.Visible = true;
+                break;
+            case TaskType.ConfigureIntegrityCheck:
+                tskConfigureIntegrityCheck.InitFields();
+                tskConfigureIntegrityCheck.LoadState(task);
+                tskConfigureIntegrityCheck.Visible = true;
                 break;
             default:
                 break;
@@ -2136,10 +2166,18 @@ public partial class Groups : PageBase
                                                             tskFirewall.ValidateFields();
                                                         }
                                                         else
-                                                        {
-                                                            task = collection.Get(name);
-                                                            //editing = "";
-                                                        }
+                                                            if (name == Resources.Resource.TaskNameIntegrityCheck)
+                                                            {
+                                                                task.Type = TaskType.ConfigureIntegrityCheck;
+                                                                task.Name = name;
+                                                                task = tskConfigureIntegrityCheck.GetCurrentState();
+                                                                tskConfigureIntegrityCheck.ValidateFields();
+                                                            }
+                                                            else
+                                                            {
+                                                                task = collection.Get(name);
+                                                                //editing = "";
+                                                            }
 
         //
         string type = task.Type.ToString();
