@@ -224,6 +224,8 @@
     <Compile Include="Service\VSIS\UpdateService.cs" />
     <Compile Include="Service\VSIS\VSISWrapper.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
+    <Compile Include="Tasks\ConfigureFirewall\TaskConfigureFirewall.cs" />
+    <Compile Include="Tasks\ConfigureJournalEvent\JournalEvent.cs" />
     <Compile Include="Tasks\ConfigureLoader\TaskConfigureLoader.cs" />
     <Compile Include="Tasks\ConfigureMonitor\MonitorActionsEnum.cs" />
     <Compile Include="Tasks\ConfigureMonitor\TaskConfigureMonitor.cs" />
@@ -231,7 +233,6 @@
     <Compile Include="Tasks\ConfigureScanner\TaskConfigureScanner.cs" />
     <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
-    <Compile Include="Tasks\Firewall\TaskFirewall.cs" />
     <Compile Include="Tasks\IConfigureTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\MonitorOnOff\TaskMonitorOnOff.cs" />

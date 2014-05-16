@@ -75,7 +75,7 @@ public partial class TaskCreate : PageBase
 
                 if (task.Type == TaskType.Firewall && task.Name != String.Empty)
                 {
-                    tbSaveAs.Text = task.Name.Substring(9);
+                    tbSaveAs.Text = task.Name.Substring(10);
                 }
                 else
                     if (task.Type == TaskType.ConfigureSheduler && task.Name != String.Empty)
@@ -309,7 +309,8 @@ public partial class TaskCreate : PageBase
 
                 break;
             case TaskType.Firewall:
-                tskFirewall.ShowProfileDetails(task);
+                tskFirewall.InitFields();
+                tskFirewall.LoadState(task);
                 lblTaskName.Text = Resources.Resource.TaskName;
                 tskFirewall.Visible = true;
 

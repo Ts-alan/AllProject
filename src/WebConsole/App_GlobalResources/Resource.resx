@@ -2976,4 +2976,352 @@ system administrator.</value>
   <data name="ErrorExistPolicy" xml:space="preserve">
     <value>Policy already exists</value>
   </data>
+  <data name="ChangeRule" xml:space="preserve">
+    <value>Change rule</value>
+  </data>
+  <data name="DestinationIP" xml:space="preserve">
+    <value>Destination IP</value>
+  </data>
+  <data name="LocalIP" xml:space="preserve">
+    <value>Local IP</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Add Rule</value>
+  </data>
+  <data name="AddTcpUdpRule" xml:space="preserve">
+    <value>Add TCP/UDP Rule</value>
+  </data>
+  <data name="AllowReceive" xml:space="preserve">
+    <value>Allow receive</value>
+  </data>
+  <data name="AllowReceiveSend" xml:space="preserve">
+    <value>Allow receive/send</value>
+  </data>
+  <data name="AllowSend" xml:space="preserve">
+    <value>Allow send</value>
+  </data>
+  <data name="DenyAll" xml:space="preserve">
+    <value>Deny All</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="DestinationAddress" xml:space="preserve">
+    <value>Destination address</value>
+  </data>
+  <data name="KeepStatistics" xml:space="preserve">
+    <value>Keep Statistics</value>
+  </data>
+  <data name="LocalAddress" xml:space="preserve">
+    <value>Local address</value>
+  </data>
+  <data name="pn3PC" xml:space="preserve">
+    <value>Third Party Connect Protocol</value>
+  </data>
+  <data name="pnANY_DISTRIBUTED" xml:space="preserve">
+    <value>any distributed file system</value>
+  </data>
+  <data name="pnANY_HOST" xml:space="preserve">
+    <value>Any host Internal protocol</value>
+  </data>
+  <data name="pnANY_LOCAL" xml:space="preserve">
+    <value>any local network</value>
+  </data>
+  <data name="pnANY_PRIVATE" xml:space="preserve">
+    <value>any Private encryption scheme</value>
+  </data>
+  <data name="pnARGUS" xml:space="preserve">
+    <value>ARGUS</value>
+  </data>
+  <data name="pnAX_25" xml:space="preserve">
+    <value>AX.25 Frames</value>
+  </data>
+  <data name="pnBBN_RCC_MON" xml:space="preserve">
+    <value>BBN RCC Monitoring</value>
+  </data>
+  <data name="pnBNA" xml:space="preserve">
+    <value>BNA</value>
+  </data>
+  <data name="pnBR_SAT_MON" xml:space="preserve">
+    <value>Backroom SATNET Monitoring</value>
+  </data>
+  <data name="pnCFTP" xml:space="preserve">
+    <value>CFTP</value>
+  </data>
+  <data name="pnCHAOS" xml:space="preserve">
+    <value>Chaos</value>
+  </data>
+  <data name="pnCPHB" xml:space="preserve">
+    <value>Computer Protocol Heart Beat</value>
+  </data>
+  <data name="pnCPNX" xml:space="preserve">
+    <value>Computer Protocol Network Executive</value>
+  </data>
+  <data name="pnDCN_MEAS" xml:space="preserve">
+    <value>DCN Measurement Subsystems</value>
+  </data>
+  <data name="pnDDP" xml:space="preserve">
+    <value>Datagram Delivery Protocol</value>
+  </data>
+  <data name="pnDGP" xml:space="preserve">
+    <value>Dissimilar Gateway Protocol</value>
+  </data>
+  <data name="pnEGP" xml:space="preserve">
+    <value>Exterior Gateway Protocol</value>
+  </data>
+  <data name="pnEMCON" xml:space="preserve">
+    <value>EMCON</value>
+  </data>
+  <data name="pnENCAP" xml:space="preserve">
+    <value>Encapsulation Header</value>
+  </data>
+  <data name="pnGGP" xml:space="preserve">
+    <value>Gateway-to-Gateway</value>
+  </data>
+  <data name="pnGMTP" xml:space="preserve">
+    <value>GMTP</value>
+  </data>
+  <data name="pnGRE" xml:space="preserve">
+    <value>General Routing Encapsulation</value>
+  </data>
+  <data name="pnHMP" xml:space="preserve">
+    <value>Host Monitoring</value>
+  </data>
+  <data name="pnICMP" xml:space="preserve">
+    <value>Internet Control Message</value>
+  </data>
+  <data name="pnIDPR" xml:space="preserve">
+    <value>Inter-Domain Policy Routing Protocol</value>
+  </data>
+  <data name="pnIDPR_CMTP" xml:space="preserve">
+    <value>IDPR Control Message Transport Protocol</value>
+  </data>
+  <data name="pnIDRP" xml:space="preserve">
+    <value>Inter-Domain Routing Protocol</value>
+  </data>
+  <data name="pnIGMP" xml:space="preserve">
+    <value>Internet Group Management</value>
+  </data>
+  <data name="pnIGP" xml:space="preserve">
+    <value>any Private interior gateway</value>
+  </data>
+  <data name="pnIGRP" xml:space="preserve">
+    <value>IGRP</value>
+  </data>
+  <data name="pnIL" xml:space="preserve">
+    <value>IL Transport Protocol</value>
+  </data>
+  <data name="pnIP" xml:space="preserve">
+    <value>IP in IP(encapsulation)</value>
+  </data>
+  <data name="pnIPCV" xml:space="preserve">
+    <value>Internet Packet Core Utility</value>
+  </data>
+  <data name="pnIPIP" xml:space="preserve">
+    <value>IP-within-IP Encapsulation Protocol</value>
+  </data>
+  <data name="pnIPPC" xml:space="preserve">
+    <value>Internet Pluribus Packet Core</value>
+  </data>
+  <data name="pnIRTP" xml:space="preserve">
+    <value>Internet Reliable Transaction</value>
+  </data>
+  <data name="pnISO_IP" xml:space="preserve">
+    <value>ISO Internet Protocol</value>
+  </data>
+  <data name="pnISO_TP4" xml:space="preserve">
+    <value>ISO Transport Protocol Class 4</value>
+  </data>
+  <data name="pnI_NLSP" xml:space="preserve">
+    <value>Integrated Net Layer Security TUBA</value>
+  </data>
+  <data name="pnKRYPTOLAN" xml:space="preserve">
+    <value>Kryptolan</value>
+  </data>
+  <data name="pnLARP" xml:space="preserve">
+    <value>Locus Address Resolution Protocol</value>
+  </data>
+  <data name="pnLEAF_1" xml:space="preserve">
+    <value>Leaf-1</value>
+  </data>
+  <data name="pnLEAF_2" xml:space="preserve">
+    <value>Leaf-2</value>
+  </data>
+  <data name="pnMERIT_INP" xml:space="preserve">
+    <value>MERIT Internodal Protocol</value>
+  </data>
+  <data name="pnMFE_NSP" xml:space="preserve">
+    <value>MFE Network Services Protocol</value>
+  </data>
+  <data name="pnMHRP" xml:space="preserve">
+    <value>Mobile Host Routing Protocol</value>
+  </data>
+  <data name="pnMICP" xml:space="preserve">
+    <value>Mobile Interworking Control Pro.</value>
+  </data>
+  <data name="pnMTP" xml:space="preserve">
+    <value>Multicast Transport Protocol</value>
+  </data>
+  <data name="pnMUX" xml:space="preserve">
+    <value>Multiplexing</value>
+  </data>
+  <data name="pnNETBLT" xml:space="preserve">
+    <value>Bulk Data Transfer Protocol</value>
+  </data>
+  <data name="pnNHRP" xml:space="preserve">
+    <value>NBMA Next Hop Resolution Protocol </value>
+  </data>
+  <data name="pnNSFNET_IGP" xml:space="preserve">
+    <value>NSFNET-IGP</value>
+  </data>
+  <data name="pnNVP_II" xml:space="preserve">
+    <value>Network Voice Protocol</value>
+  </data>
+  <data name="pnOSPFIGP" xml:space="preserve">
+    <value>OSPFIGP</value>
+  </data>
+  <data name="pnPRM" xml:space="preserve">
+    <value>Packet Radio Measurement</value>
+  </data>
+  <data name="pnPUP" xml:space="preserve">
+    <value>PUP</value>
+  </data>
+  <data name="pnPVP" xml:space="preserve">
+    <value>Packet Video Protocol</value>
+  </data>
+  <data name="pnRDP" xml:space="preserve">
+    <value>Reliable Data Protocol</value>
+  </data>
+  <data name="pnRSVP" xml:space="preserve">
+    <value>Reservation Protocol</value>
+  </data>
+  <data name="pnRVD" xml:space="preserve">
+    <value>MIT Remote Virtual Disk Protocol</value>
+  </data>
+  <data name="pnSAT_EXPAK" xml:space="preserve">
+    <value>SATNET and Backroom EXPAK</value>
+  </data>
+  <data name="pnSAT_MON" xml:space="preserve">
+    <value>SATNET Monitoring</value>
+  </data>
+  <data name="pnSCC_SP" xml:space="preserve">
+    <value>Semaphore Communications Sec. Pro</value>
+  </data>
+  <data name="pnSDRP" xml:space="preserve">
+    <value>Source Demand Routing Protocol</value>
+  </data>
+  <data name="pnSECURE_VMTP" xml:space="preserve">
+    <value>SECURE-VMTP</value>
+  </data>
+  <data name="pnSEP" xml:space="preserve">
+    <value>Sequential Exchange Protocol</value>
+  </data>
+  <data name="pnSIP" xml:space="preserve">
+    <value>Simple Transport Protocol</value>
+  </data>
+  <data name="pnSIPP_AH" xml:space="preserve">
+    <value>SIPP Authentication Header</value>
+  </data>
+  <data name="pnSIPP_ESP" xml:space="preserve">
+    <value>SIPP Encap Security Payload</value>
+  </data>
+  <data name="pnSIP_FRAG" xml:space="preserve">
+    <value>SIP Fragment</value>
+  </data>
+  <data name="pnSIP_SR" xml:space="preserve">
+    <value>SIP Source Route</value>
+  </data>
+  <data name="pnSprite_RPC" xml:space="preserve">
+    <value>Sprite RPC Protocol</value>
+  </data>
+  <data name="pnST" xml:space="preserve">
+    <value>Stream</value>
+  </data>
+  <data name="pnSUN_ND" xml:space="preserve">
+    <value>SUN ND PROTOCOL-Temporary</value>
+  </data>
+  <data name="pnSWIPE" xml:space="preserve">
+    <value>IP with Encryption</value>
+  </data>
+  <data name="pnTCF" xml:space="preserve">
+    <value>TCF</value>
+  </data>
+  <data name="pnTCP" xml:space="preserve">
+    <value>Transmission Control</value>
+  </data>
+  <data name="pnTP" xml:space="preserve">
+    <value>TP++ Transport Protocol</value>
+  </data>
+  <data name="pnTRUNK_1" xml:space="preserve">
+    <value>Trunk-1</value>
+  </data>
+  <data name="pnTRUNK_2" xml:space="preserve">
+    <value>Trunk-2</value>
+  </data>
+  <data name="pnTTP" xml:space="preserve">
+    <value>TTP</value>
+  </data>
+  <data name="pnUCL" xml:space="preserve">
+    <value>UCL</value>
+  </data>
+  <data name="pnUDP" xml:space="preserve">
+    <value>User Datagram</value>
+  </data>
+  <data name="pnVINES" xml:space="preserve">
+    <value>VINES</value>
+  </data>
+  <data name="pnVISA" xml:space="preserve">
+    <value>VISA Protocol</value>
+  </data>
+  <data name="pnVMTP" xml:space="preserve">
+    <value>VMTP</value>
+  </data>
+  <data name="pnWB_EXPAK" xml:space="preserve">
+    <value>WIDEBAND EXPAK</value>
+  </data>
+  <data name="pnWB_MON" xml:space="preserve">
+    <value>WIDEBAND Monitoring</value>
+  </data>
+  <data name="pnWSN" xml:space="preserve">
+    <value>Wang Span Network</value>
+  </data>
+  <data name="pnXNET" xml:space="preserve">
+    <value>Cross Net Debugger</value>
+  </data>
+  <data name="pnXNS_IDP" xml:space="preserve">
+    <value>XEROX NS IDP</value>
+  </data>
+  <data name="pnXTP" xml:space="preserve">
+    <value>XTP</value>
+  </data>
+  <data name="pnETHERIP" xml:space="preserve">
+    <value>Ethernet-within-IP Encapsulation</value>
+  </data>
+  <data name="pnUNASSIGNED" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="OtherProtocols" xml:space="preserve">
+    <value>Other protocols</value>
+  </data>
+  <data name="ProtocolsInIncorrectFormat" xml:space="preserve">
+    <value>Inccorrect format for protocols</value>
+  </data>
+  <data name="Ip6AddressInIncorrectFormat" xml:space="preserve">
+    <value>Incorrect ipv6 address, range  (Examples: ABCD:EF01:2345:6789:0:0:0:0, ABCD:EF01:2345:6789:0:0:0:0-ABCD:EF01:2345:6789:0:0:0:8, *)</value>
+  </data>
+  <data name="ProtocolsAreNotSelected" xml:space="preserve">
+    <value>Protocols are not selected</value>
+  </data>
+  <data name="JournalEvents" xml:space="preserve">
+    <value>Journal events</value>
+  </data>
+  <data name="CCJournal" xml:space="preserve">
+    <value>CC journal</value>
+  </data>
+  <data name="LocalJournal" xml:space="preserve">
+    <value>Local journal</value>
+  </data>
+  <data name="WindowsJournal" xml:space="preserve">
+    <value>Windows journal</value>
+  </data>
 </root>

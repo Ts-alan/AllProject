@@ -811,7 +811,7 @@ public partial class Groups : PageBase
         taskName.Add(Resources.Resource.TaskNameConfigureQuarantine);
         //taskName.Add(Resources.Resource.TaskNameConfigureProactiveProtection);
         //taskName.Add(Resources.Resource.ConfigureScheduler);
-        //taskName.Add(Resources.Resource.TaskNameConfigureFirewall);
+        taskName.Add(Resources.Resource.TaskNameConfigureFirewall);
         taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
         taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
@@ -831,7 +831,7 @@ public partial class Groups : PageBase
         List<string> nameCollection = new List<string>();
         foreach (TaskUserEntity task in collection)
         {
-            if (task.Type != TaskType.Firewall && task.Type != TaskType.ConfigureSheduler)
+            if (task.Type != TaskType.ConfigureSheduler)
                 nameCollection.Add(task.Name);
         }
         nameCollection.Sort();
@@ -1372,18 +1372,16 @@ public partial class Groups : PageBase
 
             if (tskFirewall.Visible == true)
             {
-                if ((tskFirewall.FindControl("ddlProfiles") as DropDownList).Items.Count == 0)
-                    throw new ArgumentException(Resources.Resource.ErrorNotSelectProfile);
-                TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
-                task = collection.Get(String.Format("Firewall:{0}", (tskFirewall.FindControl("ddlProfiles") as DropDownList).SelectedValue));
+                task = tskFirewall.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskFirewall.ValidateFields();
 
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, Resources.Resource.TaskNameConfigureFirewall + ": " + task.Name.Substring(9), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                //Написать реализацию отправки задачи
-                //control.PacketCustomAction(taskId, ipAddr, tskFirewall.BuildTask(@"%VBA32%???", task.Param));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskFirewall.BuildTask());
             }
 
             if (tskConfigureScheduler.Visible == true)
@@ -1782,7 +1780,7 @@ public partial class Groups : PageBase
                                                                                 task.Name = Resources.Resource.TaskNameConfigureFirewall;
                                                                                 task.Param = xmlBuil.Result;
                                                                                 lbtnDelete.Visible = false;
-                                                                                lbtnSave.Visible = false;
+                                                                                lbtnSave.Visible = true;
                                                                             }
                                                                             else
                                                                                 if (name == Resources.Resource.TaskNameConfigureProactiveProtection)
@@ -1959,6 +1957,7 @@ public partial class Groups : PageBase
             case TaskType.Firewall:
 
                 tskFirewall.InitFields();
+                tskFirewall.LoadState(task);
                 tskFirewall.Visible = true;
                 break;
 
@@ -2128,12 +2127,19 @@ public partial class Groups : PageBase
                                                         task.Name = Resources.Resource.TaskNameRestoreFileFromQtn;
                                                         task = tskRestoreFileFromQtn.GetCurrentState();
                                                     }
-
                                                     else
-                                                    {
-                                                        task = collection.Get(name);
-                                                        //editing = "";
-                                                    }
+                                                        if (name == Resources.Resource.TaskNameConfigureFirewall)
+                                                        {
+                                                            task.Type = TaskType.Firewall;
+                                                            task.Name = name;
+                                                            task = tskFirewall.GetCurrentState();
+                                                            tskFirewall.ValidateFields();
+                                                        }
+                                                        else
+                                                        {
+                                                            task = collection.Get(name);
+                                                            //editing = "";
+                                                        }
 
         //
         string type = task.Type.ToString();

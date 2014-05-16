@@ -85,6 +85,20 @@ namespace VirusBlokAda.CC.Common.Xml
             return String.Empty;
         }
 
+        /// <summary>
+        /// Читает XML значение из xml файла
+        /// </summary>
+        /// <param name="tag">тэг</param>
+        /// <returns>значение</returns>
+        public String GetXmlValue(String tag)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
 
+            foreach (XmlNode str in (doc.GetElementsByTagName(tag)))
+                return str.InnerXml;
+
+            return String.Empty;
+        }
     }
 }

@@ -2964,4 +2964,352 @@
   <data name="ErrorExistPolicy" xml:space="preserve">
     <value>Политика уже существует</value>
   </data>
+  <data name="ChangeRule" xml:space="preserve">
+    <value>Изменить правило</value>
+  </data>
+  <data name="DestinationIP" xml:space="preserve">
+    <value>IP назначения</value>
+  </data>
+  <data name="LocalIP" xml:space="preserve">
+    <value>Локальный IP</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Добавить правило</value>
+  </data>
+  <data name="AddTcpUdpRule" xml:space="preserve">
+    <value>Добавить TCP/UDP правило</value>
+  </data>
+  <data name="AllowReceive" xml:space="preserve">
+    <value>Разрешить получение</value>
+  </data>
+  <data name="AllowReceiveSend" xml:space="preserve">
+    <value>Разрешить отправку/получение</value>
+  </data>
+  <data name="AllowSend" xml:space="preserve">
+    <value>Разрешить отправку</value>
+  </data>
+  <data name="DenyAll" xml:space="preserve">
+    <value>Запретить все</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Аудит</value>
+  </data>
+  <data name="DestinationAddress" xml:space="preserve">
+    <value>Адрес назначения</value>
+  </data>
+  <data name="KeepStatistics" xml:space="preserve">
+    <value>Держать статистику</value>
+  </data>
+  <data name="LocalAddress" xml:space="preserve">
+    <value>Локальный адрес</value>
+  </data>
+  <data name="pn3PC" xml:space="preserve">
+    <value>Протокол подключения третьей партии</value>
+  </data>
+  <data name="pnANY_DISTRIBUTED" xml:space="preserve">
+    <value>Любая распределенная файловая система</value>
+  </data>
+  <data name="pnANY_HOST" xml:space="preserve">
+    <value>Любой хост внутреннего протокола</value>
+  </data>
+  <data name="pnANY_LOCAL" xml:space="preserve">
+    <value>Любая локальная сеть</value>
+  </data>
+  <data name="pnANY_PRIVATE" xml:space="preserve">
+    <value>Любая частная схема шифрования</value>
+  </data>
+  <data name="pnARGUS" xml:space="preserve">
+    <value>ARGUS</value>
+  </data>
+  <data name="pnAX_25" xml:space="preserve">
+    <value>AX.25 Кадры</value>
+  </data>
+  <data name="pnBBN_RCC_MON" xml:space="preserve">
+    <value>BBN RCC Мониторинг</value>
+  </data>
+  <data name="pnBNA" xml:space="preserve">
+    <value>BNA</value>
+  </data>
+  <data name="pnBR_SAT_MON" xml:space="preserve">
+    <value>Backroom SATNET Мониторинг</value>
+  </data>
+  <data name="pnCFTP" xml:space="preserve">
+    <value>CFTP</value>
+  </data>
+  <data name="pnCHAOS" xml:space="preserve">
+    <value>Chaos</value>
+  </data>
+  <data name="pnCPHB" xml:space="preserve">
+    <value>Компьютерный протокол Heart Beat</value>
+  </data>
+  <data name="pnCPNX" xml:space="preserve">
+    <value>Исполнительный сетевой протокол компьтера</value>
+  </data>
+  <data name="pnDCN_MEAS" xml:space="preserve">
+    <value>DCN Подсистемы измерения</value>
+  </data>
+  <data name="pnDDP" xml:space="preserve">
+    <value>Протокол доставки дейтаграмм</value>
+  </data>
+  <data name="pnDGP" xml:space="preserve">
+    <value>Разнородный протокол шлюза</value>
+  </data>
+  <data name="pnEGP" xml:space="preserve">
+    <value>Протокол внешней маршрутизации</value>
+  </data>
+  <data name="pnEMCON" xml:space="preserve">
+    <value>EMCON</value>
+  </data>
+  <data name="pnENCAP" xml:space="preserve">
+    <value>Заголовок Инкапсуляции</value>
+  </data>
+  <data name="pnGGP" xml:space="preserve">
+    <value>шлюз-шлюз</value>
+  </data>
+  <data name="pnGMTP" xml:space="preserve">
+    <value>GMTP</value>
+  </data>
+  <data name="pnGRE" xml:space="preserve">
+    <value>Инкапсуляция главной маршрутизации</value>
+  </data>
+  <data name="pnHMP" xml:space="preserve">
+    <value>Мониторинг хоста</value>
+  </data>
+  <data name="pnICMP" xml:space="preserve">
+    <value>Сообщение управления интернетом</value>
+  </data>
+  <data name="pnIDPR" xml:space="preserve">
+    <value>Междоменная политика протоколов маршрутизации</value>
+  </data>
+  <data name="pnIDPR_CMTP" xml:space="preserve">
+    <value>IDPR Транспортный протокол управления сообщениями</value>
+  </data>
+  <data name="pnIDRP" xml:space="preserve">
+    <value>Междоменный протокол маршрутизации</value>
+  </data>
+  <data name="pnIGMP" xml:space="preserve">
+    <value>Управление группами интернета</value>
+  </data>
+  <data name="pnIGP" xml:space="preserve">
+    <value>любой частный внутренний шлюз</value>
+  </data>
+  <data name="pnIGRP" xml:space="preserve">
+    <value>IGRP</value>
+  </data>
+  <data name="pnIL" xml:space="preserve">
+    <value>IL  Транспортный протокол</value>
+  </data>
+  <data name="pnIP" xml:space="preserve">
+    <value>IP в IP(инкапсуляция)</value>
+  </data>
+  <data name="pnIPCV" xml:space="preserve">
+    <value>Интернет утилита Packet Core</value>
+  </data>
+  <data name="pnIPIP" xml:space="preserve">
+    <value>IP-within-IP Протокол Инкапсуляции</value>
+  </data>
+  <data name="pnIPPC" xml:space="preserve">
+    <value>Internet Pluribus Packet Core</value>
+  </data>
+  <data name="pnIRTP" xml:space="preserve">
+    <value>Надежная интернет транзакция</value>
+  </data>
+  <data name="pnISO_IP" xml:space="preserve">
+    <value>ISO Интернет Протокол</value>
+  </data>
+  <data name="pnISO_TP4" xml:space="preserve">
+    <value>Класс транспортного протокола 4</value>
+  </data>
+  <data name="pnI_NLSP" xml:space="preserve">
+    <value>Объединенный сетевой уровень безопасности  TUBA</value>
+  </data>
+  <data name="pnKRYPTOLAN" xml:space="preserve">
+    <value>Kryptolan</value>
+  </data>
+  <data name="pnLARP" xml:space="preserve">
+    <value>Locus Протокол Разрешения Адресов</value>
+  </data>
+  <data name="pnLEAF_1" xml:space="preserve">
+    <value>Leaf-1</value>
+  </data>
+  <data name="pnLEAF_2" xml:space="preserve">
+    <value>Leaf-2</value>
+  </data>
+  <data name="pnMERIT_INP" xml:space="preserve">
+    <value>MERIT Межузловой протокол</value>
+  </data>
+  <data name="pnMFE_NSP" xml:space="preserve">
+    <value>MFE Протокол сетевых служб</value>
+  </data>
+  <data name="pnMHRP" xml:space="preserve">
+    <value>Протокол маршрутизации мобильного хоста</value>
+  </data>
+  <data name="pnMICP" xml:space="preserve">
+    <value>Мобильное Межсетевое управление Pro.</value>
+  </data>
+  <data name="pnMTP" xml:space="preserve">
+    <value>Многоадресный Транспортный Протокол</value>
+  </data>
+  <data name="pnMUX" xml:space="preserve">
+    <value>Мультиплексирование</value>
+  </data>
+  <data name="pnNETBLT" xml:space="preserve">
+    <value>Массовый протокол передачи данных</value>
+  </data>
+  <data name="pnNHRP" xml:space="preserve">
+    <value>NBMA Протокол разрешения следующего хопа</value>
+  </data>
+  <data name="pnNSFNET_IGP" xml:space="preserve">
+    <value>NSFNET-IGP</value>
+  </data>
+  <data name="pnNVP_II" xml:space="preserve">
+    <value>Протокол голосовой сети</value>
+  </data>
+  <data name="pnOSPFIGP" xml:space="preserve">
+    <value>OSPFIGP</value>
+  </data>
+  <data name="pnPRM" xml:space="preserve">
+    <value>Измерение пакетной передачи</value>
+  </data>
+  <data name="pnPUP" xml:space="preserve">
+    <value>PUP</value>
+  </data>
+  <data name="pnPVP" xml:space="preserve">
+    <value>Протокол пакетного видео</value>
+  </data>
+  <data name="pnRDP" xml:space="preserve">
+    <value>Надежный протокол данных</value>
+  </data>
+  <data name="pnRSVP" xml:space="preserve">
+    <value>Протокол резервирования</value>
+  </data>
+  <data name="pnRVD" xml:space="preserve">
+    <value>MIT Протокол удаленного виртуального диска</value>
+  </data>
+  <data name="pnSAT_EXPAK" xml:space="preserve">
+    <value>SATNET and Backroom EXPAK</value>
+  </data>
+  <data name="pnSAT_MON" xml:space="preserve">
+    <value>SATNET Мониторинг</value>
+  </data>
+  <data name="pnSCC_SP" xml:space="preserve">
+    <value>Semaphore Communications Sec. Pro</value>
+  </data>
+  <data name="pnSDRP" xml:space="preserve">
+    <value>Протокол маршрутизации источника спроса</value>
+  </data>
+  <data name="pnSECURE_VMTP" xml:space="preserve">
+    <value>SECURE-VMTP</value>
+  </data>
+  <data name="pnSEP" xml:space="preserve">
+    <value>Последовательный протокол обмена</value>
+  </data>
+  <data name="pnSIP" xml:space="preserve">
+    <value>Простой интернет протокол</value>
+  </data>
+  <data name="pnSIPP_AH" xml:space="preserve">
+    <value>SIPP Заголовок аутентификации</value>
+  </data>
+  <data name="pnSIPP_ESP" xml:space="preserve">
+    <value>SIPP Encap Security Payload</value>
+  </data>
+  <data name="pnSIP_FRAG" xml:space="preserve">
+    <value>SIP Фрагмент</value>
+  </data>
+  <data name="pnSIP_SR" xml:space="preserve">
+    <value>SIP Источник маршрута</value>
+  </data>
+  <data name="pnSprite_RPC" xml:space="preserve">
+    <value>Sprite RPC Протокол</value>
+  </data>
+  <data name="pnST" xml:space="preserve">
+    <value>Поток</value>
+  </data>
+  <data name="pnSUN_ND" xml:space="preserve">
+    <value>SUN ND PROTOCOL-Temporary</value>
+  </data>
+  <data name="pnSWIPE" xml:space="preserve">
+    <value>IP с Шифрованием</value>
+  </data>
+  <data name="pnTCF" xml:space="preserve">
+    <value>TCF</value>
+  </data>
+  <data name="pnTCP" xml:space="preserve">
+    <value>Управление передачей</value>
+  </data>
+  <data name="pnTP" xml:space="preserve">
+    <value>TP++ Транспортный протокол</value>
+  </data>
+  <data name="pnTRUNK_1" xml:space="preserve">
+    <value>Trunk-1</value>
+  </data>
+  <data name="pnTRUNK_2" xml:space="preserve">
+    <value>Trunk-2</value>
+  </data>
+  <data name="pnTTP" xml:space="preserve">
+    <value>TTP</value>
+  </data>
+  <data name="pnUCL" xml:space="preserve">
+    <value>UCL</value>
+  </data>
+  <data name="pnUDP" xml:space="preserve">
+    <value>Дейтаграмма пользователя</value>
+  </data>
+  <data name="pnVINES" xml:space="preserve">
+    <value>VINES</value>
+  </data>
+  <data name="pnVISA" xml:space="preserve">
+    <value>VISA Протокол</value>
+  </data>
+  <data name="pnVMTP" xml:space="preserve">
+    <value>VMTP</value>
+  </data>
+  <data name="pnWB_EXPAK" xml:space="preserve">
+    <value>WIDEBAND EXPAK</value>
+  </data>
+  <data name="pnWB_MON" xml:space="preserve">
+    <value>WIDEBAND Мониторинг</value>
+  </data>
+  <data name="pnWSN" xml:space="preserve">
+    <value>Wang Span Сеть</value>
+  </data>
+  <data name="pnXNET" xml:space="preserve">
+    <value>Межсетевой отладчик</value>
+  </data>
+  <data name="pnXNS_IDP" xml:space="preserve">
+    <value>XEROX NS IDP</value>
+  </data>
+  <data name="pnXTP" xml:space="preserve">
+    <value>XTP</value>
+  </data>
+  <data name="pnETHERIP" xml:space="preserve">
+    <value>Ethernet-within-IP Инкапсуляция</value>
+  </data>
+  <data name="pnUNASSIGNED" xml:space="preserve">
+    <value>Неназначенный</value>
+  </data>
+  <data name="OtherProtocols" xml:space="preserve">
+    <value>Другие протоколы</value>
+  </data>
+  <data name="ProtocolsInIncorrectFormat" xml:space="preserve">
+    <value>Список протоколов задан неверно</value>
+  </data>
+  <data name="Ip6AddressInIncorrectFormat" xml:space="preserve">
+    <value>IP адрес или диапазон  в некорректном формате.  (Примеры: ABCD:EF01:2345:6789:0:0:0:0, ABCD:EF01:2345:6789:0:0:0:0-ABCD:EF01:2345:6789:0:0:0:8, *)</value>
+  </data>
+  <data name="ProtocolsAreNotSelected" xml:space="preserve">
+    <value>Протоколы не выбраны</value>
+  </data>
+  <data name="JournalEvents" xml:space="preserve">
+    <value>События журнала</value>
+  </data>
+  <data name="CCJournal" xml:space="preserve">
+    <value>Журнал ЦУ</value>
+  </data>
+  <data name="LocalJournal" xml:space="preserve">
+    <value>Локальный журнал</value>
+  </data>
+  <data name="WindowsJournal" xml:space="preserve">
+    <value>Журнал Windows</value>
+  </data>
 </root>
