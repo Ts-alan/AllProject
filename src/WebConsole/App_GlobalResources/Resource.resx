@@ -621,7 +621,7 @@
   <data name="CongScannerDetectAdware" xml:space="preserve">
     <value>Detect Adware</value>
   </data>
-  <data name="CongScannerEnableCach" xml:space="preserve">
+  <data name="CongScannerEnableCache" xml:space="preserve">
     <value>Enable cache when scanning objects</value>
   </data>
   <data name="CongScannerExclude" xml:space="preserve">
@@ -648,8 +648,8 @@
   <data name="CongScannerRemovePathToInfected" xml:space="preserve">
     <value>Location where infected files will be placed</value>
   </data>
-  <data name="CongScannerSaveInfectedToQuarantine" xml:space="preserve">
-    <value>Save copy of infected object to Vba32 Quarantine</value>
+  <data name="CongScannerSaveCopyToQuarantine" xml:space="preserve">
+    <value>Save copy to Vba32 Quarantine</value>
   </data>
   <data name="CongScannerSaveInfectedToReport" xml:space="preserve">
     <value>Add list of infected objects to scanning report</value>
@@ -3344,5 +3344,29 @@ system administrator.</value>
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
     <value>Configure file cleaner</value>
+  </data>
+  <data name="CongScannerCases" xml:space="preserve">
+    <value>In case</value>
+  </data>
+  <data name="CongScannerDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CongScannerPotential" xml:space="preserve">
+    <value>Find potential dangerous</value>
+  </data>
+  <data name="CongScannerScanFileList" xml:space="preserve">
+    <value>File`s list for scanning</value>
+  </data>
+  <data name="CongScannerTrustAuthCode" xml:space="preserve">
+    <value>Trust to authentification code</value>
+  </data>
+  <data name="ScanningObjects" xml:space="preserve">
+    <value>Objects for scanning</value>
+  </data>
+  <data name="WrongExtensionValidator" xml:space="preserve">
+    <value>Extensions are not set correctly</value>
+  </data>
+  <data name="WrongArchivesSize" xml:space="preserve">
+    <value>Archive`s size is not set correctly</value>
   </data>
 </root>

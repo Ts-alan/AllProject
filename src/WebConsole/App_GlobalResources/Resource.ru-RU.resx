@@ -586,16 +586,16 @@
     <value>Дополнительно</value>
   </data>
   <data name="CongScannerArchivesSize" xml:space="preserve">
-    <value>Не проверять архивы размером больше заданного</value>
+    <value>Максимальный размер, KB</value>
   </data>
   <data name="CongScannerCheckArchives" xml:space="preserve">
-    <value>Обрабатывать архивы</value>
+    <value>Сканировать архивы</value>
   </data>
   <data name="CongScannerCheckMacros" xml:space="preserve">
     <value>Просмотреть список макросов в документах</value>
   </data>
   <data name="CongScannerCheckMail" xml:space="preserve">
-    <value>Обрабатывать почту</value>
+    <value>Сканировать почту</value>
   </data>
   <data name="CongScannerCheckMemory" xml:space="preserve">
     <value>Обрабатывать память</value>
@@ -607,7 +607,7 @@
     <value>Включение имен "чистых" файлов в отчет </value>
   </data>
   <data name="CongScannerCure" xml:space="preserve">
-    <value>Обезвредить</value>
+    <value>Лечить</value>
   </data>
   <data name="CongScannerCureBoot" xml:space="preserve">
     <value>Обезвреживать загрузочные сектора </value>
@@ -621,11 +621,11 @@
   <data name="CongScannerDetectAdware" xml:space="preserve">
     <value>Детектировать Adware</value>
   </data>
-  <data name="CongScannerEnableCach" xml:space="preserve">
-    <value>Включить кэш при обработке объектов</value>
+  <data name="CongScannerEnableCache" xml:space="preserve">
+    <value>Использовать кэш</value>
   </data>
   <data name="CongScannerExclude" xml:space="preserve">
-    <value>Исключить</value>
+    <value>Исключенные</value>
   </data>
   <data name="CongScannerExtension" xml:space="preserve">
     <value>Расширения</value>
@@ -637,7 +637,7 @@
     <value>Экспертный анализ</value>
   </data>
   <data name="CongScannerInfected" xml:space="preserve">
-    <value>Инфицированные файлы</value>
+    <value>Зараженные файлы</value>
   </data>
   <data name="CongScannerKeep" xml:space="preserve">
     <value>Сохранять отчет в файл</value>
@@ -648,8 +648,8 @@
   <data name="CongScannerRemovePathToInfected" xml:space="preserve">
     <value>Путь для перемещения инфицированных файлов</value>
   </data>
-  <data name="CongScannerSaveInfectedToQuarantine" xml:space="preserve">
-    <value>Копии инфицированных файлов в Карантин</value>
+  <data name="CongScannerSaveCopyToQuarantine" xml:space="preserve">
+    <value>Сохранить копию в карантине</value>
   </data>
   <data name="CongScannerSaveInfectedToReport" xml:space="preserve">
     <value>Сохранение списка инфицированных файлов в отчет</value>
@@ -3332,5 +3332,29 @@
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
     <value>Настроить удаление файлов</value>
+  </data>
+  <data name="CongScannerCases" xml:space="preserve">
+    <value>В случае</value>
+  </data>
+  <data name="CongScannerDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="CongScannerPotential" xml:space="preserve">
+    <value>Обнаружить потенциально опасные</value>
+  </data>
+  <data name="CongScannerScanFileList" xml:space="preserve">
+    <value>Наборы файлов для сканирования</value>
+  </data>
+  <data name="CongScannerTrustAuthCode" xml:space="preserve">
+    <value>Доверять коду аутентификации</value>
+  </data>
+  <data name="ScanningObjects" xml:space="preserve">
+    <value>Объекты сканирования</value>
+  </data>
+  <data name="WrongExtensionValidator" xml:space="preserve">
+    <value>Расширения заданы неправильно.</value>
+  </data>
+  <data name="WrongArchivesSize" xml:space="preserve">
+    <value>Неправильно задан размер архива</value>
   </data>
 </root>

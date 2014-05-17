@@ -1,293 +1,255 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="TaskConfigureScanner.ascx.cs" Inherits="Controls_TaskConfigureScanner" %>
 <div class="tasksection" runat="server" id="HeaderName" style="width:100%"><%=Resources.Resource.TaskNameRunScanner%></div>
 <script type="text/javascript" language="javascript">
+    function pageLoad() {
+        var defExts = ".COM.EXE.DLL.DRV.SYS.OV?.VXD.SCR.CPL.OCX.BPL.AX.PIF.DO?.XL?.HLP.RTF.WI?.WZ?.MSI.MSC.HT*.VB*.JS.JSE.ASP*.CGI.PHP*.?HTML.BAT.CMD.EML.NWS.MSG.XML.MSO.WPS.PPT.PUB.JPG.JPEG.ANI.INF.SWF.PDF";
+        $("#ScannerTabs").tabs({ cookie: { expires: 30} });
+        $("input[class='control']").button();
+        $("input[type='button']").button();
+        if($('#<%= ScannerFileExtensionsTextBox.ClientID %>').val()=='')
+            $('#<%= ScannerFileExtensionsTextBox.ClientID %>').val(defExts);
+        ScannerScanArchiveState();
+        ScannerMaxSizeState();
 
-function CheckedChanged(el)
-{
-   var lblCountThread = $get('<%=lblCountThread.ClientID%>');
-   lblCountThread.disabled = !el.checked;
-      
-   var ddlCountThread = $get('<%=ddlCountThread.ClientID%>');
-   ddlCountThread.disabled = !el.checked;
-}
+        $('#<%= ScannerFileExtensionResetButton.ClientID %>').on("click", function () {
+            $('#<%= ScannerFileExtensionsTextBox.ClientID %>').val(defExts);
+        });
 
-function RemoteCheckedChanged(el) {
-    var tboxRemoteAddress = $get('<%=tboxRemoteAddress.ClientID%>');
-    tboxRemoteAddress.disabled = !el.checked;
-}
-
+        $('#<%= chkScannerScanArchives.ClientID %>').on('click', function () {
+            ScannerScanArchiveState();
+        });
+        $('#<%= chkScannerMaxSize.ClientID %>').on('click', function () {
+            ScannerMaxSizeState();
+        });
+    };
+    function ScannerScanArchiveState()
+    {
+        if ($('#<%= chkScannerScanArchives.ClientID %>').is(':checked') == true) {
+            $('#<%= chkScannerMaxSize.ClientID %>').removeAttr('disabled');
+            $('#<%= chkScannerMaxSize.ClientID %>').parent().removeAttr('disabled');
+        }
+        else {
+            $('#<%= chkScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
+            $('#<%= chkScannerMaxSize.ClientID %>').parent().attr('disabled', 'disabled');
+            $('#<%= chkScannerMaxSize.ClientID %>').attr('checked', false);
+            $('#<%= txtScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
+        }
+    };
+    function ScannerMaxSizeState()
+    {
+        if ($('#<%= chkScannerMaxSize.ClientID %>').is(':checked') == true) {
+            $('#<%= txtScannerMaxSize.ClientID %>').removeAttr('disabled');
+        }
+        else {
+            $('#<%= txtScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
+        }
+    }
 </script>
-<ajaxToolkit:TabContainer runat="server" ID="Tabs" ActiveTabIndex="0" Width="800px">
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel1">
- <ContentTemplate>
-    <table class="ListContrastTable">
-     <tr>
-       <td>
-            <%=Resources.Resource.CongScannerCheckObjects %>&nbsp;&nbsp;<asp:TextBox runat="server" ID="tboxCheckObjects" />    
-       </td>
-       <td>
-           <asp:Label runat="server" ID="lblMode" width="150px"><%=Resources.Resource.CongScannerHeuristic %></asp:Label>
-           <asp:DropDownList ID="ddlMode" runat="server" />
-       </td>
-     </tr>
-     <tr>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxCheckMemory" /><%=Resources.Resource.CongScannerCheckMemory%> 
-       </td>
-       <td>
-            <asp:Label runat="server" ID="lblHeuristicAnalysis" width="150px"> <%=Resources.Resource.CongScannerHeuristicAnalysis %></asp:Label>
-            <asp:DropDownList runat="server" ID="ddlHeuristicAnalysis" />
-       </td>
-       
-      </tr>
-       <tr>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxScanBootSectors" /><%=Resources.Resource.CongScannerScanBootSectors %>   
-       </td>
-       <td>
-            <%=Resources.Resource.CongScannerExtension %>
-       </td>
+
+<div id="ScannerTabs">
+    <ul>
+        <li><a href="#ScannerTab1"><%=Resources.Resource.ScanningObjects %> </a> </li>
+        <li><a href="#ScannerTab2"><%=Resources.Resource.JournalEvents %></a> </li>
+    </ul>
+
+    <div id="ScannerTab1">
+    
+        <table   class="ListContrastTable" rules="all" style="width:600px">
+            <tr>
+                <td colSpan="2" style="width:600px">
+                    <table width="599px" rules="groups">
+                        <thead>
+                            <th align="center" style="font-weight:bold"><%= Resources.Resource.CongScannerScanFileList %></th>
+                        </thead>                        
+                        <tr>
+                            <td>
+                                &nbsp;
+                                <asp:RequiredFieldValidator ID="ScannerFileExtensionsTextBoxValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
+                                    ControlToValidate="ScannerFileExtensionsTextBox" Display="None" ValidationGroup="ScannerFileExtensionsValidationGroup" />
+                                 <asp:RegularExpressionValidator id="ScannerFileExtensionsRegularExpressionValidator" ControlToValidate="ScannerFileExtensionsTextBox" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutScannerFileExtensionsTextBox" runat="server"
+                                    TargetControlID="ScannerFileExtensionsTextBoxValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RegularValidatorCalloutScannerFileExtensionsTextBox" runat="server"
+                                    TargetControlID="ScannerFileExtensionsRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
+                                <asp:TextBox runat="server" ID="ScannerFileExtensionsTextBox" style="width:435px"></asp:TextBox>
+                                &nbsp;
+                                <input class='control' type="button" runat="server" id="ScannerFileExtensionResetButton" value="<%$ Resources:Resource, DefaultFiles %>" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp; &nbsp; &nbsp; &nbsp;
+                                <asp:Label runat="server" style="width:100px;"><%=Resources.Resource.CongScannerExclude%></asp:Label>
+                                &nbsp;&nbsp;
+                               <asp:RegularExpressionValidator id="ScannerFilesExcludedRegularExpressionValidator" ControlToValidate="ScannerFilesExcludedTextBox" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
+                               <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerFilesExcludedRegularExpressionValidatorCalloutExtender" runat="server"
+                                    TargetControlID="ScannerFilesExcludedRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
+                                <asp:TextBox runat="server" ID="ScannerFilesExcludedTextBox" style="width:435px"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:CheckBox runat="server" ID="chkScannerCache"></asp:CheckBox>
+                                <asp:Label runat="server"><%=Resources.Resource.CongScannerEnableCache %></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-       <tr>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxScanStartup" /><%=Resources.Resource.CongScannerScanStartup %>
-       </td>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxSet" />&nbsp;<asp:Label ID="lblSet" runat="server" width="100px" SkinId="LabelContrast"></asp:Label>
-           <asp:TextBox ID="tboxSet" runat="server"></asp:TextBox></td>
+            <tr>
+                <td colspan="2" style="width:600px">
+                    <table width="590px">
+                        <tr>
+                            <td style="width:290px">
+                                <asp:CheckBox ID="chkScannerScanMail" runat="server"/>
+                                <asp:Label runat="server" ><%=Resources.Resource.CongScannerCheckMail%></asp:Label>
+                            </td>
+                            <td style="width:290px">
+                                <asp:CheckBox ID="chkScannerFindPotential" runat="server"/>
+                                <asp:Label  runat="server" ><%=Resources.Resource.CongScannerPotential%></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:CheckBox ID="chkScannerScanArchives" runat="server"/>
+                                <asp:Label  runat="server" ><%=Resources.Resource.CongScannerCheckArchives%></asp:Label>
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="chkScannerFindVirusInstalls" runat="server"/>
+                                <asp:Label  runat="server" ><%=Resources.Resource.CongScannerSFX %></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;&nbsp;<asp:CheckBox ID="chkScannerMaxSize" runat="server" Enabled="false"/>
+                                <asp:Label   runat="server" ><%=Resources.Resource.CongScannerArchivesSize%></asp:Label>
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="chkScannerTrustAuthenCode" runat="server"/>
+                                <asp:Label   runat="server" ><%=Resources.Resource.CongScannerTrustAuthCode %></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;
+                                <asp:RegularExpressionValidator id="ScannerMaxSizeRegularExpressionValidator" ControlToValidate="txtScannerMaxSize" ValidationExpression="^([\d])*$" ErrorMessage="<%$Resources:Resource, WrongArchivesSize %>"  runat="server"/>
+                               <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerMaxSizeRegularExpressionValidatorCalloutExtender" runat="server"
+                                    TargetControlID="ScannerMaxSizeRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
+                                <asp:TextBox ID="txtScannerMaxSize" runat="server"  Enabled="false"/>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-       <tr>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxCheckArchives" /><%=Resources.Resource.CongScannerCheckArchives %>  
-       </td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxAddArch" />&nbsp;<asp:Label ID="lblAddArch"
-                runat="server" width="100px" SkinId="LabelContrast"></asp:Label>
-            <asp:TextBox ID="tboxAddArch" runat="server"></asp:TextBox></td>
+            <tr >
+                <td style="width:300px">
+                    <table rules="groups" >
+                        <thead >
+                            <td style="font-weight:bold">
+                                 <asp:Label  runat="server" ><%=Resources.Resource.InfectedFiles %></asp:Label> 
+                            </td>                           
+                        </thead>
+                        <tbody>
+                            <tr style="height:25px">
+                                <td>
+                                    <asp:Label runat="server"><%= Resources.Resource.Actions %></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList runat="server" ID="ddlInfectedActions">
+                                        <asp:ListItem Text="<%$ Resources:Resource, CongScannerCure %>"></asp:ListItem>
+                                        <asp:ListItem Text="<%$ Resources:Resource, Delete %>"></asp:ListItem>
+                                        <asp:ListItem Text="<%$ Resources:Resource, No %>"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr style="height:25px">
+                                <td>
+                                    <asp:Label  runat="server"><%= Resources.Resource.CongScannerCases %></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:DropDownList runat="server" ID="ddlInfectedCases">
+                                        <asp:ListItem Text="<%$ Resources:Resource, CongScannerCure %>"></asp:ListItem>
+                                        <asp:ListItem Text="<%$ Resources:Resource, Delete %>"></asp:ListItem>
+                                        <asp:ListItem Text="<%$ Resources:Resource, No %>"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr style="height:25px">
+                                <td colspan="2">
+                                    <asp:CheckBox runat="server" ID="chkInfectedSaveCopy" />
+                                    <asp:Label runat="server"><%= Resources.Resource.CongScannerSaveCopyToQuarantine %></asp:Label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="width:300px">
+                    <table  rules="groups" >
+                        <thead>
+                            <td style="font-weight:bold">
+                                <asp:Label  runat="server" ><%= Resources.Resource.SuspiciousFiles %></asp:Label>
+                            </td>
+                        </thead>                        
+                        <tr style="height:25px">
+                            <td >
+                                <asp:Label  runat="server"><%= Resources.Resource.Actions %></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList runat="server" ID="ddlSuspiciousActions">
+                                    <asp:ListItem Text="<%$ Resources:Resource, CongScannerCure %>"></asp:ListItem>
+                                    <asp:ListItem Text="<%$ Resources:Resource, Delete %>"></asp:ListItem>
+                                    <asp:ListItem Text="<%$ Resources:Resource, No %>"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr style="height:25px">
+                            <td >
+                                <asp:Label   runat="server"><%= Resources.Resource.CongScannerCases %></asp:Label>
+                            </td>
+                            <td>
+                                <asp:DropDownList runat="server" ID="ddlSuspiciousCases">
+                                    <asp:ListItem Text="<%$ Resources:Resource, CongScannerCure %>"></asp:ListItem>
+                                    <asp:ListItem Text="<%$ Resources:Resource, Delete %>"></asp:ListItem>
+                                    <asp:ListItem Text="<%$ Resources:Resource, No %>"></asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr style="height:25px">
+                            <td colspan="2">
+                                <asp:CheckBox runat="server" ID="chkSuspiciousSaveCopy" />
+                                <asp:Label  runat="server"><%= Resources.Resource.CongScannerSaveCopyToQuarantine %></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-       <tr>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxCheckMail" /><%=Resources.Resource.CongScannerCheckMail %> 
-       </td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxExclude" />&nbsp;<asp:Label ID="lblExclude" runat="server" width="100px" SkinId="LabelContrast"></asp:Label>
-            <asp:TextBox ID="tboxExclude" runat="server"></asp:TextBox></td>
-       </tr>
-       <tr>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxDetectAdware" /><%=Resources.Resource.CongScannerDetectAdware %>  
-       </td>
-           <td>
-               <asp:CheckBox ID="cboxIsArchiveSize" runat="server" /> <%=Resources.Resource.CongScannerArchivesSize %>
-               
-           </td>
-       </tr>
-       <tr>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxScannerSFX" /><%=Resources.Resource.CongScannerSFX %> 
-       </td>
-       <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;<asp:TextBox ID="tboxArchiveSize" runat="server"></asp:TextBox>  
-       </td>
-     </tr>
-    </table>
-    <table class="ListContrastTable">
-     <tr>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxUpdate" /><%=Resources.Resource.UpdateForRemoteConsoleScanner %> 
-       </td>
-     </tr>
-    </table>
- </ContentTemplate>
-</ajaxToolkit:TabPanel>   
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel2">
- <ContentTemplate>
-    <table class="ListContrastTable">
-    <tr>
-        <td>
-             <%=Resources.Resource.CongScannerInfected %>
-        </td>
-        <td>
-            <%=Resources.Resource.SuspiciousFiles %>
-       </td>
-       <td>
-            <asp:CheckBox runat="server" ID="cboxCureBoot" />&nbsp;<%=Resources.Resource.CongScannerCureBoot %>
-       </td>
-    </tr>
-    <tr>
-        <td>
-             <asp:CheckBox runat="server" ID="cboxCure" />&nbsp;<%=Resources.Resource.CongScannerCure %>
-        </td>
-        <td></td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxDeleteArchives" />&nbsp;<%=Resources.Resource.CongScannerDeleteArchives %>
-       </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:RadioButton runat="server" ID="rbSkip" GroupName="rbInfFiles" /><%=Resources.Resource.Skip %>
-        </td>
-        <td>
-            <asp:RadioButton runat="server" ID="rbSkipSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Skip %>
-        </td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxDeleteMail" />&nbsp;<%=Resources.Resource.CongScannerDeleteMail%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:RadioButton runat="server" ID="rbDelete" GroupName="rbInfFiles" /><%=Resources.Resource.Delete %>
-        </td>
-        <td>
-            <asp:RadioButton runat="server" ID="rbDeleteSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Delete%>
-        </td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxSaveInfectedToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveInfectedToQuarantine %>
-       </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:RadioButton runat="server" ID="rbRename" GroupName="rbInfFiles" /><%=Resources.Resource.Rename %>
-        </td>
-        <td>
-            <asp:RadioButton runat="server" ID="rbRenameSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Rename %>
-        </td>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxSaveSusToQuarantine" />&nbsp;<%=Resources.Resource.CongScannerSaveSusToQuarantine %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:RadioButton runat="server" ID="rbRemove" GroupName="rbInfFiles" /><%=Resources.Resource.Remove %>
-        </td>
-        <td>
-            <asp:RadioButton runat="server" ID="rbRemoveSusp" GroupName="rbSuspFiles" /><%=Resources.Resource.Remove %>
-        </td>
-        <td>
-            <%=Resources.Resource.CongScannerRemovePathToInfected %>
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td>
-            <asp:TextBox runat="server" ID="tboxRemove" style="width:300px"/>
-        </td>
-    </tr>
-    </table>
-  </ContentTemplate>
-</ajaxToolkit:TabPanel>   
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel3">
- <ContentTemplate>   
-     <table class="ListContrastTable">
-    <tr>
-        <td>
-            <asp:CheckBox ID="cboxKeep" runat="server" />&nbsp;<%=Resources.Resource.CongScannerKeep %>
-            <asp:TextBox ID="tboxKeep" runat="server"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox ID="cboxAdd" runat="server" />&nbsp;<%=Resources.Resource.CongScannerAdd %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:CheckBox ID="cboxCleanFiles" runat="server" />&nbsp;<%=Resources.Resource.CongScannerCleanFiles %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:CheckBox ID="cboxSaveInfectedToReport" runat="server" />&nbsp;<%=Resources.Resource.CongScannerSaveInfectedToReport %>
-            &nbsp;&nbsp;
-            <asp:TextBox ID="tboxSaveInfectedToReport" runat="server"></asp:TextBox>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox ID="cboxAddInf" runat="server" />&nbsp;<%=Resources.Resource.CongScannerAdd %>
-        </td>
-    </tr>
-    </table>
-   </ContentTemplate>
-</ajaxToolkit:TabPanel>   
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel4">
- <ContentTemplate>     
-     <table class="ListContrastTable"">
-    <tr>
-        <td>
-            <asp:CheckBox ID="cboxEnableCach" runat="server" />&nbsp;<%=Resources.Resource.CongScannerEnableCach %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:CheckBox ID="cboxAuthenticode" runat="server" />&nbsp;<%=Resources.Resource.CongScannerAuthenticode%>
-        </td>
-    </tr>
-     <tr>
-        <td>
-            <asp:CheckBox ID="cboxCheckMacros" runat="server" />&nbsp;<%=Resources.Resource.CongScannerCheckMacros %>
-        </td>
-    </tr>
-     <tr>
-        <td>
-           <%=Resources.Resource.CongScannerPathToScanner %>&nbsp;&nbsp;<asp:TextBox ID="tboxPathToScanner" runat="server"></asp:TextBox>
-        </td>
-    </tr>    
-    </table>
-    <table class="ListContrastTable" style="padding-bottom: 15px;" >
-        <tr>
-            <td style="padding-top: 5px;padding-bottom:5px;">
-                <asp:Label runat="server" ID="lblMultyThreading"><%=Resources.Resource.Multithreading%>:</asp:Label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:CheckBox runat="server" ID="cboxMultyThreading" onclick="CheckedChanged(this)" />
-            </td>            
-        </tr>
-        <tr>
-            <td>
-                <asp:Label runat="server" ID="lblCountThread"><%=Resources.Resource.ThreadsCount%>:</asp:Label>
-                <asp:DropDownList runat="server" ID="ddlCountThread" SkinID="ddlEdit" style="width:60px; position:absolute; margin-left: 10px;" onmousedown="if(this.options.length>10){this.size=10;}" onchange="this.size=0;" onblur="this.size=0;" ></asp:DropDownList>                
-            </td>
-        </tr>
-    </table>
-    <table class="ListContrastTable" style="padding-bottom: 5px;padding-top: 5px;" >        
-        <tr>
-            <td>
-                <asp:CheckBox runat="server" ID="cboxShowProgressScan" />
-            </td>            
-        </tr>
-    </table>
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-<ajaxToolkit:TabPanel runat="server" ID="tabPanel5">
- <ContentTemplate>     
-     <table class="ListContrastTable"">
-    <tr>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxRemoteServer" />&nbsp;<%=Resources.Resource.Server%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <asp:CheckBox runat="server" ID="cboxRemoteClient" onclick="RemoteCheckedChanged(this)" />&nbsp;<%=Resources.Resource.Client%>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table style="margin: 5px 0px 10px 20px;">
-                <tr>
-                    <td><%=Resources.Resource.CongLdrAddress%></td>
-                    <td style="padding-left:10px;">
-                        <asp:TextBox runat="server" ID="tboxRemoteAddress" Enabled="false"></asp:TextBox>
-                    </td>
-                </tr>                
-            </table>
-        </td>
-    </tr>
-    </table>
-</ContentTemplate>
-</ajaxToolkit:TabPanel>
-</ajaxToolkit:TabContainer>
+        </table>
+    
+    </div>
+    <div id="ScannerTab2">
+          <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
+                <ContentTemplate>
+                    <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
+                        <asp:Table ID="JournalEventTable" runat="server" CssClass="ListContrastTable">
+                            <asp:TableHeaderRow  runat="server">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label  runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label  runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label  runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+    </div>
+</div>

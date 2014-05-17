@@ -1257,33 +1257,12 @@ public partial class Groups : PageBase
                 task.Name = ddlTaskName.SelectedValue;
                 tskConfigureScanner.ValidateFields();
 
-                if (_set.VSISComputers.Count == 0)
+                taskId = new Int64[_set.VSISComputers.Count];
+                for (int i = 0; i < _set.VSISComputers.Count; i++)
                 {
-                    for (int i = 0; i < _set.AllComputers.Count; i++)
-                    {
-                        taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
-                    }
-                    control.PacketCreateProcess(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GenerateCommandLine(task));
+                    taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                else
-                {
-                    taskId = new Int64[_set.VSISComputers.Count];
-                    for (int i = 0; i < _set.VSISComputers.Count; i++)
-                    {
-                        taskId[i] = PreServAction.CreateTask(_set.VSISComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
-                    }
-                    control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GetTaskForVSIS());
-
-                    if (_set.OtherComputers.Count != 0)
-                    {
-                        taskId = new Int64[_set.OtherComputers.Count];
-                        for (int i = 0; i < _set.OtherComputers.Count; i++)
-                        {
-                            taskId[i] = PreServAction.CreateTask(_set.OtherComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
-                        }
-                        control.PacketCreateProcess(taskId, _set.OtherComputers.GetIPAddresses().ToArray(), tskConfigureScanner.GenerateCommandLine(task));
-                    }
-                }
+                control.PacketCustomAction(taskId, _set.VSISComputers.GetIPAddresses().ToArray(), tskConfigureScanner.BuildTask());
             }
 
             #endregion
@@ -1711,7 +1690,7 @@ public partial class Groups : PageBase
                                         {
                                             task.Type = TaskType.ConfigureScanner;
                                             task.Name = Resources.Resource.TaskNameConfigureScanner;
-                                            task.Param = xmlBuil.Result;
+                                            task.Param = String.Empty;
                                             lbtnDelete.Visible = false;
                                         }
                                         else
