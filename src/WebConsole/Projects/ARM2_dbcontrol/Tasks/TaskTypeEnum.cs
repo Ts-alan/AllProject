@@ -35,6 +35,7 @@ namespace ARM2_dbcontrol.Tasks
         ConfigureScanner,
         MonitorOn,
         MonitorOff,
-	ConfigureIntegrityCheck
+        ConfigureIntegrityCheck,
+        FileCleaner
     }
 }

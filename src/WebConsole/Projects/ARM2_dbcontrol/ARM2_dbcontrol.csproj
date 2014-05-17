@@ -224,6 +224,7 @@
     <Compile Include="Service\VSIS\UpdateService.cs" />
     <Compile Include="Service\VSIS\VSISWrapper.cs" />
     <Compile Include="Tasks\ConfigureAgent\TaskConfigureAgent.cs" />
+    <Compile Include="Tasks\ConfigureFileCleaner\TaskConfigureFileCleaner.cs" />
     <Compile Include="Tasks\ConfigureFirewall\TaskConfigureFirewall.cs" />
     <Compile Include="Tasks\ConfigureIntegrityCheck\TaskConfigureIntegrityCheck.cs" />
     <Compile Include="Tasks\ConfigureJournalEvent\JournalEvent.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Tasks\MonitorOnOff\TaskMonitorOnOff.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
     <Compile Include="Tasks\RunScanner\TaskRunScanner.cs" />
+    <Compile Include="Tasks\SingleCleaningTemplate\SingleCleaningTemplate.cs" />
     <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\TaskTypeEnum.cs" />
     <Compile Include="Tasks\TaskUserCollection.cs" />

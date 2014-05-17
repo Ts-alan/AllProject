@@ -70,6 +70,7 @@ public partial class TaskCreate : PageBase
                 tskConfigureScheduler.Visible = false;
                 tskRunScanner.Visible = false;
                 tskConfigureIntegrityCheck.Visible = false;
+                tskConfigureFileCleaner.Visible = false;
 
                 LoadStateTask(task);
 
@@ -183,6 +184,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "IntegrityCheck":
                         taskUserType.Type = TaskType.ConfigureIntegrityCheck;
+                        break;
+                    case "FileCleaner":
+                        taskUserType.Type = TaskType.FileCleaner;
                         break;
                 }
 
@@ -354,6 +358,13 @@ public partial class TaskCreate : PageBase
                 tskConfigureIntegrityCheck.Visible = true;
 
                 break;
+            case TaskType.FileCleaner:
+                tskConfigureFileCleaner.InitFields();
+                tskConfigureFileCleaner.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
+                tskConfigureFileCleaner.Visible = true;
+
+                break;
         }
     }
 
@@ -470,6 +481,11 @@ public partial class TaskCreate : PageBase
                     task = tskConfigureIntegrityCheck.GetCurrentState();
                     tskConfigureIntegrityCheck.ValidateFields();
                     break;
+                case "FileCleaner":
+                    task.Type = TaskType.FileCleaner;
+                    task = tskConfigureFileCleaner.GetCurrentState();
+                    tskConfigureFileCleaner.ValidateFields();
+                    break;
 
                 default:
                     break;
@@ -521,7 +537,8 @@ public partial class TaskCreate : PageBase
                 (resctrl.IsExist("TaskNameVba32ProgramAndDataBaseUpdate", task.Name)) ||
                 (resctrl.IsExist("TaskNameRestoreFileFromQtn", task.Name)) ||
                 (resctrl.IsExist("TaskNameConfigurePassword", task.Name)) ||
-                (resctrl.IsExist("TaskConfigureIntegrityCheck", task.Name))
+                (resctrl.IsExist("TaskConfigureIntegrityCheck", task.Name)) ||
+                (resctrl.IsExist("TaskConfigureFileCleaner", task.Name))
                 )
             {
                 throw new Exception(Resources.Resource.ErrorCreateTaskWithBaseName);

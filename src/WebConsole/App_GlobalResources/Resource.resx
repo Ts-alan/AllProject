@@ -3342,4 +3342,7 @@ system administrator.</value>
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
     <value>Check integrity</value>
   </data>
+  <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
+    <value>Configure file cleaner</value>
+  </data>
 </root>

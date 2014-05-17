@@ -19,6 +19,7 @@
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
 <%@ Register Src="~/Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
 <%@ Register Src="~/Controls/TaskConfigureIntegrityCheck.ascx" TagName="TaskUser" TagPrefix="tskConfigureIntegrityCheck" %>
+<%@ Register Src="~/Controls/TaskConfigureFileCleaner.ascx" TagName="TaskUser"  TagPrefix="tskConfigureFileCleaner"%>
 
 <%@ OutputCache Location="None" %>
 
@@ -63,6 +64,7 @@
             <tskConfigureScheduler:TaskUser ID="tskConfigureScheduler" runat="server" Visible="false" />
             <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true" />
             <tskConfigureIntegrityCheck:TaskUser ID="tskConfigureIntegrityCheck" runat="server" Visible="false" />
+            <tskConfigureFileCleaner:TaskUser ID="tskConfigureFileCleaner" runat="server" Visible="false"  />
                                     
     </asp:Panel>
     <table>

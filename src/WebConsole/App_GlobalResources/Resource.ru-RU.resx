@@ -3330,4 +3330,7 @@
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
     <value>Проверить целостность</value>
   </data>
+  <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
+    <value>Настроить удаление файлов</value>
+  </data>
 </root>
