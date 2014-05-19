@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides ability to change settings. Is a part of Vba32 Control Center server. Makes it possible to configure program using Web interface. If this service is stopped, applying settings from Web interface will be unavailable.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VirusBlokAda Ltd.")]
-[assembly: AssemblyProduct("Vba32 Control center")]
-[assembly: AssemblyCopyright("Copyright © VirusBlokAda Ltd. 2008- 2009")]
+[assembly: AssemblyProduct("Vba32 Control Center")]
+[assembly: AssemblyCopyright("Copyright (c) 2008-2014 VirusBlokAda Ltd.")]
 [assembly: AssemblyTrademark("Vba32")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,6 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("3.12.2.2")]
-[assembly: AssemblyFileVersion("3.12.2.2")]
+[assembly: AssemblyVersion("3.12.10.0")]
+[assembly: AssemblyFileVersion("3.12.10.0")]
+[assembly: AssemblyInformationalVersion("3.12.10.0")]

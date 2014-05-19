@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VirusBlokAda Ltd.")]
 [assembly: AssemblyProduct("Vba32 Control Center")]
-[assembly: AssemblyCopyright("Copyright © VirusBlokAda Ltd. 2008- 2009")]
+[assembly: AssemblyCopyright("Copyright (c) 2008-2014 VirusBlokAda Ltd.")]
 [assembly: AssemblyTrademark("Vba32")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,6 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("3.12.3.0")]
-[assembly: AssemblyFileVersion("3.12.3.0")]
+[assembly: AssemblyVersion("3.12.10.0")]
+[assembly: AssemblyFileVersion("3.12.10.0")]
+[assembly: AssemblyInformationalVersion("3.12.10.0")]

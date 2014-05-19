@@ -7,13 +7,13 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Vba32Control Center")]
+[assembly: AssemblyTitle("ARM2_dbcontrol.dll")]
 [assembly: AssemblyDescription("Vba32 Control Center WebInterface Business logic")]
 [assembly: AssemblyConfiguration("Standard")]
 [assembly: AssemblyCompany("VirusBlokAda Ltd.")]
 [assembly: AssemblyProduct("Vba32 Control Center")]
-[assembly: AssemblyCopyright("Copyright (c) 2008-2009 VirusBlokAda Ltd.")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright (c) 2008-2014 VirusBlokAda Ltd.")]
+[assembly: AssemblyTrademark("Vba32")]
 [assembly: AssemblyCulture("")]
 
 //
@@ -27,7 +27,9 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.12.10.0")]
+[assembly: AssemblyFileVersion("3.12.10.0")]
+[assembly: AssemblyInformationalVersion("3.12.10.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
