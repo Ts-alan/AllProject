@@ -8,7 +8,7 @@ using System.IO;
 namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
 {
     [Serializable]
-    public class SingleCleaningTemplate
+    public class SingleCleaningTemplate : IConfigureTask
     {
         #region Fields
 
@@ -113,6 +113,16 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
             task.Append("</val>");
             return task.ToString();
         }
+        #endregion
+
+        #region IConfigureTask Members
+
+
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 

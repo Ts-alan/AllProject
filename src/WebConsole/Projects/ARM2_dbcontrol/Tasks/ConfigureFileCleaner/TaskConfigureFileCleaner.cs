@@ -10,7 +10,7 @@ using ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate;
 namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
 {
     [Serializable]
-    public class TaskConfigureFileCleaner
+    public class TaskConfigureFileCleaner : IConfigureTask
     {
         #region Fields
 
@@ -127,6 +127,16 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
             return builder.ToString();
         }      
         
+        #endregion
+
+        #region IConfigureTask Members
+
+
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 

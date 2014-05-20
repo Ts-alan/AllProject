@@ -8,7 +8,7 @@ using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 namespace ARM2_dbcontrol.Tasks.ConfigureScanner
 {
     [Serializable]
-    public class TaskConfigureScanner
+    public class TaskConfigureScanner : IConfigureTask
     {
         #region Fields
 
@@ -274,7 +274,14 @@ namespace ARM2_dbcontrol.Tasks.ConfigureScanner
 
         #endregion
 
-        
+        #region IConfigureTask Members
+
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
     public enum ScannerActions
     {

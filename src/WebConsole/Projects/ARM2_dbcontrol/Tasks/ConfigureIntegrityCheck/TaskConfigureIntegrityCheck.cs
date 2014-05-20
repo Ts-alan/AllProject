@@ -7,11 +7,11 @@ using System.IO;
 namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
 {
     [Serializable]
-    public class TaskConfigureIntegrityCheck
+    public class TaskConfigureIntegrityCheck : IConfigureTask
     {
         #region Fields
 
-        private  String _Type = "IntegrityCheck";
+        private String _Type = "IntegrityCheck";
         private List<IntegrityCheckFilesEntity> _Files;
         private List<IntegrityCheckRegistryEntity> _Registries;
         private XmlSerializer serializer;
@@ -25,7 +25,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             get { return _Type; }
             set { _Type = "IntegrityCheck"; }
         }
-    
+
         public List<IntegrityCheckFilesEntity> Files
         {
             get { return _Files; }
@@ -51,14 +51,14 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
         #endregion
 
         #region Methods
-        
+
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-        
+
         public void LoadFromXml(String Xml)
         {
             if (String.IsNullOrEmpty(Xml))
@@ -71,7 +71,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             this._Files = task.Files;
             this._Registries = task.Registries;
         }
-        
+
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(512);
@@ -108,6 +108,16 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             result.Append(@"</VsisCommand>");
 
             return result.ToString();
+        }
+
+        #endregion
+
+        #region IConfigureTask Members
+
+
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

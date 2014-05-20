@@ -9,7 +9,7 @@ using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 {
     [Serializable]
-    public class TaskConfigureFirewall
+    public class TaskConfigureFirewall : IConfigureTask
     {
         #region Fields
 
@@ -18,19 +18,19 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
         private List<FirewallRule> _IP6Rules;
         //private static List<FirewallRuleProtocol> RuleProtocols;
         private JournalEvent _journalEvent;
-        
+
         public const String GUID = "{AAEBBB59-4CD4-478B-A7C6-15F4DAF74078}";
         public static readonly String[] ProtocolsName = {"pnRESERVED","pnICMP","pnIGMP","pnGGP","pnIP","pnST","pnTCP","pnUCL","pnEGP","pnIGP","pnBBN_RCC_MON","pnNVP_II","pnPUP","pnARGUS","pnEMCON","pnXNET","pnCHAOS","pnUDP","pnMUX","pnDCN_MEAS","pnHMP","pnPRM","pnXNS_IDP","pnTRUNK_1","pnTRUNK_2","pnLEAF_1","pnLEAF_2","pnRDP","pnIRTP","pnISO_TP4","pnNETBLT","pnMFE_NSP","pnMERIT_INP","pnSEP","pn3PC","pnIDPR",
                                             "pnXTP","pnDDP","pnIDRP_CMTP","pnTP","pnIL","pnSIP","pnSDRP","pnSIP_SR","pnSIP_FRAG","pnIDRP","pnRSVP","pnGRE","pnMHRP","pnBNA","pnSIPP_ESP","pnSIPP_AH","pnI_NLSP","pnSWIPE","pnNHRP","pnUNASSIGNED","pnUNASSIGNED","pnUNASSIGNED","pnUNASSIGNED","pnUNASSIGNED","pnUNASSIGNED","pnANY_HOST","pnCFTP","pnANY_LOCAL","pnSAT_EXPAK","pnKRYPTOLAN","pnRVD","pnIPPC",
                                             "pnANY_DISTRIBUTED","pnSAT_MON","pnVISA","pnIPCV","pnCPNX","pnCPHB","pnWSN","pnPVP","pnBR_SAT_MON","pnSUN_ND","pnWB_MON","pnWB_EXPAK","pnISO_IP","pnVMTP","pnSECURE_VMTP","pnVINES","pnTTP","pnNSFNET_IGP","pnDGP","pnTCF","pnIGRP","pnOSPFIGP","pnSprite_RPC","pnLARP","pnMTP","pnAX_25","pnIPIP","pnMICP","pnSCC_SP","pnETHERIP","pnENCAP","pnANY_PRIVATE","pnGMTP"};
-  
+
         private String _Vba32CCUser;
         private XmlSerializer serializer;
-        
+
         #endregion
 
         #region Properties
-        
+
         public String Vba32CCUser
         {
             get { return _Vba32CCUser; }
@@ -128,7 +128,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
                 builder.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", i.ToString(), ConvertRuleForTask(IP6Rules[i]));
             }
             builder.Append(@"</value></param></module></config></value></arg></command></Args><Async>0</Async></VsisCommand>");
-            
+
             return builder.ToString();
         }
 
@@ -177,7 +177,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 
             if (transportProtocol)
                 bitmask += (UInt32)FirewallFlags.TransportProtocol;
-            
+
             if (rule.Enable)
                 bitmask += (UInt32)FirewallFlags.Enable;
 
@@ -188,7 +188,17 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
         }
 
 
-        
+
+        #endregion
+
+        #region IConfigureTask Members
+
+
+        public void LoadFromRegistry(string reg)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 
