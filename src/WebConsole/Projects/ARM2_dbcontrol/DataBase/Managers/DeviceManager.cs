@@ -18,6 +18,84 @@ namespace VirusBlokAda.CC.DataBase
         #region Methods
 
         /// <summary>
+        /// Deserialize Base64 string to DEVICE_INFO
+        /// </summary>
+        /// <param name="text">Base64 string</param>
+        /// <returns>DEVICE_INFO entity</returns>
+        internal static DEVICE_INFO DeserializeFromBase64(String text)
+        {
+            Byte[] buffer = Convert.FromBase64String(text);
+            Byte[] tmp = new Byte[buffer.Length];
+
+            DEVICE_INFO di = new DEVICE_INFO();
+
+            Array.Copy(buffer, 0, tmp, 0, 4);
+            di.size = BitConverter.ToUInt32(tmp, 0);
+
+            di.time = new Byte[8];
+
+            di.mount = buffer[12];
+            di.insert = 0;
+
+            di.dev_class = buffer[14];
+            di.dev_subclass = buffer[15];
+            di.dev_protocol = buffer[16];
+
+            tmp = new Byte[2];
+            Array.Copy(buffer, 17, tmp, 0, 2);
+            di.id_vendor = BitConverter.ToUInt16(tmp, 0);
+
+            Array.Copy(buffer, 19, tmp, 0, 2);
+            di.id_product = BitConverter.ToUInt16(tmp, 0);
+
+
+
+            Array.Copy(buffer, 21, tmp, 0, 2);
+            di.manufacturer_length = BitConverter.ToUInt16(tmp, 0);
+
+            Array.Copy(buffer, 23, tmp, 0, 2);
+            di.product_length = BitConverter.ToUInt16(tmp, 0);
+
+            Array.Copy(buffer, 25, tmp, 0, 2);
+            di.serial_number_length = BitConverter.ToUInt16(tmp, 0);
+
+            di.strings = Encoding.Unicode.GetString(buffer, 27, di.manufacturer_length + di.product_length + di.serial_number_length);
+
+            return di;
+        }
+
+        /// <summary>
+        /// Serialize DEVICE_INFO entity to Base64 string
+        /// </summary>
+        /// <param name="di">DEVICE_INFO entity</param>
+        /// <returns>Base64 string</returns>
+        internal static String SerializeToBase64(DEVICE_INFO di)
+        {
+            Byte[] buffer = new Byte[di.size];
+
+            Array.Copy(BitConverter.GetBytes(di.size), 0, buffer, 0, 4);
+            Array.Copy(di.time, 0, buffer, 4, 8);
+
+            Array.Copy(BitConverter.GetBytes(di.insert), 0, buffer, 12, 1);
+            Array.Copy(BitConverter.GetBytes(di.mount), 0, buffer, 13, 1);
+
+            Array.Copy(BitConverter.GetBytes(di.dev_class), 0, buffer, 14, 1);
+            Array.Copy(BitConverter.GetBytes(di.dev_subclass), 0, buffer, 15, 1);
+            Array.Copy(BitConverter.GetBytes(di.dev_protocol), 0, buffer, 16, 1);
+
+            Array.Copy(BitConverter.GetBytes(di.id_vendor), 0, buffer, 17, 2);
+            Array.Copy(BitConverter.GetBytes(di.id_product), 0, buffer, 19, 2);
+
+            Array.Copy(BitConverter.GetBytes(di.manufacturer_length), 0, buffer, 21, 2);
+            Array.Copy(BitConverter.GetBytes(di.product_length), 0, buffer, 23, 2);
+            Array.Copy(BitConverter.GetBytes(di.serial_number_length), 0, buffer, 25, 2);
+
+            Array.Copy(Encoding.Unicode.GetBytes(di.strings), 0, buffer, 27, di.manufacturer_length + di.product_length + di.serial_number_length);
+
+            return Convert.ToBase64String(buffer);
+        }
+
+        /// <summary>
         /// Add new device to db 
         /// </summary>
         /// <param name="id"></param>

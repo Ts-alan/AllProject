@@ -17,6 +17,38 @@ namespace VirusBlokAda.CC.DataBase
 
         #region Methods
 
+        /// <summary>
+        /// Deserialize Base64 string to CLASS_INFO
+        /// </summary>
+        /// <param name="text">Base64 string</param>
+        /// <returns>CLASS_INFO entity</returns>
+        internal static CLASS_INFO DeserializeFromBase64(String text)
+        {
+            Byte[] buffer = Convert.FromBase64String(text);
+
+            CLASS_INFO ci = new CLASS_INFO();
+
+            ci.dev_class = buffer[0];
+            ci.mount = buffer[1];
+
+            return ci;
+        }
+
+        /// <summary>
+        /// Serialize CLASS_INFO entity to Base64 string
+        /// </summary>
+        /// <param name="di">CLASS_INFO entity</param>
+        /// <returns>Base64 string</returns>
+        internal static String SerializeToBase64(CLASS_INFO ci)
+        {
+            Byte[] buffer = new Byte[2];
+
+            buffer[0] = ci.dev_class;
+            buffer[1] = ci.mount;
+
+            return Convert.ToBase64String(buffer);
+        }
+
         #region Device Class
 
         /// <summary>

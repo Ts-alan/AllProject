@@ -221,48 +221,123 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Policy string</returns>
         private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> lists)
         {
-            StringBuilder policy = new StringBuilder(256);
+            Int32 index = 0;
+            StringBuilder policy = new StringBuilder(1024);
             policy.Append("<Task>");
             policy.Append("<Content>");
-            policy.Append("<TaskCustomAction>");
-            policy.Append("<Options>");
-            policy.Append("<SetRegistrySettings>");
-            policy.AppendFormat(@"<Common><RegisterPath>{0}</RegisterPath><IsDeleteOld>1</IsDeleteOld></Common>",
-                    @"HKLM\SOFTWARE\Vba32\Loader\Devices");
+            policy.Append("<VsisCommand>");
+            policy.Append("<Args>");
 
-            policy.Append("<Settings>");
-            //Converting in internal driver format...
+            policy.Append("<command>");
+            policy.AppendFormat(@"<arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
+            policy.Append("<arg><key>command</key><value>apply_settings</value></arg>");
+            policy.Append("<arg><key>settings</key><value><config><id>Normal</id><module><id>{87005109-1276-483A-B0A9-F3119AFA4E5B}</id>");
+
+            //AcceptableClassesRules
+            /*
+             <param>
+                      <id>AcceptableClassesRules</id>
+                      <type>stringlist</type>
+                      <value>
+                          <string>
+                              <id>0</id>
+                              <val>{36FC9E60-C465-11CF-8056-444553540000}</val>
+                          </string>
+                          <string>
+                              <id>1</id>
+                              <val>{4D36E965-E325-11CE-BFC1-08002BE10318}</val>
+                          </string>                          
+                      </value>
+                  </param>
+             
+             */
+
+            //ClassesRules
+            /*
+             
+             <param>
+                      <id>ClassesRules</id>
+                      <type>stringlist</type>
+                      <value>
+                          <string>
+                              <id>0</id>
+                              <val>{36FC9E60-C465-11CF-8056-444553540000}=0</val>
+                          </string>
+                      </value>
+                  </param>
+             
+             */
+
+            //Events
+            /*
+             <param>
+                      <id>Events</id>
+                      <type>stringmap</type>
+                      <value>
+                          <string>
+                              <id>0</id>
+                              <key>JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED</key>
+                              <val>7</val>
+                          </string>
+                          <string>
+                              <id>1</id>
+                              <key>JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK</key>
+                              <val>7</val>
+                          </string>                          
+                      </value>
+                  </param>
+             */
+
+            //InstalledClassesRules
+            /*
+             <param>
+                      <id>InstalledClassesRules</id>
+                      <type>stringlist</type>
+                      <value>
+                          <string>
+                              <id>0</id>
+                              <val>{36FC9E60-C465-11CF-8056-444553540000}=0</val>
+                          </string>
+                      </value>
+                  </param>
+             */
+
+            //
+            /*UsbClasses
+             <param>
+                      <id>UsbClasses</id>
+                      <type>stringlist</type>
+                      <value>
+                          <string>
+                              <id>0</id>
+                              <val>AQH=</val>
+                          </string>
+                          <string>
+                              <id>1</id>
+                              <val>AgH=</val>
+                          </string>                          
+                      </value>
+                  </param>
+             */
+
+            //UsbDevices
+            policy.Append("<param><id>UsbDevices</id><type>stringlist</type><value>");
+            index = 0;
             foreach (DevicePolicy item in lists)
             {
-                String s = "";
-                switch (item.State)
-                {
-                    case DevicePolicyState.Enabled:
-                        s = 'A' + Anchor.GetMd5Hash(Anchor.GetMd5Hash(item.Device.SerialNo));
-                        break;
-                    case DevicePolicyState.Disabled:
-                        s = 'D' + Anchor.GetMd5Hash(item.Device.SerialNo);
-                        break;
-                    default:
-                        continue;
-                }
-                policy.AppendFormat("<{0}>reg_sz:{1}</{0}>", s, item.Device.SerialNo);
+                DEVICE_INFO di = DeviceManager.DeserializeFromBase64(item.Device.SerialNo);
+                di.mount = (Byte)item.State;
+                policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di));
             }
-            policy.Append("</Settings>");
-            policy.Append("<Exclusion>");
-            policy.Append(@"<DEVICE_PROTECT />");
-            policy.Append(@"<USE_DAILY_PROTECT />");
-            policy.Append(@"<MONDAY />");
-            policy.Append(@"<TUESDAY />");
-            policy.Append(@"<WEDNESDAY />");
-            policy.Append(@"<THURSDAY />");
-            policy.Append(@"<FRIDAY />");
-            policy.Append(@"<SATURDAY />");
-            policy.Append(@"<SUNDAY />");
-            policy.Append("</Exclusion>");
-            policy.Append("</SetRegistrySettings>");
-            policy.Append("</Options>");
-            policy.Append("</TaskCustomAction>");
+            policy.Append("</value></param>");
+
+
+            policy.Append("</module></config></value></arg>");
+            policy.Append("</command>");
+
+            policy.Append("</Args>");
+            policy.Append("<Async>0</Async>");
+            policy.Append("</VsisCommand>");
             policy.Append("</Content>");
             policy.Append("</Task>");
 

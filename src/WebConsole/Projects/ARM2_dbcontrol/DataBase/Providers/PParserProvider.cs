@@ -163,13 +163,15 @@ namespace VirusBlokAda.CC.DataBase
         {
             //A device has been inserted. 
             //We must check whether the device registered in the database
-            if (ev.EventName == "vba32.device.inserted")
+            
+            //!!! -- проверить атрибут VDD_INSERTED!
+            if (ev.EventName == "JE_VDD_AUDIT_USB")
                 pMngr.OnDeviceInsert(ev, licenseCount);
 
             //If this event is device's module we must change some 
             //properties in this event
-            if (ev.ComponentName == "Vba32 Device Module")
-                pMngr.ModifyDeviceEvent(ev);
+            //if (ev.ComponentName == "Vba32 Device Module")
+            //    pMngr.ModifyDeviceEvent(ev);
             
             pMngr.InsertEvent(ev);
         }

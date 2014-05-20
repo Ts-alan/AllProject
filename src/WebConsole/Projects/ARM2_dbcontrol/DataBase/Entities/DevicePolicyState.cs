@@ -9,9 +9,9 @@ namespace VirusBlokAda.CC.DataBase
     /// </summary>
     public enum DevicePolicyState
     {
-        Undefined,
-        Enabled,
-        Disabled
+        Undefined = 0,
+        Enabled = 1,
+        Disabled = 0
     }
 
     public static class DevicePolicyStateExtensions

@@ -250,7 +250,10 @@ namespace VirusBlokAda.CC.DataBase
                 SqlCommand cmd = new SqlCommand("OnInsertingDevice", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@SerialNo", ev.Object);
+                DEVICE_INFO di = DeviceManager.DeserializeFromBase64(ev.Object);
+                di.mount = (Byte)DevicePolicyState.Undefined;
+
+                cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
                 cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);
                 cmd.Parameters.AddWithValue("@Comment", VirusBlokAda.CC.Common.Anchor.GetCommentFromSerial(ev.Object));
                 cmd.Parameters.AddWithValue("@LicenseCount", licenseCount);
