@@ -65,7 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AjaxControlToolkitX\AjaxControlToolkitXTests.cs" />
-    <Compile Include="ARM2_DbControl\Database\Provider\PPacketProviderTests.cs" />
+    <Compile Include="ARM2_DbControl\Database\Provider\ComputerProviderTests.cs" />
+    <Compile Include="ARM2_DbControl\Database\Provider\DBHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
