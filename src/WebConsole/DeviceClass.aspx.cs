@@ -423,18 +423,18 @@ public partial class DeviceClassPage : PageBase
             row += "<td><span class='main' uid='" + dp.ClassOfDevice.UID + "' type='comment'>" + dp.ClassOfDevice.Class + "</span></td>";
             
             String select = "<img style='cursor:pointer' dp=" + dp.ClassOfDevice.ID + " cp=" + id + " state=";
-            switch ((Int32)dp.Mode)
+            switch (dp.Mode)
             {
-                case 0:
+                case DeviceClassMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case 1:
+                case DeviceClassMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case 2:
+                case DeviceClassMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case 3:
+                case DeviceClassMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -479,18 +479,18 @@ public partial class DeviceClassPage : PageBase
             row += "<td><span class='main' uid='" + dp.ClassOfDevice.UID + "' type='comment'>" + dp.ClassOfDevice.Class + "</span></td>";
                         
             String select = "<img style='cursor:pointer' dp= " + dp.ClassOfDevice.ID + " gdp=" + groupID + " state=";
-            switch ((Int32)dp.Mode)
+            switch (dp.Mode)
             {
-                case 0:
+                case DeviceClassMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case 1:
+                case DeviceClassMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case 2:
+                case DeviceClassMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case 3:
+                case DeviceClassMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -660,5 +660,14 @@ public partial class DeviceClassPage : PageBase
         GridView1.PageIndex = 0;
         GridView1.Where = e.Where;
         GridView1.DataBind();
+    }
+
+    protected void GridView1_RowDataBound(Object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(VirusBlokAda.CC.Common.RegularExpressions.GUID);
+            (e.Row.Cells[3].FindControl("ibtnDelete") as ImageButton).Visible = reg.IsMatch((e.Row.DataItem as DeviceClass).UID);
+        }
     }
 }

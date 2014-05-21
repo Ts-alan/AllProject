@@ -67,7 +67,7 @@
 
                 <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
                     EnableModelValidation="True" CssClass="gridViewStyle"
-                    StorageType="Session" StorageName="DeviceClass"  >
+                    StorageType="Session" StorageName="DeviceClass" OnRowDataBound="GridView1_RowDataBound"  >
                 <Columns>      
                     <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" 
                         HeaderText='<%$ Resources:Resource, ClassName %>' SortExpression="ClassName">
@@ -90,11 +90,11 @@
                     <asp:TemplateField  HeaderStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" 
                         HeaderText='<%$ Resources:Resource, Actions %>'>
                         <ItemTemplate>
-                            <asp:Image ccUID='<%# Eval("UID") %>' comment='<%# Eval("Class") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' style="cursor: pointer;" runat="server" /> 
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                            <asp:ImageButton uid='<%# Eval("UID") %>' ImageUrl="~/App_Themes/Main/Images/deleteicon.png" ToolTip='<%$ Resources:Resource, Delete %>'
+                            <asp:Image ccUID='<%# Eval("UID") %>' comment='<%# Eval("Class") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' style="cursor: pointer; margin-left: 10px;" runat="server" /> 
+                            <asp:ImageButton ID="ibtnDelete" uid='<%# Eval("UID") %>' ImageUrl="~/App_Themes/Main/Images/deleteicon.png" ToolTip='<%$ Resources:Resource, Delete %>' style="margin-left: 10px;"
                                 runat="server" onclick="DeleteDeviceFromPanel"  OnClientClick= " return confirm('Are you sure?');" />
                         </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Left" />
                     </asp:TemplateField>
                 </Columns> 
                 <PagerSettings Position="TopAndBottom" Visible="true" />           
