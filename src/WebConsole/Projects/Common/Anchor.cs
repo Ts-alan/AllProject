@@ -54,23 +54,6 @@ namespace VirusBlokAda.CC.Common
             return Convert.ToBase64String(bs);
         }
 
-        /// <summary>
-        /// Get comment from serialNo for Devices
-        /// </summary>
-        /// <param name="serial">Device SerialNo</param>
-        /// <returns>Comment string</returns>
-        public static String GetCommentFromSerial(String serial)
-        {
-            String comment = "";
-            try
-            {
-                comment = FromBase64String(serial);
-            }
-            catch
-            {
-            }
-            return comment;
-        }
 
         /// <summary>
         /// Get Md5 for string

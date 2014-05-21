@@ -170,8 +170,8 @@ namespace VirusBlokAda.CC.DataBase
 
             //If this event is device's module we must change some 
             //properties in this event
-            //if (ev.ComponentName == "Vba32 Device Module")
-            //    pMngr.ModifyDeviceEvent(ev);
+            if (ev.ComponentName == "Vba32 Device Module")
+                pMngr.ModifyDeviceEvent(ev);
             
             pMngr.InsertEvent(ev);
         }

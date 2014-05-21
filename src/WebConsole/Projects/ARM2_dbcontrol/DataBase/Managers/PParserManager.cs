@@ -115,28 +115,31 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="name_value_map"></param>
         internal void ModifyDeviceEvent(EventsEntity ev)
         {
+            String[] parts = ev.Comment.Split(new Char[] { ' ' });
+            DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
+            di.mount = (Byte)DevicePolicyState.Undefined;
+
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("GetDeviceBySN", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@SerialNo", ev.Object);
+                cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
 
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 String comment = String.Empty;
                 if (reader.Read())
                 {
-
                     if (reader.GetValue(2) != DBNull.Value)
                         comment = reader.GetString(2);
                 }
                 reader.Close();
                 if (String.IsNullOrEmpty(comment))
                 {
-                    comment = VirusBlokAda.CC.Common.Anchor.GetCommentFromSerial(ev.Object);
+                    comment = di.strings.Replace('\0', ' ');
                 }
-                ev.Comment = comment;
+                ev.Comment = String.Concat(comment, parts[1]);
             }
         }
         
@@ -245,17 +248,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="licenseCount"></param>
         internal void OnDeviceInsert(EventsEntity ev, Int16 licenseCount)
         {
+            String[] parts = ev.Comment.Split(new Char[] { ' ' });
+            if (parts[1] != "VDD_INSERTED")
+                return;
+
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("OnInsertingDevice", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                DEVICE_INFO di = DeviceManager.DeserializeFromBase64(ev.Object);
+                DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
                 di.mount = (Byte)DevicePolicyState.Undefined;
 
                 cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
                 cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);
-                cmd.Parameters.AddWithValue("@Comment", VirusBlokAda.CC.Common.Anchor.GetCommentFromSerial(ev.Object));
+                cmd.Parameters.AddWithValue("@Comment", di.strings.Replace('\0', ' '));
                 cmd.Parameters.AddWithValue("@LicenseCount", licenseCount);
 
                 con.Open();
