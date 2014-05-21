@@ -24,7 +24,7 @@ function ValidationFilterName()
         return false;
     }
 
-    var expr = new RegExp('<%=RegularExpressions.FilterName %>');
+    var expr = new RegExp('<%=VirusBlokAda.CC.Common.RegularExpressions.FilterName %>');
     if(!expr.test(tbox.value))
     {
         alert('No correct name.');

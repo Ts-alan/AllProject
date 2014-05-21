@@ -22,7 +22,7 @@
     function OnClientCheck()
     {
         var tbox = $get('<%=tboxPolicyName.ClientID%>');
-        var expr = new RegExp('<%=RegularExpressions.PolicyName %>');
+        var expr = new RegExp('<%=VirusBlokAda.CC.Common.RegularExpressions.PolicyName %>');
         if(!expr.test(tbox.value))
         {
             alert('<%=Resources.Resource.ErrorPolicyName%>');

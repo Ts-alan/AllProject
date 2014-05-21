@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Diagnostics;
 using System.Threading;
 using System.Web.Services;
+using VirusBlokAda.CC.Common;
 
 public partial class UserManager : PageBase
 {

@@ -155,7 +155,7 @@
             }
 
             function matchRegexp(text) {
-                var regexp = new RegExp('<%=RegularExpressions.IPAddressRangeFull %>');
+                var regexp = new RegExp('<%=VirusBlokAda.CC.Common.RegularExpressions.IPAddressRangeFull %>');
                 return regexp.test(text);
             }
 

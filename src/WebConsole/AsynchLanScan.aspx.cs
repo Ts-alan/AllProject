@@ -16,7 +16,8 @@ using VirusBlokAda.CC.RemoteOperations.MsiInfo;
 using VirusBlokAda.CC.RemoteOperations.RemoteInstall;
 using System.Configuration;
 using VirusBlokAda.CC.DataBase;
-using System.Web.Services; 
+using System.Web.Services;
+using VirusBlokAda.CC.Common; 
 
 public partial class AsynchLanScan : PageBase
 {

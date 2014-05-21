@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Collections.Generic;
 using VirusBlokAda.CC.Settings.Entities;
+using VirusBlokAda.CC.Common;
 
 public partial class Notification : PageBase
 {
