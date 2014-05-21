@@ -6,9 +6,9 @@ namespace VirusBlokAda.CC.DataBase
 {
     public enum DeviceClassMode
     {
-        Undefined = 0,
-        Enabled = 1,
+        Undefined = 3,
         Disabled = 0,
+        Enabled = 1,        
         BlockWrite = 2
     }
 
