@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
+using VirusBlokAda.CC.DataBase;
 
 /// <summary>
 /// Сервисный класс, предоставляет различные методы для обслуживания
@@ -89,18 +90,17 @@ public static class Anchor
         return dest;
     }
     
-    public static String GetCommentFromSerial(String serial)
+    public static String ConvertComment(String comment)
     {
-        String comment = "";
+        String result = "";
         try
         {
-            comment = FixString(
-            HttpContext.Current.Server.HtmlEncode(VirusBlokAda.CC.Common.Anchor.GetCommentFromSerial(serial)), 30);
+            result = FixString(HttpContext.Current.Server.HtmlEncode(comment), 30);
         }
         catch
         {
         }
-        return comment;
+        return result;
     }
 
 

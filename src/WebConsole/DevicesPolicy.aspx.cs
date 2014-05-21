@@ -260,9 +260,7 @@ public partial class DevicesPolicy : PageBase
         foreach (DevicePolicy dp in list)
         {
             String row = "<tr style='text-align:center' class='" + cssStyle + "'><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/ dp.Device.SerialNo + "</td>";
-            String comment = dp.Device.Comment;
-            if (String.IsNullOrEmpty(comment))
-                comment = Anchor.GetCommentFromSerial(dp.Device.SerialNo);
+            String comment = Anchor.ConvertComment(dp.Device.Comment);
 
             row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
@@ -308,8 +306,8 @@ public partial class DevicesPolicy : PageBase
     public static String GetChangeCommentDialog(int id)
     {
         Device device = DBProviders.Policy.GetDevice(id);
-        if (String.IsNullOrEmpty(device.Comment))
-            device.Comment = Anchor.GetCommentFromSerial(device.SerialNo);
+
+        device.Comment = Anchor.ConvertComment(device.Comment);
         String label = "<div>" + ResourceControl.GetStringForCurrentCulture("DeviceComment") + "</div>";
         String text = "<input type=text dcdpc=" + id + " style='width:450px' value='" + device.Comment + "'></input>";
         String button = "<button dcdpc=" + id + ">" + ResourceControl.GetStringForCurrentCulture("ChangeComment") + "</button>";
@@ -394,9 +392,7 @@ public partial class DevicesPolicy : PageBase
                 all = "<img nfadp=" + dp.Device.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' />";
             }
             String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + all + "</td><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/dp.Device.SerialNo + "</td>";
-            String comment = dp.Device.Comment;
-            if (String.IsNullOrEmpty(comment))
-                comment = Anchor.GetCommentFromSerial(dp.Device.SerialNo);
+            String comment = Anchor.ConvertComment(dp.Device.Comment);
 
             row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
             row += "<td>" + dp.Computer.ComputerName + "</td>";
@@ -500,9 +496,7 @@ public partial class DevicesPolicy : PageBase
         foreach (Device dev in list)
         {
             String row = "<tr style='text-align:left' dev=" + dev.ID + "><td>" + Anchor.FixString(dev.SerialNo, 30) + "</td>";
-            String comment = dev.Comment;
-            if (String.IsNullOrEmpty(comment))
-                comment = Anchor.GetCommentFromSerial(dev.SerialNo);
+            String comment = Anchor.ConvertComment(dev.Comment);
 
             row += "<td dp=" + dev.ID + " type='comment'>" + comment + "</td>";
             row += "<td>" + dev.LastComputer + "</td>";
