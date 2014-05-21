@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using VirusBlokAda.CC.Common;
+using System.Text.RegularExpressions;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -26,9 +27,11 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Policy string</returns>
         internal String GetPolicyToComputer(String computerName)
         {
-            List<DevicePolicy> policies = GetDeviceEntitiesFromComputer(computerName);
+            DeviceClassManager dcMngr = new DeviceClassManager(connectionString);
+            ComputersEntity comp = new ComputersEntity();
+            comp.ComputerName = computerName;
 
-            return ConvertDeviceEntitiesToPolicy(policies);
+            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList());
         }
 
         /// <summary>
@@ -219,10 +222,14 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="lists">Device policy list</param>
         /// <returns>Policy string</returns>
-        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> lists)
+        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> listDP, List<DeviceClassPolicy> listDCP, List<DeviceClass> listDC)
         {
             Int32 index = 0;
+            Regex reg = new Regex(RegularExpressions.GUID);
+            List<DeviceClass> listUsbClassesAll = new List<DeviceClass>();
+            List<DeviceClassPolicy> listUsbClasses = new List<DeviceClassPolicy>();
             StringBuilder policy = new StringBuilder(1024);
+            
             policy.Append("<Task>");
             policy.Append("<Content>");
             policy.Append("<VsisCommand>");
@@ -234,39 +241,31 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("<arg><key>settings</key><value><config><id>Normal</id><module><id>{87005109-1276-483A-B0A9-F3119AFA4E5B}</id>");
 
             //AcceptableClassesRules
-            /*
-             <param>
-                      <id>AcceptableClassesRules</id>
-                      <type>stringlist</type>
-                      <value>
-                          <string>
-                              <id>0</id>
-                              <val>{36FC9E60-C465-11CF-8056-444553540000}</val>
-                          </string>
-                          <string>
-                              <id>1</id>
-                              <val>{4D36E965-E325-11CE-BFC1-08002BE10318}</val>
-                          </string>                          
-                      </value>
-                  </param>
-             
-             */
+            policy.Append("<param><id>AcceptableClassesRules</id><type>stringlist</type><value>");
+            
+            foreach (DeviceClass dc in listDC)
+            {
+                if (reg.IsMatch(dc.UID))
+                    policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, dc.UID);
+                else
+                    listUsbClassesAll.Add(dc);
+            }
+
+            policy.Append("</value></param>");
 
             //ClassesRules
-            /*
-             
-             <param>
-                      <id>ClassesRules</id>
-                      <type>stringlist</type>
-                      <value>
-                          <string>
-                              <id>0</id>
-                              <val>{36FC9E60-C465-11CF-8056-444553540000}=0</val>
-                          </string>
-                      </value>
-                  </param>
-             
-             */
+            index = 0;
+            StringBuilder tmp = new StringBuilder(256);
+            policy.Append("<param><id>ClassesRules</id><type>stringlist</type><value>");
+            foreach (DeviceClassPolicy dcp in listDCP)
+            {
+                if (reg.IsMatch(dcp.ClassOfDevice.UID))
+                    tmp.AppendFormat("<string><id>{0}</id><val>{1}={2}</val></string>", index++, dcp.ClassOfDevice.UID, (Byte)dcp.Mode);
+                else
+                    listUsbClasses.Add(dcp);
+            }
+            policy.Append(tmp.ToString());
+            policy.Append("</value></param>");
 
             //Events
             /*
@@ -289,41 +288,30 @@ namespace VirusBlokAda.CC.DataBase
              */
 
             //InstalledClassesRules
-            /*
-             <param>
-                      <id>InstalledClassesRules</id>
-                      <type>stringlist</type>
-                      <value>
-                          <string>
-                              <id>0</id>
-                              <val>{36FC9E60-C465-11CF-8056-444553540000}=0</val>
-                          </string>
-                      </value>
-                  </param>
-             */
+            policy.Append("<param><id>InstalledClassesRules</id><type>stringlist</type><value>");
+            policy.Append(tmp.ToString());
+            policy.Append("</value></param>");
 
-            //
-            /*UsbClasses
-             <param>
-                      <id>UsbClasses</id>
-                      <type>stringlist</type>
-                      <value>
-                          <string>
-                              <id>0</id>
-                              <val>AQH=</val>
-                          </string>
-                          <string>
-                              <id>1</id>
-                              <val>AgH=</val>
-                          </string>                          
-                      </value>
-                  </param>
-             */
+            //UsbClasses
+            index = 0;
+            policy.Append("<param><id>UsbClasses</id><type>stringlist</type><value>");
+            foreach (DeviceClassPolicy dcp in listUsbClasses)
+            {
+                policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++,
+                    DeviceClassManager.SerializeToBase64(new CLASS_INFO(Convert.ToByte(dcp.ClassOfDevice.UID), (Byte)dcp.Mode)));
+                listUsbClassesAll.Remove(dcp.ClassOfDevice);
+            }
+            foreach (DeviceClass dc in listUsbClassesAll)
+            {
+                policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++,
+                    DeviceClassManager.SerializeToBase64(new CLASS_INFO(Convert.ToByte(dc.UID), 1)));
+            }
+            policy.Append("</value></param>");
 
             //UsbDevices
             policy.Append("<param><id>UsbDevices</id><type>stringlist</type><value>");
             index = 0;
-            foreach (DevicePolicy item in lists)
+            foreach (DevicePolicy item in listDP)
             {
                 DEVICE_INFO di = DeviceManager.DeserializeFromBase64(item.Device.SerialNo);
                 di.mount = (Byte)item.State;

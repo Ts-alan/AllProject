@@ -32,5 +32,11 @@ namespace VirusBlokAda.CC.DataBase
     {
         public Byte dev_class;
         public Byte mount;
+
+        public CLASS_INFO(Byte _class, Byte _mount)
+        {
+            dev_class = _class;
+            mount = _mount;
+        }
     }
 }
