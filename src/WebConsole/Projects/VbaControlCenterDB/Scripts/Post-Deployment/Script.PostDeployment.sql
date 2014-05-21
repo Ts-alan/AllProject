@@ -166,6 +166,9 @@ GO
 PRINT N'[dbo].[DeviceClassMode]...';
 GO
 INSERT INTO [dbo].[DeviceClassMode] ([ModeName]) VALUES('Undefined');
+INSERT INTO [dbo].[DeviceClassMode] ([ModeName]) VALUES('Disabled');
+INSERT INTO [dbo].[DeviceClassMode] ([ModeName]) VALUES('Enabled');
+INSERT INTO [dbo].[DeviceClassMode] ([ModeName]) VALUES('BlockWrite');
 GO
 PRINT N'[dbo].[DeviceClassMode]: successfully.';
 GO
@@ -187,6 +190,31 @@ INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{6BDD1FC5-810F-11D0
 INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName]) VALUES('{E0CBF06C-CD8B-4647-BB8A-263B43F0F974}', 'Bluetooth');
 GO
 PRINT N'[dbo].[DeviceClass]: successfully.';
+GO
+
+PRINT N'[dbo].[DeviceClass] USB classes...';
+GO
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('1', 'Audio', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('2', 'CDC Control', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('3', 'HID', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('5', 'Physical', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('6', 'Image', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('7', 'Printer', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('8', 'Mass Storage', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('9', 'Hub', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('10', 'CDC-Data', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('11', 'Smart Card', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('13', 'Content Security', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('14', 'Video', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('15', 'Personal Healthcare', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('16', 'Audio/Video Devices', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('220', 'Diagnostic Device', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('224', 'Wireless Controller', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('239', 'Miscellaneous', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('254', 'Application Specific', 'USB class');
+INSERT INTO [dbo].[DeviceClass] ([UID], [ClassName], [Class]) VALUES('255', 'Vendor Specific', 'USB class');
+GO
+PRINT N'[dbo].[DeviceClass]: USB classes successfully.';
 GO
 
 PRINT N'Inserting update info...';
