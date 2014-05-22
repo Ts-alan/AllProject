@@ -83,15 +83,15 @@
     <None Include="App.config" />
     <None Include="ARM2_DbControl\Database\TestXML\DataBase.xsc">
       <DependentUpon>DataBase.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ARM2_DbControl\Database\TestXML\DataBase.xsd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ARM2_DbControl\Database\TestXML\DataBase.xss">
       <DependentUpon>DataBase.xsd</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
