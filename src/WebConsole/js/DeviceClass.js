@@ -262,8 +262,14 @@
                     state = "Disabled";
                     break;
                 case "Disabled":
-                    titleMsg = Resource.BlockWrite;
-                    state = "BlockWrite";
+                    if (img.attr('IsUsbClass') == 'true') {
+                        titleMsg = Resource.Enabled;
+                        state = "Enabled";
+                    }
+                    else {
+                        titleMsg = Resource.BlockWrite;
+                        state = "BlockWrite";
+                    }
                     break;
                 case "BlockWrite":
                     titleMsg = Resource.Enabled;
@@ -298,7 +304,7 @@
             var id = $(this).attr('dpc');
             var uid = $('input[dpc]').val();
 
-            if (!ValidateUID(uid))
+            if (!ValidateEmpty(uid))
                 return false;
 
             var isExists = false;
@@ -363,7 +369,7 @@
             var id = $(this).attr('dgr');
             var uid = $('input[dgr]').val();
 
-            if (!ValidateUID(uid))
+            if (!ValidateEmpty(uid))
                 return false;
 
             $.ajax({
@@ -439,8 +445,14 @@
                     state = "Disabled";
                     break;
                 case "Disabled":
-                    titleMsg = Resource.BlockWrite;
-                    state = "BlockWrite";
+                    if (img.attr('IsUsbClass') == 'true') {
+                        titleMsg = Resource.Enabled;
+                        state = "Enabled";
+                    }
+                    else {
+                        titleMsg = Resource.BlockWrite;
+                        state = "BlockWrite";
+                    }
                     break;
                 case "BlockWrite":
                     titleMsg = Resource.Enabled;

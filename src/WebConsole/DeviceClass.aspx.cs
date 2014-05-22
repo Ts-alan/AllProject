@@ -415,14 +415,16 @@ public partial class DeviceClassPage : PageBase
             ResourceControl.GetStringForCurrentCulture("Actions") + "</th></thead><tbody>";
         String cssStyle = "gridViewRow";
 
+        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(VirusBlokAda.CC.Common.RegularExpressions.GUID);
+
         foreach (DeviceClassPolicy dp in list)
         {
             String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + dp.ClassOfDevice.ClassName + "</td>";
 
             row += "<td style='width:60px' uidtd>" + dp.ClassOfDevice.UID + "</td>";
             row += "<td><span class='main' uid='" + dp.ClassOfDevice.UID + "' type='comment'>" + dp.ClassOfDevice.Class + "</span></td>";
-            
-            String select = "<img style='cursor:pointer' dp=" + dp.ClassOfDevice.ID + " cp=" + id + " state=";
+
+            String select = "<img style='cursor:pointer' dp=" + dp.ClassOfDevice.ID + " cp=" + id + (!reg.IsMatch(dp.ClassOfDevice.UID) ? " IsUsbClass=true" : " IsUsbClass=false") + " state=";
             switch (dp.Mode)
             {
                 case DeviceClassMode.Undefined:
@@ -467,6 +469,7 @@ public partial class DeviceClassPage : PageBase
             ResourceControl.GetStringForCurrentCulture("Actions") + "</th></thead><tbody>";
         String cssStyle = "gridViewRow";
         String all;
+        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(VirusBlokAda.CC.Common.RegularExpressions.GUID);
         foreach (DeviceClassPolicy dp in list)
         {
             all = "";
@@ -478,7 +481,7 @@ public partial class DeviceClassPage : PageBase
             row += "<td style='width:60px' uidtd>" + dp.ClassOfDevice.UID + "</td>";
             row += "<td><span class='main' uid='" + dp.ClassOfDevice.UID + "' type='comment'>" + dp.ClassOfDevice.Class + "</span></td>";
                         
-            String select = "<img style='cursor:pointer' dp= " + dp.ClassOfDevice.ID + " gdp=" + groupID + " state=";
+            String select = "<img style='cursor:pointer' dp= " + dp.ClassOfDevice.ID + " gdp=" + groupID + (!reg.IsMatch(dp.ClassOfDevice.UID) ? " IsUsbClass=true" : " IsUsbClass=false") + " state=";
             switch (dp.Mode)
             {
                 case DeviceClassMode.Undefined:
@@ -591,18 +594,18 @@ public partial class DeviceClassPage : PageBase
         String compString = "<tr treedp='" + dp.ID + "' class='" + cssStyle + "'>";
         compString += "<td >" + comp.ComputerName + "</td>";
         String select = "<img style='cursor:pointer'  treestatedev=" + DeviceClassID + " treestatecp=" + comp.ID + " state=";
-        switch ((Int32)dp.Mode)
+        switch (dp.Mode)
         {
-            case 0:
+            case DeviceClassMode.Undefined:
                 select += "Enabled src=\'App_Themes/Main/Images/undefined.gif\' title='" + Resources.Resource.Undefined + "' />";
                 break;
-            case 1:
+            case DeviceClassMode.Enabled:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' title='" + Resources.Resource.Enabled + "' />";
                 break;
-            case 2:
+            case DeviceClassMode.Disabled:
                 select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' title='" + Resources.Resource.Disabled + "' />";
                 break;
-            case 3:
+            case DeviceClassMode.BlockWrite:
                 select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' title='" + Resources.Resource.BlockWrite + "' />";
                 break;
         }
