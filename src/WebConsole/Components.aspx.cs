@@ -46,4 +46,13 @@ public partial class Components : PageBase
         GridView1.Where = e.Where;
         GridView1.DataBind();
     }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            ComponentsEntity cmpnt = (ComponentsEntity)e.Row.DataItem;
+            (e.Row.Cells[1].FindControl("lblComponentName") as Label).Text = DatabaseNameLocalization.GetNameForCurrentCulture(cmpnt.ComponentName);
+        }
+    }
 }

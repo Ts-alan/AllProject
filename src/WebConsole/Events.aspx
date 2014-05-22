@@ -78,9 +78,12 @@
                         <asp:BoundField DataField="EventTime" SortExpression="EventTime" HeaderText='<%$ Resources:Resource, EventTime %>'>
                             <HeaderStyle Width="100px" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="ComponentName" SortExpression="ComponentName" HeaderText='<%$ Resources:Resource, Component %>'>
+                        <asp:TemplateField SortExpression="ComponentName" HeaderText='<%$ Resources:Resource, Component %>'>
+                            <ItemTemplate>
+                                <asp:Label runat="server" ID="lblComponentName"></asp:Label>
+                            </ItemTemplate>
                             <HeaderStyle Width="100px" />
-                        </asp:BoundField>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="Object" SortExpression="Object" HeaderText='<%$ Resources:Resource, Object %>'>
                             <HeaderStyle Width="150px" />
                         </asp:BoundField>

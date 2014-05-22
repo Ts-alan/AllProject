@@ -48,7 +48,7 @@
         <asp:UpdatePanel runat="server" ID="updatePanelComponentsGrid">
         <ContentTemplate>
             <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
-                AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
+                AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" OnRowDataBound="GridView1_RowDataBound" 
                 EnableModelValidation="True" CssClass="gridViewStyle"
                 StorageType="Session" StorageName="Components" EmptyDataText='<%$ Resources:Resource, EmptyMessage %>'>
             <Columns>                    
@@ -56,10 +56,12 @@
                     HeaderText='<%$Resources:Resource, ComputerName%>' >
                     <HeaderStyle Width="200px" />
                 </asp:HyperLinkField>                       
-                <asp:BoundField DataField="ComponentName" SortExpression="ComponentName" 
-                    HeaderText='<%$Resources:Resource, ComponentName%>' >
+                <asp:TemplateField SortExpression="ComponentName" HeaderText='<%$ Resources:Resource, Component %>'>
+                    <ItemTemplate>
+                        <asp:Label runat="server" ID="lblComponentName"></asp:Label>
+                    </ItemTemplate>
                     <HeaderStyle Width="190px" />
-                </asp:BoundField>
+                </asp:TemplateField>
                 <asp:BoundField DataField="ComponentState" SortExpression="ComponentState" 
                     HeaderText='<%$Resources:Resource, ComponentState%>'>
                     <HeaderStyle Width="50px" />

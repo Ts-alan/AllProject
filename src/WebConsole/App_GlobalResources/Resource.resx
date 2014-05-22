@@ -3330,9 +3330,6 @@ system administrator.</value>
   <data name="CheckState" xml:space="preserve">
     <value>Check State</value>
   </data>
-  <data name="Files" xml:space="preserve">
-    <value>Files</value>
-  </data>
   <data name="SaveState" xml:space="preserve">
     <value>Save State</value>
   </data>
@@ -3368,5 +3365,32 @@ system administrator.</value>
   </data>
   <data name="WrongArchivesSize" xml:space="preserve">
     <value>Archive`s size is not set correctly</value>
+  </data>
+  <data name="VAS" xml:space="preserve">
+    <value>Antivirus scanner</value>
+  </data>
+  <data name="VDD" xml:space="preserve">
+    <value>Access control module</value>
+  </data>
+  <data name="VFC" xml:space="preserve">
+    <value>Cleaning module</value>
+  </data>
+  <data name="VGI" xml:space="preserve">
+    <value>Graphical User Interface</value>
+  </data>
+  <data name="VIC" xml:space="preserve">
+    <value>Check integrity module</value>
+  </data>
+  <data name="VMT" xml:space="preserve">
+    <value>Monitor</value>
+  </data>
+  <data name="VND" xml:space="preserve">
+    <value>Network module</value>
+  </data>
+  <data name="VPP" xml:space="preserve">
+    <value>Proactive protection</value>
+  </data>
+  <data name="VQTN" xml:space="preserve">
+    <value>Quarantine</value>
   </data>
 </root>

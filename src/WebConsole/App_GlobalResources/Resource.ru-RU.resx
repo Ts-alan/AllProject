@@ -3318,9 +3318,6 @@
   <data name="CheckState" xml:space="preserve">
     <value>Проверить состояние</value>
   </data>
-  <data name="Files" xml:space="preserve">
-    <value>Файлы</value>
-  </data>
   <data name="SaveState" xml:space="preserve">
     <value>Сохранить состояние</value>
   </data>
@@ -3356,5 +3353,32 @@
   </data>
   <data name="WrongArchivesSize" xml:space="preserve">
     <value>Неправильно задан размер архива</value>
+  </data>
+  <data name="VAS" xml:space="preserve">
+    <value>Антивирусный сканер</value>
+  </data>
+  <data name="VDD" xml:space="preserve">
+    <value>Модуль управления доступом</value>
+  </data>
+  <data name="VFC" xml:space="preserve">
+    <value>Модуль удаления</value>
+  </data>
+  <data name="VGI" xml:space="preserve">
+    <value>Графический интерфейс пользователя</value>
+  </data>
+  <data name="VIC" xml:space="preserve">
+    <value>Модуль проверки целостности</value>
+  </data>
+  <data name="VMT" xml:space="preserve">
+    <value>Монитор</value>
+  </data>
+  <data name="VND" xml:space="preserve">
+    <value>Сетевой модуль</value>
+  </data>
+  <data name="VPP" xml:space="preserve">
+    <value>Проактивная защита</value>
+  </data>
+  <data name="VQTN" xml:space="preserve">
+    <value>Карантин</value>
   </data>
 </root>
