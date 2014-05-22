@@ -266,16 +266,15 @@ public partial class DevicesPolicy : PageBase
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
             String select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
-            int i = (int)dp.State;
-            switch (i)
+            switch (dp.State)
             {
-                case 0:
+                case DevicePolicyState.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case 1:
+                case DevicePolicyState.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case 2:
+                case DevicePolicyState.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
             }
@@ -399,16 +398,15 @@ public partial class DevicesPolicy : PageBase
             row += "<td style='width:60px'>" + dp.LatestInsert ?? "" + "</td>";
 
             String select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
-            int i = (int)dp.State;
-            switch (i)
+            switch (dp.State)
             {
-                case 0:
+                case DevicePolicyState.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case 1:
+                case DevicePolicyState.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case 2:
+                case DevicePolicyState.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
             }
@@ -689,16 +687,15 @@ public partial class DevicesPolicy : PageBase
         compString += "<td >" + comp.ComputerName + "</td>";
         compString += "<td >" + dp.LatestInsert + "</td>";
         String select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp=" + comp.ID + " state=";
-        int i = (int)dp.State;
-        switch (i)
+        switch (dp.State)
         {
-            case 0:
+            case DevicePolicyState.Undefined:
                 select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                 break;
-            case 1:
+            case DevicePolicyState.Enabled:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                 break;
-            case 2:
+            case DevicePolicyState.Disabled:
                 select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                 break;
         }
