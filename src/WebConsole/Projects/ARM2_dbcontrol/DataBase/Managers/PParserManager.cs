@@ -140,6 +140,7 @@ namespace VirusBlokAda.CC.DataBase
                     comment = di.strings.Replace('\0', ' ');
                 }
                 ev.Comment = String.Concat(comment, parts[1]);
+                ev.Object = DeviceManager.SerializeToBase64(di);
             }
         }
         
