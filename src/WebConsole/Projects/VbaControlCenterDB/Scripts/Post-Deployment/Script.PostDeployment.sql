@@ -126,12 +126,9 @@ GO
 
 PRINT N'[dbo].[Vba32Versions]...';
 GO
-INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 WinNT Workstation');
-INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 WinNT Server');
-INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 for Windows Vista');
-INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 for Windows Server 2008');
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Remote Console Scanner');
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Remote Control Agent');
+INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Antivirus');
 GO
 PRINT N'[dbo].[Vba32Versions]: successfully.';
 GO
