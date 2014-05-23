@@ -546,14 +546,14 @@ public partial class AsynchLanScan : PageBase
         else
         {
             foreach (RemoteInfoEntityShow next in scanResultDict.Values)
-            {
-                if (next.IsSelected)
-                {
-                    totalCountSelected++;
-                }
+            {               
                 if (!next.IsDisabled)
                 {
                     totalCountAvailable++;
+                    if (next.IsSelected)
+                    {
+                        totalCountSelected++;
+                    }
                 }
             }
         }
@@ -984,11 +984,12 @@ public partial class AsynchLanScan : PageBase
                     if (!$(this).is(':disabled'))
                     {
                         availableCheckboxes++;
-                    }
-                    if ($(this).is(':checked'))
-                    { 
-                        checkedCheckboxes++;
-                    }
+                        if ($(this).is(':checked'))
+                        {
+                            checkedCheckboxes++;
+                        }
+                    }                    
+                    
                 });
                 return {available : availableCheckboxes, checked : checkedCheckboxes};
             }
@@ -1234,6 +1235,11 @@ public partial class AsynchLanScan : PageBase
         installer.MethodType = GetRemoteMethod();
         installer.InstallAll(installEntities, rebootAfterInstall);
         //Response.Redirect("~/TasksInstall.aspx");
+        String key2 = "ResetSelectedCountScript";
+        String script2 = "var lblSelectedTotalCountSelector = '#" + lblSelectedTotalCount.ClientID + @"';
+                        $(gridViewSelector).attr('" + totalCountSelectedKey + @"', 0);
+                        $(lblSelectedTotalCountSelector).html(0); ";
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key2, script2.ToString(), true);
         String key = "InstallClickCallbackScript";
         String script = "alert('" + Resources.Resource.InstallGived + "');";
         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);
