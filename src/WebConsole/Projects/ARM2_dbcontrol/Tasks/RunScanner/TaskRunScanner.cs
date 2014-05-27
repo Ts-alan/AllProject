@@ -47,35 +47,6 @@ namespace ARM2_dbcontrol.Tasks
 
         #endregion
 
-        #region Methods
-
-        public String GetTaskForVSIS()
-        {
-            StringBuilder result = new StringBuilder(256);
-
-            result.Append("<VsisCommand>");
-            result.Append("<Args>");
-
-            result.Append(@"<command><arg><key>module-id</key><value>{2E406790-5472-4E0C-9EBF-88D081AA09AC}</value></arg>");
-            result.Append(@"<arg><key>command</key><value>scan</value></arg><arg>");
-
-            if (IsCheckMemory)
-                result.Append(@"<key>memory</key><value />");
-
-            Int32 index = 0;
-            foreach (String path in PathScan)
-            {
-                result.AppendFormat(@"<key>path{0}</key><value>{1}</value>", index++, path.Replace('\\', '/'));
-            }
-
-            result.Append(@"</arg></command>");
-            result.Append(@"</Args>");
-            result.Append(@"<Async>0</Async>");
-            result.Append(@"</VsisCommand>");
-
-            return result.ToString();
-        }
-
         #region IConfigureTask Members
 
         public String SaveToXml()
@@ -105,7 +76,29 @@ namespace ARM2_dbcontrol.Tasks
 
         public String GetTask()
         {
-            return String.Empty;
+            StringBuilder result = new StringBuilder(256);
+
+            result.Append("<VsisCommand>");
+            result.Append("<Args>");
+
+            result.Append(@"<command><arg><key>module-id</key><value>{2E406790-5472-4E0C-9EBF-88D081AA09AC}</value></arg>");
+            result.Append(@"<arg><key>command</key><value>scan</value></arg><arg>");
+
+            if (IsCheckMemory)
+                result.Append(@"<key>memory</key><value />");
+
+            Int32 index = 0;
+            foreach (String path in PathScan)
+            {
+                result.AppendFormat(@"<key>path{0}</key><value>{1}</value>", index++, path.Replace('\\', '/'));
+            }
+
+            result.Append(@"</arg></command>");
+            result.Append(@"</Args>");
+            result.Append(@"<Async>0</Async>");
+            result.Append(@"</VsisCommand>");
+
+            return result.ToString();
         }
 
         public void LoadFromXml(String xml)
@@ -127,7 +120,6 @@ namespace ARM2_dbcontrol.Tasks
             throw new NotImplementedException();
         }
 
-        #endregion
         #endregion
     }
 }

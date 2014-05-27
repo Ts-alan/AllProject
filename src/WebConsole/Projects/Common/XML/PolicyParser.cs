@@ -37,23 +37,28 @@ namespace VirusBlokAda.CC.Common.Xml
             return GetTaskConfigureSettingsContentNode("qtn");
         }
 
-        public String GetParamToDeviceProtect()
+        public String GetParamToJournalEvents()
         {
-            return GetTaskConfigureSettingsContentNodeCustomAction("SetRegistrySettings");
+            return GetTaskConfigureSettingsContentNodeWithoutName("journalevents");
         }
 
         private String GetTaskConfigureSettingsContentNode(String name)
         {
             try
             {
-                XmlNode node = root.SelectSingleNode(
-                    String.Format("descendant::Task/Content/TaskConfigureSettings/{0}", name));
-                return String.Format("<{0}>{1}</{0}>",name,node.InnerXml);
+                return String.Format("<{0}>{1}</{0}>", name, GetTaskConfigureSettingsContentNodeWithoutName(name));
             }
             catch
             {
             }
             return String.Empty;
+        }
+
+        private String GetTaskConfigureSettingsContentNodeWithoutName(String name)
+        {
+            XmlNode node = root.SelectSingleNode(
+                String.Format("descendant::Task/Content/TaskConfigureSettings/{0}", name));
+            return node.InnerXml;
         }
                 
         private String GetTaskConfigureSettingsContentNodeCustomAction(String name)

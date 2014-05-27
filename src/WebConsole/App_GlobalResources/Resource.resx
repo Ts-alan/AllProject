@@ -2235,7 +2235,7 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>User tasks</value>
   </data>
   <data name="UseStartupOptionsLoaderAndMonitor" xml:space="preserve">
-    <value>Use Options Loader, Monitor and Device protect</value>
+    <value>Use Options Loader, Monitor</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

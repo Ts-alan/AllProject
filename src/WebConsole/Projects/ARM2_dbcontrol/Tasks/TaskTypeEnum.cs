@@ -23,8 +23,6 @@ namespace ARM2_dbcontrol.Tasks
         RestoreFileFromQtn,
         ProactiveProtection,
         Firewall,
-        ChangeDeviceProtect,
-        DailyDeviceProtect,
         RequestPolicy,
         ConfigureSheduler,
         Uninstall,
@@ -36,6 +34,7 @@ namespace ARM2_dbcontrol.Tasks
         MonitorOn,
         MonitorOff,
         ConfigureIntegrityCheck,
-        FileCleaner
+        FileCleaner,
+        JornalEvents
     }
 }

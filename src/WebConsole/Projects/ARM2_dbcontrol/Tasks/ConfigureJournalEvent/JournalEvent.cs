@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
 {
     [Serializable]
-    public class JournalEvent
+    public class JournalEvent : IConfigureTask
     {
         private SingleJournalEvent[] _events;
 
@@ -37,24 +39,6 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
             }
         }
 
-        public String GetTask()
-        {
-            StringBuilder task = new StringBuilder(256);
-            
-            task.Append("<param>");
-            task.Append("<id>Events</id>");
-            task.Append("<type>stringmap</type>");
-            task.Append("<value>");
-            for (Int32 i = 1; i < _events.Length; i++)
-            {
-                task.AppendFormat("<string><id>{0}</id>{1}</string>", i.ToString(), ConvertEventForTask(_events[i]));
-            }
-            task.Append("</value>");
-            task.Append("</param>");
-
-            return task.ToString();
-        }
-
         private String ConvertEventForTask(SingleJournalEvent journalEvent)
         {
             UInt32 val = 0;
@@ -77,6 +61,56 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
                 _events[i].EventFlag = EventJournalFlags.NoOneJournal;
             }
         }
+
+        #region IConfigureTask Members
+
+        public String SaveToXml()
+        {
+            XmlSerializer serializer = new XmlSerializer(this.GetType());
+            StringWriter sw = new StringWriter();
+            serializer.Serialize(sw, this);
+            return sw.ToString();
+        }
+
+        public void LoadFromXml(String xml)
+        {
+            if (String.IsNullOrEmpty(xml))
+                return;
+
+            XmlSerializer serializer = new XmlSerializer(this.GetType());
+            JournalEvent task;
+            using (TextReader reader = new StringReader(xml))
+            {
+                task = (JournalEvent)serializer.Deserialize(reader);
+            }
+
+            this._events = task.Events;
+        }
+
+        public void LoadFromRegistry(String reg)
+        {
+            throw new NotImplementedException();
+        }
+
+        public String GetTask()
+        {
+            StringBuilder task = new StringBuilder(256);
+
+            task.Append("<param>");
+            task.Append("<id>Events</id>");
+            task.Append("<type>stringmap</type>");
+            task.Append("<value>");
+            for (Int32 i = 1; i < _events.Length; i++)
+            {
+                task.AppendFormat("<string><id>{0}</id>{1}</string>", i.ToString(), ConvertEventForTask(_events[i]));
+            }
+            task.Append("</value>");
+            task.Append("</param>");
+
+            return task.ToString();
+        }
+
+        #endregion
     }
 
     public struct SingleJournalEvent

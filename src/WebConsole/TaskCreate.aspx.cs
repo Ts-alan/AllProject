@@ -65,7 +65,6 @@ public partial class TaskCreate : PageBase
                 tskRestoreFileFromQtn.Visible = false;
                 tskProactiveProtection.Visible = false;
                 tskFirewall.Visible = false;
-                tskChangeDeviceProtect.Visible = false;
                 tskRequestPolicy.Visible = false;
                 tskConfigureScheduler.Visible = false;
                 tskRunScanner.Visible = false;
@@ -178,9 +177,6 @@ public partial class TaskCreate : PageBase
                         break;
                     case "ConfigureSheduler":
                         taskUserType.Type = TaskType.ConfigureSheduler;
-                        break;
-                    case "ChangeDeviceProtect":
-                        taskUserType.Type = TaskType.ChangeDeviceProtect;
                         break;
                     case "IntegrityCheck":
                         taskUserType.Type = TaskType.ConfigureIntegrityCheck;
@@ -328,17 +324,6 @@ public partial class TaskCreate : PageBase
                 tskConfigureScheduler.ShowProfileDetails(task);
                 lblTaskName.Text = Resources.Resource.ProfileName;
                 tskConfigureScheduler.Visible = true;
-                break;
-            case TaskType.ChangeDeviceProtect:
-
-                tskChangeDeviceProtect.InitFields();
-                tskChangeDeviceProtect.LoadState(task);
-                lblTaskName.Text = Resources.Resource.TaskName;
-                tskChangeDeviceProtect.Visible = true;
-
-                tbSaveAs.Visible = false;
-                lbtnSaveAs.Visible = false;
-                lblTaskName.Visible = false;
                 break;
             case TaskType.RequestPolicy:
 

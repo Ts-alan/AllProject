@@ -19,8 +19,6 @@
 <%--<%@ Register Src="~/Controls/TemporaryGroupPanel.ascx" TagName="GroupPanel" TagPrefix="tmpGroup" %>--%>
 <%@ Register Src="~/Controls/TaskConfigureProactive.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
 <%@ Register Src="~/Controls/TaskConfigureFirewall.ascx" TagName="TaskUser" TagPrefix="tskFirewall" %>
-<%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
-<%@ Register Src="~/Controls/TaskChangeDeviceProtectEx.ascx" TagName="TaskUser" TagPrefix="tskDailyDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
 <%@ Register Src="~/Controls/TaskProductUninstall.ascx" TagName="TaskUser" TagPrefix="tskUninstall" %>
@@ -283,8 +281,6 @@
                           <tskRestoreFileFromQtn:TaskUser ID="tskRestoreFileFromQtn" runat="server" Visible="false" HideHeader="true"/>          
                           <tskProactiveProtection:TaskUser ID="tskProactiveProtection" runat="server" Visible="false" HideHeader="true"/>
                           <tskFirewall:TaskUser ID="tskFirewall" runat="server" Visible="false" HideHeader="true" />                    
-                          <tskChangeDeviceProtect:TaskUser ID="tskChangeDeviceProtect" runat="server" HideHeader="true" Visible="false" />
-                          <tskDailyDeviceProtect:TaskUser ID="tskDailyDeviceProtect" runat="server" HideHeader="true" Visible="false" />
                           <tskRequestPolicy:TaskUser ID="tskRequestPolicy" runat="server" HideHeader="true" Visible="false"></tskRequestPolicy:TaskUser>
                           <tskConfigureScheduler:TaskUser ID="tskConfigureScheduler" runat="server" HideHeader="true" Visible="false"></tskConfigureScheduler:TaskUser>                    
                           <tskUninstall:TaskUser ID="tskUninstall" runat="server" HideHeader="true" Visible="false"></tskUninstall:TaskUser>  

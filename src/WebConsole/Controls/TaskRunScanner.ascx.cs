@@ -89,9 +89,9 @@ public partial class Controls_TaskRunScanner : System.Web.UI.UserControl, ITask
         return task;
     }
 
-    public String GetTaskForVSIS()
+    public String GetTask()
     {
-        return GetTaskEntity().GetTaskForVSIS();
+        return GetTaskEntity().GetTask();
     }
 
     private TaskRunScanner GetTaskEntity()

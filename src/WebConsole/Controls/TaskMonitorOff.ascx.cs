@@ -41,12 +41,7 @@ public partial class Controls_TaskMonitorOff : System.Web.UI.UserControl, ITask
         return task;
     }
 
-    public String GetTaskForVSIS()
-    {
-        return GetTaskEntity().GetTaskForVSIS();
-    }
-
-    public String GetTaskForLoader()
+    public String GetTask()
     {
         return GetTaskEntity().GetTask();
     }

@@ -2233,7 +2233,7 @@
     <value>Пользовательские задачи</value>
   </data>
   <data name="UseStartupOptionsLoaderAndMonitor" xml:space="preserve">
-    <value>Использовать параметры Диспетчера, Монитора и Защиты USB</value>
+    <value>Использовать параметры Диспетчера, Монитора</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Значение</value>

@@ -479,9 +479,9 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         return task;
     }
 
-    public String GetTaskForVSIS()
+    public String GetTask()
     {
-        return GetTaskEntity().GetTaskForVSIS();
+        return GetTaskEntity().GetTask();
     }
 
     private void ScrollToObj(String controlId)

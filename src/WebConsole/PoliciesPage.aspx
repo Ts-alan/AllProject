@@ -5,7 +5,7 @@
 <%@ Register Src="Controls/TaskConfigureMonitor.ascx" TagName="TaskConfigureMonitor"    TagPrefix="uc" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskConfigureQuarantine"    TagPrefix="uc" %>
 <%@ Register Src="Controls/TaskConfigureLoader.ascx" TagName="TaskConfigureLoader"    TagPrefix="uc" %>
-<%@ Register Src="~/Controls/TaskChangeDeviceProtectEx.ascx" TagName="TaskChangeDeviceProtect" TagPrefix="uc" %>
+<%@ Register Src="~/Controls/TaskConfigureJornalEvents.ascx" TagName="TaskConfigureJornalEvents" TagPrefix="uc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 
@@ -46,7 +46,7 @@
                     var tabs = Ext.widget('tabpanel',
                  {
                      renderTo: 'tabs1',
-                     height: '600px',
+                     height: '800px',
                      plain: true,
                      activeTab: 1,
                      defaults: {
@@ -476,23 +476,28 @@
             <table style="width:570px;" class="ListContrastTable" runat="server" id="tblPolicies">
                 <tr>
                     <td>
-                    &nbsp;                    
-                        <asp:DropDownList ID="ddlPolicyNames" style="width:90%" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPolicyNames_SelectedIndexChanged" />
-                        <div style="height:10px"></div>
-                        <div class="GiveButton1" style="float:left; width: 120px">
-                            <asp:LinkButton ID="lbtnCreate" runat="server" OnClick="lbtnCreate_Click" ForeColor="white" Width="100%"><%=Resources.Resource.Create%></asp:LinkButton>
-                        </div>
-                        <div style="float:left;width:10px; height:10px;"></div>
-                        <div class="GiveButton1" style="float:left; width: 120px" runat="server" id="divSaveAs">
-                            <asp:LinkButton ID="lbtnSaveAs" runat="server" OnClick="lbtnSaveAs_Click" ForeColor="white" Width="100%"><%=Resources.Resource.SaveAs%></asp:LinkButton>
-                        </div>
-                        <div style="float:left;width:10px; height:10px;"></div>
-                        <div class="GiveButton1" style="float:left; width: 120px" runat="server" id="divEdit">
-                            <asp:LinkButton ID="lbtnEdit" runat="server" OnClick="lbtnEdit_Click" ForeColor="white" Width="100%"><%=Resources.Resource.Edit%></asp:LinkButton>
-                        </div>
-                        <div style="float:left;width:10px; height:10px;"></div>
-                        <div class="GiveButton1" style="width: 120px" runat="server" id="divDelete">
-                            <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click" ForeColor="white" Width="100%"><%=Resources.Resource.Delete%></asp:LinkButton>
+                        <asp:DropDownList ID="ddlPolicyNames" style="width:90%;margin-left: 5px; margin-top:10px;" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPolicyNames_SelectedIndexChanged" />
+                        <div style="text-align: left;">
+                            <asp:LinkButton ID="lbtnCreate" runat="server" OnClick="lbtnCreate_Click" 
+                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;">
+                                <%=Resources.Resource.Create%>
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lbtnSaveAs" runat="server" OnClick="lbtnSaveAs_Click" 
+                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 120px;">
+                                <%=Resources.Resource.SaveAs%>
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lbtnEdit" runat="server" OnClick="lbtnEdit_Click" 
+                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 120px;">
+                                <%=Resources.Resource.Edit%>
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click" 
+                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;">
+                                <%=Resources.Resource.Delete%>
+                            </asp:LinkButton>
                         </div>
                     </td>
                 </tr>
@@ -512,6 +517,7 @@
                 <tr>
                     <td>
                           <asp:CheckBoxList runat="server" ID="cblUsedTasks" >
+                            <asp:ListItem />
                             <asp:ListItem />
                             <asp:ListItem />
                             <asp:ListItem />
@@ -563,30 +569,26 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox ID="cboxRunMonitor" runat="server" /><%=Resources.Resource.MonitorEnabled %> <br/>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <%=Resources.Resource.TaskChangeDeviceProtect%>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <uc:TaskChangeDeviceProtect ID="deviceProtect" runat="server" HideHeader="true" HideBound="true" />
-                            </td>
-                        </tr>                        
                         </table>
                     </Content>
                 </ajaxToolkit:AccordionPane>                
+                 <ajaxToolkit:AccordionPane ID="AccordionPane5" runat="server">
+                        <Header>
+                        <a href="" class="accordionLink"><%=Resources.Resource.JournalEvents%></a>
+                        </Header>
+                    <Content>                        
+                        <uc:TaskConfigureJornalEvents ID="JornalEvents" runat="server" HideHeader="true" />
+                    </Content>
+                </ajaxToolkit:AccordionPane>
              </Panes>
         </ajaxToolkit:Accordion>
-      </div>
-         <div style="text-align:center; margin:5px; height: 15px;" runat="server" id="divButtons" visible="false">
-            <div class="GiveButton1" style="float:left;">
-               <asp:LinkButton ID="lbtnSave" OnClick="lbtnSave_Click" runat="server" ForeColor="white" Width="100%" OnClientClick='return OnClientCheck()' />
-            </div>
-            <div class="GiveButton1" style="float:left;" runat="server" id="divCancelEditing" visible="false">
-               <asp:LinkButton ID="lbtnCancelEditing" OnClick="lbtnCancelEditing_Click" runat="server" ForeColor="white" Width="100%"></asp:LinkButton>
-            </div>
-         </div>
+        </div>
+        <div style="text-align:left; margin:5px; height: 15px;" runat="server" id="divButtons" visible="false">
+           <asp:LinkButton ID="lbtnSave" OnClick="lbtnSave_Click" runat="server" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;" OnClientClick='return OnClientCheck()' />
+           <asp:LinkButton ID="lbtnCancelEditing" OnClick="lbtnCancelEditing_Click" runat="server" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+                Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;"></asp:LinkButton>
+        </div>
       </div>
       <div id='tab2' class="tab-content">
             <div id="mainContainer">

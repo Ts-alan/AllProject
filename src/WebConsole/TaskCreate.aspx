@@ -14,7 +14,6 @@
 <%@ Register Src="Controls/TaskRestoreFileFromQtn.ascx" TagName="TaskUser" TagPrefix="tskRestoreFileFromQtn" %>
 <%@ Register Src="~/Controls/TaskConfigureProactive.ascx" TagName="TaskUser" TagPrefix="tskProactiveProtection" %>
 <%@ Register Src="~/Controls/TaskConfigureFirewall.ascx" TagName="TaskUser" TagPrefix="tskFirewall" %>
-<%@ Register Src="~/Controls/TaskChangeDeviceProtect.ascx" TagName="TaskUser" TagPrefix="tskChangeDeviceProtect" %>
 <%@ Register Src="~/Controls/TaskRequestPolicy.ascx" TagName="TaskUser" TagPrefix="tskRequestPolicy" %>
 <%@ Register Src="~/Controls/TaskConfigureScheduler.ascx" TagName="TaskUser" TagPrefix="tskConfigureScheduler" %>
 <%@ Register Src="~/Controls/TaskRunScanner.ascx" TagName="TaskUser" TagPrefix="tskRunScanner" %>
@@ -59,7 +58,6 @@
             <tskRestoreFileFromQtn:TaskUser ID="tskRestoreFileFromQtn" runat="server" Visible="false"/>                    
             <tskProactiveProtection:TaskUser ID="tskProactiveProtection" runat="server" Visible="false" />
             <tskFirewall:TaskUser ID="tskFirewall" runat="server" Visible="false" />
-            <tskChangeDeviceProtect:TaskUser ID="tskChangeDeviceProtect" runat="server" Visible="false" />
             <tskRequestPolicy:TaskUser ID="tskRequestPolicy" runat="server" Visible="false" />
             <tskConfigureScheduler:TaskUser ID="tskConfigureScheduler" runat="server" Visible="false" />
             <tskRunScanner:TaskUser ID="tskRunScanner" runat="server" Visible="false" HideHeader="true" />

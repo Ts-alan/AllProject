@@ -211,7 +211,6 @@ namespace ARM2_dbcontrol.Tasks
         }
 
         #endregion
-
        
         #region IConfigureTask Members
 

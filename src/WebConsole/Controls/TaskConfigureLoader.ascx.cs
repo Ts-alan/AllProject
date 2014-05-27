@@ -281,6 +281,11 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
             rbMode.SelectedIndex = 0;
     }
 
+    public String GetTask()
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Load state
     /// </summary>

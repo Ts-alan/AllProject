@@ -48,7 +48,7 @@ public partial class _PoliciesPage : PageBase
             loader.Enabled = true;
             monitor.Enabled = true;
             quarantine.Enabled = true;
-            deviceProtect.Enabled = true;
+            JornalEvents.Enabled = true;
             cboxRunLoader.Enabled = cboxRunMonitor.Enabled = true;
         }
         else
@@ -57,7 +57,7 @@ public partial class _PoliciesPage : PageBase
             loader.Enabled = false;
             monitor.Enabled = false;
             quarantine.Enabled = false;
-            deviceProtect.Enabled = false;
+            JornalEvents.Enabled = false;
             cboxRunLoader.Enabled = cboxRunMonitor.Enabled = false;
         }
 
@@ -88,6 +88,9 @@ public partial class _PoliciesPage : PageBase
         quarantine.InitFields();
         quarantine.LoadState(task);
 
+        task.Type = TaskType.JornalEvents;
+        JornalEvents.InitFields();
+
         //get starting params
         string name = Request.QueryString["Name"];
         string mode = Request.QueryString["Mode"];
@@ -96,7 +99,7 @@ public partial class _PoliciesPage : PageBase
             InitEditPolicy(name);
             tboxPolicyName.Text = name;
             tboxPolicyName.Enabled = false;
-            divCancelEditing.Visible = true;
+            lbtnCancelEditing.Visible = true;
             trTBOX.Visible = true;
             tblPolicies.Visible = false;
             divButtons.Visible = true;
@@ -110,7 +113,7 @@ public partial class _PoliciesPage : PageBase
                 trTBOX.Visible = true;
                 tblPolicies.Visible = false;
                 divButtons.Visible = true;
-                divCancelEditing.Visible = true;
+                lbtnCancelEditing.Visible = true;
                 lbtnCancelEditing.Text = Resources.Resource.CancelButtonText;
                                 
                 if (!cboxRunLoader.Checked) cboxRunMonitor.InputAttributes.Add("disabled", "true");
@@ -121,7 +124,7 @@ public partial class _PoliciesPage : PageBase
                     InitEditPolicy(name);
                     tboxPolicyName.Text = "";
                     tboxPolicyName.Enabled = true;
-                    divCancelEditing.Visible = true;
+                    lbtnCancelEditing.Visible = true;
                     trTBOX.Visible = true;
                     tblPolicies.Visible = false;
                     divButtons.Visible = true;
@@ -163,9 +166,9 @@ public partial class _PoliciesPage : PageBase
                     }
                     else
                     {
-                        divDelete.Visible = false;
-                        divEdit.Visible = false;
-                        divSaveAs.Visible = false;
+                        lbtnDelete.Visible = false;
+                        lbtnEdit.Visible = false;
+                        lbtnSaveAs.Visible = false;
                     }
                     
                 }
@@ -176,6 +179,7 @@ public partial class _PoliciesPage : PageBase
         cblUsedTasks.Items[1].Text = Resources.Resource.SetMonitorSettings;
         cblUsedTasks.Items[2].Text = Resources.Resource.SetQtnSettings;
         cblUsedTasks.Items[3].Text = Resources.Resource.UseStartupOptionsLoaderAndMonitor;
+        cblUsedTasks.Items[4].Text = Resources.Resource.JournalEvents;
     }   
     
     #region Policies creation
@@ -275,21 +279,22 @@ public partial class _PoliciesPage : PageBase
 
         }
 
-        //init Device Protect state
-        TaskUserEntity protectTask = new TaskUserEntity();
-        protectTask.Param = parser.GetParamToDeviceProtect();
-        protectTask.Type = TaskType.DailyDeviceProtect;
+        //init journal events state
+        TaskUserEntity journalEventTask = new TaskUserEntity();
+        journalEventTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParamToJournalEvents());
+        journalEventTask.Type = TaskType.JornalEvents;
 
-        deviceProtect.InitFields();
-        if (!String.IsNullOrEmpty(protectTask.Param))
+        JornalEvents.InitFields();
+        if (!String.IsNullOrEmpty(journalEventTask.Param))
         {
             //we are using this setting
-            deviceProtect.LoadState(protectTask);
-            cblUsedTasks.Items[3].Selected = true;
+            JornalEvents.LoadState(journalEventTask);
+            cblUsedTasks.Items[4].Selected = true;
         }
+        else cblUsedTasks.Items[4].Selected = false;
     }
 
-    private string GetPolicyString()
+    private String GetPolicyString()
     {
         TaskUserEntity task;        
 
@@ -311,13 +316,16 @@ public partial class _PoliciesPage : PageBase
             task = quarantine.GetCurrentState();
             sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
         }
+        if (cblUsedTasks.Items[4].Selected)
+        {
+            task = JornalEvents.GetCurrentState();
+            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings><journalevents>{0}</journalevents></TaskConfigureSettings></Content></Task>", VirusBlokAda.CC.Common.Anchor.ToBase64String(task.Param));
+        }
             
 
         //Run status of Monitor and Loader
         if (cblUsedTasks.Items[3].Selected)
         {
-            //Device Protect
-            sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options>{0}</Options></TaskCustomAction></Content></Task>", deviceProtect.BuildTask());
             //Loader
             string runLoader;
             string typeLoader;
@@ -420,8 +428,6 @@ public partial class _PoliciesPage : PageBase
         {
             if (j == cblUsedTasks.Items.Count)
                 throw new Exception(Resources.Resource.PolicyEmpty);
-
-
 
             if (cblUsedTasks.Items[0].Selected)
                 loader.ValidateFields();
