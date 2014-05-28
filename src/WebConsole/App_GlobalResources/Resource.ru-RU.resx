@@ -2070,21 +2070,6 @@
   <data name="TaskParams" xml:space="preserve">
     <value>Параметры</value>
   </data>
-  <data name="TaskParamVba32LoaderDisable" xml:space="preserve">
-    <value>"%VBA32%Vba32ldr.exe"&amp;#160;/lu /user</value>
-  </data>
-  <data name="TaskParamVba32LoaderEnable" xml:space="preserve">
-    <value>"%VBA32%Vba32ldr.exe"&amp;#160;/user</value>
-  </data>
-  <data name="TaskParamVba32MonitorDisable" xml:space="preserve">
-    <value>"%VBA32%Vba32ldr.exe"&amp;#160;/mf /user</value>
-  </data>
-  <data name="TaskParamVba32MonitorEnable" xml:space="preserve">
-    <value>"%VBA32%Vba32ldr.exe"&amp;#160;/mn /user</value>
-  </data>
-  <data name="TaskParamVba32ProgramAndDataBaseUpdate" xml:space="preserve">
-    <value>"%VBA32%Vba32ldr.exe"&amp;#160;/bl /user</value>
-  </data>
   <data name="TaskRequestPolicy" xml:space="preserve">
     <value>Запросить политику</value>
   </data>

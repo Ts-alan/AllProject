@@ -11,14 +11,6 @@
 
 <script type="text/javascript">   
         
-    function OnLoaderClick()
-    {
-        var cbox = $get("<%=cboxRunLoader.ClientID%>");
-        var elem = $get("<%=cboxRunMonitor.ClientID%>");
-        
-        elem.disabled = !cbox.checked;
-    }
-    
     function OnClientCheck()
     {
         var tbox = $get('<%=tboxPolicyName.ClientID%>');
@@ -565,8 +557,7 @@
                         <table style="width:570px;" class="ListContrastTable">
                         <tr>
                             <td>
-                                <asp:CheckBox ID="cboxRunLoader" runat="server" onclick="OnLoaderClick()" /><%=Resources.Resource.LoaderLoaded %> <br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox ID="cboxRunMonitor" runat="server" /><%=Resources.Resource.MonitorEnabled %> <br/>
+                                <asp:CheckBox ID="cboxRunMonitor" runat="server" /><%=Resources.Resource.MonitorEnabled %>
                             </td>
                         </tr>
                         </table>
@@ -607,7 +598,7 @@
                                     </div>
                                     <div id="ModalPopupButton">
                                         <p style="text-align: center; vertical-align:bottom;">
-                                            <asp:Button ID="btnClose" runat="server" />                                            
+                                            <asp:Button ID="btnClose" runat="server" Text='<%$Resources:Resource, Close %>'/>                                            
                                         </p>
                                     </div>
                             </asp:Panel>

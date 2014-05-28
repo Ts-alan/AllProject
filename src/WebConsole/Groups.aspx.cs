@@ -1618,36 +1618,6 @@ public partial class Groups : PageBase
                                                     lbtnSave.Visible = false;
                                                 }
                                                 else
-                                                    if (name == Resources.Resource.TaskNameVba32LoaderEnable)
-                                                    {
-                                                        task.Type = TaskType.CreateProcess;
-                                                        task.Name = Resources.Resource.TaskNameVba32LoaderEnable;
-
-                                                        string str = Resources.Resource.TaskParamVba32LoaderEnable;
-                                                        xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                        xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                        xml.Generate();
-                                                        task.Param = xml.Result;
-                                                        lbtnDelete.Visible = false;
-                                                        lbtnSave.Visible = false;
-                                                    }
-                                                    else
-                                                        if (name == Resources.Resource.TaskNameVba32LoaderDisable)
-                                                        {
-                                                            task.Type = TaskType.CreateProcess;
-                                                            task.Name = Resources.Resource.TaskNameVba32LoaderDisable;
-
-                                                            string str = Resources.Resource.TaskParamVba32LoaderDisable;
-                                                            xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                            xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                            xml.Generate();
-                                                            task.Param = xml.Result;
-                                                            lbtnDelete.Visible = false;
-                                                            lbtnSave.Visible = false;
-                                                        }
-                                                        else
                                                             if (name == Resources.Resource.TaskNameVba32MonitorEnable)
                                                             {
                                                                 task.Type = TaskType.MonitorOn;
@@ -1668,17 +1638,18 @@ public partial class Groups : PageBase
                                                                 else
                                                                     if (name == Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate)
                                                                     {
-                                                                        task.Type = TaskType.CreateProcess;
-                                                                        task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
+                                                                        throw new NotImplementedException();
+                                                                        //task.Type = TaskType.CreateProcess;
+                                                                        //task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
 
-                                                                        string str = Resources.Resource.TaskParamVba32ProgramAndDataBaseUpdate;
-                                                                        xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                                        xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
+                                                                        //string str = Resources.Resource.TaskParamVba32ProgramAndDataBaseUpdate;
+                                                                        //xml.AddNode(tskCreateProcess.TagCommandLine, str);
+                                                                        //xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
 
-                                                                        xml.Generate();
-                                                                        task.Param = xml.Result;
-                                                                        lbtnDelete.Visible = false;
-                                                                        lbtnSave.Visible = false;
+                                                                        //xml.Generate();
+                                                                        //task.Param = xml.Result;
+                                                                        //lbtnDelete.Visible = false;
+                                                                        //lbtnSave.Visible = false;
                                                                     }
                                                                     else
                                                                         if (name == Resources.Resource.TaskNameConfigureQuarantine)

@@ -22,31 +22,18 @@ namespace VirusBlokAda.CC.Common.Xml
             root = xml.DocumentElement;
         }
 
-        public String GetParamToLoader()
+        public String GetParam(String name)
         {
-            return GetTaskConfigureSettingsContentNode("loader");
+            return GetContentNode(name);
         }
 
-        public String GetParamToMonitor()
-        {
-            return GetTaskConfigureSettingsContentNode("monitor") + GetTaskConfigureSettingsContentNode("exclusions") + GetTaskConfigureSettingsContentNode("idlecheck");
-        }
-
-        public String GetParamToQtn()
-        {
-            return GetTaskConfigureSettingsContentNode("qtn");
-        }
-
-        public String GetParamToJournalEvents()
-        {
-            return GetTaskConfigureSettingsContentNodeWithoutName("journalevents");
-        }
-
-        private String GetTaskConfigureSettingsContentNode(String name)
+        private String GetContentNode(String name)
         {
             try
             {
-                return String.Format("<{0}>{1}</{0}>", name, GetTaskConfigureSettingsContentNodeWithoutName(name));
+                XmlNode node = root.SelectSingleNode(
+                String.Format("descendant::{0}", name));
+                return node.InnerXml;
             }
             catch
             {
@@ -54,11 +41,18 @@ namespace VirusBlokAda.CC.Common.Xml
             return String.Empty;
         }
 
-        private String GetTaskConfigureSettingsContentNodeWithoutName(String name)
+        private String GetTaskConfigureSettingsContentNode(String name)
         {
-            XmlNode node = root.SelectSingleNode(
+            try
+            {
+                XmlNode node = root.SelectSingleNode(
                 String.Format("descendant::Task/Content/TaskConfigureSettings/{0}", name));
-            return node.InnerXml;
+                return String.Format("<{0}>{1}</{0}>", name, node.InnerXml);
+            }
+            catch
+            {
+            }
+            return String.Empty;
         }
                 
         private String GetTaskConfigureSettingsContentNodeCustomAction(String name)

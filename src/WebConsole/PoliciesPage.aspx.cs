@@ -29,7 +29,6 @@ public partial class _PoliciesPage : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
         if (!Roles.IsUserInRole("Administrator"))
         {
             Response.Redirect("Default.aspx");
@@ -44,21 +43,11 @@ public partial class _PoliciesPage : PageBase
         string mode = Request.QueryString["Mode"];
         if (!String.IsNullOrEmpty(mode) && (mode == "Create" || mode == "Edit" || mode == "SaveAs"))
         {
-            cblUsedTasks.Enabled = true;
-            loader.Enabled = true;
-            monitor.Enabled = true;
-            quarantine.Enabled = true;
-            JornalEvents.Enabled = true;
-            cboxRunLoader.Enabled = cboxRunMonitor.Enabled = true;
+            ChangeEnable(true);
         }
         else
         {
-            cblUsedTasks.Enabled = false;
-            loader.Enabled = false;
-            monitor.Enabled = false;
-            quarantine.Enabled = false;
-            JornalEvents.Enabled = false;
-            cboxRunLoader.Enabled = cboxRunMonitor.Enabled = false;
+            ChangeEnable(false);
         }
 
         if (!Page.IsPostBack)
@@ -67,12 +56,20 @@ public partial class _PoliciesPage : PageBase
         InitDefaultPolicy();
     }
 
+    private void ChangeEnable(Boolean isEnable)
+    {
+        cblUsedTasks.Enabled = isEnable;
+        loader.Enabled = isEnable;
+        monitor.Enabled = isEnable;
+        quarantine.Enabled = isEnable;
+        JornalEvents.Enabled = isEnable;
+        cboxRunMonitor.Enabled = isEnable;
+    }
 
     protected override void InitFields()
     {
         lbtnDelete.Attributes.Add("onclick", "return confirm('" + Resources.Resource.AreYouSurePolicy + "');");        
-        btnClose.Text = Resources.Resource.Close;
-
+        
         TaskUserEntity task = new TaskUserEntity();
         task.Param = "<root></root>";
 
@@ -104,8 +101,6 @@ public partial class _PoliciesPage : PageBase
             tblPolicies.Visible = false;
             divButtons.Visible = true;
             lbtnCancelEditing.Text = Resources.Resource.CancelButtonText;
-                        
-            if (!cboxRunLoader.Checked) cboxRunMonitor.InputAttributes.Add("disabled", "true");
         }
         else
             if (!String.IsNullOrEmpty(mode) && mode == "Create")
@@ -115,8 +110,6 @@ public partial class _PoliciesPage : PageBase
                 divButtons.Visible = true;
                 lbtnCancelEditing.Visible = true;
                 lbtnCancelEditing.Text = Resources.Resource.CancelButtonText;
-                                
-                if (!cboxRunLoader.Checked) cboxRunMonitor.InputAttributes.Add("disabled", "true");
             }
             else
                 if (!String.IsNullOrEmpty(mode) && mode == "SaveAs")
@@ -129,8 +122,6 @@ public partial class _PoliciesPage : PageBase
                     tblPolicies.Visible = false;
                     divButtons.Visible = true;
                     lbtnCancelEditing.Text = Resources.Resource.CancelButtonText;
-
-                    if (!cboxRunLoader.Checked) cboxRunMonitor.InputAttributes.Add("disabled", "true");
                 }
                 else
                 {
@@ -187,28 +178,16 @@ public partial class _PoliciesPage : PageBase
     private void InitEditPolicy(string policyName)
     {
         //Get policy that should be parsed
-        Policy policy;
-        try
-        {
-            policy = DBProviders.Policy.GetPolicyByName(policyName);
-        }
-        catch
-        {
-            Response.Redirect("ErrorSql.aspx");
-            return;
-        }
-
+        Policy policy = DBProviders.Policy.GetPolicyByName(policyName);
         PolicyParser parser = new PolicyParser(policy.Content);
 
         //init loader state
         TaskUserEntity loaderTask = new TaskUserEntity();
-        loaderTask.Param = parser.GetParamToLoader();
+        loaderTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.ConfigureLoader.ToString()));
         loaderTask.Type = TaskType.ConfigureLoader;
-
         loader.InitFields();
         if (!String.IsNullOrEmpty(loaderTask.Param))
         {
-            //we are using this setting
             loader.LoadState(loaderTask);
             cblUsedTasks.Items[0].Selected = true;
         }
@@ -216,13 +195,11 @@ public partial class _PoliciesPage : PageBase
 
         //init monitor state
         TaskUserEntity monitorTask = new TaskUserEntity();
-        monitorTask.Param = parser.GetParamToMonitor();
+        monitorTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.ConfigureMonitor.ToString()));
         monitorTask.Type = TaskType.ConfigureMonitor;
-
         monitor.InitFields();
         if (!String.IsNullOrEmpty(monitorTask.Param))
         {
-            //we are using this setting
             monitor.LoadState(monitorTask);
             cblUsedTasks.Items[1].Selected = true;
         }
@@ -230,64 +207,36 @@ public partial class _PoliciesPage : PageBase
 
         //init qtn state
         TaskUserEntity qtnTask = new TaskUserEntity();
-        qtnTask.Param = parser.GetParamToQtn();
+        qtnTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.ConfigureQuarantine.ToString()));
         qtnTask.Type = TaskType.ConfigureQuarantine;
-
         quarantine.InitFields();
         if (!String.IsNullOrEmpty(qtnTask.Param))
         {
-            //we are using this setting
             quarantine.LoadState(qtnTask);
             cblUsedTasks.Items[2].Selected = true;
         }
-        else
+        else cblUsedTasks.Items[2].Selected = false;
+
+        String tmp = parser.GetParam(TaskType.MonitorOn.ToString());
+        if (!String.IsNullOrEmpty(tmp))
         {
-            cblUsedTasks.Items[2].Selected = false;
-            TaskUserEntity taskQuarantine = new TaskUserEntity();
-            taskQuarantine.Type = TaskType.ConfigureQuarantine;
-
-            VirusBlokAda.CC.Common.Xml.XmlBuilder xmlBuil = new VirusBlokAda.CC.Common.Xml.XmlBuilder("root");
-            xmlBuil.Generate();
-            taskQuarantine.Param = xmlBuil.Result;
-
-            quarantine.LoadState(taskQuarantine);
+            cboxRunMonitor.Checked = (tmp == "1");
+            cblUsedTasks.Items[3].Selected = true;            
         }
-
-        List<string> list = parser.GetTaskCreateProcessContentNodes();
-        if (list.Count > 0)
-            cblUsedTasks.Items[3].Selected = true;
         else
         {
-            cboxRunLoader.Checked = false;
             cboxRunMonitor.Checked = false;
             cblUsedTasks.Items[3].Selected = false;
-        }
-        foreach (string str in list)
-        {
-
-            if (str == GetEncodedString(Resources.Resource.TaskParamVba32LoaderDisable))
-                cboxRunLoader.Checked = false;
-
-            if (str == GetEncodedString(Resources.Resource.TaskParamVba32LoaderEnable))
-                cboxRunLoader.Checked = true;
-
-            if (str == GetEncodedString(Resources.Resource.TaskParamVba32MonitorDisable))
-                cboxRunMonitor.Checked = false;
-
-            if (str == GetEncodedString(Resources.Resource.TaskParamVba32MonitorEnable))
-                cboxRunMonitor.Checked = true;
-
         }
 
         //init journal events state
         TaskUserEntity journalEventTask = new TaskUserEntity();
-        journalEventTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParamToJournalEvents());
+        journalEventTask.Param = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.JornalEvents.ToString()));
         journalEventTask.Type = TaskType.JornalEvents;
 
         JornalEvents.InitFields();
         if (!String.IsNullOrEmpty(journalEventTask.Param))
         {
-            //we are using this setting
             JornalEvents.LoadState(journalEventTask);
             cblUsedTasks.Items[4].Selected = true;
         }
@@ -296,91 +245,23 @@ public partial class _PoliciesPage : PageBase
 
     private String GetPolicyString()
     {
-        TaskUserEntity task;        
-
         VirusBlokAda.CC.Common.Xml.XmlBuilder xml = new VirusBlokAda.CC.Common.Xml.XmlBuilder();
         StringBuilder sb = new StringBuilder(1024);
 
         if (cblUsedTasks.Items[0].Selected)
-        {
-            task = loader.GetCurrentState();
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
-        }
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.ConfigureLoader.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(loader.GetCurrentState().Param));
         if (cblUsedTasks.Items[1].Selected)
-        {
-            task = monitor.GetCurrentState();
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
-        }
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.ConfigureMonitor.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(monitor.GetCurrentState().Param));
         if (cblUsedTasks.Items[2].Selected)
-        {
-            task = quarantine.GetCurrentState();
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings>{0}</TaskConfigureSettings></Content></Task>", task.Param.Replace(xml.Top, ""));
-        }
-        if (cblUsedTasks.Items[4].Selected)
-        {
-            task = JornalEvents.GetCurrentState();
-            sb.AppendFormat(@"<Task><Content><TaskConfigureSettings><journalevents>{0}</journalevents></TaskConfigureSettings></Content></Task>", VirusBlokAda.CC.Common.Anchor.ToBase64String(task.Param));
-        }
-            
-
-        //Run status of Monitor and Loader
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.ConfigureQuarantine.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(quarantine.GetCurrentState().Param));
         if (cblUsedTasks.Items[3].Selected)
-        {
-            //Loader
-            string runLoader;
-            string typeLoader;
-            if (cboxRunLoader.Checked)
-            {
-                runLoader = GetEncodedString(Resources.Resource.TaskParamVba32LoaderEnable);
-                typeLoader = "LoaderLoad";
-            }
-            else
-            {
-                runLoader = GetEncodedString(Resources.Resource.TaskParamVba32LoaderDisable);
-                typeLoader = "LoaderUnload";
-            }
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.MonitorOn.ToString(), cboxRunMonitor.Checked ? "1" : "0");
+        if (cblUsedTasks.Items[4].Selected)
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.JornalEvents.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(JornalEvents.GetCurrentState().Param));
 
-
-            sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options><NamedCreateProcess><Name>{0}</Name><TaskCreateProcess><CommandLine>{1}</CommandLine></TaskCreateProcess></NamedCreateProcess></Options></TaskCustomAction></Content></Task>",
-            typeLoader, runLoader);
-
-            //sb.AppendFormat(@"<Task><Content><TaskCreateProcess><CommandLine>{0}</CommandLine></TaskCreateProcess></Content></Task>",
-            //runLoader);
-
-            //Monitor
-            if (cboxRunLoader.Checked)
-            {
-                string runMonitor;
-                string typeMonitor;
-                if (cboxRunMonitor.Checked)
-                {
-                    runMonitor = GetEncodedString(Resources.Resource.TaskParamVba32MonitorEnable);
-                    typeMonitor = "MonitorEnable";
-                }
-                else
-                {
-                    runMonitor = GetEncodedString(Resources.Resource.TaskParamVba32MonitorDisable);
-                    typeMonitor = "MonitorDisable";
-                }
-
-                sb.AppendFormat(@"<Task><Content><TaskCustomAction><Options><NamedCreateProcess><Name>{0}</Name><TaskCreateProcess><CommandLine>{1}</CommandLine></TaskCreateProcess></NamedCreateProcess></Options></TaskCustomAction></Content></Task>",
-           typeMonitor, runMonitor);
-
-
-               // sb.AppendFormat(@"<Task><Content><TaskCreateProcess><CommandLine>{0}</CommandLine></TaskCreateProcess></Content></Task>",
-               //     runMonitor);
-            }
-        }
         return sb.ToString();
     }
 
-    private string GetEncodedString(string str)
-    {
-        str = str.Replace("&#160;"," ");
-        return Server.HtmlDecode(Server.HtmlEncode(str));
-    }
-
-   
     protected void lbtnSave_Click(object sender, EventArgs e)
     {
         if (!ValidatePolicy()) return;
@@ -398,12 +279,6 @@ public partial class _PoliciesPage : PageBase
         else
             DBProviders.Policy.AddPolicy(policy);
 
-        /*
-        lblMessage.Text = Resources.Resource.PolicySaved;
-        mpPicture.Attributes["class"] = "ModalPopupPictureSuccess";
-        CorrectPositionModalPopup();
-        ModalPopupExtender.Show();
-        */
         Response.Redirect("PoliciesPage.aspx?name=" + tboxPolicyName.Text);
     }
 
