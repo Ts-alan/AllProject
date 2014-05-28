@@ -4,6 +4,8 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using VirusBlokAda.CC.Common.Xml;
+using ARM2_dbcontrol.Tasks;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -27,23 +29,25 @@ namespace VirusBlokAda.CC.DataBase
 
         public GeneralPolicy(String computerName, String ip, String connectionString)
         {
-            VerifyComputer(computerName, ip);
-
-            PolicyManager pm = new PolicyManager(connectionString);
-            DevicePolicyManager dpm = new DevicePolicyManager(connectionString);
-
-            Policy policy;
-            String devicePolicy;
-            ///to try to fix 0007326
-
-            //conn isn't thread-safe
             lock (lockToken)
             {
+                VerifyComputer(computerName, ip);
+
+                PolicyManager pm = new PolicyManager(connectionString);
+                DevicePolicyManager dpm = new DevicePolicyManager(connectionString);
+
+                List<IConfigureTask> tasks = new List<IConfigureTask>();
+                String devicePolicy;
+
+                StringBuilder sb = new StringBuilder(2048);
+                XmlBuilder xml = new XmlBuilder();
+                sb.Append(xml.Top);
+                sb.Append(@"<Tasks>");
+
+                PolicyParser parser = null;
                 try
                 {
-                    //get policy and usb settings
-                    policy = pm.GetPolicyToComputer(computerName);
-                    devicePolicy = dpm.GetPolicyToComputer(computerName);
+                    parser = new PolicyParser(pm.GetPolicyToComputer(computerName).Content);
                 }
                 catch
                 {
@@ -51,28 +55,70 @@ namespace VirusBlokAda.CC.DataBase
                     throw new Exception("Unable to get policy from database. Connection will be zero");
                 }
 
-                if ((String.IsNullOrEmpty(policy.Content)) && (String.IsNullOrEmpty(devicePolicy)))
+                tasks.Add(ConvertTask(parser, TaskType.ConfigureLoader));
+                tasks.Add(ConvertTask(parser, TaskType.ConfigureMonitor));
+                tasks.Add(ConvertTask(parser, TaskType.ConfigureQuarantine));
+                tasks.Add(ConvertTask(parser, TaskType.MonitorOn));
+
+                try
+                {
+                    IConfigureTask task = ConvertTask(parser, TaskType.JornalEvents);
+                    devicePolicy = dpm.GetPolicyToComputer(computerName, (task == null ? "" : task.GetTask()));
+                }
+                catch
+                {
+                    throw new Exception("Unable to get device policy from database. Connection will be zero");
+                }
+
+                Boolean isEmptyTasks = true;
+                foreach (IConfigureTask tsk in tasks)
+                {
+                    if (tsk != null)
+                    {
+                        sb.Append(tsk.GetTask());
+                        isEmptyTasks = false;
+                    }
+                }
+
+                if (isEmptyTasks && String.IsNullOrEmpty(devicePolicy))
                     return;
-
-
-                //build policy
-                StringBuilder sb = new StringBuilder(2048);
-                XmlBuilder xml = new XmlBuilder();
-
-                sb.Append(xml.Top);
-                sb.Append(@"<Tasks>");
-
-                sb.Append(policy.Content);
+                
                 sb.Append(devicePolicy);
 
                 sb.Append(@"</Tasks>");
 
                 GeneralizePolicy = sb.ToString();
 
-
                 EncryptPolicy();
 
                 CalculateHash();
+            }
+        }
+
+        private static IConfigureTask ConvertTask(PolicyParser parser, TaskType taskType)
+        {
+            String xml = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(taskType.ToString()));
+            IConfigureTask task = CreateTask(taskType);
+            task.LoadFromXml(xml);
+            return task;
+        }
+
+        private static IConfigureTask CreateTask(TaskType taskType)
+        {
+            switch (taskType)
+            {
+                case TaskType.ConfigureLoader:
+                    return new TaskConfigureLoader();
+                case TaskType.ConfigureMonitor:
+                    return new TaskConfigureMonitor();
+                case TaskType.ConfigureQuarantine:
+                    return new TaskConfigureQuarantine();
+                case TaskType.JornalEvents:
+                    return new JournalEvent();
+                case TaskType.MonitorOn:
+                    return new TaskMonitorOnOff();
+                default:
+                    throw new ArgumentException("TaskType is not defined.");
             }
         }
 

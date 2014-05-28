@@ -217,10 +217,12 @@ public partial class _PoliciesPage : PageBase
         }
         else cblUsedTasks.Items[2].Selected = false;
 
-        String tmp = parser.GetParam(TaskType.MonitorOn.ToString());
+        String tmp = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.MonitorOn.ToString()));
         if (!String.IsNullOrEmpty(tmp))
         {
-            cboxRunMonitor.Checked = (tmp == "1");
+            TaskMonitorOnOff task = new TaskMonitorOnOff();
+            task.LoadFromXml(tmp);
+            cboxRunMonitor.Checked = task.IsMonitorOn;
             cblUsedTasks.Items[3].Selected = true;            
         }
         else
@@ -255,7 +257,11 @@ public partial class _PoliciesPage : PageBase
         if (cblUsedTasks.Items[2].Selected)
             sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.ConfigureQuarantine.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(quarantine.GetCurrentState().Param));
         if (cblUsedTasks.Items[3].Selected)
-            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.MonitorOn.ToString(), cboxRunMonitor.Checked ? "1" : "0");
+        {
+            TaskMonitorOnOff task = new TaskMonitorOnOff();
+            task.IsMonitorOn = cboxRunMonitor.Checked;
+            sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.MonitorOn.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(task.SaveToXml()));
+        }
         if (cblUsedTasks.Items[4].Selected)
             sb.AppendFormat(@"<{0}>{1}</{0}>", TaskType.JornalEvents.ToString(), VirusBlokAda.CC.Common.Anchor.ToBase64String(JornalEvents.GetCurrentState().Param));
 

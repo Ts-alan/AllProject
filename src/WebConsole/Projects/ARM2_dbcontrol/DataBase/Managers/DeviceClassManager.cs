@@ -156,7 +156,7 @@ namespace VirusBlokAda.CC.DataBase
                 SqlCommand cmd = new SqlCommand("GetDeviceClassList", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                con.Close();
+                con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClass> list = new List<DeviceClass>();
                 DeviceClass deviceClass;

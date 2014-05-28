@@ -25,13 +25,13 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="computerName">Computer name</param>
         /// <returns>Policy string</returns>
-        internal String GetPolicyToComputer(String computerName)
+        internal String GetPolicyToComputer(String computerName, String jounalEvents)
         {
             DeviceClassManager dcMngr = new DeviceClassManager(connectionString);
             ComputersEntity comp = new ComputersEntity();
             comp.ComputerName = computerName;
 
-            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList());
+            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="lists">Device policy list</param>
         /// <returns>Policy string</returns>
-        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> listDP, List<DeviceClassPolicy> listDCP, List<DeviceClass> listDC)
+        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> listDP, List<DeviceClassPolicy> listDCP, List<DeviceClass> listDC, String journalEvents)
         {
             Int32 index = 0;
             Regex reg = new Regex(RegularExpressions.GUID);
@@ -236,7 +236,7 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("<Args>");
 
             policy.Append("<command>");
-            policy.AppendFormat(@"<arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
+            policy.Append(@"<arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
             policy.Append("<arg><key>command</key><value>apply_settings</value></arg>");
             policy.Append("<arg><key>settings</key><value><config><id>Normal</id><module><id>{87005109-1276-483A-B0A9-F3119AFA4E5B}</id>");
 
@@ -268,24 +268,8 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("</value></param>");
 
             //Events
-            /*
-             <param>
-                      <id>Events</id>
-                      <type>stringmap</type>
-                      <value>
-                          <string>
-                              <id>0</id>
-                              <key>JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED</key>
-                              <val>7</val>
-                          </string>
-                          <string>
-                              <id>1</id>
-                              <key>JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK</key>
-                              <val>7</val>
-                          </string>                          
-                      </value>
-                  </param>
-             */
+            if (!String.IsNullOrEmpty(journalEvents))
+                policy.Append(journalEvents);
 
             //InstalledClassesRules
             policy.Append("<param><id>InstalledClassesRules</id><type>stringlist</type><value>");
