@@ -21,7 +21,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack )
+        if (!Page.IsPostBack)
         {
             InitFields();
         }
@@ -57,14 +57,14 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         IP4dlAddRules.DataBind();
         IP6dlAddRules.DataSource = RuleProtocols;
         IP6dlAddRules.DataBind();
-        
+
         IP4UpdateData();
-        IP6UpdateData();        
+        IP6UpdateData();
     }
 
     private String[] GetEvents()
     {
-        String[] s= {"ev1","ev2","ev3","ev4"};
+        String[] s = { "ev1", "ev2", "ev3", "ev4" };
         return s;
     }
 
@@ -77,11 +77,33 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.Firewall;
-
+        SaveJournalEvents();
         task.Param = firewall.SaveToXml();
         return task;
     }
-    
+
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
+
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        firewall.journalEvent = je;
+    }
+
     public void LoadState(TaskUserEntity task)
     {
         if (task == null || task.Type != TaskType.Firewall)
@@ -106,7 +128,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     protected void IP4ApplyTcpUdpRuleDialogButtonClick(object sender, EventArgs e)
     {
-        FirewallRule rule=new FirewallRule();
+        FirewallRule rule = new FirewallRule();
         rule.Name = IP4txtNameDialog.Text;
         rule.LocalIP = IP4txtLocalIPDialog.Text;
         rule.LocalPort = IP4txtLocalPortDialog.Text;
@@ -114,7 +136,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         rule.DestinationPort = IP4txtDestinationPortDialog.Text;
         rule.Audit = IP4chkAuditTcpUdpDialog.Checked;
         rule.Protocol = IP4selectProtocolDialog.SelectedValue;
-        rule.Rule = (RulesEnum)IP4selectRuleDialog.SelectedIndex;   
+        rule.Rule = (RulesEnum)IP4selectRuleDialog.SelectedIndex;
         firewall.IP4Rules.Add(rule);
         IP4UpdateData();
     }
@@ -145,7 +167,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         rule.Rule = (RulesEnum)IP4addRuleActionSelect.SelectedIndex;
         firewall.IP4Rules.Add(rule);
         IP4UpdateData();
-    }   
+    }
 
     protected void IP4dlRules_ItemDataBound(object sender, DataListItemEventArgs e)
     {
@@ -170,7 +192,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
             (e.Item.FindControl("IP4lblDestinationPort") as Label).Text = ((FirewallRule)e.Item.DataItem).DestinationPort;
             (e.Item.FindControl("IP4lblProtocol") as Label).Text = ((FirewallRule)e.Item.DataItem).Protocol;
             (e.Item.FindControl("IP4lblRule") as Label).Text = ResourceControl.GetStringForCurrentCulture(((FirewallRule)e.Item.DataItem).Rule.ToString());
-            (e.Item.FindControl("IP4lblRule") as Label).Attributes.Add("valueRule",((FirewallRule)e.Item.DataItem).Rule.ToString());
+            (e.Item.FindControl("IP4lblRule") as Label).Attributes.Add("valueRule", ((FirewallRule)e.Item.DataItem).Rule.ToString());
             if (e.Item.ItemIndex % 2 == 0)
                 (e.Item.FindControl("IP4trFirewallItem") as System.Web.UI.HtmlControls.HtmlTableRow).Attributes.Add("class", "gridViewRowAlternating");
             else
@@ -181,13 +203,13 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     protected void IP4dlRules_SelectedIndexChanged(object sender, DataListCommandEventArgs e)
     {
         IP4dlRules.EditItemIndex = e.Item.ItemIndex;
-        IP4dlRules.SelectedIndex=e.Item.ItemIndex;
+        IP4dlRules.SelectedIndex = e.Item.ItemIndex;
         IP4UpdateData();
     }
 
     protected void IP4DeleteButtonClick(object sender, EventArgs e)
     {
-        int index =Convert.ToInt32( IP4hdnActiveRowNo.Value);
+        int index = Convert.ToInt32(IP4hdnActiveRowNo.Value);
         if (index != 0)
         {
             firewall.IP4Rules.RemoveAt(index - 1);
@@ -199,10 +221,10 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     protected void IP4MoveUpButtonClick(object sender, EventArgs e)
     {
         int index = Convert.ToInt32(IP4hdnActiveRowNo.Value);
-        if (index != 0 & index!=1)
+        if (index != 0 & index != 1)
         {
-            firewall.IP4Rules.Reverse(index - 2, 2);            
-            IP4hdnActiveRowNo.Value = Convert.ToString(index-1);
+            firewall.IP4Rules.Reverse(index - 2, 2);
+            IP4hdnActiveRowNo.Value = Convert.ToString(index - 1);
             IP4UpdateData();
         }
     }
@@ -213,7 +235,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         if (index != 0 & index != firewall.IP4Rules.Count)
         {
             firewall.IP4Rules.Reverse(index - 1, 2);
-            IP4hdnActiveRowNo.Value = Convert.ToString(index+1);
+            IP4hdnActiveRowNo.Value = Convert.ToString(index + 1);
             IP4UpdateData();
         }
     }
@@ -223,7 +245,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         int index = Convert.ToInt32(IP4hdnActiveRowNo.Value);
         if (index != 0)
         {
-            FirewallRule rule = firewall.IP4Rules[index-1];
+            FirewallRule rule = firewall.IP4Rules[index - 1];
             rule.Name = IP4txtNameDialog.Text;
             rule.LocalIP = IP4txtLocalIPDialog.Text;
             rule.LocalPort = IP4txtLocalPortDialog.Text;
@@ -233,7 +255,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
             rule.Protocol = IP4selectProtocolDialog.SelectedValue;
             rule.Rule = (RulesEnum)IP4selectRuleDialog.SelectedIndex;
             firewall.IP4Rules.Insert(index - 1, rule);
-            firewall.IP4Rules.RemoveAt(index);            
+            firewall.IP4Rules.RemoveAt(index);
             IP4UpdateData();
         }
     }
@@ -285,8 +307,8 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     protected void IP4chkEnable_OnCheckedChanged(object sender, EventArgs e)
     {
-        CheckBox chk = sender as CheckBox;     
-        int index =Convert.ToInt32( (chk.Parent.Controls[3] as HiddenField).Value);
+        CheckBox chk = sender as CheckBox;
+        int index = Convert.ToInt32((chk.Parent.Controls[3] as HiddenField).Value);
         FirewallRule rule = firewall.IP4Rules[index - 1];
         rule.Enable = chk.Checked;
         firewall.IP4Rules.Insert(index - 1, rule);
@@ -458,7 +480,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
                 }
             }
             protocols += IP6addRuleOtherProtocol.Text;
-            if (protocols[protocols.Length - 1] == ',') 
+            if (protocols[protocols.Length - 1] == ',')
                 protocols = protocols.Remove(protocols.Length - 1, 1);
             rule.Protocol = protocols;
             rule.Rule = (RulesEnum)IP6addRuleActionSelect.SelectedIndex;
@@ -485,7 +507,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     protected void IP6chkEnable_OnCheckedChanged(object sender, EventArgs e)
     {
-        CheckBox chk = sender as CheckBox;       
+        CheckBox chk = sender as CheckBox;
         int index = Convert.ToInt32((chk.Parent.Controls[3] as HiddenField).Value);
         FirewallRule rule = firewall.IP6Rules[index - 1];
         rule.Enable = chk.Checked;
@@ -510,7 +532,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         }
     }
 
-    private string CreateProtocolName( string pnName)
+    private string CreateProtocolName(string pnName)
     {
         if (pnName == "pnAX_25") return "AX.25";
         if (pnName == "pnTP") return "TP++";
@@ -580,10 +602,10 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
             cell = new TableCell();
             CheckBox chk = new CheckBox();
             chk.Checked = false;
-            chk.Attributes.Add("rowNo", rowNo.ToString());
-            chk.Attributes.Add("colNo", i.ToString());
-            chk.AutoPostBack = true;
-            chk.CheckedChanged += JournalEventChecked;
+   //         chk.Attributes.Add("rowNo", rowNo.ToString());
+   //         chk.Attributes.Add("colNo", i.ToString());
+
+
             cell.Controls.Add(chk);
             cell.Attributes.Add("align", "center");
             row.Cells.Add(cell);
@@ -592,48 +614,8 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         return row;
     }
 
-    private void JournalEventChecked(Object sender, EventArgs e)
-    {
-        CheckBox chk = (CheckBox)sender;
-        Int32 rowNo =Convert.ToInt32( chk.Attributes["rowNo"]);
-        Int32 colNo = Convert.ToInt32(chk.Attributes["colNo"]);
-        SaveCurrentStateJournalEvent(ref firewall.journalEvent.Events[rowNo], colNo, chk.Checked);
-    }
 
-    private void SaveCurrentStateJournalEvent(ref SingleJournalEvent sje, Int32 colNo, Boolean isChecked)
-    {
-        sje.EventFlag = GetEventFlag(sje.EventFlag, colNo, isChecked);
-    }
 
-    private EventJournalFlags GetEventFlag(EventJournalFlags eventJournalFlags, Int32 colNo, Boolean isChecked)
-    {
-        EventJournalFlags flags = eventJournalFlags;
-        switch (colNo)
-        {
-            case 0:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.WindowsJournal;
-                }
-                else flags &=~EventJournalFlags.WindowsJournal;
-                break;
-            case 1:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.LocalJournal;
-                }
-                else flags &= ~EventJournalFlags.LocalJournal;
-                break;
-            case 2:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.CCJournal;
-                }
-                else flags &= ~EventJournalFlags.CCJournal;
-                break;
-        }
-        return flags;
-    }
 
     #endregion
 }
