@@ -1143,7 +1143,7 @@ public partial class Groups : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.GetTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.BuildTask());
             }
 
             #endregion
@@ -1588,7 +1588,7 @@ public partial class Groups : PageBase
                                     {
                                         task.Type = TaskType.ConfigureMonitor;
                                         task.Name = Resources.Resource.CongLdrConfigureMonitor;
-                                        task.Param = xmlBuil.Result.Remove(0, xmlBuil.Top.Length);
+                                        task.Param = String.Empty;
                                         lbtnDelete.Visible = false;
                                     }
                                     else

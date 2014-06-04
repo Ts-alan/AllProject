@@ -3378,4 +3378,13 @@ system administrator.</value>
   <data name="VQTN" xml:space="preserve">
     <value>Quarantine</value>
   </data>
+  <data name="CongMonitorActionFirst" xml:space="preserve">
+    <value>First action</value>
+  </data>
+  <data name="CongMonitorActionSecond" xml:space="preserve">
+    <value>Second action</value>
+  </data>
+  <data name="CongMonitorActionThird" xml:space="preserve">
+    <value>Third action</value>
+  </data>
 </root>

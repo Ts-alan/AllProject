@@ -1851,7 +1851,7 @@ public partial class Computers : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.GetTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureMonitor.BuildTask());
             }
             #endregion
             #region Monitor On
@@ -2286,7 +2286,8 @@ public partial class Computers : PageBase
                                         {
                                             task.Type = TaskType.ConfigureMonitor;
                                             task.Name = Resources.Resource.CongLdrConfigureMonitor;
-                                            task.Param = xmlBuil.Result.Remove(0, xmlBuil.Top.Length);
+                                           // task.Param = xmlBuil.Result.Remove(0, xmlBuil.Top.Length);
+                                            task.Param = String.Empty;
                                             lbtnDelete.Visible = false;
                                         }
                                         else

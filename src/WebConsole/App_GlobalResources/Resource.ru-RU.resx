@@ -3366,4 +3366,13 @@
   <data name="VQTN" xml:space="preserve">
     <value>Карантин</value>
   </data>
+  <data name="CongMonitorActionFirst" xml:space="preserve">
+    <value>Первое действие</value>
+  </data>
+  <data name="CongMonitorActionSecond" xml:space="preserve">
+    <value>Второе действие</value>
+  </data>
+  <data name="CongMonitorActionThird" xml:space="preserve">
+    <value>Третье действие</value>
+  </data>
 </root>
