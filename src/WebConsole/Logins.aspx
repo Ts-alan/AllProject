@@ -41,8 +41,7 @@
                 <div align="center" style="width:100%;">
                    <asp:Label ID="lblError" runat="server"></asp:Label>
                    <asp:Login ID="lgLogin" runat="server" CreateUserUrl="~/Registration.aspx" 
-                   DestinationPageUrl="~/Default.aspx" OnLoggedIn="lgLogin_LoggedIn"
-                    DisplayRememberMe="False">
+                   DestinationPageUrl="~/Default.aspx" DisplayRememberMe="False">
                        <TextBoxStyle CssClass="input" Width="150px" BorderColor="LightCyan" BorderStyle="Groove" Font-Names="Verdana" />
                        <LoginButtonStyle  CssClass="LoginButton" Width="70px"  />
                        <InstructionTextStyle Font-Names="Verdana" Font-Size="9pt" />
