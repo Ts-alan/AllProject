@@ -2,10 +2,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="x-ua-compatible" content="IE=10">
-    <title></title>    
+    <meta http-equiv="x-ua-compatible" content="IE=10"/>
+    <title></title>        
 </head>
 <body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (/msie/.test(navigator.userAgent.toLowerCase())) {
+                $('input[type=text]').each(function () {
+                    //work around for ie10 clipping text
+                    $(this).val($(this).val());
+                });
+            }
+        });
+    </script>
     <form id="form1" runat="server" style="height: 100%" autocomplete="off">
     <div class="all">    
         <div class="Header">
