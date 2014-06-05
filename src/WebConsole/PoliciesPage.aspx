@@ -470,24 +470,16 @@
                     <td>
                         <asp:DropDownList ID="ddlPolicyNames" style="width:90%;margin-left: 5px; margin-top:10px;" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPolicyNames_SelectedIndexChanged" />
                         <div style="text-align: left;">
-                            <asp:LinkButton ID="lbtnCreate" runat="server" OnClick="lbtnCreate_Click" 
-                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;">
+                            <asp:LinkButton ID="lbtnCreate" runat="server" OnClick="lbtnCreate_Click" SkinID="Button">
                                 <%=Resources.Resource.Create%>
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lbtnSaveAs" runat="server" OnClick="lbtnSaveAs_Click" 
-                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 120px;">
+                            <asp:LinkButton ID="lbtnSaveAs" runat="server" OnClick="lbtnSaveAs_Click" SkinID="Button">
                                 <%=Resources.Resource.SaveAs%>
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lbtnEdit" runat="server" OnClick="lbtnEdit_Click" 
-                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 120px;">
+                            <asp:LinkButton ID="lbtnEdit" runat="server" OnClick="lbtnEdit_Click" SkinID="Button">
                                 <%=Resources.Resource.Edit%>
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click" 
-                              CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                              Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;">
+                            <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click" SkinID="Button">
                                 <%=Resources.Resource.Delete%>
                             </asp:LinkButton>
                         </div>
@@ -575,10 +567,8 @@
         </ajaxToolkit:Accordion>
         </div>
         <div style="text-align:left; margin:5px; height: 15px;" runat="server" id="divButtons" visible="false">
-           <asp:LinkButton ID="lbtnSave" OnClick="lbtnSave_Click" runat="server" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;" OnClientClick='return OnClientCheck()' />
-           <asp:LinkButton ID="lbtnCancelEditing" OnClick="lbtnCancelEditing_Click" runat="server" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-                Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;"></asp:LinkButton>
+           <asp:LinkButton ID="lbtnSave" OnClick="lbtnSave_Click" runat="server" SkinID="Button" OnClientClick='return OnClientCheck()' />
+           <asp:LinkButton ID="lbtnCancelEditing" OnClick="lbtnCancelEditing_Click" runat="server" SkinID="Button"></asp:LinkButton>
         </div>
       </div>
       <div id='tab2' class="tab-content">
