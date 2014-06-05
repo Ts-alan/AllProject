@@ -58,8 +58,6 @@ public partial class SettingsExtra : PageBase
         pcPaging.HomeText = Resources.Resource.HomePaging;
         pcPaging.LastText = Resources.Resource.LastPaging;
 
-        btnSave.Text = Resources.Resource.Save;        
-
         InitializeColorOptions();
 
         if (Roles.IsUserInRole("Administrator"))

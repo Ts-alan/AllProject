@@ -25,28 +25,34 @@
     <tr>
         <td>
                         <br />
-        <asp:Label ID="lblLanguage" runat="server" SkinId="LeftLabel"></asp:Label>
+        <asp:Label ID="lblLanguage" runat="server" SkinId="LeftLabel">
+            <%=Resources.Resource.Language%>
+        </asp:Label>
             <asp:DropDownList ID="ddlLanguage" runat="server" ></asp:DropDownList>
            </td>
     </tr> 
      <tr>
         <td>
-            <asp:Label ID="lblMasterPage" runat="server" SkinId="LeftLabel"></asp:Label>
+            <asp:Label ID="lblMasterPage" runat="server" SkinId="LeftLabel">
+                <%=Resources.Resource.MasterPage%>
+            </asp:Label>
             <asp:DropDownList ID="ddlMasterPage" runat="server"  ></asp:DropDownList>
         </td> 
     </tr>
     <tr>
         <td>
-        <asp:Label ID="lblTheme" runat="server" SkinId="LeftLabel"></asp:Label>
+        <asp:Label ID="lblTheme" runat="server" SkinId="LeftLabel">
+            <%=Resources.Resource.Theme%>
+        </asp:Label>
         <asp:DropDownList ID="ddlTheme" runat="server"  ></asp:DropDownList>
         </td>
     </tr> 
      <tr>
          <td>
             <br/>
-            <div class="GiveButton1">
-                <asp:LinkButton ID="btnSave" runat="server" SkinID="LeftLink" OnClick="btnSave_Click" ForeColor="white" Width="100%"/>
-            </div>
+            <asp:LinkButton ID="btnSave" runat="server" SkinID="Button" OnClick="btnSave_Click" >
+                <%=Resources.Resource.Save%>
+            </asp:LinkButton>
          </td>
      </tr>
 </table>  
@@ -63,7 +69,9 @@
                                     <table border="0" cellpadding="0">
                                         <tr>
                                             <td class="LeftLabel">
-                                                <asp:Label ID="CurrentPasswordLabel" SkinId="LeftLabel" runat="server" AssociatedControlID="CurrentPassword">Password:</asp:Label>
+                                                <asp:Label ID="CurrentPasswordLabel" SkinId="LeftLabel" runat="server" AssociatedControlID="CurrentPassword">
+                                                    <%=Resources.Resource.PasswordLabelText%>
+                                                </asp:Label>
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="CurrentPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;&nbsp;
@@ -74,7 +82,9 @@
                                         </tr>
                                         <tr>
                                             <td class="LeftLabel">
-                                                <asp:Label ID="NewPasswordLabel" SkinId="LeftLabel" runat="server" AssociatedControlID="NewPassword">New Password:</asp:Label>
+                                                <asp:Label ID="NewPasswordLabel" SkinId="LeftLabel" runat="server" AssociatedControlID="NewPassword">
+                                                    <%=Resources.Resource.NewPasswordLabelText%>
+                                                </asp:Label>
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="NewPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;&nbsp;
@@ -85,7 +95,9 @@
                                         </tr>
                                         <tr>
                                             <td class="LeftLabel">
-                                                <asp:Label ID="ConfirmNewPasswordLabel" runat="server" AssociatedControlID="ConfirmNewPassword"  Width="200px" SkinId="LeftLabel">Confirm New Password:</asp:Label>
+                                                <asp:Label ID="ConfirmNewPasswordLabel" runat="server" AssociatedControlID="ConfirmNewPassword"  Width="200px" SkinId="LeftLabel">
+                                                    <%=Resources.Resource.ConfirmNewPasswordLabelText%>
+                                                </asp:Label>
                                             </td>
                                             <td>
                                                 <asp:TextBox ID="ConfirmNewPassword" runat="server" TextMode="Password"></asp:TextBox>&nbsp;&nbsp;
@@ -109,10 +121,10 @@
                                         <tr>
                                             <td align="left" colspan=2> 
                                             <br />
-                                                <div class="GiveButton1">
-                                                    <asp:LinkButton ID="ChangePasswordLinkButton" SkinID="LeftLink" runat="server" CommandName="ChangePassword"
-                                                        ValidationGroup="chpwdPassword" ForeColor="white" Width="100%">Change Password</asp:LinkButton>
-                                                </div>
+                                                <asp:LinkButton ID="ChangePasswordLinkButton" SkinID="Button" runat="server" CommandName="ChangePassword"
+                                                    ValidationGroup="chpwdPassword">
+                                                    <%=Resources.Resource.ChangePasswordButtonText%>
+                                                </asp:LinkButton>
                                             </td>
                                         </tr>
                                     </table>

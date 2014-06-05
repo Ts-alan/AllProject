@@ -33,14 +33,10 @@
 <asp:UpdatePanel runat="server" ID="upnlUpdate" UpdateMode="Always">
 <ContentTemplate>
     <div>
-        <asp:LinkButton ID="lbtnUpdate" runat="server" OnClick="lbtnUpdate_Click"
-            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px; width: 100px;">
+        <asp:LinkButton ID="lbtnUpdate" runat="server" OnClick="lbtnUpdate_Click" SkinID="Button">
                 <%=Resources.Resource.UpdateButtonText%>
         </asp:LinkButton>
-        <asp:LinkButton ID="lbtnCancelUpdate" runat="server" OnClick="lbtnCancelUpdate_Click"
-            CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-            style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px; width: 100px;">
+        <asp:LinkButton ID="lbtnCancelUpdate" runat="server" OnClick="lbtnCancelUpdate_Click" SkinID="Button">
                 <%=Resources.Resource.CancelButtonText%>
         </asp:LinkButton>
     </div>
@@ -137,9 +133,7 @@
       </div>
 </div>
 <div>
-    <asp:LinkButton ID="lbtnSave" runat="server" OnClick="lbtnSave_Click"
-        CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-        style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px; width: 100px;">
+    <asp:LinkButton ID="lbtnSave" runat="server" OnClick="lbtnSave_Click" SkinID="Button">
             <%=Resources.Resource.Save%>
     </asp:LinkButton>
 </div>

@@ -99,6 +99,8 @@
 
             $('#mainAccordion').accordion({ collapsible: true, active: 0 });
             $('#divAccordion').accordion({ collapsible: true, active: false });
+            
+            IpAddressActionButtons.disable();
         })
         var IpAddressActionButtons = function () {
             return {
@@ -106,14 +108,8 @@
                     lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
                     lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
 
-                    if (navigator.appName == 'Microsoft Internet Explorer') {
-                        lbtnDeleteIpAddress.attr('disabled', true);
-                        lbtnEditIpAddress.attr('disabled', true);
-                    }
-                    else {
-                        lbtnDeleteIpAddress.css('color', 'gray');
-                        lbtnEditIpAddress.css('color', 'gray');
-                    }
+                    lbtnDeleteIpAddress.css('color', 'gray');
+                    lbtnEditIpAddress.css('color', 'gray');
                     lbtnDeleteIpAddress.css('cursor', 'default');
                     lbtnEditIpAddress.css('cursor', 'default');
                 },
@@ -122,17 +118,10 @@
                     lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
                     lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
 
-                    if (navigator.appName == 'Microsoft Internet Explorer') {
-                        lbtnDeleteIpAddress.attr('disabled', false);
-                        lbtnEditIpAddress.attr('disabled', false);
-                    }
-                    else {
-                        lbtnDeleteIpAddress.css('color', '');
-                        lbtnEditIpAddress.css('color', '');
-                    }
+                    lbtnDeleteIpAddress.css('color', '');
+                    lbtnEditIpAddress.css('color', '');
                     lbtnDeleteIpAddress.css('cursor', 'pointer');
                     lbtnEditIpAddress.css('cursor', 'pointer');
-
                 }
             };
         } ();
@@ -313,14 +302,15 @@
                             </h3>
                             <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
                                 <div>
-                                    <a id="lbtnAddIpAddress" runat="server" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                        role="button" aria-disabled="false"><span class="ui-button-text">
-                                            <%=Resources.Resource.Add%></span> </a><a id="lbtnEditIpAddress" runat="server" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                                role="button" aria-disabled="false"><span class="ui-button-text">
-                                                    <%=Resources.Resource.Edit%></span> </a><a id="lbtnDeleteIpAddress" runat="server"
-                                                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                                        role="button" aria-disabled="false"><span class="ui-button-text">
-                                                            <%=Resources.Resource.Delete%></span> </a>
+                                    <asp:LinkButton ID="lbtnAddIpAddress" runat="server" SkinID="Button" OnClientClick="return false;">
+                                        <%=Resources.Resource.Add%>                                        
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lbtnEditIpAddress" runat="server" SkinID="Button" OnClientClick="return false;">
+                                        <%=Resources.Resource.Edit%>                                        
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lbtnDeleteIpAddress" runat="server" SkinID="Button" OnClientClick="return false;">
+                                        <%=Resources.Resource.Delete%>                                        
+                                    </asp:LinkButton>
                                 </div>
                                 <div>
                                     <asp:TextBox ID="tboxNewIpAddress" runat="server" Style="width: 310px; margin-top: 8px;
@@ -443,23 +433,16 @@
             <td>
                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                     <ContentTemplate>
-                        <asp:LinkButton ID="btnStart" ValidationGroup="SettingsValidation" runat="server"
-                            OnClick="btnStart_Click" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                            Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px;
-                            width: 100px;">
+                        <asp:LinkButton ID="btnStart" ValidationGroup="SettingsValidation" runat="server" OnClick="btnStart_Click" SkinID="Button">
                                 <%=Resources.Resource.Start%>
                         </asp:LinkButton>
-                        <asp:LinkButton ID="btnStop" runat="server" OnClick="btnStop_Click" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                            Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;
-                            width: 100px;">
+                        <asp:LinkButton ID="btnStop" runat="server" OnClick="btnStop_Click" SkinID="Button">
                                 <%=Resources.Resource.Stop%>
                         </asp:LinkButton>
-                        <asp:LinkButton ID="btnPause" runat="server" OnClick="btnPause_Click" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                            Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; width: 100px;">
+                        <asp:LinkButton ID="btnPause" runat="server" OnClick="btnPause_Click" SkinID="Button">
                                 <%=Resources.Resource.Pause%>
                         </asp:LinkButton>
-                        <asp:LinkButton ID="btnResume" runat="server" OnClick="btnResume_Click" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                            Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; width: 100px;">
+                        <asp:LinkButton ID="btnResume" runat="server" OnClick="btnResume_Click" SkinID="Button">
                                 <%=Resources.Resource.Resume%>
                         </asp:LinkButton>
                     </ContentTemplate>
@@ -551,10 +534,7 @@
                 <table>
                     <tr>
                         <td>
-                            <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server"
-                                OnClick="lbtnInstall_Click" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px;
-                                width: 100px;">
+                            <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click" SkinID="Button">
                                     <%=Resources.Resource.Attach %>
                             </asp:LinkButton>
                         </td>

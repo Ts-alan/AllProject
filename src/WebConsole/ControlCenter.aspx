@@ -233,9 +233,7 @@
                </tr>
             </table>
             <br />
-            <asp:LinkButton ID="lbtnSaveBoxes" CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-             runat="server" OnClick="lbtnSaveBoxes_Click" OnClientClick="return validateSettings();"
-             Style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 5px;width: 100px;">
+            <asp:LinkButton ID="lbtnSaveBoxes" SkinID="Button" runat="server" OnClick="lbtnSaveBoxes_Click" OnClientClick="return validateSettings();">
                 <%=Resources.Resource.Save%>
             </asp:LinkButton>
         </ContentTemplate>

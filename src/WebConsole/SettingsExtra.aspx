@@ -417,9 +417,9 @@
       </div>
       
       <div class="divSettings">
-            <div class="GiveButton1">
-				<asp:LinkButton id="btnSave" runat="server" SkinID="LeftLink" onclick="btnSave_Click" ForeColor="white" Width="100%"></asp:LinkButton>
-			</div>
+	      <asp:LinkButton id="btnSave" runat="server" SkinID="Button" onclick="btnSave_Click">
+            <%=Resources.Resource.Save%>
+          </asp:LinkButton>
       </div>
 </div>  
             

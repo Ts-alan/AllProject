@@ -57,7 +57,6 @@ public partial class Task : PageBase
     protected override void InitFields()
     {
         lblMessage.Visible = false;        
-        lbtnCancel.Text = Resources.Resource.CancelButtonText;
 
         fltState.DataSource = TasksDataContainer.GetTaskStates();
         fltState.DataBind();

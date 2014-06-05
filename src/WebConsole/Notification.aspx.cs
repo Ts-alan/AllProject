@@ -61,10 +61,6 @@ public partial class Notification : PageBase
         cboxUseJabber.Text = Resources.Resource.UseJabber;
         cboxUseFlowAnalysis.Text = Resources.Resource.UseFlowAnalysis;
 
-        //lblSelectedEventName.Text = Resources.Resource.ÑhoiseEvent;
-        lbtnSave.Text = Resources.Resource.Save;
-        btnCancel.Text = Resources.Resource.Close;
-
         regularMailServer.ValidationExpression = RegularExpressions.IPAddress;
         regularMailFrom.ValidationExpression = RegularExpressions.Email;
 

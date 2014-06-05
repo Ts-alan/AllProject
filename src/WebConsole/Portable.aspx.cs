@@ -44,9 +44,6 @@ public partial class Portable : PageBase
     /// </summary>
     protected override void InitFields()
     {
-        lbtnImport.Text = Resources.Resource.Import;
-        lbtnExport.Text = Resources.Resource.Export;
-
         cbList.Items.Add(Resources.Resource.PageComputersFilterTitle);
         cbList.Items.Add(Resources.Resource.PageEventsFilterTitle);
 
@@ -60,7 +57,6 @@ public partial class Portable : PageBase
             cbList.Items.Add(Resources.Resource.UsersTasks);
         }
 
-        lbtnDelete.Text = Resources.Resource.Delete;
         lbtnDelete.Attributes.Add("onclick", "return confirm('" + Resources.Resource.AreYouSureSelected + "');");
     }
 

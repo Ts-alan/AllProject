@@ -17,21 +17,8 @@ using ARM2_dbcontrol.Filters;
 /// <summary>
 /// Settings main
 /// </summary>
-public partial class SettingsMain : System.Web.UI.Page
+public partial class SettingsMain : PageBase
 {
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if(ddlLanguage.Items.Count ==0)
@@ -54,50 +41,30 @@ public partial class SettingsMain : System.Web.UI.Page
         {
             InitFields();     
         }
-        
     }
 
     /// <summary>
     /// Initialization fields
     /// </summary>
-    private void InitFields()
+    protected override void InitFields()
     {
-        btnSave.Text = Resources.Resource.Save;
-
         chpwdPassword.ContinueButtonText = Resources.Resource.ContinueButtonText;
-
         chpwdPassword.NewPasswordRegularExpressionErrorMessage = Resources.Resource.NewPasswordRegularExpressionErrorMessage;
-        
         chpwdPassword.PasswordRequiredErrorMessage = Resources.Resource.PasswordRequiredErrorMessage;
-       
-        (chpwdPassword.Controls[0].FindControl("CurrentPasswordLabel") as Label).Text = Resources.Resource.PasswordLabelText ;
-        (chpwdPassword.Controls[0].FindControl("NewPasswordLabel") as Label).Text = Resources.Resource.NewPasswordLabelText;
-        (chpwdPassword.Controls[0].FindControl("ConfirmNewPasswordLabel") as Label).Text = Resources.Resource.ConfirmNewPasswordLabelText;
-
-        (chpwdPassword.Controls[0].FindControl("ChangePasswordLinkButton") as LinkButton).Text = Resources.Resource.ChangePasswordButtonText;
 
         (chpwdPassword.Controls[0].FindControl("CurrentPasswordRequired") as Label).Text = Resources.Resource.ChangePasswordFailureText;
         (chpwdPassword.Controls[0].FindControl("NewPasswordRequired") as Label).Text = Resources.Resource.NewPasswordRequiredErrorMessage;
         (chpwdPassword.Controls[0].FindControl("ConfirmNewPasswordRequired") as Label).Text = Resources.Resource.ConfirmPasswordRequiredErrorMessage;
         (chpwdPassword.Controls[0].FindControl("NewPasswordCompare") as Label).Text = Resources.Resource.ConfirmPasswordCompareErrorMessage;
-                
 
-        lblLanguage.Text = Resources.Resource.Language;
-        
-        lblTheme.Text = Resources.Resource.Theme;
-        lblMasterPage.Text = Resources.Resource.MasterPage;
-
-        tbFirstName.Text = Profile.FirstName==String.Empty?"admin":Profile.FirstName;
-        tbLastName.Text = Profile.LastName == String.Empty ? "admin" : Profile.LastName; ;
-
+        tbFirstName.Text = Profile.FirstName == String.Empty ? "admin" : Profile.FirstName;
+        tbLastName.Text = Profile.LastName == String.Empty ? "admin" : Profile.LastName;
 
         lblLogin.Text = Profile.UserName;
-        string[] master = Page.MasterPageFile.Split('.');
+        String[] master = Page.MasterPageFile.Split('.');
 
         ddlMasterPage.SelectedValue = master[0];
         ddlTheme.SelectedValue = Page.Theme;
-        
-                
     }
 
     /// <summary>
@@ -141,13 +108,13 @@ public partial class SettingsMain : System.Web.UI.Page
     /// Themes list
     /// </summary>
     /// <returns></returns>
-    public string[] GetThemes()
+    public String[] GetThemes()
     {
         // получаем список путей к подпапкам папки App_Themes 
-        string[] folders = Directory.GetDirectories(
+        String[] folders = Directory.GetDirectories(
             System.Web.HttpContext.Current.Server.MapPath("~/App_Themes"));
         // отрезаем от найденных полных путей только названия самих папок 
-        for (int i = 0; i < folders.Length; i++)
+        for (Int32 i = 0; i < folders.Length; i++)
         {
             folders[i] = new DirectoryInfo(folders[i]).Name;
         }
@@ -158,9 +125,9 @@ public partial class SettingsMain : System.Web.UI.Page
     /// Master page list
     /// </summary>
     /// <returns></returns>
-    public List<string> GetMasterPages()
+    public List<String> GetMasterPages()
     {     
-        List<string> list = new List<string>();
+        List<String> list = new List<String>();
         DirectoryInfo dir = new DirectoryInfo(
             System.Web.HttpContext.Current.Server.MapPath("~"));
 
@@ -168,7 +135,7 @@ public partial class SettingsMain : System.Web.UI.Page
         {         
             if (file.Extension == ".master")
             {
-                string[] names = file.Name.Split('.');
+                String[] names = file.Name.Split('.');
                 //list.Add(file.Name);
                 list.Add(names[0]);
             }
@@ -197,6 +164,4 @@ public partial class SettingsMain : System.Web.UI.Page
 
         return null;
     }
-
-
 }

@@ -8,16 +8,13 @@
             disable: function () {
                 lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
                 lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
-                if (navigator.appName == 'Microsoft Internet Explorer') {
-                    lbtnDeleteIpAddress.attr('disabled', true);
-                    lbtnEditIpAddress.attr('disabled', true);
-                }
-                else {
                     
-                    lbtnDeleteIpAddress.css('color', 'gray');
-                    lbtnEditIpAddress.css('color','gray');
+                lbtnDeleteIpAddress.css('color', 'gray');
+                lbtnEditIpAddress.css('color','gray');
+
+                lbtnDeleteIpAddress.css('cursor', 'default');
+                lbtnEditIpAddress.css('cursor', 'default');
                     
-                }
                 lbtnEditIpAddress.unbind("click");
                 lbtnDeleteIpAddress.unbind("click");
             },
@@ -25,14 +22,13 @@
             enable: function () {
                 lbtnDeleteIpAddress = $('#<%= lbtnDeleteIpAddress.ClientID %>');
                 lbtnEditIpAddress = $('#<%= lbtnEditIpAddress.ClientID %>');
-                if (navigator.appName == 'Microsoft Internet Explorer') {
-                    lbtnDeleteIpAddress.attr('disabled',false);
-                    lbtnEditIpAddress.attr('disabled', false);
-                }
-                else {
-                    lbtnDeleteIpAddress.css('color','blue');
-                    lbtnEditIpAddress.css('color',"blue");
-                }
+                
+                lbtnDeleteIpAddress.css('color','');
+                lbtnEditIpAddress.css('color','');
+
+                lbtnDeleteIpAddress.css('cursor', 'pointer');
+                lbtnEditIpAddress.css('cursor', 'pointer');
+                                    
                 lbtnEditIpAddress.unbind("click");
                 lbtnDeleteIpAddress.unbind("click");
                 lbtnDeleteIpAddress.click(function () {
@@ -126,6 +122,10 @@
                     }
                     validateText();
                     NewIpAddressTextBox.setText(ipbox.val());
+
+                    if (option.length == 1) {
+                            IpAddressActionButtons.disable();
+                        }
                 });
             },
 
@@ -277,7 +277,7 @@
                 
                 dialog =  $('#<%= dlgIpAddress.ClientID  %>').dialog({
                         title: '<%=Resources.Resource.IPAddress %>',
-                        width: 340,
+                        width: 350,
                         draggable:false,
                         modal: true,
                         open:function(){
@@ -329,9 +329,9 @@
 </flt:PrimitiveFilterTemplate>
 <div id="dlgIpAddress" runat="server" style="display:none" >
     <p>
-                    <asp:LinkButton ID="lbtnAddIpAddress" runat="server"><%=Resources.Resource.Add%></asp:LinkButton>
-                    <asp:LinkButton ID="lbtnEditIpAddress" runat="server"><%=Resources.Resource.Edit%></asp:LinkButton>
-                    <asp:LinkButton ID="lbtnDeleteIpAddress" runat="server"><%=Resources.Resource.Delete%></asp:LinkButton>
+        <asp:LinkButton ID="lbtnAddIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Add%></asp:LinkButton>
+        <asp:LinkButton ID="lbtnEditIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Edit%></asp:LinkButton>
+        <asp:LinkButton ID="lbtnDeleteIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Delete%></asp:LinkButton>
         <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>
         <asp:RequiredFieldValidator ID="reqNewIpAddress" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
             ControlToValidate="tboxNewIpAddress" Display="None" ValidationGroup="NewIpAddressValidation">

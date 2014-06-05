@@ -37,27 +37,22 @@
             <asp:PlaceHolder runat="server" ID="FiltersPlaceHolder" />
         </div>        
         <div>
-            <div class="GiveButton1" style="width: 100px; float: left">
-                <asp:LinkButton ID="lbtnApply" SkinID="FilterActions" runat="server" OnClick="lbtnApply_Click"
-                    ForeColor="White" Text="<%$ Resources:Resource, Apply %>" ValidationGroup="FilterValidation" />
-            </div>
-            <div class="GiveButton1" style="width: 100px; float: left">
-                <asp:LinkButton ID="lbtnClear" SkinID="FilterActions" runat="server" OnClick="lbtnClear_Click"
-                    ForeColor="White" Text="<%$ Resources:Resource, Clear %>" />
-            </div>
-            <div class="GiveButton1" style="width: 100px; float: left">
-                <asp:LinkButton ID="lbtnSaveAs" SkinID="FilterActions" runat="server" 
-                OnClientClick="lbtnSaveAs_OnClientClick(); return false;" OnClick="lbtnSaveAs_Click"
-                    ForeColor="White" Text="<%$ Resources:Resource, SaveAs %>" ValidationGroup="FilterValidation"></asp:LinkButton>
-            </div>
-            <div class="GiveButton1" style="width: 100px; float: left" runat="server" id="divSave">
-                <asp:LinkButton ID="lbtnSave" SkinID="FilterActions" runat="server" OnClick="lbtnSave_Click"
-                    ForeColor="White" Text="<%$ Resources:Resource, Save %>" ValidationGroup="FilterValidation"></asp:LinkButton>
-            </div>
-            <div class="GiveButton1" style="width: 100px; float: left" runat="server" id="divDelete">
-                <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click" ForeColor="White"
-                    Text="<%$ Resources:Resource, Delete %>" OnClientClick="lbtnDelete_OnClientClick(); return false; "></asp:LinkButton>
-            </div>
+            <asp:LinkButton ID="lbtnApply" SkinID="ButtonSmall" runat="server" OnClick="lbtnApply_Click" ValidationGroup="FilterValidation" >
+                <%=Resources.Resource.Apply %>
+            </asp:LinkButton>
+            <asp:LinkButton ID="lbtnClear" SkinID="ButtonSmall" runat="server" OnClick="lbtnClear_Click">
+                <%=Resources.Resource.Clear %>
+            </asp:LinkButton>
+            <asp:LinkButton ID="lbtnSaveAs" SkinID="ButtonSmall" runat="server" OnClientClick="lbtnSaveAs_OnClientClick(); return false;"
+                 OnClick="lbtnSaveAs_Click" ValidationGroup="FilterValidation">
+                 <%=Resources.Resource.SaveAs %>
+            </asp:LinkButton>
+            <asp:LinkButton ID="lbtnSave" SkinID="ButtonSmall" runat="server" OnClick="lbtnSave_Click" ValidationGroup="FilterValidation">
+                <%=Resources.Resource.Save %>
+            </asp:LinkButton>
+            <asp:LinkButton ID="lbtnDelete" runat="server" SkinID="ButtonSmall" OnClick="lbtnDelete_Click" OnClientClick="lbtnDelete_OnClientClick(); return false; ">
+                <%=Resources.Resource.Delete %>
+            </asp:LinkButton>
         </div>
     </div>
 </div>

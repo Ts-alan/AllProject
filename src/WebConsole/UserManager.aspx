@@ -73,9 +73,7 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     <%--Users Grid View ended--%>
-    <div class="GiveButton1">
-        <asp:LinkButton runat="server" ID="lbtnCreateUserInit" ForeColor="white" Width="100%"><%=Resources.Resource.CreateUserButtonText %></asp:LinkButton>
-    </div>
+    <asp:LinkButton runat="server" ID="lbtnCreateUserInit" SkinID="Button" ><%=Resources.Resource.CreateUserButtonText %></asp:LinkButton>
     <%--Create User Modal--%>
     <asp:Panel runat="server" ID="panelCreateUser" Style="display: none;" CssClass="modalPopupUsers">
         <div runat="server" id="divPopupCreateUser" class="modalPopupUsersHeader">
@@ -220,11 +218,12 @@
         <div id="divCreateUserResult" style="background-color: #dcdcdc; width: 99%; height: 150px; border-width: 1px; border-color: Black; border-style:solid;">
         </div>
         
-        <div class="GiveButton1" style="margin: 0 auto; margin-bottom: 5px; margin-top: 5px;">
-            <asp:LinkButton runat="server" ID="btnCreateUser" ForeColor="white" Width="100%" 
-            OnClientClick="setTimeout(btnCreateUser_ClientClick, 0); return false;">
-            <%=Resources.Resource.Create %></asp:LinkButton>
-        </div>        
+        <div style="text-align:center;">
+            <asp:LinkButton runat="server" ID="btnCreateUser" SkinID="Button" 
+                OnClientClick="setTimeout(btnCreateUser_ClientClick, 0); return false;">
+                <%=Resources.Resource.Create %>
+            </asp:LinkButton>
+        </div>
     </asp:Panel>
     <ajaxToolkit:ModalPopupExtender ID="modalPopupExtCreateUser" runat="server" TargetControlID="lbtnCreateUserInit"
         CancelControlID="btnCancelCreateUser" PopupControlID="panelCreateUser" BackgroundCssClass="modalBackgroundBottom" />

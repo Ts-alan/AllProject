@@ -127,11 +127,10 @@
                     <AlternatingRowStyle CssClass="gridViewRowAlternating" />
                     <RowStyle CssClass="gridViewRow" />
                 </custom:GridViewExtended>
-                <div style="text-align: center;">
-                    <div class="GiveButton1" style="float: left;">
-                        <asp:LinkButton runat="server" ID="lbtnCancel" OnClick="lbtnCancel_Click" Width="100%"
-                            ForeColor="white"></asp:LinkButton>
-                    </div>
+                <div style="text-align: left;">
+                    <asp:LinkButton runat="server" ID="lbtnCancel" OnClick="lbtnCancel_Click" SkinID="Button">
+                        <%=Resources.Resource.CancelButtonText%>
+                    </asp:LinkButton>
                     <div style="min-width: 300px;">
                         <asp:Label runat="server" ID="lblMessage"></asp:Label>
                     </div>

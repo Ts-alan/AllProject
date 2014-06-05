@@ -129,32 +129,17 @@ public partial class AsynchLanScan : PageBase
             }
             hdnIPAddress.Value = str;
 
-            if (Request.Browser.Browser == "IE")
-            {
-                lbtnEditIpAddress.Attributes.Remove("disabled");
-                lbtnDeleteIpAddress.Attributes.Remove("disabled");
-            }
-            else
-            {
-                lbtnEditIpAddress.Style["color"] = "";
-                lbtnDeleteIpAddress.Style["color"] = "";
-            }
-            
+            lbtnEditIpAddress.Style["color"] = "";
+            lbtnDeleteIpAddress.Style["color"] = "";
+
             lbtnEditIpAddress.Style["cursor"] = "pointer";
             lbtnDeleteIpAddress.Style["cursor"] = "pointer";
         }
         else
         {
-            if (Request.Browser.Browser == "IE")
-            {
-                lbtnEditIpAddress.Attributes.Add("disabled", "true");
-                lbtnDeleteIpAddress.Attributes.Add("disabled", "true");
-            }
-            else
-            {
-                lbtnEditIpAddress.Style["color"] = "Gray";
-                lbtnDeleteIpAddress.Style["color"] = "Gray";
-            }
+            lbtnEditIpAddress.Style["color"] = "Gray";
+            lbtnDeleteIpAddress.Style["color"] = "Gray";
+
             lbtnEditIpAddress.Style["cursor"] = "default";
             lbtnDeleteIpAddress.Style["cursor"] = "default";
         }

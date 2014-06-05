@@ -151,8 +151,8 @@ public partial class Controls_CompositeFilter : System.Web.UI.UserControl, IComp
 
     private void SetVisibleSaveDelete(bool visible)
     {
-        divDelete.Visible = visible;
-        divSave.Visible = visible;
+        lbtnDelete.Visible = visible;
+        lbtnSave.Visible = visible;
     }
 
     protected void InitDDLUserFilters()

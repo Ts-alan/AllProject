@@ -442,14 +442,14 @@
                                 <asp:Label ID="lblSelectedEventName" SkinID="SubSectionLabel" style="font-size: 14px; font-weight:bold" runat="server" />
                             </div>    
 		                            <NotifyCnfg:Notify ID="notify" runat="server" />			    
-                            <div style="vertical-align:middle; height:30px">            
-                                    <div class="GiveButton1" style="float:left">
-                                        <asp:LinkButton runat="server" ID="lbtnSave" SkinID="LeftLink" OnClick="lbtnSave_Click" ForeColor="white" Width="100%" />
-                                    </div>  
-                                    <div class="GiveButton1" style="float:left">
-                                        <asp:LinkButton ID="btnCancel" runat="server" ForeColor="white" Width="100%"/>  
-                                    </div>                
-                                    <asp:Button ID="btnModalPopup" runat="server" Style="visibility:hidden" />            
+                            <div style="vertical-align:middle; height:50px">            
+                                <asp:LinkButton runat="server" ID="lbtnSave" SkinID="Button" OnClick="lbtnSave_Click" >
+                                    <%=Resources.Resource.Save%>
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="btnCancel" runat="server" SkinID="Button">
+                                    <%=Resources.Resource.Close%>
+                                </asp:LinkButton>
+                                <asp:Button ID="btnModalPopup" runat="server" Style="visibility:hidden" />            
                             </div>
                         </asp:Panel>
                         <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" runat="server" TargetControlID="btnModalPopup" X="400" Y="200" PopupControlID="pnlModalPopap" CancelControlID="btnCancel" BackgroundCssClass="modalBackground" PopupDragHandleControlID="divPopupHeader" />
@@ -462,9 +462,7 @@
     
     <asp:UpdatePanel runat="server" ID="upnlSave">
     <ContentTemplate>
-        <asp:LinkButton ID="lbtnSaveAll" runat="server" OnClientClick="return SaveAll();" OnClick="lbtnSaveAll_Click" 
-        CssClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
-        style="padding: 5px; margin-top: 10px; margin-bottom: 10px; margin-left: 10px; width: 100px;" >
+        <asp:LinkButton ID="lbtnSaveAll" runat="server" OnClientClick="return SaveAll();" OnClick="lbtnSaveAll_Click" SkinID="Button" >
             <%=Resources.Resource.Save%>
         </asp:LinkButton>
     </ContentTemplate>

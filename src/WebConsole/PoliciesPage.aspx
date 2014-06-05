@@ -605,3 +605,4 @@
 <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" runat="server" X="400" Y="200" TargetControlID="btnHiddenMessage" PopupControlID="pnlModalPopapMessage" CancelControlID="btnClose" BackgroundCssClass="modalBackground" DropShadow="true" PopupDragHandleControlID="pnlModalPopapMessage" />
      
 </asp:Content>
+
