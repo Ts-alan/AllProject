@@ -35,8 +35,6 @@ public partial class UserManager : PageBase
 
     protected override void InitFields()
     {
-        btnCancelCreateUser.ImageUrl = "~/App_Themes/" + Profile.Theme + "/Images/close.gif";
-        btnCancelEditUser.ImageUrl = "~/App_Themes/" + Profile.Theme + "/Images/close.gif";
     }
 
     protected void SetRegularExpressions()
@@ -91,8 +89,8 @@ public partial class UserManager : PageBase
                 else
                 {
                     imgEdit.ImageUrl = "~/App_Themes/" + Profile.Theme + "/Images/user_edit.png";                    
-                    imgEdit.OnClientClick = String.Format("openEditPopup({0}, {1})", e.Row.RowIndex,
-                        (user.Login == User.Identity.Name) ? "true" : "false");                
+                    imgEdit.Attributes.Add("rowIndex", e.Row.RowIndex.ToString());
+                    imgEdit.Attributes.Add("disableRole", (user.Login == User.Identity.Name) ? "true" : "false");
                 }
                 break;
             default:

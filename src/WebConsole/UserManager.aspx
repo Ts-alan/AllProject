@@ -49,7 +49,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="False" ToolTip="<%$ Resources:Resource, Edit %>" />
+                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="False" ToolTip="<%$ Resources:Resource, Edit %>" OnClientClick="return false;" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
@@ -73,18 +73,9 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     <%--Users Grid View ended--%>
-    <asp:LinkButton runat="server" ID="lbtnCreateUserInit" SkinID="Button" ><%=Resources.Resource.CreateUserButtonText %></asp:LinkButton>
+    <asp:LinkButton runat="server" ID="lbtnCreateUserInit" SkinID="Button" OnClientClick="return false;" ><%=Resources.Resource.CreateUserButtonText %></asp:LinkButton>
     <%--Create User Modal--%>
-    <asp:Panel runat="server" ID="panelCreateUser" Style="display: none;" CssClass="modalPopupUsers">
-        <div runat="server" id="divPopupCreateUser" class="modalPopupUsersHeader">
-            <div style="float:left;width:350px;">
-                <asp:Label ID="lblCreateUserHeader" SkinID="SubSectionLabel" Style="font-size: 14px;
-                    font-weight: bold; width: 350px; margin-top: 9px;" runat="server"><%=Resources.Resource.RegistrationNewUser%></asp:Label>
-            </div>
-            <div style="float:right; cursor:pointer;">
-                <asp:ImageButton ID="btnCancelCreateUser" runat="server" />
-            </div>
-        </div>        
+    <div id="panelCreateUser" style="display: none;">
         <%--Create User Input--%>
         <table style="margin: 0 auto;">
             <tr>
@@ -96,9 +87,9 @@
                     <asp:RequiredFieldValidator ID="requiredUserName" runat="server" ControlToValidate="tbUserName"
                         ErrorMessage="<%$ Resources:Resource, UserNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredUserNameCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredUserNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredUserName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -114,12 +105,12 @@
                         Display="None" ErrorMessage="<%$ Resources:Resource, InvalidPasswordErrorMessage %>"
                         ValidationGroup="CreateUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredPasswordCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="regexPasswordCalloutExtender" runat="server"
+                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -134,12 +125,12 @@
                     <asp:CompareValidator ID="comparePassword" runat="server" ControlToCompare="tbPassword"
                         ControlToValidate="tbConfirmPassword" Display="None" ErrorMessage="<%$ Resources:Resource, ConfirmPasswordCompareErrorMessage %>"
                         ValidationGroup="CreateUserValidation"></asp:CompareValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredConfirmPasswordCalloutExtender"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredConfirmPasswordCalloutExtender" PopupPosition="BottomLeft"
                         runat="server" TargetControlID="requiredConfirmPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="comparePasswordCalloutExtender" runat="server"
+                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="comparePasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="comparePassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -154,12 +145,12 @@
                     <asp:RegularExpressionValidator ID="regexEmail" runat="server" ControlToValidate="tbEmail"
                         Display="None" ErrorMessage="<%$ Resources:Resource, ErrorInvalidEmail  %>" ValidationGroup="CreateUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredEmailCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredEmail" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="regexEmailCalloutExtender" runat="server"
+                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexEmail" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -171,9 +162,9 @@
                     <asp:RequiredFieldValidator ID="requiredFirstName" runat="server" ControlToValidate="tbFirstName"
                         ErrorMessage="<%$ Resources:Resource, FirstNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredFirstNameCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredFirstNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredFirstName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -185,9 +176,9 @@
                     <asp:RequiredFieldValidator ID="requiredLastName" runat="server" ControlToValidate="tbLastName"
                         ErrorMessage="<%$ Resources:Resource, LastNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredLastNameCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredLastNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredLastName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -217,118 +208,111 @@
         </div>
         <div id="divCreateUserResult" style="background-color: #dcdcdc; width: 99%; height: 150px; border-width: 1px; border-color: Black; border-style:solid;">
         </div>
-        
-        <div style="text-align:center;">
-            <asp:LinkButton runat="server" ID="btnCreateUser" SkinID="Button" 
-                OnClientClick="setTimeout(btnCreateUser_ClientClick, 0); return false;">
-                <%=Resources.Resource.Create %>
-            </asp:LinkButton>
-        </div>
-    </asp:Panel>
-    <ajaxToolkit:ModalPopupExtender ID="modalPopupExtCreateUser" runat="server" TargetControlID="lbtnCreateUserInit"
-        CancelControlID="btnCancelCreateUser" PopupControlID="panelCreateUser" BackgroundCssClass="modalBackgroundBottom" />
+    </div>
     <script type="text/javascript" language="javascript">
-        var tbUserName = '<%= tbUserName.ClientID %>';
-        var tbPassword = '<%= tbPassword.ClientID %>';
-        var tbConfirmPassword = '<%= tbConfirmPassword.ClientID %>';
-        var tbEmail = '<%= tbEmail.ClientID %>';
-        var tbFirstName = '<%= tbFirstName.ClientID %>';
-        var tbLastName = '<%= tbLastName.ClientID %>';
-        var ddlRole = '<%= ddlRole.ClientID %>';
-        var modalPopupExtCreateUser = '<%= modalPopupExtCreateUser.ClientID %>';
-        var btnHiddenRefresh = '<%= btnHiddenRefresh.ClientID %>';
-        var btnCreateUser = '<%= btnCreateUser.ClientID %>';
+        $(document).ready(function () {
+            var tbUserName = '#' + '<%= tbUserName.ClientID %>';
+            var tbPassword = '#' + '<%= tbPassword.ClientID %>';
+            var tbConfirmPassword = '#' + '<%= tbConfirmPassword.ClientID %>';
+            var tbEmail = '#' + '<%= tbEmail.ClientID %>';
+            var tbFirstName = '#' + '<%= tbFirstName.ClientID %>';
+            var tbLastName = '#' + '<%= tbLastName.ClientID %>';
+            var ddlRole = '#' + '<%= ddlRole.ClientID %>';
 
-        function clearCreateUserFields() {
-            $get(tbUserName).value = "";
-            $get(tbPassword).value = "";
-            $get(tbConfirmPassword).value = "";
-            $get(tbEmail).value = "";
-            $get(tbFirstName).value = "";
-            $get(tbLastName).value = "";
-            $get(ddlRole).selectedIndex = 0;
-            $get('divCreateUserResult').innerHTML = "&nbsp";
-        }
+            var btnHiddenRefresh = '<%= btnHiddenRefresh.ClientID %>';
+            var btnCreateUserInit = '#' + '<%= lbtnCreateUserInit.ClientID %>';
+            var divCreateUserResult = '#divCreateUserResult';
+            var divCreateUserProgress = '#divCreateUserProgress';
 
-        Sys.Application.add_load(hideCreate);
+            $("#panelCreateUser").dialog({ autoOpen: false });
 
-        function hideCreate(sender, args) {
-            $addHandler(document, "keydown", function (args) {
-                if (args.keyCode == Sys.UI.Key.esc) {
-                    $find(modalPopupExtCreateUser).hide();
-                }
+            $(document).on("click", btnCreateUserInit, function () {
+                $("#panelCreateUser").dialog('destroy');
+                var d = $("#panelCreateUser");
+                var dOpt = {
+                    title: '<%=Resources.Resource.RegistrationNewUser%>',
+                    width: 320,
+                    modal: true,
+                    resizable: false,
+                    buttons: [{
+                        id: "button-create",
+                        text: '<%=Resources.Resource.Create %>',
+                        click: function () {
+                            if (Page_ClientValidate('CreateUserValidation')) {
+                                //Validation is successful
+                                disableCreate();
+
+                                var username = $(tbUserName).val();
+                                var password = $(tbPassword).val();
+                                var email = $(tbEmail).val();
+                                var firstname = $(tbFirstName).val();
+                                var lastname = $(tbLastName).val();
+                                var role = $(ddlRole + " :selected").val();
+                                var user = new UserEntity(username, password, email, firstname, lastname, role);
+                                PageMethods.CreateUser(user, btnCreateUser_Callback, btnCreateUser_Error);
+                            }
+                        }
+                    }]
+                };
+                d.dialog(dOpt);
             });
-        }
 
-        function btnCreateUser_ClientClick() {
-            if (Page_ClientValidate('CreateUserValidation')) {
-                //Validation is successful
-                disableCreate();
-                var username = $get(tbUserName).value;
-                var password = $get(tbPassword).value;
-                var email = $get(tbEmail).value;
-                var firstname = $get(tbFirstName).value;
-                var lastname = $get(tbLastName).value;
-                var role = $get(ddlRole).options[$get(ddlRole).selectedIndex].value;
-                var user = new UserEntity(username, password, email, firstname, lastname, role);
-                PageMethods.CreateUser(user, btnCreateUser_Callback, btnCreateUser_Error);
+            function disableCreate() {
+                $(tbUserName).prop("disabled", true);
+                $(tbPassword).prop("disabled", true);
+                $(tbConfirmPassword).prop("disabled", true);
+                $(tbEmail).prop("disabled", true);
+                $(tbFirstName).prop("disabled", true);
+                $(tbLastName).prop("disabled", true);
+                $(ddlRole).prop("disabled", true);
+                $("#button-create").button("disable");
+                $(divCreateUserProgress).css('display', 'block');
             }
-        }
 
-        function enableCreate() {
-            $get(tbUserName).disabled = false;
-            $get(tbPassword).disabled = false;
-            $get(tbConfirmPassword).disabled = false;
-            $get(tbEmail).disabled = false;
-            $get(tbFirstName).disabled = false;
-            $get(tbLastName).disabled = false;
-            $get(ddlRole).disabled = false;
-            $get(btnCreateUser).disabled = false;
-            $get('divCreateUserProgress').style.display = 'none';
-        }
-
-        function disableCreate() {
-            $get(tbUserName).disabled = true;
-            $get(tbPassword).disabled = true;
-            $get(tbConfirmPassword).disabled = true;
-            $get(tbEmail).disabled = true;
-            $get(tbFirstName).disabled = true;
-            $get(tbLastName).disabled = true;
-            $get(ddlRole).disabled = true;
-            $get(btnCreateUser).disabled = true;
-            $get('divCreateUserProgress').style.display = 'block';
-        }
-
-        function btnCreateUser_Callback(result) {
-            if (result.Success) {
-                $get(btnHiddenRefresh).click();
-                clearCreateUserFields();
-                alert(result.Message);
+            function clearCreateUserFields() {
+                $(tbUserName).val("");
+                $(tbPassword).val("");
+                $(tbConfirmPassword).val("");
+                $(tbEmail).val("");
+                $(tbFirstName).val("");
+                $(tbLastName).val("");
+                $('select' + ddlRole).prop('selectedIndex', 0);
+                $(divCreateUserResult).html("&nbsp");
             }
-            else {
-                $get('divCreateUserResult').innerHTML = result.Message;
-            }
-            enableCreate();
-        }
 
-        function btnCreateUser_Error(errors) {
-            $get('divCreateUserResult').innerHTML = errors.get_Message();
-            enableCreate();
-        }
+            function enableCreate() {
+                $(tbUserName).prop("disabled", false);
+                $(tbPassword).prop("disabled", false);
+                $(tbConfirmPassword).prop("disabled", false);
+                $(tbEmail).prop("disabled", false);
+                $(tbFirstName).prop("disabled", false);
+                $(tbLastName).prop("disabled", false);
+                $(ddlRole).prop("disabled", false);
+                $("#button-create").button("enable");
+                $(divCreateUserProgress).css('display', 'none');
+            }
+
+            function btnCreateUser_Callback(result) {
+                if (result.Success) {
+                    $get(btnHiddenRefresh).click();
+                    clearCreateUserFields();
+                    alert(result.Message);
+                }
+                else {
+                    $(divCreateUserResult).html(result.Message);
+                }
+                enableCreate();
+            }
+
+            function btnCreateUser_Error(errors) {
+                $(divCreateUserResult).html(errors.get_Message());
+                enableCreate();
+            }
+        });
     </script>
     <%--Create User Modal ended--%>
     <%--Edit User Modal--%>
-    <asp:Panel runat="server" ID="panelEditUser" Style="display: none;" CssClass="modalPopupUsers">
-        <div runat="server" id="divPopupEditUser" class="modalPopupUsersHeader">
-            <div style="float:left;width:350px;">
-                <asp:Label ID="lblEditUserHeader" SkinID="SubSectionLabel" Style="font-size: 14px;
-                    font-weight: bold; width: 350px; margin-top: 9px;" runat="server"><%=Resources.Resource.EditUser%></asp:Label>
-            </div>
-            <div style="float:right; cursor:pointer;">
-                <asp:ImageButton ID="btnCancelEditUser" runat="server" />
-            </div>
-        </div> 
-        
+    <div id="panelEditUser" style="display: none;">
         <%--Edit User Input--%>
         <table style="margin: 0 auto;">
             <tr>
@@ -351,12 +335,12 @@
                     <asp:RegularExpressionValidator ID="regexEmailEdit" runat="server" ControlToValidate="tbEmailEdit"
                         Display="None" ErrorMessage="<%$ Resources:Resource, ErrorInvalidEmail  %>" ValidationGroup="EditUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredEmailEditCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredEmailEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="regexEmailEditCalloutExtender" runat="server"
+                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexEmailEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -368,9 +352,9 @@
                     <asp:RequiredFieldValidator ID="requiredFirstNameEdit" runat="server" ControlToValidate="tbFirstNameEdit"
                         ErrorMessage="<%$ Resources:Resource, FirstNameRequiredErrorMessage %>" ValidationGroup="EditUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredFirstNameEditCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredFirstNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredFirstNameEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -382,9 +366,9 @@
                     <asp:RequiredFieldValidator ID="requiredLastNameEdit" runat="server" ControlToValidate="tbLastNameEdit"
                         ErrorMessage="<%$ Resources:Resource, LastNameRequiredErrorMessage %>" ValidationGroup="EditUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredLastNameEditCalloutExtender" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredLastNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredLastNameEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender>
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                 </td>
             </tr>
             <tr>
@@ -414,179 +398,180 @@
         </div>
         <div id="divLitEditResult" style="background-color: #dcdcdc; width: 99%; height: 150px; border-width: 1px; border-color: Black; border-style:solid;">
         </div>
-        
-        <div class="GiveButton1" style="margin: 0 auto; margin-bottom: 5px; margin-top: 5px;">
-            <asp:LinkButton runat="server" ID="btnEditUser" ForeColor="white" Width="100%" ValidationGroup="EditUserValidation" 
-            OnClientClick="setTimeout(btnEditUser_ClientClick, 0); return false;">
-            <%=Resources.Resource.Edit %></asp:LinkButton>
-        </div>
-        
-    </asp:Panel>
-    <asp:Button ID="btnShowEditPopup" runat="server" Style="display: none" />
-    <ajaxToolkit:ModalPopupExtender ID="modalPopupExtEditUser" runat="server" CancelControlID="btnCancelEditUser"
-        TargetControlID="btnShowEditPopup" PopupControlID="panelEditUser" BackgroundCssClass="modalBackgroundBottom" />
+    </div>
+    
     <script type="text/javascript" language="javascript">
-        var modalPopupExtEditUser = '<%= modalPopupExtEditUser.ClientID %>';
-        var gridViewUsers = '<%= gridViewUsers.ClientID %>';
-        var lblUserNameEditActive = '<%= lblUserNameEditActive.ClientID %>';
-        var tbEmailEdit = '<%= tbEmailEdit.ClientID %>';
-        var tbFirstNameEdit = '<%= tbFirstNameEdit.ClientID %>';
-        var tbLastNameEdit = '<%= tbLastNameEdit.ClientID %>';
-        var ddlRoleEdit = '<%= ddlRoleEdit.ClientID %>';
-        var btnEditUser = '<%= btnEditUser.ClientID %>';
+        $(document).ready(function () {
+            var gridViewUsers = '<%= gridViewUsers.ClientID %>';
+            var lblUserNameEditActive = '#' + '<%= lblUserNameEditActive.ClientID %>';
+            var tbEmailEdit = '#' + '<%= tbEmailEdit.ClientID %>';
+            var tbFirstNameEdit = '#' + '<%= tbFirstNameEdit.ClientID %>';
+            var tbLastNameEdit = '#' + '<%= tbLastNameEdit.ClientID %>';
+            var ddlRoleEdit = '#' + '<%= ddlRoleEdit.ClientID %>';
 
-        String.prototype.trim = function () {
-            return this.replace(/^\s*/, "").replace(/\s*$/, "");
-        }
+            var divLitEditResult = '#divLitEditResult';
+            var divEditUserProgress = '#divEditUserProgress';
+            var btnHiddenRefresh = '<%= btnHiddenRefresh.ClientID %>';
 
-        //populates edit popup with corresponding user info
-        function openEditPopup(rowIndex, disableRole) {
-            var row = $get(gridViewUsers).rows[parseInt(rowIndex) + 2];
-            var username = row.cells[0].childNodes[0].data;
-            $get('divLitEditResult').innerHTML = '&nbsp;';
-            $get(lblUserNameEditActive).innerHTML = username;
+            $("#panelEditUser").dialog({ autoOpen: false });
 
-            var loadEditRequestUser = false;
-            var user = null;
-            for (i = 0; i < editRequestUsers.length; i++) {
-                if (editRequestUsers[i].username == username) {
-                    loadEditRequestUser = true;
-                    user = editRequestUsers[i];
-                    break;
-                }
-            }
+            $(document).on("click", "input[type*='image'][id$='_imgEdit']", function () {
+                var rowIndex = $(this).attr('rowIndex');
+                var disableRole = $(this).attr('disableRole');
+                openEditPopup(rowIndex, disableRole == "true");
 
-            var firstname;
-            var lastname;
-            var email;
-            var roleIndex;
-
-            var options = $get(ddlRoleEdit).options;
-            if (loadEditRequestUser) {
-                firstname = user.firstname;
-                lastname = user.lastname;
-                email = user.email;
-                for (i = 0; i < options.length; i++) {
-                    if (options[i].value == user.role) {
-                        roleIndex = i;
-                        break;
-                    }
-                }
-            }
-            else {
-                firstname = row.cells[1].childNodes[0].data;
-                lastname = row.cells[2].childNodes[0].data;
-                email = row.cells[4].childNodes[0].data;
-                var role = row.cells[6].childNodes[0].data.trim();                
-                for (i = 0; i < options.length; i++) {
-                    if (options[i].innerHTML == role) {
-                        roleIndex = i;
-                        break;
-                    }
-                }
-            }
-
-            $get(tbEmailEdit).value = email;
-            $get(tbFirstNameEdit).value = firstname;
-            $get(tbLastNameEdit).value = lastname;
-            $get(ddlRoleEdit).selectedIndex = roleIndex;
-
-            if (loadEditRequestUser) {
-                disableEdit();
-            }
-            else {
-                enableEdit(disableRole);
-            }
-            Page_ClientValidate('EditUserValidation');
-            $find(modalPopupExtEditUser).show();
-        }
-
-        Sys.Application.add_load(hideEdit);
-
-        function hideEdit(sender, args) {
-            $addHandler(document, "keydown", function (args) {
-                if (args.keyCode == Sys.UI.Key.esc) {
-                    $find(modalPopupExtEditUser).hide();
-                }
+                $("#panelEditUser").dialog('destroy');
+                var d = $("#panelEditUser");
+                var dOpt = {
+                    title: '<%=Resources.Resource.EditUser%>',
+                    width: 320,
+                    modal: true,
+                    resizable: false,
+                    buttons: [{
+                        id: "button-edit",
+                        text: '<%=Resources.Resource.Edit %>',
+                        click: function () {
+                            if (Page_ClientValidate('EditUserValidation')) {
+                                //Validation is successful
+                                var disableRole = $(ddlRoleEdit).prop("disabled");
+                                disableEdit();
+                                var username = $(lblUserNameEditActive).html();
+                                var email = $(tbEmailEdit).val();
+                                var firstname = $(tbFirstNameEdit).val();
+                                var lastname = $(tbLastNameEdit).val();
+                                var role = $(ddlRoleEdit + " :selected").val();
+                                var user = new UserEntity(username, "", email, firstname, lastname, role);
+                                editRequestUsers.push(user);
+                                var objEditUserContext = new EditUserContext(username, disableRole);
+                                PageMethods.UpdateUser(user, btnEditUser_Callback, btnEditUser_Error, objEditUserContext);
+                            }
+                        }
+                    }]
+                };
+                d.dialog(dOpt);
             });
-        }
 
-        var editRequestUsers = new Array();
-
-        function EditUserContext(username, disableRole) {
-            this.username = username;
-            this.disableRole = disableRole;
-        }
-
-        function disableEdit() {
-            $get(tbEmailEdit).disabled = true;
-            $get(tbFirstNameEdit).disabled = true;
-            $get(tbLastNameEdit).disabled = true;
-            $get(ddlRoleEdit).disabled = true;
-            $get(btnEditUser).disabled = true;
-            $get('divEditUserProgress').style.display = 'block';
-        }
-
-        function enableEdit(disableRole) {
-            $get(tbEmailEdit).disabled = false;
-            $get(tbFirstNameEdit).disabled = false;
-            $get(tbLastNameEdit).disabled = false;
-            if (disableRole) {
-                $get(ddlRoleEdit).disabled = true;
+            function disableEdit() {
+                $(tbEmailEdit).prop("disabled", true);
+                $(tbFirstNameEdit).prop("disabled", true);
+                $(tbLastNameEdit).prop("disabled", true);
+                $(ddlRoleEdit).prop("disabled", true);
+                $("#button-edit").button("disable");
+                $(divEditUserProgress).css('display', 'block');
             }
-            else {
-                $get(ddlRoleEdit).disabled = false;
-            }
-            $get(btnEditUser).disabled = false;
-            $get('divEditUserProgress').style.display = 'none';
-        }
 
-
-        function btnEditUser_ClientClick() {
-            if (Page_ClientValidate('EditUserValidation')) {
-                //Validation is successful
-                var disableRole = $get(ddlRoleEdit).disabled;
-                disableEdit();
-                var username = $get(lblUserNameEditActive).innerHTML;
-                var email = $get(tbEmailEdit).value;
-                var firstname = $get(tbFirstNameEdit).value;
-                var lastname = $get(tbLastNameEdit).value;
-                var role = $get(ddlRoleEdit).options[$get(ddlRoleEdit).selectedIndex].value;
-                var user = new UserEntity(username, "", email, firstname, lastname, role);
-                editRequestUsers.push(user);
-                var objEditUserContext = new EditUserContext(username,
-                   disableRole);
-                PageMethods.UpdateUser(user, btnEditUser_Callback, btnEditUser_Error, objEditUserContext);
-                
+            function enableEdit(disableRole) {
+                $(tbEmailEdit).prop("disabled", false);
+                $(tbFirstNameEdit).prop("disabled", false);
+                $(tbLastNameEdit).prop("disabled", false);
+                if (disableRole) {
+                    $(ddlRoleEdit).prop("disabled", true);
+                }
+                else {
+                    $(ddlRoleEdit).prop("disabled", false);
+                }
+                $("#button-edit").button("enable");
+                $(divEditUserProgress).css('display', 'none');
             }
-        }
 
-        function btnEditUser_Callback(result, userContext) {
-            if (result.Success) {
-                $get(btnHiddenRefresh).click();
-            }
-            for (i = 0; i < editRequestUsers.length; i++) {
-                if (userContext.username == editRequestUsers[i].username) {
-                    editRequestUsers.splice(i, 1);
+            function btnEditUser_Callback(result, userContext) {
+                if (result.Success) {
+                    $get(btnHiddenRefresh).click();
+                }
+                for (i = 0; i < editRequestUsers.length; i++) {
+                    if (userContext.username == editRequestUsers[i].username) {
+                        editRequestUsers.splice(i, 1);
+                    }
+                }
+                if (userContext.username == $(lblUserNameEditActive).html()) {
+                    $(divLitEditResult).html(result.Message);
+                    enableEdit(userContext.disableRole);
                 }
             }
-            if (userContext.username == $get(lblUserNameEditActive).innerHTML) {
-                $get('divLitEditResult').innerHTML = result.Message;
-                enableEdit(userContext.disableRole);
-            }
-        }
 
-        function btnEditUser_Error(errors, userContext) {            
-            for (i = 0; i < editRequestUsers.length; i++) {
-                if (userContext.username == editRequestUsers[i].username) {
-                    editRequestUsers.splice(i, 1);
+            function btnEditUser_Error(errors, userContext) {
+                for (i = 0; i < editRequestUsers.length; i++) {
+                    if (userContext.username == editRequestUsers[i].username) {
+                        editRequestUsers.splice(i, 1);
+                    }
+                }
+                if (userContext.username == $(lblUserNameEditActive).html()) {
+                    $(divLitEditResult).html(errors.get_Message());
+                    enableEdit(userContext.disableRole);
                 }
             }
-            if (userContext.username == $get(lblUserNameEditActive).innerHTML) {
-                $get('divLitEditResult').innerHTML = errors.get_Message();
-                enableEdit(userContext.disableRole);
+
+            var editRequestUsers = new Array();
+
+            function EditUserContext(username, disableRole) {
+                this.username = username;
+                this.disableRole = disableRole;
             }
-        }
+
+            String.prototype.trim = function () {
+                return this.replace(/^\s*/, "").replace(/\s*$/, "");
+            }
+
+            //populates edit popup with corresponding user info
+            function openEditPopup(rowIndex, disableRole) {
+                var row = $get(gridViewUsers).rows[parseInt(rowIndex) + 2];
+                var username = row.cells[0].childNodes[0].data;
+                $(divLitEditResult).html('&nbsp;');
+                $(lblUserNameEditActive).html(username);
+
+                var loadEditRequestUser = false;
+                var user = null;
+                for (i = 0; i < editRequestUsers.length; i++) {
+                    if (editRequestUsers[i].username == username) {
+                        loadEditRequestUser = true;
+                        user = editRequestUsers[i];
+                        break;
+                    }
+                }
+
+                var firstname;
+                var lastname;
+                var email;
+                var roleIndex;
+
+                if (loadEditRequestUser) {
+                    firstname = user.firstname;
+                    lastname = user.lastname;
+                    email = user.email;
+                    i = 0;
+                    $(ddlRoleEdit + " option").each(function () {
+                        if ($(this).val() == user.role) {
+                            roleIndex = i;
+                        }
+                        i++;
+                    });
+                }
+                else {
+                    firstname = row.cells[1].childNodes[0].data;
+                    lastname = row.cells[2].childNodes[0].data;
+                    email = row.cells[4].childNodes[0].data;
+                    var role = row.cells[6].childNodes[0].data.trim();
+                    i = 0;
+                    $(ddlRoleEdit + " option").each(function () {
+                        if ($(this).html() == role) {
+                            roleIndex = i;
+                        }
+                        i++;
+                    });
+                }
+                $(tbEmailEdit).val(email);
+                $(tbFirstNameEdit).val(firstname);
+                $(tbLastNameEdit).val(lastname);
+                $('select' + ddlRoleEdit).prop('selectedIndex', roleIndex);
+
+                if (loadEditRequestUser) {
+                    disableEdit();
+                }
+                else {
+                    enableEdit(disableRole);
+                }
+            }
+        });
     </script>
     <%--Edit User Modal ended--%>
 </asp:Content>
