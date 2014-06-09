@@ -3387,4 +3387,7 @@ system administrator.</value>
   <data name="CongMonitorActionThird" xml:space="preserve">
     <value>Third action</value>
   </data>
+  <data name="CongLdrProxyServerType" xml:space="preserve">
+    <value>Proxy type</value>
+  </data>
 </root>

@@ -3375,4 +3375,7 @@
   <data name="CongMonitorActionThird" xml:space="preserve">
     <value>Третье действие</value>
   </data>
+  <data name="CongLdrProxyServerType" xml:space="preserve">
+    <value>Тип прокси</value>
+  </data>
 </root>
