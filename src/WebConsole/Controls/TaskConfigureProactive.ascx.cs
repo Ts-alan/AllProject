@@ -103,7 +103,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ProactiveProtection;
-
+        SaveJournalEvents();
         task.Param = proactive.SaveToXml();
 
         return task;
@@ -126,6 +126,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
 
     public String BuildTask()
     {
+        SaveJournalEvents();
         return proactive.GetTask();        
     }
 
@@ -836,7 +837,29 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         }
     }
 
-    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (Int32 i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
+
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        proactive.journalEvent = je;
+    }
+
+    private TableRow GenerateRow(SingleJournalEvent ev, Int32 rowNo)
     {
         String eventName = ev.EventName;
         EventJournalFlags val = ev.EventFlag;
@@ -853,59 +876,13 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
             cell = new TableCell();
             CheckBox chk = new CheckBox();
             chk.Checked = false;
-            chk.Attributes.Add("rowNo", rowNo.ToString());
-            chk.Attributes.Add("colNo", i.ToString());
-            chk.AutoPostBack = true;
-            chk.CheckedChanged += JournalEventChecked;
+
             cell.Controls.Add(chk);
             cell.Attributes.Add("align", "center");
             row.Cells.Add(cell);
         }
 
         return row;
-    }
-
-    private void JournalEventChecked(Object sender, EventArgs e)
-    {
-        CheckBox chk = (CheckBox)sender;
-        Int32 rowNo = Convert.ToInt32(chk.Attributes["rowNo"]);
-        Int32 colNo = Convert.ToInt32(chk.Attributes["colNo"]);
-        SaveCurrentStateJournalEvent(ref proactive.journalEvent.Events[rowNo], colNo, chk.Checked);
-    }
-
-    private void SaveCurrentStateJournalEvent(ref SingleJournalEvent sje, Int32 colNo, Boolean isChecked)
-    {
-        sje.EventFlag = GetEventFlag(sje.EventFlag, colNo, isChecked);
-    }
-
-    private EventJournalFlags GetEventFlag(EventJournalFlags eventJournalFlags, Int32 colNo, Boolean isChecked)
-    {
-        EventJournalFlags flags = eventJournalFlags;
-        switch (colNo)
-        {
-            case 0:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.WindowsJournal;
-                }
-                else flags &= ~EventJournalFlags.WindowsJournal;
-                break;
-            case 1:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.LocalJournal;
-                }
-                else flags &= ~EventJournalFlags.LocalJournal;
-                break;
-            case 2:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.CCJournal;
-                }
-                else flags &= ~EventJournalFlags.CCJournal;
-                break;
-        }
-        return flags;
     }
 
     #endregion

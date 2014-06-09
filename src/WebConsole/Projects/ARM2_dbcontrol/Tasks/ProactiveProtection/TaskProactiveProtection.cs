@@ -84,8 +84,6 @@ namespace ARM2_dbcontrol.Tasks
             defaultRule.TrustedApplications.Add(@"C:\Windows\explorer.exe");
             defaultRule.TrustedApplications.Add(@"C:\Windows\system32\userinit.exe");
             defaultRule.TrustedApplications.Add(@"C:\Windows\system32\winlogon.exe");
-            defaultRule.TrustedApplications.Add(@"C:\Program Files\VirusBlokAda\VSIS\VSIS_64\vsis.exe");
-            defaultRule.TrustedApplications.Add(@"C:\Program Files\VirusBlokAda\KANOE\VGI_64\vgi.exe");
 
             defaultRule.ProtectedFolders.Add(@"C:");
             return defaultRule;

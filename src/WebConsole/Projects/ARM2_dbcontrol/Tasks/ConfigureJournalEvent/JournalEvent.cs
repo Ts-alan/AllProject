@@ -100,7 +100,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
             task.Append("<id>Events</id>");
             task.Append("<type>stringmap</type>");
             task.Append("<value>");
-            for (Int32 i = 1; i < _events.Length; i++)
+            for (Int32 i = 0; i < _events.Length; i++)
             {
                 task.AppendFormat("<string><id>{0}</id>{1}</string>", i.ToString(), ConvertEventForTask(_events[i]));
             }

@@ -4,7 +4,7 @@
 <div class="divSettings">
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#MainTabs").tabs({ cookie: { expires: 30} });
+            $("#MainTabsProactive").tabs({ cookie: { expires: 30} });
             $("#TabsProactive").tabs({ cookie: { expires: 30} });
             $("#TabsProactiveUsers").tabs({ cookie: { expires: 30} });
             $("#AccordionFileSystem").accordion({ collapsible: false, active: false, heightStyle: 'content' });
@@ -41,20 +41,20 @@
     }
 
     </script>
-    <div id="MainTabs">
+    <div id="MainTabsProactive">
         <ul>
-            <li><a href="#mainTab1"><%=Resources.Resource.General %></a> </li>
-            <li><a href="#mainTab2"><%=Resources.Resource.UserManaging%></a> </li>
-            <li><a href="#mainTab3"><%=Resources.Resource.JournalEvents%></a> </li>
+            <li><a href="#mainTabProactive1"><%=Resources.Resource.General %></a> </li>
+            <li><a href="#mainTabProactive2"><%=Resources.Resource.UserManaging%></a> </li>
+            <li><a href="#mainTabProactive3"><%=Resources.Resource.JournalEvents%></a> </li>
         </ul>
-        <div id="mainTab1">
+        <div id="mainTabProactive1">
             <div id="TabsProactive" style="width:900px">
                 <ul>
-                    <li><a href="#tab1"><%=Resources.Resource.Applications %></a> </li>
-                    <li><a href="#tab2"><%=Resources.Resource.FileSystem %></a> </li>
-                    <li><a href="#tab3"><%=Resources.Resource.Registry %></a> </li>
+                    <li><a href="#tabProactive1"><%=Resources.Resource.Applications %></a> </li>
+                    <li><a href="#tabProactive2"><%=Resources.Resource.FileSystem %></a> </li>
+                    <li><a href="#tabProactive3"><%=Resources.Resource.Registry %></a> </li>
                 </ul>
-                <div id='tab1'>
+                <div id='tabProactive1'>
                     <table>
                     <tr>
                         <td>
@@ -116,7 +116,7 @@
                     </tr>
                     </table>
                 </div>
-                <div id='tab2'>
+                <div id='tabProactive2'>
                 <div id='AccordionFileSystem'>
                 <h3><a><span><%=Resources.Resource.ReadOnly %></span></a></h3>
                 <div>
@@ -308,7 +308,7 @@
                 </div>
                 </div>
                 </div>
-                <div id='tab3'>
+                <div id='tabProactive3'>
                 <div id='AccordionRegistry'>
                 <h3><a><span><%=Resources.Resource.ReadOnly %></span></a></h3>
                 <div>
@@ -440,7 +440,7 @@
                 </div>
             </div>    
         </div>
-        <div id="mainTab2">
+        <div id="mainTabProactive2">
             <div>
                 <asp:UpdatePanel runat="server" ID="upnlUsers">
                 <ContentTemplate>
@@ -536,11 +536,11 @@
             </div>
             <div id="TabsProactiveUsers" style="width:900px">
                 <ul>
-                    <li><a href="#tabUsers1"><%=Resources.Resource.Applications %></a> </li>
-                    <li><a href="#tabUsers2"><%=Resources.Resource.FileSystem %></a> </li>
-                    <li><a href="#tabUsers3"><%=Resources.Resource.Registry %></a> </li>
+                    <li><a href="#tabUsersProactive1"><%=Resources.Resource.Applications %></a> </li>
+                    <li><a href="#tabUsersProactive2"><%=Resources.Resource.FileSystem %></a> </li>
+                    <li><a href="#tabUsersProactive3"><%=Resources.Resource.Registry %></a> </li>
                 </ul>
-                <div id='tabUsers1'>
+                <div id='tabUsersProactive1'>
                     <asp:UpdatePanel ID="upnlApplicationTrustedUsers" runat="server" UpdateMode="Conditional" >
                                 <ContentTemplate>
                                     <div class="ui-accordion ui-widget ui-helper-reset" style="width: 400px;">
@@ -568,7 +568,7 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                 </div>
-                <div id='tabUsers2'>
+                <div id='tabUsersProactive2'>
                 <div id='AccordionFileSystemUsers'>
                 <h3><a><span><%=Resources.Resource.ReadOnly %></span></a></h3>
                 <div>
@@ -698,7 +698,7 @@
                 </div>  
                 </div>
                 </div>
-                <div id='tabUsers3'>
+                <div id='tabUsersProactive3'>
                     <table>
                     <tr>
                         <td>
@@ -762,7 +762,7 @@
                 </div>  
             </div>
         </div>
-        <div id="mainTab3">
+        <div id="mainTabProactive3">
             <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
