@@ -4,17 +4,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ARM2_dbcontrol.Tasks;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl, ITask
 {
+    private static TaskConfigureProactive proactive;
+
     protected void Page_Init(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
             InitFields();
-    }
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
+        InitFieldsJournalEvent(proactive.journalEvent);
     }
 
     private Boolean _hideHeader = false;
@@ -36,8 +36,37 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
-        Clear();
         SetEnabled();
+
+        if (proactive == null)
+        {
+            proactive = new TaskConfigureProactive(GetEvents());
+            proactive.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
+        }
+        else
+        {
+            proactive.Clear();
+        }
+
+        UpdateUserList();
+        UpdateGeneral();
+        UpdateUsers(proactive.UserRules[0].RuleName);
+    }
+
+    private String[] GetEvents()
+    {
+        String[] s = { "JE_VPP_APPLIED_RULES_FAILED",
+                        "JE_VPP_APPLIED_RULES_OK",
+                        "JE_VPP_AUDIT_DELETE",
+                        "JE_VPP_AUDIT_EXECUTE",
+                        "JE_VPP_AUDIT_OPEN_READ",
+                        "JE_VPP_AUDIT_OPEN_WRITE",
+                        "JE_VPP_AUDIT_READ",
+                        "JE_VPP_AUDIT_WRITE",
+                        "JE_VPP_START",
+                        "JE_VPP_STOP"
+                     };
+        return s;
     }
 
     private void SetEnabled()
@@ -52,29 +81,17 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         lboxFolderExcluded.Enabled = lboxFolderProtected.Enabled = lboxFolderReadOnly.Enabled = _enabled;
         lboxFileExcluded.Enabled = lboxFileProtected.Enabled = lboxFileReadOnly.Enabled = _enabled;
         lboxKeyProtected.Enabled = lboxKeyReadOnly.Enabled = _enabled;
-        lboxValueProtected.Enabled = lboxValueReadOnly.Enabled = _enabled;        
-    }
+        lboxValueProtected.Enabled = lboxValueReadOnly.Enabled = _enabled;
 
-    private void Clear()
-    {
-        tboxAppsProtected.Text = tboxAppsTrusted.Text = String.Empty;
-        tboxFolderExcluded.Text = tboxFolderProtected.Text = tboxFolderReadOnly.Text = String.Empty;
-        tboxFileExcluded.Text = tboxFileProtected.Text = tboxFileReadOnly.Text = String.Empty;
-        tboxKeyProtected.Text = tboxKeyReadOnly.Text = String.Empty;
-        tboxValueProtected.Text = tboxValueReadOnly.Text = String.Empty;
+        tboxAppsTrustedUsers.Enabled = _enabled;
+        tboxFolderProtectedUsers.Enabled = tboxFolderReadOnlyUsers.Enabled = _enabled;
+        tboxFileProtectedUsers.Enabled = tboxFileReadOnlyUsers.Enabled = _enabled;
+        tboxKeyProtectedUsers.Enabled = tboxKeyReadOnlyUsers.Enabled = _enabled;
 
-        lboxAppsTrusted.Items.Clear();
-        lboxAppsProtected.Items.Clear();
-        lboxFolderExcluded.Items.Clear();
-        lboxFolderProtected.Items.Clear();
-        lboxFolderReadOnly.Items.Clear();
-        lboxFileExcluded.Items.Clear();
-        lboxFileProtected.Items.Clear();
-        lboxFileReadOnly.Items.Clear();
-        lboxKeyProtected.Items.Clear();
-        lboxKeyReadOnly.Items.Clear();
-        lboxValueProtected.Items.Clear();
-        lboxValueReadOnly.Items.Clear();
+        lboxAppsTrustedUsers.Enabled = _enabled;
+        lboxFolderProtectedUsers.Enabled = lboxFolderReadOnlyUsers.Enabled = _enabled;
+        lboxFileProtectedUsers.Enabled = lboxFileReadOnlyUsers.Enabled = _enabled;
+        lboxKeyProtectedUsers.Enabled = lboxKeyReadOnlyUsers.Enabled = _enabled;
     }
 
     public Boolean ValidateFields()
@@ -87,9 +104,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ProactiveProtection;
 
-        ValidateFields();
-
-        task.Param = BuildXml();
+        task.Param = proactive.SaveToXml();
 
         return task;
     }
@@ -99,176 +114,24 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         if (task.Type != TaskType.ProactiveProtection)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
 
-        TaskConfigureProactive tsk = new TaskConfigureProactive();
-        tsk.LoadFromXml(task.Param);
+        proactive.LoadFromXml(task.Param);
 
-        lboxAppsTrusted.Items.Clear();
-        foreach (String str in tsk.TrustedApplications)
-        {
-            lboxAppsTrusted.Items.Add(new ListItem(str, str));
-        }
-
-        lboxAppsProtected.Items.Clear();
-        foreach (String str in tsk.ProtectedApplications)
-        {
-            lboxAppsProtected.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFileReadOnly.Items.Clear();
-        foreach (String str in tsk.ReadOnlyFiles)
-        {
-            lboxFileReadOnly.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFileProtected.Items.Clear();
-        foreach (String str in tsk.ProtectedFiles)
-        {
-            lboxFileProtected.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFileExcluded.Items.Clear();
-        foreach (String str in tsk.ExcludedFiles)
-        {
-            lboxFileExcluded.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFolderReadOnly.Items.Clear();
-        foreach (String str in tsk.ReadOnlyFolders)
-        {
-            lboxFolderReadOnly.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFolderProtected.Items.Clear();
-        foreach (String str in tsk.ProtectedFolders)
-        {
-            lboxFolderProtected.Items.Add(new ListItem(str, str));
-        }
-
-        lboxFolderExcluded.Items.Clear();
-        foreach (String str in tsk.ExcludedFolders)
-        {
-            lboxFolderExcluded.Items.Add(new ListItem(str, str));
-        }
-
-        lboxKeyReadOnly.Items.Clear();
-        foreach (String str in tsk.ReadOnlyRegistryKeys)
-        {
-            lboxKeyReadOnly.Items.Add(new ListItem(str, str));
-        }
-
-        lboxKeyProtected.Items.Clear();
-        foreach (String str in tsk.ProtectedRegistryKeys)
-        {
-            lboxKeyProtected.Items.Add(new ListItem(str, str));
-        }
-
-        lboxValueReadOnly.Items.Clear();
-        foreach (String str in tsk.ReadOnlyRegistryValues)
-        {
-            lboxValueReadOnly.Items.Add(new ListItem(str, str));
-        }
-
-        lboxValueProtected.Items.Clear();
-        foreach (String str in tsk.ProtectedRegistryValues)
-        {
-            lboxValueProtected.Items.Add(new ListItem(str, str));
-        }
+        UpdateUserList();
+        UpdateGeneral();
+        UpdateUsers(proactive.UserRules[0].RuleName);
+        LoadJournalEvent(proactive.journalEvent);
     }
 
     #endregion
 
-    private String BuildXml()
+    public String BuildTask()
     {
-        TaskConfigureProactive task = new TaskConfigureProactive();
-
-        foreach (ListItem item in lboxAppsTrusted.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.TrustedApplications.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxAppsProtected.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ProtectedApplications.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFileReadOnly.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ReadOnlyFiles.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFileProtected.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ProtectedFiles.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFileExcluded.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ExcludedFiles.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFolderReadOnly.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ReadOnlyFolders.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFolderProtected.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ProtectedFolders.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxFolderExcluded.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ExcludedFolders.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxKeyReadOnly.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ReadOnlyRegistryKeys.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxKeyProtected.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ProtectedRegistryKeys.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxValueReadOnly.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ReadOnlyRegistryValues.Add(item.Value);
-        }
-
-        foreach (ListItem item in lboxValueProtected.Items)
-        {
-            if (!String.IsNullOrEmpty(item.Value))
-                task.ProtectedRegistryValues.Add(item.Value);
-        }
-
-        task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
-
-        return task.SaveToXml();
-    }
-
-    public String BuildTask(TaskUserEntity task)
-    {
-        if (task.Type != TaskType.ProactiveProtection)
-            throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
-
-        TaskConfigureProactive tsk = new TaskConfigureProactive();
-        tsk.LoadFromXml(task.Param);
-        return tsk.GetTask();        
+        return proactive.GetTask();        
     }
 
     #region Change ListBoxes
+
+    #region General
 
     #region Application - Trusted
 
@@ -276,6 +139,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxAppsTrusted.Text))
         {
+            proactive.GeneralRule.TrustedApplications.Add(tboxAppsTrusted.Text);
             lboxAppsTrusted.Items.Add(tboxAppsTrusted.Text);
             tboxAppsTrusted.Text = String.Empty;
         }
@@ -284,7 +148,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteAppsTrusted_Click(Object sender, EventArgs e)
     {
         if (lboxAppsTrusted.SelectedIndex > -1 && lboxAppsTrusted.SelectedIndex < lboxAppsTrusted.Items.Count)
-            lboxAppsTrusted.Items.RemoveAt(lboxAppsTrusted.SelectedIndex);
+        {
+            proactive.GeneralRule.TrustedApplications.RemoveAt(lboxAppsTrusted.SelectedIndex);
+            lboxAppsTrusted.Items.RemoveAt(lboxAppsTrusted.SelectedIndex);            
+        }
     }
 
     #endregion
@@ -295,6 +162,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxAppsProtected.Text))
         {
+            proactive.GeneralRule.ProtectedApplications.Add(tboxAppsProtected.Text);
             lboxAppsProtected.Items.Add(tboxAppsProtected.Text);
             tboxAppsProtected.Text = String.Empty;
         }
@@ -303,7 +171,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteAppsProtected_Click(Object sender, EventArgs e)
     {
         if (lboxAppsProtected.SelectedIndex > -1 && lboxAppsProtected.SelectedIndex < lboxAppsProtected.Items.Count)
+        {
+            proactive.GeneralRule.ProtectedApplications.RemoveAt(lboxAppsProtected.SelectedIndex);
             lboxAppsProtected.Items.RemoveAt(lboxAppsProtected.SelectedIndex);
+        }
     }
 
     #endregion
@@ -314,6 +185,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFolderProtected.Text))
         {
+            proactive.GeneralRule.ProtectedFolders.Add(tboxFolderProtected.Text);
             lboxFolderProtected.Items.Add(tboxFolderProtected.Text);
             tboxFolderProtected.Text = String.Empty;
         }
@@ -322,7 +194,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFolderProtected_Click(Object sender, EventArgs e)
     {
         if (lboxFolderProtected.SelectedIndex > -1 && lboxFolderProtected.SelectedIndex < lboxFolderProtected.Items.Count)
+        {
+            proactive.GeneralRule.ProtectedFolders.RemoveAt(lboxFolderProtected.SelectedIndex);
             lboxFolderProtected.Items.RemoveAt(lboxFolderProtected.SelectedIndex);
+        }
     }
 
     #endregion
@@ -333,6 +208,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFolderExcluded.Text))
         {
+            proactive.GeneralRule.ExcludedFolders.Add(tboxFolderExcluded.Text);
             lboxFolderExcluded.Items.Add(tboxFolderExcluded.Text);
             tboxFolderExcluded.Text = String.Empty;
         }
@@ -341,7 +217,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFolderExcluded_Click(Object sender, EventArgs e)
     {
         if (lboxFolderExcluded.SelectedIndex > -1 && lboxFolderExcluded.SelectedIndex < lboxFolderExcluded.Items.Count)
+        {
+            proactive.GeneralRule.ExcludedFolders.RemoveAt(lboxFolderExcluded.SelectedIndex);
             lboxFolderExcluded.Items.RemoveAt(lboxFolderExcluded.SelectedIndex);
+        }
     }
 
     #endregion
@@ -352,6 +231,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFolderReadOnly.Text))
         {
+            proactive.GeneralRule.ReadOnlyFolders.Add(tboxFolderReadOnly.Text);
             lboxFolderReadOnly.Items.Add(tboxFolderReadOnly.Text);
             tboxFolderReadOnly.Text = String.Empty;
         }
@@ -360,7 +240,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFolderReadOnly_Click(Object sender, EventArgs e)
     {
         if (lboxFolderReadOnly.SelectedIndex > -1 && lboxFolderReadOnly.SelectedIndex < lboxFolderReadOnly.Items.Count)
+        {
+            proactive.GeneralRule.ReadOnlyFolders.RemoveAt(lboxFolderReadOnly.SelectedIndex);
             lboxFolderReadOnly.Items.RemoveAt(lboxFolderReadOnly.SelectedIndex);
+        }
     }
 
     #endregion
@@ -371,6 +254,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFileProtected.Text))
         {
+            proactive.GeneralRule.ProtectedFiles.Add(tboxFileProtected.Text);
             lboxFileProtected.Items.Add(tboxFileProtected.Text);
             tboxFileProtected.Text = String.Empty;
         }
@@ -379,7 +263,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFileProtected_Click(Object sender, EventArgs e)
     {
         if (lboxFileProtected.SelectedIndex > -1 && lboxFileProtected.SelectedIndex < lboxFileProtected.Items.Count)
+        {
+            proactive.GeneralRule.ProtectedFiles.RemoveAt(lboxFileProtected.SelectedIndex);
             lboxFileProtected.Items.RemoveAt(lboxFileProtected.SelectedIndex);
+        }
     }
 
     #endregion
@@ -390,6 +277,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFileExcluded.Text))
         {
+            proactive.GeneralRule.ExcludedFiles.Add(tboxFileExcluded.Text);
             lboxFileExcluded.Items.Add(tboxFileExcluded.Text);
             tboxFileExcluded.Text = String.Empty;
         }
@@ -398,7 +286,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFileExcluded_Click(Object sender, EventArgs e)
     {
         if (lboxFileExcluded.SelectedIndex > -1 && lboxFileExcluded.SelectedIndex < lboxFileExcluded.Items.Count)
+        {
+            proactive.GeneralRule.ExcludedFiles.RemoveAt(lboxFileExcluded.SelectedIndex);
             lboxFileExcluded.Items.RemoveAt(lboxFileExcluded.SelectedIndex);
+        }
     }
 
     #endregion
@@ -409,6 +300,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxFileReadOnly.Text))
         {
+            proactive.GeneralRule.ReadOnlyFiles.Add(tboxFileReadOnly.Text);
             lboxFileReadOnly.Items.Add(tboxFileReadOnly.Text);
             tboxFileReadOnly.Text = String.Empty;
         }
@@ -417,7 +309,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteFileReadOnly_Click(Object sender, EventArgs e)
     {
         if (lboxFileReadOnly.SelectedIndex > -1 && lboxFileReadOnly.SelectedIndex < lboxFileReadOnly.Items.Count)
+        {
+            proactive.GeneralRule.ReadOnlyFiles.RemoveAt(lboxFileReadOnly.SelectedIndex);
             lboxFileReadOnly.Items.RemoveAt(lboxFileReadOnly.SelectedIndex);
+        }
     }
 
     #endregion
@@ -428,6 +323,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxKeyProtected.Text))
         {
+            proactive.GeneralRule.ProtectedRegistryKeys.Add(tboxKeyProtected.Text);
             lboxKeyProtected.Items.Add(tboxKeyProtected.Text);
             tboxKeyProtected.Text = String.Empty;
         }
@@ -436,7 +332,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteKeyProtected_Click(Object sender, EventArgs e)
     {
         if (lboxKeyProtected.SelectedIndex > -1 && lboxKeyProtected.SelectedIndex < lboxKeyProtected.Items.Count)
+        {
+            proactive.GeneralRule.ProtectedRegistryKeys.RemoveAt(lboxKeyProtected.SelectedIndex);
             lboxKeyProtected.Items.RemoveAt(lboxKeyProtected.SelectedIndex);
+        }
     }
 
     #endregion
@@ -447,6 +346,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxKeyReadOnly.Text))
         {
+            proactive.GeneralRule.ReadOnlyRegistryKeys.Add(tboxKeyReadOnly.Text);
             lboxKeyReadOnly.Items.Add(tboxKeyReadOnly.Text);
             tboxKeyReadOnly.Text = String.Empty;
         }
@@ -455,7 +355,10 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteKeyReadOnly_Click(Object sender, EventArgs e)
     {
         if (lboxKeyReadOnly.SelectedIndex > -1 && lboxKeyReadOnly.SelectedIndex < lboxKeyReadOnly.Items.Count)
+        {
+            proactive.GeneralRule.ReadOnlyRegistryKeys.RemoveAt(lboxKeyReadOnly.SelectedIndex);
             lboxKeyReadOnly.Items.RemoveAt(lboxKeyReadOnly.SelectedIndex);
+        }
     }
 
     #endregion
@@ -466,6 +369,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         if (!String.IsNullOrEmpty(tboxValueProtected.Text))
         {
+            proactive.GeneralRule.ProtectedRegistryValues.Add(tboxValueProtected.Text);
             lboxValueProtected.Items.Add(tboxValueProtected.Text);
             tboxValueProtected.Text = String.Empty;
         }
@@ -474,17 +378,21 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteValueProtected_Click(Object sender, EventArgs e)
     {
         if (lboxValueProtected.SelectedIndex > -1 && lboxValueProtected.SelectedIndex < lboxValueProtected.Items.Count)
+        {
+            proactive.GeneralRule.ProtectedRegistryValues.RemoveAt(lboxValueProtected.SelectedIndex);
             lboxValueProtected.Items.RemoveAt(lboxValueProtected.SelectedIndex);
+        }
     }
 
     #endregion
-    
+
     #region Value- ReadOnly
 
     protected void lbtnAddValueReadOnly_Click(Object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(tboxValueReadOnly.Text))
         {
+            proactive.GeneralRule.ReadOnlyRegistryValues.Add(tboxValueReadOnly.Text);
             lboxValueReadOnly.Items.Add(tboxValueReadOnly.Text);
             tboxValueReadOnly.Text = String.Empty;
         }
@@ -493,10 +401,512 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     protected void lbtnDeleteValueReadOnly_Click(Object sender, EventArgs e)
     {
         if (lboxValueReadOnly.SelectedIndex > -1 && lboxValueReadOnly.SelectedIndex < lboxValueReadOnly.Items.Count)
+        {
+            proactive.GeneralRule.ReadOnlyRegistryValues.RemoveAt(lboxValueReadOnly.SelectedIndex);
             lboxValueReadOnly.Items.RemoveAt(lboxValueReadOnly.SelectedIndex);
+        }
     }
 
     #endregion
-    
+
+    #endregion
+
+    #region Users
+
+    #region Application - Trusted
+
+    protected void lbtnAddAppsTrustedUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxAppsTrustedUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].TrustedApplications.Add(tboxAppsTrustedUsers.Text);
+            lboxAppsTrustedUsers.Items.Add(tboxAppsTrustedUsers.Text);
+            tboxAppsTrustedUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteAppsTrustedUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxAppsTrustedUsers.SelectedIndex > -1 && lboxAppsTrustedUsers.SelectedIndex < lboxAppsTrustedUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].TrustedApplications.RemoveAt(lboxAppsTrustedUsers.SelectedIndex);
+            lboxAppsTrustedUsers.Items.RemoveAt(lboxAppsTrustedUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region Folder- Protected
+
+    protected void lbtnAddFolderProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxFolderProtectedUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedFolders.Add(tboxFolderProtectedUsers.Text);
+            lboxFolderProtectedUsers.Items.Add(tboxFolderProtectedUsers.Text);
+            tboxFolderProtectedUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteFolderProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxFolderProtectedUsers.SelectedIndex > -1 && lboxFolderProtectedUsers.SelectedIndex < lboxFolderProtectedUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedFolders.RemoveAt(lboxFolderProtectedUsers.SelectedIndex);
+            lboxFolderProtectedUsers.Items.RemoveAt(lboxFolderProtectedUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region Folder- ReadOnly
+
+    protected void lbtnAddFolderReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxFolderReadOnlyUsers.Text))
+        {            
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyFolders.Add(tboxFolderReadOnlyUsers.Text);
+            lboxFolderReadOnlyUsers.Items.Add(tboxFolderReadOnlyUsers.Text);
+            tboxFolderReadOnlyUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteFolderReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxFolderReadOnlyUsers.SelectedIndex > -1 && lboxFolderReadOnlyUsers.SelectedIndex < lboxFolderReadOnlyUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyFolders.RemoveAt(lboxFolderReadOnlyUsers.SelectedIndex);
+            lboxFolderReadOnlyUsers.Items.RemoveAt(lboxFolderReadOnlyUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region File- Protected
+
+    protected void lbtnAddFileProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxFileProtectedUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedFiles.Add(tboxFileProtectedUsers.Text);
+            lboxFileProtectedUsers.Items.Add(tboxFileProtectedUsers.Text);
+            tboxFileProtectedUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteFileProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxFileProtectedUsers.SelectedIndex > -1 && lboxFileProtectedUsers.SelectedIndex < lboxFileProtectedUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedFiles.RemoveAt(lboxFileProtectedUsers.SelectedIndex);
+            lboxFileProtectedUsers.Items.RemoveAt(lboxFileProtectedUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region File- ReadOnly
+
+    protected void lbtnAddFileReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxFileReadOnlyUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyFiles.Add(tboxFileReadOnlyUsers.Text);
+            lboxFileReadOnlyUsers.Items.Add(tboxFileReadOnlyUsers.Text);
+            tboxFileReadOnlyUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteFileReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxFileReadOnlyUsers.SelectedIndex > -1 && lboxFileReadOnlyUsers.SelectedIndex < lboxFileReadOnlyUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyFiles.RemoveAt(lboxFileReadOnlyUsers.SelectedIndex);
+            lboxFileReadOnlyUsers.Items.RemoveAt(lboxFileReadOnlyUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region Key- Protected
+
+    protected void lbtnAddKeyProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxKeyProtectedUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedRegistryKeys.Add(tboxKeyProtectedUsers.Text);
+            lboxKeyProtectedUsers.Items.Add(tboxKeyProtectedUsers.Text);
+            tboxKeyProtectedUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteKeyProtectedUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxKeyProtectedUsers.SelectedIndex > -1 && lboxKeyProtectedUsers.SelectedIndex < lboxKeyProtectedUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ProtectedRegistryKeys.RemoveAt(lboxKeyProtectedUsers.SelectedIndex);
+            lboxKeyProtectedUsers.Items.RemoveAt(lboxKeyProtectedUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    #region Key- ReadOnly
+
+    protected void lbtnAddKeyReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxKeyReadOnlyUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyRegistryKeys.Add(tboxKeyReadOnlyUsers.Text);
+            lboxKeyReadOnlyUsers.Items.Add(tboxKeyReadOnlyUsers.Text);
+            tboxKeyReadOnlyUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeleteKeyReadOnlyUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxKeyReadOnlyUsers.SelectedIndex > -1 && lboxKeyReadOnlyUsers.SelectedIndex < lboxKeyReadOnlyUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].ReadOnlyRegistryKeys.RemoveAt(lboxKeyReadOnlyUsers.SelectedIndex);
+            lboxKeyReadOnlyUsers.Items.RemoveAt(lboxKeyReadOnlyUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
+    private Int32 GetSelectedIndex()
+    {
+        return proactive.UserRules.FindIndex(
+            delegate(ProactiveRule rule)
+            {
+                if (rule.RuleName == ddlUsers.SelectedValue)
+                    return true;
+                return false;
+            }
+            );
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Users Manager
+
+    protected void lbtnAddUser_Click(object sender, EventArgs e)
+    {
+        String userName = Request["__EVENTARGUMENT"];
+        if (!String.IsNullOrEmpty(userName))
+        {
+            proactive.UserRules.Add(proactive.UserRules[0].Clone(userName));
+            ddlUsers.Items.Add(new ListItem(userName, userName));
+            ddlUsers.SelectedIndex = ddlUsers.Items.Count - 1;
+            UpdateUsers(userName);
+        }
+    }
+
+    protected void lbtnDeleteUser_Click(object sender, EventArgs e)
+    {
+        if (ddlUsers.SelectedIndex >= 0)
+        {
+            proactive.UserRules.RemoveAt(ddlUsers.SelectedIndex);
+            ddlUsers.Items.RemoveAt(ddlUsers.SelectedIndex);
+            UpdateUsers(ddlUsers.SelectedValue);
+        }
+    }
+
+    protected void ddlUsers_Changed(object sender, EventArgs e)
+    {
+        UpdateUsers(ddlUsers.SelectedValue);        
+    }
+
+    #endregion
+
+    #region Updates
+
+    private void UpdateUsers(String userName)
+    {
+        Int32 index = proactive.UserRules.FindIndex(
+            delegate(ProactiveRule rule)
+            {
+                if (rule.RuleName == userName)
+                    return true;
+                return false;
+            }
+            );
+        FillUserRules(proactive.UserRules[index]);
+
+        tboxAppsTrustedUsers.Text = String.Empty;
+        tboxFileProtectedUsers.Text = tboxFileReadOnlyUsers.Text = String.Empty;
+        tboxFolderProtectedUsers.Text = tboxFolderReadOnlyUsers.Text = String.Empty;
+        tboxKeyProtectedUsers.Text = tboxKeyReadOnlyUsers.Text = String.Empty;
+
+        upnlApplicationTrustedUsers.Update();
+        upnlFileReadOnlyUsers.Update();
+        upnlFileProtectedUsers.Update();
+        upnlFolderReadOnlyUsers.Update();
+        upnlFolderProtectedUsers.Update();
+        upnlKeyReadOnlyUsers.Update();
+        upnlKeyProtectedUsers.Update();
+    }
+
+    private void UpdateUserList()
+    {
+        ddlUsers.Items.Clear();
+        proactive.UserRules.ForEach(AddUserName);
+    }
+
+    private void AddUserName(ProactiveRule rule)
+    {
+        ddlUsers.Items.Add(new ListItem(rule.RuleName, rule.RuleName));
+    }
+
+
+    private void FillUserRules(ProactiveRule rule)
+    {
+        lboxAppsTrustedUsers.Items.Clear();
+        lboxFileReadOnlyUsers.Items.Clear();
+        lboxFileProtectedUsers.Items.Clear();
+        lboxFolderReadOnlyUsers.Items.Clear();
+        lboxFolderProtectedUsers.Items.Clear();
+        lboxKeyReadOnlyUsers.Items.Clear();
+        lboxKeyProtectedUsers.Items.Clear();
+
+        if (rule == null)
+            return;
+
+        foreach (String str in rule.TrustedApplications)
+        {
+            lboxAppsTrustedUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ReadOnlyFiles)
+        {
+            lboxFileReadOnlyUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ProtectedFiles)
+        {
+            lboxFileProtectedUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ReadOnlyFolders)
+        {
+            lboxFolderReadOnlyUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ProtectedFolders)
+        {
+            lboxFolderProtectedUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ReadOnlyRegistryKeys)
+        {
+            lboxKeyReadOnlyUsers.Items.Add(new ListItem(str, str));
+        }
+
+
+        foreach (String str in rule.ProtectedRegistryKeys)
+        {
+            lboxKeyProtectedUsers.Items.Add(new ListItem(str, str));
+        }
+    }
+
+    private void UpdateGeneral()
+    {
+        lboxAppsTrusted.Items.Clear();
+        foreach (String str in proactive.GeneralRule.TrustedApplications)
+        {
+            lboxAppsTrusted.Items.Add(new ListItem(str, str));
+        }
+
+        lboxAppsProtected.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ProtectedApplications)
+        {
+            lboxAppsProtected.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFileReadOnly.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ReadOnlyFiles)
+        {
+            lboxFileReadOnly.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFileProtected.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ProtectedFiles)
+        {
+            lboxFileProtected.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFileExcluded.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ExcludedFiles)
+        {
+            lboxFileExcluded.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFolderReadOnly.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ReadOnlyFolders)
+        {
+            lboxFolderReadOnly.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFolderProtected.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ProtectedFolders)
+        {
+            lboxFolderProtected.Items.Add(new ListItem(str, str));
+        }
+
+        lboxFolderExcluded.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ExcludedFolders)
+        {
+            lboxFolderExcluded.Items.Add(new ListItem(str, str));
+        }
+
+        lboxKeyReadOnly.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ReadOnlyRegistryKeys)
+        {
+            lboxKeyReadOnly.Items.Add(new ListItem(str, str));
+        }
+
+        lboxKeyProtected.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ProtectedRegistryKeys)
+        {
+            lboxKeyProtected.Items.Add(new ListItem(str, str));
+        }
+
+        lboxValueReadOnly.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ReadOnlyRegistryValues)
+        {
+            lboxValueReadOnly.Items.Add(new ListItem(str, str));
+        }
+
+        lboxValueProtected.Items.Clear();
+        foreach (String str in proactive.GeneralRule.ProtectedRegistryValues)
+        {
+            lboxValueProtected.Items.Add(new ListItem(str, str));
+        }
+    }
+
+    #endregion
+
+    #region JournalEvents
+
+    private void InitFieldsJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        if (JournalEventTable.Rows.Count == 1)
+        {
+            for (Int32 i = 0; i < _events.Events.Length; i++)
+            {
+                JournalEventTable.Rows.Add(GenerateRow(_events.Events[i], i));
+            }
+        }
+    }
+
+    private void LoadJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        Boolean isChecked = false;
+        for (Int32 i = 0; i < _events.Events.Length; i++)
+        {
+            for (Int32 j = 0; j < 3; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.WindowsJournal) == EventJournalFlags.WindowsJournal;
+                        break;
+                    case 1:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.LocalJournal) == EventJournalFlags.LocalJournal;
+                        break;
+                    case 2:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.CCJournal) == EventJournalFlags.CCJournal;
+                        break;
+                }
+                (JournalEventTable.Rows[i + 1].Cells[j + 1].Controls[0] as CheckBox).Checked = isChecked;
+            }
+        }
+    }
+
+    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    {
+        String eventName = ev.EventName;
+        EventJournalFlags val = ev.EventFlag;
+
+        TableRow row = new TableRow();
+        TableCell cell = new TableCell();
+        cell.Attributes.Add("align", "center");
+        Label l = new Label();
+        l.Text = eventName;
+        cell.Controls.Add(l);
+        row.Cells.Add(cell);
+        for (Int32 i = 0; i < 3; i++)
+        {
+            cell = new TableCell();
+            CheckBox chk = new CheckBox();
+            chk.Checked = false;
+            chk.Attributes.Add("rowNo", rowNo.ToString());
+            chk.Attributes.Add("colNo", i.ToString());
+            chk.AutoPostBack = true;
+            chk.CheckedChanged += JournalEventChecked;
+            cell.Controls.Add(chk);
+            cell.Attributes.Add("align", "center");
+            row.Cells.Add(cell);
+        }
+
+        return row;
+    }
+
+    private void JournalEventChecked(Object sender, EventArgs e)
+    {
+        CheckBox chk = (CheckBox)sender;
+        Int32 rowNo = Convert.ToInt32(chk.Attributes["rowNo"]);
+        Int32 colNo = Convert.ToInt32(chk.Attributes["colNo"]);
+        SaveCurrentStateJournalEvent(ref proactive.journalEvent.Events[rowNo], colNo, chk.Checked);
+    }
+
+    private void SaveCurrentStateJournalEvent(ref SingleJournalEvent sje, Int32 colNo, Boolean isChecked)
+    {
+        sje.EventFlag = GetEventFlag(sje.EventFlag, colNo, isChecked);
+    }
+
+    private EventJournalFlags GetEventFlag(EventJournalFlags eventJournalFlags, Int32 colNo, Boolean isChecked)
+    {
+        EventJournalFlags flags = eventJournalFlags;
+        switch (colNo)
+        {
+            case 0:
+                if (isChecked)
+                {
+                    flags |= EventJournalFlags.WindowsJournal;
+                }
+                else flags &= ~EventJournalFlags.WindowsJournal;
+                break;
+            case 1:
+                if (isChecked)
+                {
+                    flags |= EventJournalFlags.LocalJournal;
+                }
+                else flags &= ~EventJournalFlags.LocalJournal;
+                break;
+            case 2:
+                if (isChecked)
+                {
+                    flags |= EventJournalFlags.CCJournal;
+                }
+                else flags &= ~EventJournalFlags.CCJournal;
+                break;
+        }
+        return flags;
+    }
+
     #endregion
 }

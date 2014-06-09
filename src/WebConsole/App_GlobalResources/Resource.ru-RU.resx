@@ -3366,6 +3366,15 @@
   <data name="VQTN" xml:space="preserve">
     <value>Карантин</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Общие</value>
+  </data>
+  <data name="DuplicateValue" xml:space="preserve">
+    <value>Запись с таким значением уже содержится. Пожалуйста, введите другое значение.</value>
+  </data>
+  <data name="NoDeleteDefault" xml:space="preserve">
+    <value>Пользователя по-умолчанию удалить нельзя.</value>
+  </data>
   <data name="CongMonitorActionFirst" xml:space="preserve">
     <value>Первое действие</value>
   </data>

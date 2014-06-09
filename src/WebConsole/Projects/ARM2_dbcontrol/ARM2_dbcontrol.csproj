@@ -112,6 +112,7 @@
       <Name>System.Drawing</Name>
     </Reference>
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
@@ -239,6 +240,7 @@
     <Compile Include="Tasks\IConfigureTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\MonitorOnOff\TaskMonitorOnOff.cs" />
+    <Compile Include="Tasks\ProactiveProtection\ProactiveRule.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
     <Compile Include="Tasks\RunScanner\TaskRunScanner.cs" />
     <Compile Include="Tasks\SingleCleaningTemplate\SingleCleaningTemplate.cs" />

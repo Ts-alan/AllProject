@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" EnableEventValidation="false" AutoEventWireup="true" CodeFile="TaskCreate.aspx.cs" Inherits="TaskCreate"%>
+<%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" EnableEventValidation="false" validateRequest="false" AutoEventWireup="true" CodeFile="TaskCreate.aspx.cs" Inherits="TaskCreate"%>
 
 <%@ Register Src="Controls/TaskCreateProcess.ascx" TagName="TaskUser" TagPrefix="tskCreateProcess" %>
 <%@ Register Src="Controls/TaskSendFile.ascx" TagName="TaskUser" TagPrefix="tskSendFile" %>

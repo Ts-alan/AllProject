@@ -1974,7 +1974,7 @@ public partial class Computers : PageBase
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskProactiveProtection.BuildTask(task));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskProactiveProtection.BuildTask());
             }
 
             if (tskFirewall.Visible == true)
@@ -2372,6 +2372,7 @@ public partial class Computers : PageBase
                                                                                 task.Name = Resources.Resource.TaskNameConfigureProactiveProtection;
                                                                                 task.Param = String.Empty;
                                                                                 lbtnDelete.Visible = false;
+                                                                                lbtnSave.Visible = true;
                                                                             }
                                                                             else
                                                                                 if (name == Resources.Resource.ConfigureScheduler)
