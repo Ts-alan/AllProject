@@ -59,7 +59,7 @@ namespace ARM2_dbcontrol.Tasks
         public String Type
         {
             get { return _Type; }
-            set { _Type = "ConfigureScanner"; }
+            set { _Type = "ConfigureMonitor"; }
         }
 
         public JournalEvent journalEvent
@@ -208,7 +208,7 @@ namespace ARM2_dbcontrol.Tasks
             result.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", MONITOR_ON);
 
             //???????????
-            result.Append(@"<param><id>Events</id><type>stringmap</type><value />");
+            result.Append(journalEvent.GetTask());
 
 
             result.Append(@"<param><id>Journal</id><type>stringmap</type><value>");
