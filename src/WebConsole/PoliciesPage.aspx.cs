@@ -78,6 +78,7 @@ public partial class _PoliciesPage : PageBase
         loader.LoadState(task);
 
         task.Type = TaskType.ConfigureMonitor;
+        task.Param = "";
         monitor.InitFields();
         monitor.LoadState(task);
 
@@ -220,6 +221,7 @@ public partial class _PoliciesPage : PageBase
         String tmp = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(TaskType.MonitorOn.ToString()));
         if (!String.IsNullOrEmpty(tmp))
         {
+
             TaskMonitorOnOff task = new TaskMonitorOnOff();
             task.LoadFromXml(tmp);
             cboxRunMonitor.Checked = task.IsMonitorOn;

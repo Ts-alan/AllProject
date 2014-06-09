@@ -1837,7 +1837,7 @@ public partial class Computers : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureLoader.GetTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureLoader.BuildTask());
             }
 
             #region Configure Monitor
@@ -1943,10 +1943,8 @@ public partial class Computers : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                string strtask = task.Param.Remove(0, builder.Top.Length);
-                string s = @"<Type>ConfigureQuarantine</Type>";
-                strtask = strtask.Replace(s, "");
-                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
+                
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(),tskConfigureQuarantine.BuildTask());
             }
 
             if (tskRestoreFileFromQtn.Visible == true)
@@ -2277,7 +2275,7 @@ public partial class Computers : PageBase
                                     {
                                         task.Type = TaskType.ConfigureLoader;
                                         task.Name = Resources.Resource.CongLdrConfigureLoader;
-                                        task.Param = xmlBuil.Result;
+                                        task.Param = String.Empty;
                                         lbtnDelete.Visible = false;
                                     }
                                     else
@@ -2286,7 +2284,7 @@ public partial class Computers : PageBase
                                         {
                                             task.Type = TaskType.ConfigureMonitor;
                                             task.Name = Resources.Resource.CongLdrConfigureMonitor;
-                                           // task.Param = xmlBuil.Result.Remove(0, xmlBuil.Top.Length);
+                                           
                                             task.Param = String.Empty;
                                             lbtnDelete.Visible = false;
                                         }
@@ -2372,7 +2370,7 @@ public partial class Computers : PageBase
                                                                             {
                                                                                 task.Type = TaskType.ProactiveProtection;
                                                                                 task.Name = Resources.Resource.TaskNameConfigureProactiveProtection;
-                                                                                task.Param = xmlBuil.Result;
+                                                                                task.Param = String.Empty;
                                                                                 lbtnDelete.Visible = false;
                                                                             }
                                                                             else
@@ -2528,7 +2526,7 @@ public partial class Computers : PageBase
                 break;
 
             case TaskType.ConfigureLoader:
-
+                tskConfigureLoader.InitFields();
                 tskConfigureLoader.LoadState(task);
                 tskConfigureLoader.Visible = true;
                 break;

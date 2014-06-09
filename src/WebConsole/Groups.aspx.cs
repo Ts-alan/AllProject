@@ -1128,7 +1128,7 @@ public partial class Groups : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureLoader.GetTask());
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureLoader.BuildTask());
             }
 
             #region Configure Monitor
@@ -1236,10 +1236,8 @@ public partial class Groups : PageBase
                 {
                     taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
-                string strtask = task.Param.Remove(0, builder.Top.Length);
-                string s = @"<Type>ConfigureQuarantine</Type>";
-                strtask = strtask.Replace(s, "");
-                control.PacketConfigureSettings(taskId, _set.AllComputers.GetIPAddresses().ToArray(), strtask);
+              
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(),tskConfigureQuarantine.BuildTask());
             }
 
             if (tskRestoreFileFromQtn.Visible == true)
@@ -1656,7 +1654,7 @@ public partial class Groups : PageBase
                                                                         {
                                                                             task.Type = TaskType.ConfigureQuarantine;
                                                                             task.Name = Resources.Resource.TaskNameConfigureQuarantine;
-                                                                            task.Param = xmlBuil.Result;
+                                                                            task.Param = String.Empty;
                                                                             lbtnDelete.Visible = false;
                                                                         }
                                                                         else
@@ -1801,7 +1799,7 @@ public partial class Groups : PageBase
                 break;
 
             case TaskType.ConfigureLoader:
-
+                tskConfigureLoader.InitFields();
                 tskConfigureLoader.LoadState(task);
                 tskConfigureLoader.Visible = true;
                 break;
