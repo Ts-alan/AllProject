@@ -4,6 +4,9 @@ using System.Text;
 using System.Reflection;
 using VirusBlokAda.CC.Common.Xml;
 using VirusBlokAda.CC.Common;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace ARM2_dbcontrol.Tasks
 {
@@ -14,219 +17,101 @@ namespace ARM2_dbcontrol.Tasks
         public const String TaskType = "ConfigureQuarantine";
         public const String PassPrefix = "HER!%&$";
 
-        private String _Vba32CCUser;
-        private String _StoragePath;
-        private Int32 _UseProxy;
-        private String _UserName;
-        private String _Password;
-        private String _Proxy;
-        private Int32 _ProxyPort;
-        private Int32 _TimeOutEx;
-        private Int32 _TimeOut;
-        private Int32 _MaxSizeEx;
-        private Int32 _MaxSize;
-        private Int32 _MaxTimeEx;
-        private Int32 _MaxTime;
-        private Int32 _AutoSend;
-        private Int32 _INARACTIVE_MAINT;
 
+
+        private String _Type = "ConfigureQarantine";
+        private String _Vba32CCUser;
+        private XmlSerializer serializer;
+        private JournalEvent _journalEvent;
         #endregion
 
         #region Properties
 
-        public Int32 INARACTIVE_MAINT
-        {
-            get { return _INARACTIVE_MAINT; }
-            set { _INARACTIVE_MAINT = value; }
-        }
-
-        public Int32 AutoSend
-        {
-            get { return _AutoSend; }
-            set { _AutoSend = value; }
-        }
-
-        public Int32 MaxTime
-        {
-            get { return _MaxTime; }
-            set { _MaxTime = value; }
-        }
-
-        public Int32 MaxTimeEx
-        {
-            get { return _MaxTimeEx; }
-            set { _MaxTimeEx = value; }
-        }
-
-        public Int32 MaxSize
-        {
-            get { return _MaxSize; }
-            set { _MaxSize = value; }
-        }
-
-        public Int32 MaxSizeEx
-        {
-            get { return _MaxSizeEx; }
-            set { _MaxSizeEx = value; }
-        }
-
-        public Int32 TimeOut
-        {
-            get { return _TimeOut; }
-            set { _TimeOut = value; }
-        }
-
-        public Int32 TimeOutEx
-        {
-            get { return _TimeOutEx; }
-            set { _TimeOutEx = value; }
-        }
-
-        public Int32 ProxyPort
-        {
-            get { return _ProxyPort; }
-            set { _ProxyPort = value; }
-        }
-
-        public String Proxy
-        {
-            get { return _Proxy; }
-            set { _Proxy = value; }
-        }
-
-        public String Password
-        {
-            get { return _Password; }
-            set { _Password = value; }
-        }
-
-        public String UserName
-        {
-            get { return _UserName; }
-            set { _UserName = value; }
-        }
-
-        public Int32 UseProxy
-        {
-            get { return _UseProxy; }
-            set { _UseProxy = value; }
-        }
-
-        public String StoragePath
-        {
-            get { return _StoragePath; }
-            set { _StoragePath = value; }
-        }
+     
 
         public String Vba32CCUser
         {
             get { return _Vba32CCUser; }
             set { _Vba32CCUser = value; }
         }
+        public String Type
+        {
+            get { return _Type; }
+            set { _Type = "ConfigureQarantine"; }
+        }
 
+        public JournalEvent journalEvent
+        {
+            get { return _journalEvent; }
+            set { _journalEvent = value; }
+        }
         #endregion
 
         #region Constructors
 
         public TaskConfigureQuarantine()
         {
+            serializer = new XmlSerializer(this.GetType());
+            journalEvent = new JournalEvent();
         }
-
+        public TaskConfigureQuarantine(String[] eventNames)
+        {
+            serializer = new XmlSerializer(this.GetType());
+            journalEvent = new JournalEvent(eventNames);
+        }
         #endregion
 
         #region IConfigureTask Members
 
         public String SaveToXml()
         {
-            XmlBuilder xml = new XmlBuilder("qtn");
+            StringWriter sw = new StringWriter();
+            serializer.Serialize(sw, this);
+            return sw.ToString();
+        }
+        public String GetTask()
+        {
+            StringBuilder result = new StringBuilder(512);
+
+            result.Append("<VsisCommand>");
+            result.Append("<Args>");
+
+            result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
+            result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
+            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{67E7B7BE-BE06-4A0D-A812-7E1A0142C0F6}</id>");
+
+           
+            result.Append(journalEvent.GetTask());
             
-            if (!String.IsNullOrEmpty(StoragePath))
-                xml.AddNode("StoragePath", "reg_sz:" + StoragePath);
+           
 
-            xml.AddNode("UseProxy", "reg_dword:" + UseProxy.ToString());
-            if (UseProxy == 1)
-            {
-                xml.AddNode("UserName", "reg_sz:" + UserName);
-                
-                //Шифруем пароль
-                if (!Password.Contains(PassPrefix))
-                {
-                    Byte[] bytes = Encoding.Unicode.GetBytes(Password);
+            result.Append(@"</module></config></value></arg></command>");
 
-                    Byte xorValue = 0xAA;
-                    Byte delta = 0x1;
+            result.Append(@"</Args>");
+            result.Append(@"<Async>0</Async>");
+            result.Append(@"</VsisCommand>");
 
-                    for (Int32 i = 0; i < bytes.Length; i++)
-                    {
-                        bytes[i] ^= xorValue;
-                        delta = Convert.ToByte(delta % 3 + 1);
-                        xorValue += delta;
-                    }
-
-                    xml.AddNode("Password", "reg_binary:" + Anchor.ConvertToDumpString(bytes));
-                }
-                else
-                {
-                    xml.AddNode("Password", Password.Replace(PassPrefix, ""));
-                }
-
-                xml.AddNode("Proxy", "reg_sz:" + Proxy);
-                xml.AddNode("ProxyPort", "reg_dword:" + ProxyPort.ToString());
-            }
-
-            //вкладка "Обслуживание"
-            xml.AddNode("TimeOutEx", "reg_dword:" + TimeOutEx.ToString());
-            if (TimeOutEx == 1)
-            {
-                xml.AddNode("TimeOut", "reg_dword:" + TimeOut);
-
-                xml.AddNode("MaxSizeEx", "reg_dword:" + MaxSizeEx.ToString());
-                if (MaxSizeEx == 1)
-                    xml.AddNode("MaxSize", "reg_dword:" + MaxSize.ToString());
-
-                xml.AddNode("MaxTimeEx", "reg_dword:" + MaxTimeEx.ToString());
-                if (MaxTimeEx == 1)
-                    xml.AddNode("MaxTime", "reg_dword:" + MaxTime.ToString());
-
-                xml.AddNode("AutoSend", "reg_dword:" + AutoSend.ToString());
-                xml.AddNode("INARACTIVE_MAINT", "reg_dword:" + INARACTIVE_MAINT.ToString());
-            }
-            xml.AddNode("Vba32CCUser", Vba32CCUser);
-            xml.AddNode("Type", TaskType);
-
-            xml.Generate();
-
-            return xml.Result;
+            return result.ToString();
         }
 
-        public void LoadFromXml(String xml)
+        public void LoadFromXml(String Xml)
         {
-            XmlTaskParser pars = new XmlTaskParser(xml);
-
-            _StoragePath = pars.GetValue("StoragePath", "reg_sz:");
-            if (String.IsNullOrEmpty(_StoragePath))
-                _StoragePath = @"http://www.anti-virus.by/cgi-bin/vbar.cgi";
-
-            Int32.TryParse(pars.GetValue("UseProxy", "reg_dword:"), out _UseProxy);
-            _UserName = pars.GetValue("UserName", "reg_sz:");
-            if (pars.GetValue("Password", "reg_binary:") != String.Empty)
-                _Password = PassPrefix + pars.GetValue("Password", "reg_binary:");
-            _Proxy = pars.GetValue("Proxy", "reg_sz:");
-            Int32.TryParse(pars.GetValue("ProxyPort", "reg_dword:"), out _ProxyPort);
-
-            Int32.TryParse(pars.GetValue("TimeOutEx", "reg_dword:"), out _TimeOutEx);
-            Int32.TryParse(pars.GetValue("TimeOut", "reg_dword:"), out _TimeOut);
-            Int32.TryParse(pars.GetValue("MaxSizeEx", "reg_dword:"), out _MaxSizeEx);
-            Int32.TryParse(pars.GetValue("MaxSize", "reg_dword:"), out _MaxSize);
-            Int32.TryParse(pars.GetValue("MaxTimeEx", "reg_dword:"), out _MaxTimeEx);
-            Int32.TryParse(pars.GetValue("MaxTime", "reg_dword:"), out _MaxTime);
-            Int32.TryParse(pars.GetValue("AutoSend", "reg_dword:"), out _AutoSend);
-            Int32.TryParse(pars.GetValue("INARACTIVE_MAINT", "reg_dword:"), out _INARACTIVE_MAINT);
+            if (String.IsNullOrEmpty(Xml))
+                return;
+            TaskConfigureQuarantine task;
+            using (TextReader reader = new StringReader(Xml))
+            {
+                task = (TaskConfigureQuarantine)serializer.Deserialize(reader);
+            }
+           
+            this._Vba32CCUser = task.Vba32CCUser;
+            this._journalEvent = task.journalEvent;
         }
 
         public void LoadFromRegistry(String reg)
         {
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            throw new NotImplementedException();
+       /*     System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
             doc.LoadXml(reg);
 
             foreach (System.Xml.XmlNode node in doc.GetElementsByTagName("Value"))
@@ -266,11 +151,6 @@ namespace ARM2_dbcontrol.Tasks
 			<Value name="UseProxy" type="1" value="0"/>
 		</Key>
              */
-        }
-
-        public String GetTask()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

@@ -14,16 +14,31 @@ using System.Text;
 using ARM2_dbcontrol.Generation;
 using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Filters;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 /// <summary>
 /// Задача настройки карантина
 /// </summary>
 public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserControl, ITask
 {
-    protected void Page_Load(object sender, EventArgs e)
+    private static TaskConfigureQuarantine quarantine;
+
+    protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+
+        if (!Page.IsPostBack || quarantine == null)
+        {
             InitFields();
+
+            InitFieldsJournalEvent(quarantine.journalEvent);
+        }
+        else
+        {
+            InitFieldsJournalEvent(quarantine.journalEvent);
+            LoadQuarantine();
+        }
+
+
     }
 
     private Boolean _hideHeader = false;
@@ -43,18 +58,16 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
 
     public void InitFields()
     {
-        if (HideHeader) HeaderName.Visible = false;
-
-
-        lblCongLdrUserName.Text = Resources.Resource.CongLdrUserName;
-        lblCongLdrPassword.Text = Resources.Resource.CongLdrPassword;
-        lblCongLdrAddress.Text = Resources.Resource.CongLdrAddress;
-        lblCongLdrPort.Text = Resources.Resource.CongLdrPort;
+        quarantine = new TaskConfigureQuarantine(GetEvents());
     }
-
+    private String[] GetEvents()
+    {
+        String[] s = { "JE_QTN_ADD", "JE_QTN_DELETE", "JE_QTN_RESTORE"};
+        return s;
+    }
     public Boolean ValidateFields()
     {
-        Validation vld = new Validation("");
+       /* Validation vld = new Validation("");
         if (cboxUseProxyServer.Checked)
         {
             vld.Value = tboxAddress.Text;
@@ -70,7 +83,7 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
             /*vld.Value = tboxUserName.Text;
             if (!vld.CheckStringValue())
                 throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                    + Resources.Resource.CongLdrUserName);*/
+                    + Resources.Resource.CongLdrUserName);
         }
 
         if (cboxMaintenancePeriod.Checked)
@@ -95,124 +108,131 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
                     throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
                         + Resources.Resource.CongQtnMaximumStorageTime);
             }
-        }
+        }*/
 
         return true;
     }
 
-    public TaskUserEntity GetCurrentState()
+    public void LoadQuarantine()
     {
-        TaskUserEntity task = new TaskUserEntity();
-        task.Type = TaskType.ConfigureQuarantine;
-
-        task.Param = BuildXml();
-
-        return task;
+        LoadJournalEvent(quarantine.journalEvent);
     }
-
-    /// <summary>
-    /// Конструирует строку xml-файла
-    /// </summary>
-    /// <returns></returns>
-    private String BuildXml()
-    {
-        TaskConfigureQuarantine task = new TaskConfigureQuarantine();
-
-        //Удаленное хранилище        
-        task.StoragePath = tboxRemote.Text;
-
-        //Прокси-сервер и авторизация
-        task.UseProxy = cboxUseProxyServer.Checked ? 1 : 0;
-        if (cboxUseProxyServer.Checked)
-        {
-            task.UserName = tboxUserName.Text;
-            task.Password = tboxPassword.Text;
-
-            task.Proxy = tboxAddress.Text;
-            task.ProxyPort = Int32.Parse(tboxPort.Text);
-        }
-
-        //вкладка "Обслуживание"
-        task.TimeOutEx = cboxMaintenancePeriod.Checked ? 1 : 0;
-        if (cboxMaintenancePeriod.Checked)
-        {
-            task.TimeOut = Int32.Parse(tboxServicePeriod.Text);
-
-            task.MaxSizeEx = cboxMaximumQuarantineSize.Checked ? 1 : 0;
-            if (cboxMaximumQuarantineSize.Checked)
-                task.MaxSize = Int32.Parse(tboxMaxSize.Text);
-
-            task.MaxTimeEx = cboxMaximumStorageTime.Checked ? 1 : 0;
-            if (cboxMaximumStorageTime.Checked)
-                task.MaxTime = Int32.Parse(tboxMaximumStorageTime.Text);
-
-            task.AutoSend = cboxAutomaticallySendSuspiciousObject.Checked ? 1 : 0;
-            task.INARACTIVE_MAINT = cboxInteractive.Checked ? 1 : 0;
-        }
-        task.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
-
-        return task.SaveToXml();
-    }
-
     /// <summary>
     /// Загружаем состояние карантина
     /// </summary>
     /// <param name="task">сохраненное состояние</param>
     public void LoadState(TaskUserEntity task)
     {
-        if (task.Type != TaskType.ConfigureQuarantine)
+        if (task == null || task.Type != TaskType.ConfigureQuarantine)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
+        quarantine.LoadFromXml(task.Param);
+        LoadQuarantine();
+    }
+    public TaskUserEntity GetCurrentState()
+    {
+        TaskUserEntity task = new TaskUserEntity();
+        task.Type = TaskType.ConfigureQuarantine;
+        SaveJournalEvents();
+        ValidateFields();
+        task.Param = quarantine.SaveToXml();
 
-        TaskConfigureQuarantine tsk = new TaskConfigureQuarantine();
-        tsk.LoadFromXml(task.Param);
+        return task;
+    }
 
-        tboxRemote.Text = tsk.StoragePath;
+    public String BuildTask()
+    {
+        return quarantine.GetTask();
+    }
 
-        cboxUseProxyServer.Checked = tsk.UseProxy == 1;
-        if (cboxUseProxyServer.Checked)
+
+    #region JournalEvents
+
+    private void InitFieldsJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        if (JournalEventTable.Rows.Count == 1)
         {
-            tboxUserName.Text = tsk.UserName;
-
-            tboxPassword.Text = tsk.Password;
-            tboxPassword.Attributes.Add("Value", tboxPassword.Text);
-
-            tboxAddress.Text = tsk.Proxy;
-            tboxPort.Text = tsk.ProxyPort.ToString();
-        }
-
-        //вкладка обслуживание
-        cboxMaintenancePeriod.Checked = tsk.TimeOutEx == 1;
-        if (cboxMaintenancePeriod.Checked)
-        {
-            cboxMaximumQuarantineSize.InputAttributes.Remove("disabled");
-            tboxServicePeriod.Enabled = true;
-            tboxMaxSize.Enabled = true;
-            cboxMaximumStorageTime.InputAttributes.Remove("disabled");
-            tboxMaximumStorageTime.Enabled = true;
-            cboxAutomaticallySendSuspiciousObject.InputAttributes.Remove("disabled");
-            cboxInteractive.InputAttributes.Remove("disabled");
-
-            tboxServicePeriod.Text = tsk.TimeOut.ToString();
-            cboxMaximumQuarantineSize.Checked = tsk.MaxSizeEx == 1;
-            if (cboxMaximumQuarantineSize.Checked)
-                tboxMaxSize.Text = tsk.MaxSize.ToString();
-
-            cboxMaximumStorageTime.Checked = tsk.MaxTimeEx == 1;
-            if (cboxMaximumStorageTime.Checked)
-                tboxMaximumStorageTime.Text = tsk.MaxTime.ToString();
-
-            cboxAutomaticallySendSuspiciousObject.Checked = tsk.AutoSend == 1;
-            cboxInteractive.Checked = tsk.INARACTIVE_MAINT == 1;
-        }
-        else
-        {
-            cboxMaximumQuarantineSize.InputAttributes.Add("disabled", "true");
-            tboxServicePeriod.Enabled = false;
-            tboxMaxSize.Enabled = false;
-            cboxMaximumStorageTime.InputAttributes.Add("disabled", "true");
-            tboxMaximumStorageTime.Enabled = false;
-            cboxAutomaticallySendSuspiciousObject.InputAttributes.Add("disabled", "true");
-            cboxInteractive.InputAttributes.Add("disabled", "true");
+            for (Int32 i = 0; i < _events.Events.Length; i++)
+            {
+                JournalEventTable.Rows.Add(GenerateRow(_events.Events[i], i));
+            }
         }
     }
+
+    private void LoadJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        Boolean isChecked = false;
+        for (Int32 i = 0; i < _events.Events.Length; i++)
+        {
+            for (Int32 j = 0; j < 3; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.WindowsJournal) == EventJournalFlags.WindowsJournal;
+                        break;
+                    case 1:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.LocalJournal) == EventJournalFlags.LocalJournal;
+                        break;
+                    case 2:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.CCJournal) == EventJournalFlags.CCJournal;
+                        break;
+                }
+                (JournalEventTable.Rows[i + 1].Cells[j + 1].Controls[0] as CheckBox).Checked = isChecked;
+            }
+        }
+    }
+
+    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    {
+        String eventName = ev.EventName;
+        EventJournalFlags val = ev.EventFlag;
+
+        TableRow row = new TableRow();
+        TableCell cell = new TableCell();
+        cell.Attributes.Add("align", "center");
+        Label l = new Label();
+        l.Text = eventName;
+        cell.Controls.Add(l);
+        row.Cells.Add(cell);
+        for (Int32 i = 0; i < 3; i++)
+        {
+            cell = new TableCell();
+            CheckBox chk = new CheckBox();
+            chk.Checked = false;
+            cell.Controls.Add(chk);
+            cell.Attributes.Add("align", "center");
+            row.Cells.Add(cell);
+        }
+
+        return row;
+    }
+
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
+
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        quarantine.journalEvent = je;
+    }
+    #endregion
 }
