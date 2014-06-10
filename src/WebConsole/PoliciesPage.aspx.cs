@@ -71,14 +71,13 @@ public partial class _PoliciesPage : PageBase
         lbtnDelete.Attributes.Add("onclick", "return confirm('" + Resources.Resource.AreYouSurePolicy + "');");        
         
         TaskUserEntity task = new TaskUserEntity();
-        task.Param = "<root></root>";
+        task.Param = "";
 
         task.Type = TaskType.ConfigureLoader;
         loader.InitFields();
         loader.LoadState(task);
 
         task.Type = TaskType.ConfigureMonitor;
-        task.Param = "";
         monitor.InitFields();
         monitor.LoadState(task);
 
