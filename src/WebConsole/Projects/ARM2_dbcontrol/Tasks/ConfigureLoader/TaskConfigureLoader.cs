@@ -13,10 +13,9 @@ namespace ARM2_dbcontrol.Tasks
     {
         #region Fields
 
-        public const String TaskType = "ConfigureLoader";
         public const String PassPrefix = "HER!%&$";
 
-        private String _Type = "ConfigureLoader";
+        private String _TaskType = "ConfigureLoader";
         private String _Vba32CCUser;
         private XmlSerializer serializer;
 
@@ -36,16 +35,17 @@ namespace ARM2_dbcontrol.Tasks
         private String _PROXY_PASSWORD;
 
         private List<UserLoginPassword> _USERS;
-        
 
         #endregion
 
-        #region Properties   
+        #region Properties
+
         public Boolean AUTHORIZE
         {
             get { return _AUTHORIZE; }
             set { _AUTHORIZE = value; }
         }
+
         public String AUTH_PASSWORD
         {
             get { return _AUTH_PASSWORD; }
@@ -81,17 +81,18 @@ namespace ARM2_dbcontrol.Tasks
             get { return _PROXY_ADDRESS; }
             set { _PROXY_ADDRESS = value; }
         }
+
         public ProxyType PROXY_TYPE
         {
             get { return _PROXY_TYPE; }
             set { _PROXY_TYPE = value; }
         }
+
         public List<String> UPDATE_FOLDER_LIST
         {
             get { return _UPDATE_FOLDER_LIST; }
             set { _UPDATE_FOLDER_LIST = value; }
         }
-
 
         public Boolean PROXY_AUTHORIZE
         {
@@ -104,23 +105,24 @@ namespace ARM2_dbcontrol.Tasks
             get { return _PROXY_USAGE; }
             set { _PROXY_USAGE = value; }
         }
+
         public List<UserLoginPassword> USERS
         {
             get { return _USERS; }
             set { _USERS = value; }
         }
        
-
         public String Vba32CCUser
         {
             get { return _Vba32CCUser; }
             set { _Vba32CCUser = value; }
         }
-        public String Type
+
+        public String TaskType
         {
-            get { return _Type; }
-            set { _Type = "ConfigureLoader"; }
+            get { return _TaskType; }
         }
+
         #endregion
 
         #region Constructors
@@ -142,6 +144,7 @@ namespace ARM2_dbcontrol.Tasks
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
+
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(512);
@@ -191,6 +194,7 @@ namespace ARM2_dbcontrol.Tasks
             {
                 task = (TaskConfigureLoader)serializer.Deserialize(reader);
             }
+
             this._PROXY_ADDRESS = task.PROXY_ADDRESS;
             this._PROXY_AUTHORIZE = task.PROXY_AUTHORIZE;
             this._PROXY_PASSWORD = task.PROXY_PASSWORD;
@@ -205,16 +209,12 @@ namespace ARM2_dbcontrol.Tasks
             this._AUTH_USER = task.AUTH_USER;
             this._AUTHORIZE = task.AUTHORIZE;
 
-
             this._Vba32CCUser = task.Vba32CCUser;
         }
 
         #endregion
 
-
         #region IConfigureTask Members
-
-        
         
         public void LoadFromRegistry(String reg)
         {
@@ -293,11 +293,13 @@ namespace ARM2_dbcontrol.Tasks
 
         #endregion
     }
+
     public struct UserLoginPassword
     {
         public String Login;
         public String Password;
     }
+
     public enum ProxyType
     {
         PROXY_NO = 0,

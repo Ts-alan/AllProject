@@ -3,230 +3,149 @@
 
 <script language="javascript" type="text/javascript" >
 
-    function pageLoad() {
+    $(document).ready(function () {
         $("#TabsLoader").tabs({ cookie: { expires: 30} });
-        $("input[class='control']").button();
-        $("input[type='button']").button();
 
-        HideTable1(); 
-        HideTable2(); 
+        HideTableLoader1();
+        HideTableLoader2();
 
-        var activeRowNo=$('#<%=UpdatePathHdnActiveRowNo.ClientID %>').attr('value');
-        btnDeleteUpdateEnabled(activeRowNo);
-
-           $('#<%= UpdateAddButton.ClientID %>').on("click", function () {
-                var dOpt = {
-                    width: 350,                                       
-                    resizable: false,
-                    close: function(event, ui)
-                        {
-                            btnAddUpdatePathDialogSetDefaultValues() ; 
-                            $('#divOverlay').css('display','none');
-                        },
-                    buttons: {
-                        <%=Resources.Resource.Apply%>: function () {
-                            var btn = '<%=AddUpdatePathDialogApplyButton.UniqueID %>';
-                            if( Page_ClientValidate('AddDialogUpdatePathValidationGroup'))
-                            { 
-                                SetActiveRowNo(0);    
-                                __doPostBack(btn, '');                                                              
-                                $('#AddUpdatePathDialog').dialog('close');
-                                                              
-                            }                            
-                        },
-                       <%=Resources.Resource.CancelButtonText%>: function () {                           
-                            $('#AddUpdatePathDialog').dialog('close');                            
-                        }
-                    }
-                };
-                $('#AddUpdatePathDialog').dialog(dOpt);
-                $('#divOverlay').css('display','inline');
-                $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
-             });
-                $("[UpdateRowSelected]").hover(function(){
-                    if($(this).attr('UpdateRowSelected')=="true") return;
-                    $(this).css('background-color', 'yellow');
-                },
-                function () { 
-                    if($(this).attr('UpdateRowSelected')=="true") return;           
-                    $(this).css('background-color', '');
-                }
-            );
-            $("[UpdateRowSelected]").on("click",function(){
-                if($(this).attr("UpdateRowSelected")=="true") return;
-                $(this).css('background-color', '#3399ff');
-                $("[UpdateRowSelected=true]").css('background-color', '');
-                $("[UpdateRowSelected=true]").attr('UpdateRowSelected',false);
-                $(this).attr('UpdateRowSelected',true);                
-                var rowNo=$(this).children().find('[value]').attr('value');                
-                SetActiveRowNo(rowNo);
-             });
-        };
-        function SetActiveRowNo(no)
-        {
-            $('#<%=UpdatePathHdnActiveRowNo.ClientID %>').attr('value',no);
-            btnDeleteUpdateEnabled(no);
-        }
-        /**/
-        function btnDeleteUpdateEnabled(rowNo)
-        {
-            var enabled=false;
-            if(rowNo!=0) {
-                enabled=true;
-                var tableRow=$("[id*='hdnUpdateRowNo'][value='"+rowNo+"']").parent().parent(); 
-                tableRow.css('background-color', '#3399ff');
-                tableRow.attr('UpdateRowSelected',true); 
-            }
-            var delbtn=$('#<%=UpdateDeleteButton.ClientID %>');
-            var chgbtn=$('#<%=UpdateChangeButton.ClientID %>');
-            var upbtn=$('#<%=UpdateMoveUPButton.ClientID %>');
-            var downbtn=$('#<%=UpdateMoveDownButton.ClientID %>');
-            delbtn.button( "option", "disabled",!enabled);
-            chgbtn.button( "option", "disabled",!enabled);
-            upbtn.button( "option", "disabled",!enabled);
-            downbtn.button( "option", "disabled",!enabled);
-        }
-        /**/
-        function btnAddUpdatePathDialogSetDefaultValues()
-        {
-           $('#<%=AddDialogUpdatePath.ClientID %>').val('');
-        };
-        function UpdatePathChangeButtonClientClick()
-        {
-            var index=$('#<%=UpdatePathHdnActiveRowNo.ClientID %>').attr('value');
-            if(index==0)
-                return;
-            var tableRow=$("[id*='hdnUpdateRowNo'][value='"+index+"']").parent().parent();           
-            PathChangeDialog(tableRow);            
-        }
-        function PathChangeDialog(tableRow)
-        {
-            var path=tableRow.children().find("[id*='CongLdrUpdatePath']").text();
-            $('#' + '<%=AddDialogUpdatePath.ClientID %>').val(path);                    
-                var dOpt = {
+        $(document).on("click", '#<%= lbtnUpdateAdd.ClientID %>', function () {
+            var dOpt = {
                 width: 350,
                 resizable: false,
-                close: function(event, ui)
-                {
-                    $('#divOverlay').css('display','none');
-                    btnAddUpdatePathDialogSetDefaultValues();                            
+                close: function (event, ui) {
+                    btnAddUpdatePathDialogSetDefaultValues();
+                    $('#divOverlay').css('display', 'none');
                 },
                 buttons: {
-                    <%=Resources.Resource.Apply%>: function () {
-                        var btn = '<%=UpdatePathChangeButton.UniqueID %>';
-                        if( Page_ClientValidate('AddDialogUpdatePathValidationGroup'))
-                        {   
-                            
+                    '<%=Resources.Resource.Apply%>': function () {
+                        var btn = '<%=lbtnAddUpdatePathDialogApply.UniqueID %>';
+                        if (Page_ClientValidate('AddDialogUpdatePathValidationGroup')) {
                             __doPostBack(btn, '');
-                                                                                      
-                            $('#AddUpdatePathDialog').dialog('close');                                
-                        }     
+                            $('#AddUpdatePathDialog').dialog('close');
+                        }
                     },
-                    <%=Resources.Resource.CancelButtonText%>: function () {                            
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
                         $('#AddUpdatePathDialog').dialog('close');
                     }
                 }
             };
             $('#AddUpdatePathDialog').dialog(dOpt);
-            $('#divOverlay').css('display','inline');
+            $('#divOverlay').css('display', 'inline');
             $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
-        } 
-        function HideTable1() {
-         var cbox = $("#<%= cboxProxyEnabled.ClientID %>").is(":checked");
-         $("#<%=ddlProxyType.ClientID %>").prop("disabled", !cbox);
-         $("#<%= tboxProxyAddress.ClientID%>").prop("disabled", !cbox);
-         $("#<%= tboxProxyPort.ClientID%>").prop("disabled", !cbox);
+        });
 
-         HideTable1_1(cbox);
-     }
+        function btnAddUpdatePathDialogSetDefaultValues() {
+            $('#<%=tboxAddDialogUpdatePath.ClientID %>').val('');
+        }
 
-     function HideTable1_1(checked) {
-         $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").prop("disabled", !checked);
-         $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").parent().prop("disabled", !checked);
-         var cbox = $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").is(":checked");
-         if (!checked) {             
-             cbox = false;
-         }
-         $("#<%= tboxProxyAuthorizationUserName.ClientID%>").prop("disabled", !cbox);
-         $("#<%= tboxProxyAuthorizationPassword.ClientID%>").prop("disabled", !cbox);
-     }
+        $(document).on("click", '#<%= lbtnUpdateChange.ClientID %>', function () {
+            var lbox = '#<%=lboxUpdatePathes.ClientID %>';
+            $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').val($(lbox + " option:selected").text());
+            var dOpt = {
+                width: 350,
+                resizable: false,
+                close: function (event, ui) {
+                    $('#divOverlay').css('display', 'none');
+                    btnAddUpdatePathDialogSetDefaultValues();
+                },
+                buttons: {
+                    '<%=Resources.Resource.Apply%>': function () {
+                        var btn = '<%=lbtnUpdatePathChange.UniqueID %>';
+                        if (Page_ClientValidate('AddDialogUpdatePathValidationGroup')) {
+                            __doPostBack(btn, '');
+                            $('#AddUpdatePathDialog').dialog('close');
+                        }
+                    },
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#AddUpdatePathDialog').dialog('close');
+                    }
+                }
+            };
+            $('#AddUpdatePathDialog').dialog(dOpt);
+            $('#divOverlay').css('display', 'inline');
+            $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
+        });
+    });
 
-    function HideTable2() {
+    function HideTableLoader1() {
+        var cbox = $("#<%= cboxProxyEnabled.ClientID %>").is(":checked");
+        $("#<%=ddlProxyType.ClientID %>").prop("disabled", !cbox);
+        $("#<%= tboxProxyAddress.ClientID%>").prop("disabled", !cbox);
+        $("#<%= tboxProxyPort.ClientID%>").prop("disabled", !cbox);
+
+        HideTableLoader1_1(cbox);
+    }
+
+    function HideTableLoader1_1(checked) {
+        $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").prop("disabled", !checked);
+        $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").parent().prop("disabled", !checked);
+        var cbox = $("#<%= cboxProxyAuthorizationEnabled.ClientID %>").is(":checked");
+        if (!checked) {
+            cbox = false;
+        }
+        $("#<%= tboxProxyAuthorizationUserName.ClientID%>").prop("disabled", !cbox);
+        $("#<%= tboxProxyAuthorizationPassword.ClientID%>").prop("disabled", !cbox);
+    }
+
+    function HideTableLoader2() {
         var cbox = $("#<%= cboxAuthorizationEnabled.ClientID %>").is(":checked");
         $("#<%= tboxAuthorizationUserName.ClientID%>").prop("disabled", !cbox);
         $("#<%= tboxAuthorizationPassword.ClientID%>").prop("disabled", !cbox);
-    }  
+    }
 
 </script>
 <div id="TabsLoader" style="width:100%">
     <ul>
-        <li><a href="#tab1"><%=Resources.Resource.Main%></a> </li>
-        <li><a href='#tab2'><span><%=Resources.Resource.Authorization %></span></a></li>
-        <li><a href='#tab3'><span><%=Resources.Resource.Proxy %></span></a></li>
-        <%--<li><a href="#tab4"><%=Resources.Resource.CongLdrPassword%></a> </li>--%>
+        <li><a href="#tabLoader1"><%=Resources.Resource.Main%></a> </li>
+        <li><a href='#tabLoader2'><span><%=Resources.Resource.Authorization %></span></a></li>
+        <li><a href='#tabLoader3'><span><%=Resources.Resource.Proxy %></span></a></li>
+        <%--<li><a href="#tabLoader4"><%=Resources.Resource.CongLdrPassword%></a> </li>--%>
 
     </ul>
-    <div id="tab1" class="divSettings" >
+    <div id="tabLoader1" class="divSettings" >
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-                <asp:HiddenField ID="UpdatePathHdnActiveRowNo" Value='0' runat="server" />
-                    <asp:Table  runat="server" Style="width: 500px" GridLines="Horizontal" class="ListContrastTable">
-                        <asp:TableHeaderRow>
-                            <asp:TableHeaderCell ColumnSpan="4">
-                                <asp:Label  runat="server"><%=Resources.Resource.UpdatePath %></asp:Label>
-                            </asp:TableHeaderCell>
-                        </asp:TableHeaderRow>
-                        <asp:TableRow>
-                            <asp:TableCell ColumnSpan="3">
-                                <asp:Panel  runat="server" Width="460px" Height="160px" Style="overflow: scroll">
-                                    <asp:DataList ID="CongLdrUpdateDataList" runat="server" Style="table-layout: fixed; word-break: break-all;" rules="all" 
-                                        OnItemDataBound="CongLdrUpdateDataList_ItemDataBound">
-                                        <ItemTemplate>
-                                            <tr runat="server" id="trUpdateItem" UpdateRowSelected="false">
-                                                <td runat="server">
-                                                    <asp:HiddenField runat="server" ID="hdnUpdateRowNo" Value="0"/>
-                                                    <asp:Label runat="server" ID="CongLdrUpdatePath" Width="440px"></asp:Label>
-                                                </td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:DataList>
-                                </asp:Panel>
-                            </asp:TableCell>
-                            <asp:TableCell>
+                    <table style="width: 500px;" class="ListContrastTable">
+                        <tr>
+                            <td>
+                                <%=Resources.Resource.UpdatePath %>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td>
                                 <table>
-                                    <tr><td>
-                                        <asp:Button ID="UpdateMoveUPButton" runat="server" Text='&#x2191;' OnClick="UpdatePathMoveUpButtonClick"/>
-                                    </td></tr>
-                                    <tr><td>
-                                        <asp:Button ID="UpdateMoveDownButton" runat="server" Text='&#x2193;'  OnClick="UpdatePathMoveDownButtonClick"/>
-                                    </td></tr>
+                                    <tr>
+                                        <td>
+                                            <asp:ListBox runat="server" ID="lboxUpdatePathes" style="width: 460px;height: 160px;"></asp:ListBox> 
+                                        </td>
+                                        <td>
+                                            <asp:LinkButton ID="lbtnUpdateMoveUP" runat="server" Text='&#x2191;' SkinID="Button" OnClick="lbtnUpdateMoveUP_Click"></asp:LinkButton>
+                                            <br />
+                                            <asp:LinkButton ID="lbtnUpdateMoveDown" runat="server" Text='&#x2193;' SkinID="Button" OnClick="lbtnUpdateMoveDown_Click"></asp:LinkButton>
+                                        </td>
+                                    </tr>
                                 </table>
-                            </asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow>
-                            <asp:TableCell >
-                                <asp:Button ID="UpdateAddButton" runat="server" Text="<%$ Resources:Resource, Add %>" OnClientClick="return false;"/>
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:Button ID="UpdateDeleteButton" runat="server"  Text="<%$ Resources:Resource, Delete %>" OnClick="UpdatePathDeleteButtonClick"/>
-                            </asp:TableCell>
-                            <asp:TableCell>
-                                <asp:Button ID="UpdateChangeButton" runat="server"  Text="<%$ Resources:Resource, Change %>" OnClientClick="UpdatePathChangeButtonClientClick()"/>
-                            </asp:TableCell>
-                            <asp:TableCell> &nbsp</asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>  
-                    <asp:Button ID="AddUpdatePathDialogApplyButton" runat='server' Style="display: none" OnClick="AddUpdatePathDialogApplyButtonClick" />
-                    <asp:Button ID="UpdatePathChangeButton" runat='server' Style="display: none" OnClick="UpdatePathChangeButtonClick" />
-             
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:LinkButton ID="lbtnUpdateAdd" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Add %></asp:LinkButton>
+                                <asp:LinkButton ID="lbtnUpdateDelete" runat="server" SkinID="Button" OnClick="lbtnUpdateDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
+                                <asp:LinkButton ID="lbtnUpdateChange" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Change %></asp:LinkButton>
+                                <asp:LinkButton ID="lbtnAddUpdatePathDialogApply" runat='server' Style="display: none" OnClick="lbtnAddUpdatePathDialogApply_Click" ></asp:LinkButton>
+                                <asp:LinkButton ID="lbtnUpdatePathChange" runat='server' Style="display: none" OnClick="lbtnUpdatePathChange_Click" ></asp:LinkButton>
+                            </td>
+                        </tr>
+                    </table>
                 </ContentTemplate>
             </asp:UpdatePanel>
     </div>
-    <div id="tab2" class="divSettings">
+    <div id="tabLoader2" class="divSettings">
         <table class="ListContrastTable" style="width:500px">
             <tr>
                 <td style="padding-top: 5px;padding-bottom: 5px;" colspan="2">
-                    <asp:CheckBox ID="cboxProxyEnabled" runat="server" Text="<%$ Resources:Resource, CongLdrUseProxyServer %>" onclick="HideTable1()" />
+                    <asp:CheckBox ID="cboxProxyEnabled" runat="server" Text="<%$ Resources:Resource, CongLdrUseProxyServer %>" onclick="HideTableLoader1()" />
                 </td>
             </tr>
             <tr>
@@ -260,7 +179,7 @@
             </tr>
             <tr>
                 <td style="padding-top: 5px;padding-bottom: 5px;" colspan="2">
-                    <asp:CheckBox ID="cboxProxyAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTable1_1(true)" />
+                    <asp:CheckBox ID="cboxProxyAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader1_1(true)" />
                 </td>
             </tr>
             <tr>
@@ -281,11 +200,11 @@
             </tr>
         </table>
     </div>
-    <div id="tab3" class="divSettings">
+    <div id="tabLoader3" class="divSettings">
         <table class="ListContrastTable" style="width:500px">
             <tr>
                 <td style="padding-top: 5px;padding-bottom: 5px;">
-                    <asp:CheckBox ID="cboxAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTable2()" />
+                    <asp:CheckBox ID="cboxAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader2()" />
                 </td>
             </tr>
             <tr>
@@ -302,10 +221,7 @@
             </tr>                
         </table>
     </div>
-                           
-                            
-                 
-    <div id="tab4" class="divSettings" style="display:none">
+    <div id="tabLoader4" class="divSettings" style="display:none">
         <table class="ListContrastTable">
              <tr>                 
                 <td colspan="2">
@@ -364,15 +280,14 @@
         </table>        
     </div>   
 </div>
-<div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" />
-<div id="AddUpdatePathDialog" style="display: none;" class="ui-front">
-    <br />
-    <asp:Label   runat="server"><%=Resources.Resource.Path %></asp:Label><br />
-    <asp:TextBox ID="AddDialogUpdatePath" Style="width: 300px" runat='server'></asp:TextBox>
+<div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" ></div>
+<div id="AddUpdatePathDialog" style="display: none;padding-bottom:20px;" class="ui-front">    
+    <%=Resources.Resource.Path %><br />
+    <asp:TextBox ID="tboxAddDialogUpdatePath" Style="width: 300px" runat='server'></asp:TextBox>
     <asp:RequiredFieldValidator ID="AddDialogUpdatePathValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
-        ControlToValidate="AddDialogUpdatePath" Display="None" ValidationGroup="AddDialogUpdatePathValidationGroup" />
-
+        ControlToValidate="tboxAddDialogUpdatePath" Display="None" ValidationGroup="AddDialogUpdatePathValidationGroup" >
+    </asp:RequiredFieldValidator>
     <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogUpdatePath" runat="server"
-        TargetControlID="AddDialogUpdatePathValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />          
-      
+        TargetControlID="AddDialogUpdatePathValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
+    </ajaxToolkit:ValidatorCalloutExtender2>
 </div>

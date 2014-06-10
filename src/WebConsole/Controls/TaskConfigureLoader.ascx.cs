@@ -22,21 +22,16 @@ using ARM2_dbcontrol.Filters;
 public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,ITask
 {
     private static TaskConfigureLoader loader;
-    private Int32 UpdatePathAddedCount = 0;
+
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack || loader == null)
+        if (!Page.IsPostBack)
         {
             InitFields();
-        }
-        else
-        {
-            LoadLoader();
         }
     }
 
     private Boolean _hideHeader = false;
-
     public Boolean HideHeader
     {
         get { return _hideHeader; }
@@ -44,26 +39,27 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
     }
 
     private Boolean _enabled = true;
-
     public Boolean Enabled
     {
         get { return _enabled; }
         set { _enabled = value; }
     }
+    
     public void InitFields()
-    {       
-        loader = new TaskConfigureLoader();
+    {
+        if (loader == null)
+        {
+            loader = new TaskConfigureLoader();
+            loader.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
+        }
+        
         PathUpdateData();
-        UpdatePathHdnActiveRowNo.Value ="0";
     }
-
 
     public Boolean ValidateFields()
     {
         return true;
     }
-
-
    
     private void LoadLoader()
     {
@@ -80,10 +76,10 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         cboxAuthorizationEnabled.Checked = loader.AUTHORIZE;
         cboxProxyAuthorizationEnabled.Checked = loader.PROXY_AUTHORIZE;
 
-        UpdatePathAddedCount = 0;
         UpdateEnabledControls();
         PathUpdateData();
     }
+
     public void SaveLoader()
     {
         loader.AUTHORIZE = cboxAuthorizationEnabled.Checked;
@@ -95,16 +91,13 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         loader.PROXY_ADDRESS = tboxProxyAddress.Text;
         loader.PROXY_PORT = Convert.ToInt32(tboxProxyPort.Text);
 
-        loader.PROXY_AUTHORIZE = cboxAuthorizationEnabled.Checked;
+        loader.PROXY_AUTHORIZE = cboxProxyAuthorizationEnabled.Checked;
         loader.PROXY_USER = tboxProxyAuthorizationUserName.Text;
         loader.PROXY_PASSWORD = tboxProxyAuthorizationPassword.Text;
     }
 
-
-
     private void UpdateEnabledControls()
     {
-
         tboxProxyAddress.Enabled = cboxProxyEnabled.Checked;
         tboxProxyPort.Enabled = cboxProxyEnabled.Checked;
         ddlProxyType.Enabled = cboxProxyEnabled.Checked;
@@ -114,8 +107,6 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
         tboxAuthorizationPassword.Enabled = cboxAuthorizationEnabled.Checked;
         tboxAuthorizationUserName.Enabled = cboxAuthorizationEnabled.Checked;
-
-        
     }
 
     /// <summary>
@@ -148,93 +139,72 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
     public String BuildTask()
     {
+        SaveLoader();
         return loader.GetTask();
     }
 
 
     #region UpdatePath
+    
     private void PathUpdateData()
     {
-        UpdatePathAddedCount = 0;
-        CongLdrUpdateDataList.DataSource = loader.UPDATE_FOLDER_LIST;
-        CongLdrUpdateDataList.DataBind();
+        lboxUpdatePathes.Items.Clear();
+        foreach (String str in loader.UPDATE_FOLDER_LIST)
+            lboxUpdatePathes.Items.Add(str);
     }
-    protected void CongLdrUpdateDataList_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        String path;
-        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-        {
-            path = (String)e.Item.DataItem;
-            (e.Item.FindControl("hdnUpdateRowNo") as HiddenField).Value = (++UpdatePathAddedCount).ToString();
-            (e.Item.FindControl("CongLdrUpdatePath") as Label).Text = path;
 
-            if (e.Item.ItemIndex % 2 == 0)
-                (e.Item.FindControl("trUpdateItem") as System.Web.UI.HtmlControls.HtmlTableRow).Attributes.Add("class", "gridViewRowAlternating");
-            else
-                (e.Item.FindControl("trUpdateItem") as System.Web.UI.HtmlControls.HtmlTableRow).Attributes.Add("class", "gridViewRow");
-        }
-    }
-    protected void CongLdrUpdateDataList_SelectedIndexChanged(object sender, DataListCommandEventArgs e)
+    protected void lbtnAddUpdatePathDialogApply_Click(object sender, EventArgs e)
     {
-        CongLdrUpdateDataList.EditItemIndex = e.Item.ItemIndex;
-        CongLdrUpdateDataList.SelectedIndex = e.Item.ItemIndex;
+        loader.UPDATE_FOLDER_LIST.Add(tboxAddDialogUpdatePath.Text);
         PathUpdateData();
     }
-    protected void AddUpdatePathDialogApplyButtonClick(object sender, EventArgs e)
+
+    protected void lbtnUpdateDelete_Click(object sender, EventArgs e)
     {
-        String path = AddDialogUpdatePath.Text;
-        loader.UPDATE_FOLDER_LIST.Add(path);
-        PathUpdateData();
-    }
-    protected void UpdatePathDeleteButtonClick(object sender, EventArgs e)
-    {
-        Int32 index = Convert.ToInt32(UpdatePathHdnActiveRowNo.Value);
-        if (index != 0)
+        Int32 index = lboxUpdatePathes.SelectedIndex;
+        if (index >= 0)
         {
-            loader.UPDATE_FOLDER_LIST.RemoveAt(index - 1);
-            UpdatePathHdnActiveRowNo.Value = Convert.ToString(0);
-            PathUpdateData();
-        }
-    }
-    protected void UpdatePathChangeButtonClick(object sender, EventArgs e)
-    {
-        Int32 index = Convert.ToInt32(UpdatePathHdnActiveRowNo.Value);
-        if (index != 0)
-        {
-            String path = loader.UPDATE_FOLDER_LIST[index - 1];
-            path = AddDialogUpdatePath.Text;
-            loader.UPDATE_FOLDER_LIST.Insert(index - 1, path);
             loader.UPDATE_FOLDER_LIST.RemoveAt(index);
             PathUpdateData();
         }
     }
-    protected void UpdatePathMoveUpButtonClick(object sender, EventArgs e)
-    {
-        Int32 index = Convert.ToInt32(UpdatePathHdnActiveRowNo.Value);
-        String path;
-        if (index >1)
-        {
-            path = loader.UPDATE_FOLDER_LIST[index - 1];
-            loader.UPDATE_FOLDER_LIST.RemoveAt(index - 1);
-            loader.UPDATE_FOLDER_LIST.Insert(index - 2, path);
-            
-            UpdatePathHdnActiveRowNo.Value = Convert.ToString(index-1);
-            PathUpdateData();
-        }
-    }
-    protected void UpdatePathMoveDownButtonClick(object sender, EventArgs e)
-    {
-        Int32 index = Convert.ToInt32(UpdatePathHdnActiveRowNo.Value);
-        String path;
-        if (index !=0 && index<loader.UPDATE_FOLDER_LIST.Count)
-        {
-            path = loader.UPDATE_FOLDER_LIST[index - 1];
-            loader.UPDATE_FOLDER_LIST.RemoveAt(index - 1);
-            loader.UPDATE_FOLDER_LIST.Insert(index, path);
 
-            UpdatePathHdnActiveRowNo.Value = Convert.ToString(index+1);
+    protected void lbtnUpdatePathChange_Click(object sender, EventArgs e)
+    {
+        Int32 index = lboxUpdatePathes.SelectedIndex;
+        if (index >= 0)
+        {
+            loader.UPDATE_FOLDER_LIST[index] = tboxAddDialogUpdatePath.Text;
             PathUpdateData();
         }
     }
+
+    protected void lbtnUpdateMoveUP_Click(object sender, EventArgs e)
+    {
+        Int32 index = lboxUpdatePathes.SelectedIndex;
+        String path;
+        if (index > 0)
+        {
+            path = loader.UPDATE_FOLDER_LIST[index];
+            loader.UPDATE_FOLDER_LIST[index] = loader.UPDATE_FOLDER_LIST[index - 1];
+            loader.UPDATE_FOLDER_LIST[index-1] = path;
+            
+            PathUpdateData();
+        }
+    }
+
+    protected void lbtnUpdateMoveDown_Click(object sender, EventArgs e)
+    {
+        Int32 index = lboxUpdatePathes.SelectedIndex;
+        String path;
+        if (index >=0 && index < loader.UPDATE_FOLDER_LIST.Count - 1)
+        {
+            path = loader.UPDATE_FOLDER_LIST[index];
+            loader.UPDATE_FOLDER_LIST[index] = loader.UPDATE_FOLDER_LIST[index + 1];
+            loader.UPDATE_FOLDER_LIST[index + 1] = path;
+            PathUpdateData();
+        }
+    }
+    
     #endregion
 }
