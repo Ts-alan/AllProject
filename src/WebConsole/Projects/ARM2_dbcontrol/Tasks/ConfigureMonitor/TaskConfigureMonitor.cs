@@ -15,13 +15,12 @@ namespace ARM2_dbcontrol.Tasks
     {
         #region Fields
 
-        private String _Type = "ConfigureMonitor";
+        private String _TaskType = "ConfigureMonitor";
+        public const String DefaultFilters = @"COM.EXE.DLL.DRV.SYS.OV?.VXD.SCR.CPL.OCX.BPL.AX.PIF.DO?.XL?.HLP.RTF.WI?.WZ?.MSI.MSC.HT*.VB*.JS.JSE.ASP*.CGI.PHP*.?HTML.BAT.CMD.EML.NWS.MSG.XML.MSO.WPS.PPT.PUB.JPG.JPEG.ANI.INF.SWF.PDF";
+
         private String _Vba32CCUser;
         private XmlSerializer serializer;
-
         private JournalEvent _journalEvent;
-
-        public const String DefaultFilters = @"COM.EXE.DLL.DRV.SYS.OV?.VXD.SCR.CPL.OCX.BPL.AX.PIF.DO?.XL?.HLP.RTF.WI?.WZ?.MSI.MSC.HT*.VB*.JS.JSE.ASP*.CGI.PHP*.?HTML.BAT.CMD.EML.NWS.MSG.XML.MSO.WPS.PPT.PUB.JPG.JPEG.ANI.INF.SWF.PDF";
 
         private Boolean _MONITOR_ON;
 
@@ -38,15 +37,6 @@ namespace ARM2_dbcontrol.Tasks
         private MonitorSuspiciousActions _SuspiciousAction1;
         private MonitorSuspiciousActions _SuspiciousAction2;
 
-/*
-        private Int32 _NOTIFY;
-        private String _REPORT_NAME;
-        private Int32 _LIMIT_REPORT;
-        private Int32 _LIMIT_REPORT_VALUE = -1;
-        private Int32 _SHOW_OK;
-        */
-
-
         #endregion
 
         #region Properties
@@ -56,10 +46,10 @@ namespace ARM2_dbcontrol.Tasks
             get { return _Vba32CCUser; }
             set { _Vba32CCUser = value; }
         }
-        public String Type
+
+        public String TaskType
         {
-            get { return _Type; }
-            set { _Type = "ConfigureMonitor"; }
+            get { return _TaskType; }
         }
 
         public JournalEvent journalEvent
@@ -133,39 +123,6 @@ namespace ARM2_dbcontrol.Tasks
             set { _SuspiciousAction2 = value; }
         }
 
-        /*
-        public Int32 SHOW_OK
-        {
-            get { return _SHOW_OK; }
-            set { _SHOW_OK = value; }
-        }
-
-        public Int32 LIMIT_REPORT_VALUE
-        {
-            get { return _LIMIT_REPORT_VALUE; }
-            set { _LIMIT_REPORT_VALUE = value; }
-        }
-
-        public Int32 LIMIT_REPORT
-        {
-            get { return _LIMIT_REPORT; }
-            set { _LIMIT_REPORT = value; }
-        }
-
-        public String REPORT_NAME
-        {
-            get { return _REPORT_NAME; }
-            set { _REPORT_NAME = value; }
-        }
-
-        public Int32 NOTIFY
-        {
-            get { return _NOTIFY; }
-            set { _NOTIFY = value; }
-        }
-        */
-       
-
         #endregion
 
         #region Constructors
@@ -175,13 +132,17 @@ namespace ARM2_dbcontrol.Tasks
             serializer = new XmlSerializer(this.GetType());
             journalEvent = new JournalEvent();
             _ExcludingFoldersAndFilesDelete = new List<String>();
+            _FileExtensions = DefaultFilters;
         }
+
         public TaskConfigureMonitor(String[]eventNames)
         {
             serializer = new XmlSerializer(this.GetType());
             journalEvent = new JournalEvent(eventNames);
             _ExcludingFoldersAndFilesDelete = new List<String>();
+            _FileExtensions = DefaultFilters;
         }
+
         #endregion
 
         #region Methods
@@ -192,6 +153,7 @@ namespace ARM2_dbcontrol.Tasks
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
+
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(512);
@@ -207,15 +169,12 @@ namespace ARM2_dbcontrol.Tasks
             
             result.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", MONITOR_ON);
 
-            //???????????
             result.Append(journalEvent.GetTask());
-
 
             result.Append(@"<param><id>Journal</id><type>stringmap</type><value>");
             result.AppendFormat(@"<string><id>0</id><key>Enable</key><val>On</val></string>");
             result.AppendFormat(@"<string><id>1</id><key>FullFileList</key><val>Off</val></string>");
             result.Append(@"</value></param>");
-
 
             result.AppendFormat(@"<param><id>MntExcludedFiles</id><type>stringlist</type><value><string><id>0</id><val></val></string></value></param>");
 
@@ -299,6 +258,23 @@ namespace ARM2_dbcontrol.Tasks
 
             this._Vba32CCUser = task.Vba32CCUser;
             this._journalEvent = task.journalEvent;
+        }
+
+        public void Clear()
+        {
+            this._ExcludingFoldersAndFilesDelete.Clear();
+            this._FileExtensions = DefaultFilters;
+            this._FileExtensionsExcluded = String.Empty;
+            this._InfectedAction1 = MonitorInfectedActions.None;
+            this._InfectedAction2 = MonitorInfectedActions.None;
+            this._InfectedAction3 = MonitorInfectedActions.None;
+            this._IsSaveInfectedToQuarantine = false;
+            this._SuspiciousAction1 = MonitorSuspiciousActions.None;
+            this._SuspiciousAction2 = MonitorSuspiciousActions.None;
+            this._IsSaveSuspiciousToQuarantine = false;
+            this.MONITOR_ON = true;
+
+            this._journalEvent.ClearEvents();
         }
 
         #endregion
@@ -401,17 +377,19 @@ namespace ARM2_dbcontrol.Tasks
      
         #endregion
     }
+
     public enum MonitorInfectedActions
     {
         Block = 0,
         Cure = 1,
         Delete = 2,        
         None = 3
-    };
+    }
+
     public enum MonitorSuspiciousActions
     {
         Block = 0,
         Delete = 1,
         None = 2
-    };
+    }
 }

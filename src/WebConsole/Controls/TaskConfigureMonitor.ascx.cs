@@ -21,25 +21,15 @@ using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,ITask
 {
     private static TaskConfigureMonitor monitor;
-    private Int32 PathAddedCount = 0;
+
     protected void Page_Init(object sender, EventArgs e)
     {
-
-        if (!Page.IsPostBack || monitor==null)
+        if (!Page.IsPostBack)
         {
             InitFields();
-
-            InitFieldsJournalEvent(monitor.journalEvent);
         }
-        else
-        {
-            InitFieldsJournalEvent(monitor.journalEvent);
-            LoadMonitor();
-        }
-
-
+        InitFieldsJournalEvent(monitor.journalEvent);
     }
-
 
     private Boolean _hideHeader = false;
     public Boolean HideHeader
@@ -55,21 +45,21 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         set { _enabled = value; }
     }
 
-    private String defaultFilters = TaskConfigureMonitor.DefaultFilters;
-
-
-
     public void InitFields()
     {
-        /*if (monitor == null)
+        if (monitor == null)
         {
             monitor = new TaskConfigureMonitor(GetEvents());
             monitor.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
-        }*/
-        monitor = new TaskConfigureMonitor(GetEvents());
-        ExcludedPathUpdateData();
+        }
+        else
+        {
+            monitor.Clear();
+        }
 
+        UpdateSettings();
     }
+
     private String[] GetEvents()
     {
         String[] s = { "E_VMT_START", "JE_VMT_STOP", "JE_VMT_APPLIED_SETTINGS_OK", "JE_VMT_APPLIED_SETTINGS_FAILED" };
@@ -78,82 +68,68 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
     public Boolean ValidateFields()
     {
-       /* Validation vld = new Validation(tboxLogFile.Text);
-        if (!vld.CheckFileName())
-            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                + Resources.Resource.CongLdrKeep);
-
-        if (cboxMaximumSizeLog.Checked)
-        {
-            vld.Value = tboxMaximumSizeLog.Text;
-            if (!vld.CheckSize())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                    + Resources.Resource.CongLdrMaximumSizeLog);
-        }
-
-        if (cboxMaximumCPUUsege.Checked)
-        {
-            vld.Value = tboxMaximumCPUUsege.Text;
-            if (!vld.CheckPercent())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                + Resources.Resource.CongMonitorMaximumCPUUsege);
-        }
-
-        if (cboxMaximumDiskActivity.Checked)
-        {
-            vld.Value = tboxMaximumDiskActivity.Text;
-            if (!vld.CheckPercent())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                + Resources.Resource.CongMonitorMaximumDiskActivity);
-        }
-
-        if (cboxMaximumDisplacement.Checked)
-        {
-            vld.Value = tboxMaximumDisplacement.Text;
-            if (!vld.CheckSize())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-               + Resources.Resource.CongMonitorMaximumDisplacement);
-        }
-
-        if (cboxMinimumBattery.Checked)
-        {
-            vld.Value = tboxMinimumBattery.Text;
-            if (!vld.CheckPercent())
-                throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                + Resources.Resource.CongMonitorMinimumBattery);
-        }*/
-
         return true;
     }
 
-    public void LoadMonitor()
+    public void LoadState(TaskUserEntity task)
+    {
+        if (task == null || task.Type != TaskType.ConfigureMonitor)
+            throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
+        
+        monitor.LoadFromXml(task.Param);
+        
+        UpdateSettings();
+        LoadJournalEvent(monitor.journalEvent);        
+    }
+
+    public TaskUserEntity GetCurrentState()
+    {
+        TaskUserEntity task = new TaskUserEntity();
+        task.Type = TaskType.ConfigureMonitor;
+
+        SaveJournalEvents();
+        SaveSettings();
+        ValidateFields();
+        task.Param = monitor.SaveToXml();
+
+        return task;
+    }
+
+    public String BuildTask()
+    {
+        SaveSettings();
+        SaveJournalEvents();
+        return monitor.GetTask();
+    }
+
+    #region Settings
+
+    public void UpdateSettings()
     {
         cboxMonitorOn.Checked = monitor.MONITOR_ON;
 
-        MonitorFileExtensionsTextBox.Text = monitor.FileExtensions;
-        MonitorFilesExcludedTextBox.Text = monitor.FileExtensionsExcluded;
+        tboxMonitorFileExtensions.Text = monitor.FileExtensions;
+        tboxMonitorFilesExcluded.Text = monitor.FileExtensionsExcluded;
 
-        ddlInfectedActions1.SelectedIndex = (int)monitor.InfectedAction1;
-        ddlInfectedActions2.SelectedIndex = (int)monitor.InfectedAction2;
-        ddlInfectedActions3.SelectedIndex = (int)monitor.InfectedAction3;
+        ddlInfectedActions1.SelectedIndex = (Int32)monitor.InfectedAction1;
+        ddlInfectedActions2.SelectedIndex = (Int32)monitor.InfectedAction2;
+        ddlInfectedActions3.SelectedIndex = (Int32)monitor.InfectedAction3;
 
-        ddlSuspiciousActions1.SelectedIndex = (int)monitor.SuspiciousAction1;
-        ddlSuspiciousActions2.SelectedIndex = (int)monitor.SuspiciousAction2;
+        ddlSuspiciousActions1.SelectedIndex = (Int32)monitor.SuspiciousAction1;
+        ddlSuspiciousActions2.SelectedIndex = (Int32)monitor.SuspiciousAction2;
 
         chkInfectedSaveCopy.Checked = monitor.IsSaveInfectedToQuarantine;
         chkSuspiciousSaveCopy.Checked = monitor.IsSaveSuspiciousToQuarantine;
 
-        PathAddedCount = 0;
-        LoadJournalEvent(monitor.journalEvent);
         ExcludedPathUpdateData();
-
     }
-    public void SaveMonitor()
+
+    public void SaveSettings()
     {
         monitor.MONITOR_ON = cboxMonitorOn.Checked;
 
-        monitor.FileExtensions = MonitorFileExtensionsTextBox.Text;
-        monitor.FileExtensionsExcluded = MonitorFilesExcludedTextBox.Text;
+        monitor.FileExtensions = tboxMonitorFileExtensions.Text;
+        monitor.FileExtensionsExcluded = tboxMonitorFilesExcluded.Text;
 
         monitor.InfectedAction1 = (MonitorInfectedActions)ddlInfectedActions1.SelectedIndex;
         monitor.InfectedAction2 = (MonitorInfectedActions)ddlInfectedActions2.SelectedIndex;
@@ -165,95 +141,44 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
         monitor.IsSaveInfectedToQuarantine = chkInfectedSaveCopy.Checked;
         monitor.IsSaveSuspiciousToQuarantine = chkSuspiciousSaveCopy.Checked;
-
     }
 
-
-
-
-    public void LoadState(TaskUserEntity task)
-    {
-        if (task == null || task.Type != TaskType.ConfigureMonitor)
-            throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
-        monitor.LoadFromXml(task.Param);
-        LoadMonitor();
-    }
-
-    public TaskUserEntity GetCurrentState()
-    {
-        TaskUserEntity task = new TaskUserEntity();
-        task.Type = TaskType.ConfigureMonitor;
-
-        SaveJournalEvents();
-        SaveMonitor();
-        ValidateFields();
-        task.Param = monitor.SaveToXml();
-
-        return task;
-    }
-
-    public String BuildTask()
-    {
-        return monitor.GetTask();
-    }
-
-    #region Settings
     private void ExcludedPathUpdateData()
     {
-        PathAddedCount = 0;
-        ExcludedPathDataList.DataSource = monitor.ExcludingFoldersAndFilesDelete;
-        ExcludedPathDataList.DataBind();
+        lboxExcludedPath.Items.Clear();
+        foreach (String str in monitor.ExcludingFoldersAndFilesDelete)
+        {
+            lboxExcludedPath.Items.Add(str);
+        }
     }
-    protected void AddExcludedDialogApplyButtonClick(object sender, EventArgs e)
+
+    protected void lbtnAddExcludedDialogApply_Click(object sender, EventArgs e)
     {
-        String path = AddExcludedDialogPath.Text;
-        monitor.ExcludingFoldersAndFilesDelete.Add(path);
+        monitor.ExcludingFoldersAndFilesDelete.Add(tboxAddExcludedDialogPath.Text);
 
         ExcludedPathUpdateData();
     }
-    protected void PathDeleteButtonClick(object sender, EventArgs e)
+
+    protected void lbtnPathDelete_Click(object sender, EventArgs e)
     {
-        Int32 index = Convert.ToInt32(PathHdnActiveRowNo.Value);
-        if (index != 0)
+        Int32 index = lboxExcludedPath.SelectedIndex;
+        if (index >= 0)
         {
-            monitor.ExcludingFoldersAndFilesDelete.RemoveAt(index - 1);
-            PathHdnActiveRowNo.Value = Convert.ToString(0);
-            ExcludedPathUpdateData();
-        }
-    }
-    protected void PathChangeButtonClick(object sender, EventArgs e)
-    {
-        Int32 index = Convert.ToInt32(PathHdnActiveRowNo.Value);
-        if (index != 0)
-        {
-            String path = monitor.ExcludingFoldersAndFilesDelete[index - 1];
-            path = AddExcludedDialogPath.Text;
-            monitor.ExcludingFoldersAndFilesDelete.Insert(index - 1, path);
             monitor.ExcludingFoldersAndFilesDelete.RemoveAt(index);
             ExcludedPathUpdateData();
         }
-    } 
-    protected void ExcludedPathDataList_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        String path;
-        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-        {
-            path = (String)e.Item.DataItem;
-            (e.Item.FindControl("PathHdnRowNo") as HiddenField).Value = (++PathAddedCount).ToString();
-            (e.Item.FindControl("CongMonExcludedPath") as Label).Text = path;
+    }
 
-            if (e.Item.ItemIndex % 2 == 0)
-                (e.Item.FindControl("trPathItem") as System.Web.UI.HtmlControls.HtmlTableRow).Attributes.Add("class", "gridViewRowAlternating");
-            else
-                (e.Item.FindControl("trPathItem") as System.Web.UI.HtmlControls.HtmlTableRow).Attributes.Add("class", "gridViewRow");
-        }
-    }
-    protected void ExcludedPathDataList_SelectedIndexChanged(object sender, DataListCommandEventArgs e)
+    protected void lbtnPathChangeHidden_Click(object sender, EventArgs e)
     {
-        ExcludedPathDataList.EditItemIndex = e.Item.ItemIndex;
-        ExcludedPathDataList.SelectedIndex = e.Item.ItemIndex;
-        ExcludedPathUpdateData();
-    }
+        Int32 index = lboxExcludedPath.SelectedIndex;
+        if (index >= 0)
+        {
+            monitor.ExcludingFoldersAndFilesDelete[index] = tboxAddExcludedDialogPath.Text;
+            ExcludedPathUpdateData();
+        }
+    } 
+
     #endregion 
 
     #region JournalEvents
@@ -299,7 +224,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         }
     }
 
-    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    private TableRow GenerateRow(SingleJournalEvent ev, Int32 rowNo)
     {
         String eventName = ev.EventName;
         EventJournalFlags val = ev.EventFlag;
@@ -316,10 +241,6 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
             cell = new TableCell();
             CheckBox chk = new CheckBox();
             chk.Checked = false;
-          //  chk.Attributes.Add("rowNo", rowNo.ToString());
-          //  chk.Attributes.Add("colNo", i.ToString());
-          //  chk.AutoPostBack = true;
-          //  chk.CheckedChanged += JournalEventChecked;
             cell.Controls.Add(chk);
             cell.Attributes.Add("align", "center");
             row.Cells.Add(cell);
@@ -331,7 +252,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
     private void SaveJournalEvents()
     {
         JournalEvent je = new JournalEvent(GetEvents());
-        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        for (Int32 i = 0; i < JournalEventTable.Rows.Count - 1; i++)
         {
 
             if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
@@ -349,5 +270,6 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         }
         monitor.journalEvent = je;
     }
+
     #endregion
 }
