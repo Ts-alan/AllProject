@@ -14,21 +14,8 @@ using ARM2_dbcontrol.Generation;
 /// <summary>
 /// Страница для отображения сообщений об ошибках
 /// </summary>
-public partial class Error : System.Web.UI.Page
+public partial class Error : PageBase
 {
-    protected void Page_PreInit(object sender, EventArgs e)
-    {
-        Page.MasterPageFile = Profile.MasterPage;
-        Page.Theme = Profile.Theme;
-    }
-
-    protected override void InitializeCulture()
-    {
-        System.Threading.Thread.CurrentThread.CurrentUICulture =
-            new System.Globalization.CultureInfo(Profile.Culture);
-        base.InitializeCulture();
-    }
-
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -77,5 +64,9 @@ public partial class Error : System.Web.UI.Page
         Session.Clear();
         Application.Clear();
         Response.Redirect("Default.aspx");
+    }
+
+    protected override void InitFields()
+    {
     }
 }
