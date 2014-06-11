@@ -248,7 +248,7 @@
         <asp:UpdatePanel ID="FileCleanerUpdatePanel" runat="server">
             <ContentTemplate>
                 <asp:HiddenField ID="FileCleanerhdnActiveRowNo" Value='0' runat="server" />
-                <asp:Table class="ListContrastTable" Style="width: 525px" runat="server">
+                <asp:Table class="ListContrastTable" ID="tblFileCleanerMainPanel" Style="width: 525px" runat="server">
                     <asp:TableRow>
                         <asp:TableCell ColumnSpan="3">
                             <asp:Panel runat="server" Width="520px" Height="400px" ID="ProgramListPanel" Style="overflow: scroll">

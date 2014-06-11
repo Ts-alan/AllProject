@@ -28,6 +28,13 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
         set { _hideHeader = value; }
     }
 
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     private Boolean _hideBound = false;
     public Boolean HideBound
     {
@@ -51,7 +58,7 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
-
+        SetEnabled();
         List<String> list = new List<String>();
         list.Add(Resources.Resource.Antivirus);
         list.Add(Resources.Resource.RemoteConsoleScanner);
@@ -59,6 +66,11 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
 
         ddlProduct.DataSource = list;
         ddlProduct.DataBind();
+    }
+
+    private void SetEnabled()
+    {
+        ddlProduct.Enabled = _enabled;
     }
 
     public Boolean ValidateFields()

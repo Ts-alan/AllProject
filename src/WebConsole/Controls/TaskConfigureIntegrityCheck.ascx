@@ -201,7 +201,7 @@
             <asp:UpdatePanel ID="FilesUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:HiddenField ID="FileshdnActiveRowNo" Value='0' runat="server" />
-                    <asp:Table class="ListContrastTable" Style="width: 500px" runat="server">
+                    <asp:Table class="ListContrastTable" ID="tblFilesUpdatePanel" Style="width: 500px" runat="server">
                         <asp:TableRow>
                             <asp:TableCell ColumnSpan="3">
                                 <asp:Panel runat="server" Width="370px" Height="300px" ID="FilesPanel" Style="overflow: scroll">
@@ -291,7 +291,7 @@
             <asp:UpdatePanel ID="RegistryUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:HiddenField ID="RegistryhdnActiveRowNo" Value='0' runat="server" />
-                    <asp:Table class="ListContrastTable" Style="width: 500px" runat="server">
+                    <asp:Table class="ListContrastTable" ID="tblRegistryUpdatePanel" Style="width: 500px" runat="server">
                         <asp:TableRow>
                             <asp:TableCell ColumnSpan="3">
                                 <asp:Panel runat="server" Width="370px" Height="300px" ID="RegistryPanel" Style="overflow: scroll">

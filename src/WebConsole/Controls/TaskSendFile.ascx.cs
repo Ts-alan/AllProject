@@ -37,11 +37,26 @@ public partial class Controls_TaskSendFile : System.Web.UI.UserControl, ITask
         set { _hideHeader = value; }
     }
 
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
         //lblDetails.Text = "";
         lbtnUpload.Text = Resources.Resource.Upload;
+    }
+
+    private void SetEnabled()
+    {
+        lbtnUpload.Enabled = _enabled;
+        fuClient.Enabled = _enabled;
+        tboxDestination.Enabled = tboxSource.Enabled = _enabled;
     }
 
     public bool ValidateFields()

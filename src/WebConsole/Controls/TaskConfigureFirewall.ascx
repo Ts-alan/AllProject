@@ -516,7 +516,7 @@
             <asp:UpdatePanel ID="IP4UpdatePanel" runat="server" >
                 <ContentTemplate>
                     <asp:HiddenField ID="IP4hdnActiveRowNo" Value='0'  runat="server" />
-                    <asp:Table class="ListContrastTable" style="width:771px" runat="server">
+                    <asp:Table class="ListContrastTable" ID="tblIP4UpdatePanel" style="width:771px" runat="server" >
                         <asp:TableRow>
                             <asp:TableCell ColumnSpan="3">                            
                                 <asp:Panel runat="server" Width="770px" Height="400px" ID="IP4pnlFirewall" style="overflow:scroll">
@@ -812,7 +812,7 @@
             <asp:UpdatePanel ID="IP6UpdatePanel" runat="server" >
                 <ContentTemplate>
                     <asp:HiddenField ID="IP6hdnActiveRowNo" Value='0'  runat="server" />
-                    <asp:Table class="ListContrastTable" style="width:771px" runat="server">
+                    <asp:Table class="ListContrastTable" ID="tblIP6UpdatePanel" style="width:771px" runat="server">
                         <asp:TableRow>
                             <asp:TableCell ColumnSpan="3">                            
                                 <asp:Panel runat="server" Width="770px" Height="400px" ID="IP6pnlFirewall" style="overflow:scroll">
@@ -1079,7 +1079,7 @@
             <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
-                        <asp:Table ID="JournalEventTable" runat="server" CssClass="ListContrastTable">
+                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
                             <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
                                 <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
                                     <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            

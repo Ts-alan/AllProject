@@ -18,6 +18,20 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
     private Int32 FilesAddedCount = 0;
     private Int32 RegistryAddedCount = 0;
 
+    private Boolean _hideHeader = false;
+    public Boolean HideHeader
+    {
+        get { return _hideHeader; }
+        set { _hideHeader = value; }
+    }
+
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     protected void Page_Init(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -26,9 +40,17 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
 
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
+
         taskIntegrityCheck = new TaskConfigureIntegrityCheck();
         FilesUpdateData();
         RegistryUpdateData();
+    }
+
+    private void SetEnabled()
+    {
+        tblFilesUpdatePanel.Enabled = tblRegistryUpdatePanel.Enabled = _enabled;
     }
 
     public bool ValidateFields()

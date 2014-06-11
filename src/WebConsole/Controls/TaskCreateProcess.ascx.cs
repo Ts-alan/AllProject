@@ -37,9 +37,22 @@ public partial class Controls_TaskCreateProcess : System.Web.UI.UserControl, ITa
         set { _hideHeader = value; }
     }
 
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
+    }
+
+    private void SetEnabled()
+    {
+        tboxCreateProcess.Enabled = cboxCommand.Enabled = _enabled;
     }
 
     public TaskUserEntity GetCurrentState()

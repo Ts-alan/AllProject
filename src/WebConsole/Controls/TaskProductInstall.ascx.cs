@@ -16,6 +16,13 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
         set { _hideHeader = value; }
     }
 
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     private Boolean _hideBound = false;
     public Boolean HideBound
     {
@@ -45,6 +52,7 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
     public void InitFields()
     {
         if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
 
         List<String> list = new List<String>();
         list.Add(Resources.Resource.Antivirus);
@@ -54,6 +62,11 @@ public partial class Controls_TaskProductInstall : System.Web.UI.UserControl, IT
 
         ddlProduct.DataSource = list;
         ddlProduct.DataBind();
+    }
+
+    private void SetEnabled()
+    {
+        ddlProduct.Enabled = tboxArguments.Enabled = _enabled;
     }
 
     public Boolean ValidateFields()

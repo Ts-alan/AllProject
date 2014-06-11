@@ -25,8 +25,24 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         }
     }
 
+    private Boolean _hideHeader = false;
+    public Boolean HideHeader
+    {
+        get { return _hideHeader; }
+        set { _hideHeader = value; }
+    }
+
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
         if (fileCleaner == null)
         {
             fileCleaner = new TaskConfigureFileCleaner();
@@ -38,6 +54,11 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         }
 
         FileCleanerUpdateData();
+    }
+
+    private void SetEnabled()
+    {
+        tblFileCleanerMainPanel.Enabled = _enabled;
     }
 
 

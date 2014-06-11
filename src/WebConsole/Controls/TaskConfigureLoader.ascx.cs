@@ -47,6 +47,9 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
     
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
+
         if (loader == null)
         {
             loader = new TaskConfigureLoader();
@@ -54,6 +57,19 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         }
         
         PathUpdateData();
+    }
+
+    private void SetEnabled()
+    {
+        lboxUpdatePathes.Enabled = _enabled;
+        lbtnUpdateMoveUP.Enabled = lbtnUpdateMoveDown.Enabled = _enabled;
+        lbtnUpdateAdd.Enabled = lbtnUpdateChange.Enabled = lbtnUpdateDelete.Enabled = _enabled;
+       // lbtnUpdateAdd.Attributes["disabled"] = (!_enabled).ToString();
+        cboxAuthorizationEnabled.Enabled = cboxProxyAuthorizationEnabled.Enabled = cboxProxyEnabled.Enabled = _enabled;
+        ddlProxyType.Enabled = _enabled;
+        tboxProxyAddress.Enabled = tboxProxyPort.Enabled = tboxProxyAuthorizationPassword.Enabled = tboxProxyAuthorizationUserName.Enabled = _enabled;
+        tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = _enabled;
+
     }
 
     public Boolean ValidateFields()

@@ -47,6 +47,9 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
+
         if (monitor == null)
         {
             monitor = new TaskConfigureMonitor(GetEvents());
@@ -58,6 +61,19 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         }
 
         UpdateSettings();
+    }
+
+    private void SetEnabled()
+    {
+        cboxMonitorOn.Enabled = _enabled;
+        tboxMonitorFileExtensions.Enabled = tboxMonitorFilesExcluded.Enabled = _enabled;
+        lbtnMonitorFileExtensionReset.Enabled = _enabled;
+        lboxExcludedPath.Enabled = _enabled;
+        lbtnPathAdd.Enabled = lbtnPathChange.Enabled = lbtnPathDelete.Enabled = _enabled;
+        ddlInfectedActions1.Enabled = ddlInfectedActions2.Enabled = ddlInfectedActions3.Enabled = _enabled;
+        ddlSuspiciousActions1.Enabled = ddlSuspiciousActions2.Enabled = _enabled;
+        chkInfectedSaveCopy.Enabled = chkSuspiciousSaveCopy.Enabled = _enabled;
+        JournalEventTable.Enabled = _enabled;
     }
 
     private String[] GetEvents()

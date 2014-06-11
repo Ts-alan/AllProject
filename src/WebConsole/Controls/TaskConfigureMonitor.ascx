@@ -10,6 +10,11 @@
         });
 
         $(document).on("click", '#<%= lbtnPathAdd.ClientID %>', function () {
+            var disabled = $('#<%= lbtnPathAdd.ClientID %>').attr("disabled");
+
+            if (disabled == "disabled") {
+                return;
+            }
             var dOpt = {
                 width: 350,
                 resizable: false,
@@ -40,6 +45,12 @@
         }
 
         $(document).on("click", '#<%= lbtnPathChange.ClientID %>', function () {
+
+            var disabled = $('#<%= lbtnPathChange.ClientID %>').attr("disabled");
+            if (disabled == "disabled") {
+                return;
+            }
+
             var lbox = '#<%=lboxExcludedPath.ClientID %>';
             $('#' + '<%=tboxAddExcludedDialogPath.ClientID %>').val($(lbox + " option:selected").text());
 
@@ -66,6 +77,13 @@
             $('#AddExcludedDialog').dialog(dOpt);
             $('#divOverlay').css('display', 'inline');
             $('#AddExcludedDialog').parent().appendTo(jQuery("form:first"));
+        });
+        $(document).on("click", '#<%= lbtnPathDelete.ClientID %>', function () {
+
+            var disabled = $('#<%= lbtnPathDelete.ClientID %>').attr("disabled");
+            if (disabled == "disabled") {
+                return;
+            }
         });
     });
 </script>
@@ -141,13 +159,13 @@
                             <table rules="groups" >
                                 <thead >
                                     <td style="font-weight:bold">
-                                         <asp:Label ID="Label5"   runat="server" ><%=Resources.Resource.InfectedFiles %></asp:Label> 
+                                         <asp:Label runat="server" ><%=Resources.Resource.InfectedFiles %></asp:Label> 
                                     </td>                           
                                 </thead>
                                 <tbody>
                                     <tr style="height:25px">
                                         <td>
-                                            <asp:Label ID="Label6"   runat="server"><%= Resources.Resource.CongMonitorActionFirst%></asp:Label>
+                                            <asp:Label  runat="server"><%= Resources.Resource.CongMonitorActionFirst%></asp:Label>
                                         </td>
                                         <td>
                                             <asp:DropDownList runat="server" ID="ddlInfectedActions1" style="width:120px;"> 

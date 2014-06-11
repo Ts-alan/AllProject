@@ -28,8 +28,24 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         InitFieldsJournalEvent(firewall.journalEvent);
     }
 
+    private Boolean _hideHeader = false;
+    public Boolean HideHeader
+    {
+        get { return _hideHeader; }
+        set { _hideHeader = value; }
+    }
+
+    private Boolean _enabled = true;
+    public Boolean Enabled
+    {
+        get { return _enabled; }
+        set { _enabled = value; }
+    }
+
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
         if (firewall == null)
         {
             firewall = new TaskConfigureFirewall(GetEvents());
@@ -60,6 +76,11 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
         IP4UpdateData();
         IP6UpdateData();
+    }
+
+    private void SetEnabled()
+    {
+        tblIP4UpdatePanel.Enabled = tblIP6UpdatePanel.Enabled = JournalEventTable.Enabled = _enabled;
     }
 
     private String[] GetEvents()

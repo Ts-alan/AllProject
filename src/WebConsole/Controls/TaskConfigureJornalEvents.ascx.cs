@@ -49,7 +49,14 @@ public partial class Controls_TaskConfigureJornalEvents : System.Web.UI.UserCont
             _journalEvent.ClearEvents();
         }
 
-        HeaderName.Visible = !HideHeader;
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
+
+    }
+
+    private void SetEnabled()
+    {
+        JournalEventTable.Enabled = _enabled;
     }
 
     private String[] GetEvents()

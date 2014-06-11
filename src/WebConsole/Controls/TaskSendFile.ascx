@@ -18,7 +18,7 @@
                 <%=Resources.Resource.Information %>
             </td>
             <td>
-                <asp:Label ID=lblDetails runat=server Text="Select file" />
+                <asp:Label ID="lblDetails" runat="server" Text="Select file" />
             </td>
         </tr>
         <tr>

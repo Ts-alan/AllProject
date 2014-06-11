@@ -58,12 +58,26 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
 
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
         if (scanner == null)
         {
             scanner = new TaskConfigureScanner(GetEvents());
             scanner.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
         }
       
+    }
+
+    private void SetEnabled()
+    {
+        tboxScannerFileExtensions.Enabled = _enabled;
+        tboxScannerFilesExcluded.Enabled = _enabled;
+        chkScannerCache.Enabled = chkScannerFindPotential.Enabled = chkScannerFindVirusInstalls.Enabled = _enabled;
+        chkScannerMaxSize.Enabled = chkScannerScanArchives.Enabled = chkScannerScanMail.Enabled = chkScannerTrustAuthenCode.Enabled = _enabled;
+        chkSuspiciousSaveCopy.Enabled = chkInfectedSaveCopy.Enabled = _enabled;
+        ddlInfectedActions.Enabled = ddlInfectedCases.Enabled = _enabled;
+        ddlSuspiciousActions.Enabled = ddlSuspiciousCases.Enabled = _enabled;
+        tboxScannerMaxSize.Enabled = _enabled;
     }
     private String[] GetEvents()
     {
@@ -144,8 +158,8 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
 
     public void LoadScanner()
     {
-        ScannerFileExtensionsTextBox.Text = scanner.FileExtensions;
-        ScannerFilesExcludedTextBox.Text = scanner.FileExtensionsExcluded;
+        tboxScannerFileExtensions.Text = scanner.FileExtensions;
+        tboxScannerFilesExcluded.Text = scanner.FileExtensionsExcluded;
         chkScannerCache.Checked = scanner.IsEnableCache;
         chkScannerScanArchives.Checked = scanner.IsCheckArchives;
         chkScannerScanMail.Checked = scanner.IsCheckMail;
@@ -153,7 +167,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         chkScannerFindVirusInstalls.Checked = scanner.IsFindVirusInstalls;
         chkScannerMaxSize.Checked = scanner.IsArchivesMaxSize;
         chkScannerTrustAuthenCode.Checked = scanner.IsAuthenticode;
-        txtScannerMaxSize.Text = scanner.ArchiveMaxSize.ToString();
+        tboxScannerMaxSize.Text = scanner.ArchiveMaxSize.ToString();
         ddlInfectedActions.SelectedIndex = (int)scanner.InfectedAction;
         ddlInfectedCases.SelectedIndex = (int)scanner.InfectedCases;
         ddlSuspiciousActions.SelectedIndex = (int)scanner.SuspiciousAction;
@@ -166,8 +180,8 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
     }
     public void SaveScanner()
     {
-        scanner.FileExtensions = ScannerFileExtensionsTextBox.Text;
-        scanner.FileExtensionsExcluded = ScannerFilesExcludedTextBox.Text;
+        scanner.FileExtensions = tboxScannerFileExtensions.Text;
+        scanner.FileExtensionsExcluded = tboxScannerFilesExcluded.Text;
         scanner.IsEnableCache = chkScannerCache.Checked;
         scanner.IsCheckArchives = chkScannerScanArchives.Checked;
         scanner.IsCheckMail = chkScannerScanMail.Checked;
@@ -175,7 +189,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         scanner.IsFindVirusInstalls = chkScannerFindVirusInstalls.Checked;
         scanner.IsArchivesMaxSize = chkScannerMaxSize.Checked;
         scanner.IsAuthenticode = chkScannerTrustAuthenCode.Checked;
-        scanner.ArchiveMaxSize =Int32.Parse( txtScannerMaxSize.Text);
+        scanner.ArchiveMaxSize =Int32.Parse( tboxScannerMaxSize.Text);
         scanner.InfectedAction = (ScannerActions)ddlInfectedActions.SelectedIndex  ;
         scanner.InfectedCases = (ScannerActions)ddlInfectedCases.SelectedIndex;
         scanner.SuspiciousAction = (ScannerActions)ddlSuspiciousActions.SelectedIndex;

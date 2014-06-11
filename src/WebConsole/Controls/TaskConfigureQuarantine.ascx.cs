@@ -58,7 +58,14 @@ public partial class Controls_TaskConfigureQuarantine : System.Web.UI.UserContro
 
     public void InitFields()
     {
+        if (HideHeader) HeaderName.Visible = false;
+        SetEnabled();
         quarantine = new TaskConfigureQuarantine(GetEvents());
+    }
+
+    private void SetEnabled()
+    {
+        JournalEventTable.Enabled = _enabled;
     }
     private String[] GetEvents()
     {

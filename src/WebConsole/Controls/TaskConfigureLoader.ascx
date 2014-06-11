@@ -10,6 +10,11 @@
         HideTableLoader2();
 
         $(document).on("click", '#<%= lbtnUpdateAdd.ClientID %>', function () {
+            var disabled = $('#<%= lbtnUpdateAdd.ClientID %>').attr("disabled");
+         
+            if (disabled =="disabled") {
+                return;
+            }
             var dOpt = {
                 width: 350,
                 resizable: false,
@@ -40,6 +45,11 @@
         }
 
         $(document).on("click", '#<%= lbtnUpdateChange.ClientID %>', function () {
+            var disabled = $('#<%= lbtnUpdateChange.ClientID %>').attr("disabled");
+
+            if (disabled == "disabled") {
+                return;
+            }
             var lbox = '#<%=lboxUpdatePathes.ClientID %>';
             $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').val($(lbox + " option:selected").text());
             var dOpt = {
@@ -67,7 +77,13 @@
             $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
         });
     });
-
+    $(document).on("click", '#<%= lbtnUpdateDelete.ClientID %>', function () {
+        var disabled = $('#<%= lbtnUpdateDelete.ClientID %>').attr("disabled");
+        
+        if (disabled == "disabled") {
+            return;
+        }
+    });
     function HideTableLoader1() {
         var cbox = $("#<%= cboxProxyEnabled.ClientID %>").is(":checked");
         $("#<%=ddlProxyType.ClientID %>").prop("disabled", !cbox);
@@ -117,7 +133,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <asp:ListBox runat="server" ID="lboxUpdatePathes" style="width: 460px;height: 160px;"></asp:ListBox> 
+                                            <asp:ListBox runat="server" ID="lboxUpdatePathes" style="width: 460px;height: 160px;" ></asp:ListBox> 
                                         </td>
                                         <td>
                                             <asp:LinkButton ID="lbtnUpdateMoveUP" runat="server" Text='&#x2191;' SkinID="Button" OnClick="lbtnUpdateMoveUP_Click"></asp:LinkButton>
@@ -130,7 +146,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <asp:LinkButton ID="lbtnUpdateAdd" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Add %></asp:LinkButton>
+                                <asp:LinkButton ID="lbtnUpdateAdd" runat="server" SkinID="Button" OnClientClick="return false;" ><%=Resources.Resource.Add %></asp:LinkButton>
                                 <asp:LinkButton ID="lbtnUpdateDelete" runat="server" SkinID="Button" OnClick="lbtnUpdateDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
                                 <asp:LinkButton ID="lbtnUpdateChange" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Change %></asp:LinkButton>
                                 <asp:LinkButton ID="lbtnAddUpdatePathDialogApply" runat='server' Style="display: none" OnClick="lbtnAddUpdatePathDialogApply_Click" ></asp:LinkButton>

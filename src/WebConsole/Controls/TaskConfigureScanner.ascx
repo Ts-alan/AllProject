@@ -6,13 +6,13 @@
         $("#ScannerTabs").tabs({ cookie: { expires: 30} });
         $("input[class='control']").button();
         $("input[type='button']").button();
-        if($('#<%= ScannerFileExtensionsTextBox.ClientID %>').val()=='')
-            $('#<%= ScannerFileExtensionsTextBox.ClientID %>').val(defExts);
+        if($('#<%= tboxScannerFileExtensions.ClientID %>').val()=='')
+            $('#<%= tboxScannerFileExtensions.ClientID %>').val(defExts);
         ScannerScanArchiveState();
         ScannerMaxSizeState();
 
-        $('#<%= ScannerFileExtensionResetButton.ClientID %>').on("click", function () {
-            $('#<%= ScannerFileExtensionsTextBox.ClientID %>').val(defExts);
+        $('#<%= lbtnScannerFileExtensionReset.ClientID %>').on("click", function () {
+            $('#<%= tboxScannerFileExtensions.ClientID %>').val(defExts);
         });
 
         $('#<%= chkScannerScanArchives.ClientID %>').on('click', function () {
@@ -32,16 +32,16 @@
             $('#<%= chkScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
             $('#<%= chkScannerMaxSize.ClientID %>').parent().attr('disabled', 'disabled');
             $('#<%= chkScannerMaxSize.ClientID %>').attr('checked', false);
-            $('#<%= txtScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
+            $('#<%= tboxScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
         }
     };
     function ScannerMaxSizeState()
     {
         if ($('#<%= chkScannerMaxSize.ClientID %>').is(':checked') == true) {
-            $('#<%= txtScannerMaxSize.ClientID %>').removeAttr('disabled');
+            $('#<%= tboxScannerMaxSize.ClientID %>').removeAttr('disabled');
         }
         else {
-            $('#<%= txtScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
+            $('#<%= tboxScannerMaxSize.ClientID %>').attr('disabled', 'disabled');
         }
     }
 </script>
@@ -64,16 +64,16 @@
                         <tr>
                             <td>
                                 &nbsp;
-                                <asp:RequiredFieldValidator ID="ScannerFileExtensionsTextBoxValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
-                                    ControlToValidate="ScannerFileExtensionsTextBox" Display="None" ValidationGroup="ScannerFileExtensionsValidationGroup" />
-                                 <asp:RegularExpressionValidator id="ScannerFileExtensionsRegularExpressionValidator" ControlToValidate="ScannerFileExtensionsTextBox" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutScannerFileExtensionsTextBox" runat="server"
-                                    TargetControlID="ScannerFileExtensionsTextBoxValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RegularValidatorCalloutScannerFileExtensionsTextBox" runat="server"
+                                <asp:RequiredFieldValidator ID="tboxScannerFileExtensionsValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
+                                    ControlToValidate="tboxScannerFileExtensions" Display="None" ValidationGroup="ScannerFileExtensionsValidationGroup" />
+                                 <asp:RegularExpressionValidator id="ScannerFileExtensionsRegularExpressionValidator" ControlToValidate="tboxScannerFileExtensions" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCallouttboxScannerFileExtensions" runat="server"
+                                    TargetControlID="tboxScannerFileExtensionsValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RegularValidatorCallouttboxScannerFileExtensions" runat="server"
                                     TargetControlID="ScannerFileExtensionsRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
-                                <asp:TextBox runat="server" ID="ScannerFileExtensionsTextBox" style="width:435px"></asp:TextBox>
-                                &nbsp;
-                                <input class='control' type="button" runat="server" id="ScannerFileExtensionResetButton" value="<%$ Resources:Resource, DefaultFiles %>" />
+                                <asp:TextBox runat="server" ID="tboxScannerFileExtensions" style="width:435px"></asp:TextBox>
+                                &nbsp;     
+                                <asp:LinkButton runat="server" ID="lbtnScannerFileExtensionReset" SkinID="Button" OnClientClick="return false;"><%= Resources.Resource.DefaultFiles %></asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
@@ -81,10 +81,10 @@
                                 &nbsp; &nbsp; &nbsp; &nbsp;
                                 <asp:Label runat="server" style="width:100px;"><%=Resources.Resource.CongScannerExclude%></asp:Label>
                                 &nbsp;&nbsp;
-                               <asp:RegularExpressionValidator id="ScannerFilesExcludedRegularExpressionValidator" ControlToValidate="ScannerFilesExcludedTextBox" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
+                               <asp:RegularExpressionValidator id="ScannerFilesExcludedRegularExpressionValidator" ControlToValidate="tboxScannerFilesExcluded" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server"/>
                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerFilesExcludedRegularExpressionValidatorCalloutExtender" runat="server"
                                     TargetControlID="ScannerFilesExcludedRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
-                                <asp:TextBox runat="server" ID="ScannerFilesExcludedTextBox" style="width:435px"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="tboxScannerFilesExcluded" style="width:435px"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -132,10 +132,10 @@
                         <tr>
                             <td>
                                 &nbsp; &nbsp; &nbsp;  &nbsp;  &nbsp;
-                                <asp:RegularExpressionValidator id="ScannerMaxSizeRegularExpressionValidator" ControlToValidate="txtScannerMaxSize" ValidationExpression="^([\d])*$" ErrorMessage="<%$Resources:Resource, WrongArchivesSize %>"  runat="server"/>
+                                <asp:RegularExpressionValidator id="ScannerMaxSizeRegularExpressionValidator" ControlToValidate="tboxScannerMaxSize" ValidationExpression="^([\d])*$" ErrorMessage="<%$Resources:Resource, WrongArchivesSize %>"  runat="server"/>
                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerMaxSizeRegularExpressionValidatorCalloutExtender" runat="server"
                                     TargetControlID="ScannerMaxSizeRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
-                                <asp:TextBox ID="txtScannerMaxSize" runat="server"  Enabled="false"/>
+                                <asp:TextBox ID="tboxScannerMaxSize" runat="server"  Enabled="false"/>
                             </td>
                             <td>
                             </td>
