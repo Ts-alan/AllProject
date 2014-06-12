@@ -203,6 +203,8 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>settings entity</returns>
         public ComputerColorOptionsEntity Deserialize(string options)
         {
+            if (String.IsNullOrEmpty(options))
+                return new ComputerColorOptionsEntity();
             XmlSerializer xmlser = new XmlSerializer(this.GetType());
             StringReader reader = new StringReader(options);
             return (ComputerColorOptionsEntity)xmlser.Deserialize(reader);
