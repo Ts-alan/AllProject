@@ -2707,7 +2707,7 @@
     <value>Снять выделение со всех компьютеров.</value>
   </data>
   <data name="Antivirus" xml:space="preserve">
-    <value>Антивирусный комплекс</value>
+    <value>КАНОЭ клиент</value>
   </data>
   <data name="ErrorOfNestingLavel" xml:space="preserve">
     <value>Превышен уровень вложенности</value>

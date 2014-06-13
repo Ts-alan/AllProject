@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vba32msi xmlns="Settings">
-  <path version="Vba32 WinNT Workstation">Vba32Workstation.msi</path>
-  <path version="Vba32 WinNT Server">Vba32Server.msi</path>
-  <path version="Vba32 for Windows Vista">Vba32Vista.msi</path>
-  <path version="Vba32 for Windows Server 2008">Vba32VistaServer.msi</path>
-  <path version="Vba32 Remote Console Scanner">Vba32 Remote Console Scanner.msi</path>
-  <path version="Vba32 Remote Control Agent">Vba32 Remote Control Agent.msi</path>
+  <path version="Vba32 Remote Control Agent">Vba32RemoteControlAgent.exe</path>
+  <path version="Vba32 Antivirus">Vba32Antivirus.exe</path>
 </vba32msi>

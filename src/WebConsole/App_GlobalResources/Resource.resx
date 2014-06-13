@@ -2719,7 +2719,7 @@ system administrator.</value>
     <value>Unselect all computers.</value>
   </data>
   <data name="Antivirus" xml:space="preserve">
-    <value>Antivirus</value>
+    <value>KANOE Client</value>
   </data>
   <data name="ErrorOfNestingLavel" xml:space="preserve">
     <value>Nesting level exceeded</value>

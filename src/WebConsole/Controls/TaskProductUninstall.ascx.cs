@@ -61,8 +61,6 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
         SetEnabled();
         List<String> list = new List<String>();
         list.Add(Resources.Resource.Antivirus);
-        list.Add(Resources.Resource.RemoteConsoleScanner);
-        list.Add(Resources.Resource.AntivirusVirtualization);
 
         ddlProduct.DataSource = list;
         ddlProduct.DataBind();
@@ -131,12 +129,6 @@ public partial class Controls_TaskProductUninstall : System.Web.UI.UserControl, 
         switch (ddlProduct.SelectedIndex)
         {
             case 0:
-                version = Vba32MsiStorage.GetVba32VersionByOSVersion(osVersion);
-                break;
-            case 1:
-                version = Vba32VersionInfo.Vba32RemoteConsoleScanner;
-                break;
-            case 2:
                 version = Vba32VersionInfo.Vba32Antivirus;
                 break;
         }
