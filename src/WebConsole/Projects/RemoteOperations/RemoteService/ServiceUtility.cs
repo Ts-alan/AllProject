@@ -4,6 +4,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.ComponentModel;
+using System.Security.Principal;
+using VirusBlokAda.CC.RemoteOperations.Common;
 
 namespace VirusBlokAda.CC.RemoteOperations.RemoteService
 {
@@ -65,6 +67,43 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteService
 
         [DllImport("advapi32.dll", EntryPoint = "QueryServiceStatus", CharSet = CharSet.Auto)]
         private static extern bool QueryServiceStatusA(IntPtr hService, ref SERVICE_STATUS dwServiceStatus);
+
+        [DllImport("advapi32.DLL", SetLastError = true)]
+        public static extern int LogonUser(string lpszUsername, string lpszDomain,
+            string lpszPassword, int dwLogonType, int dwLogonProvider, out IntPtr phToken);
+
+        [DllImport("advapi32.DLL")]
+        public static extern bool ImpersonateLoggedOnUser(IntPtr hToken); //handle to token for logged-on user
+
+        [DllImport("advapi32.DLL")]
+        public static extern bool RevertToSelf();
+
+        [DllImport("kernel32.dll")]
+        public extern static bool CloseHandle(IntPtr hToken);
+
+        #endregion
+
+        #region Internal enums
+
+        private enum LogonType
+        {
+            Interactive = 2,
+            Network = 3,
+            Batch = 4,
+            Service = 5,
+            Unlock = 7,
+            NetworkClearText = 8,
+            NewCredentials = 9
+        }
+
+        private enum LogonProvider
+        {
+            Default = 0,
+            WinNT35 = 1,
+            WinNT40 = 2,
+            WinNT50 = 3
+        }
+
         #endregion
 
         #region Service Methods
@@ -237,10 +276,26 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteService
         /// <param name="servicePath">Absolute path to service</param>
         /// <param name="timeout">Time to wait for service to start</param>
         public static void InstallAndStartRemoteService(string remoteMachineName, string serviceName, string servicePath,
-            TimeSpan timeout)
+            TimeSpan timeout, Credentials credentials)
         {
+            WindowsImpersonationContext context = null;
+            IntPtr admin_token;
+            Int32 valid = LogonUser(credentials.Username,
+                            credentials.Domain,
+                            credentials.Password,
+                            (Int32)LogonType.Interactive,
+                            (Int32)LogonProvider.WinNT50,
+                            out admin_token);
+
+            if (valid != 0)
+            {
+                context = WindowsIdentity.Impersonate(admin_token);
+                CloseHandle(admin_token);
+            }
+
             IntPtr hSCM = IntPtr.Zero;
             IntPtr hService = IntPtr.Zero;
+
             try
             {
                 hSCM = OpenServiceManager(remoteMachineName);
@@ -264,7 +319,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteService
                         // wait the service to reach the running status
 
                         WaitForServiceToReachState(hService, SERVICE_RUNNING, ref ss, timeout);
-                    }                    
+                    }
                 }
             }
             finally
@@ -277,6 +332,8 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteService
                 {
                     CloseServiceManager(hSCM);
                 }
+                if (context != null)
+                    context.Dispose();
             }
         }
 

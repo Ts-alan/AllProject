@@ -18,42 +18,6 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
 {
     class RemoteInstallHelper
     {
-        [DllImport("advapi32.DLL", SetLastError = true)]
-        public static extern int LogonUser(string lpszUsername, string lpszDomain,
-            string lpszPassword, int dwLogonType, int dwLogonProvider, out IntPtr phToken);
-
-        [DllImport("advapi32.DLL")]
-        public static extern bool ImpersonateLoggedOnUser(IntPtr hToken); //handle to token for logged-on user
-
-        [DllImport("advapi32.DLL")]
-        public static extern bool RevertToSelf();
-
-        [DllImport("kernel32.dll")]
-        public extern static bool CloseHandle(IntPtr hToken);
-
-        #region Internal enums
-
-        private enum LogonType
-        {
-            Interactive = 2,
-            Network = 3,
-            Batch = 4,
-            Service = 5,
-            Unlock = 7,
-            NetworkClearText = 8,
-            NewCredentials = 9
-        }
-
-        private enum LogonProvider
-        {
-            Default = 0,
-            WinNT35 = 1,
-            WinNT40 = 2,
-            WinNT50 = 3
-        }
-
-        #endregion
-
         protected const String InstallLogFileName = "vba32install.log";
         protected const String UninstallLogFileName = "vba32uninstall.log";
         protected const WmiMethodsCallMode MethodsCallMode = WmiMethodsCallMode.Synchronous;
@@ -210,21 +174,6 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
             Boolean gotWindir = false;
             Boolean installedSuccessfully = false;
 
-            IntPtr admin_token;
-            Int32 valid = LogonUser(credentials.Username,
-                            credentials.Domain,
-                            credentials.Password,
-                            (Int32)LogonType.Interactive,
-                            (Int32)LogonProvider.WinNT50,
-                            out admin_token);
-
-            WindowsImpersonationContext context = null;
-            if (valid != 0)
-            {
-                context = WindowsIdentity.Impersonate(admin_token);
-                CloseHandle(admin_token);
-            }
-
             connectedToAdminShare = ConnectToAdminShare(rie, credentials, out usedComputerName);
             if (connectedToAdminShare)
             {
@@ -293,9 +242,6 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
                 noError = DisconnectFromAdminShare(rie, credentials, usedComputerName);
 
             }
-
-            if (context != null)
-                context.Dispose();
 
             return noError;
         }
@@ -593,7 +539,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
             {
                 SetStatus(rie, InstallationStatusEnum.Connecting);
                 ServiceUtility.InstallAndStartRemoteService(usedComputerName ? rie.ComputerName : rie.IP, "vba32helperservice",
-                    @"%systemroot%\Temp\vba32helperservice.exe", new TimeSpan(0, 0, 20));
+                    @"%systemroot%\Temp\vba32helperservice.exe", new TimeSpan(0, 0, 20), credentials);
                 return true;
             }
             catch (Exception)
