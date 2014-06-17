@@ -81,7 +81,14 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
     }
     private String[] GetEvents()
     {
-        String[] s = { "ev1", "ev2", "ev3", "ev4" };
+        String[] s = { "JE_VAS_ACTION_BLOCK",
+                        "JE_VAS_ACTION_CURE",
+                        "JE_VAS_ACTION_DELETE",
+                        "JE_VAS_ACTION_NONE",
+                        "JE_VAS_INFECTED",
+                        "JE_VAS_START",
+                        "JE_VAS_STOP",
+                        "JE_VAS_SUSPICIOUS"};
         return s;
     }
 
