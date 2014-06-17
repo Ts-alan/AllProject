@@ -3405,4 +3405,16 @@
   <data name="SomeDateTime" xml:space="preserve">
     <value>Определенная дата/время</value>
   </data>
+  <data name="FirewallIsOn" xml:space="preserve">
+    <value>Файрвол включен</value>
+  </data>
+  <data name="NetworkType" xml:space="preserve">
+    <value>Тип сети</value>
+  </data>
+  <data name="OpenNetwork" xml:space="preserve">
+    <value>Открытая</value>
+  </data>
+  <data name="PrivateNetwork" xml:space="preserve">
+    <value>Частная</value>
+  </data>
 </root>

@@ -76,16 +76,23 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
         IP4UpdateData();
         IP6UpdateData();
+        UpdateGeneralSettings();
+    }
+
+    private void UpdateGeneralSettings()
+    {
+        chkFirewallOn.Checked = firewall.firewall_On;
+        ddlFirewallNetworkType.SelectedIndex = (Int32)firewall.NetworkType;
     }
 
     private void SetEnabled()
     {
-        tblIP4UpdatePanel.Enabled = tblIP6UpdatePanel.Enabled = JournalEventTable.Enabled = _enabled;
+        chkFirewallOn.Enabled = ddlFirewallNetworkType.Enabled = tblIP4UpdatePanel.Enabled = tblIP6UpdatePanel.Enabled = JournalEventTable.Enabled = _enabled;
     }
 
     private String[] GetEvents()
     {
-        String[] s = { "ev1", "ev2", "ev3", "ev4" };
+        String[] s = { "JE_VND_APPLIED_RULES_FAILED", "JE_VND_APPLIED_RULES_OK", "JE_VND_AUIDIT_OTHER", "JE_VND_AUIDIT_TCP", "JE_VND_AUIDIT_UDP", "JE_VND_START", "JE_VND_STOP" };
         return s;
     }
 
@@ -98,9 +105,16 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.Firewall;
+        SaveGeneralSettings();
         SaveJournalEvents();
         task.Param = firewall.SaveToXml();
         return task;
+    }
+
+    private void SaveGeneralSettings()
+    {
+        firewall.firewall_On = chkFirewallOn.Checked;
+        firewall.NetworkType = (FirewallNetworkType)ddlFirewallNetworkType.SelectedIndex;
     }
 
     private void SaveJournalEvents()
@@ -132,6 +146,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         firewall.LoadFromXml(task.Param);
         IP4UpdateData();
         IP6UpdateData();
+        UpdateGeneralSettings();
         LoadJournalEvent(firewall.journalEvent);
     }
 

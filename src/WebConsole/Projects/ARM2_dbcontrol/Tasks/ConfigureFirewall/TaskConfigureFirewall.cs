@@ -16,6 +16,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
         private String _Type = "Firewall";
         private List<FirewallRule> _IP4Rules;
         private List<FirewallRule> _IP6Rules;
+        private Boolean _firewall_On;
+        private FirewallNetworkType _networkType;
         //private static List<FirewallRuleProtocol> RuleProtocols;
         private JournalEvent _journalEvent;
 
@@ -61,6 +63,16 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
             set { _journalEvent = value; }
         }
 
+        public Boolean firewall_On
+        {
+            get { return _firewall_On; }
+            set { _firewall_On = value; }
+        }
+        public FirewallNetworkType NetworkType
+        {
+            get { return _networkType; }
+            set { _networkType = value; }
+        }
         #endregion
 
         #region Constructor
@@ -116,6 +128,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 
             builder.Append(@"<VsisCommand><Args><command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg><arg><key>command</key><value>apply_settings</value></arg>");
             builder.AppendFormat(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{0}</id>", GUID);
+            builder.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", firewall_On);
+
+            builder.AppendFormat(@"<param><id>ActiveRulesSets</id><type>string</type><value>{0}</value></param>", NetworkType.ToString());
+
             builder.Append(journalEvent.GetTask());
             builder.Append("<param><id>IpV4</id><type>stringlist</type><value>");
             for (Int32 i = 0; i < IP4Rules.Count; i++)
@@ -181,7 +197,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
             if (rule.Enable)
                 bitmask += (UInt32)FirewallFlags.Enable;
 
-            task.AppendFormat("{0};", bitmask.ToString("X"));
+            task.AppendFormat("{0};", bitmask.ToString());
             task.Append(rule.Name);
 
             return task.ToString();
@@ -201,7 +217,12 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 
         #endregion
     }
-
+    public enum FirewallNetworkType
+    {
+        Domain=0,
+        Open,
+        Private
+    }
     public struct FirewallRule
     {
         public Boolean Enable;

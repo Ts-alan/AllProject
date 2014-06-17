@@ -508,10 +508,25 @@
 
     <div id="Tabs">
         <ul>
+            <li><a href="#tab0"><%=Resources.Resource.General %></a></li>
             <li><a href="#tab1">IP v4</a> </li>
             <li><a href="#tab2">IP v6</a> </li>
             <li><a href="#tab3"><%=Resources.Resource.JournalEvents %></a> </li>
         </ul>
+        <div id='tab0'>
+            <div class="ListContrastTable">
+                <asp:CheckBox ID="chkFirewallOn" runat="server" />
+                <asp:Label runat="server"><%=Resources.Resource.FirewallIsOn %></asp:Label>
+                <div>
+                    <p><asp:Label runat="server"><%=Resources.Resource.NetworkType %></asp:Label></p>
+                    <asp:DropDownList ID="ddlFirewallNetworkType" runat="server">
+                        <asp:ListItem Text="<%$ Resources:Resource, DomainName %>"></asp:ListItem>
+                        <asp:ListItem Text="<%$ Resources:Resource, OpenNetwork %>" Selected="True"></asp:ListItem>
+                        <asp:ListItem Text="<%$ Resources:Resource, PrivateNetwork %>"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
+        </div>
         <div id='tab1'>       
             <asp:UpdatePanel ID="IP4UpdatePanel" runat="server" >
                 <ContentTemplate>

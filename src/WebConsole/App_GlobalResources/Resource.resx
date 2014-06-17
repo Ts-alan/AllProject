@@ -3417,4 +3417,16 @@ system administrator.</value>
   <data name="SomeDateTime" xml:space="preserve">
     <value>Some date/time</value>
   </data>
+  <data name="FirewallIsOn" xml:space="preserve">
+    <value>Firewall is on</value>
+  </data>
+  <data name="NetworkType" xml:space="preserve">
+    <value>Network type</value>
+  </data>
+  <data name="OpenNetwork" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PrivateNetwork" xml:space="preserve">
+    <value>Private</value>
+  </data>
 </root>
