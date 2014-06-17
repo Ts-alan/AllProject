@@ -77,14 +77,9 @@ public partial class TaskCreate : PageBase
                 if (task.Type == TaskType.Firewall && task.Name != String.Empty)
                 {
                     tbSaveAs.Text = task.Name.Substring(10);
-                }
+                }               
                 else
-                    if (task.Type == TaskType.ConfigureSheduler && task.Name != String.Empty)
-                    {
-                        tbSaveAs.Text = task.Name.Substring(11);
-                    }
-                    else
-                        tbSaveAs.Text = task.Name;
+                    tbSaveAs.Text = task.Name;
             }
 
             if (Request.QueryString["ID"] != null)
@@ -321,8 +316,9 @@ public partial class TaskCreate : PageBase
                 break;
             case TaskType.ConfigureSheduler:
 
-                tskConfigureScheduler.ShowProfileDetails(task);
-                lblTaskName.Text = Resources.Resource.ProfileName;
+                tskConfigureScheduler.InitFields();
+                tskConfigureScheduler.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
                 tskConfigureScheduler.Visible = true;
                 break;
             case TaskType.RequestPolicy:
@@ -482,25 +478,18 @@ public partial class TaskCreate : PageBase
                 task.Name = String.Format("Firewall: {0}", tbSaveAs.Text);
                 if (tbSaveAs.Text == String.Empty)
                     throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.TaskName);
-            }
+            }            
             else
-                if (task.Type == TaskType.ConfigureSheduler)
-                {
-                    task.Name = String.Format("Scheduler: {0}", tbSaveAs.Text);
-                    if (tbSaveAs.Text == String.Empty)
-                        throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": " + Resources.Resource.TaskName);
-                }
-                else
-                {
-                    task.Name = tbSaveAs.Text;
+            {
+                task.Name = tbSaveAs.Text;
 
-                    //Проверка имени..
+                //Проверка имени..
 
-                    Validation vld = new Validation(task.Name);
-                    if (!vld.CheckStringFilterName())
-                        throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-                            + Resources.Resource.TaskName);
-                }
+                Validation vld = new Validation(task.Name);
+                if (!vld.CheckStringFilterName())
+                    throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
+                        + Resources.Resource.TaskName);
+            }
             //Проверим, не является ли это имя именем базовой задачи
             ResourceControl resctrl = new ResourceControl();
 
@@ -523,6 +512,7 @@ public partial class TaskCreate : PageBase
                 (resctrl.IsExist("TaskNameRestoreFileFromQtn", task.Name)) ||
                 (resctrl.IsExist("TaskNameConfigurePassword", task.Name)) ||
                 (resctrl.IsExist("TaskConfigureIntegrityCheck", task.Name)) ||
+                (resctrl.IsExist("TaskConfigureScheduler", task.Name)) ||
                 (resctrl.IsExist("TaskConfigureFileCleaner", task.Name))
                 )
             {
@@ -570,10 +560,7 @@ public partial class TaskCreate : PageBase
         LoadStateTask(task);
 
         lblMessage.Text = Resources.Resource.TaskSaved;
-        if (task.Type == TaskType.ProactiveProtection || task.Type == TaskType.ConfigureSheduler)
-        {
-            lblMessage.Text = Resources.Resource.ProfileSaved;
-        }
+        
         mpPicture.Attributes["class"] = "ModalPopupPictureSuccess";
         CorrectPositionModalPopup();
         ModalPopupExtender.Show();

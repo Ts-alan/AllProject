@@ -3399,4 +3399,22 @@ system administrator.</value>
   <data name="CongLdrProxyServerType" xml:space="preserve">
     <value>Proxy type</value>
   </data>
+  <data name="AtSystemStartUp" xml:space="preserve">
+    <value>At system startup</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Date and time</value>
+  </data>
+  <data name="EveryDayOfMonth" xml:space="preserve">
+    <value>Every day of month</value>
+  </data>
+  <data name="EveryDayOfWeek" xml:space="preserve">
+    <value>Every day of week</value>
+  </data>
+  <data name="EveryHour" xml:space="preserve">
+    <value>Every hour</value>
+  </data>
+  <data name="SomeDateTime" xml:space="preserve">
+    <value>Some date/time</value>
+  </data>
 </root>

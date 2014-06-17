@@ -809,8 +809,8 @@ public partial class Groups : PageBase
         taskName.Add(Resources.Resource.CongLdrConfigureMonitor);
         taskName.Add(Resources.Resource.TaskNameConfigureScanner);
         taskName.Add(Resources.Resource.TaskNameConfigureQuarantine);
-        //taskName.Add(Resources.Resource.TaskNameConfigureProactiveProtection);
-        //taskName.Add(Resources.Resource.ConfigureScheduler);
+        taskName.Add(Resources.Resource.TaskNameConfigureProactiveProtection);
+        taskName.Add(Resources.Resource.ConfigureScheduler);
         taskName.Add(Resources.Resource.TaskNameConfigureFirewall);
         taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
@@ -829,18 +829,10 @@ public partial class Groups : PageBase
 
 
         TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
-        //Sort by name
-        List<string> nameCollection = new List<string>();
+
         foreach (TaskUserEntity task in collection)
         {
-            if (task.Type != TaskType.ConfigureSheduler)
-                nameCollection.Add(task.Name);
-        }
-        nameCollection.Sort();
-        //
-        foreach (string task in nameCollection)
-        {
-            taskName.Add(task);
+            taskName.Add(task.Name);
         }
 
         ddlTaskName.DataSource = taskName;
@@ -1286,17 +1278,16 @@ public partial class Groups : PageBase
 
             if (tskConfigureScheduler.Visible == true)
             {
-                if ((tskConfigureScheduler.FindControl("ddlProfiles") as DropDownList).Items.Count == 0)
-                    throw new ArgumentException(Resources.Resource.ErrorNotSelectProfile);
-                TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
-                task = collection.Get(String.Format("Scheduler: {0}", (tskConfigureScheduler.FindControl("ddlProfiles") as DropDownList).SelectedValue));
+                task = tskConfigureScheduler.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskConfigureScheduler.ValidateFields();
 
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, Resources.Resource.ConfigureScheduler + ": " + task.Name.Substring(11), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScheduler.BuildTask(task.Param));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScheduler.BuildTask());
             }
 
             if (tskAgentSettings.Visible == true)
@@ -1680,7 +1671,7 @@ public partial class Groups : PageBase
                                                                                     {
                                                                                         task.Type = TaskType.ConfigureSheduler;
                                                                                         task.Name = Resources.Resource.ConfigureScheduler;
-                                                                                        task.Param = xmlBuil.Result;
+                                                                                        task.Param = String.Empty;
                                                                                         lbtnDelete.Visible = false;
                                                                                         lbtnSave.Visible = false;
                                                                                     }
@@ -1859,6 +1850,7 @@ public partial class Groups : PageBase
             case TaskType.ConfigureSheduler:
 
                 tskConfigureScheduler.InitFields();
+                tskConfigureScheduler.LoadState(task);
                 tskConfigureScheduler.Visible = true;
 
                 break;
@@ -2052,10 +2044,18 @@ public partial class Groups : PageBase
                                                                     tskConfigureFileCleaner.ValidateFields();
                                                                 }
                                                                 else
-                                                                {
-                                                                    task = collection.Get(name);
-                                                                    //editing = "";
-                                                                }
+                                                                    if (name == Resources.Resource.ConfigureScheduler)
+                                                                    {
+                                                                        task.Type = TaskType.ConfigureSheduler;
+                                                                        task.Name = name;
+                                                                        task = tskConfigureScheduler.GetCurrentState();
+                                                                        tskConfigureScheduler.ValidateFields();
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        task = collection.Get(name);
+                                                                        //editing = "";
+                                                                    }
 
         //
         string type = task.Type.ToString();

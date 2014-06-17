@@ -3387,4 +3387,22 @@
   <data name="CongLdrProxyServerType" xml:space="preserve">
     <value>Тип прокси</value>
   </data>
+  <data name="AtSystemStartUp" xml:space="preserve">
+    <value>При загрузке системы</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Дата и время</value>
+  </data>
+  <data name="EveryDayOfMonth" xml:space="preserve">
+    <value>Каждый день месяца</value>
+  </data>
+  <data name="EveryDayOfWeek" xml:space="preserve">
+    <value>Каждый день недели</value>
+  </data>
+  <data name="EveryHour" xml:space="preserve">
+    <value>Каждый час</value>
+  </data>
+  <data name="SomeDateTime" xml:space="preserve">
+    <value>Определенная дата/время</value>
+  </data>
 </root>

@@ -1495,19 +1495,13 @@ public partial class Computers : PageBase
 
         TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
         //Sort by name
-        List<string> nameCollection = new List<string>();
+        
         foreach (TaskUserEntity task in collection)
         {
-            if (task.Type != TaskType.ConfigureSheduler)
-                nameCollection.Add(task.Name);
-        }
-        nameCollection.Sort();
-        //
-        foreach (string task in nameCollection)
-        {            
-                taskName.Add(task);
+            taskName.Add(task.Name);
         }
 
+        //
         ddlTaskName.DataSource = taskName;
         ddlTaskName.DataBind();
 
@@ -1993,17 +1987,15 @@ public partial class Computers : PageBase
 
             if (tskConfigureScheduler.Visible == true)
             {
-                if ((tskConfigureScheduler.FindControl("ddlProfiles") as DropDownList).Items.Count == 0)
-                    throw new ArgumentException(Resources.Resource.ErrorNotSelectProfile);
-                TaskUserCollection collection = (TaskUserCollection)Session["TaskUser"];
-                task = collection.Get(String.Format("Scheduler: {0}", (tskConfigureScheduler.FindControl("ddlProfiles") as DropDownList).SelectedValue));
-
+                task = tskConfigureScheduler.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskConfigureScheduler.ValidateFields();
                 for (int i = 0; i < _set.AllComputers.Count; i++)
                 {
-                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, Resources.Resource.ConfigureScheduler + ": " + task.Name.Substring(11), task.Param, userName, connStr);
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
                 }
 
-                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScheduler.BuildTask(task.Param));
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureScheduler.BuildTask());
             }
 
             if (tskAgentSettings.Visible == true)
@@ -2379,9 +2371,9 @@ public partial class Computers : PageBase
                                                                                 {
                                                                                     task.Type = TaskType.ConfigureSheduler;
                                                                                     task.Name = Resources.Resource.ConfigureScheduler;
-                                                                                    task.Param = xmlBuil.Result;
+                                                                                    task.Param = String.Empty;
                                                                                     lbtnDelete.Visible = false;
-                                                                                    lbtnSave.Visible = false;
+                                                                                    lbtnSave.Visible = true;
                                                                                 }
                                                                                 else
                                                                                     if (name == Resources.Resource.TaskRequestPolicy)
@@ -2587,6 +2579,7 @@ public partial class Computers : PageBase
             case TaskType.ConfigureSheduler:
 
                 tskConfigureScheduler.InitFields();
+                tskConfigureScheduler.LoadState(task);
                 tskConfigureScheduler.Visible = true;
 
                 break;
@@ -2828,6 +2821,14 @@ public partial class Computers : PageBase
                                                                         task = tskConfigureFileCleaner.GetCurrentState();
                                                                         tskConfigureFileCleaner.ValidateFields();
                                                                     }
+                                                                    else
+                                                                        if (name == Resources.Resource.ConfigureScheduler)
+                                                                        {
+                                                                            task.Type = TaskType.ConfigureSheduler;
+                                                                            task.Name = name;
+                                                                            task = tskConfigureScheduler.GetCurrentState();
+                                                                            tskConfigureScheduler.ValidateFields();
+                                                                        }
                                                                     else
                                                                     {
                                                                         task = collection.Get(name);
