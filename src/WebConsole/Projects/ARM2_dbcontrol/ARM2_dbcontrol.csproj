@@ -235,7 +235,7 @@
     <Compile Include="Tasks\ConfigureMonitor\TaskConfigureMonitor.cs" />
     <Compile Include="Tasks\ConfigureQuarantine\TaskConfigureQuarantine.cs" />
     <Compile Include="Tasks\ConfigureScanner\TaskConfigureScanner.cs" />
-    <Compile Include="Tasks\ConfigureScheduler\TaskScheduler.cs" />
+    <Compile Include="Tasks\ConfigureScheduler\TaskConfigureScheduler.cs" />
     <Compile Include="Tasks\DefaultTaskBuild.cs" />
     <Compile Include="Tasks\IConfigureTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
