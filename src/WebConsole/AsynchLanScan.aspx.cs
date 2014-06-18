@@ -82,7 +82,7 @@ public partial class AsynchLanScan : PageBase
                 SortIsSelectedDesc();
             }
         }
-        ReloadGridView();
+        //ReloadGridView();
     }
 
     protected void Page_Prerender(object sender, EventArgs e)
