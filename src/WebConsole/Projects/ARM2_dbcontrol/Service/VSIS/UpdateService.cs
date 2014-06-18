@@ -142,7 +142,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                     }
                     return;
                 }
-                String[] param = new String[] { "VBA32AAW" };
+                String[] param = new String[] { "VBA32CCK" };
                 lock (syncObject)
                 {
                     _stopReason = String.Empty;
