@@ -39,6 +39,7 @@ ECHO Service files copying...
 
 FOR %%i IN (Vba32PMS  Vba32NS  Vba32SS packet_parser) DO (
     ERASE /F /S /Q "%bindir%\%%i\%config%\*.pdb"
+    ERASE /F /S /Q "%bindir%\%%i\%config%\*.xml"
     XCOPY "%bindir%\%%i\%config%" %1SERVICE  /E /C /I /F /H /R /Y /v
     IF NOT ERRORLEVEL 0 (
         ECHO Error %ERRORLEVEL% while copying
