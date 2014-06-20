@@ -287,6 +287,23 @@
                 }
             };
         } ();
+        function lbtnInstallClientClick() {
+
+            if (Page_ClientValidate('SettingsValidation')) {
+                if ($('#<%= lblSelectedTotalCount.ClientID %>').text() != "0") {
+
+                    $('#divOverlay').css('display', 'inline');
+                    return true;
+                } else {
+                    alert('<%=Resources.Resource.NoSelectedComputers %>');
+                }
+            }
+            return false;
+        }
+        function AttachAlert(message) {
+            alert(message);
+            $('#divOverlay').css('display', 'none');
+        }
     </script>
     <div id='mainAccordion'>
         <h3>
@@ -534,7 +551,7 @@
                 <table>
                     <tr>
                         <td>
-                            <asp:LinkButton ID="lbtnInstall" ValidationGroup="SettingsValidation" runat="server" OnClick="lbtnInstall_Click" SkinID="Button">
+                            <asp:LinkButton ID="lbtnInstall" runat="server" ValidationGroup="SettingsValidation" OnClick="lbtnInstall_Click" OnClientClick="return lbtnInstallClientClick();" SkinID="Button">
                                     <%=Resources.Resource.Attach %>
                             </asp:LinkButton>
                         </td>
@@ -588,5 +605,8 @@
     <asp:Timer ID="Timer1" runat="server" Interval="10000" Enabled="False" OnTick="Timer1_Tick">
     </asp:Timer>
     <div id="divModalDialog" style="display: none;">
+    </div>
+    <div id="divOverlay" style="display: none;" class="ui-widget-overlay ui-front">
+         <asp:Image ID="imgProcessingCreate" style="position:absolute;top:47%;left:47%" AlternateText="Processing" runat="server" OnInit="imgProcessing_Init" /> 
     </div>
 </asp:Content>

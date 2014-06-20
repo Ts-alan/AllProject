@@ -1226,10 +1226,14 @@ public partial class AsynchLanScan : PageBase
                         $(lblSelectedTotalCountSelector).html(0); ";
         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key2, script2.ToString(), true);
         String key = "InstallClickCallbackScript";
-        String script = "alert('" + Resources.Resource.InstallGived + "');";
-        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, script.ToString(), true);
+        String func = "AttachAlert('"+Resources.Resource.InstallGived+"')";
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), key, func, true);
     }
-
+    protected void imgProcessing_Init(object sender, EventArgs e)
+    {
+        (sender as Image).ImageUrl =
+            "~/App_Themes/" + Profile.Theme + "/Images/loading-transparent.gif";
+    }
     #endregion
 
     #region Get Scan Variables
@@ -1353,5 +1357,7 @@ public partial class AsynchLanScan : PageBase
         }
     }
     #endregion
+
+    
 
 }
