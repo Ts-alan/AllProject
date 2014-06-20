@@ -94,78 +94,77 @@
     </ul>
     <div id="tabMonitor1" class="divSettings">
         <div class="ListContrastTable">
-            <div>
+            <div style="margin-left:10px; margin-top:5px">
                 <asp:CheckBox ID="cboxMonitorOn" runat="server" /><%=Resources.Resource.MonitorEnabled %>
             </div>
-            <div>
-                <%= Resources.Resource.CongMonitorScanSelectedTypes %>
-            </div>
-            <div>
-                <asp:TextBox runat="server" ID="tboxMonitorFileExtensions" style="width:350px;"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="MonitorFileExtensionsTextBoxValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
-                    ControlToValidate="tboxMonitorFileExtensions" Display="None" ValidationGroup="MonitorFileExtensionsValidationGroup" >
-                </asp:RequiredFieldValidator>
-                <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutMonitorFileExtensionsTextBox" runat="server"
-                    TargetControlID="MonitorFileExtensionsTextBoxValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-                </ajaxToolkit:ValidatorCalloutExtender2>
+            <div style="margin-left:10px;margin-top:10px;">
+                <p style="font-weight:bold"><%= Resources.Resource.CongMonitorScanSelectedTypes %></p>
+                <p>
+                    <asp:TextBox runat="server" ID="tboxMonitorFileExtensions" style="width:350px;"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="MonitorFileExtensionsTextBoxValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
+                        ControlToValidate="tboxMonitorFileExtensions" Display="None" ValidationGroup="MonitorFileExtensionsValidationGroup" >
+                    </asp:RequiredFieldValidator>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutMonitorFileExtensionsTextBox" runat="server"
+                        TargetControlID="MonitorFileExtensionsTextBoxValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
+                    </ajaxToolkit:ValidatorCalloutExtender2>
                                 
-                <asp:LinkButton runat="server" ID="lbtnMonitorFileExtensionReset" SkinID="Button" OnClientClick="return false;"><%= Resources.Resource.DefaultFiles %></asp:LinkButton>
-            </div>
-            <div>
-                <%=Resources.Resource.CongMonitorExcluding%>
-                <asp:TextBox runat="server" ID="tboxMonitorFilesExcluded" style="width:400px"></asp:TextBox>
+                    <asp:LinkButton runat="server" ID="lbtnMonitorFileExtensionReset" SkinID="Button" Width="120" OnClientClick="return false;"><%= Resources.Resource.DefaultFiles %></asp:LinkButton>
+                </p>
+                <b > <%=Resources.Resource.CongMonitorExcluding%>  </b>
+                <asp:TextBox runat="server" ID="tboxMonitorFilesExcluded" style="width:420px"></asp:TextBox>
                 <asp:RegularExpressionValidator id="MonitorFilesExcludedRegularExpressionValidator" ControlToValidate="tboxMonitorFilesExcluded" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server">
                 </asp:RegularExpressionValidator>
                 <ajaxToolkit:ValidatorCalloutExtender2 ID="MonitorFilesExcludedRegularExpressionValidatorCalloutExtender" runat="server"
                         TargetControlID="MonitorFilesExcludedRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
                 </ajaxToolkit:ValidatorCalloutExtender2>
             </div>
-            <div>
+            <div style="margin:10px">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">                    
                         <ContentTemplate>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <%=Resources.Resource.CongMonitorExcludingFoldersAndFiles %>
-                                        <br />
-                                        <asp:ListBox runat="server" ID="lboxExcludedPath" style="width: 350px;height: 160px;"></asp:ListBox>
-                                    </td>
-                                    <td>
-                                        <table>
-                                        <tr><td>
-                                            <asp:LinkButton ID="lbtnPathAdd" runat="server" SkinID="Button" Width="120" OnClientClick="return false;"><%=Resources.Resource.Add %></asp:LinkButton>
-                                        </td></tr>
-                                        <tr><td>
-                                            <asp:LinkButton ID="lbtnPathDelete" runat="server" SkinID="Button" Width="120" OnClick="lbtnPathDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
-                                        </td></tr>
-                                        <tr><td>
-                                            <asp:LinkButton ID="lbtnPathChange" runat="server" SkinID="Button" Width="120" OnClientClick="return false;" ><%=Resources.Resource.Change %></asp:LinkButton>
-                                        </td></tr>
-                                        <tr><td>
-                                            <asp:LinkButton ID="lbtnAddExcludedDialogApply" runat='server' Style="display: none;" OnClick="lbtnAddExcludedDialogApply_Click" ></asp:LinkButton>
-                                            <asp:LinkButton ID="lbtnPathChangeHidden" runat='server' Style="display: none;" OnClick="lbtnPathChangeHidden_Click" ></asp:LinkButton>
-                                        </td></tr>
-                                        </table>
-                                    </td>
-                                </tr>                                    
+                            <table >
+                                <th colspan="2" >
+                                    <b><%=Resources.Resource.CongMonitorExcludingFoldersAndFiles %></b>
+                                </th>
+                                    <tr>
+                                        <td>
+                                            <asp:ListBox runat="server" ID="lboxExcludedPath" style="width: 350px;height: 160px;" class="ListContrastTable"></asp:ListBox>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr><td>
+                                                    <asp:LinkButton ID="lbtnPathAdd" runat="server" SkinID="Button" Width="120" OnClientClick="return false;"><%=Resources.Resource.Add %></asp:LinkButton>
+                                                </td></tr>
+                                                <tr><td>
+                                                    <asp:LinkButton ID="lbtnPathDelete" runat="server" SkinID="Button" Width="120" OnClick="lbtnPathDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
+                                                </td></tr>
+                                                <tr><td>
+                                                    <asp:LinkButton ID="lbtnPathChange" runat="server" SkinID="Button" Width="120" OnClientClick="return false;" ><%=Resources.Resource.Change %></asp:LinkButton>
+                                                </td></tr>
+                                                <tr><td>
+                                                    <asp:LinkButton ID="lbtnAddExcludedDialogApply" runat='server' Style="display: none;" OnClick="lbtnAddExcludedDialogApply_Click" ></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbtnPathChangeHidden" runat='server' Style="display: none;" OnClick="lbtnPathChangeHidden_Click" ></asp:LinkButton>
+                                                </td></tr>
+                                            </table>
+                                        </td>
+                                    </tr>                                    
                             </table>
                         </ContentTemplate>                                         
                     </asp:UpdatePanel>
             </div>
-            <div>
-                <table>
+            <div style="padding-bottom:5px;padding-left:5px">
+                <table style="padding:10px">
                     <tr>
-                        <td>
-                            <table rules="groups" >
+                        <td >
+                            <table rules="groups"  border="1px" width="245px">
                                 <thead >
-                                    <td style="font-weight:bold">
-                                         <asp:Label runat="server" ><%=Resources.Resource.InfectedFiles %></asp:Label> 
+                                    <td  colspan="2">
+                                         <b><%=Resources.Resource.InfectedFiles %></b>
                                     </td>                           
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     <tr style="height:25px">
                                         <td>
-                                            <asp:Label  runat="server"><%= Resources.Resource.CongMonitorActionFirst%></asp:Label>
+                                            <%= Resources.Resource.CongMonitorActionFirst%>
                                         </td>
                                         <td>
                                             <asp:DropDownList runat="server" ID="ddlInfectedActions1" style="width:120px;"> 
@@ -178,7 +177,7 @@
                                     </tr>
                                     <tr style="height:25px">
                                         <td>
-                                            <asp:Label ID="Label7"   runat="server"><%= Resources.Resource.CongMonitorActionSecond%></asp:Label>
+                                            <%= Resources.Resource.CongMonitorActionSecond%>
                                         </td>
                                         <td>
                                             <asp:DropDownList runat="server" ID="ddlInfectedActions2" style="width:120px;">  
@@ -191,7 +190,7 @@
                                     </tr>
                                     <tr style="height:25px">
                                         <td>
-                                            <asp:Label ID="Label8" runat="server"><%= Resources.Resource.CongMonitorActionThird%></asp:Label>
+                                            <%= Resources.Resource.CongMonitorActionThird%>
                                         </td>
                                         <td>
                                             <asp:DropDownList runat="server" ID="ddlInfectedActions3" style="width:120px;">
@@ -205,22 +204,22 @@
                                     <tr style="height:25px">
                                         <td colspan="2">
                                             <asp:CheckBox runat="server" ID="chkInfectedSaveCopy" />
-                                            <asp:Label ID="Label9" runat="server"><%= Resources.Resource.CongScannerSaveCopyToQuarantine %></asp:Label>
+                                            <%= Resources.Resource.CongScannerSaveCopyToQuarantine %>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </td>
-                        <td style="width:250px">
-                            <table  rules="groups" >
+                        <td style="padding-left:10px">
+                            <table  rules="groups" border="1px" width="245px">
                                 <thead>
-                                    <td style="font-weight:bold">
-                                        <asp:Label ID="Label10"  runat="server" ><%= Resources.Resource.SuspiciousFiles %></asp:Label>
+                                    <td colspan="2">
+                                        <b><%= Resources.Resource.SuspiciousFiles %></b>
                                     </td>
                                 </thead>                        
                                 <tr style="height:25px">
                                     <td >
-                                        <asp:Label ID="Label11" runat="server"><%= Resources.Resource.CongMonitorActionFirst%></asp:Label>
+                                        <%= Resources.Resource.CongMonitorActionFirst%>
                                     </td>
                                     <td >
                                         <asp:DropDownList runat="server" ID="ddlSuspiciousActions1" style="width:120px;">
@@ -232,7 +231,7 @@
                                 </tr>
                                 <tr style="height:25px">
                                     <td >
-                                        <asp:Label ID="Label12" runat="server"><%= Resources.Resource.CongMonitorActionSecond%></asp:Label>
+                                        <%= Resources.Resource.CongMonitorActionSecond%>
                                     </td>
                                     <td >
                                         <asp:DropDownList runat="server" ID="ddlSuspiciousActions2"  style="width:120px;">
@@ -248,7 +247,7 @@
                                 <tr style="height:25px">
                                     <td colspan="2">
                                         <asp:CheckBox runat="server" ID="chkSuspiciousSaveCopy" />
-                                        <asp:Label ID="Label13" runat="server"><%= Resources.Resource.CongScannerSaveCopyToQuarantine %></asp:Label>
+                                        <%= Resources.Resource.CongScannerSaveCopyToQuarantine %>
                                     </td>
                                 </tr>
                             </table>

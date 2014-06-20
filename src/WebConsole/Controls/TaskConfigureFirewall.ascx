@@ -514,17 +514,19 @@
             <li><a href="#tab3"><%=Resources.Resource.JournalEvents %></a> </li>
         </ul>
         <div id='tab0'>
-            <div class="ListContrastTable">
-                <asp:CheckBox ID="chkFirewallOn" runat="server" />
-                <asp:Label runat="server"><%=Resources.Resource.FirewallIsOn %></asp:Label>
-                <div>
+            <div class="ListContrastTable" >
+                <div style="margin-left:10px;margin-top:3px">
+                    <asp:CheckBox ID="chkFirewallOn" runat="server"  />
+                    <asp:Label runat="server" ><%=Resources.Resource.FirewallIsOn %></asp:Label>
+                </div>
+                <div style="margin-left:10px;margin-top:3px;margin-bottom:3px">
                     <p><asp:Label runat="server"><%=Resources.Resource.NetworkType %></asp:Label></p>
                     <asp:DropDownList ID="ddlFirewallNetworkType" runat="server">
                         <asp:ListItem Text="<%$ Resources:Resource, DomainName %>"></asp:ListItem>
                         <asp:ListItem Text="<%$ Resources:Resource, OpenNetwork %>" Selected="True"></asp:ListItem>
                         <asp:ListItem Text="<%$ Resources:Resource, PrivateNetwork %>"></asp:ListItem>
                     </asp:DropDownList>
-                </div>
+                </div> 
             </div>
         </div>
         <div id='tab1'>       
