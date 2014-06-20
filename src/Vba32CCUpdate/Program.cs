@@ -57,7 +57,7 @@ namespace Vba32ControlCenterUpdate
             }
 
             Logger.Debug("Finished: success.");
-            return 1;
+            return 0;
         }
 
         private static String ParseVersion(String version)
