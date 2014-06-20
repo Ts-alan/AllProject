@@ -2345,7 +2345,7 @@ public partial class Computers : PageBase
                                                                     {
                                                                         task.Type = TaskType.ConfigureQuarantine;
                                                                         task.Name = Resources.Resource.TaskNameConfigureQuarantine;
-                                                                        task.Param = xmlBuil.Result;
+                                                                        task.Param = String.Empty;
                                                                         lbtnDelete.Visible = false;
                                                                     }
                                                                     else
