@@ -24,7 +24,7 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack || monitor==null)
         {
             InitFields();
         }

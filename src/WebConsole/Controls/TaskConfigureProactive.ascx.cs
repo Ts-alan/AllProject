@@ -12,7 +12,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack || proactive == null)
             InitFields();
         InitFieldsJournalEvent(proactive.journalEvent);
     }
