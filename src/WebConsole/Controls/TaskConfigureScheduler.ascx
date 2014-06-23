@@ -189,7 +189,7 @@
         }
 </script>
 
-<div id="divSchedulerMain" class="ListContrastTable" runat="server">
+<div id="divSchedulerMain" class="ListContrastTable" runat="server" style="width:501px">
       
     <div style="height: 200px; width: 500px; overflow: scroll">
     <table id="tblSchedulerTasks"  rules="cols">

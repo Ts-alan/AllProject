@@ -158,16 +158,14 @@
             </asp:UpdatePanel>
     </div>
     <div id="tabLoader2" class="divSettings">
-        <table class="ListContrastTable" style="width:500px">
+        <table class="ListContrastTable" style="width:500px;padding-left:5px">
             <tr>
-                <td style="padding-top: 5px;padding-bottom: 5px;" colspan="2">
+                <td style="padding-bottom: 5px;padding-top:5px;padding-left:5px" colspan="2">
                     <asp:CheckBox ID="cboxProxyEnabled" runat="server" Text="<%$ Resources:Resource, CongLdrUseProxyServer %>" onclick="HideTableLoader1()" />
                 </td>
             </tr>
-            <tr>
-                <td >
-                    <asp:Label runat="server" Text="<%$ Resources:Resource, CongLdrProxyServerType %>"></asp:Label>
-                </td>
+            <tr style="padding-bottom: 5px;padding-left:5px">
+                <td><%= Resources.Resource.CongLdrProxyServerType %></td>            
                 <td>
                     <asp:DropDownList runat="server" ID="ddlProxyType"  style="width:120px;">
                         <asp:ListItem Text="NO PROXY" Value="0"></asp:ListItem>
@@ -177,42 +175,26 @@
                     </asp:DropDownList>
                 </td>
             </tr>
-            <tr>
-                <td style="padding-left: 20px;">
-                    <asp:Label runat="server"  Width="100px" Text="<%$ Resources:Resource, CongLdrAddress %>"/>
-                </td>
-                <td>
-                    <asp:TextBox runat="server" ID="tboxProxyAddress" />
-                </td>
+            <tr style="padding-left:5px">
+                <td style="padding-left: 20px;padding-top:5px"> <%= Resources.Resource.CongLdrAddress %></td>
+                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyAddress" /></td>
+            </tr>
+            <tr style="padding-left:5px">
+                <td style="padding-left: 20px;padding-top:5px"><%= Resources.Resource.CongLdrPort %></td>
+                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyPort"/></td>
             </tr>
             <tr>
-                <td style="padding-left: 20px;">
-                    <asp:Label runat="server"  Width="100px" Text="<%$ Resources:Resource, CongLdrPort %>"/>
-                </td>
-                <td>
-                    <asp:TextBox runat="server" ID="tboxProxyPort"/>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-top: 5px;padding-bottom: 5px;" colspan="2">
+                <td style="padding-top: 5px;padding-bottom: 5px;padding-left:5px" colspan="2">
                     <asp:CheckBox ID="cboxProxyAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader1_1(true)" />
                 </td>
             </tr>
-            <tr>
-                <td style="padding-left: 20px;">
-                    <asp:Label runat="server" id="lblProxyAuthorizationUserName" Width="100px" Text="<%$ Resources:Resource, CongLdrUserName %>"/>
-                </td>
-                <td>
-                    <asp:TextBox runat="server" ID="tboxProxyAuthorizationUserName" autocomplete="off" />
-                </td>
+            <tr style="padding-left:5px">
+                <td style="padding-left: 20px;padding-top:5px"><%= Resources.Resource.CongLdrUserName %></td>
+                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyAuthorizationUserName" autocomplete="off" /></td>
             </tr>
-            <tr>
-                <td style="padding-left: 20px;padding-bottom: 5px;">
-                    <asp:Label runat="server" id="lblProxyAuthorizationPassword" Width="100px" Text="<%$ Resources:Resource, CongLdrPassword %>"/>
-                </td>
-                <td>
-                    <asp:TextBox runat="server" ID="tboxProxyAuthorizationPassword" TextMode="Password" autocomplete="off" Value=""/>
-                </td>
+            <tr style="padding-left:5px">
+                <td style="padding-left: 20px;padding-top: 5px;padding-bottom:5px"><%= Resources.Resource.CongLdrPassword %></td>
+                <td style="padding-bottom:5px;padding-top: 5px;"><asp:TextBox runat="server" ID="tboxProxyAuthorizationPassword" TextMode="Password" autocomplete="off" Value=""/></td>
             </tr>
         </table>
     </div>
@@ -224,13 +206,13 @@
                 </td>
             </tr>
             <tr>
-                <td style="padding-left: 20px;">
-                    <asp:Label runat="server" id="lblAuthorizationUserName" Width="100px" Text="<%$ Resources:Resource, CongLdrUserName %>"/>
+                <td style="padding-left: 20px;padding-top:5px">
+                    <asp:Label runat="server" id="lblAuthorizationUserName" Width="100px" Text="<%$ Resources:Resource, CongLdrUserName %>"></asp:Label>
                     <asp:TextBox runat="server" ID="tboxAuthorizationUserName" autocomplete="off" Value=""/>
                 </td>
             </tr>
             <tr>
-                <td style="padding-left: 20px;padding-bottom: 5px;" >
+                <td style="padding-left: 20px;padding-bottom: 5px;padding-top:5px" >
                     <asp:Label runat="server" id="lblAuthorizationPassword" Width="100px" Text="<%$ Resources:Resource, CongLdrPassword %>"/>
                     <asp:TextBox runat="server" ID="tboxAuthorizationPassword" TextMode="Password" autocomplete="off" />
                 </td>
