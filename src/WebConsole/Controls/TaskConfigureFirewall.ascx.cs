@@ -21,7 +21,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack || firewall==null)
         {
             InitFields();
         }
