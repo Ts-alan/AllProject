@@ -122,103 +122,86 @@
     <div id="tabLoader1" class="divSettings" >
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
-                    <table style="width: 500px;" class="ListContrastTable">
-                        <tr>
-                            <td>
-                                <%=Resources.Resource.UpdatePath %>
-                            </td>
-                        </tr>                        
-                        <tr>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <asp:ListBox runat="server" ID="lboxUpdatePathes" style="width: 460px;height: 160px;" ></asp:ListBox> 
-                                        </td>
-                                        <td>
-                                            <asp:LinkButton ID="lbtnUpdateMoveUP" runat="server" Text='&#x2191;' SkinID="Button" OnClick="lbtnUpdateMoveUP_Click"></asp:LinkButton>
-                                            <br />
-                                            <asp:LinkButton ID="lbtnUpdateMoveDown" runat="server" Text='&#x2193;' SkinID="Button" OnClick="lbtnUpdateMoveDown_Click"></asp:LinkButton>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:LinkButton ID="lbtnUpdateAdd" runat="server" SkinID="Button" OnClientClick="return false;" ><%=Resources.Resource.Add %></asp:LinkButton>
-                                <asp:LinkButton ID="lbtnUpdateDelete" runat="server" SkinID="Button" OnClick="lbtnUpdateDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
-                                <asp:LinkButton ID="lbtnUpdateChange" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Change %></asp:LinkButton>
-                                <asp:LinkButton ID="lbtnAddUpdatePathDialogApply" runat='server' Style="display: none" OnClick="lbtnAddUpdatePathDialogApply_Click" ></asp:LinkButton>
-                                <asp:LinkButton ID="lbtnUpdatePathChange" runat='server' Style="display: none" OnClick="lbtnUpdatePathChange_Click" ></asp:LinkButton>
-                            </td>
-                        </tr>
-                    </table>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                <div style="width: 500px;padding-left:5px;" class="ListContrastTable">
+                    <div>
+                        <%=Resources.Resource.UpdatePath %>
+                    </div>                       
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <asp:ListBox runat="server" ID="lboxUpdatePathes" style="width: 460px;height: 160px;" ></asp:ListBox> 
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="lbtnUpdateMoveUP" runat="server" Text='&#x2191;' SkinID="Button" OnClick="lbtnUpdateMoveUP_Click"></asp:LinkButton>
+                                    <br />
+                                    <asp:LinkButton ID="lbtnUpdateMoveDown" runat="server" Text='&#x2193;' SkinID="Button" OnClick="lbtnUpdateMoveDown_Click"></asp:LinkButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <asp:LinkButton ID="lbtnUpdateAdd" runat="server" SkinID="Button" OnClientClick="return false;" ><%=Resources.Resource.Add %></asp:LinkButton>
+                        <asp:LinkButton ID="lbtnUpdateDelete" runat="server" SkinID="Button" OnClick="lbtnUpdateDelete_Click"><%=Resources.Resource.Delete %></asp:LinkButton>
+                        <asp:LinkButton ID="lbtnUpdateChange" runat="server" SkinID="Button" OnClientClick="return false;"><%=Resources.Resource.Change %></asp:LinkButton>
+                        <asp:LinkButton ID="lbtnAddUpdatePathDialogApply" runat='server' Style="display: none" OnClick="lbtnAddUpdatePathDialogApply_Click" ></asp:LinkButton>
+                        <asp:LinkButton ID="lbtnUpdatePathChange" runat='server' Style="display: none" OnClick="lbtnUpdatePathChange_Click" ></asp:LinkButton>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
     <div id="tabLoader2" class="divSettings">
-        <table class="ListContrastTable" style="width:500px;padding-left:5px">
-            <tr>
-                <td style="padding-bottom: 5px;padding-top:5px;padding-left:5px" colspan="2">
-                    <asp:CheckBox ID="cboxProxyEnabled" runat="server" Text="<%$ Resources:Resource, CongLdrUseProxyServer %>" onclick="HideTableLoader1()" />
-                </td>
-            </tr>
-            <tr style="padding-bottom: 5px;padding-left:5px">
-                <td><%= Resources.Resource.CongLdrProxyServerType %></td>            
-                <td>
-                    <asp:DropDownList runat="server" ID="ddlProxyType"  style="width:120px;">
-                        <asp:ListItem Text="NO PROXY" Value="0"></asp:ListItem>
-                        <asp:ListItem Text="HTTP" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="SOCKS4" Value="3"></asp:ListItem>
-                        <asp:ListItem Text="SOCKS5" Value="4"></asp:ListItem>
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr style="padding-left:5px">
-                <td style="padding-left: 20px;padding-top:5px"> <%= Resources.Resource.CongLdrAddress %></td>
-                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyAddress" /></td>
-            </tr>
-            <tr style="padding-left:5px">
-                <td style="padding-left: 20px;padding-top:5px"><%= Resources.Resource.CongLdrPort %></td>
-                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyPort"/></td>
-            </tr>
-            <tr>
-                <td style="padding-top: 5px;padding-bottom: 5px;padding-left:5px" colspan="2">
-                    <asp:CheckBox ID="cboxProxyAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader1_1(true)" />
-                </td>
-            </tr>
-            <tr style="padding-left:5px">
-                <td style="padding-left: 20px;padding-top:5px"><%= Resources.Resource.CongLdrUserName %></td>
-                <td style="padding-top:5px"><asp:TextBox runat="server" ID="tboxProxyAuthorizationUserName" autocomplete="off" /></td>
-            </tr>
-            <tr style="padding-left:5px">
-                <td style="padding-left: 20px;padding-top: 5px;padding-bottom:5px"><%= Resources.Resource.CongLdrPassword %></td>
-                <td style="padding-bottom:5px;padding-top: 5px;"><asp:TextBox runat="server" ID="tboxProxyAuthorizationPassword" TextMode="Password" autocomplete="off" Value=""/></td>
-            </tr>
-        </table>
+        <div class="ListContrastTable" style="width:500px;padding-left:5px;padding-bottom: 10px">
+            <div style="padding-bottom: 5px;padding-top:5px" >
+                <asp:CheckBox ID="cboxProxyEnabled" runat="server" Text="<%$ Resources:Resource, CongLdrUseProxyServer %>" onclick="HideTableLoader1()" />
+            </div>
+            <div style="padding-left:20px">
+                <span style="width:100px;display:inline-block" ><%= Resources.Resource.CongLdrProxyServerType %></span>
+                <asp:DropDownList runat="server" ID="ddlProxyType"  style="width:120px;">
+                    <asp:ListItem Text="NO PROXY" Value="0"></asp:ListItem>
+                    <asp:ListItem Text="HTTP" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="SOCKS4" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="SOCKS5" Value="4"></asp:ListItem>
+                </asp:DropDownList>                
+            </div>
+             <div style="padding-top:5px;padding-left:20px">
+                <span style="width:100px;display:inline-block" ><%= Resources.Resource.CongLdrAddress %></span>
+                <asp:TextBox runat="server" ID="tboxProxyAddress" />
+            </div>
+            <div style="padding-top:5px;padding-left:20px">
+                <span style="width:100px;display:inline-block" ><%= Resources.Resource.CongLdrPort %></span>
+                <asp:TextBox runat="server" ID="tboxProxyPort" />
+            </div>
+            <div style="padding-top:5px">                
+                <asp:CheckBox ID="cboxProxyAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader1_1(true)" />
+            </div>
+            <div style="padding-top:5px;padding-left:20px">   
+                <span style="width:100px;display:inline-block" ><%= Resources.Resource.CongLdrUserName %></span>
+                <asp:TextBox runat="server" ID="tboxProxyAuthorizationUserName" autocomplete="off" />
+            </div>
+            <div style="padding-top:5px;padding-left:20px">   
+                <span style="width:100px;display:inline-block" ><%= Resources.Resource.CongLdrPassword %></span>
+                <asp:TextBox runat="server" ID="tboxProxyAuthorizationPassword" TextMode="Password" autocomplete="off" Value=""  />
+            </div>
+        </div>
     </div>
     <div id="tabLoader3" class="divSettings">
-        <table class="ListContrastTable" style="width:500px">
-            <tr>
-                <td style="padding-top: 5px;padding-bottom: 5px;">
-                    <asp:CheckBox ID="cboxAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader2()" />
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left: 20px;padding-top:5px">
-                    <asp:Label runat="server" id="lblAuthorizationUserName" Width="100px" Text="<%$ Resources:Resource, CongLdrUserName %>"></asp:Label>
-                    <asp:TextBox runat="server" ID="tboxAuthorizationUserName" autocomplete="off" Value=""/>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left: 20px;padding-bottom: 5px;padding-top:5px" >
-                    <asp:Label runat="server" id="lblAuthorizationPassword" Width="100px" Text="<%$ Resources:Resource, CongLdrPassword %>"/>
-                    <asp:TextBox runat="server" ID="tboxAuthorizationPassword" TextMode="Password" autocomplete="off" />
-                </td>
-            </tr>                
-        </table>
+        <div class="ListContrastTable" style="width:500px;padding-left:5px">
+            <div style="padding-top: 5px">
+                <asp:CheckBox ID="cboxAuthorizationEnabled" runat="server" Text="<%$ Resources:Resource, UseAuthorization %>" onclick="HideTableLoader2()" />
+            </div>
+            <div style="padding-left: 20px;padding-top:5px">
+                <span style="width:100px;display:inline-block" ><%=Resources.Resource.CongLdrUserName %></span>
+                <asp:TextBox runat="server" ID="tboxAuthorizationUserName" autocomplete="off" Value=""/>
+            </div>
+            <div style="padding-left: 20px;padding-bottom: 5px;padding-top:5px" >
+                <span style="width:100px;display:inline-block"><%=Resources.Resource.CongLdrPassword %></span>
+                <asp:TextBox runat="server" ID="tboxAuthorizationPassword" TextMode="Password" autocomplete="off" />
+            </div>               
+        </div>
     </div>
+    <%--hidden div--%>
     <div id="tabLoader4" class="divSettings" style="display:none">
         <table class="ListContrastTable">
              <tr>                 
@@ -236,7 +219,6 @@
                                     <asp:TableCell ColumnSpan="3">
                                         <asp:Panel  runat="server" Width="400px" Height="160px" Style="overflow: scroll">
                                             <asp:DataList ID="PasswordDataList" runat="server" Style="table-layout: fixed; word-break: break-all;" rules="all">
-                                               <%-- OnItemDataBound="PasswordDataList_ItemDataBound">--%>
                                                 <ItemTemplate>
                                                     <tr runat="server" id="trPasswordItem" PasswordRowSelected="false">
                                                         <td  runat="server">
@@ -256,11 +238,6 @@
                                                 </asp:TableCell>
                                             </asp:TableRow>
                                             <asp:TableRow>
-                                                <%--<asp:TableCell Height="50px" HorizontalAlign="Center">
-                                                    <asp:Button ID="btnPasswordDelete" runat="server" Text="<%$ Resources:Resource, Delete %>" Width="120px"  OnClick="PasswordDeleteButtonClick"   />
-                                                </asp:TableCell>--%>
-                                            </asp:TableRow>
-                                            <asp:TableRow>
                                                 <asp:TableCell Height="50px" HorizontalAlign="Center"  >
                                                     <asp:Button ID="btnPasswordChange" runat="server" Text="<%$ Resources:Resource, Change %>" Width="120px" OnClientClick="PasswordChangeButtonClientClick()" />
                                                 </asp:TableCell>
@@ -269,8 +246,6 @@
                                     </asp:TableCell>
                                 </asp:TableRow>
                             </asp:Table>
-                          <%--  <asp:Button ID="AddPasswordDialogApplyButton" runat='server' Style="display: none" OnClick="AddPasswordDialogApplyButtonClick" />
-                            <asp:Button ID="PasswordChangeButton" runat='server' Style="display: none" OnClick="PasswordChangeButtonClick" />--%>
                         </ContentTemplate>                                         
                     </asp:UpdatePanel>
                </td>
