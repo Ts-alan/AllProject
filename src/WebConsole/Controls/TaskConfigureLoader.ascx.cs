@@ -25,7 +25,7 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack ||loader==null)
         {
             InitFields();
         }
@@ -55,7 +55,10 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
             loader = new TaskConfigureLoader();
             loader.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
         }
-        
+        if (loader.UPDATE_FOLDER_LIST == null)
+        {
+            loader.UPDATE_FOLDER_LIST = new List<string>();
+        }
         PathUpdateData();
     }
 
