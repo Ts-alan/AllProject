@@ -194,6 +194,8 @@
       </div>
         
       <div id='2'>
+        <asp:UpdatePanel runat="server" ID="upnlCompColors">
+        <ContentTemplate>
         <table class="ListContrastTable" style="width: 700px;">
             <tr>
                 <td style="width: 300px;">
@@ -383,10 +385,13 @@
                 <td></td>
             </tr>
         </table>
-                 
+        </ContentTemplate>
+        </asp:UpdatePanel>       
       </div>
       
       <div id='3'>
+        <asp:UpdatePanel runat="server" ID="upnlEvents">
+        <ContentTemplate>
             <table class="ListContrastTable" style="width: 700px;" runat="server" id="tblEvent" >
 				<tr>
 					<td><asp:datalist id="dlEvents" border=1 runat="server" Height="80px" OnItemCommand="dlEvents_ItemCommand" OnItemDataBound="dlEvents_ItemDataBound">
@@ -414,6 +419,8 @@
 					</td>
 				</tr>
 			</table>
+        </ContentTemplate>
+        </asp:UpdatePanel>
       </div>
       
       <div class="divSettings">
