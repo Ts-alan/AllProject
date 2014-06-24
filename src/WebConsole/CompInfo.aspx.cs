@@ -240,11 +240,14 @@ public partial class CompInfo : PageBase
 
     private void AddComponent(ComponentsEntity cmpt)
     {
+        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(VirusBlokAda.CC.Common.RegularExpressions.GUID);
+        if (reg.IsMatch(DatabaseNameLocalization.GetNameForCurrentCulture(cmpt.ComponentName)))
+            return;
         String title;
         HtmlGenericControl ctrlH3 = new HtmlGenericControl("h3");
         HtmlGenericControl ctrlA = new HtmlGenericControl("a");
         HtmlGenericControl ctrlSpan = new HtmlGenericControl("span");
-        ctrlSpan.InnerText = cmpt.ComponentName;
+        ctrlSpan.InnerText = DatabaseNameLocalization.GetNameForCurrentCulture(cmpt.ComponentName);
         HtmlImage ctrlImg = new HtmlImage();
         ctrlImg.Src = GetImageSrcByState(cmpt.ComponentState, out title);
         ctrlImg.Attributes.Add("title", title);
