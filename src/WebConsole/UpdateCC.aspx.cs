@@ -222,6 +222,8 @@ public partial class UpdateCC : PageBase
 
     protected void lbtnUpdate_Click(Object sender, EventArgs e)
     {
+        VSISWrapper.Initialize();
+        VSISWrapper.ConnectionString = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
         VSISWrapper.Update();
         lbtnCancelUpdate.Enabled = true;
         lbtnUpdate.Enabled = false;
