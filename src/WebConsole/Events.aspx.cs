@@ -49,6 +49,7 @@ public partial class Events : PageBase
             }
 
             (e.Row.Cells[5].FindControl("lblComponentName") as Label).Text = DatabaseNameLocalization.GetNameForCurrentCulture(_event.ComponentName);
+            (e.Row.Cells[5].FindControl("lblEventName") as Label).Text = DatabaseNameLocalization.GetNameForCurrentCulture(_event.EventName);
         }
     }
 

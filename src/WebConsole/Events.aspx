@@ -72,6 +72,12 @@
                         <asp:BoundField DataField="Description" SortExpression="Description" HeaderText='<%$ Resources:Resource, Description %>'>
                             <HeaderStyle Width="50px" />
                         </asp:BoundField>
+                        <asp:TemplateField HeaderText='<%$ Resources:Resource, EventName %>'>
+                            <ItemTemplate>
+                                <asp:Label runat="server" ID="lblEventName"></asp:Label>
+                            </ItemTemplate>
+                            <HeaderStyle Width="100px" />
+                        </asp:TemplateField>
                         <asp:BoundField DataField="EventName" SortExpression="EventName" HeaderText='<%$ Resources:Resource, EventName %>'>
                             <HeaderStyle Width="100px" />
                         </asp:BoundField>
