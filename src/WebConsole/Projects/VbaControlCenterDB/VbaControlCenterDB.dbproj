@@ -925,6 +925,24 @@
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetDeviceBySN.proc.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\UpdateStates.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\UpdateStates.PK_UpdateStates.pkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\UpdateLog.FK_UpdateLog_UpdateState.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetLastUpdate.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\InsertUpdate.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\UpdateInsertedUpdate.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
     <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\ChangeDeviceClassModeToGroup.proc.sql">
       <SubType>Code</SubType>
     </Build>

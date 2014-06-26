@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using vsisLib;
+using VirusBlokAda.CC.DataBase;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
@@ -54,27 +55,49 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
             }
         }
 
-        private String _stopReason = String.Empty;
-        internal String StopReason
+        internal UpdateEntity LastProcessing
         {
             get
             {
                 lock (syncObject)
                 {
-                    return _stopReason;
+                    return provider.GetLast(UpdateStateEnum.Processing);
                 }
             }
         }
 
-        private DateTime _lastUpdate = DateTime.MinValue;
-        internal DateTime LastUpdate
+        internal UpdateEntity LastFail
         {
             get
             {
                 lock (syncObject)
                 {
-                    return _lastUpdate;
+                    return provider.GetLast(UpdateStateEnum.Fail);
                 }
+            }
+        }
+
+        internal UpdateEntity LastSuccess
+        {
+            get
+            {
+                lock (syncObject)
+                {
+                    return provider.GetLast(UpdateStateEnum.Success);
+                }
+            }
+        }
+
+        private UpdateProvider provider = null;
+
+        private String _ConnectionString = String.Empty;
+        internal String ConnectionString
+        {
+            get { return _ConnectionString; }
+            set
+            {
+                _ConnectionString = value;
+                provider = new UpdateProvider(_ConnectionString);
             }
         }
 
@@ -127,25 +150,29 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
         internal void Update()
         {
-            new Thread(UpdateStart).Start();
+            ThreadPool.QueueUserWorkItem(UpdateStart);
+            //new Thread(UpdateStart).Start();
         }
 
-        private void UpdateStart()
+        private void UpdateStart(Object obj)
         {
+            provider.InsertUpdate();
+            UpdateEntity ent = LastProcessing;
             try
             {
                 if (IsAlive && IsAbort)
                 {
                     lock (syncObject)
                     {
-                        _stopReason = "Update already running...";
+                        ent.State = UpdateStateEnum.Fail;
+                        ent.Description = "Update already running...";
+                        provider.Update(ent);
                     }
                     return;
                 }
                 String[] param = new String[] { "VBA32CCK" };
                 lock (syncObject)
                 {
-                    _stopReason = String.Empty;
                     _isAlive = true;
                 }
                 _update.UpdateNow(param);
@@ -154,7 +181,9 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
             {
                 lock (syncObject)
                 {
-                    _stopReason = "Error update: " + e.Message;
+                    ent.State = UpdateStateEnum.Fail;
+                    ent.Description = "Error update: " + e.Message;
+                    provider.Update(ent);
                 }
             }
             finally
@@ -170,28 +199,57 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         private void OnNeedStop(out Int32 stop)
         {
             stop = IsAbort ? 1 : 0;
+            
+            if (IsAbort)
+            {
+                lock (syncObject)
+                {
+                    UpdateEntity ent = LastProcessing;
+                    ent.State = UpdateStateEnum.Fail;
+                    provider.Update(ent);
+                }
+            }
         }
 
         private void OnNeedStopReason(String reason, out Int32 stop)
         {
+            UpdateEntity ent = LastProcessing;
+
             lock (syncObject)
             {
-                _stopReason = reason;
+                ent.State = UpdateStateEnum.Processing;
+                ent.Description = reason;
+                provider.Update(ent);
             }
             stop = IsAbort ? 1 : 0;
+
+            if (IsAbort)
+            {
+                lock (syncObject)
+                {
+                    ent.State = UpdateStateEnum.Fail;
+                    ent.Description = reason;
+                    provider.Update(ent);
+                }
+            }
         }
 
         private void OnApplyFinish(Int32 success)
         {
+            UpdateEntity ent = LastProcessing;
+
             lock (syncObject)
             {
                 if (success != 0)
                 {
-                    _lastUpdate = DateTime.Now;
-                    _stopReason = String.Empty;
+                    ent.State = UpdateStateEnum.Success;
+                    provider.Update(ent);
                 }
                 else
-                    _stopReason = "Error update: " + _stopReason;
+                {
+                    ent.State = UpdateStateEnum.Fail;
+                    provider.Update(ent);
+                }
             }
         }
 

@@ -1,0 +1,5 @@
+﻿ALTER TABLE [dbo].[UpdateLog]
+	ADD CONSTRAINT [FK_UpdateLog_UpdateState] 
+	FOREIGN KEY ([StateID])
+	REFERENCES UpdateStates ([ID])
+	ON UPDATE CASCADE ON DELETE CASCADE

@@ -214,7 +214,11 @@ GO
 PRINT N'[dbo].[DeviceClass]: USB classes successfully.';
 GO
 
-PRINT N'Inserting update info...';
+PRINT N'[dbo].[UpdateStates]...';
 GO
-INSERT [dbo].[UpdateLog] ([BuildId], [DeployDatetime]) VALUES ('$(BuildId)', GETDATE());
+INSERT [dbo].[UpdateStates] ([State]) VALUES ('Processing');
+INSERT [dbo].[UpdateStates] ([State]) VALUES ('Success');
+INSERT [dbo].[UpdateStates] ([State]) VALUES ('Fail');
+GO
+PRINT N'[dbo].[UpdateStates]: successfully.';
 GO

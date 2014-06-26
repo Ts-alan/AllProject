@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[UpdateStates]
+	ADD CONSTRAINT [PK_UpdateStates]
+	PRIMARY KEY NONCLUSTERED ([ID])

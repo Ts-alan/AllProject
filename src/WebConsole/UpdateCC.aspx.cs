@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using VirusBlokAda.CC.Settings.Common;
 using ARM2_dbcontrol.Filters;
 using VirusBlokAda.Vba32CC.Service.VSIS;
+using VirusBlokAda.CC.DataBase;
 
 public partial class UpdateCC : PageBase
 {
@@ -38,24 +39,32 @@ public partial class UpdateCC : PageBase
 
     private void CheckUpdateProcess()
     {
-        lblLastSuccessUpdate.Text = Resources.Resource.LastSuccessUpdate + ": " + (VSISWrapper.LastUpdate != DateTime.MinValue ? VSISWrapper.LastUpdate.ToString() : "-");
+        UpdateEntity lastSuccess = VSISWrapper.GetLastUpdate(UpdateStateEnum.Success);
+        UpdateEntity lastFail = VSISWrapper.GetLastUpdate(UpdateStateEnum.Fail);
+        UpdateEntity lastProcessing = VSISWrapper.GetLastUpdate(UpdateStateEnum.Processing);
+
+        lblLastSuccessUpdate.Text = Resources.Resource.LastSuccessUpdate + ": " + (lastSuccess != null ? lastSuccess.DeployDatetime.ToString() : "-");
         divLastUpdate.Visible = true;
 
-        if (VSISWrapper.IsUpdateAlive)
+        if (VSISWrapper.IsUpdateAlive && lastProcessing != null)
         {
             lbtnCancelUpdate.Enabled = true;
             lbtnUpdate.Enabled = false;
             lblLastUpdate.Text = Resources.Resource.UpdateCC + "..."
-                + (!String.IsNullOrEmpty(VSISWrapper.UpdateStopReason) ?
-                String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, VSISWrapper.UpdateStopReason) : "");
+                + (!String.IsNullOrEmpty(lastProcessing.Description) ?
+                String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, lastProcessing.Description) : "");
         }
         else
         {
             lbtnCancelUpdate.Enabled = false;
             lbtnUpdate.Enabled = true;
-            if (!String.IsNullOrEmpty(VSISWrapper.UpdateStopReason))
+
+            if (lastFail != null)
             {
-                lblLastUpdate.Text = Resources.Resource.LastUpdate + ": " + String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, VSISWrapper.UpdateStopReason);
+                if (lastSuccess != null && lastSuccess.DeployDatetime > lastFail.DeployDatetime)
+                    divLastUpdate.Visible = false;
+                else
+                    lblLastUpdate.Text = Resources.Resource.LastUpdate + ": " + String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, lastFail.Description);
             }
             else
             {
@@ -83,6 +92,7 @@ public partial class UpdateCC : PageBase
         lbtnSave.Text = Resources.Resource.Save;
 
         VSISWrapper.Initialize();
+        VSISWrapper.ConnectionString = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
         InitState();
     }
 

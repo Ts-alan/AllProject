@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using vsisLib;
+using VirusBlokAda.CC.DataBase;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
@@ -12,6 +13,17 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         private static ServiceClass _service;
         private static UpdateService _updateService;
         private static VSIS.Settings _settings;
+
+        private static String _ConnectionString = String.Empty;
+        public static String ConnectionString
+        {
+            get { return _ConnectionString; }
+            set
+            {
+                _ConnectionString = value;
+                _updateService.ConnectionString = _ConnectionString;
+            }
+        }
 
         #region Guids
 
@@ -134,19 +146,21 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         }
 
         /// <summary>
-        /// Get last update date
+        /// Get last update
         /// </summary>
-        public static DateTime LastUpdate
+        public static UpdateEntity GetLastUpdate(UpdateStateEnum state)
         {
-            get { return _updateService.LastUpdate; }
-        }
+            switch (state)
+            {
+                case UpdateStateEnum.Success:
+                    return _updateService.LastSuccess;
+                case UpdateStateEnum.Fail:
+                    return _updateService.LastFail;
+                case UpdateStateEnum.Processing:
+                    return _updateService.LastProcessing;
+            }
 
-        /// <summary>
-        /// Get update stop reason
-        /// </summary>
-        public static String UpdateStopReason
-        {
-            get { return _updateService.StopReason; }
+            return null;
         }
 
         #endregion
