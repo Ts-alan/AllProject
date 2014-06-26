@@ -86,7 +86,6 @@ namespace VirusBlokAda.CC.DataBase
                 SqlCommand cmd = new SqlCommand("UpdateInsertedUpdate", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@BuildId", ent.BuildID);
                 cmd.Parameters.AddWithValue("@DeployDatetime", ent.DeployDatetime);
                 cmd.Parameters.AddWithValue("@State", ent.State.ToString());
                 cmd.Parameters.AddWithValue("@Description", ent.Description);

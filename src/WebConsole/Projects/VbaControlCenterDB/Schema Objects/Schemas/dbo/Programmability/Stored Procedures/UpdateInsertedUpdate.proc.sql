@@ -1,5 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[UpdateInsertedUpdate]
-	@BuildId nvarchar(50),
+﻿CREATE PROCEDURE [dbo].[UpdateInsertedUpdate]	
 	@DeployDatetime smalldatetime,
 	@State nvarchar(32),
 	@Description nvarchar(256) = NULL
@@ -9,7 +8,6 @@ AS
 	SET @StateID = (SELECT ID FROM UpdateStates WHERE [State] = @State)
 
 	UPDATE UpdateLog
-	SET BuildId = @BuildId,
-		StateID = @StateID,
+	SET StateID = @StateID,
 		[Description] = @Description
 	WHERE DeployDatetime = @DeployDatetime

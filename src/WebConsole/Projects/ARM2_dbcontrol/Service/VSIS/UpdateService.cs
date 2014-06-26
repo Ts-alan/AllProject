@@ -191,6 +191,11 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                 lock (syncObject)
                 {
                     _isAlive = false;
+                    if (LastProcessing != null)
+                    {
+                        ent.State = UpdateStateEnum.Fail;
+                        provider.Update(ent);
+                    }
                 }
                 IsAbort = false;
             }

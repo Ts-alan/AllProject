@@ -64,7 +64,7 @@ public partial class UpdateCC : PageBase
                 if (lastSuccess != null && lastSuccess.DeployDatetime > lastFail.DeployDatetime)
                     divLastUpdate.Visible = false;
                 else
-                    lblLastUpdate.Text = Resources.Resource.LastUpdate + ": " + String.Format("({0}: {1})", Resources.Resource.ErrorMessageError, lastFail.Description);
+                    lblLastUpdate.Text = Resources.Resource.LastUpdate + ": " + String.Format("{2} ({0}: {1})", Resources.Resource.ErrorMessageError, lastFail.Description, lastFail.DeployDatetime.ToString());
             }
             else
             {
