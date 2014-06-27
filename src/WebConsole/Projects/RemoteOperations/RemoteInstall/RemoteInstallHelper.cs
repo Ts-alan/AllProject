@@ -68,7 +68,7 @@ namespace VirusBlokAda.CC.RemoteOperations.RemoteInstall
         }
         protected static void SetStatus(RemoteInstallEntity rie, InstallationStatusEnum status)
         {
-            SetStatus(rie, status, null);
+            SetStatus(rie, status, 0);
         }
         protected static void InsertIntoBase(ref RemoteInstallEntity rie, String taskType)
         {
