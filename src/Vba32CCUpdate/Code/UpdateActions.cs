@@ -9,10 +9,15 @@ namespace Vba32ControlCenterUpdate
     internal static class UpdateActions
     {
         private static SortedDictionary<String, String> services;
-        private const String gc_database_regkey = "SOFTWARE\\Vba32\\ControlCenter\\DataBase";
+        private static readonly String gc_database_regkey;
         
         static UpdateActions()
         {
+            if (System.Runtime.InteropServices.Marshal.SizeOf(typeof(IntPtr)) == 8)
+                gc_database_regkey = "SOFTWARE\\Wow6432Node\\Vba32\\ControlCenter\\DataBase";
+            else
+                gc_database_regkey = "SOFTWARE\\Vba32\\ControlCenter\\DataBase";
+
             services = new SortedDictionary<String, String>();
             services.Add("Vba32CCService.exe", "VbaControlCenter");
             services.Add("packet_parser.dll", "VbaControlCenter");
@@ -24,6 +29,13 @@ namespace Vba32ControlCenterUpdate
             services.Add("agsXMPP.dll", "Vba32NS");
             services.Add("VbaTaskAssignment.exe", "VbaTaskAssignment");
             services.Add("VbaTaskAssignmentPS.dll", "VbaTaskAssignment");
+            services.Add("ARM2_dbcontrol.dll", "VbaControlCenter|Vba32PMS");
+            services.Add("Common.dll", "VbaControlCenter|Vba32NS|Vba32PMS|Vba32SS");
+            services.Add("Filters.dll", "Vba32PMS");
+            services.Add("Interop.vsisLib.dll", "VbaControlCenter|Vba32PMS");
+            services.Add("Newtonsoft.Json.dll", "VbaControlCenter|Vba32PMS");
+            services.Add("Settings.dll", "VbaControlCenter|Vba32NS|Vba32PMS|Vba32SS");
+            services.Add("Tasks.dll", "Vba32PMS");
         }
 
         #region Methods
@@ -42,12 +54,7 @@ namespace Vba32ControlCenterUpdate
         internal static Boolean ActionAfterReplaceFiles(String[] files, String currentVersion, String newVersion)
         {
             Logger.Debug(String.Format("ActionAfterReplaceFiles() :: enter (files count: {0}, currentVersion: {1}, newVersion: {2})", files.Length, currentVersion, newVersion));
-            //Start the services
-            foreach (String serviceName in GetServices(files))
-            {
-                StartService(serviceName);
-            }
-
+            
             //Update DB
             IPatchUpdate updater = DBPatchFactory.GetPatch(newVersion);
             if (updater == null)
@@ -59,6 +66,12 @@ namespace Vba32ControlCenterUpdate
             String errorVersion;
             if (!updater.Update(currentVersion, GetConnectionString(), out errorVersion))
                 return false;
+            
+            //Start the services
+            foreach (String serviceName in GetServices(files))
+            {
+                StartService(serviceName);
+            }
 
             return true;
         }
@@ -77,8 +90,12 @@ namespace Vba32ControlCenterUpdate
             {
                 if (services.ContainsKey(file))
                 {
-                    if (!list.Contains(services[file]))
-                        list.Add(services[file]);
+                    String[] servList = services[file].Split(new Char[] { '|' });
+                    foreach (String serv in servList)
+                    {
+                        if (!String.IsNullOrEmpty(serv) && !list.Contains(serv))
+                            list.Add(serv);
+                    }
                 }
             }
             return list;
