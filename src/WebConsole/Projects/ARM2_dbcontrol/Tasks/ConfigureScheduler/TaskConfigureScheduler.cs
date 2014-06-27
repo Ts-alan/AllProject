@@ -62,13 +62,29 @@ namespace ARM2_dbcontrol.Tasks
 
             result.Append(@"<command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg>");
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
-            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{A3F5FCA0-46DC-4328-8568-5FDF961E87E6}</id>");
+            result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{AE8BC729-4C9D-4123-B1CC-28B6EBEA6EAA}</id>");
 
+            result.Append(@"<param><id><tasks></id><type>stringlist</type><value>");
+            for (int i = 0; i < _schedulerTasksList.Count; i++)
+            {
+                result.AppendFormat(@"string><id>{0}</id><val>{1}_{2}</val></string>", i, SchedulerTasksList[i].Type.ToString(), i + 1);
+            }
+            result.Append(@"</param>");
 
-
-           
-
-
+            for (int i = 0; i < _schedulerTasksList.Count; i++)
+            {
+                result.AppendFormat(@"<param><id>{0}_{1}_type</id><type>ulong</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, (UInt32)SchedulerTasksList[i].Period);
+                result.AppendFormat(@"<param><id>{0}_{1}_time</id><type>string</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, SchedulerTasksList[i].TaskDateTime);
+                result.AppendFormat(@"<param><id>{0}_{1}_command</id><type>stringmap</type><value>",SchedulerTasksList[i].Type.ToString(), i + 1);
+                result.AppendFormat(@"<string><id>0</id><key>command</key><val>{0}</val></string>",SchedulerTasksList[i].Type.ToString());
+                String guid = "";
+                if (SchedulerTasksList[i].Type == ActionTypeEnum.SCHD_SCANNER)
+                {
+                    guid = "{2E406790-5472-4E0C-9EBF-88D081AA09AC}";
+                }
+                else guid = "{D4041472-FEC0-41B5-A133-8AAC758C1006}";
+                result.AppendFormat(@"<string><id>1</id><key>module-id</key><val>{0}</val></string></value></param>",guid);
+            }  
             result.Append(@"</module></config></value></arg></command>");
 
             result.Append(@"</Args>");
@@ -91,7 +107,6 @@ namespace ARM2_dbcontrol.Tasks
             this._Vba32CCUser = task.Vba32CCUser;
         }
         #endregion
-
 
         #region IConfigureTask Members
         public void LoadFromRegistry(string reg)
@@ -117,9 +132,7 @@ namespace ARM2_dbcontrol.Tasks
 
     public enum ActionTypeEnum
     {
-        Scan=0,
-        Update
-    }
-
-  
+        SCHD_SCANNER = 0,
+        SCHD_LOADER = 1
+    }  
 }
