@@ -11,29 +11,29 @@
     TagPrefix="cc" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
-<ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
- <div class="title"><%=Resources.Resource.PageProcessTitle%></div>
+    <ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
+    <div class="title"><%=Resources.Resource.PageProcessTitle%></div>
     <asp:UpdatePanel runat="server" ID="updatePanelProcessesFilter">
-     <ContentTemplate>
-      <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="ProcessFiltersTemp" InformationListType="Processes"
-        UserFiltersProfileKey="ProcessFilters" OnClearClick="Filter1_ClearClick" runat="server"
-        OnActiveFilterChange="FilterContainer_ActiveFilterChanged">
-        <FiltersTemplate>
-            <table>
-                <tr>
-                    <td valign="top">
-                        <flt:FilterComputers runat="server" ID="fltComputers" NameFieldDB="ComputerName" TextFilter='<%$ Resources:Resource, ComputerName %>' />
-                        <flt:FilterText runat="server" ID="fltProcessName" NameFieldDB="ProcessName" TextFilter='<%$ Resources:Resource, ProcessName %>' />
-                        <flt:FilterRange runat="server" ID="fltMemory" NameFieldDB="MemorySize" RangeCompareErrorMessage="Error" TextFilter='<%$ Resources:Resource, MemorySize %>'/>
-                    </td>
-                    <td valign="top" style="padding-left: 20px;">
-                        <flt:FilterDateTime runat="server" ID="fltDateTime" NameFieldDB="LastDate" TextFilter="<%$ Resources:Resource, Date2 %>" />
-                    </td>
-                </tr>
-            </table>
-        </FiltersTemplate>
-    </flt:CompositeFilter>
-     </ContentTemplate>
+        <ContentTemplate>
+            <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="ProcessFiltersTemp" InformationListType="Processes"
+                UserFiltersProfileKey="ProcessFilters" OnClearClick="Filter1_ClearClick" runat="server"
+                OnActiveFilterChange="FilterContainer_ActiveFilterChanged">
+                <FiltersTemplate>
+                    <table>
+                        <tr>
+                            <td valign="top">
+                                <flt:FilterComputers runat="server" ID="fltComputers" NameFieldDB="ComputerName" TextFilter='<%$ Resources:Resource, ComputerName %>' />
+                                <flt:FilterText runat="server" ID="fltProcessName" NameFieldDB="ProcessName" TextFilter='<%$ Resources:Resource, ProcessName %>' />
+                                <flt:FilterRange runat="server" ID="fltMemory" NameFieldDB="MemorySize" RangeCompareErrorMessage="Error" TextFilter='<%$ Resources:Resource, MemorySize %>'/>
+                            </td>
+                            <td valign="top" style="padding-left: 20px;">
+                                <flt:FilterDateTime runat="server" ID="fltDateTime" NameFieldDB="LastDate" TextFilter="<%$ Resources:Resource, Date2 %>" />
+                            </td>
+                        </tr>
+                    </table>
+                </FiltersTemplate>
+            </flt:CompositeFilter>
+        </ContentTemplate>
     </asp:UpdatePanel>
         
      <div class="divSettings">
@@ -46,50 +46,48 @@
         </asp:ObjectDataSource>
         
         <asp:UpdatePanel runat="server" ID="updatePanelProcessesGrid">
-        <ContentTemplate>
-            <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
-                AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
-                EnableModelValidation="True" CssClass="gridViewStyle"
-                StorageType="Session" StorageName="Processes" >
-            <Columns>                    
-                <asp:HyperLinkField DataTextField="ComputerName" DataNavigateUrlFormatString="CompInfo.aspx?CompName={0}" DataNavigateUrlFields="ComputerName" SortExpression="ComputerName" 
-                    HeaderText='<%$ Resources:Resource, ComputerName %>' >
-                    <HeaderStyle Width="200px" />
-                </asp:HyperLinkField>                       
-                <asp:BoundField DataField="ProcessName" SortExpression="ProcessName" 
-                    HeaderText='<%$ Resources:Resource, ProcessName %>'>
-                    <HeaderStyle Width="370px" />
-                </asp:BoundField>
-                <asp:BoundField DataField="MemorySize" SortExpression="MemorySize" 
-                    HeaderText='<%$ Resources:Resource, MemorySize %>'>
-                    <HeaderStyle Width="50px" />
-                </asp:BoundField>
-                <asp:BoundField DataField="LastDate" SortExpression="LastDate" 
-                    HeaderText='<%$ Resources:Resource, Date2 %>'>
-                    <HeaderStyle Width="180px" />
-                </asp:BoundField>
-            </Columns> 
-            <PagerSettings Position="TopAndBottom" Visible="true" />           
-            <PagerTemplate>
-                    <paging:Paging runat="server" ID="Paging1" />
-            </PagerTemplate>
-            <HeaderStyle CssClass="gridViewHeader" />
-            <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
-            <RowStyle CssClass="gridViewRow" />
-            </custom:GridViewExtended>
-        </ContentTemplate>
+            <ContentTemplate>
+                <custom:GridViewExtended ID="GridView1" runat="server" AllowPaging="True" AllowSorting="true"
+                    AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" 
+                    EnableModelValidation="True" CssClass="gridViewStyle"
+                    StorageType="Session" StorageName="Processes" >
+                    <Columns>                    
+                        <asp:HyperLinkField DataTextField="ComputerName" DataNavigateUrlFormatString="CompInfo.aspx?CompName={0}" DataNavigateUrlFields="ComputerName" SortExpression="ComputerName" 
+                            HeaderText='<%$ Resources:Resource, ComputerName %>' >
+                            <HeaderStyle Width="200px" />
+                        </asp:HyperLinkField>                       
+                        <asp:BoundField DataField="ProcessName" SortExpression="ProcessName" 
+                            HeaderText='<%$ Resources:Resource, ProcessName %>'>
+                            <HeaderStyle Width="370px" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="MemorySize" SortExpression="MemorySize" 
+                            HeaderText='<%$ Resources:Resource, MemorySize %>'>
+                            <HeaderStyle Width="50px" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="LastDate" SortExpression="LastDate" 
+                            HeaderText='<%$ Resources:Resource, Date2 %>'>
+                            <HeaderStyle Width="180px" />
+                        </asp:BoundField>
+                    </Columns> 
+                    <PagerSettings Position="TopAndBottom" Visible="true" />           
+                    <PagerTemplate>
+                        <paging:Paging runat="server" ID="Paging1" />
+                    </PagerTemplate>
+                    <HeaderStyle CssClass="gridViewHeader" />
+                    <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
+                    <RowStyle CssClass="gridViewRow" />
+                </custom:GridViewExtended>
+            </ContentTemplate>
         </asp:UpdatePanel>
     </div>
 
     <table width="100%" class="subWebParts">
         <tr>
-            <td align="left" style="width:33%">
-            </td>              
+            <td align="left" style="width:33%"></td>              
 			<td align="right" style="width:33%">
                 <asp:LinkButton ID="lbtnExcel" runat="server" OnClick="lbtnExcel_Click"></asp:LinkButton>
 			</td>
         </tr>
-     </table>
-     <cc:AsyncLoadingStateControl runat="server" ID="AsyncLoadingStateControl1" />
+    </table>
+    <cc:AsyncLoadingStateControl runat="server" ID="AsyncLoadingStateControl1" />
 </asp:Content>
-
