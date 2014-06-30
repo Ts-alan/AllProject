@@ -50,15 +50,20 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         if (HideHeader) HeaderName.Visible = false;
         SetEnabled();
 
-        if (loader == null)
+  /*      if (loader == null)
         {
             loader = new TaskConfigureLoader();
             loader.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
         }
+        else
+        {
+            loader.Clear();
+        }
         if (loader.UPDATE_FOLDER_LIST == null)
         {
             loader.UPDATE_FOLDER_LIST = new List<string>();
-        }
+        }*/
+        loader = new TaskConfigureLoader();
         PathUpdateData();
     }
 
