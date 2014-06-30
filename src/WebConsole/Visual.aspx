@@ -8,7 +8,7 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
-<div class="title"><%=Resources.Resource.Diagram%></div>
+    <div class="title"><%=Resources.Resource.Diagram%></div>
     <script type="text/javascript">
         var select = null;
         var plot = null;
@@ -164,8 +164,8 @@
             }
         }
     </script>
-     <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="true" />
-     <asp:UpdatePanel runat="server" ID="updatePanelEventsFilter">
+    <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="true" />
+    <asp:UpdatePanel runat="server" ID="updatePanelEventsFilter">
         <ContentTemplate>
             <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="DiagramFiltersTemp"
                 InformationListType="Diagrams" UserFiltersProfileKey="DiagramFilters" runat="server"
@@ -211,5 +211,5 @@
     <div style="text-align:center; top:50px; position:relative">
         <asp:Label ID="lblChartError" runat="server" Visible="true" Font-Size='Large' ><%=Resources.Resource.SetDiagramCriteria %></asp:Label>
     </div>        
-    <div id='chart1' style=" width:600px; left:27%; position:relative"  ></div>  
+    <div id='chart1' style=" width:600px; left:27%; position:relative" ></div>  
 </asp:Content>
