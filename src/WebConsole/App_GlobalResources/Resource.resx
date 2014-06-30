@@ -3429,4 +3429,145 @@ system administrator.</value>
   <data name="PrivateNetwork" xml:space="preserve">
     <value>Private</value>
   </data>
+  <data name="JE_QTN_ADD" xml:space="preserve">
+    <value>Added object %1%</value>
+  </data>
+  <data name="JE_QTN_DELETE" xml:space="preserve">
+    <value>Deleted object %1%</value>
+  </data>
+  <data name="JE_QTN_RESTORE" xml:space="preserve">
+    <value>Restored object %1%</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying classes devices settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK" xml:space="preserve">
+    <value>Classes devices settings applied.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying usb classes settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK" xml:space="preserve">
+    <value>Usb classes settings applied.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying usb devices settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
+    <value>Usb devices settings applied.</value>
+  </data>
+  <data name="JE_VDD_AUDIT_USB" xml:space="preserve">
+    <value>Device %1% %2%.</value>
+  </data>
+  <data name="JE_VDD_START" xml:space="preserve">
+    <value>Access control module started.</value>
+  </data>
+  <data name="JE_VDD_STOP" xml:space="preserve">
+    <value>Access control module stoped.</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Rules is not applied</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Rules is applied</value>
+  </data>
+  <data name="JE_VND_AUIDIT_OTHER" xml:space="preserve">
+    <value>Audit other: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_TCP" xml:space="preserve">
+    <value>Audit tcp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_UDP" xml:space="preserve">
+    <value>Audit udp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_START" xml:space="preserve">
+    <value>Firewall started</value>
+  </data>
+  <data name="JE_VND_STOP" xml:space="preserve">
+    <value>Firewall stoped</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Settings is not applied</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Settings is applied</value>
+  </data>
+  <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
+    <value>Action delete: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
+    <value>Action execute: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
+    <value>Action open(read): %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
+    <value>Action open(write): %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
+    <value>Action read: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
+    <value>Action write: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_START" xml:space="preserve">
+    <value>Proactive protection started</value>
+  </data>
+  <data name="JE_VPP_STOP" xml:space="preserve">
+    <value>Proactive protection stoped</value>
+  </data>
+  <data name="JE_VAS_ACTION_BLOCK" xml:space="preserve">
+    <value>Blocked %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_CURE" xml:space="preserve">
+    <value>Cured %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_DELETE" xml:space="preserve">
+    <value>Deleted %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_NONE" xml:space="preserve">
+    <value>Skipped %1%</value>
+  </data>
+  <data name="JE_VAS_INFECTED" xml:space="preserve">
+    <value>Infected object %1% with %2%</value>
+  </data>
+  <data name="JE_VAS_START" xml:space="preserve">
+    <value>Start scanning: %1%</value>
+  </data>
+  <data name="JE_VAS_STOP" xml:space="preserve">
+    <value>Stop scanning: %1%</value>
+  </data>
+  <data name="JE_VAS_SUSPICIOUS" xml:space="preserve">
+    <value>Suspected object %1% of %2%</value>
+  </data>
+  <data name="JE_VMT_ACTION_BLOCK" xml:space="preserve">
+    <value>Blocked %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_CURE" xml:space="preserve">
+    <value>Cured %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_DELETE" xml:space="preserve">
+    <value>Deleted %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_NONE" xml:space="preserve">
+    <value>Skipped %1%</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Monitor settings is not applied</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Monitor settings is applied</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_INFECTED" xml:space="preserve">
+    <value>Infected object %1% with %2%</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_SUSPECTED" xml:space="preserve">
+    <value>Suspected object %1% of %2%</value>
+  </data>
+  <data name="JE_VMT_START" xml:space="preserve">
+    <value>Monitor started</value>
+  </data>
+  <data name="JE_VMT_STOP" xml:space="preserve">
+    <value>Monitor stoped</value>
+  </data>
 </root>

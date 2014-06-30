@@ -3417,4 +3417,145 @@
   <data name="PrivateNetwork" xml:space="preserve">
     <value>Частная</value>
   </data>
+  <data name="JE_VPP_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Настройки не применены</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Настройки применены</value>
+  </data>
+  <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
+    <value>Действие удаление: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
+    <value>Действие выполнение: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
+    <value>Действие открытие(чтение): %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
+    <value>Действие открытие(запись): %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
+    <value>Действие чтение: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
+    <value>Действие запись: %1%\\%2% -&gt; %3%</value>
+  </data>
+  <data name="JE_VPP_START" xml:space="preserve">
+    <value>Проактивная защита запущена</value>
+  </data>
+  <data name="JE_VPP_STOP" xml:space="preserve">
+    <value>Проактивная защита остановлена</value>
+  </data>
+  <data name="JE_QTN_ADD" xml:space="preserve">
+    <value>Добавлен объект %1%</value>
+  </data>
+  <data name="JE_QTN_DELETE" xml:space="preserve">
+    <value>Удален объект %1%</value>
+  </data>
+  <data name="JE_QTN_RESTORE" xml:space="preserve">
+    <value>Восстановлен объект %1%</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек классов устройств.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки классов устройств применены.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек usb-классов.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки usb-классов применены.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек usb-устройств.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки usb-устройств применены.</value>
+  </data>
+  <data name="JE_VDD_AUDIT_USB" xml:space="preserve">
+    <value>Устройство %1% %2%.</value>
+  </data>
+  <data name="JE_VDD_START" xml:space="preserve">
+    <value>Модуль управления доступом запущен.</value>
+  </data>
+  <data name="JE_VDD_STOP" xml:space="preserve">
+    <value>Модуль управления доступом остановлен.</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Правила не применены</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Правила применены</value>
+  </data>
+  <data name="JE_VND_AUIDIT_OTHER" xml:space="preserve">
+    <value>Аудит other: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_TCP" xml:space="preserve">
+    <value>Аудит tcp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_UDP" xml:space="preserve">
+    <value>Аудит udp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_START" xml:space="preserve">
+    <value>Файервол запущен</value>
+  </data>
+  <data name="JE_VND_STOP" xml:space="preserve">
+    <value>Файервол остановлен</value>
+  </data>
+  <data name="JE_VAS_ACTION_BLOCK" xml:space="preserve">
+    <value>Заблокирован %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_CURE" xml:space="preserve">
+    <value>Вылечен %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_DELETE" xml:space="preserve">
+    <value>Удален %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_NONE" xml:space="preserve">
+    <value>Пропущен %1%</value>
+  </data>
+  <data name="JE_VAS_INFECTED" xml:space="preserve">
+    <value>Объект %1% инфицирован %2%</value>
+  </data>
+  <data name="JE_VAS_START" xml:space="preserve">
+    <value>Начало сканирования: %1%</value>
+  </data>
+  <data name="JE_VAS_STOP" xml:space="preserve">
+    <value>Сканирование завершено: %1%</value>
+  </data>
+  <data name="JE_VAS_SUSPICIOUS" xml:space="preserve">
+    <value>Объект %1% подозрение на %2%</value>
+  </data>
+  <data name="JE_VMT_ACTION_BLOCK" xml:space="preserve">
+    <value>Заблокирован %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_CURE" xml:space="preserve">
+    <value>Вылечен %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_DELETE" xml:space="preserve">
+    <value>Удален %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_NONE" xml:space="preserve">
+    <value>Пропущен %1%</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Настройки монитора не применены</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки монитора применены</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_INFECTED" xml:space="preserve">
+    <value>Объект %1% инфицирован %2%</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_SUSPECTED" xml:space="preserve">
+    <value>Объект %1% подозрение на %2%</value>
+  </data>
+  <data name="JE_VMT_START" xml:space="preserve">
+    <value>Монитор запущен</value>
+  </data>
+  <data name="JE_VMT_STOP" xml:space="preserve">
+    <value>Монитор остановлен</value>
+  </data>
 </root>

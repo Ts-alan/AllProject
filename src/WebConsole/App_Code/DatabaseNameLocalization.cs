@@ -52,6 +52,60 @@ public static class DatabaseNameLocalization
         _dict.Add("{AAEBBB59-4CD4-478B-A7C6-15F4DAF74078}", "VND");
         _dict.Add("{7B7D499C-541E-4971-BFD5-286A78CAE649}", "VPP");
         _dict.Add("{67E7B7BE-BE06-4A0D-A812-7E1A0142C0F6}", "VQTN");
+
+	    //Events
+        _dict.Add("JE_VPP_START", "JE_VPP_START");
+        _dict.Add("JE_VPP_STOP", "JE_VPP_STOP");
+        _dict.Add("JE_VPP_APPLIED_RULES_OK", "JE_VPP_APPLIED_RULES_OK");
+        _dict.Add("JE_VPP_APPLIED_RULES_FAILED", "JE_VPP_APPLIED_RULES_FAILED");
+        _dict.Add("JE_VPP_AUDIT_WRITE", "JE_VPP_AUDIT_WRITE");
+        _dict.Add("JE_VPP_AUDIT_READ", "JE_VPP_AUDIT_READ");
+        _dict.Add("JE_VPP_AUDIT_DELETE", "JE_VPP_AUDIT_DELETE");
+        _dict.Add("JE_VPP_AUDIT_EXECUTE", "JE_VPP_AUDIT_EXECUTE");
+        _dict.Add("JE_VPP_AUDIT_OPEN_WRITE", "JE_VPP_AUDIT_OPEN_WRITE");
+        _dict.Add("JE_VPP_AUDIT_OPEN_READ", "JE_VPP_AUDIT_OPEN_READ");
+        
+        _dict.Add("JE_QTN_ADD", "JE_QTN_ADD");
+        _dict.Add("JE_QTN_DELETE", "JE_QTN_DELETE");
+        _dict.Add("JE_QTN_RESTORE", "JE_QTN_RESTORE");
+
+        _dict.Add("JE_VND_START", "JE_VND_START");
+        _dict.Add("JE_VND_STOP", "JE_VND_STOP");
+        _dict.Add("JE_VND_APPLIED_RULES_OK", "JE_VND_APPLIED_RULES_OK");
+        _dict.Add("JE_VND_APPLIED_RULES_FAILED", "JE_VND_APPLIED_RULES_FAILED");
+        _dict.Add("JE_VND_AUIDIT_TCP", "JE_VND_AUIDIT_TCP");
+        _dict.Add("JE_VND_AUIDIT_UDP", "JE_VND_AUIDIT_UDP");
+        _dict.Add("JE_VND_AUIDIT_OTHER", "JE_VND_AUIDIT_OTHER");
+
+        _dict.Add("JE_VDD_START", "JE_VDD_START");
+        _dict.Add("JE_VDD_STOP", "JE_VDD_STOP");
+        _dict.Add("JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK", "JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK");
+        _dict.Add("JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK", "JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK");
+        _dict.Add("JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK", "JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK");
+        _dict.Add("JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED", "JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED");
+        _dict.Add("JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED", "JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED");
+        _dict.Add("JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED", "JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED");
+        _dict.Add("JE_VDD_AUDIT_USB", "JE_VDD_AUDIT_USB");
+
+        _dict.Add("JE_VAS_START", "JE_VAS_START");
+        _dict.Add("JE_VAS_STOP", "JE_VAS_STOP");
+        _dict.Add("JE_VAS_INFECTED", "JE_VAS_INFECTED");
+        _dict.Add("JE_VAS_SUSPICIOUS", "JE_VAS_SUSPICIOUS");
+        _dict.Add("JE_VAS_ACTION_BLOCK", "JE_VAS_ACTION_BLOCK");
+        _dict.Add("JE_VAS_ACTION_CURE", "JE_VAS_ACTION_CURE");
+        _dict.Add("JE_VAS_ACTION_DELETE", "JE_VAS_ACTION_DELETE");
+        _dict.Add("JE_VAS_ACTION_NONE", "JE_VAS_ACTION_NONE");
+
+        _dict.Add("JE_VMT_START", "JE_VMT_START");
+        _dict.Add("JE_VMT_STOP", "JE_VMT_STOP");
+        _dict.Add("JE_VMT_APPLIED_SETTINGS_OK", "JE_VMT_APPLIED_SETTINGS_OK");
+        _dict.Add("JE_VMT_APPLIED_SETTINGS_FAILED", "JE_VMT_APPLIED_SETTINGS_FAILED");
+        _dict.Add("JE_VMT_CHECK_RESULT_SUSPECTED", "JE_VMT_CHECK_RESULT_SUSPECTED");
+        _dict.Add("JE_VMT_CHECK_RESULT_INFECTED", "JE_VMT_CHECK_RESULT_INFECTED");
+        _dict.Add("JE_VMT_ACTION_BLOCK", "JE_VMT_ACTION_BLOCK");
+        _dict.Add("JE_VMT_ACTION_CURE", "JE_VMT_ACTION_CURE");
+        _dict.Add("JE_VMT_ACTION_DELETE", "JE_VMT_ACTION_DELETE");
+        _dict.Add("JE_VMT_ACTION_NONE", "JE_VMT_ACTION_NONE");
 	}
 
     public static String GetNameForCurrentCulture(String name)
