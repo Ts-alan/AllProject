@@ -22,7 +22,18 @@ public partial class Controls_PrimitiveFilterSingleDropDownListForStatistics : S
     public String GenerateSQL()
     {
         if (!fltTemplate.IsSelected) return String.Empty;
-        return PrimitiveFilterHelper.GenerateSqlForTextValue(SingleSelectionDropDownList1.SelectedValue.Substring(2), NameFieldDB, fltTemplate.UseOR, fltTemplate.UseNOT);
+        
+        String filterString;
+        switch (SingleSelectionDropDownList1.SelectedValue)
+        {
+            case "1":
+                filterString = "*";
+                break;
+            default:
+                filterString = "vba32.virus.found&JE_VAS_INFECTED&JE_VMT_CHECK_RESULT_INFECTED";
+                break;
+        }
+        return PrimitiveFilterHelper.GenerateSqlForTextValue(filterString, NameFieldDB, fltTemplate.UseOR, fltTemplate.UseNOT);
     }
 
     public void Clear()
