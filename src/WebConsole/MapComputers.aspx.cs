@@ -72,7 +72,7 @@ public partial class MapComputers : PageBase
     private string GetClassName(ComputersEntity entity)
     {
         TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);
-        if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 3) return "vbagrey";
+        if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 10) return "vbagrey";
         List<ComponentsEntity> list;
 
         list = DBProviders.Component.List(String.Format("ComputerName = \'{0}\' AND (ComponentName = \'Vba32 Loader\' OR ComponentName = \'Vba32 Monitor\')", entity.ComputerName), null, 1, Int16.MaxValue);
