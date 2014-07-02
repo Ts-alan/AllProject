@@ -3636,4 +3636,7 @@ system administrator.</value>
   <data name="DeviceClass" xml:space="preserve">
     <value>Device classes</value>
   </data>
+  <data name="TaskNameRunFileCleaner" xml:space="preserve">
+    <value>Vba32 File cleaner: clean</value>
+  </data>
 </root>

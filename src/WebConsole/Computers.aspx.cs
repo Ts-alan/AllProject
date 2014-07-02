@@ -1478,6 +1478,7 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameConfigureFirewall);
         taskName.Add(Resources.Resource.TaskNameIntegrityCheck);
         taskName.Add(Resources.Resource.TaskNameConfigureFileCleaner);
+        taskName.Add(Resources.Resource.TaskNameRunFileCleaner);
         taskName.Add(Resources.Resource.TaskSaveIntegrityCheck);
         taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
@@ -2065,6 +2066,19 @@ public partial class Computers : PageBase
 
                 control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureFileCleaner.BuildTask());
             }
+            if (tskClearVFC.Visible == true)
+            {
+                task = tskClearVFC.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskClearVFC.ValidateFields();
+
+                for (int i = 0; i < _set.AllComputers.Count; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskClearVFC.GetTask());
+            }
         }
         catch (ArgumentException argEx)
         {
@@ -2290,7 +2304,7 @@ public partial class Computers : PageBase
                                         {
                                             task.Type = TaskType.ConfigureMonitor;
                                             task.Name = Resources.Resource.CongLdrConfigureMonitor;
-                                           
+
                                             task.Param = String.Empty;
                                             lbtnDelete.Visible = false;
                                         }
@@ -2455,26 +2469,35 @@ public partial class Computers : PageBase
 
                                                                                                                 lbtnDelete.Visible = false;
                                                                                                             }
-                                                                                                        else
-                                                                                                            if (name == Resources.Resource.TaskNameConfigureFileCleaner)
-                                                                                                            {
-                                                                                                                task.Type = TaskType.FileCleaner;
-                                                                                                                task.Name = name;
-                                                                                                                task.Param = String.Empty;
-
-                                                                                                                lbtnDelete.Visible = false;
-                                                                                                            }
                                                                                                             else
-                                                                                                            {
-                                                                                                                //User task
-                                                                                                                collection = (TaskUserCollection)Session["TaskUser"];
-                                                                                                                foreach (TaskUserEntity tsk in collection)
+                                                                                                                if (name == Resources.Resource.TaskNameConfigureFileCleaner)
                                                                                                                 {
-                                                                                                                    if (tsk.Name == name)
-                                                                                                                        task = tsk;
+                                                                                                                    task.Type = TaskType.FileCleaner;
+                                                                                                                    task.Name = name;
+                                                                                                                    task.Param = String.Empty;
+
+                                                                                                                    lbtnDelete.Visible = false;
                                                                                                                 }
-                                                                                                                lbtnDelete.Visible = true;
-                                                                                                            }
+                                                                                                                else
+                                                                                                                    if (name == Resources.Resource.TaskNameRunFileCleaner)
+                                                                                                                    {
+                                                                                                                        task.Type = TaskType.ClearVFC;
+                                                                                                                        task.Name = name;
+                                                                                                                        task.Param = String.Empty;
+
+                                                                                                                        lbtnDelete.Visible = false;
+                                                                                                                    }
+                                                                                                                    else
+                                                                                                                    {
+                                                                                                                        //User task
+                                                                                                                        collection = (TaskUserCollection)Session["TaskUser"];
+                                                                                                                        foreach (TaskUserEntity tsk in collection)
+                                                                                                                        {
+                                                                                                                            if (tsk.Name == name)
+                                                                                                                                task = tsk;
+                                                                                                                        }
+                                                                                                                        lbtnDelete.Visible = true;
+                                                                                                                    }
 
         tskCreateProcess.Visible = false;
         tskSendFile.Visible = false;
@@ -2503,6 +2526,7 @@ public partial class Computers : PageBase
         tskConfigureIntegrityCheck.Visible = false;
         tskConfigureFileCleaner.Visible = false;
         tskSaveIntegrityCheck.Visible = false;
+        tskClearVFC.Visible = false;
 
         LoadStateTask(task);
     }
@@ -2654,6 +2678,10 @@ public partial class Computers : PageBase
                 tskConfigureFileCleaner.InitFields();
                 tskConfigureFileCleaner.LoadState(task);
                 tskConfigureFileCleaner.Visible = true;
+                break;
+            case TaskType.ClearVFC:
+                tskClearVFC.LoadState(task);
+                tskClearVFC.Visible = true;
                 break;
             default:
                 break;
@@ -2850,27 +2878,35 @@ public partial class Computers : PageBase
                                                                         task = tskSaveIntegrityCheck.GetCurrentState();
                                                                         tskSaveIntegrityCheck.ValidateFields();
                                                                     }
-                                                                else
-                                                                    if (name == Resources.Resource.TaskNameConfigureFileCleaner)
-                                                                    {
-                                                                        task.Type = TaskType.FileCleaner;
-                                                                        task.Name = name;
-                                                                        task = tskConfigureFileCleaner.GetCurrentState();
-                                                                        tskConfigureFileCleaner.ValidateFields();
-                                                                    }
                                                                     else
-                                                                        if (name == Resources.Resource.ConfigureScheduler)
+                                                                        if (name == Resources.Resource.TaskNameConfigureFileCleaner)
                                                                         {
-                                                                            task.Type = TaskType.ConfigureSheduler;
+                                                                            task.Type = TaskType.FileCleaner;
                                                                             task.Name = name;
-                                                                            task = tskConfigureScheduler.GetCurrentState();
-                                                                            tskConfigureScheduler.ValidateFields();
+                                                                            task = tskConfigureFileCleaner.GetCurrentState();
+                                                                            tskConfigureFileCleaner.ValidateFields();
                                                                         }
-                                                                    else
-                                                                    {
-                                                                        task = collection.Get(name);
-                                                                        //editing = "";
-                                                                    }
+                                                                        else
+                                                                            if (name == Resources.Resource.TaskNameRunFileCleaner)
+                                                                            {
+                                                                                task.Type = TaskType.ClearVFC;
+                                                                                task.Name = name;
+                                                                                task = tskClearVFC.GetCurrentState();
+                                                                                tskClearVFC.ValidateFields();
+                                                                            }
+                                                                            else
+                                                                                if (name == Resources.Resource.ConfigureScheduler)
+                                                                                {
+                                                                                    task.Type = TaskType.ConfigureSheduler;
+                                                                                    task.Name = name;
+                                                                                    task = tskConfigureScheduler.GetCurrentState();
+                                                                                    tskConfigureScheduler.ValidateFields();
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    task = collection.Get(name);
+                                                                                    //editing = "";
+                                                                                }
         }
         catch (ArgumentException argEx)
         {

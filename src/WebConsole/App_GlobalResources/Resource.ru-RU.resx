@@ -3624,4 +3624,7 @@
   <data name="DeviceClass" xml:space="preserve">
     <value>Классы устройств</value>
   </data>
+  <data name="TaskNameRunFileCleaner" xml:space="preserve">
+    <value>Vba32 Удаление файлов: очистить</value>
+  </data>
 </root>

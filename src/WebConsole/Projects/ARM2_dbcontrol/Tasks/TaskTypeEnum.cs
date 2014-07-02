@@ -36,6 +36,7 @@ namespace ARM2_dbcontrol.Tasks
         ConfigureIntegrityCheck,
         FileCleaner,
         JornalEvents,
-        SaveCheckIntegrity
+        SaveCheckIntegrity,
+        ClearVFC
     }
 }

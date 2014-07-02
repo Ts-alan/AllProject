@@ -32,6 +32,7 @@
 <%@ Register Src="~/Controls/TaskConfigureIntegrityCheck.ascx" TagName="TaskUser" TagPrefix="tskConfigureIntegrityCheck" %>
 <%@ Register Src="~/Controls/TaskConfigureFileCleaner.ascx" TagName="TaskUser"  TagPrefix="tskConfigureFileCleaner"%>
 <%@ Register Src="~/Controls/TaskSaveIntegrityCheck.ascx" TagName="TaskUser"  TagPrefix="tskSaveIntegrityCheck"%>
+<%@ Register Src="~/Controls/TaskClearVFC.ascx" TagName="TaskUser"  TagPrefix="tskClearVFC"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
     <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" ScriptMode="Release"/>
@@ -292,6 +293,7 @@
                         <tskConfigureIntegrityCheck:TaskUser ID="tskConfigureIntegrityCheck" runat="server" Visible="false" />
                         <tskConfigureFileCleaner:TaskUser ID="tskConfigureFileCleaner" runat="server" Visible="false"  />
                         <tskSaveIntegrityCheck:TaskUser ID="tskSaveIntegrityCheck" runat="server" Visible="false"  />
+                        <tskClearVFC:TaskUser ID="tskClearVFC" runat="server" Visible="false"  />
                     </asp:Panel>
                 </td>
             </tr>

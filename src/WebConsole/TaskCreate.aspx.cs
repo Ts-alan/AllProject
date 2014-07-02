@@ -71,6 +71,7 @@ public partial class TaskCreate : PageBase
                 tskConfigureIntegrityCheck.Visible = false;
                 tskConfigureFileCleaner.Visible = false;
                 tskSaveIntegrityCheck.Visible = false;
+                tskClearVFC.Visible = false;
 
                 LoadStateTask(task);
 
@@ -179,6 +180,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "FileCleaner":
                         taskUserType.Type = TaskType.FileCleaner;
+                        break;
+                    case "ClearVFC":
+                        taskUserType.Type = TaskType.ClearVFC;
                         break;
                     case "SaveCheckIntegrity":
                         taskUserType.Type = TaskType.SaveCheckIntegrity;
@@ -356,6 +360,11 @@ public partial class TaskCreate : PageBase
                 tskConfigureFileCleaner.Visible = true;
 
                 break;
+            case TaskType.ClearVFC:
+                tskClearVFC.LoadState(task);
+                tskClearVFC.Visible = true;
+                
+                break;
         }
     }
 
@@ -481,6 +490,11 @@ public partial class TaskCreate : PageBase
                     task.Type = TaskType.FileCleaner;
                     task = tskConfigureFileCleaner.GetCurrentState();
                     tskConfigureFileCleaner.ValidateFields();
+                    break;
+                case "ClearVFC":
+                    task.Type = TaskType.ClearVFC;
+                    task = tskClearVFC.GetCurrentState();
+                    tskClearVFC.ValidateFields();
                     break;
 
                 default:
