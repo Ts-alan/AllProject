@@ -29,6 +29,7 @@
       <siteMapNode url="GroupsAdministrate.aspx" title="$resources:Resource,Groups" description="$resources:Resource,Groups" roles="Administrator" />
       <siteMapNode url="PoliciesPage.aspx" title="$resources:Resource,Policies" description="$resources:Resource,Policies" roles="Administrator" />
       <siteMapNode url="DevicesPolicy.aspx" title="$resources:Resource,Devices" description="$resources:Resource,Devices" roles="Administrator" />
+      <siteMapNode url="DeviceClass.aspx" title="$resources:Resource,DeviceClass" description="$resources:Resource,DeviceClass" roles="Administrator" />
       <siteMapNode url="UpdateCC.aspx" title="$resources:Resource,UpdateCC" description="$resources:Resource,UpdateCC" roles="Administrator" />
 	  <!--<siteMapNode url="elmah.axd" title="Logging" description="Logging" roles="Administrator" />-->
     </siteMapNode>

@@ -3633,4 +3633,7 @@ system administrator.</value>
   <data name="JE_VIC_REGISTRY_STATE_SAVE_START" xml:space="preserve">
     <value>Saving info about registry integrity began</value>
   </data>
+  <data name="DeviceClass" xml:space="preserve">
+    <value>Device classes</value>
+  </data>
 </root>
