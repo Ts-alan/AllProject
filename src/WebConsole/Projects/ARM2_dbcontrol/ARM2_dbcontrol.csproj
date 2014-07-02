@@ -247,6 +247,7 @@
     <Compile Include="Tasks\ProactiveProtection\ProactiveRule.cs" />
     <Compile Include="Tasks\ProactiveProtection\TaskProactiveProtection.cs" />
     <Compile Include="Tasks\RunScanner\TaskRunScanner.cs" />
+    <Compile Include="Tasks\SaveIntegrityCheck\TaskSaveIntegrityCheck.cs" />
     <Compile Include="Tasks\SingleCleaningTemplate\SingleCleaningTemplate.cs" />
     <Compile Include="Tasks\TaskHelper.cs" />
     <Compile Include="Tasks\TaskTypeEnum.cs" />

@@ -70,6 +70,7 @@ public partial class TaskCreate : PageBase
                 tskRunScanner.Visible = false;
                 tskConfigureIntegrityCheck.Visible = false;
                 tskConfigureFileCleaner.Visible = false;
+                tskSaveIntegrityCheck.Visible = false;
 
                 LoadStateTask(task);
 
@@ -178,6 +179,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "FileCleaner":
                         taskUserType.Type = TaskType.FileCleaner;
+                        break;
+                    case "SaveCheckIntegrity":
+                        taskUserType.Type = TaskType.SaveCheckIntegrity;
                         break;
                 }
 
@@ -339,6 +343,12 @@ public partial class TaskCreate : PageBase
                 tskConfigureIntegrityCheck.Visible = true;
 
                 break;
+            case TaskType.SaveCheckIntegrity:
+                tskSaveIntegrityCheck.InitFields();
+                tskSaveIntegrityCheck.LoadState(task);
+                lblTaskName.Text = Resources.Resource.TaskName;
+                tskSaveIntegrityCheck.Visible = true;
+                break;
             case TaskType.FileCleaner:
                 tskConfigureFileCleaner.InitFields();
                 tskConfigureFileCleaner.LoadState(task);
@@ -461,6 +471,11 @@ public partial class TaskCreate : PageBase
                     task.Type = TaskType.ConfigureIntegrityCheck;
                     task = tskConfigureIntegrityCheck.GetCurrentState();
                     tskConfigureIntegrityCheck.ValidateFields();
+                    break;
+                case "SaveCheckIntegrity":
+                    task.Type = TaskType.SaveCheckIntegrity;
+                    task = tskSaveIntegrityCheck.GetCurrentState();
+                    tskSaveIntegrityCheck.ValidateFields();
                     break;
                 case "FileCleaner":
                     task.Type = TaskType.FileCleaner;

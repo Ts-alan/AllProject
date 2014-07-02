@@ -35,6 +35,7 @@ namespace ARM2_dbcontrol.Tasks
         MonitorOff,
         ConfigureIntegrityCheck,
         FileCleaner,
-        JornalEvents
+        JornalEvents,
+        SaveCheckIntegrity
     }
 }

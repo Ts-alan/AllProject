@@ -3322,10 +3322,10 @@ system administrator.</value>
     <value>Template</value>
   </data>
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
-    <value>Check integrity</value>
+    <value>Configure Vba32 Check integrity</value>
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
-    <value>Configure file cleaner</value>
+    <value>Configure Vba32 File cleaner</value>
   </data>
   <data name="CongScannerCases" xml:space="preserve">
     <value>In case</value>
@@ -3569,5 +3569,14 @@ system administrator.</value>
   </data>
   <data name="JE_VMT_STOP" xml:space="preserve">
     <value>Monitor stoped</value>
+  </data>
+  <data name="TaskSaveIntegrityCheck" xml:space="preserve">
+    <value>Save/Check integrity</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
   </data>
 </root>

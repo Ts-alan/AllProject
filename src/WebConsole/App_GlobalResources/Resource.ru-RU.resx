@@ -3310,10 +3310,10 @@
     <value>Шаблон</value>
   </data>
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
-    <value>Проверить целостность</value>
+    <value>Настроить Vba32 Проверка целостности</value>
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
-    <value>Настроить удаление файлов</value>
+    <value>Настроить Vba32 Удаление файлов</value>
   </data>
   <data name="CongScannerCases" xml:space="preserve">
     <value>В случае</value>
@@ -3557,5 +3557,14 @@
   </data>
   <data name="JE_VMT_STOP" xml:space="preserve">
     <value>Монитор остановлен</value>
+  </data>
+  <data name="TaskSaveIntegrityCheck" xml:space="preserve">
+    <value>Сохранение/проверка целостности</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Команда</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Проверить</value>
   </data>
 </root>

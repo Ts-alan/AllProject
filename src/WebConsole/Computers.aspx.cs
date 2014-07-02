@@ -1476,13 +1476,14 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameConfigureProactiveProtection);
         taskName.Add(Resources.Resource.ConfigureScheduler);
         taskName.Add(Resources.Resource.TaskNameConfigureFirewall);
+        taskName.Add(Resources.Resource.TaskNameIntegrityCheck);
+        taskName.Add(Resources.Resource.TaskNameConfigureFileCleaner);
+        taskName.Add(Resources.Resource.TaskSaveIntegrityCheck);
         taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
         taskName.Add(Resources.Resource.TaskNameConfigurePassword);
         taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
         //taskName.Add(Resources.Resource.TaskDailyDeviceProtect);
         taskName.Add(Resources.Resource.TaskRequestPolicy);
-        taskName.Add(Resources.Resource.TaskNameIntegrityCheck);
-        taskName.Add(Resources.Resource.TaskNameConfigureFileCleaner);
    
         taskName.Add(Resources.Resource.TaskSeparator);
 
@@ -2038,6 +2039,19 @@ public partial class Computers : PageBase
 
                 control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureIntegrityCheck.BuildTask());
             }
+            if (tskSaveIntegrityCheck.Visible == true)
+            {
+                task = tskSaveIntegrityCheck.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskSaveIntegrityCheck.ValidateFields();
+
+                for (int i = 0; i < _set.AllComputers.Count; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskSaveIntegrityCheck.GetTask());
+            }
             if (tskConfigureFileCleaner.Visible == true)
             {
                 task = tskConfigureFileCleaner.GetCurrentState();
@@ -2433,6 +2447,15 @@ public partial class Computers : PageBase
                                                                                                             lbtnDelete.Visible = false;
                                                                                                         }
                                                                                                         else
+                                                                                                            if (name == Resources.Resource.TaskSaveIntegrityCheck)
+                                                                                                            {
+                                                                                                                task.Type = TaskType.SaveCheckIntegrity;
+                                                                                                                task.Name = name;
+                                                                                                                task.Param = String.Empty;
+
+                                                                                                                lbtnDelete.Visible = false;
+                                                                                                            }
+                                                                                                        else
                                                                                                             if (name == Resources.Resource.TaskNameConfigureFileCleaner)
                                                                                                             {
                                                                                                                 task.Type = TaskType.FileCleaner;
@@ -2479,6 +2502,7 @@ public partial class Computers : PageBase
         tskRunScanner.Visible = false;
         tskConfigureIntegrityCheck.Visible = false;
         tskConfigureFileCleaner.Visible = false;
+        tskSaveIntegrityCheck.Visible = false;
 
         LoadStateTask(task);
     }
@@ -2620,6 +2644,11 @@ public partial class Computers : PageBase
                 tskConfigureIntegrityCheck.InitFields();
                 tskConfigureIntegrityCheck.LoadState(task);
                 tskConfigureIntegrityCheck.Visible = true;
+                break;
+            case TaskType.SaveCheckIntegrity:
+                tskSaveIntegrityCheck.InitFields();
+                tskSaveIntegrityCheck.LoadState(task);
+                tskSaveIntegrityCheck.Visible = true;
                 break;
             case TaskType.FileCleaner:
                 tskConfigureFileCleaner.InitFields();
@@ -2813,6 +2842,14 @@ public partial class Computers : PageBase
                                                                     task = tskConfigureIntegrityCheck.GetCurrentState();
                                                                     tskConfigureIntegrityCheck.ValidateFields();
                                                                 }
+                                                                else
+                                                                    if (name == Resources.Resource.TaskSaveIntegrityCheck)
+                                                                    {
+                                                                        task.Type = TaskType.SaveCheckIntegrity;
+                                                                        task.Name = name;
+                                                                        task = tskSaveIntegrityCheck.GetCurrentState();
+                                                                        tskSaveIntegrityCheck.ValidateFields();
+                                                                    }
                                                                 else
                                                                     if (name == Resources.Resource.TaskNameConfigureFileCleaner)
                                                                     {
