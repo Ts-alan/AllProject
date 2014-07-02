@@ -196,6 +196,7 @@
             <li><a href="#tabRegistry">
                 <%=Resources.Resource.Registry %></a></li>
             <%--  <li><a href="#tabDevices"><%=Resources.Resource.Devices %></a></li>--%>
+            <li><a href="#tabJournalVIC"><%=Resources.Resource.JournalEvents %></a> </li>
         </ul>
         <div id='tabFiles'>
             <asp:UpdatePanel ID="FilesUpdatePanel" runat="server">
@@ -237,18 +238,18 @@
                                 <asp:Table runat="server">
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnFilesAdd" runat="server" Text="<%$ Resources:Resource, Add %>" />
+                                            <asp:Button ID="btnFilesAdd" runat="server" Text="<%$ Resources:Resource, Add %>" Width="100" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnFilesDelete" runat="server" Text="<%$ Resources:Resource, Delete %>"
+                                            <asp:Button ID="btnFilesDelete" runat="server" Text="<%$ Resources:Resource, Delete %>" Width="100"
                                                 OnClick="FilesDeleteButtonClick" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnFilesChange" runat="server" Text="<%$ Resources:Resource, Change %>"
+                                            <asp:Button ID="btnFilesChange" runat="server" Text="<%$ Resources:Resource, Change %>" Width="100"
                                                 OnClientClick="FilesChangeButtonClientClick()" />
                                         </asp:TableCell>
                                     </asp:TableRow>
@@ -321,18 +322,18 @@
                                 <asp:Table runat="server">
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnRegistryAdd" runat="server" Text="<%$ Resources:Resource, Add %>" />
+                                            <asp:Button ID="btnRegistryAdd" runat="server" Text="<%$ Resources:Resource, Add %>" Width="100" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnRegistryDelete" runat="server" Text="<%$ Resources:Resource, Delete %>"
+                                            <asp:Button ID="btnRegistryDelete" runat="server" Text="<%$ Resources:Resource, Delete %>" Width="100"
                                                 OnClick="RegistryDeleteButtonClick" />
                                         </asp:TableCell>
                                     </asp:TableRow>
                                     <asp:TableRow>
                                         <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                            <asp:Button ID="btnRegistryChange" runat="server" Text="<%$ Resources:Resource, Change %>"
+                                            <asp:Button ID="btnRegistryChange" runat="server" Text="<%$ Resources:Resource, Change %>" Width="100"
                                                 OnClientClick="RegistryChangeButtonClientClick()" />
                                         </asp:TableCell>
                                     </asp:TableRow>
@@ -385,6 +386,30 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>--%>
+        <div id='tabJournalVIC'>
+            <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
+                <ContentTemplate>
+                    <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
+                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label2" runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label3" runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label4" runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
     </div>
     <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" />
 </div>

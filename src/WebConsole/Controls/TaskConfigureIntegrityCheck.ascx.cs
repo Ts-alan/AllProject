@@ -10,6 +10,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserControl, ITask
 {
@@ -36,6 +37,8 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
     {
         if (!Page.IsPostBack)
             InitFields();
+
+        InitFieldsJournalEvent(taskIntegrityCheck.journalEvent);
     }
 
     public void InitFields()
@@ -43,7 +46,7 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
         if (HideHeader) HeaderName.Visible = false;
         SetEnabled();
 
-        taskIntegrityCheck = new TaskConfigureIntegrityCheck();
+        taskIntegrityCheck = new TaskConfigureIntegrityCheck(GetEvents());
         FilesUpdateData();
         RegistryUpdateData();
     }
@@ -51,6 +54,29 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
     private void SetEnabled()
     {
         tblFilesUpdatePanel.Enabled = tblRegistryUpdatePanel.Enabled = _enabled;
+    }
+
+    private String[] GetEvents()
+    {
+        String[] s = { "JE_VIC_REGISTRY_CHANGED",
+                         "JE_VIC_DEVICES_STATE_SAVE_START",
+                         "JE_VIC_FILES_STATE_SAVE_FINISHED",
+                         "JE_VIC_REGISTRY_STATE_CHECK_FINISHED",
+                         "JE_VIC_REGISTRY_STATE_SAVE_START",
+                         "JE_VIC_DEVICE_CAN_NOT_READ",
+                         "JE_VIC_REGISTRY_STATE_CHECK_START",
+                         "JE_VIC_DEVICES_STATE_SAVE_FINISHED",
+                         "JE_VIC_FILES_STATE_CHECK_START",
+                         "JE_VIC_FILES_STATE_CHECK_FINISHED",
+                         "JE_VIC_FILES_CAN_NOT_OPEN",
+                         "JE_VIC_DEVICES_STATE_CHECK_FINISHED",
+                         "JE_VIC_REGISTRY_CAN_NOT_OPEN_KEY",
+                         "JE_VIC_DEVICES_STATE_CHECK_START",
+                         "JE_VIC_FILES_STATE_SAVE_START",
+                         "JE_VIC_FILE_CHANGED",
+                         "JE_VIC_DEVICE_CHANGED",
+                         "JE_VIC_REGISTRY_STATE_SAVE_FINISHED"};
+        return s;
     }
 
     public bool ValidateFields()
@@ -62,6 +88,7 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ConfigureIntegrityCheck;
+        SaveJournalEvents();
         task.Param = taskIntegrityCheck.SaveToXml(); 
         return task;
     }
@@ -71,12 +98,106 @@ public partial class Controls_TaskConfigureIntegrityCheck : System.Web.UI.UserCo
         taskIntegrityCheck.LoadFromXml(task.Param);
         FilesUpdateData();
         RegistryUpdateData();
+        LoadJournalEvent(taskIntegrityCheck.journalEvent);
     }
         
     public String BuildTask()
     {
         return taskIntegrityCheck.GetTask();
     }
+
+    #region JournalEvents
+
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
+
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        taskIntegrityCheck.journalEvent = je;
+    }
+
+    private void InitFieldsJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        if (JournalEventTable.Rows.Count == 1)
+        {
+            for (Int32 i = 0; i < _events.Events.Length; i++)
+            {
+                JournalEventTable.Rows.Add(GenerateRow(_events.Events[i], i));
+            }
+        }
+    }
+
+    private void LoadJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        Boolean isChecked = false;
+        for (Int32 i = 0; i < _events.Events.Length; i++)
+        {
+            for (Int32 j = 0; j < 3; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.WindowsJournal) == EventJournalFlags.WindowsJournal;
+                        break;
+                    case 1:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.LocalJournal) == EventJournalFlags.LocalJournal;
+                        break;
+                    case 2:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.CCJournal) == EventJournalFlags.CCJournal;
+                        break;
+                }
+                (JournalEventTable.Rows[i + 1].Cells[j + 1].Controls[0] as CheckBox).Checked = isChecked;
+            }
+        }
+    }
+
+    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    {
+        String eventName = ev.EventName;
+        EventJournalFlags val = ev.EventFlag;
+
+        TableRow row = new TableRow();
+        TableCell cell = new TableCell();
+        cell.Attributes.Add("align", "center");
+        Label l = new Label();
+        l.Text = eventName;
+        cell.Controls.Add(l);
+        row.Cells.Add(cell);
+        for (Int32 i = 0; i < 3; i++)
+        {
+            cell = new TableCell();
+            CheckBox chk = new CheckBox();
+            chk.Checked = false;
+
+            cell.Controls.Add(chk);
+            cell.Attributes.Add("align", "center");
+            row.Cells.Add(cell);
+        }
+
+        return row;
+    }
+
+    #endregion
 
     #region Files
     private void FilesUpdateData()

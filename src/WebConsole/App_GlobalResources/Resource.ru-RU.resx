@@ -3567,4 +3567,58 @@
   <data name="Check" xml:space="preserve">
     <value>Проверить</value>
   </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CAN_NOT_READ" xml:space="preserve">
+    <value>Невозможно получить информацию об устройстве %1%</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CHANGED" xml:space="preserve">
+    <value>Устройство %1%(%2%) %3%</value>
+  </data>
+  <data name="JE_VIC_FILES_CAN_NOT_OPEN" xml:space="preserve">
+    <value>Невозможно прочитать файл %1%</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILE_CHANGED" xml:space="preserve">
+    <value>Файл %1% %2%:хэш старой версии - %3%, хэш новой версии - %4%, размер старой версии - %5%, размер новой версии - %6%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CAN_NOT_OPEN_KEY" xml:space="preserve">
+    <value>Невозможно прочитать ветку реестра %1%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CHANGED" xml:space="preserve">
+    <value>%2% реестра %1%: старое значение - %3%(%4%), новое значение - %5%(%6%)</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности реестра</value>
+  </data>
 </root>

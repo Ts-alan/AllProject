@@ -3579,4 +3579,58 @@ system administrator.</value>
   <data name="Check" xml:space="preserve">
     <value>Check</value>
   </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Checking devices integrity finished</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_START" xml:space="preserve">
+    <value>Checking devices integrity began</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about devices integrity finished</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about devices integrity began</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CAN_NOT_READ" xml:space="preserve">
+    <value>Can not to get info about device %1%</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CHANGED" xml:space="preserve">
+    <value>Device %1%(%2%) %3%</value>
+  </data>
+  <data name="JE_VIC_FILES_CAN_NOT_OPEN" xml:space="preserve">
+    <value>Can not to read a file %1%</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Check files integrity finished</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_START" xml:space="preserve">
+    <value>Check files integrity begin</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about files integrity finished</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about files integrity began</value>
+  </data>
+  <data name="JE_VIC_FILE_CHANGED" xml:space="preserve">
+    <value>File %1% %2%: old version hash - %3%, new version hash - %4%, old versrion size - %5%, new versrion size - %6%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CAN_NOT_OPEN_KEY" xml:space="preserve">
+    <value>Can not to read a key %1%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CHANGED" xml:space="preserve">
+    <value>Registry %2% %1%: old value - %3%(%4%), new value - %5%(%6%)</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Checking registry integrity finished</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_START" xml:space="preserve">
+    <value>Checking registry integrity began</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about registry integrity finished</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about registry integrity began</value>
+  </data>
 </root>

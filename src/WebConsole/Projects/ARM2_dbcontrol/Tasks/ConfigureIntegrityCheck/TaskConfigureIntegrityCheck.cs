@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 using System.IO;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
 {
@@ -14,6 +15,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
         private String _Type = "IntegrityCheck";
         private List<IntegrityCheckFilesEntity> _Files;
         private List<IntegrityCheckRegistryEntity> _Registries;
+        private JournalEvent _journalEvent;
+        private String _Vba32CCUser;
         private XmlSerializer serializer;
 
         #endregion
@@ -24,6 +27,12 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
         {
             get { return _Type; }
             set { _Type = "IntegrityCheck"; }
+        }
+
+        public String Vba32CCUser
+        {
+            get { return _Vba32CCUser; }
+            set { _Vba32CCUser = value; }
         }
 
         public List<IntegrityCheckFilesEntity> Files
@@ -37,6 +46,12 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             set { _Registries = value; }
         }
 
+        public JournalEvent journalEvent
+        {
+            get { return _journalEvent; }
+            set { _journalEvent = value; }
+        }
+
         #endregion
 
         #region Constructor
@@ -46,6 +61,15 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             serializer = new XmlSerializer(this.GetType());
             _Files = new List<IntegrityCheckFilesEntity>();
             _Registries = new List<IntegrityCheckRegistryEntity>();
+            _journalEvent = new JournalEvent();
+        }
+
+        public TaskConfigureIntegrityCheck(String[] eventNames)
+        {
+            serializer = new XmlSerializer(this.GetType());
+            _Files = new List<IntegrityCheckFilesEntity>();
+            _Registries = new List<IntegrityCheckRegistryEntity>();
+            _journalEvent = new JournalEvent(eventNames);
         }
 
         #endregion
@@ -70,6 +94,9 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             }
             this._Files = task.Files;
             this._Registries = task.Registries;
+            this._Type = task.Type;
+            this._Vba32CCUser = task.Vba32CCUser;
+            this._journalEvent = task.journalEvent;
         }
 
         public String GetTask()
@@ -100,6 +127,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             result.Append(@"</value>");
             result.Append(@"</param>");
 
+            result.Append(journalEvent.GetTask());
 
             result.Append(@"</module></config></value></arg></command>");
 
