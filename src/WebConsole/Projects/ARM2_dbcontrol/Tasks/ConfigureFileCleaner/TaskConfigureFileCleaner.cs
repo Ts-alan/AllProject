@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
 using ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 
 namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
@@ -16,13 +17,11 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
 
         private String _Type = "FileCleaner";
         private List<SingleCleaningTemplate> _FullProgramList;
-
-
-
+        private JournalEvent _journalEvent;
         public const String GUID = "{76DC546B-D814-4E18-AF4B-C7D17BC0AB90}";
         private String _Vba32CCUser;
         private XmlSerializer serializer;
-        
+
         #endregion
 
         #region Properties
@@ -45,14 +44,28 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
             set { _FullProgramList = value; }
         }
 
+        public JournalEvent journalEvent
+        {
+            get { return _journalEvent; }
+            set { _journalEvent = value; }
+        }
+
         #endregion
 
         #region Constructor
+
+        public TaskConfigureFileCleaner(String[] eventNames)
+        {
+            _FullProgramList = new List<SingleCleaningTemplate>();
+            serializer = new XmlSerializer(this.GetType());
+            _journalEvent = new JournalEvent(eventNames);
+        }
 
         public TaskConfigureFileCleaner()
         {
             _FullProgramList = new List<SingleCleaningTemplate>();
             serializer = new XmlSerializer(this.GetType());
+            _journalEvent = new JournalEvent();
         }
 
         #endregion
@@ -78,6 +91,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
             }
 
             this._FullProgramList = task.FullProgramList;
+            this._journalEvent = task.journalEvent;
             this._Type = task.Type;
             this._Vba32CCUser = task.Vba32CCUser;
         }
@@ -110,8 +124,9 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
             {
                 builder.AppendFormat("<string><id>{0}</id>{1}</string>", i, FullProgramList[i].GetTask());
             }
-            builder.Append("</value></param>"); 
-            //блок Events пока не нужен
+            builder.Append("</value></param>");
+
+            builder.Append(journalEvent.GetTask());
 
             builder.Append("<param>");
             builder.Append("<id>FullProgramsList</id>");

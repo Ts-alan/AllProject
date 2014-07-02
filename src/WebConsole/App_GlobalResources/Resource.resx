@@ -3639,4 +3639,19 @@ system administrator.</value>
   <data name="TaskNameRunFileCleaner" xml:space="preserve">
     <value>Vba32 File cleaner: clean</value>
   </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Settings is not applied</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Settings is applied</value>
+  </data>
+  <data name="JE_VFC_REMOVED" xml:space="preserve">
+    <value>Object %1% deleted</value>
+  </data>
+  <data name="JE_VFC_START" xml:space="preserve">
+    <value>Cleaning module started</value>
+  </data>
+  <data name="JE_VFC_STOP" xml:space="preserve">
+    <value>Cleaning module stopped</value>
+  </data>
 </root>

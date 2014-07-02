@@ -6,7 +6,7 @@
     <script type="text/javascript" language="javascript">
         function pageLoad() 
         {
-            
+            $("#fileCleanerMainPanel").tabs({ cookie: { expires: 30} });
             $("input[class='control']").button();
 
               $("[trProgramItemSelected]").hover(function(){
@@ -56,7 +56,7 @@
                         $('#divOverlay').css('display','none');
                     },
                 buttons: {
-                    <%=Resources.Resource.Apply%>: function () {
+                    '<%=Resources.Resource.Apply%>': function () {
 
                         if($('#<%=AddProgramDialogName.ClientID %>').val()!="")
                         {
@@ -67,9 +67,10 @@
                             $('#addProgramTable tbody').children("tr").each(function(index){
                                 
                                 template=new Object();
+                                alert($(this).children()[0].innerText);
                                 template.path=$(this).children()[0].innerText;
                                 template.filename=$(this).children()[1].innerText;
-                                array.push(template);      
+                                array.push(template);                                
                             });
                             var json=JSON.stringify(array);
                                 __doPostBack(btn, json);                          
@@ -80,7 +81,7 @@
                             alert($('#<%=HiddenAlertLabel.ClientID%>').html());
                         }                     
                     },
-                    <%=Resources.Resource.CancelButtonText%>: function () {                           
+                    '<%=Resources.Resource.CancelButtonText%>': function () {                           
                         $('#AddProgramDialog').dialog('close');                            
                     }
                 }
@@ -189,7 +190,7 @@
                 buttons: {
                     <%=Resources.Resource.Apply%>: function () {
                             var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
-                            var name=$('#<%=AddTemplateDialogName.ClientID %>').val();                    
+                            var name=$('#<%=AddTemplateDialogName.ClientID %>').val();  
                             $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + path + '</td><td>'+name+'</td></tr>');                               
                             $('#AddTemplateDialog').dialog('close');
                     },
@@ -244,6 +245,11 @@
     }
     </script>
     <div id='fileCleanerMainPanel'>
+        <ul>
+            <li><a href="#tabVCF1"><%=Resources.Resource.Files %></a></li>
+            <li><a href="#tabVCF2"><%=Resources.Resource.JournalEvents %></a> </li>
+        </ul>
+        <div id='tabVCF1'>
         <asp:Label ID="HiddenAlertLabel" runat="server" Style="display: none"><%=Resources.Resource.FirstNameRequiredErrorMessage %> </asp:Label>
         <asp:UpdatePanel ID="FileCleanerUpdatePanel" runat="server">
             <ContentTemplate>
@@ -303,6 +309,31 @@
                     OnClick="ChangeProgramRulesHiddenButtonClick" />
             </ContentTemplate>
         </asp:UpdatePanel>
+        </div>
+        <div id='tabVCF2'>
+            <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
+                <ContentTemplate>
+                    <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
+                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label2" runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label3" runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                    <asp:Label ID="Label4" runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
+                                </asp:TableHeaderCell>
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
     </div>
     <%--Диалог для добавления новых правил--%>
     <div id="AddProgramDialog" style="display: none;" class="ui-front">

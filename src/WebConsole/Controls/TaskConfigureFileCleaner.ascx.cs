@@ -11,6 +11,7 @@ using ARM2_dbcontrol.Tasks;
 using ARM2_dbcontrol.Tasks.ConfigureFileCleaner;
 using ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate;
 using Newtonsoft.Json;
+using ARM2_dbcontrol.Tasks.ConfigureJournalEvent;
 
 public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserControl, ITask
 {
@@ -23,6 +24,7 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         {
             InitFields();
         }
+        InitFieldsJournalEvent(fileCleaner.journalEvent);
     }
 
     private Boolean _hideHeader = false;
@@ -45,12 +47,13 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         SetEnabled();
         if (fileCleaner == null)
         {
-            fileCleaner = new TaskConfigureFileCleaner();
+            fileCleaner = new TaskConfigureFileCleaner(GetEvents());
             fileCleaner.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
         }
         else
         {
             fileCleaner.FullProgramList.Clear();
+            fileCleaner.journalEvent.ClearEvents();
         }
 
         FileCleanerUpdateData();
@@ -71,7 +74,7 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.FileCleaner;
-
+        SaveJournalEvents();
         task.Param = fileCleaner.SaveToXml();
         return task;
     }
@@ -81,12 +84,23 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         if (task == null || task.Type != TaskType.FileCleaner)
             throw new ArgumentException(Resources.Resource.ErrorInvalidTaskType);
         fileCleaner.LoadFromXml(task.Param);
+        LoadJournalEvent(fileCleaner.journalEvent);
         FileCleanerUpdateData();
     }
 
     public String BuildTask()
     {
         return fileCleaner.GetTask();
+    }
+
+    private String[] GetEvents()
+    {
+        String[] s = { "JE_VFC_START",
+                         "JE_VFC_STOP",
+                         "JE_VFC_APPLIED_SETTINGS_OK",
+                         "JE_VFC_APPLIED_SETTINGS_FAILED",
+                         "JE_VFC_REMOVED"};
+        return s;
     }
 
     #region FileCleaner
@@ -185,7 +199,98 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
 
     #endregion
 
+    #region JournalEvents
 
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
+
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        fileCleaner.journalEvent = je;
+    }
+
+    private void InitFieldsJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        if (JournalEventTable.Rows.Count == 1)
+        {
+            for (Int32 i = 0; i < _events.Events.Length; i++)
+            {
+                JournalEventTable.Rows.Add(GenerateRow(_events.Events[i], i));
+            }
+        }
+    }
+
+    private void LoadJournalEvent(JournalEvent _events)
+    {
+        if (_events == null)
+            return;
+
+        Boolean isChecked = false;
+        for (Int32 i = 0; i < _events.Events.Length; i++)
+        {
+            for (Int32 j = 0; j < 3; j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.WindowsJournal) == EventJournalFlags.WindowsJournal;
+                        break;
+                    case 1:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.LocalJournal) == EventJournalFlags.LocalJournal;
+                        break;
+                    case 2:
+                        isChecked = (_events.Events[i].EventFlag & EventJournalFlags.CCJournal) == EventJournalFlags.CCJournal;
+                        break;
+                }
+                (JournalEventTable.Rows[i + 1].Cells[j + 1].Controls[0] as CheckBox).Checked = isChecked;
+            }
+        }
+    }
+
+    private TableRow GenerateRow(SingleJournalEvent ev, int rowNo)
+    {
+        String eventName = ev.EventName;
+        EventJournalFlags val = ev.EventFlag;
+
+        TableRow row = new TableRow();
+        TableCell cell = new TableCell();
+        cell.Attributes.Add("align", "center");
+        Label l = new Label();
+        l.Text = eventName;
+        cell.Controls.Add(l);
+        row.Cells.Add(cell);
+        for (Int32 i = 0; i < 3; i++)
+        {
+            cell = new TableCell();
+            CheckBox chk = new CheckBox();
+            chk.Checked = false;
+
+            cell.Controls.Add(chk);
+            cell.Attributes.Add("align", "center");
+            row.Cells.Add(cell);
+        }
+
+        return row;
+    }
+
+    #endregion
 
 
 }

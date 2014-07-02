@@ -125,6 +125,12 @@ public static class DatabaseNameLocalization
         _dict.Add("JE_VIC_FILE_CHANGED", "JE_VIC_FILE_CHANGED");
         _dict.Add("JE_VIC_DEVICE_CHANGED", "JE_VIC_DEVICE_CHANGED");
         _dict.Add("JE_VIC_REGISTRY_STATE_SAVE_FINISHED", "JE_VIC_REGISTRY_STATE_SAVE_FINISHED");
+
+        _dict.Add("JE_VFC_START", "JE_VFC_START");
+        _dict.Add("JE_VFC_STOP", "JE_VFC_STOP");
+        _dict.Add("JE_VFC_APPLIED_SETTINGS_OK", "JE_VFC_APPLIED_SETTINGS_OK");
+        _dict.Add("JE_VFC_APPLIED_SETTINGS_FAILED", "JE_VFC_APPLIED_SETTINGS_FAILED");
+        _dict.Add("JE_VFC_REMOVED", "JE_VFC_REMOVED");
 	}
 
     public static String GetNameForCurrentCulture(String name)

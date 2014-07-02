@@ -3627,4 +3627,19 @@
   <data name="TaskNameRunFileCleaner" xml:space="preserve">
     <value>Vba32 Удаление файлов: очистить</value>
   </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Настройки не применены</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки применены</value>
+  </data>
+  <data name="JE_VFC_REMOVED" xml:space="preserve">
+    <value>Объект %1% удален</value>
+  </data>
+  <data name="JE_VFC_START" xml:space="preserve">
+    <value>Модуль удаления запущен</value>
+  </data>
+  <data name="JE_VFC_STOP" xml:space="preserve">
+    <value>Модуль удаления остановлен</value>
+  </data>
 </root>
