@@ -64,6 +64,8 @@ public static class DatabaseNameLocalization
         _dict.Add("JE_VPP_AUDIT_EXECUTE", "JE_VPP_AUDIT_EXECUTE");
         _dict.Add("JE_VPP_AUDIT_OPEN_WRITE", "JE_VPP_AUDIT_OPEN_WRITE");
         _dict.Add("JE_VPP_AUDIT_OPEN_READ", "JE_VPP_AUDIT_OPEN_READ");
+        _dict.Add("JE_VPP_PRINTER_GRANTED", "JE_VPP_PRINTER_GRANTED");
+        _dict.Add("JE_VPP_PRINTER_DENIED", "JE_VPP_PRINTER_DENIED");
         
         _dict.Add("JE_QTN_ADD", "JE_QTN_ADD");
         _dict.Add("JE_QTN_DELETE", "JE_QTN_DELETE");

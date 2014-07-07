@@ -64,7 +64,9 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
                         "JE_VPP_AUDIT_READ",
                         "JE_VPP_AUDIT_WRITE",
                         "JE_VPP_START",
-                        "JE_VPP_STOP"
+                        "JE_VPP_STOP",
+                        "JE_VPP_PRINTER_GRANTED",
+                        "JE_VPP_PRINTER_DENIED"
                      };
         return s;
     }
