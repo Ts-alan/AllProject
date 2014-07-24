@@ -175,6 +175,8 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         lboxUpdatePathes.Items.Clear();
         foreach (String str in loader.UPDATE_FOLDER_LIST)
             lboxUpdatePathes.Items.Add(str);
+
+        lbtnUpdateChange.Enabled = lbtnUpdateDelete.Enabled = (loader.UPDATE_FOLDER_LIST.Count != 0);
     }
 
     protected void lbtnAddUpdatePathDialogApply_Click(object sender, EventArgs e)

@@ -11,8 +11,8 @@
 
         $(document).on("click", '#<%= lbtnUpdateAdd.ClientID %>', function () {
             var disabled = $('#<%= lbtnUpdateAdd.ClientID %>').attr("disabled");
-         
-            if (disabled =="disabled") {
+
+            if (disabled == "disabled") {
                 return;
             }
             var dOpt = {
@@ -51,6 +51,8 @@
                 return;
             }
             var lbox = '#<%=lboxUpdatePathes.ClientID %>';
+            if ($(lbox).prop("selectedIndex") < 0)
+                return;
             $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').val($(lbox + " option:selected").text());
             var dOpt = {
                 width: 350,
