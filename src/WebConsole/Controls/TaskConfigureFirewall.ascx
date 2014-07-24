@@ -525,6 +525,7 @@
                         <asp:ListItem Text="<%$ Resources:Resource, DomainName %>"></asp:ListItem>
                         <asp:ListItem Text="<%$ Resources:Resource, OpenNetwork %>" Selected="True"></asp:ListItem>
                         <asp:ListItem Text="<%$ Resources:Resource, PrivateNetwork %>"></asp:ListItem>
+                        <asp:ListItem Text="<%$ Resources:Resource, CloseNetwork %>"></asp:ListItem>
                     </asp:DropDownList>
                 </div> 
             </div>

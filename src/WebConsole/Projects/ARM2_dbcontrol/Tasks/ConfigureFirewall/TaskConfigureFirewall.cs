@@ -115,6 +115,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
                 task = (TaskConfigureFirewall)serializer.Deserialize(reader);
             }
 
+            this._networkType = task._networkType;
+            this._firewall_On = task._firewall_On;
             this._IP4Rules = task.IP4Rules;
             this._IP6Rules = task.IP6Rules;
             this._Type = task.Type;
@@ -128,17 +130,20 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 
             builder.Append(@"<VsisCommand><Args><command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg><arg><key>command</key><value>apply_settings</value></arg>");
             builder.AppendFormat(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{0}</id>", GUID);
-            builder.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", firewall_On);
-
+            
+            builder.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", firewall_On ? "On" : "Off");
             builder.AppendFormat(@"<param><id>ActiveRulesSets</id><type>string</type><value>{0}</value></param>", NetworkType.ToString());
 
             builder.Append(journalEvent.GetTask());
+            
             builder.Append("<param><id>IpV4</id><type>stringlist</type><value>");
             for (Int32 i = 0; i < IP4Rules.Count; i++)
             {
                 builder.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", i.ToString(), ConvertRuleForTask(IP4Rules[i]));
             }
-            builder.Append("</value><id>IpV6</id><type>stringlist</type><value>");
+            builder.Append("</value></param>");
+            
+            builder.Append("<param><id>IpV6</id><type>stringlist</type><value>");
             for (Int32 i = 0; i < IP6Rules.Count; i++)
             {
                 builder.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", i.ToString(), ConvertRuleForTask(IP6Rules[i]));
@@ -221,7 +226,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
     {
         Domain=0,
         Open,
-        Private
+        Private,
+        Close
     }
     public struct FirewallRule
     {

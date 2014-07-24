@@ -166,8 +166,8 @@ namespace ARM2_dbcontrol.Tasks
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{A3F5FCA0-46DC-4328-8568-5FDF961E87E6}</id>");
 
 
-            
-            result.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", MONITOR_ON);
+
+            result.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", MONITOR_ON ? "On" : "Off");
 
             result.Append(journalEvent.GetTask());
 

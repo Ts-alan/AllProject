@@ -3648,4 +3648,7 @@
   <data name="JE_VPP_PRINTER_GRANTED" xml:space="preserve">
     <value>Отправлено на печать: машина %1%, пользователь %2%, документ %3%, принтер %4%</value>
   </data>
+  <data name="CloseNetwork" xml:space="preserve">
+    <value>Закрытая</value>
+  </data>
 </root>

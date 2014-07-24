@@ -3660,4 +3660,7 @@ system administrator.</value>
   <data name="JE_VPP_PRINTER_GRANTED" xml:space="preserve">
     <value>Sent to print: machine %1%, user %2%, document %3%, printer %4%</value>
   </data>
+  <data name="CloseNetwork" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>
