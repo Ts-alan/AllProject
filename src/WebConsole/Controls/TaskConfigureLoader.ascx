@@ -116,8 +116,8 @@
 <div id="TabsLoader" style="width:100%">
     <ul>
         <li><a href="#tabLoader1"><%=Resources.Resource.Main%></a> </li>
-        <li><a href='#tabLoader2'><span><%=Resources.Resource.Authorization %></span></a></li>
-        <li><a href='#tabLoader3'><span><%=Resources.Resource.Proxy %></span></a></li>
+        <li><a href='#tabLoader2'><span><%=Resources.Resource.Proxy%></span></a></li>
+        <li><a href='#tabLoader3'><span><%=Resources.Resource.Authorization %></span></a></li>
         <%--<li><a href="#tabLoader4"><%=Resources.Resource.CongLdrPassword%></a> </li>--%>
 
     </ul>
