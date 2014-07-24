@@ -15,6 +15,7 @@
             if (disabled == "disabled") {
                 return;
             }
+
             var dOpt = {
                 width: 350,
                 resizable: false,
@@ -38,6 +39,7 @@
             $('#AddUpdatePathDialog').dialog(dOpt);
             $('#divOverlay').css('display', 'inline');
             $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
+            $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').focus();
         });
 
         function btnAddUpdatePathDialogSetDefaultValues() {
@@ -77,6 +79,7 @@
             $('#AddUpdatePathDialog').dialog(dOpt);
             $('#divOverlay').css('display', 'inline');
             $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
+            $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').focus();
         });
     });
     $(document).on("click", '#<%= lbtnUpdateDelete.ClientID %>', function () {
