@@ -305,6 +305,9 @@
             $('#divOverlay').css('display', 'none');
         }
     </script>
+    <div class="title">
+        <%=Resources.Resource.PageLanScanTitle%>
+    </div>
     <div id='mainAccordion'>
         <h3>
             <%=Resources.Resource.Settings%></h3>
