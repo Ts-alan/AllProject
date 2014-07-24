@@ -21,6 +21,9 @@
 <%@ Register Src="~/Controls/ExportToExcel.ascx" TagName="ExportToExcel" TagPrefix="cc" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
     <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnableScriptGlobalization="true" />
+    <div class="title">
+        <%=Resources.Resource.PageEventsTitle%>
+    </div>
     <asp:UpdatePanel runat="server" ID="updatePanelEventsFilter">
         <ContentTemplate>
             <flt:CompositeFilter ID="FilterContainer" UserFiltersTemproraryStorageName="EventFiltersTemp"
