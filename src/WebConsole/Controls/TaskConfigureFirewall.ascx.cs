@@ -165,6 +165,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     protected void IP4ApplyTcpUdpRuleDialogButtonClick(object sender, EventArgs e)
     {
         FirewallRule rule = new FirewallRule();
+        rule.IsTransport = false;
         rule.Name = IP4txtNameDialog.Text;
         rule.LocalIP = IP4txtLocalIPDialog.Text;
         rule.LocalPort = IP4txtLocalPortDialog.Text;
@@ -180,6 +181,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
     protected void IP4ApplyRuleDialogButtonClick(object sender, EventArgs e)
     {
         FirewallRule rule = new FirewallRule();
+        rule.IsTransport = true;
         rule.Name = IP4AddRuleDialogName.Text;
         rule.LocalIP = IP4addRuleLocalIP.Text;
         rule.LocalPort = "*";

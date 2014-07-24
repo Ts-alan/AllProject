@@ -156,7 +156,6 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
         private String ConvertRuleForTask(FirewallRule rule)
         {
             StringBuilder task = new StringBuilder(128);
-            Boolean transportProtocol = false;
             task.AppendFormat("{0};", rule.LocalIP);
             task.AppendFormat("{0};", rule.LocalPort);
             task.AppendFormat("{0};", rule.DestinationIP);
@@ -166,17 +165,13 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
             {
                 case "TCP":
                     task.Append("6;");
-                    transportProtocol = true;
                     break;
                 case "UDP":
                     task.Append("17;");
-                    transportProtocol = true;
                     break;
-            }
-
-            if (!transportProtocol)
-            {
-                task.AppendFormat("{0};", rule.Protocol);
+                default:
+                    task.AppendFormat("{0};", rule.Protocol);
+                    break;
             }
 
             UInt32 bitmask = 0x00;
@@ -196,7 +191,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
             if (rule.Audit)
                 bitmask += (UInt32)FirewallFlags.Audit;
 
-            if (transportProtocol)
+            if (rule.IsTransport)
                 bitmask += (UInt32)FirewallFlags.TransportProtocol;
 
             if (rule.Enable)
@@ -243,6 +238,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFirewall
 
         public String Protocol;
         public RulesEnum Rule;
+
+        public Boolean IsTransport;
     }
 
     public enum RulesEnum
