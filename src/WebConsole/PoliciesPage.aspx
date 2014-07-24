@@ -510,7 +510,7 @@
                     </td>
                 </tr>
             </table>
-            
+            <div style="overflow:scroll;height: 600px;">
             <ajaxToolkit:Accordion ID="MyAccordion" runat="server" SelectedIndex="0"
             HeaderCssClass="accordionHeader" HeaderSelectedCssClass="accordionHeaderSelected"
             ContentCssClass="accordionContent" FadeTransitions="false" FramesPerSecond="40" 
@@ -565,6 +565,7 @@
                 </ajaxToolkit:AccordionPane>
              </Panes>
         </ajaxToolkit:Accordion>
+            </div>
         </div>
         <div style="text-align:left; margin:5px; height: 15px;" runat="server" id="divButtons" visible="false">
            <asp:LinkButton ID="lbtnSave" OnClick="lbtnSave_Click" runat="server" SkinID="Button" OnClientClick='return OnClientCheck()' />
