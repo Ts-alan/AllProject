@@ -591,6 +591,9 @@
             });
         });
     </script>
+    <div class="title">
+        <%=Resources.Resource.GroupManagment%>
+    </div>
     <div id="mainContainer" 
         style="width: 800px; height: 500px;">
     </div>
