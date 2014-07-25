@@ -3424,22 +3424,22 @@
     <value>Настройки применены</value>
   </data>
   <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
-    <value>Действие удаление: %1%\\%2% -&gt; %3%</value>
+    <value>Действие удаление: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
-    <value>Действие выполнение: %1%\\%2% -&gt; %3%</value>
+    <value>Действие выполнение: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
-    <value>Действие открытие(чтение): %1%\\%2% -&gt; %3%</value>
+    <value>Действие открытие(чтение): %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
-    <value>Действие открытие(запись): %1%\\%2% -&gt; %3%</value>
+    <value>Дейсвтие открытие(запись): %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
-    <value>Действие чтение: %1%\\%2% -&gt; %3%</value>
+    <value>Действие чтение: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
-    <value>Действие запись: %1%\\%2% -&gt; %3%</value>
+    <value>Дейсвтие запись: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
   </data>
   <data name="JE_VPP_START" xml:space="preserve">
     <value>Проактивная защита запущена</value>
@@ -3650,5 +3650,14 @@
   </data>
   <data name="CloseNetwork" xml:space="preserve">
     <value>Закрытая</value>
+  </data>
+  <data name="JE_SERVICE_CORRUPTED" xml:space="preserve">
+    <value>Сервис поврежден</value>
+  </data>
+  <data name="JE_SERVICE_START" xml:space="preserve">
+    <value>Сервис запущен</value>
+  </data>
+  <data name="JE_SERVICE_STOP" xml:space="preserve">
+    <value>Сервис остановлен</value>
   </data>
 </root>

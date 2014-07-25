@@ -3493,22 +3493,22 @@ system administrator.</value>
     <value>Settings is applied</value>
   </data>
   <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
-    <value>Action delete: %1%\\%2% -&gt; %3%</value>
+    <value>Action delete: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
-    <value>Action execute: %1%\\%2% -&gt; %3%</value>
+    <value>Action execute: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
-    <value>Action open(read): %1%\\%2% -&gt; %3%</value>
+    <value>Action open(read): %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
-    <value>Action open(write): %1%\\%2% -&gt; %3%</value>
+    <value>Action open(write): %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
-    <value>Action read: %1%\\%2% -&gt; %3%</value>
+    <value>Action read: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
-    <value>Action write: %1%\\%2% -&gt; %3%</value>
+    <value>Action write: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
   </data>
   <data name="JE_VPP_START" xml:space="preserve">
     <value>Proactive protection started</value>
@@ -3662,5 +3662,14 @@ system administrator.</value>
   </data>
   <data name="CloseNetwork" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="JE_SERVICE_CORRUPTED" xml:space="preserve">
+    <value>Service corrupted</value>
+  </data>
+  <data name="JE_SERVICE_START" xml:space="preserve">
+    <value>Service started</value>
+  </data>
+  <data name="JE_SERVICE_STOP" xml:space="preserve">
+    <value>Service stopped</value>
   </data>
 </root>

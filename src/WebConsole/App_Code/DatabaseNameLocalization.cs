@@ -133,6 +133,10 @@ public static class DatabaseNameLocalization
         _dict.Add("JE_VFC_APPLIED_SETTINGS_OK", "JE_VFC_APPLIED_SETTINGS_OK");
         _dict.Add("JE_VFC_APPLIED_SETTINGS_FAILED", "JE_VFC_APPLIED_SETTINGS_FAILED");
         _dict.Add("JE_VFC_REMOVED", "JE_VFC_REMOVED");
+
+        _dict.Add("JE_SERVICE_START", "JE_SERVICE_START");
+        _dict.Add("JE_SERVICE_STOP", "JE_SERVICE_STOP");
+        _dict.Add("JE_SERVICE_CORRUPTED", "JE_SERVICE_CORRUPTED");
 	}
 
     public static String GetNameForCurrentCulture(String name)
