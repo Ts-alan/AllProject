@@ -460,7 +460,7 @@ namespace VirusBlokAda.CC.Settings
 
         private static void ReverseNode(XmlNode root, String key)
         {
-            if (root.Name != "VbaSettings")
+            if (root.Name != "VbaSettings" && root.Name != "ControlCenter")
                 key += root.Name + "\\";
 
             foreach (XmlNode node in root.ChildNodes)
