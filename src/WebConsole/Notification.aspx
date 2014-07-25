@@ -424,7 +424,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText='<%$Resources:Resource, EventName %>' SortExpression="EventName">
                                     <ItemTemplate>
-					                    <asp:LinkButton id="lbtnEventName" CommandName="SelectCommand" CommandArgument="EventName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:LinkButton>
+					                    <asp:LinkButton id="lbtnEventName" CommandName="SelectCommand" CommandArgument="EventName" runat="server" Text='<%# DatabaseNameLocalization.GetNameForCurrentCulture(DataBinder.Eval(Container.DataItem, "EventName").ToString())%>' SkinId="LabelContrast"></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
