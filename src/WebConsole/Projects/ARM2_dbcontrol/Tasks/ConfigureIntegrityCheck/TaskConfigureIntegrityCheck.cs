@@ -110,22 +110,21 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{B4A234EB-3BAF-4822-9262-2467B035856C}</id>");
 
             Int32 Index = 0;
-            result.Append(@"<param><id>FilesPathes </id><type>stringmap</type><value>");
+            result.Append(@"<param><id>FilesPathes</id><type>stringmap</type><value>");
             for (Int32 i = 0; i < _Files.Count; i++)
             {
                 if (!String.IsNullOrEmpty(_Files[i].Template))
                     result.AppendFormat(@"<string><id>{0}</id><key><![CDATA[{1}]]></key><val>{2}</val></string>", Index++, _Files[i].Path, _Files[i].Template);
                 else result.AppendFormat(@"<string><id>{0}</id><key><![CDATA[{1}]]></key><val/></string>", Index++, _Files[i].Path);
             }
-            result.Append(@"</value>");
+            result.Append(@"</value></param>");
             Index = 0;
             result.Append(@"<param><id>RegistryPathes</id><type>stringlist</type><value>");
             for (Int32 i = 0; i < _Registries.Count; i++)
             {
                 result.AppendFormat(@"<string><id>{0}</id><val>{1}<val/></string>", Index++, _Registries[i].Path);
             }
-            result.Append(@"</value>");
-            result.Append(@"</param>");
+            result.Append(@"</value></param>");
 
             result.Append(journalEvent.GetTask());
 
