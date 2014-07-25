@@ -54,7 +54,13 @@ namespace Vba32ControlCenterUpdate
         internal static Boolean ActionAfterReplaceFiles(String[] files, String currentVersion, String newVersion)
         {
             Logger.Debug(String.Format("ActionAfterReplaceFiles() :: enter (files count: {0}, currentVersion: {1}, newVersion: {2})", files.Length, currentVersion, newVersion));
-            
+
+            //Start the services
+            foreach (String serviceName in GetServices(files))
+            {
+                StartService(serviceName);
+            }
+
             //Update DB
             IPatchUpdate updater = DBPatchFactory.GetPatch(newVersion);
             if (updater == null)
@@ -66,12 +72,6 @@ namespace Vba32ControlCenterUpdate
             String errorVersion;
             if (!updater.Update(currentVersion, GetConnectionString(), out errorVersion))
                 return false;
-            
-            //Start the services
-            foreach (String serviceName in GetServices(files))
-            {
-                StartService(serviceName);
-            }
 
             return true;
         }
