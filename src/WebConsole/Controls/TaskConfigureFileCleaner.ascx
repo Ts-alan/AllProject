@@ -67,7 +67,6 @@
                             $('#addProgramTable tbody').children("tr").each(function(index){
                                 
                                 template=new Object();
-                                alert($(this).children()[0].innerText);
                                 template.path=$(this).children()[0].innerText;
                                 template.filename=$(this).children()[1].innerText;
                                 array.push(template);                                
