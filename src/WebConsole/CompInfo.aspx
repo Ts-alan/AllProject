@@ -295,38 +295,7 @@
      <div class="divSettings" style="width:850px;">
 
 
-     <div id='divComponents' runat="server">
-        <h3><a><img runat="server" id="imgLoader" style="margin-right: 10px;" /><span>Vba32 Loader</span></a></h3>        
-        <div>
-            <cc:Loader runat="server" ID="tskLoader" HideHeader="true" Visible="false" />
-            <span runat="server" id="lblLoader" visible="false" ></span>
-            <asp:UpdatePanel runat="server" ID="updatePaneltskLoader">
-                <ContentTemplate>
-                    <asp:Button ID="btnTskLoader" runat="server" Visible="false" OnClick="btnTskLoader_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>"/>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-        <h3><a><img runat="server" id="imgMonitor" style="margin-right: 10px;" /><span>Vba32 Monitor</span></a></h3>        
-        <div>
-            <cc:Monitor runat="server" ID="tskMonitor" HideHeader="true" Visible="false" />
-            <span runat="server" id="lblMonitor" visible="false"></span>
-            <asp:UpdatePanel runat="server" ID="updatePaneltskMonitor">
-                <ContentTemplate>
-                    <asp:Button ID="btnTskMonitor" runat="server" Visible="false" OnClick="btnTskMonitor_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>" />
-                </ContentTemplate>
-            </asp:UpdatePanel>
-            
-        </div>
-        <h3><a><img runat="server" id="imgQuarantine" style="margin-right: 10px;" /><span>Vba32 Quarantine</span></a></h3>        
-        <div>
-            <cc:Quarantine runat="server" ID="tskQuarantine" HideHeader="true" Visible="false" />
-            <span runat="server" id="lblQuarantine" visible="false"></span>
-            <asp:UpdatePanel runat="server" ID="updatePaneltskQuarantine">
-                <ContentTemplate>
-                    <asp:Button ID="btnTskQuarantine" runat="server" Visible="false" OnClick="btnTskQuarantine_Click" Text="<%$ Resources:Resource, ChangeComponentSettings %>" />
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
+     <div id='divComponents' runat="server">       
      </div>
 
      </div>
