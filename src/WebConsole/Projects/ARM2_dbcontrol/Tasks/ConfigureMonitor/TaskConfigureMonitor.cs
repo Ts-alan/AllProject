@@ -176,7 +176,20 @@ namespace ARM2_dbcontrol.Tasks
             result.AppendFormat(@"<string><id>1</id><key>FullFileList</key><val>Off</val></string>");
             result.Append(@"</value></param>");
 
-            result.AppendFormat(@"<param><id>MntExcludedFiles</id><type>stringlist</type><value><string><id>0</id><val></val></string></value></param>");
+            result.AppendFormat(@"<param><id>MntExcludedFiles</id><type>stringlist</type><value>
+                <string>
+                    <id>0</id>
+                    <val>C:\pagefile.sys</val>
+                </string>
+                <string>
+                    <id>1</id>
+                    <val>C:\swapfile.sys</val>
+                </string>
+                <string>
+                    <id>2</id>
+                    <val>C:\hiberfil.sys</val>
+                </string>
+            </value></param>");
 
             result.AppendFormat(@"<param><id>MntExcludedFolders</id><type>stringlist</type><value>");
             for(int i=0;i<ExcludingFoldersAndFilesDelete.Count;i++)
@@ -198,6 +211,7 @@ namespace ARM2_dbcontrol.Tasks
             result.AppendFormat(@"<string><id>{0}</id><key>MailAnalyze</key><val>Off</val></string>", index++);
             result.AppendFormat(@"<string><id>{0}</id><key>MaxArchiveSize</key><val>0</val></string>", index++);
             result.AppendFormat(@"<string><id>{0}</id><key>SfxAnalyze</key><val>On</val> </string>", index++);
+            result.AppendFormat(@"<string><id>{0}</id><key>DefaultExtensions</key><val>{1}</val></string>", index++, DefaultFilters);
             #endregion 
 
             //Not Default
