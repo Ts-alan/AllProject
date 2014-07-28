@@ -29,11 +29,11 @@ namespace Vba32ControlCenterUpdate
             services.Add("agsXMPP.dll", "Vba32NS");
             services.Add("VbaTaskAssignment.exe", "VbaTaskAssignment");
             services.Add("VbaTaskAssignmentPS.dll", "VbaTaskAssignment");
-            services.Add("ARM2_dbcontrol.dll", "VbaControlCenter|Vba32PMS");
+            services.Add("ARM2_dbcontrol.dll", "VbaControlCenter|Vba32PMS|Vba32NS");
             services.Add("Common.dll", "VbaControlCenter|Vba32NS|Vba32PMS|Vba32SS");
             services.Add("Filters.dll", "Vba32PMS");
-            services.Add("Interop.vsisLib.dll", "VbaControlCenter|Vba32PMS");
-            services.Add("Newtonsoft.Json.dll", "VbaControlCenter|Vba32PMS");
+            services.Add("Interop.vsisLib.dll", "VbaControlCenter|Vba32PMS|Vba32NS");
+            services.Add("Newtonsoft.Json.dll", "VbaControlCenter|Vba32PMS|Vba32NS");
             services.Add("Settings.dll", "VbaControlCenter|Vba32NS|Vba32PMS|Vba32SS");
             services.Add("Tasks.dll", "Vba32PMS");
         }
