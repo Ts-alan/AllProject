@@ -361,7 +361,7 @@
     <value>Запускать через командный интерпретатор</value>
   </data>
   <data name="ConfigureScheduler" xml:space="preserve">
-    <value>Настроить Vba32 Планировщик</value>
+    <value>Настроить Планировщик</value>
   </data>
   <data name="ConfigureSettings" xml:space="preserve">
     <value>Конфигурация</value>
@@ -388,10 +388,10 @@
     <value>Адрес</value>
   </data>
   <data name="CongLdrConfigureLoader" xml:space="preserve">
-    <value>Настроить Vba32 Диспетчер</value>
+    <value>Настроить Диспетчер</value>
   </data>
   <data name="CongLdrConfigureMonitor" xml:space="preserve">
-    <value>Настроить Vba32 Монитор</value>
+    <value>Настроить Монитор</value>
   </data>
   <data name="CongLdrDisplayLoadingProgress" xml:space="preserve">
     <value>Показывать процесс загрузки</value>
@@ -1573,7 +1573,7 @@
     <value>Сканирование локальной сети</value>
   </data>
   <data name="PageLoginTitle" xml:space="preserve">
-    <value>Центр управления Vba32: вход</value>
+    <value>Центр управления: вход</value>
   </data>
   <data name="PagePortableTitle" xml:space="preserve">
     <value>Экспорт/Импорт</value>
@@ -1609,7 +1609,7 @@
     <value>Список выданных задач</value>
   </data>
   <data name="PageUpdateTitle" xml:space="preserve">
-    <value>Настройки обновления управляющего центра Vba32</value>
+    <value>Настройки обновления управляющего центра</value>
   </data>
   <data name="PageUserManaging" xml:space="preserve">
     <value>Управление пользователями</value>
@@ -2029,16 +2029,16 @@
     <value>Получить состояние компонентов</value>
   </data>
   <data name="TaskNameConfigureFirewall" xml:space="preserve">
-    <value>Настроить Vba32 Файрвол</value>
+    <value>Настроить Файрвол</value>
   </data>
   <data name="TaskNameConfigurePassword" xml:space="preserve">
     <value>Установить пароль</value>
   </data>
   <data name="TaskNameConfigureProactiveProtection" xml:space="preserve">
-    <value>Настроить Vba32 Проактивная защита</value>
+    <value>Настроить Проактивная защита</value>
   </data>
   <data name="TaskNameConfigureQuarantine" xml:space="preserve">
-    <value>Настроить Vba32 Карантин</value>
+    <value>Настроить Карантин</value>
   </data>
   <data name="TaskNameListProcesses" xml:space="preserve">
     <value>Получить список процессов</value>
@@ -2053,19 +2053,19 @@
     <value>Получить информацию о системе</value>
   </data>
   <data name="TaskNameVba32LoaderDisable" xml:space="preserve">
-    <value>Vba32 Диспетчер - выгрузить</value>
+    <value>Диспетчер - выгрузить</value>
   </data>
   <data name="TaskNameVba32LoaderEnable" xml:space="preserve">
-    <value>Vba32 Диспетчер - загрузить</value>
+    <value>Диспетчер - загрузить</value>
   </data>
   <data name="TaskNameVba32MonitorDisable" xml:space="preserve">
-    <value>Vba32 Монитор - выключить</value>
+    <value>Монитор - выключить</value>
   </data>
   <data name="TaskNameVba32MonitorEnable" xml:space="preserve">
-    <value>Vba32 Монитор - включить</value>
+    <value>Монитор - включить</value>
   </data>
   <data name="TaskNameVba32ProgramAndDataBaseUpdate" xml:space="preserve">
-    <value>Обновить комплекс Vba32 и базы</value>
+    <value>Обновить комплекс и базы</value>
   </data>
   <data name="TaskParams" xml:space="preserve">
     <value>Параметры</value>
@@ -2110,7 +2110,7 @@
     <value>Тип задачи</value>
   </data>
   <data name="TaskUninstall" xml:space="preserve">
-    <value>Удалить Vba32</value>
+    <value>Удаление</value>
   </data>
   <data name="TemporaryFileSize" xml:space="preserve">
     <value>Размер временных файлов (Кб)</value>
@@ -2224,10 +2224,10 @@
     <value>Значение</value>
   </data>
   <data name="Vba32CCServicesState" xml:space="preserve">
-    <value>Состояние сервисов Центра Управления Vba32</value>
+    <value>Состояние сервисов Центра Управления</value>
   </data>
   <data name="Vba32ControlCenterTitle" xml:space="preserve">
-    <value>Центр Управления Vba32, Веб-оснастка</value>
+    <value>Центр Управления, Веб-оснастка</value>
   </data>
   <data name="VBA32Integrity" xml:space="preserve">
     <value>Целостность</value>
@@ -2239,10 +2239,10 @@
     <value>Настройка сервиса уведомлений</value>
   </data>
   <data name="Vba32SSUnavailable" xml:space="preserve">
-    <value>Эта ошибка могла возникнуть при попытке вызвать сервис Vba32 Settings Service. Проверьте, запущен ли он.</value>
+    <value>Эта ошибка могла возникнуть при попытке вызвать сервис Settings Service. Проверьте, запущен ли он.</value>
   </data>
   <data name="VBA32Version" xml:space="preserve">
-    <value>Версия Vba32</value>
+    <value>Версия</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>
@@ -2872,7 +2872,7 @@
     <value>Изменить настройки агента</value>
   </data>
   <data name="TaskNameConfigureScanner" xml:space="preserve">
-    <value>Настроить Vba32 Cканер</value>
+    <value>Настроить Cканер</value>
   </data>
   <data name="ScanMemory" xml:space="preserve">
     <value>Сканировать память</value>
@@ -3310,10 +3310,10 @@
     <value>Шаблон</value>
   </data>
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
-    <value>Настроить Vba32 Проверка целостности</value>
+    <value>Настроить Проверка целостности</value>
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
-    <value>Настроить Vba32 Удаление файлов</value>
+    <value>Настроить Удаление файлов</value>
   </data>
   <data name="CongScannerCases" xml:space="preserve">
     <value>В случае</value>
@@ -3625,7 +3625,7 @@
     <value>Классы устройств</value>
   </data>
   <data name="TaskNameRunFileCleaner" xml:space="preserve">
-    <value>Vba32 Удаление файлов: очистить</value>
+    <value>Удаление файлов: очистить</value>
   </data>
   <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
     <value>Настройки не применены</value>

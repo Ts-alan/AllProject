@@ -361,7 +361,7 @@
     <value>Run via command line</value>
   </data>
   <data name="ConfigureScheduler" xml:space="preserve">
-    <value>Configure Vba32 Scheduler</value>
+    <value>Configure Scheduler</value>
   </data>
   <data name="ConfigureSettings" xml:space="preserve">
     <value>Configure settings</value>
@@ -388,16 +388,16 @@
     <value>Address</value>
   </data>
   <data name="CongLdrConfigureLoader" xml:space="preserve">
-    <value>Configure Vba32 Loader</value>
+    <value>Configure Loader</value>
   </data>
   <data name="CongLdrConfigureMonitor" xml:space="preserve">
-    <value>Configure Vba32 Monitor</value>
+    <value>Configure Monitor</value>
   </data>
   <data name="CongLdrDisplayLoadingProgress" xml:space="preserve">
     <value>Display loading progress</value>
   </data>
   <data name="CongLdrEnableMonitorAtStart" xml:space="preserve">
-    <value>Enable Vba32 Monitor at Vba32 Loader startup</value>
+    <value>Enable Monitor at Loader startup</value>
   </data>
   <data name="CongLdrInitialization" xml:space="preserve">
     <value>Initialization</value>
@@ -412,7 +412,7 @@
     <value>Interface language</value>
   </data>
   <data name="CongLdrLaunchLoaderAtStart" xml:space="preserve">
-    <value>Launch Vba32 Loader at Windows startup</value>
+    <value>Launch Loader at Windows startup</value>
   </data>
   <data name="CongLdrLoaderStartup" xml:space="preserve">
     <value>Loader startup</value>
@@ -520,7 +520,7 @@
     <value>Minimum battery charge, %</value>
   </data>
   <data name="CongMonitorNotifyOfMonitor" xml:space="preserve">
-    <value>Notify of Vba32 Monitor actions</value>
+    <value>Notify of Monitor actions</value>
   </data>
   <data name="CongMonitorObjects" xml:space="preserve">
     <value>Objects</value>
@@ -529,7 +529,7 @@
     <value>Report</value>
   </data>
   <data name="CongMonitorSaveCopyQuarantine" xml:space="preserve">
-    <value>Save copy to Vba32 Quarantine</value>
+    <value>Save copy to Quarantine</value>
   </data>
   <data name="CongMonitorScanAllTypes" xml:space="preserve">
     <value>Scan all file types</value>
@@ -571,7 +571,7 @@
     <value>Maintenance period, hours</value>
   </data>
   <data name="CongQtnMaximumQuarantineSize" xml:space="preserve">
-    <value>Maximum Vba32 Quarantine size, Mb</value>
+    <value>Maximum Quarantine size, Mb</value>
   </data>
   <data name="CongQtnMaximumStorageTime" xml:space="preserve">
     <value>Maximum storage time, days</value>
@@ -643,13 +643,13 @@
     <value>Keep</value>
   </data>
   <data name="CongScannerPathToScanner" xml:space="preserve">
-    <value>Vba32 Scanner path</value>
+    <value>Scanner path</value>
   </data>
   <data name="CongScannerRemovePathToInfected" xml:space="preserve">
     <value>Location where infected files will be placed</value>
   </data>
   <data name="CongScannerSaveCopyToQuarantine" xml:space="preserve">
-    <value>Save copy to Vba32 Quarantine</value>
+    <value>Save copy to Quarantine</value>
   </data>
   <data name="CongScannerSaveInfectedToReport" xml:space="preserve">
     <value>Add list of infected objects to scanning report</value>
@@ -1573,7 +1573,7 @@
     <value>Scanning Local Network</value>
   </data>
   <data name="PageLoginTitle" xml:space="preserve">
-    <value>Vba32 Control Center: login</value>
+    <value>Control Center: login</value>
   </data>
   <data name="PagePortableTitle" xml:space="preserve">
     <value>Export/Import</value>
@@ -1609,7 +1609,7 @@
     <value>List of assigned tasks</value>
   </data>
   <data name="PageUpdateTitle" xml:space="preserve">
-    <value>Vba32 Control Center Update Settings</value>
+    <value>Control Center Update Settings</value>
   </data>
   <data name="PageUserManaging" xml:space="preserve">
     <value>User management</value>
@@ -1741,7 +1741,7 @@
     <value>Proxy</value>
   </data>
   <data name="QtnFilePath" xml:space="preserve">
-    <value>Full path to file in Vba32 Quarantine</value>
+    <value>Full path to file in Quarantine</value>
   </data>
   <data name="RAM" xml:space="preserve">
     <value>RAM</value>
@@ -1905,13 +1905,13 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>Services</value>
   </data>
   <data name="SetLoaderSettings" xml:space="preserve">
-    <value>Set Vba32 Loader settings</value>
+    <value>Set Loader settings</value>
   </data>
   <data name="SetMonitorSettings" xml:space="preserve">
-    <value>Set Vba32 Monitor settings</value>
+    <value>Set Monitor settings</value>
   </data>
   <data name="SetQtnSettings" xml:space="preserve">
-    <value>Set Vba32 Quarantine settings</value>
+    <value>Set Quarantine settings</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -2031,43 +2031,43 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>Get components state</value>
   </data>
   <data name="TaskNameConfigureFirewall" xml:space="preserve">
-    <value>Configure Vba32 Firewall</value>
+    <value>Configure Firewall</value>
   </data>
   <data name="TaskNameConfigurePassword" xml:space="preserve">
     <value>Set password</value>
   </data>
   <data name="TaskNameConfigureProactiveProtection" xml:space="preserve">
-    <value>Configure Vba32 Proactive protection</value>
+    <value>Configure Proactive protection</value>
   </data>
   <data name="TaskNameConfigureQuarantine" xml:space="preserve">
-    <value>Configure Vba32 Quarantine</value>
+    <value>Configure Quarantine</value>
   </data>
   <data name="TaskNameListProcesses" xml:space="preserve">
     <value>Get list of processes</value>
   </data>
   <data name="TaskNameRestoreFileFromQtn" xml:space="preserve">
-    <value>Restore file from Vba32 Quarantine</value>
+    <value>Restore file from Quarantine</value>
   </data>
   <data name="TaskNameRunScanner" xml:space="preserve">
-    <value>Run Vba32 Scanner</value>
+    <value>Run Scanner</value>
   </data>
   <data name="TaskNameSystemInfo" xml:space="preserve">
     <value>System Information</value>
   </data>
   <data name="TaskNameVba32LoaderDisable" xml:space="preserve">
-    <value>Vba32 Loader - exit</value>
+    <value>Loader - exit</value>
   </data>
   <data name="TaskNameVba32LoaderEnable" xml:space="preserve">
-    <value>Vba32 Loader - launch</value>
+    <value>Loader - launch</value>
   </data>
   <data name="TaskNameVba32MonitorDisable" xml:space="preserve">
-    <value>Vba32 Monitor - disable</value>
+    <value>Monitor - disable</value>
   </data>
   <data name="TaskNameVba32MonitorEnable" xml:space="preserve">
-    <value>Vba32 Monitor - enable</value>
+    <value>Monitor - enable</value>
   </data>
   <data name="TaskNameVba32ProgramAndDataBaseUpdate" xml:space="preserve">
-    <value>Update Vba32 antivirus and its databases</value>
+    <value>Update antivirus and its databases</value>
   </data>
   <data name="TaskParams" xml:space="preserve">
     <value>Task parameters</value>
@@ -2112,7 +2112,7 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>Task type</value>
   </data>
   <data name="TaskUninstall" xml:space="preserve">
-    <value>Uninstall Vba32</value>
+    <value>Uninstall</value>
   </data>
   <data name="TemporaryFileSize" xml:space="preserve">
     <value>Temporary file size(Kb)</value>
@@ -2226,10 +2226,10 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>Value</value>
   </data>
   <data name="Vba32CCServicesState" xml:space="preserve">
-    <value>State of Vba32 Control Center services</value>
+    <value>State of Control Center services</value>
   </data>
   <data name="Vba32ControlCenterTitle" xml:space="preserve">
-    <value>Vba32 Control Center Web Interface</value>
+    <value>Control Center Web Interface</value>
   </data>
   <data name="VBA32Integrity" xml:space="preserve">
     <value>Integrity</value>
@@ -2241,10 +2241,10 @@ type:&lt;b&gt;{2}&lt;/b&gt;</value>
     <value>Notification service settings</value>
   </data>
   <data name="Vba32SSUnavailable" xml:space="preserve">
-    <value>The error may occur when calling Vba32 Settings Service. Check whether it is started or not.</value>
+    <value>The error may occur when calling Settings Service. Check whether it is started or not.</value>
   </data>
   <data name="VBA32Version" xml:space="preserve">
-    <value>Vba32 Version</value>
+    <value>Version</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
@@ -2884,7 +2884,7 @@ system administrator.</value>
     <value>Change agent settings</value>
   </data>
   <data name="TaskNameConfigureScanner" xml:space="preserve">
-    <value>Configure Vba32 Scanner</value>
+    <value>Configure Scanner</value>
   </data>
   <data name="ScanMemory" xml:space="preserve">
     <value>Scan memory</value>
@@ -3322,10 +3322,10 @@ system administrator.</value>
     <value>Template</value>
   </data>
   <data name="TaskNameIntegrityCheck" xml:space="preserve">
-    <value>Configure Vba32 Check integrity</value>
+    <value>Configure Check integrity</value>
   </data>
   <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
-    <value>Configure Vba32 File cleaner</value>
+    <value>Configure File cleaner</value>
   </data>
   <data name="CongScannerCases" xml:space="preserve">
     <value>In case</value>
@@ -3637,7 +3637,7 @@ system administrator.</value>
     <value>Device classes</value>
   </data>
   <data name="TaskNameRunFileCleaner" xml:space="preserve">
-    <value>Vba32 File cleaner: clean</value>
+    <value>File cleaner: clean</value>
   </data>
   <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
     <value>Settings is not applied</value>

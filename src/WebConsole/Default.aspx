@@ -114,7 +114,7 @@
            
            <!-- ************************* -->
             
-            <div class="subsection"><%=Resources.Resource.DataBaseServer %>&nbsp;Vba32 Control Center</div>
+            <div class="subsection"><%=Resources.Resource.DataBaseServer %>&nbsp;Control Center</div>
            <table class="ListContrastTableMain">
             <tr>
                 <td style="padding-left:5px">
@@ -134,7 +134,7 @@
             </tr>
             <tr>
                 <td style="padding-left:5px">
-                    <%=Resources.Resource.InitialCatalog %>&nbsp;Vba32 Control Center
+                    <%=Resources.Resource.InitialCatalog %>&nbsp;Control Center
                 </td>
                <td style="width:50%">
                     <asp:Label runat="server" ID="lblARM2DataBaseInitialCatalog" />

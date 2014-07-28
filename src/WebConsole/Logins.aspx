@@ -37,7 +37,7 @@
 		        </ul>
 	        </div>
             <div class="curved-vt-1" style="width:30%;margin-left:33%;margin-top:10%">
-                <div class="header">Vba<font style="color:#FF0000">32</font>&nbsp;<font style="color:#FF0000">C</font>ontrol <font style="color:#FF0000">C</font>enter</div>
+                <div class="header"><font style="color:#FF0000">C</font>ontrol <font style="color:#FF0000">C</font>enter</div>
                 <div align="center" style="width:100%;">
                    <asp:Label ID="lblError" runat="server"></asp:Label>
                    <asp:Login ID="lgLogin" runat="server" CreateUserUrl="~/Registration.aspx" 
