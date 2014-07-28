@@ -114,8 +114,8 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             for (Int32 i = 0; i < _Files.Count; i++)
             {
                 if (!String.IsNullOrEmpty(_Files[i].Template))
-                    result.AppendFormat(@"<string><id>{0}</id><key><![CDATA[{1}]]></key><val>{2}</val></string>", Index++, _Files[i].Path, _Files[i].Template);
-                else result.AppendFormat(@"<string><id>{0}</id><key><![CDATA[{1}]]></key><val/></string>", Index++, _Files[i].Path);
+                    result.AppendFormat(@"<string><id>{0}</id><key>![CDATA[{1}]]</key><val>{2}</val></string>", Index++, _Files[i].Path, _Files[i].Template);
+                else result.AppendFormat(@"<string><id>{0}</id><key>![CDATA[{1}]]</key><val/></string>", Index++, _Files[i].Path);
             }
             result.Append(@"</value></param>");
             Index = 0;
