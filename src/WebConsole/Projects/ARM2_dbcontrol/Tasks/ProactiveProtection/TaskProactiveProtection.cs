@@ -126,10 +126,12 @@ namespace ARM2_dbcontrol.Tasks
                 result.Append("<value/>");
             else
             {
+                result.Append("<value>");
                 foreach (String str in GeneralRule.TrustedApplications)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -139,10 +141,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ProtectedApplications)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -152,10 +156,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ProtectedFiles)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -165,10 +171,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ReadOnlyFiles)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -178,10 +186,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ExcludedFiles)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -191,10 +201,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ProtectedFolders)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -204,10 +216,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ReadOnlyFolders)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -217,10 +231,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ExcludedFolders)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -230,10 +246,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ProtectedRegistryKeys)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -243,10 +261,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ReadOnlyRegistryKeys)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -256,10 +276,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ProtectedRegistryValues)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
 
@@ -269,10 +291,12 @@ namespace ARM2_dbcontrol.Tasks
             else
             {
                 id = 0;
+                result.Append("<value>");
                 foreach (String str in GeneralRule.ReadOnlyRegistryValues)
                 {
                     result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                 }
+                result.Append("</value>");
             }
             result.Append("</param>");
             #endregion
@@ -291,10 +315,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.TrustedApplications)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -304,10 +330,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ProtectedFiles)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -317,10 +345,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ReadOnlyFiles)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -330,10 +360,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ProtectedFolders)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -343,10 +375,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ReadOnlyFolders)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -356,10 +390,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ProtectedRegistryKeys)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
 
@@ -369,10 +405,12 @@ namespace ARM2_dbcontrol.Tasks
                 else
                 {
                     id = 0;
+                    result.Append("<value>");
                     foreach (String str in rule.ReadOnlyRegistryKeys)
                     {
                         result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
                     }
+                    result.Append("</value>");
                 }
                 result.Append("</param>");
             }
