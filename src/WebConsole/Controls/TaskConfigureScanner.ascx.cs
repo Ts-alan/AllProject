@@ -196,18 +196,16 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         scanner.IsFindVirusInstalls = chkScannerFindVirusInstalls.Checked;
         scanner.IsArchivesMaxSize = chkScannerMaxSize.Checked;
         scanner.IsAuthenticode = chkScannerTrustAuthenCode.Checked;
-        scanner.ArchiveMaxSize =Int32.Parse( tboxScannerMaxSize.Text);
+        if (scanner.IsArchivesMaxSize)
+        {
+            scanner.ArchiveMaxSize = Int32.Parse(tboxScannerMaxSize.Text);
+        }
         scanner.InfectedAction = (ScannerActions)ddlInfectedActions.SelectedIndex  ;
         scanner.InfectedCases = (ScannerActions)ddlInfectedCases.SelectedIndex;
         scanner.SuspiciousAction = (ScannerActions)ddlSuspiciousActions.SelectedIndex;
         scanner.SuspiciousCases = (ScannerActions)ddlSuspiciousCases.SelectedIndex;
         scanner.IsSaveInfectedToQuarantine = chkInfectedSaveCopy.Checked;
         scanner.IsSaveSuspiciousToQuarantine = chkSuspiciousSaveCopy.Checked;
-
-
-
-
-
     }
 
     public void LoadState(TaskUserEntity task)
