@@ -1375,6 +1375,19 @@ public partial class Groups : PageBase
 
                 control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskConfigureFileCleaner.BuildTask());
             }
+            if (tskProgramAndDataBaseUpdate.Visible == true)
+            {
+                task = tskProgramAndDataBaseUpdate.GetCurrentState();
+                task.Name = ddlTaskName.SelectedValue;
+                tskProgramAndDataBaseUpdate.ValidateFields();
+
+                for (int i = 0; i < _set.AllComputers.Count; i++)
+                {
+                    taskId[i] = PreServAction.CreateTask(_set.AllComputers[i].ComputerName, task.Name, task.Param, userName, connStr);
+                }
+
+                control.PacketCustomAction(taskId, _set.AllComputers.GetIPAddresses().ToArray(), tskProgramAndDataBaseUpdate.GetTask());
+            }
         }
         catch (ArgumentException argEx)
         {
@@ -1642,18 +1655,12 @@ public partial class Groups : PageBase
                                                         else
                                                             if (name == Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate)
                                                             {
-                                                                throw new NotImplementedException();
-                                                                //task.Type = TaskType.CreateProcess;
-                                                                //task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
+                                                                task.Type = TaskType.UpdateAll;
+                                                                task.Name = Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate;
+                                                                task.Param = String.Empty;
 
-                                                                //string str = Resources.Resource.TaskParamVba32ProgramAndDataBaseUpdate;
-                                                                //xml.AddNode(tskCreateProcess.TagCommandLine, str);
-                                                                //xml.AddNode(tskCreateProcess.TagCommandSpec, "0");
-
-                                                                //xml.Generate();
-                                                                //task.Param = xml.Result;
-                                                                //lbtnDelete.Visible = false;
-                                                                //lbtnSave.Visible = false;
+                                                                lbtnDelete.Visible = false;
+                                                                lbtnSave.Visible = false;
                                                             }
                                                             else
                                                                 if (name == Resources.Resource.TaskNameConfigureQuarantine)
@@ -1791,6 +1798,7 @@ public partial class Groups : PageBase
         tskConfigureFileCleaner.Visible = false;
         tskSaveIntegrityCheck.Visible = false;
         tskClearVFC.Visible = false;
+        tskProgramAndDataBaseUpdate.Visible = false;
 
         switch (task.Type)
         {
@@ -1928,6 +1936,10 @@ public partial class Groups : PageBase
             case TaskType.ClearVFC:
                 tskClearVFC.LoadState(task);
                 tskClearVFC.Visible = true;
+                break;
+            case TaskType.UpdateAll:
+                tskProgramAndDataBaseUpdate.LoadState(task);
+                tskProgramAndDataBaseUpdate.Visible = true;
                 break;
             default:
                 break;

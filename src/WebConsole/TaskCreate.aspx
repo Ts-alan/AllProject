@@ -21,6 +21,7 @@
 <%@ Register Src="~/Controls/TaskConfigureFileCleaner.ascx" TagName="TaskUser"  TagPrefix="tskConfigureFileCleaner"%>
 <%@ Register Src="~/Controls/TaskSaveIntegrityCheck.ascx" TagName="TaskUser"  TagPrefix="tskSaveIntegrityCheck"%>
 <%@ Register Src="~/Controls/TaskClearVFC.ascx" TagName="TaskUser"  TagPrefix="tskClearVFC"%>
+<%@ Register Src="~/Controls/TaskProgramAndDataBaseUpdate.ascx" TagName="TaskUser"  TagPrefix="tskProgramAndDataBaseUpdate"%>
 
 <%@ OutputCache Location="None" %>
 
@@ -67,6 +68,7 @@
         <tskConfigureFileCleaner:TaskUser ID="tskConfigureFileCleaner" runat="server" Visible="false"  />
         <tskSaveIntegrityCheck:TaskUser ID="tskSaveIntegrityCheck" runat="server" Visible="false"  />
         <tskClearVFC:TaskUser ID="tskClearVFC" runat="server" Visible="false"  />
+        <tskProgramAndDataBaseUpdate:TaskUser ID="tskProgramAndDataBaseUpdate" runat="server" Visible="false"  />
                                     
     </asp:Panel>
     <table>

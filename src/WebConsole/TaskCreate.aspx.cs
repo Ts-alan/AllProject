@@ -72,6 +72,7 @@ public partial class TaskCreate : PageBase
                 tskConfigureFileCleaner.Visible = false;
                 tskSaveIntegrityCheck.Visible = false;
                 tskClearVFC.Visible = false;
+                tskProgramAndDataBaseUpdate.Visible = false;
 
                 LoadStateTask(task);
 
@@ -186,6 +187,9 @@ public partial class TaskCreate : PageBase
                         break;
                     case "SaveCheckIntegrity":
                         taskUserType.Type = TaskType.SaveCheckIntegrity;
+                        break;
+                    case "UpdateAll":
+                        taskUserType.Type = TaskType.UpdateAll;
                         break;
                 }
 
@@ -365,6 +369,10 @@ public partial class TaskCreate : PageBase
                 tskClearVFC.Visible = true;
                 
                 break;
+            case TaskType.UpdateAll:
+                tskProgramAndDataBaseUpdate.LoadState(task);
+                tskProgramAndDataBaseUpdate.Visible = true;
+                break;
         }
     }
 
@@ -496,7 +504,9 @@ public partial class TaskCreate : PageBase
                     task = tskClearVFC.GetCurrentState();
                     tskClearVFC.ValidateFields();
                     break;
-
+                case "UpdateAll":
+                    task.Type = TaskType.UpdateAll;
+                    break;
                 default:
                     break;
             }
