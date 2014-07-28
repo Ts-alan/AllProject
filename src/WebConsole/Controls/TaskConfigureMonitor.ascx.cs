@@ -78,7 +78,9 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
 
     private String[] GetEvents()
     {
-        String[] s = { "E_VMT_START", "JE_VMT_STOP", "JE_VMT_APPLIED_SETTINGS_OK", "JE_VMT_APPLIED_SETTINGS_FAILED" };
+        String[] s = { "JE_VMT_START", "JE_VMT_STOP", "JE_VMT_APPLIED_SETTINGS_OK", "JE_VMT_APPLIED_SETTINGS_FAILED", 
+                         "JE_VMT_CHECK_RESULT_SUSPECTED", "JE_VMT_CHECK_RESULT_INFECTED", "JE_VMT_ACTION_BLOCK", 
+                         "JE_VMT_ACTION_CURE", "JE_VMT_ACTION_DELETE", "JE_VMT_ACTION_NONE" };
         return s;
     }
 

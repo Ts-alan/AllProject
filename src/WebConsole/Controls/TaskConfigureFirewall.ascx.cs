@@ -92,7 +92,8 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
 
     private String[] GetEvents()
     {
-        String[] s = { "JE_VND_APPLIED_RULES_FAILED", "JE_VND_APPLIED_RULES_OK", "JE_VND_AUIDIT_OTHER", "JE_VND_AUIDIT_TCP", "JE_VND_AUIDIT_UDP", "JE_VND_START", "JE_VND_STOP" };
+        String[] s = { "JE_VND_APPLIED_RULES_FAILED", "JE_VND_APPLIED_RULES_OK", "JE_VND_AUIDIT_OTHER", 
+                         "JE_VND_AUIDIT_TCP", "JE_VND_AUIDIT_UDP", "JE_VND_START", "JE_VND_STOP" };
         return s;
     }
 
