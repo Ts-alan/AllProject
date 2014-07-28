@@ -15,10 +15,10 @@ namespace Vba32ControlCenterUpdate
 
             Logger.Debug("Starting...");
 
-            if (args.Length < 4)
+            if (args.Length < 2)
             {
                 Logger.Fatal("Wrong count of arguments.");
-                return 0;
+                return 1;
             }
 
             Logger.Debug("Arguments(args[0]: " + args[0] + "; args[1]: " + args[1] + "; args[2]: " + args[2] + "; args[3]: " + args[3] + ")");
@@ -26,20 +26,36 @@ namespace Vba32ControlCenterUpdate
             #region Get params
 
             EventEnum eventName;
-            String currentVersion;
-            String newVersion;
-            String[] files;
+            String currentVersion = String.Empty;
+            String newVersion = String.Empty;
+            String[] files = new String[0];
             try
             {
                 eventName = EventEnumExtensions.Get(args[0]);
-                currentVersion = ParseVersion(args[1]);
-                newVersion = ParseVersion(args[2]);
-                files = args[3].Split(new Char[] { '|' });                
+
+                if (eventName == EventEnum.ActionAfterReplaceFiles && args.Length < 4)
+                {
+                    Logger.Fatal("Wrong count of arguments.");
+                    return 1;
+                }
+
+                switch (eventName)
+                {
+                    case EventEnum.ActionBeforeReplaceFiles:
+                        files = args[1].Split(new Char[] { '|' });
+                        break;
+                    case EventEnum.ActionAfterReplaceFiles:
+                        currentVersion = ParseVersion(args[1]);
+                        newVersion = ParseVersion(args[2]);
+                        files = args[3].Split(new Char[] { '|' });
+                        break;
+                }
+                                
             }
             catch(Exception e)
             {
                 Logger.Fatal(String.Format("Wrong argument type ({0}).", e.Message));
-                return 0;
+                return 1;
             }
 
             #endregion
@@ -53,7 +69,7 @@ namespace Vba32ControlCenterUpdate
                     UpdateActions.ActionAfterReplaceFiles(files, currentVersion, newVersion);
                     break;
                 default:
-                    return 0;
+                    return 1;
             }
 
             Logger.Debug("Finished: success.");
