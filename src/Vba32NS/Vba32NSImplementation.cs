@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections.Specialized;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
+using ARM2_dbcontrol.Service.Vba32NS;
 
 namespace Vba32.ControlCenter.NotificationService
 {

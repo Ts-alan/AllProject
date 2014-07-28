@@ -85,7 +85,6 @@
     <Compile Include="Network\NetSendMessage.cs" />
     <Compile Include="Network\SMTPMessage.cs" />
     <Compile Include="Network\JVlsXMPPClient.cs" />
-    <Compile Include="Notification\NotifyEvent.cs" />
     <Compile Include="Notification\NotifyMessageBuilder.cs" />
     <Compile Include="Notification\NotifyType.cs" />
     <Compile Include="Notification\NotifyTypeAddrList.cs" />
@@ -134,6 +133,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>

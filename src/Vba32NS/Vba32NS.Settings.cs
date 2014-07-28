@@ -13,6 +13,7 @@ using Vba32.ControlCenter.NotificationService.Notification;
 using VirusBlokAda.CC.Common.Xml;
 using VirusBlokAda.CC.Common;
 using VirusBlokAda.CC.Settings;
+using ARM2_dbcontrol.Service.Vba32NS;
 
 namespace Vba32.ControlCenter.NotificationService
 {
@@ -34,7 +35,7 @@ namespace Vba32.ControlCenter.NotificationService
             {
                 String settingsFileName = path + "webconsole\\settings\\Vba32NS.xml";
                
-                tlist = ObjectSerializer.XmlStrToObj<List<NotifyEvent>>(settingsFileName);
+                tlist = ObjectSerializer.XmlFileToObj<List<NotifyEvent>>(settingsFileName);
 
                 if (tlist == null)
                 {

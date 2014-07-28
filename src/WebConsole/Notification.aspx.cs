@@ -259,7 +259,7 @@ public partial class Notification : PageBase
                 {
                     if ((String)e.CommandArgument == "EventName")
                     {
-                        String eventName = (e.CommandSource as LinkButton).Text;
+                        String eventName = (e.CommandSource as LinkButton).Attributes["EventName"];
                         lblSelectedEventName.Text = eventName;
 
                         Session["NotifyEvent"] = eventName;  // попробовать избавиться!!!

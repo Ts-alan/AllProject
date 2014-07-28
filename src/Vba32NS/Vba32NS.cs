@@ -21,6 +21,7 @@ using agsXMPP;
 using Vba32.ControlCenter.NotificationService.Network;
 using Vba32.ControlCenter.NotificationService.Notification;
 using VirusBlokAda.CC.Settings.Entities;
+using ARM2_dbcontrol.Service.Vba32NS;
 
 namespace Vba32.ControlCenter.NotificationService
 {
