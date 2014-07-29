@@ -75,14 +75,16 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     if (tsk != null)
                     {
+                        sb.Append(@"<Task><Content><TaskCustomAction><Options>");
                         sb.Append(tsk.GetTask());
+                        sb.Append(@"</Options></TaskCustomAction></Content></Task>");
                         isEmptyTasks = false;
                     }
                 }
 
                 if (isEmptyTasks && String.IsNullOrEmpty(devicePolicy))
                     return;
-                
+
                 sb.Append(devicePolicy);
 
                 sb.Append(@"</Tasks>");
@@ -98,6 +100,8 @@ namespace VirusBlokAda.CC.DataBase
         private static IConfigureTask ConvertTask(PolicyParser parser, TaskType taskType)
         {
             String xml = VirusBlokAda.CC.Common.Anchor.FromBase64String(parser.GetParam(taskType.ToString()));
+            if (String.IsNullOrEmpty(xml))
+                return null;
             IConfigureTask task = CreateTask(taskType);
             task.LoadFromXml(xml);
             return task;

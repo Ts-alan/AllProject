@@ -78,6 +78,9 @@ namespace ARM2_dbcontrol.Tasks
 
         public void LoadFromXml(String xml)
         {
+            if (String.IsNullOrEmpty(xml))
+                return;
+
             XmlTaskParser pars = new XmlTaskParser(xml);
             IsMonitorOn = pars.GetValue("IsMonitorOn") == "1";
         }

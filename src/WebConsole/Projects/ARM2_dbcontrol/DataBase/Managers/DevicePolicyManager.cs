@@ -28,8 +28,10 @@ namespace VirusBlokAda.CC.DataBase
         internal String GetPolicyToComputer(String computerName, String jounalEvents)
         {
             DeviceClassManager dcMngr = new DeviceClassManager(connectionString);
+            ComputersManager compMngr = new ComputersManager(connectionString);
             ComputersEntity comp = new ComputersEntity();
             comp.ComputerName = computerName;
+            comp.ID = compMngr.GetComputerID(computerName);
 
             return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
         }
@@ -232,6 +234,7 @@ namespace VirusBlokAda.CC.DataBase
             
             policy.Append("<Task>");
             policy.Append("<Content>");
+            policy.Append("<TaskCustomAction><Options>");
             policy.Append("<VsisCommand>");
             policy.Append("<Args>");
 
@@ -271,11 +274,6 @@ namespace VirusBlokAda.CC.DataBase
             if (!String.IsNullOrEmpty(journalEvents))
                 policy.Append(journalEvents);
 
-            //InstalledClassesRules
-            policy.Append("<param><id>InstalledClassesRules</id><type>stringlist</type><value>");
-            policy.Append(tmp.ToString());
-            policy.Append("</value></param>");
-
             //UsbClasses
             index = 0;
             policy.Append("<param><id>UsbClasses</id><type>stringlist</type><value>");
@@ -310,6 +308,7 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("</Args>");
             policy.Append("<Async>0</Async>");
             policy.Append("</VsisCommand>");
+            policy.Append("</Options></TaskCustomAction>");
             policy.Append("</Content>");
             policy.Append("</Task>");
 
