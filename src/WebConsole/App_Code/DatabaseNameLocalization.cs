@@ -136,7 +136,7 @@ public static class DatabaseNameLocalization
 
         _dict.Add("JE_SERVICE_START", "JE_SERVICE_START");
         _dict.Add("JE_SERVICE_STOP", "JE_SERVICE_STOP");
-        _dict.Add("JE_SERVICE_CORRUPTED", "JE_SERVICE_CORRUPTED");
+        _dict.Add("JE_UPDATE_PRODUCTS_CORRUPTED", "JE_UPDATE_PRODUCTS_CORRUPTED");
 	}
 
     public static String GetNameForCurrentCulture(String name)

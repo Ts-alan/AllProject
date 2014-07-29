@@ -3651,8 +3651,8 @@
   <data name="CloseNetwork" xml:space="preserve">
     <value>Закрытая</value>
   </data>
-  <data name="JE_SERVICE_CORRUPTED" xml:space="preserve">
-    <value>Сервис поврежден</value>
+  <data name="JE_UPDATE_PRODUCTS_CORRUPTED" xml:space="preserve">
+    <value>Продукт(ы) %1 поврежден(ы) (%2)</value>
   </data>
   <data name="JE_SERVICE_START" xml:space="preserve">
     <value>Сервис запущен</value>

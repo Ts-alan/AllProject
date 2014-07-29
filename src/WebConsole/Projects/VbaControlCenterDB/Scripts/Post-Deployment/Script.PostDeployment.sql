@@ -57,6 +57,7 @@ INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'vba32.cc.GlobalEpidemy', 1, 1, 1);
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_SERVICE_START', 0, 0, 0);
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_SERVICE_STOP', 0, 0, 0);
+INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_UPDATE_PRODUCTS_CORRUPTED', 0, 0, 0);
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_VPP_START', 0, 0, 0);
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_VPP_STOP', 0, 0, 0);
 INSERT INTO [dbo].[EventTypes]([EventName], [Send], [NoDelete], [Notify]) VALUES (N'JE_VPP_APPLIED_RULES_OK', 0, 0, 0);

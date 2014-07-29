@@ -3663,8 +3663,8 @@ system administrator.</value>
   <data name="CloseNetwork" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="JE_SERVICE_CORRUPTED" xml:space="preserve">
-    <value>Service corrupted</value>
+  <data name="JE_UPDATE_PRODUCTS_CORRUPTED" xml:space="preserve">
+    <value>Product(s) %1 corrupted (%2)</value>
   </data>
   <data name="JE_SERVICE_START" xml:space="preserve">
     <value>Service started</value>
