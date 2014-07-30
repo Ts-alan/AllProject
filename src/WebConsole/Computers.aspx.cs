@@ -1480,16 +1480,16 @@ public partial class Computers : PageBase
         taskName.Add(Resources.Resource.TaskNameConfigureFileCleaner);
         taskName.Add(Resources.Resource.TaskNameRunFileCleaner);
         taskName.Add(Resources.Resource.TaskSaveIntegrityCheck);
-        taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
-        taskName.Add(Resources.Resource.TaskNameConfigurePassword);
-        taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
+        //taskName.Add(Resources.Resource.TaskNameRestoreFileFromQtn);
+        //taskName.Add(Resources.Resource.TaskNameConfigurePassword);
+        //taskName.Add(Resources.Resource.TaskChangeDeviceProtect);
         //taskName.Add(Resources.Resource.TaskDailyDeviceProtect);
         taskName.Add(Resources.Resource.TaskRequestPolicy);
    
         taskName.Add(Resources.Resource.TaskSeparator);
 
-        taskName.Add(Resources.Resource.TaskNameVba32LoaderEnable);
-        taskName.Add(Resources.Resource.TaskNameVba32LoaderDisable);
+        //taskName.Add(Resources.Resource.TaskNameVba32LoaderEnable);
+        //taskName.Add(Resources.Resource.TaskNameVba32LoaderDisable);
         taskName.Add(Resources.Resource.TaskNameVba32MonitorEnable);
         taskName.Add(Resources.Resource.TaskNameVba32MonitorDisable);
         taskName.Add(Resources.Resource.TaskNameVba32ProgramAndDataBaseUpdate);        
