@@ -132,7 +132,7 @@ public partial class DevicesPolicy : PageBase
         if (compList.Count == 0)
         {
             if(isEmpty)
-                return "<tr><td style='text-align:center'>" + Resources.Resource.GroupHasNotComps + "</td></tr>";
+                return "<tr><td style='text-align:center'>" + ResourceControl.GetStringForCurrentCulture("GroupHasNotComps") + "</td></tr>";
             else return "<tr><td ></td></tr>";
         }
         String compListData = "";
@@ -185,7 +185,7 @@ public partial class DevicesPolicy : PageBase
             groupData += "<a style='font-size:10pt !important; '>";
 
             groupData += "<span id=null >";
-            groupData += Resources.Resource.ComputersWithoutGroups + "</span>";
+            groupData += ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups") + "</span>";
         }
         else
         {
@@ -206,7 +206,7 @@ public partial class DevicesPolicy : PageBase
         String withoutGroupData = "\"acc\":\"null\",\"text\":\"";
         if (compList.Count == 0)
         {
-            withoutGroupData +=  "<tr><td style='text-align:center'>" + Resources.Resource.GroupHasNotComps + "</td></tr>";
+            withoutGroupData +=  "<tr><td style='text-align:center'>" + ResourceControl.GetStringForCurrentCulture("GroupHasNotComps") + "</td></tr>";
             return withoutGroupData;
         }
         String cssStyle = "";
@@ -596,7 +596,7 @@ public partial class DevicesPolicy : PageBase
         List<DevicePolicy> compList = DBProviders.Policy.GetComputerListByDeviceID(device);
         BranchOfTree tree = GetBranchOfTreeByDevice(compList);
         String treeDialog = ConvertDeviceTreeDialog(compList, tree, id);
-        String addButton = "<button addcompdev='" + serial + "'>" + Resources.Resource.Add + "</button>";
+        String addButton = "<button addcompdev='" + serial + "'>" + ResourceControl.GetStringForCurrentCulture("Add") + "</button>";
         return treeDialog + addButton;
     }
 
@@ -617,7 +617,7 @@ public partial class DevicesPolicy : PageBase
     private static String ConvertComputersWithoutGroupBranch(List<DevicePolicy> compList, BranchOfTree tree, int DeviceID)
     {
         String branchString = "";
-        branchString += "<h3 treetabledevID=-1 treetableID=" + DeviceID + ">" + Resources.Resource.ComputersWithoutGroups + "</h3>";
+        branchString += "<h3 treetabledevID=-1 treetableID=" + DeviceID + ">" + ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups") + "</h3>";
         branchString += "<div treetabledevID=-1>";
         branchString += "<table treetabledevID=-1 width='100%' class='ListContrastTable'>";
         String cssStyle = "gridViewRow";

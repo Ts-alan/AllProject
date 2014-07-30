@@ -22,7 +22,7 @@
     <div id="tabs">
     <ul>
         <li><a href="#tab1"><%= Resources.Resource.Groups %></a> </li>
-        <li><a href="#tab2"><%= Resources.Resource.Devices %></a> </li>
+        <li><a href="#tab2"><%= Resources.Resource.DeviceClass%></a> </li>
     </ul>
 
     <div id="tab1">

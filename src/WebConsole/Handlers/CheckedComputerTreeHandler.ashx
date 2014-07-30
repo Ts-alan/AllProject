@@ -26,7 +26,7 @@ public class CheckedComputerTreeHandler : IHttpHandler {
         }
 
         //without group
-        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), false, false, false, false, true, true));
+        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups"), "", null), false, false, false, false, true, true));
         foreach (ComputersEntity comp in provider.GetComputersWithoutGroup())
         {
             tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, false, true, false, true));

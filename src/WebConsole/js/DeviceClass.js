@@ -122,7 +122,7 @@
     /* запрет на раскрытие вкладок и загрузка данных об устройствах */
     function HeaderFunction(content) {
         var header = $(content).find("h3");
-        header.append('<button class="stop" style="position:absolute; right: 5px; bottom:1px; top: 1px ">' + Resource.Devices + '</button>');
+        header.append('<button class="stop" style="position:absolute; right: 5px; bottom:1px; top: 1px ">' + Resource.DeviceClass + '</button>');
         var button = $(header).find("button")
         button.button();
         button.on("click", function (event) {

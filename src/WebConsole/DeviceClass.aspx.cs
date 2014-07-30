@@ -60,7 +60,7 @@ public partial class DeviceClassPage : PageBase
     private String[] GetResourcesList()
     {
         return new String[] {"Loading", "ChangeComment", "Delete", 
-            "Devices", "Error", "ErrorRequestingDataFromServer",
+            "DeviceClass", "Error", "ErrorRequestingDataFromServer",
             "Computers", "Computers", "Apply", "ErrorFieldIsEmpty",
             "ClassName", "GuidRegexErrorMessage", "AddNewDeviceClass",
             "Enabled", "Disabled", "BlockWrite", "ErrorExistPolicy"
@@ -103,7 +103,7 @@ public partial class DeviceClassPage : PageBase
     public static String GetDeviceTreeDialog(Int16 id)
     {
         List<DeviceClassPolicy> policyList = DBProviders.Policy.GetDeviceClassComputerList(new DeviceClass(id, String.Empty, String.Empty, String.Empty));
-        String addButton = "<button addcompdev='" + id + "'>" + Resources.Resource.Add + "</button>";
+        String addButton = "<button addcompdev='" + id + "'>" + ResourceControl.GetStringForCurrentCulture("Add") + "</button>";
         return ConvertDeviceTreeDialog(policyList, GetBranchOfTreeByDevice(policyList), id) + addButton;
     }
 
@@ -215,7 +215,7 @@ public partial class DeviceClassPage : PageBase
         dp.ClassOfDevice = DBProviders.Policy.GetDeviceClass(uid);
 
         if(dp.ClassOfDevice == null)
-            return "{\"success\":\"false\", \"info\":\"" + Resources.Resource.NoFoundUID + ".\"}";
+            return "{\"success\":\"false\", \"info\":\"" + ResourceControl.GetStringForCurrentCulture("NoFoundUID") + ".\"}";
         
         dp = DBProviders.Policy.AddDeviceClassPolicy(dp);
         if (dp.ID != 0)
@@ -270,7 +270,7 @@ public partial class DeviceClassPage : PageBase
         dp.Mode = DeviceClassMode.Disabled;
 
         if (dp.ClassOfDevice == null)
-            return "{\"success\":\"false\", \"info\":\"" + Resources.Resource.NoFoundUID + ".\"}";
+            return "{\"success\":\"false\", \"info\":\"" + ResourceControl.GetStringForCurrentCulture("NoFoundUID") + ".\"}";
 
         Group group = new Group();
         group.ID = id;
@@ -314,7 +314,7 @@ public partial class DeviceClassPage : PageBase
         if (compList.Count == 0)
         {
             if (isEmpty)
-                return "<tr class='gridViewRowAlternating'><td style='text-align:center'>" + Resources.Resource.GroupHasNotComps + "</td></tr>";
+                return "<tr class='gridViewRowAlternating'><td style='text-align:center'>" + ResourceControl.GetStringForCurrentCulture("GroupHasNotComps") + "</td></tr>";
             else 
                 return "<tr><td></td></tr>";
         }
@@ -363,7 +363,7 @@ public partial class DeviceClassPage : PageBase
         {
             groupData.Append("<h3 id=null acc=null load=false >");
             groupData.Append("<a style='font-size:10pt !important; '>");
-            groupData.AppendFormat("<span id=null >{0}</span>", Resources.Resource.ComputersWithoutGroups);
+            groupData.AppendFormat("<span id=null >{0}</span>", ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups"));
         }
         else
         {
@@ -383,7 +383,7 @@ public partial class DeviceClassPage : PageBase
         StringBuilder withoutGroupData = new StringBuilder("\"acc\":\"null\",\"text\":\"");
         if (compList.Count == 0)
         {
-            withoutGroupData.AppendFormat("<tr class='gridViewRowAlternating'><td style='text-align:center'>{0}</td></tr>", Resources.Resource.GroupHasNotComps);
+            withoutGroupData.AppendFormat("<tr class='gridViewRowAlternating'><td style='text-align:center'>{0}</td></tr>", ResourceControl.GetStringForCurrentCulture("GroupHasNotComps"));
             return withoutGroupData.ToString();
         }
         String cssStyle = "";
@@ -448,7 +448,7 @@ public partial class DeviceClassPage : PageBase
             cssStyle = (cssStyle == "gridViewRow") ? "gridViewRowAlternating" : "gridViewRow";
         }
         table += "</table>";
-        String text = "<div>" + Resources.Resource.InputUID + ": <input type=text dpc=" + id + " style='width:350px'></input>   ";
+        String text = "<div>" + ResourceControl.GetStringForCurrentCulture("InputUID") + ": <input type=text dpc=" + id + " style='width:350px'></input>   ";
         String button = "<button style='width:auto' dpc=" + id + ">" + ResourceControl.GetStringForCurrentCulture("Add") + "</button></div>";
         
         return table + text + button;
@@ -475,7 +475,7 @@ public partial class DeviceClassPage : PageBase
             all = "";
             if (dp.ID == 0)
             {
-                all = "<img nfadp=" + dp.ClassOfDevice.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' title='" + Resources.Resource.ApplyNotForAll + "' />";
+                all = "<img nfadp=" + dp.ClassOfDevice.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' title='" + ResourceControl.GetStringForCurrentCulture("ApplyNotForAll") + "' />";
             }
             String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + all + "</td><td>" + dp.ClassOfDevice.ClassName + "</td>";
             row += "<td style='width:60px' uidtd>" + dp.ClassOfDevice.UID + "</td>";
@@ -508,7 +508,7 @@ public partial class DeviceClassPage : PageBase
             cssStyle = (cssStyle == "gridViewRow") ? "gridViewRowAlternating" : "gridViewRow";
         }
         table += "</table>";
-        String text = "<div>" + Resources.Resource.InputUID + ": <input type=text dgr=" + groupID + " style='width:350px'></input>   ";
+        String text = "<div>" + ResourceControl.GetStringForCurrentCulture("InputUID") + ": <input type=text dgr=" + groupID + " style='width:350px'></input>   ";
         String button = "<button style='width:auto' dgr=" + groupID + ">" + ResourceControl.GetStringForCurrentCulture("Add") + "</button></div>";
 
         return table + text + button;
@@ -539,7 +539,7 @@ public partial class DeviceClassPage : PageBase
 
     private static String ConvertComputersWithoutGroupBranch(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID)
     {
-        String branchString = "<h3 treetabledevID=-1 treetableID=" + DeviceClassID + ">" + Resources.Resource.ComputersWithoutGroups + "</h3>";
+        String branchString = "<h3 treetabledevID=-1 treetableID=" + DeviceClassID + ">" + ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups") + "</h3>";
         branchString += "<div treetabledevID=-1>";
         branchString += "<table treetabledevID=-1 width='100%' class='ListContrastTable'>";
         String cssStyle = "gridViewRow";
@@ -597,16 +597,16 @@ public partial class DeviceClassPage : PageBase
         switch (dp.Mode)
         {
             case DeviceClassMode.Undefined:
-                select += "Enabled src=\'App_Themes/Main/Images/undefined.gif\' title='" + Resources.Resource.Undefined + "' />";
+                select += "Enabled src=\'App_Themes/Main/Images/undefined.gif\' title='" + ResourceControl.GetStringForCurrentCulture("Undefined") + "' />";
                 break;
             case DeviceClassMode.Enabled:
-                select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' title='" + Resources.Resource.Enabled + "' />";
+                select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' title='" + ResourceControl.GetStringForCurrentCulture("Enabled") + "' />";
                 break;
             case DeviceClassMode.Disabled:
-                select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' title='" + Resources.Resource.Disabled + "' />";
+                select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' title='" + ResourceControl.GetStringForCurrentCulture("Disabled") + "' />";
                 break;
             case DeviceClassMode.BlockWrite:
-                select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' title='" + Resources.Resource.BlockWrite + "' />";
+                select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' title='" + ResourceControl.GetStringForCurrentCulture("BlockWrite") + "' />";
                 break;
         }
         compString += "<td >" + select + "</td>";
