@@ -45,6 +45,7 @@
         <ul>
             <li><a href="#mainTabProactive1"><%=Resources.Resource.General %></a> </li>
             <li><a href="#mainTabProactive2"><%=Resources.Resource.UserManaging%></a> </li>
+            <li><a href="#mainTabProactive4"><%=Resources.Resource.Audit%></a> </li>
             <li><a href="#mainTabProactive3"><%=Resources.Resource.JournalEvents%></a> </li>
         </ul>
         <div id="mainTabProactive1">
@@ -760,6 +761,19 @@
 	                </tr>
 	                </table>
                 </div>  
+            </div>
+        </div>
+        <div id="mainTabProactive4">
+            <div><asp:CheckBox runat="server" ID="cboxIsUserAudit" /> &nbsp;<%=Resources.Resource.AuditOn%></div>
+            <div style="padding-top: 10px;"><b><%=Resources.Resource.ProcessedFileTypes%></b></div>
+            <div>
+                <asp:TextBox runat="server" ID="tboxProcessedExtensions" style="width: 300px;"></asp:TextBox>
+                <asp:RegularExpressionValidator id="tboxProcessedExtensionsRegularExpressionValidator" ControlToValidate="tboxProcessedExtensions" 
+                    ValidationExpression="^([\w|.\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server" Display="None">
+                </asp:RegularExpressionValidator>
+                <ajaxToolkit:ValidatorCalloutExtender2 ID="tboxProcessedExtensionsRegularExpressionValidatorCalloutExtender" runat="server"
+                        TargetControlID="tboxProcessedExtensionsRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="Right" >
+                </ajaxToolkit:ValidatorCalloutExtender2>
             </div>
         </div>
         <div id="mainTabProactive3">

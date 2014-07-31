@@ -94,6 +94,8 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         lboxFolderProtectedUsers.Enabled = lboxFolderReadOnlyUsers.Enabled = _enabled;
         lboxFileProtectedUsers.Enabled = lboxFileReadOnlyUsers.Enabled = _enabled;
         lboxKeyProtectedUsers.Enabled = lboxKeyReadOnlyUsers.Enabled = _enabled;
+
+        cboxIsUserAudit.Enabled = tboxProcessedExtensions.Enabled = _enabled;
     }
 
     public Boolean ValidateFields()
@@ -106,6 +108,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ProactiveProtection;
         SaveJournalEvents();
+        SaveAudit();
         task.Param = proactive.SaveToXml();
 
         return task;
@@ -121,14 +124,28 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         UpdateUserList();
         UpdateGeneral();
         UpdateUsers(proactive.UserRules[0].RuleName);
+        UpdateAudit();
         LoadJournalEvent(proactive.journalEvent);
     }
 
     #endregion
 
+    private void UpdateAudit()
+    {
+        cboxIsUserAudit.Checked = proactive.IsUserAudit;
+        tboxProcessedExtensions.Text = proactive.LogProcessedExtensions;
+    }
+
+    private void SaveAudit()
+    {
+        proactive.IsUserAudit = cboxIsUserAudit.Checked;
+        proactive.LogProcessedExtensions = tboxProcessedExtensions.Text;
+    }
+
     public String BuildTask()
     {
         SaveJournalEvents();
+        SaveAudit();
         return proactive.GetTask();        
     }
 

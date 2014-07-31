@@ -22,6 +22,9 @@ namespace ARM2_dbcontrol.Tasks
         private ProactiveRule _GeneralRule;
         private List<ProactiveRule> _UserRules;
         private JournalEvent _journalEvent;
+
+        private Boolean _IsUserAudit = false;
+        private String _LogProcessedExtensions;
         
         private String _Vba32CCUser;
         private XmlSerializer serializer;
@@ -46,6 +49,18 @@ namespace ARM2_dbcontrol.Tasks
         {
             get { return _journalEvent; }
             set { _journalEvent = value; }
+        }
+
+        public Boolean IsUserAudit
+        {
+            get { return _IsUserAudit; }
+            set { _IsUserAudit = value; }
+        }
+
+        public String LogProcessedExtensions
+        {
+            get { return _LogProcessedExtensions; }
+            set { _LogProcessedExtensions = value; }
         }
 
         public String TaskType
@@ -95,6 +110,9 @@ namespace ARM2_dbcontrol.Tasks
 
         public void Clear()
         {
+            _IsUserAudit = false;
+            _LogProcessedExtensions = String.Empty;
+
             _GeneralRule.Clear();
             _UserRules.Clear();
             _UserRules.Add(GetDefaultUserRule());
@@ -427,7 +445,10 @@ namespace ARM2_dbcontrol.Tasks
             result.Append("</value></param>");
             
             #endregion
-        
+
+            result.AppendFormat(@"<param><id>UserAudit</id><type>string</type><value>{0}</value></param>", IsUserAudit ? "On" : "Off");
+            result.AppendFormat(@"<param><id>LogProcessedExtensions</id><type>string</type><value>{0}</value></param>", LogProcessedExtensions);
+
             result.Append("</module></config>");
             result.Append("</value></arg></command></Args><Async>0</Async></VsisCommand>");
 
@@ -444,6 +465,8 @@ namespace ARM2_dbcontrol.Tasks
             {
                 task = (TaskConfigureProactive)serializer.Deserialize(reader);
             }
+            this._IsUserAudit = task.IsUserAudit;
+            this._LogProcessedExtensions = task.LogProcessedExtensions;
             this._GeneralRule = task.GeneralRule;
             this._UserRules = task.UserRules;
             this._journalEvent = task.journalEvent;

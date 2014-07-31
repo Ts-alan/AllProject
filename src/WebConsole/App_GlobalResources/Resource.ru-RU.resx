@@ -3660,4 +3660,10 @@
   <data name="JE_SERVICE_STOP" xml:space="preserve">
     <value>Сервис остановлен</value>
   </data>
+  <data name="AuditOn" xml:space="preserve">
+    <value>Аудит включен</value>
+  </data>
+  <data name="ProcessedFileTypes" xml:space="preserve">
+    <value>Обрабатываемые типы файлов</value>
+  </data>
 </root>

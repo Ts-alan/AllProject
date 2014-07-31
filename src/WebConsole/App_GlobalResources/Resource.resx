@@ -3672,4 +3672,10 @@ system administrator.</value>
   <data name="JE_SERVICE_STOP" xml:space="preserve">
     <value>Service stopped</value>
   </data>
+  <data name="AuditOn" xml:space="preserve">
+    <value>Audit is on</value>
+  </data>
+  <data name="ProcessedFileTypes" xml:space="preserve">
+    <value>Processed file types</value>
+  </data>
 </root>
