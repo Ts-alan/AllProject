@@ -64,12 +64,12 @@ namespace ARM2_dbcontrol.Tasks
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{AE8BC729-4C9D-4123-B1CC-28B6EBEA6EAA}</id>");
 
-            result.Append(@"<param><id><tasks></id><type>stringlist</type><value>");
+            result.Append(@"<param><id>tasks</id><type>stringlist</type><value>");
             for (int i = 0; i < _schedulerTasksList.Count; i++)
             {
-                result.AppendFormat(@"string><id>{0}</id><val>{1}_{2}</val></string>", i, SchedulerTasksList[i].Type.ToString(), i + 1);
+                result.AppendFormat(@"<string><id>{0}</id><val>{1}_{2}</val></string>", i, SchedulerTasksList[i].Type.ToString(), i + 1);
             }
-            result.Append(@"</param>");
+            result.Append(@"</value></param>");
 
             for (int i = 0; i < _schedulerTasksList.Count; i++)
             {
