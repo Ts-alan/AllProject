@@ -25,6 +25,10 @@ namespace ARM2_dbcontrol.Tasks
 
         private Boolean _IsUserAudit = false;
         private String _LogProcessedExtensions;
+
+        private Boolean _IsEnabled = false;
+        private Boolean _IsUserFiltering = false;
+        private Boolean _IsPrinterControl = false;
         
         private String _Vba32CCUser;
         private XmlSerializer serializer;
@@ -57,6 +61,24 @@ namespace ARM2_dbcontrol.Tasks
             set { _IsUserAudit = value; }
         }
 
+        public Boolean IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { _IsEnabled = value; }
+        }
+
+        public Boolean IsPrinterControl
+        {
+            get { return _IsPrinterControl; }
+            set { _IsPrinterControl = value; }
+        }
+
+        public Boolean IsUserFiltering
+        {
+            get { return _IsUserFiltering; }
+            set { _IsUserFiltering = value; }
+        }
+
         public String LogProcessedExtensions
         {
             get { return _LogProcessedExtensions; }
@@ -85,7 +107,7 @@ namespace ARM2_dbcontrol.Tasks
         public TaskConfigureProactive(String[] eventNames)
         {
             _GeneralRule = new ProactiveRule("");
-            _UserRules = new List<ProactiveRule>();            
+            _UserRules = new List<ProactiveRule>();
             _journalEvent = new JournalEvent(eventNames);
 
             _UserRules.Add(GetDefaultUserRule());
@@ -110,8 +132,8 @@ namespace ARM2_dbcontrol.Tasks
 
         public void Clear()
         {
-            _IsUserAudit = false;
-            _LogProcessedExtensions = String.Empty;
+            _IsUserAudit = _IsEnabled=_IsPrinterControl=_IsUserFiltering = false;
+            _LogProcessedExtensions = String.Empty;            
 
             _GeneralRule.Clear();
             _UserRules.Clear();
@@ -132,7 +154,7 @@ namespace ARM2_dbcontrol.Tasks
         {
             StringBuilder result = new StringBuilder(1024);
 
-            result.Append("<VsisCommand><Args><command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg><arg><key>command</key><value>apply_settings</value></arg><arg><key>settings</key><value>");            
+            result.Append("<VsisCommand><Args><command><arg><key>module-id</key><value>{7C62F84A-A362-4CAA-800C-DEA89110596C}</value></arg><arg><key>command</key><value>apply_settings</value></arg><arg><key>settings</key><value>");
             result.Append("<config><id>Normal</id><module><id>{7B7D499C-541E-4971-BFD5-286A78CAE649}</id>");
             result.Append(journalEvent.GetTask());
 
@@ -431,7 +453,41 @@ namespace ARM2_dbcontrol.Tasks
                     result.Append("</value>");
                 }
                 result.Append("</param>");
+
+                result.AppendFormat("<param><id>{0}|TrustedPrinters</id><type>stringlist</type>", System.Web.HttpUtility.HtmlEncode(rule.RuleName));
+                if (rule.TrustedPrinters.Count == 0)
+                    result.Append("<value/>");
+                else
+                {
+                    id = 0;
+                    result.Append("<value>");
+                    foreach (String str in rule.TrustedPrinters)
+                    {
+                        result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
+                    }
+                    result.Append("</value>");
+                }
+                result.Append("</param>");
             }
+
+            #endregion
+
+            #region Printers rule
+
+            result.Append("<param><id>TrustedPrinters</id><type>stringlist</type>");
+            if (GeneralRule.TrustedPrinters.Count == 0)
+                result.Append("<value/>");
+            else
+            {
+                id = 0;
+                result.Append("<value>");
+                foreach (String str in GeneralRule.TrustedPrinters)
+                {
+                    result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, str);
+                }
+                result.Append("</value>");
+            }
+            result.Append("</param>");
 
             #endregion
 
@@ -443,11 +499,15 @@ namespace ARM2_dbcontrol.Tasks
                 result.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", id++, user);
             }
             result.Append("</value></param>");
-            
+
             #endregion
 
             result.AppendFormat(@"<param><id>UserAudit</id><type>string</type><value>{0}</value></param>", IsUserAudit ? "On" : "Off");
             result.AppendFormat(@"<param><id>LogProcessedExtensions</id><type>string</type><value>{0}</value></param>", LogProcessedExtensions);
+
+            result.AppendFormat(@"<param><id>Enable</id><type>string</type><value>{0}</value></param>", IsEnabled ? "On" : "Off");
+            result.AppendFormat(@"<param><id>UserFiltering</id><type>string</type><value>{0}</value></param>", IsUserFiltering ? "On" : "Off");
+            result.AppendFormat(@"<param><id>PrinterControl</id><type>string</type><value>{0}</value></param>", IsPrinterControl ? "On" : "Off");
 
             result.Append("</module></config>");
             result.Append("</value></arg></command></Args><Async>0</Async></VsisCommand>");
@@ -465,6 +525,10 @@ namespace ARM2_dbcontrol.Tasks
             {
                 task = (TaskConfigureProactive)serializer.Deserialize(reader);
             }
+
+            this._IsEnabled = task.IsEnabled;
+            this._IsUserFiltering = task.IsUserFiltering;
+            this._IsPrinterControl = task.IsPrinterControl;
             this._IsUserAudit = task.IsUserAudit;
             this._LogProcessedExtensions = task.LogProcessedExtensions;
             this._GeneralRule = task.GeneralRule;

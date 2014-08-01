@@ -3678,4 +3678,16 @@ system administrator.</value>
   <data name="ProcessedFileTypes" xml:space="preserve">
     <value>Processed file types</value>
   </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Printers</value>
+  </data>
+  <data name="VPP_General_On" xml:space="preserve">
+    <value>Protection of objects is on</value>
+  </data>
+  <data name="VPP_Printers_On" xml:space="preserve">
+    <value>Printer control enable</value>
+  </data>
+  <data name="VPP_Users_On" xml:space="preserve">
+    <value>Filtering users action is on</value>
+  </data>
 </root>

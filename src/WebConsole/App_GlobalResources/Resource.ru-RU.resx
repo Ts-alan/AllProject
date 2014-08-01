@@ -3666,4 +3666,16 @@
   <data name="ProcessedFileTypes" xml:space="preserve">
     <value>Обрабатываемые типы файлов</value>
   </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Принтеры</value>
+  </data>
+  <data name="VPP_General_On" xml:space="preserve">
+    <value>Защита объектов включена</value>
+  </data>
+  <data name="VPP_Printers_On" xml:space="preserve">
+    <value>Контроль принтеров включен</value>
+  </data>
+  <data name="VPP_Users_On" xml:space="preserve">
+    <value>Фильтрация действий пользователя включена</value>
+  </data>
 </root>

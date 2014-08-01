@@ -23,6 +23,7 @@ namespace ARM2_dbcontrol.Tasks
         private List<String> _ProtectedRegistryValues;
         private List<String> _ReadOnlyRegistryKeys;
         private List<String> _ReadOnlyRegistryValues;
+        private List<String> _TrustedPrinters;
 
         #endregion
 
@@ -100,6 +101,12 @@ namespace ARM2_dbcontrol.Tasks
             set { _TrustedApplications = value; }
         }
 
+        public List<String> TrustedPrinters
+        {
+            get { return _TrustedPrinters; }
+            set { _TrustedPrinters = value; }
+        }
+
         public String RuleName
         {
             get { return _RuleName; }
@@ -133,6 +140,8 @@ namespace ARM2_dbcontrol.Tasks
 
             _ReadOnlyRegistryValues = new List<String>();
             _ProtectedRegistryValues = new List<String>();
+
+            _TrustedPrinters = new List<String>();
         }
 
         #endregion
@@ -149,6 +158,7 @@ namespace ARM2_dbcontrol.Tasks
             clone.ProtectedFiles = new List<String>(this.ProtectedFiles);
             clone.ProtectedFolders = new List<String>(this.ProtectedFolders);
             clone.ProtectedRegistryKeys = new List<String>(this.ProtectedRegistryKeys);
+            clone.TrustedPrinters = new List<String>(this.TrustedPrinters);
             return clone;
         }
 
@@ -169,6 +179,8 @@ namespace ARM2_dbcontrol.Tasks
 
             this.ExcludedFiles.Clear();
             this.ExcludedFolders.Clear();
+
+            this.TrustedPrinters.Clear();
         }
 
         #endregion

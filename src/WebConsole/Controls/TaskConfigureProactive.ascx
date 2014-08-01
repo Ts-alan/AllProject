@@ -45,10 +45,12 @@
         <ul>
             <li><a href="#mainTabProactive1"><%=Resources.Resource.General %></a> </li>
             <li><a href="#mainTabProactive2"><%=Resources.Resource.UserManaging%></a> </li>
+            <li><a href="#mainTabProactive5"><%=Resources.Resource.Printers%></a> </li>
             <li><a href="#mainTabProactive4"><%=Resources.Resource.Audit%></a> </li>
             <li><a href="#mainTabProactive3"><%=Resources.Resource.JournalEvents%></a> </li>
         </ul>
         <div id="mainTabProactive1">
+            <div><asp:CheckBox runat="server" ID="cboxGeneralOn" /> &nbsp;<%=Resources.Resource.VPP_General_On%></div>
             <div id="TabsProactive" style="width:900px">
                 <ul>
                     <li><a href="#tabProactive1"><%=Resources.Resource.Applications %></a> </li>
@@ -442,6 +444,7 @@
             </div>    
         </div>
         <div id="mainTabProactive2">
+            <div><asp:CheckBox runat="server" ID="cboxUsersOn" /> &nbsp;<%=Resources.Resource.VPP_Users_On%></div>
             <div>
                 <asp:UpdatePanel runat="server" ID="upnlUsers">
                 <ContentTemplate>
@@ -540,6 +543,7 @@
                     <li><a href="#tabUsersProactive1"><%=Resources.Resource.Applications %></a> </li>
                     <li><a href="#tabUsersProactive2"><%=Resources.Resource.FileSystem %></a> </li>
                     <li><a href="#tabUsersProactive3"><%=Resources.Resource.Registry %></a> </li>
+                    <li><a href="#tabUsersProactive4"><%=Resources.Resource.Printers %></a> </li>
                 </ul>
                 <div id='tabUsersProactive1'>
                     <asp:UpdatePanel ID="upnlApplicationTrustedUsers" runat="server" UpdateMode="Conditional" >
@@ -760,8 +764,65 @@
                         </td>
 	                </tr>
 	                </table>
-                </div>  
+                </div>
+                <div id='tabUsersProactive4'>
+                    <asp:UpdatePanel ID="upnlPrinterTrustedUsers" runat="server" UpdateMode="Conditional" >
+                        <ContentTemplate>
+                            <div class="ui-accordion ui-widget ui-helper-reset" style="width: 400px;">
+                                <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
+                                            ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
+                                    <%=Resources.Resource.Trusted %>
+                                </h3>                        
+                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
+                                    <div>
+                    
+                                        <asp:TextBox runat="server" ID="tboxPrinterTrustedUsers" style="width: 350px;" PrinterTrustedUsers></asp:TextBox>                                
+                                        <br />
+                                        <asp:LinkButton runat="server" ID="lbtnAddPrinterTrustedUsers" OnClick="lbtnAddPrinterTrustedUsers_Click" OnClientClick="return AddPath('PrinterTrustedUsers');" style="color: Blue;"><%=Resources.Resource.Add %></asp:LinkButton>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <asp:LinkButton runat="server" ID="lbtnDeletePrinterTrustedUsers" OnClick="lbtnDeletePrinterTrustedUsers_Click" style="color: Blue;"><%=Resources.Resource.Delete %></asp:LinkButton>
+                                        <br />
+                                        <asp:ListBox runat="server" ID="lboxPrinterTrustedUsers" onchange="OnChange(this, 'PrinterTrustedUsers');" style="width: 350px;height: 100px;" PrinterTrustedUsersList></asp:ListBox>
+                                        <asp:RequiredFieldValidator ID="reqPrinterTrustedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
+                                                    ControlToValidate="tboxPrinterTrustedUsers" Display="None" ValidationGroup="PrinterTrustedUsersValidation">
+                                        </asp:RequiredFieldValidator>
+                                        <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqPrinterTrustedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrustedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                    </div>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
             </div>
+        </div>
+        <div id="mainTabProactive5">
+            <div><asp:CheckBox runat="server" ID="cboxPrintersOn" /> &nbsp;<%=Resources.Resource.VPP_Printers_On%></div>
+            <asp:UpdatePanel ID="upnlPrinterTrusted" runat="server" UpdateMode="Conditional" >
+                <ContentTemplate>
+                    <div class="ui-accordion ui-widget ui-helper-reset" style="width: 400px;">
+                        <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
+                                    ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
+                            <%=Resources.Resource.Trusted %>
+                        </h3>                        
+                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
+                            <div>
+                    
+                                <asp:TextBox runat="server" ID="tboxPrinterTrusted" style="width: 350px;" PrinterTrusted></asp:TextBox>                                
+                                <br />
+                                <asp:LinkButton runat="server" ID="lbtnAddPrinterTrusted" OnClick="lbtnAddPrinterTrusted_Click" OnClientClick="return AddPath('PrinterTrusted');" style="color: Blue;"><%=Resources.Resource.Add %></asp:LinkButton>
+                                &nbsp;&nbsp;&nbsp;
+                                <asp:LinkButton runat="server" ID="lbtnDeletePrinterTrusted" OnClick="lbtnDeletePrinterTrusted_Click" style="color: Blue;"><%=Resources.Resource.Delete %></asp:LinkButton>
+                                <br />
+                                <asp:ListBox runat="server" ID="lboxPrinterTrusted" onchange="OnChange(this, 'PrinterTrusted');" style="width: 350px;height: 100px;" PrinterTrustedList></asp:ListBox>
+                                <asp:RequiredFieldValidator ID="reqPrinterTrusted" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
+                                            ControlToValidate="tboxPrinterTrusted" Display="None" ValidationGroup="PrinterTrustedValidation">
+                                </asp:RequiredFieldValidator>
+                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqPrinterTrustedCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrusted"></ajaxToolkit:ValidatorCalloutExtender2>
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
         <div id="mainTabProactive4">
             <div><asp:CheckBox runat="server" ID="cboxIsUserAudit" /> &nbsp;<%=Resources.Resource.AuditOn%></div>

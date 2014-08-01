@@ -51,6 +51,8 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         UpdateUserList();
         UpdateGeneral();
         UpdateUsers(proactive.UserRules[0].RuleName);
+        UpdatePrinters();
+        UpdateFields();
     }
 
     private String[] GetEvents()
@@ -84,18 +86,25 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         lboxFileExcluded.Enabled = lboxFileProtected.Enabled = lboxFileReadOnly.Enabled = _enabled;
         lboxKeyProtected.Enabled = lboxKeyReadOnly.Enabled = _enabled;
         lboxValueProtected.Enabled = lboxValueReadOnly.Enabled = _enabled;
-
+        
         tboxAppsTrustedUsers.Enabled = _enabled;
         tboxFolderProtectedUsers.Enabled = tboxFolderReadOnlyUsers.Enabled = _enabled;
         tboxFileProtectedUsers.Enabled = tboxFileReadOnlyUsers.Enabled = _enabled;
         tboxKeyProtectedUsers.Enabled = tboxKeyReadOnlyUsers.Enabled = _enabled;
+        tboxPrinterTrustedUsers.Enabled = _enabled;
 
         lboxAppsTrustedUsers.Enabled = _enabled;
         lboxFolderProtectedUsers.Enabled = lboxFolderReadOnlyUsers.Enabled = _enabled;
         lboxFileProtectedUsers.Enabled = lboxFileReadOnlyUsers.Enabled = _enabled;
         lboxKeyProtectedUsers.Enabled = lboxKeyReadOnlyUsers.Enabled = _enabled;
+        lboxPrinterTrustedUsers.Enabled = _enabled;
+
+        tboxPrinterTrusted.Enabled = _enabled;
+        lboxPrinterTrusted.Enabled = _enabled;
 
         cboxIsUserAudit.Enabled = tboxProcessedExtensions.Enabled = _enabled;
+
+        cboxGeneralOn.Enabled = cboxUsersOn.Enabled = cboxPrintersOn.Enabled = _enabled;
     }
 
     public Boolean ValidateFields()
@@ -108,7 +117,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ProactiveProtection;
         SaveJournalEvents();
-        SaveAudit();
+        SaveFields();
         task.Param = proactive.SaveToXml();
 
         return task;
@@ -124,28 +133,27 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         UpdateUserList();
         UpdateGeneral();
         UpdateUsers(proactive.UserRules[0].RuleName);
-        UpdateAudit();
+        UpdatePrinters();
+        UpdateFields();
         LoadJournalEvent(proactive.journalEvent);
     }
 
     #endregion
 
-    private void UpdateAudit()
-    {
-        cboxIsUserAudit.Checked = proactive.IsUserAudit;
-        tboxProcessedExtensions.Text = proactive.LogProcessedExtensions;
-    }
-
-    private void SaveAudit()
+    private void SaveFields()
     {
         proactive.IsUserAudit = cboxIsUserAudit.Checked;
         proactive.LogProcessedExtensions = tboxProcessedExtensions.Text;
+
+        proactive.IsEnabled = cboxGeneralOn.Checked;
+        proactive.IsUserFiltering = cboxUsersOn.Checked;
+        proactive.IsPrinterControl = cboxPrintersOn.Checked;
     }
 
     public String BuildTask()
     {
         SaveJournalEvents();
-        SaveAudit();
+        SaveFields();
         return proactive.GetTask();        
     }
 
@@ -594,6 +602,29 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
 
     #endregion
 
+    #region Printers - Trusted
+
+    protected void lbtnAddPrinterTrustedUsers_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxPrinterTrustedUsers.Text))
+        {
+            proactive.UserRules[GetSelectedIndex()].TrustedPrinters.Add(tboxPrinterTrustedUsers.Text);
+            lboxPrinterTrustedUsers.Items.Add(tboxPrinterTrustedUsers.Text);
+            tboxPrinterTrustedUsers.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeletePrinterTrustedUsers_Click(Object sender, EventArgs e)
+    {
+        if (lboxPrinterTrustedUsers.SelectedIndex > -1 && lboxPrinterTrustedUsers.SelectedIndex < lboxPrinterTrustedUsers.Items.Count)
+        {
+            proactive.UserRules[GetSelectedIndex()].TrustedPrinters.RemoveAt(lboxPrinterTrustedUsers.SelectedIndex);
+            lboxPrinterTrustedUsers.Items.RemoveAt(lboxPrinterTrustedUsers.SelectedIndex);
+        }
+    }
+
+    #endregion
+
     private Int32 GetSelectedIndex()
     {
         return proactive.UserRules.FindIndex(
@@ -605,6 +636,33 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
             }
             );
     }
+
+    #endregion
+
+    #region Printers
+
+    #region Printer - Trusted
+
+    protected void lbtnAddPrinterTrusted_Click(Object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(tboxPrinterTrusted.Text))
+        {
+            proactive.GeneralRule.TrustedPrinters.Add(tboxPrinterTrusted.Text);
+            lboxPrinterTrusted.Items.Add(tboxPrinterTrusted.Text);
+            tboxPrinterTrusted.Text = String.Empty;
+        }
+    }
+
+    protected void lbtnDeletePrinterTrusted_Click(Object sender, EventArgs e)
+    {
+        if (lboxPrinterTrusted.SelectedIndex > -1 && lboxPrinterTrusted.SelectedIndex < lboxPrinterTrusted.Items.Count)
+        {
+            proactive.GeneralRule.TrustedPrinters.RemoveAt(lboxPrinterTrusted.SelectedIndex);
+            lboxPrinterTrusted.Items.RemoveAt(lboxPrinterTrusted.SelectedIndex);
+        }
+    }
+
+    #endregion
 
     #endregion
 
@@ -643,6 +701,16 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
 
     #region Updates
 
+    private void UpdateFields()
+    {
+        cboxIsUserAudit.Checked = proactive.IsUserAudit;
+        tboxProcessedExtensions.Text = proactive.LogProcessedExtensions;
+
+        cboxGeneralOn.Checked = proactive.IsEnabled;
+        cboxUsersOn.Checked = proactive.IsUserFiltering;
+        cboxPrintersOn.Checked = proactive.IsPrinterControl;
+    }
+
     private void UpdateUsers(String userName)
     {
         Int32 index = proactive.UserRules.FindIndex(
@@ -659,6 +727,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         tboxFileProtectedUsers.Text = tboxFileReadOnlyUsers.Text = String.Empty;
         tboxFolderProtectedUsers.Text = tboxFolderReadOnlyUsers.Text = String.Empty;
         tboxKeyProtectedUsers.Text = tboxKeyReadOnlyUsers.Text = String.Empty;
+        tboxPrinterTrustedUsers.Text = String.Empty;
 
         upnlApplicationTrustedUsers.Update();
         upnlFileReadOnlyUsers.Update();
@@ -667,6 +736,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         upnlFolderProtectedUsers.Update();
         upnlKeyReadOnlyUsers.Update();
         upnlKeyProtectedUsers.Update();
+        upnlPrinterTrustedUsers.Update();
     }
 
     private void UpdateUserList()
@@ -679,8 +749,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
     {
         ddlUsers.Items.Add(new ListItem(rule.RuleName, rule.RuleName));
     }
-
-
+    
     private void FillUserRules(ProactiveRule rule)
     {
         lboxAppsTrustedUsers.Items.Clear();
@@ -690,6 +759,7 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         lboxFolderProtectedUsers.Items.Clear();
         lboxKeyReadOnlyUsers.Items.Clear();
         lboxKeyProtectedUsers.Items.Clear();
+        lboxPrinterTrustedUsers.Items.Clear();
 
         if (rule == null)
             return;
@@ -733,6 +803,20 @@ public partial class Controls_TaskConfigureProactive : System.Web.UI.UserControl
         foreach (String str in rule.ProtectedRegistryKeys)
         {
             lboxKeyProtectedUsers.Items.Add(new ListItem(str, str));
+        }
+
+        foreach (String str in rule.TrustedPrinters)
+        {
+            lboxPrinterTrustedUsers.Items.Add(new ListItem(str, str));
+        }
+    }
+
+    private void UpdatePrinters()
+    {
+        lboxPrinterTrusted.Items.Clear();
+        foreach (String str in proactive.GeneralRule.TrustedPrinters)
+        {
+            lboxPrinterTrusted.Items.Add(new ListItem(str, str));
         }
     }
 
