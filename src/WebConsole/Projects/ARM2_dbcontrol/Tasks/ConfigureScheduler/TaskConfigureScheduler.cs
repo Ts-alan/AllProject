@@ -15,7 +15,9 @@ namespace ARM2_dbcontrol.Tasks
         private String _Vba32CCUser;
         private XmlSerializer serializer;
         private List<SchedulerTask> _schedulerTasksList;
+
         #endregion
+
         #region Properties
 
         public String Vba32CCUser
@@ -78,11 +80,26 @@ namespace ARM2_dbcontrol.Tasks
                 result.AppendFormat(@"<param><id>{0}_{1}_command</id><type>stringmap</type><value>",SchedulerTasksList[i].Type.ToString(), i + 1);
                 result.AppendFormat(@"<string><id>0</id><key>command</key><val>{0}</val></string>",SchedulerTasksList[i].Type.ToString());
                 String guid = "";
-                if (SchedulerTasksList[i].Type == ActionTypeEnum.SCHD_SCANNER)
+                switch (SchedulerTasksList[i].Type)
                 {
-                    guid = "{2E406790-5472-4E0C-9EBF-88D081AA09AC}";
+                    case ActionTypeEnum.VAS_SCHD_SCANNER:
+                        guid = "{2E406790-5472-4E0C-9EBF-88D081AA09AC}";
+                        break;
+                    case ActionTypeEnum.SCHD_UPDATER:
+                        guid = "{D4041472-FEC0-41B5-A133-8AAC758C1006}";
+                        break;
+                    case ActionTypeEnum.SCHD_CLEANING:
+                        guid = "{76DC546B-D814-4E18-AF4B-C7D17BC0AB90}";
+                        break;
+                    case ActionTypeEnum.check_devices:
+                    case ActionTypeEnum.check_files:
+                    case ActionTypeEnum.check_registry:
+                    case ActionTypeEnum.save_devices:
+                    case ActionTypeEnum.save_files:
+                    case ActionTypeEnum.save_registry:
+                        guid = "{B4A234EB-3BAF-4822-9262-2467B035856C}";
+                        break;
                 }
-                else guid = "{D4041472-FEC0-41B5-A133-8AAC758C1006}";
                 result.AppendFormat(@"<string><id>1</id><key>module-id</key><val>{0}</val></string></value></param>",guid);
             }  
             result.Append(@"</module></config></value></arg></command>");
@@ -106,6 +123,7 @@ namespace ARM2_dbcontrol.Tasks
             this._schedulerTasksList = task.SchedulerTasksList;
             this._Vba32CCUser = task.Vba32CCUser;
         }
+
         #endregion
 
         #region IConfigureTask Members
@@ -115,24 +133,33 @@ namespace ARM2_dbcontrol.Tasks
         }
         #endregion
     }
+
     public struct SchedulerTask
     {
         public ActionTypeEnum Type;
         public PeriodicityEnum Period;
         public DateTime TaskDateTime;
+        public Boolean IsConsideringSystemLoad;
     }
+
     public enum PeriodicityEnum
     {
         AtSystemStartUp = 0,
         SomeDateTime = 1,
         EveryHour = 2,
-        EveryDayWeek = 3,
-        EveryDayMonth = 4
+        EveryDayWeek = 3
     }
 
     public enum ActionTypeEnum
     {
-        SCHD_SCANNER = 0,
-        SCHD_LOADER = 1
-    }  
+        VAS_SCHD_SCANNER = 0,
+        SCHD_UPDATER,
+        SCHD_CLEANING,
+        check_devices,
+        check_files,
+        check_registry,
+        save_devices,
+        save_files,
+        save_registry
+    }
 }

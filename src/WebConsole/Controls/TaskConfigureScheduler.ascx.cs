@@ -70,7 +70,6 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
 
     public TaskUserEntity GetCurrentState()
     {
-        
         GetCurrentSchedulerTasks();
         
         TaskUserEntity task = new TaskUserEntity();
@@ -80,6 +79,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         task.Param = scheduler.SaveToXml();
         return task;
     }
+    
     private void GetCurrentSchedulerTasks()
     {
         scheduler.SchedulerTasksList.Clear();
@@ -91,7 +91,6 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
             scheduler.SchedulerTasksList.Add(ConvertJSONTaskToScheduler(jsonTask));
         }
     }
-   
 
     public String BuildTask()
     {
@@ -114,34 +113,44 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         {
             TaskList.Add(ConvertToJSONTask(task));
         }
-        String json=JsonConvert.SerializeObject(TaskList);
+        String json = JsonConvert.SerializeObject(TaskList);
 
         hdnSchedulerTableState.Value = json;
     }
+
     #endregion
 
     #region JSONConvert
+    
     private SchedulerTask ConvertJSONTaskToScheduler(SchedulerTaskFromJSON jsonTask)
     {
         SchedulerTask task = new SchedulerTask();
         task.Type = (ActionTypeEnum)jsonTask.TaskType;
         task.Period = (PeriodicityEnum)jsonTask.TaskPeriod;
         task.TaskDateTime = DateTime.Parse(jsonTask.TaskDateTime);
+        task.IsConsideringSystemLoad = jsonTask.IsConsideringSystemLoad;
+
         return task;
     }
+
     private SchedulerTaskFromJSON ConvertToJSONTask(SchedulerTask task)
     {
         SchedulerTaskFromJSON jsonTask = new SchedulerTaskFromJSON();
         jsonTask.TaskType = (Int32)task.Type;
         jsonTask.TaskPeriod = (Int32)task.Period;
         jsonTask.TaskDateTime = task.TaskDateTime.ToString();
+        jsonTask.IsConsideringSystemLoad = task.IsConsideringSystemLoad;
+
         return jsonTask;
     }
+
     public struct SchedulerTaskFromJSON
     {
         public Int32 TaskType;
         public Int32 TaskPeriod;
         public String TaskDateTime;
+        public Boolean IsConsideringSystemLoad;
     }
+
     #endregion
 }

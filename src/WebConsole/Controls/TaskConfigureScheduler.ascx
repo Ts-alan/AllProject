@@ -53,8 +53,7 @@
         });
       
         //load data from json to table
-        function  LoadTableFromJSON(jsonTable)
-        {
+        function LoadTableFromJSON(jsonTable) {
             var array=[];
             array=JSON.parse(jsonTable);
             var item=new Object();
@@ -63,13 +62,14 @@
             {
                 item=array[i];
                 var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option[value='+item.TaskType+']').text();
-                var taskPeriod=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value='+item.TaskPeriod+']').text();                
+                var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value=' + item.TaskPeriod + ']').text();
                 var taskDateTime=item.TaskDateTime.substr(0,item.TaskDateTime.length-3);
+                var taskIsConsideringSystemLoad = item.IsConsideringSystemLoad ? "1" : "0";
 
-                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type='+item.TaskType+'>' + taskType + '</td><td period='+item.TaskPeriod+'>'+taskPeriod+'</td><td>'+taskDateTime+'</td></tr>');   
-                        
+                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');   
             }
         };
+
         function SchedulerTaskAddButtonClick()
         {
             var dOpt = {
@@ -82,19 +82,21 @@
                        
                     },
                 buttons: {
-                    <%=Resources.Resource.Apply%>: function () {
+                    '<%=Resources.Resource.Apply%>': function () {
                         var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
                         var taskTypeNo=$('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
                         var taskPeriod=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
                         var taskPeriodNo=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> ').val();
                         var taskDate=$('#datepickerAddSchedulerTask').val();
                         var taskTime=$('#timePickerAddSchedulerTask').val();
-                        $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type='+taskTypeNo+'>' + taskType + '</td><td period='+taskPeriodNo+'>'+taskPeriod+'</td><td>'+taskDate+' '+taskTime+'</td></tr>');   
+                        var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') == true ? "1" : "0";
+
+                        $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');   
                              
                         SchedulerSaveTableState();
                         $('#AddSchedulerTaskDialog').dialog('close');
                     },
-                    <%=Resources.Resource.CancelButtonText%>: function () {                           
+                    '<%=Resources.Resource.CancelButtonText%>': function () {                           
                         $('#AddSchedulerTaskDialog').dialog('close');                           
                     }
                 }
@@ -103,27 +105,30 @@
             $('#divOverlay').css('display','inline');
             $('#AddSchedulerTaskDialog').parent().appendTo(jQuery("form:first"));
         };
+
         //separate "Date Time" to {date,time}
         function SeparateDateTime(dateTime)
         {
             return dateTime.split(' ');
         };
+
         function SchedulerTaskChangeButtonClick()
         {        
             var row=$("[trSchedulerItemSelected=true]");
-            if(row.children().length<3) return;
-            var OldTaskType=row.children()[0].innerText;
-            var OldTaskTypeNo=row.children()[1].getAttribute("type");
-            var OldTaskPeriod=row.children()[1].innerText;
+            if(row.children().length<4) return;
+            
+            var OldTaskTypeNo=row.children()[0].getAttribute("type");            
             var OldTaskPeriodNo=row.children()[1].getAttribute("period");
-            var OldTaskDateTime=SeparateDateTime(row.children()[2].innerText);
+            var OldTaskDateTime=SeparateDateTime(row.children()[2].innerHTML);
             var OldTaskDate=OldTaskDateTime[0];
-            var OldTaskTime=OldTaskDateTime[1];
+            var OldTaskTime = OldTaskDateTime[1];
+            var OldTaskIsConsideringSystemLoad = row.children()[3].innerHTML == "1" ? true : false;
 
-            $('#<%=ddlAddSchedulerTaskType.ClientID %>').val(OldTaskType);
+            $('#<%=ddlAddSchedulerTaskType.ClientID %>').val(OldTaskTypeNo);
             $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val(OldTaskPeriodNo);
             $('#datepickerAddSchedulerTask').val(OldTaskDate);
             $('#timePickerAddSchedulerTask').val(OldTaskTime);
+            $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', OldTaskIsConsideringSystemLoad);
  
                         
             var dOpt = {
@@ -135,23 +140,26 @@
                         SchedulerAddDialogSetDefault();
                     },
                     buttons: {
-                        <%=Resources.Resource.Apply%>: function () {
+                        '<%=Resources.Resource.Apply%>': function () {
                             var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
                             var taskTypeNo=$('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
                             var taskPeriod=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected' ).text();
                             var taskPeriodNo=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val();
                             var taskDate=$('#datepickerAddSchedulerTask').val();
                             var taskTime=$('#timePickerAddSchedulerTask').val(); 
+                            var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked');
 
-                            row.children()[0].innerText =taskType;
+                            row.children()[0].innerHTML = taskType;
                             row.children()[0].setAttribute("type",taskTypeNo);
-                            row.children()[1].innerText =taskPeriod;
+                            row.children()[1].innerHTML = taskPeriod;
                             row.children()[1].setAttribute("period",taskPeriodNo);
-                            row.children()[2].innerText =taskDate+' '+taskTime;
+                            row.children()[2].innerHTML = taskDate + ' ' + taskTime;
+                            row.children()[3].innerHTML = taskIsConsideringSystemLoad ? "1" : "0";
+
                             SchedulerSaveTableState()
                             $('#AddSchedulerTaskDialog').dialog('close');
                         },
-                        <%=Resources.Resource.CancelButtonText%>: function () {                           
+                        '<%=Resources.Resource.CancelButtonText%>': function () {                           
                             $('#AddSchedulerTaskDialog').dialog('close');                           
                         }
                     }
@@ -160,33 +168,39 @@
             $('#divOverlay').css('display','inline');
             $('#AddSchedulerTaskDialog').parent().appendTo(jQuery("form:first"));
         };
+
         function SchedulerAddDialogSetDefault()
         {
             $('#<%=ddlAddSchedulerTaskType.ClientID %>').val("0");
             $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val("0");
             $('#datepickerAddSchedulerTask').val("01.01.2014");
             $('#timePickerAddSchedulerTask').val("00:00");
+            $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', false);
         }
+
         function SchedulerTaskDeleteButtonClick()
         {
             $("[trSchedulerItemSelected=true]").remove();
             SchedulerSaveTableState()
         }
+
         function SchedulerSaveTableState()
         {
             var array=[];
-            $('#tblSchedulerTasks tbody').children("tr").each(function(index){
-                    /**/            
-            var item=new Object();
-            var row=$(this);
-            item.TaskType=row.children()[0].getAttribute("type");
-            item.TaskPeriod=row.children()[1].getAttribute("period");
-            item.TaskDateTime=row.children()[2].innerText;
-            array.push(item);      
+            $('#tblSchedulerTasks tbody').children("tr").each(function (index) {
+                /**/
+                var item = new Object();
+                var row = $(this);
+                item.TaskType = row.children()[0].getAttribute("type");
+                item.TaskPeriod = row.children()[1].getAttribute("period");
+                item.TaskDateTime = row.children()[2].innerHTML;
+                item.IsConsideringSystemLoad = row.children()[3].innerHTML == "1" ? true : false;
+                array.push(item);
             });
             var json=JSON.stringify(array);
             $('#<%=hdnSchedulerTableState.ClientID %>').val(json);
         }
+
 </script>
 
 <div id="divSchedulerMain" class="ListContrastTable" runat="server" style="width:501px">
@@ -203,6 +217,8 @@
             <th runat="server" id="tdSchedulerTaskDateTime" colspan="2" style="width: 200px; text-align: center;" class="listRulesHeader">
                 <%=Resources.Resource.Time%>
             </th>
+            <th runat="server" id="tdSchedulerTaskIsConsideringSystemLoad" style="display:none;" class="listRulesHeader">
+            </th>
         </thead>
         <tbody></tbody>
     </table>
@@ -217,23 +233,34 @@
 </div>
 
 <div id="AddSchedulerTaskDialog" style="display:none; padding-bottom: 20px;" class="ui-front">
-    <%=Resources.Resource.Schedule %><br />
-    <asp:DropDownList ID="ddlAddSchedulerTaskType" runat="server">
-        <asp:ListItem Value="0" Text="<%$ Resources:Resource, ActionScan %>"></asp:ListItem>
-        <asp:ListItem Value="1" Text="<%$ Resources:Resource, ActionUpdate %>"></asp:ListItem>
-    </asp:DropDownList>
-    <br />
-    <%=Resources.Resource.Type %>
-    <br />
-    <asp:DropDownList ID="ddlAddSchedulerTaskPeriod" runat="server">
-    <asp:ListItem Value="0" Text="<%$ Resources:Resource, AtSystemStartUp %>"></asp:ListItem>
-    <asp:ListItem Value="1" Text="<%$ Resources:Resource, SomeDateTime %>"></asp:ListItem>
-    <asp:ListItem Value="2" Text="<%$ Resources:Resource, EveryHour %>"></asp:ListItem>
-    <asp:ListItem Value="3" Text="<%$ Resources:Resource, EveryDayOfWeek %>"></asp:ListItem>
-    <asp:ListItem Value="4" Text="<%$ Resources:Resource, EveryDayOfMonth %>"></asp:ListItem>
-    </asp:DropDownList>
-    <br />
-    <label ><%=Resources.Resource.DateAndTime%> </label>
-    <p><input type="text" id="datepickerAddSchedulerTask"/> <input id="timePickerAddSchedulerTask" name="spinner" value="00:00 AM"/></p>
-
+    <div><%=Resources.Resource.Schedule %></div>
+    <div>
+        <asp:DropDownList ID="ddlAddSchedulerTaskType" runat="server" style="width:230px;">
+            <asp:ListItem Value="0" Text="<%$ Resources:Resource, ActionScan %>"></asp:ListItem>
+            <asp:ListItem Value="1" Text="<%$ Resources:Resource, ActionUpdate %>"></asp:ListItem>
+            <asp:ListItem Value="2" Text="<%$ Resources:Resource, Action_SCHD_CLEANING %>"></asp:ListItem>
+            <asp:ListItem Value="3" Text="<%$ Resources:Resource, Action_check_devices %>"></asp:ListItem>
+            <asp:ListItem Value="4" Text="<%$ Resources:Resource, Action_check_files %>"></asp:ListItem>
+            <asp:ListItem Value="5" Text="<%$ Resources:Resource, Action_check_registry %>"></asp:ListItem>
+            <asp:ListItem Value="6" Text="<%$ Resources:Resource, Action_save_devices %>"></asp:ListItem>
+            <asp:ListItem Value="7" Text="<%$ Resources:Resource, Action_save_files %>"></asp:ListItem>
+            <asp:ListItem Value="8" Text="<%$ Resources:Resource, Action_save_registry %>"></asp:ListItem>
+        </asp:DropDownList>
+    </div>
+    <div><%=Resources.Resource.Type %></div>
+    <div>
+        <asp:DropDownList ID="ddlAddSchedulerTaskPeriod" runat="server" style="width:230px;">
+        <asp:ListItem Value="0" Text="<%$ Resources:Resource, AtSystemStartUp %>"></asp:ListItem>
+        <asp:ListItem Value="1" Text="<%$ Resources:Resource, SomeDateTime %>"></asp:ListItem>
+        <asp:ListItem Value="2" Text="<%$ Resources:Resource, EveryHour %>"></asp:ListItem>
+        <asp:ListItem Value="3" Text="<%$ Resources:Resource, EveryDayOfWeek %>"></asp:ListItem>    
+        </asp:DropDownList>
+    </div>
+    <div>
+        <asp:CheckBox runat="server" ID="cboxConsideringSystemLoad" /> &nbsp;<%=Resources.Resource.ConsideringSystemLoad%>
+    </div>
+    <div>
+        <label ><%=Resources.Resource.DateAndTime%> </label>
+        <p><input type="text" id="datepickerAddSchedulerTask"/> <input id="timePickerAddSchedulerTask" name="spinner" value="00:00 AM"/></p>
+    </div>
 </div>

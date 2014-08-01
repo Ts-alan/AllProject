@@ -3690,4 +3690,28 @@ system administrator.</value>
   <data name="VPP_Users_On" xml:space="preserve">
     <value>Filtering users action is on</value>
   </data>
+  <data name="ConsideringSystemLoad" xml:space="preserve">
+    <value>Considering system load</value>
+  </data>
+  <data name="Action_check_devices" xml:space="preserve">
+    <value>Check devices state</value>
+  </data>
+  <data name="Action_check_files" xml:space="preserve">
+    <value>Check files state</value>
+  </data>
+  <data name="Action_check_registry" xml:space="preserve">
+    <value>Check registry state</value>
+  </data>
+  <data name="Action_save_devices" xml:space="preserve">
+    <value>Save devices state</value>
+  </data>
+  <data name="Action_save_files" xml:space="preserve">
+    <value>Save files state</value>
+  </data>
+  <data name="Action_save_registry" xml:space="preserve">
+    <value>Save registry state</value>
+  </data>
+  <data name="Action_SCHD_CLEANING" xml:space="preserve">
+    <value>Cleaning</value>
+  </data>
 </root>

@@ -3678,4 +3678,28 @@
   <data name="VPP_Users_On" xml:space="preserve">
     <value>Фильтрация действий пользователя включена</value>
   </data>
+  <data name="ConsideringSystemLoad" xml:space="preserve">
+    <value>Учитывая загруженность системы</value>
+  </data>
+  <data name="Action_check_devices" xml:space="preserve">
+    <value>Проверка состояния устройств</value>
+  </data>
+  <data name="Action_check_files" xml:space="preserve">
+    <value>Проверка состояния файлов</value>
+  </data>
+  <data name="Action_check_registry" xml:space="preserve">
+    <value>Проверка состояния реестра</value>
+  </data>
+  <data name="Action_save_devices" xml:space="preserve">
+    <value>Сохранение состояние устройств</value>
+  </data>
+  <data name="Action_save_files" xml:space="preserve">
+    <value>Сохранение состояние файлов</value>
+  </data>
+  <data name="Action_save_registry" xml:space="preserve">
+    <value>Сохранение состояние реестра</value>
+  </data>
+  <data name="Action_SCHD_CLEANING" xml:space="preserve">
+    <value>Очистка</value>
+  </data>
 </root>
