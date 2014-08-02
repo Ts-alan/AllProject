@@ -83,12 +83,11 @@ public partial class Processes : PageBase
         Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
 
         Int64[] taskId = new Int64[1];
-        taskId[0] = PreServAction.CreateTask(compName, Resources.Resource.Terminate + " " + Resources.Resource.ActionProcess.ToLower(), GetTaskXML(procName), Anchor.GetStringForTaskGivedUser(), connStr);
+        taskId[0] = PreServAction.CreateTask(compName, ResourceControl.GetStringForCurrentCulture("Terminate") + " " + ResourceControl.GetStringForCurrentCulture("ActionProcess").ToLower(), GetTaskXML(procName), Anchor.GetStringForTaskGivedUser(), connStr);
         
         control.PacketCreateProcess(taskId, ipAddr, GetCommangLine(procName));
 
-        return Resources.Resource.Terminate + " " + Resources.Resource.ActionProcess.ToLower() + ": " + Resources.Resource.TaskGived;
-        //control.GetLastError()
+        return ResourceControl.GetStringForCurrentCulture("Terminate") + " " + ResourceControl.GetStringForCurrentCulture("ActionProcess").ToLower() + ": " + ResourceControl.GetStringForCurrentCulture("TaskGived");
     }
 
     private static String GetTaskXML(String procName)
