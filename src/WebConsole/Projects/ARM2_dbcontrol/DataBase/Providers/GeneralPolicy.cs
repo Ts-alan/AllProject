@@ -85,7 +85,8 @@ namespace VirusBlokAda.CC.DataBase
                 if (isEmptyTasks && String.IsNullOrEmpty(devicePolicy))
                     return;
 
-                sb.Append(devicePolicy);
+                if (!String.IsNullOrEmpty(devicePolicy))
+                    sb.Append(devicePolicy);
 
                 sb.Append(@"</Tasks>");
 
