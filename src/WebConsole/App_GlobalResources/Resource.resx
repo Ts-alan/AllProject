@@ -3714,4 +3714,7 @@ system administrator.</value>
   <data name="Action_SCHD_CLEANING" xml:space="preserve">
     <value>Cleaning</value>
   </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>Terminate</value>
+  </data>
 </root>

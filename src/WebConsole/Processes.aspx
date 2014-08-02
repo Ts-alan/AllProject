@@ -12,6 +12,45 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
     <ajaxToolkit:ToolkitScriptManager runat="server" ID="ToolkitScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
+   
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on("click", 'a[id=lbtnTerminate]', function () {
+                var sender = $(this);
+                var procName = sender.attr('procName');
+                var compName = sender.attr('compName');
+
+                $.ajax({
+                    type: "POST",
+                    url: "Processes.aspx/TerminateProcess",
+                    dataType: "json",
+                    data: "{procName:\"" + procName + "\", compName:\"" + compName + "\"}",
+                    contentType: "application/json; charset=utf-8",
+                    error: function (msg) {
+                        ShowJSONMessage(msg);
+                    },
+                    success: function (msg) {
+                        alert(msg);
+                    }
+                });
+            });
+
+            function ShowJSONMessage(msg) {
+                var m = JSON.parse(msg.responseText, function (key, value) {
+                    var type;
+                    if (value && typeof value === 'object') {
+                        type = value.type;
+                        if (typeof type === 'string' && typeof window[type] === 'function') {
+                            return new (window[type])(value);
+                        }
+                    }
+                    return value;
+                });
+                alert(m.Message);
+            }
+        });
+    </script>
+
     <div class="title"><%=Resources.Resource.PageProcessTitle%></div>
     <asp:UpdatePanel runat="server" ID="updatePanelProcessesFilter">
         <ContentTemplate>
@@ -68,6 +107,16 @@
                             HeaderText='<%$ Resources:Resource, Date2 %>'>
                             <HeaderStyle Width="180px" />
                         </asp:BoundField>
+                        <asp:TemplateField>
+                        <HeaderStyle Width="100px" />
+                        <ItemTemplate>
+                            <a id='lbtnTerminate' style="cursor:pointer;"
+                            procName='<%#System.IO.Path.GetFileName(DataBinder.Eval(Container.DataItem, "ProcessName").ToString())%>' 
+                            compName='<%#DataBinder.Eval(Container.DataItem, "ComputerName")%>'>
+                                <%=Resources.Resource.Terminate %>
+                            </a>
+                        </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns> 
                     <PagerSettings Position="TopAndBottom" Visible="true" />           
                     <PagerTemplate>

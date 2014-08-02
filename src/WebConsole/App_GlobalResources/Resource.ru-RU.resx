@@ -3702,4 +3702,7 @@
   <data name="Action_SCHD_CLEANING" xml:space="preserve">
     <value>Очистка</value>
   </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
 </root>
