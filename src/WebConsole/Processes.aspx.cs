@@ -113,6 +113,6 @@ public partial class Processes : PageBase
 
     private static String GetCommangLine(String procName)
     {
-        return String.Format("taskkill /IM \"{0}\"/F /T", procName);
+        return String.Format("taskkill /IM \"{0}\" /F /T", procName);
     }
 }
