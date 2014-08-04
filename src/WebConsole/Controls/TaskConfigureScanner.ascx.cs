@@ -220,7 +220,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
     {
         TaskUserEntity task = new TaskUserEntity();
         task.Type = TaskType.ConfigureScanner;
-
+        SaveJournalEvents();
         SaveScanner();
         ValidateFields();
         task.Param = scanner.SaveToXml();
@@ -232,6 +232,8 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
     {
         return scanner.GetTask();
     }
+
+
     #region JournalEvents
 
     private void InitFieldsJournalEvent(JournalEvent _events)
@@ -292,10 +294,6 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
             cell = new TableCell();
             CheckBox chk = new CheckBox();
             chk.Checked = false;
-            chk.Attributes.Add("rowNo", rowNo.ToString());
-            chk.Attributes.Add("colNo", i.ToString());
-            chk.AutoPostBack = true;
-            chk.CheckedChanged += JournalEventChecked;
             cell.Controls.Add(chk);
             cell.Attributes.Add("align", "center");
             row.Cells.Add(cell);
@@ -304,48 +302,26 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         return row;
     }
 
-    private void JournalEventChecked(Object sender, EventArgs e)
+    private void SaveJournalEvents()
     {
-        CheckBox chk = (CheckBox)sender;
-        Int32 rowNo = Convert.ToInt32(chk.Attributes["rowNo"]);
-        Int32 colNo = Convert.ToInt32(chk.Attributes["colNo"]);
-        SaveCurrentStateJournalEvent(ref scanner.journalEvent.Events[rowNo], colNo, chk.Checked);
-    }
-
-    private void SaveCurrentStateJournalEvent(ref SingleJournalEvent sje, Int32 colNo, Boolean isChecked)
-    {
-        sje.EventFlag = GetEventFlag(sje.EventFlag, colNo, isChecked);
-    }
-
-    private EventJournalFlags GetEventFlag(EventJournalFlags eventJournalFlags, Int32 colNo, Boolean isChecked)
-    {
-        EventJournalFlags flags = eventJournalFlags;
-        switch (colNo)
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
         {
-            case 0:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.WindowsJournal;
-                }
-                else flags &= ~EventJournalFlags.WindowsJournal;
-                break;
-            case 1:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.LocalJournal;
-                }
-                else flags &= ~EventJournalFlags.LocalJournal;
-                break;
-            case 2:
-                if (isChecked)
-                {
-                    flags |= EventJournalFlags.CCJournal;
-                }
-                else flags &= ~EventJournalFlags.CCJournal;
-                break;
-        }
-        return flags;
-    }
 
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            {
+                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+            }
+        }
+        scanner.journalEvent = je;
+    }
     #endregion
 }
