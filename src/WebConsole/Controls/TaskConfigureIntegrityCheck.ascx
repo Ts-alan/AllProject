@@ -409,5 +409,5 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" />
+    <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" ></div>
 </div>

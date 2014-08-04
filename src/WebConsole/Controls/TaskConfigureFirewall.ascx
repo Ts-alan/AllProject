@@ -19,7 +19,7 @@
                             $('#divOverlay').css('display','none');
                         },
                     buttons: {
-                        <%=Resources.Resource.Apply%>: function () {
+                        '<%=Resources.Resource.Apply%>': function () {
                             var btn = '<%=IP4ApplyTcpUdpRuleDialogButton.UniqueID %>';
                             var txt = '#' + '<%=IP4txtLocalIPDialog.ClientID %>';
                             if( Page_ClientValidate('IP4AddressValidation'))
@@ -28,7 +28,7 @@
                                 $('#IP4AddTcpUdpRuleDialog').dialog('close');
                             }
                         },
-                       <%=Resources.Resource.CancelButtonText%>: function () {                           
+                       '<%=Resources.Resource.CancelButtonText%>': function () {                           
                             $('#IP4AddTcpUdpRuleDialog').dialog('close');
                             
                         }
@@ -1118,6 +1118,6 @@
             </asp:UpdatePanel>
        </div>
     </div>     
-        <div id="divOverlay" class="ui-widget-overlay ui-front" style="display:none"/>
+        <div id="divOverlay" class="ui-widget-overlay ui-front" style="display:none"></div>
 </div>
 
