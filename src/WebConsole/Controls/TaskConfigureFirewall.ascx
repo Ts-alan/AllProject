@@ -540,29 +540,29 @@
                                 <asp:Panel runat="server" Width="770px" Height="400px" ID="IP4pnlFirewall" style="overflow:scroll">
                                     <asp:DataList runat="server" ID="IP4dlRules" Width="750px" OnItemDataBound="IP4dlRules_ItemDataBound"  OnItemCommand="IP4dlRules_SelectedIndexChanged"  style="table-layout:fixed;word-break: break-all;" rules="all">                                        
                                         <HeaderTemplate>
-                                            <tr>
-                                                <th runat="server" id="IP4tdEnable" style="width: 80px;text-align: center;" class="listRulesHeader">
+                                            <tr class="gridViewHeader">
+                                                <th runat="server" id="IP4tdEnable" style="width: 80px;text-align: center;" >
                                                 <asp:Label runat="server" ><%=Resources.Resource.Enable%></asp:Label>                            
                                                 </th>
-                                                <th runat="server" id="IP4tdName" style="width: 150px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdName" style="width: 150px;text-align: center;" >
                                                 <asp:Label runat="server" ><%=Resources.Resource.Name%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdLocalIP" style="width: 100px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdLocalIP" style="width: 100px;text-align: center;" >
                                                 <asp:Label runat="server" ><%=Resources.Resource.LocalIP%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdLocalPort" style="width: 40px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdLocalPort" style="width: 40px;text-align: center;" >
                                                 <asp:Label runat="server"  ><%=Resources.Resource.Port%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdDestinationIP" style="width: 100px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdDestinationIP" style="width: 100px;text-align: center;" >
                                                 <asp:Label runat="server" ><%=Resources.Resource.DestinationIP%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdDestinationPort" style="width: 40px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdDestinationPort" style="width: 40px;text-align: center;" >
                                                 <asp:Label runat="server"  ><%=Resources.Resource.Port%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdProtocol" style="width: 125px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdProtocol" style="width: 125px;text-align: center;" >
                                                 <asp:Label runat="server"  ><%=Resources.Resource.Protocol%></asp:Label>
                                                 </th>
-                                                <th runat="server" id="IP4tdRule" style="width: 115px;text-align: center;" class="listRulesHeader">
+                                                <th runat="server" id="IP4tdRule" style="width: 115px;text-align: center;">
                                                 <%=Resources.Resource.Rules%>
                                                 </th>
                                             </tr>
@@ -596,7 +596,7 @@
                                                     <asp:Label runat="server" ID="IP4lblRule" /> 
                                                 </td>   
                                             </tr>
-                                        </ItemTemplate>                                     
+                                        </ItemTemplate>                         
                                     </asp:DataList>
                                 </asp:Panel>                               
                             </asp:TableCell>
@@ -836,29 +836,29 @@
                                 <asp:Panel runat="server" Width="770px" Height="400px" ID="IP6pnlFirewall" style="overflow:scroll">
                                     <asp:DataList runat="server" ID="IP6dlRules" Width="750px" OnItemDataBound="IP6dlRules_ItemDataBound"  OnItemCommand="IP6dlRules_SelectedIndexChanged"  style="table-layout:fixed;word-break: break-all; " rules="all">                                        
                                         <HeaderTemplate>
-                                        <tr>
-                                            <th runat="server" id="IP6tdEnable" style="width: 80px;text-align: center;" class="listRulesHeader">
+                                        <tr class="gridViewHeader">
+                                            <th runat="server" id="IP6tdEnable" style="width: 80px;text-align: center;" >
                                             <asp:Label runat="server" ><%=Resources.Resource.Enable%></asp:Label>                            
                                             </th>
-                                            <th runat="server" id="IP6tdName" style="width: 150px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdName" style="width: 150px;text-align: center;" >
                                             <asp:Label runat="server" ><%=Resources.Resource.Name%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdLocalIP" style="width: 100px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdLocalIP" style="width: 100px;text-align: center;">
                                             <asp:Label runat="server" ><%=Resources.Resource.LocalIP%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdLocalPort" style="width: 40px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdLocalPort" style="width: 40px;text-align: center;">
                                             <asp:Label runat="server"  ><%=Resources.Resource.Port%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdDestinationIP" style="width: 100px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdDestinationIP" style="width: 100px;text-align: center;" >
                                             <asp:Label runat="server" ><%=Resources.Resource.DestinationIP%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdDestinationPort" style="width: 40px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdDestinationPort" style="width: 40px;text-align: center;" >
                                             <asp:Label runat="server"  ><%=Resources.Resource.Port%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdProtocol" style="width: 125px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdProtocol" style="width: 125px;text-align: center;" >
                                             <asp:Label runat="server"  ><%=Resources.Resource.Protocol%></asp:Label>
                                             </th>
-                                            <th runat="server" id="IP6tdRule" style="width: 115px;text-align: center;" class="listRulesHeader">
+                                            <th runat="server" id="IP6tdRule" style="width: 115px;text-align: center;">
                                             <%=Resources.Resource.Rules%>
                                             </th>
                                             </tr>
@@ -1098,17 +1098,17 @@
                 <ContentTemplate>
                     <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
                         <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
-                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
-                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" class="gridViewHeader">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" >
                                     <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label2" runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label3" runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;">
                                     <asp:Label ID="Label4" runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
                                 </asp:TableHeaderCell>
                             </asp:TableHeaderRow>
