@@ -67,8 +67,8 @@
                             $('#addProgramTable tbody').children("tr").each(function(index){
                                 
                                 template=new Object();
-                                template.path=$(this).children()[0].innerText;
-                                template.filename=$(this).children()[1].innerText;
+                                template.path=$(this).children()[0].innerHTML;
+                                template.filename=$(this).children()[1].innerHTML
                                 array.push(template);                                
                             });
                             var json=JSON.stringify(array);
@@ -125,8 +125,8 @@
                             $('#addProgramTable tbody').children("tr").each(function(index){
 
                                     template=new Object();
-                                    template.path=$(this).children()[0].innerText;
-                                    template.filename=$(this).children()[1].innerText;
+                                    template.path=$(this).children()[0].innerHTML;
+                                    template.filename=$(this).children()[1].innerHTML;
                                     array.push(template);                                                                 
                             });
                             var json=JSON.stringify(array);
@@ -207,8 +207,12 @@
        function ChangeProgramDialogButtonClientClick()
         {        
             var row=$("[trAddProgramItemSelected=true]"); 
-            var Oldpath=row.children()[0].innerText;
-            var Oldname=row.children()[1].innerText;
+            
+           if(row.children().length==0) return;
+            
+            var Oldpath=row.children()[0].innerHTML;
+            var Oldname=row.children()[1].innerHTML;
+
             $('#<%=AddTemplateDialogPath.ClientID %>').val(Oldpath);
             $('#<%=AddTemplateDialogName.ClientID %>').val(Oldname);   
                         
@@ -224,8 +228,8 @@
                     <%=Resources.Resource.Apply%>: function () {
                         var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
                         var name=$('#<%=AddTemplateDialogName.ClientID %>').val();                            
-                        row.children()[0].innerText=path;
-                        row.children()[1].innerText=name;    
+                        row.children()[0].innerHTML=path;
+                        row.children()[1].innerHTML=name;    
                                                             
                         $('#AddTemplateDialog').dialog('close');
                             
