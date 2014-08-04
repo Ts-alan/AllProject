@@ -75,7 +75,7 @@ namespace ARM2_dbcontrol.Tasks
 
             for (int i = 0; i < _schedulerTasksList.Count; i++)
             {
-                result.AppendFormat(@"<param><id>{0}_{1}_type</id><type>ulong</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, 524288 + (UInt32)SchedulerTasksList[i].Period);
+                result.AppendFormat(@"<param><id>{0}_{1}_type</id><type>ulong</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, (SchedulerTasksList[i].IsConsideringSystemLoad ? 524288 : 0) + (UInt32)SchedulerTasksList[i].Period);
                 result.AppendFormat(@"<param><id>{0}_{1}_time</id><type>string</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, SchedulerTasksList[i].TaskDateTime.ToString("yyyy-MM-dd HH:mm:ss"));
                 result.AppendFormat(@"<param><id>{0}_{1}_command</id><type>stringmap</type><value>",SchedulerTasksList[i].Type.ToString(), i + 1);
                 result.AppendFormat(@"<string><id>0</id><key>command</key><val>{0}</val></string>",SchedulerTasksList[i].Type.ToString());
