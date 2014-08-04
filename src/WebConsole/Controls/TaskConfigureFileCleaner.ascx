@@ -149,7 +149,7 @@
                 {
                     $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + jsonTable[i].Path + '</td><td>'+jsonTable[i].FileName+'</td></tr>');
                 }
-                
+                addProgramTableChangeStyle();
                 $('#AddProgramDialog').dialog(dOpt);
 
                 $('#divOverlay').css('display','inline');
@@ -190,7 +190,8 @@
                     <%=Resources.Resource.Apply%>: function () {
                             var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
                             var name=$('#<%=AddTemplateDialogName.ClientID %>').val();  
-                            $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + path + '</td><td>'+name+'</td></tr>');                               
+                            $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + path + '</td><td>'+name+'</td></tr>'); 
+                            addProgramTableChangeStyle();                              
                             $('#AddTemplateDialog').dialog('close');
                     },
                     <%=Resources.Resource.CancelButtonText%>: function () {                           
@@ -201,6 +202,7 @@
             $('#AddTemplateDialog').dialog(dOpt);
             $('#divOverlay').css('display','inline');
             $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
+            
        };
        function ChangeProgramDialogButtonClientClick()
         {        
@@ -211,7 +213,7 @@
             $('#<%=AddTemplateDialogName.ClientID %>').val(Oldname);   
                         
             var dOpt = {
-                width: 550,                                       
+                width: 350,                                       
                 resizable: false,
                 close: function(event, ui)
                     {
@@ -241,6 +243,21 @@
     function DeleteProgramDialogButtonClientClick()
     {
         $("[trAddProgramItemSelected=true]").remove();
+        addProgramTableChangeStyle();
+    }
+    function addProgramTableChangeStyle() {
+        var i = 0;
+        $('#addProgramTable tbody').children("tr").each(function (index) {
+            if (i % 2 == 0) {
+                gridStyle = "gridViewRow";
+            }
+            else
+                gridStyle = "gridViewRowAlternating";
+            var row = $(this);
+            row.removeClass();
+            row.addClass(gridStyle);
+            i++;
+        });
     }
     </script>
     <div id='fileCleanerMainPanel'>
@@ -261,18 +278,17 @@
                                     OnItemCommand="ProgramListDataList_SelectedIndexChanged" Style="table-layout: fixed;
                                     word-break: break-all;" rules="all">
                                     <HeaderTemplate>
-                                        <tr>
-                                            <th runat="server" id="tdProgramName" style="width: 435px; text-align: center;" class="listRulesHeader">
+                                        <tr class="gridViewHeader">
+                                            <th runat="server" id="tdProgramName" style="width: 420px; text-align: center;">
                                                 <asp:Label runat="server"><%=Resources.Resource.Name%></asp:Label>
                                             </th>
-                                            <th runat="server" id="tdProgramChecked" style="width: 65px; text-align: center;"
-                                                class="listRulesHeader">
+                                            <th runat="server" id="tdProgramChecked" style="width: 80px; text-align: center;">
                                                 <asp:Label runat="server"><%=Resources.Resource.CheckState%></asp:Label>
                                             </th>
                                         </tr>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <tr runat="server" id="trProgramItem" trprogramitemselected='false'>
+                                        <tr runat="server" id="trProgramItem" trprogramitemselected='false' >
                                             <td runat="server" id="tdProgramName" style="width: 435px;">
                                                 <asp:Label runat="server" ID="lblProgramName" Text="" />
                                             </td>
@@ -313,18 +329,18 @@
             <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
-                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
-                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
-                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable" rules="cols">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" CssClass="gridViewHeader">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" >
                                     <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label2" runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label3" runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label4" runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
                                 </asp:TableHeaderCell>
                             </asp:TableHeaderRow>
@@ -351,13 +367,11 @@
                 <asp:TableCell ColumnSpan="3">
                     <div style="height: 200px; width: 500px; overflow: scroll">
                         <table id="addProgramTable" rules="cols">
-                            <thead>
-                                <th runat="server" id="tdAddProgramPath" style="width: 350px; text-align: center;"
-                                    class="listRulesHeader">
+                            <thead class="gridViewHeader">
+                                <th runat="server" id="tdAddProgramPath" style="width: 350px; text-align: center;">
                                     <%=Resources.Resource.Path%>
                                 </th>
-                                <th runat="server" id="tdAddProgramDialogTemplate" style="width: 150px; text-align: center;"
-                                    class="listRulesHeader">
+                                <th runat="server" id="tdAddProgramDialogTemplate" style="width: 150px; text-align: center;">
                                     <%=Resources.Resource.Template%>
                                 </th>
                             </thead>
