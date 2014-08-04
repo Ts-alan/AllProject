@@ -14,7 +14,6 @@
         LoadTableFromJSON($('#<%=hdnSchedulerTableState.ClientID %>').val());
  
   });
-
         /*  Hover/Click Templates   */
         $(document).on("mouseenter","[trSchedulerItemSelected]",function () {
             if ($(this).attr('trSchedulerItemSelected') == "true") return;
@@ -58,46 +57,47 @@
             array=JSON.parse(jsonTable);
             var item=new Object();
             $('#tblSchedulerTasks tbody').empty();
-            for(var i=0;i<array.length;i++)
-            {
+            var gridStyle = "gridViewRow";
+            for (var i = 0; i < array.length; i++) {
                 item=array[i];
                 var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option[value='+item.TaskType+']').text();
                 var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value=' + item.TaskPeriod + ']').text();                
                 var taskDateTime=item.TaskDateTime.substr(0,16);
                 var taskIsConsideringSystemLoad = item.IsConsideringSystemLoad ? "1" : "0";
 
-                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');   
+                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
             }
+            SchedulerTableChangeStyle();
         };
 
         function SchedulerTaskAddButtonClick()
         {
             var dOpt = {
-                width: 350,                                       
+                width: 350,
                 resizable: false,
-                close: function(event, ui)
-                    {
-                        $('#divOverlay').css('display','none');
-                        SchedulerAddDialogSetDefault();
-                       
-                    },
+                close: function (event, ui) {
+                    $('#divOverlay').css('display', 'none');
+                    SchedulerAddDialogSetDefault();
+
+                },
                 buttons: {
                     '<%=Resources.Resource.Apply%>': function () {
-                        var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
-                        var taskTypeNo=$('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
-                        var taskPeriod=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
-                        var taskPeriodNo=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> ').val();
-                        var taskDate=$('#datepickerAddSchedulerTask').val();
-                        var taskTime=$('#timePickerAddSchedulerTask').val();
+                        var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
+                        var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
+                        var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
+                        var taskPeriodNo = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> ').val();
+                        var taskDate = $('#datepickerAddSchedulerTask').val();
+                        var taskTime = $('#timePickerAddSchedulerTask').val();
                         var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') == true ? "1" : "0";
 
-                        $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');   
-                             
+
+                        $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
+                        SchedulerTableChangeStyle()
                         SchedulerSaveTableState();
                         $('#AddSchedulerTaskDialog').dialog('close');
                     },
-                    '<%=Resources.Resource.CancelButtonText%>': function () {                           
-                        $('#AddSchedulerTaskDialog').dialog('close');                           
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#AddSchedulerTaskDialog').dialog('close');
                     }
                 }
             };
@@ -181,12 +181,13 @@
         function SchedulerTaskDeleteButtonClick()
         {
             $("[trSchedulerItemSelected=true]").remove();
-            SchedulerSaveTableState()
+            SchedulerTableChangeStyle();
+            SchedulerSaveTableState();
         }
 
         function SchedulerSaveTableState()
         {
-            var array=[];
+            var array = [];
             $('#tblSchedulerTasks tbody').children("tr").each(function (index) {
                 /**/
                 var item = new Object();
@@ -201,6 +202,20 @@
             $('#<%=hdnSchedulerTableState.ClientID %>').val(json);
         }
 
+        function SchedulerTableChangeStyle() {
+            var i = 0;
+            $('#tblSchedulerTasks tbody').children("tr").each(function (index) {
+                if (i % 2 == 0) {
+                    gridStyle = "gridViewRow";
+                }
+                else
+                    gridStyle = "gridViewRowAlternating";
+                var row = $(this);
+                row.removeClass();
+                row.addClass(gridStyle);
+                i++;
+            });
+        }
 </script>
 
 <div id="divSchedulerMain" class="ListContrastTable" runat="server" style="width:501px">
@@ -208,16 +223,16 @@
     <div style="height: 200px; width: 500px; overflow: scroll">
     <table id="tblSchedulerTasks"  rules="cols">
         <thead >
-            <th runat="server" id="tdSchedulerTaskName" style="width: 150px; text-align: center;"  class="listRulesHeader">
+            <th runat="server" id="tdSchedulerTaskName" style="width: 150px; text-align: center;"  class="gridViewHeader">
                 <%=Resources.Resource.TaskName%>
             </th>
-            <th runat="server" id="tdSchedulerTaskPeriod" style="width: 150px; text-align: center;" class="listRulesHeader">
+            <th runat="server" id="tdSchedulerTaskPeriod" style="width: 150px; text-align: center;" class="gridViewHeader">
                 <%=Resources.Resource.PeriodicityType%>
             </th>
-            <th runat="server" id="tdSchedulerTaskDateTime" colspan="2" style="width: 200px; text-align: center;" class="listRulesHeader">
+            <th runat="server" id="tdSchedulerTaskDateTime" colspan="2" style="width: 200px; text-align: center;" class="gridViewHeader">
                 <%=Resources.Resource.Time%>
             </th>
-            <th runat="server" id="tdSchedulerTaskIsConsideringSystemLoad" style="display:none;" class="listRulesHeader">
+            <th runat="server" id="tdSchedulerTaskIsConsideringSystemLoad" style="display:none;" class="gridViewHeader">
             </th>
         </thead>
         <tbody></tbody>
