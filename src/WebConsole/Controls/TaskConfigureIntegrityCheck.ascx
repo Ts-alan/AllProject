@@ -210,12 +210,11 @@
                                         OnItemCommand="FilesDataList_SelectedIndexChanged" Style="table-layout: fixed;
                                         word-break: break-all;" rules="all">
                                         <HeaderTemplate>
-                                            <tr>
-                                                <th runat="server" id="tdFilesPath" style="width: 230px; text-align: center;" class="listRulesHeader">
+                                            <tr class="gridViewHeader">
+                                                <th runat="server" id="tdFilesPath" style="width: 230px; text-align: center;" >
                                                     <asp:Label runat="server" Text="<%$ Resources:Resource, Path %>"></asp:Label>
                                                 </th>
-                                                <th runat="server" id="tdFilesTemplate" style="width: 120px; text-align: center;"
-                                                    class="listRulesHeader">
+                                                <th runat="server" id="tdFilesTemplate" style="width: 120px; text-align: center;" >
                                                     <asp:Label runat="server" Text="<%$ Resources:Resource, Template %>"></asp:Label>
                                                 </th>
                                             </tr>
@@ -300,9 +299,8 @@
                                         OnItemCommand="RegistryDataList_SelectedIndexChanged" Style="table-layout: fixed;
                                         word-break: break-all;" rules="all">
                                         <HeaderTemplate>
-                                            <tr>
-                                                <th runat="server" id="tdRegistryPath" style="width: 350px; text-align: center;"
-                                                    class="listRulesHeader">
+                                            <tr class="gridViewHeader">
+                                                <th runat="server" id="tdRegistryPath" style="width: 350px; text-align: center;">
                                                     <asp:Label runat="server" Text="<%$ Resources:Resource, Path %>"></asp:Label>
                                                 </th>
                                             </tr>
@@ -390,18 +388,18 @@
             <asp:UpdatePanel ID="JournalEventUpdatePanel" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="JournalEventPanel" runat='server' EnableViewState="false">
-                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable">
-                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server">
-                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" class="listRulesHeader">
+                        <asp:Table ID="JournalEventTable"  runat="server" CssClass="ListContrastTable" rules="cols">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" runat="server" CssClass="gridViewHeader">
+                                <asp:TableHeaderCell runat="server" id="tdEvent" style="width: 150px;text-align: center;" >
                                     <asp:Label ID="Label1" runat="server" ><%=Resources.Resource.Events %></asp:Label>                            
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdWindowsJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label2" runat="server" ><%=Resources.Resource.WindowsJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdLocalJournal" style="width: 120px;text-align: center;" >
                                     <asp:Label ID="Label3" runat="server" ><%=Resources.Resource.LocalJournal %></asp:Label>
                                 </asp:TableHeaderCell>
-                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;" class="listRulesHeader">
+                                <asp:TableHeaderCell runat="server" id="tdCCJournal" style="width: 120px;text-align: center;">
                                     <asp:Label ID="Label4" runat="server"  ><%=Resources.Resource.CCJournal %></asp:Label>
                                 </asp:TableHeaderCell>
                             </asp:TableHeaderRow>
