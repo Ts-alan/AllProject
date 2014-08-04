@@ -3334,7 +3334,7 @@ system administrator.</value>
     <value>Delete</value>
   </data>
   <data name="CongScannerPotential" xml:space="preserve">
-    <value>Find potential dangerous</value>
+    <value>Detect RiskWare</value>
   </data>
   <data name="CongScannerScanFileList" xml:space="preserve">
     <value>File`s list for scanning</value>
