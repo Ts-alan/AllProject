@@ -62,8 +62,8 @@
             {
                 item=array[i];
                 var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option[value='+item.TaskType+']').text();
-                var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value=' + item.TaskPeriod + ']').text();
-                var taskDateTime=item.TaskDateTime.substr(0,item.TaskDateTime.length-3);
+                var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value=' + item.TaskPeriod + ']').text();                
+                var taskDateTime=item.TaskDateTime.substr(0,16);
                 var taskIsConsideringSystemLoad = item.IsConsideringSystemLoad ? "1" : "0";
 
                 $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');   
