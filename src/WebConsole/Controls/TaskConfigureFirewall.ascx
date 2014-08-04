@@ -563,7 +563,7 @@
                                                 <asp:Label runat="server"  ><%=Resources.Resource.Protocol%></asp:Label>
                                                 </th>
                                                 <th runat="server" id="IP4tdRule" style="width: 115px;text-align: center;">
-                                                <%=Resources.Resource.Rules%>
+                                                <asp:Label runat="server"  ><%=Resources.Resource.Rules%></asp:Label>
                                                 </th>
                                             </tr>
                                         </HeaderTemplate>
@@ -859,7 +859,7 @@
                                             <asp:Label runat="server"  ><%=Resources.Resource.Protocol%></asp:Label>
                                             </th>
                                             <th runat="server" id="IP6tdRule" style="width: 115px;text-align: center;">
-                                            <%=Resources.Resource.Rules%>
+                                            <asp:Label runat="server"  ><%=Resources.Resource.Rules%></asp:Label>
                                             </th>
                                             </tr>
                                         </HeaderTemplate>
