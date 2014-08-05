@@ -38,7 +38,7 @@ AS
 		END,
 		d.[ID], 
 		StateName=CASE tmp.[CountStates]
-			WHEN 1 THEN dps.[StateName]
+			WHEN 1 THEN dps.[ModeName]
 			ELSE 'Undefined'
 		END,
 		d.[SerialNo], dt.[TypeName], d.[Comment], tmp.[DP_LatestInsert],
@@ -52,7 +52,7 @@ AS
 		ON dp.[ID] = (SELECT TOP(1) [ID] FROM DevicesPolicies WHERE [DeviceID] = tmp.[D_ID] AND 
 			([LatestInsert] = tmp.[DP_LatestInsert] OR ([LatestInsert] IS NULL AND tmp.[DP_LatestInsert] IS NULL))
 			AND [ComputerID] IN (SELECT [ID] FROM @ComputerPage))
-	LEFT JOIN DevicePolicyStates AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
+	LEFT JOIN DeviceClassMode AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
 	LEFT JOIN DeviceTypes AS dt ON dt.[ID] = d.[DeviceTypeID]
 	LEFT JOIN Computers AS c ON c.[ID] = dp.[ComputerID]
 	ORDER BY c.[ComputerName] ASC, dp.[LatestInsert] DESC

@@ -141,16 +141,6 @@ PRINT N'[dbo].[DeviceTypes]: successfully.';
 GO
 
 
-PRINT N'[dbo].[DevicePolicyStates]...';
-GO
-INSERT INTO [dbo].[DevicePolicyStates]([StateName]) VALUES(N'Undefined');
-INSERT INTO [dbo].[DevicePolicyStates]([StateName]) VALUES(N'Enabled');
-INSERT INTO [dbo].[DevicePolicyStates]([StateName]) VALUES(N'Disabled');
-GO
-PRINT N'[dbo].[DevicePolicyStates]: successfully.';
-GO
-
-
 PRINT N'[dbo].[Vba32Versions]...';
 GO
 INSERT INTO [dbo].[Vba32Versions]([Vba32Version]) VALUES(N'Vba32 Remote Console Scanner');

@@ -628,9 +628,6 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Devices.table.sql">
       <SubType>Code</SubType>
     </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\DevicePolicyStates.table.sql">
-      <SubType>Code</SubType>
-    </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\DeviceTypes.table.sql">
       <SubType>Code</SubType>
     </Build>
@@ -749,12 +746,6 @@
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\ControlDeviceType.U_ControlDeviceType_ControlName.ukey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DevicePolicyStates.PK_DevicePolicyStates.pkey.sql">
-      <SubType>Code</SubType>
-    </Build>
-    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DevicePolicyStates.U_DevicePolicyStates_StateName.ukey.sql">
       <SubType>Code</SubType>
     </Build>
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\Devices.PK_Devices.pkey.sql">

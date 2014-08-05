@@ -174,22 +174,35 @@ $(document).ready(function () {
             changeState($(this), dp, cp, state);
         });
         function changeState(img, dp, cp, state) {
-            if (state == "Enabled" || state == "Undefined") {
-                img.attr('state', "Disabled");
-                state = "Disabled";
-                img.attr('src', "App_Themes/Main/Images/disabled.gif");
-            } else if (state == "Disabled") {
-                img.attr('state', "Enabled");
-                state = "Enabled";
-                img.attr('src', "App_Themes/Main/Images/enabled.gif");
+            var titleMsg;
+            switch (state) {
+                case "Undefined":
+                    titleMsg = Resource.Disabled;
+                    state = "Disabled";
+                    break;
+                case "Enabled":
+                    titleMsg = Resource.Disabled;
+                    state = "Disabled";
+                    break;
+                case "Disabled":
+                    titleMsg = Resource.BlockWrite;
+                    state = "BlockWrite";
+                    break;
+                case "BlockWrite":
+                    titleMsg = Resource.Enabled;
+                    state = "Enabled";
+                    break;
             }
+
             $.ajax({
                 type: "POST",
                 url: "DevicesPolicy.aspx/ChangeDevicePolicyStateComputer",
                 data: "{dp:" + dp + ",cp:" + cp + ",state:'" + state + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function () {
-
+                    img.attr('state', state);
+                    img.attr('title', titleMsg);
+                    img.attr('src', "App_Themes/Main/Images/" + state + ".gif");
                 }
             });
         };
@@ -308,22 +321,35 @@ $(document).ready(function () {
             var dp = $(this).attr('dp');
             var state = $(this).attr('state');
             //установка смены чекбоксов
-            if (state == "Enabled" || state == "Undefined") {
-                $(this).attr('state', "Disabled");
-                state = "Disabled";
-                $(this).attr('src', "App_Themes/Main/Images/disabled.gif");
-            } else if (state == "Disabled") {
-                $(this).attr('state', "Enabled");
-                state = "Enabled";
-                $(this).attr('src', "App_Themes/Main/Images/enabled.gif");
+            var titleMsg;
+            switch (state) {
+                case "Undefined":
+                    titleMsg = Resource.Disabled;
+                    state = "Disabled";
+                    break;
+                case "Enabled":
+                    titleMsg = Resource.Disabled;
+                    state = "Disabled";
+                    break;
+                case "Disabled":
+                    titleMsg = Resource.BlockWrite;
+                    state = "BlockWrite";
+                    break;
+                case "BlockWrite":
+                    titleMsg = Resource.Enabled;
+                    state = "Enabled";
+                    break;
             }
+
             $.ajax({
                 type: "POST",
                 url: "DevicesPolicy.aspx/ChangeDevicePolicyStateGroup",
                 data: "{dp:" + dp + " ,gp:" + gp + ",state:'" + state + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function () {
-                    //alert(state);
+                    $(this).attr('state', state);
+                    $(this).attr('title', titleMsg);
+                    $(this).attr('src', "App_Themes/Main/Images/" + state + ".gif");
                 }
             });
         });
@@ -656,20 +682,20 @@ $(document).ready(function () {
             devpolicies += $(this).attr("dcp") + ";";
             computerNames += $('[devcompdp=' + $(this).attr("dcp") + ']').html() + ";";
         });
-        
-         $.ajax({
-        type: "POST",
-        url: "DevicesPolicy.aspx/ActionForAllDevices",
-        data: "{action:'" + action + "',devpolicies:'" + devpolicies + "',computerNames:'"+computerNames+"'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function () {
 
-        $("input[UpdatePanelButton]").click();
-        },
-        error: function (msg) {
-            ShowJSONMessage(msg);
-        }
+        $.ajax({
+            type: "POST",
+            url: "DevicesPolicy.aspx/ActionForAllDevices",
+            data: "{action:'" + action + "',devpolicies:'" + devpolicies + "',computerNames:'" + computerNames + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+
+                $("input[UpdatePanelButton]").click();
+            },
+            error: function (msg) {
+                ShowJSONMessage(msg);
+            }
         })
     });
     function ShowJSONMessage(msg) {

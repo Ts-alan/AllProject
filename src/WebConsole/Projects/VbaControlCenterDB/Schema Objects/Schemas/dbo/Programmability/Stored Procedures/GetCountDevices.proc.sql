@@ -19,7 +19,7 @@ AS
 			d.[ID], d.[SerialNo], d.[Comment]
 		FROM Devices AS d
 		LEFT JOIN DevicesPolicies AS dp ON d.[ID] = dp.[DeviceID]
-		LEFT JOIN DevicePolicyStates AS dps ON dps.[ID] = dp.[DevicePolicyStateID]'
+		LEFT JOIN DeviceClassMode AS dps ON dps.[ID] = dp.[DevicePolicyStateID]'
 	IF @Where IS NOT NULL
 		SET @Query = @Query + N' WHERE ' + @Where
 	SET @Query = @Query + N' GROUP BY d.[ID], d.[SerialNo], d.[Comment]'

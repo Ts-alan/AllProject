@@ -4,7 +4,7 @@
 WITH ENCRYPTION
 AS
 	DECLARE @ID1 smallint
-	SET @ID1 = (SELECT [ID] FROM DevicePolicyStates WHERE [StateName] = @StateName)
+	SET @ID1 = (SELECT [ID] FROM DeviceClassMode WHERE [ModeName] = @StateName)
 	
 	UPDATE [DevicesPolicies]
 	SET    [DevicePolicyStateID] = @ID1  

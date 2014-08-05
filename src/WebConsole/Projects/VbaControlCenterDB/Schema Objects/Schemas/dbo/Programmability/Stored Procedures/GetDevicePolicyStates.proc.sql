@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [GetDevicePolicyStates]
 WITH ENCRYPTION
 AS
-	SELECT [StateName] FROM DevicePolicyStates
-	ORDER BY [StateName] ASC
+	SELECT [ModeName] FROM DeviceClassMode
+	ORDER BY [ModeName] ASC

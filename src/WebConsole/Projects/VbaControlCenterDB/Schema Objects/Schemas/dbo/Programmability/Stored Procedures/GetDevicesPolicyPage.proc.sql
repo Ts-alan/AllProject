@@ -13,7 +13,7 @@ AS
 			[ComputerID] smallint NOT NULL,
 			[ComputerName] nvarchar(64) NOT NULL,
 			[DeviceID] smallint NOT NULL,
-			[StateName] nvarchar(64) NOT NULL,
+			[ModeName] nvarchar(64) NOT NULL,
 			[SerialNo] nvarchar(256) NOT NULL ,
 			[TypeName] nvarchar(256) NOT NULL,
 			[Comment] nvarchar(128) NULL,
@@ -21,20 +21,20 @@ AS
 		)
 	
 		INSERT INTO @UnknownDevicesPolicy([ID], [ComputerID], [ComputerName], [DeviceID], 
-			[StateName],[SerialNo], [TypeName], [Comment],[LatestInsert])
-		SELECT dp.[ID], dp.[ComputerID], c.[ComputerName], dp.[DeviceID], dps.[StateName],
+			[ModeName],[SerialNo], [TypeName], [Comment],[LatestInsert])
+		SELECT dp.[ID], dp.[ComputerID], c.[ComputerName], dp.[DeviceID], dps.[ModeName],
 		 d.[SerialNo], dt.[TypeName], d.[Comment], dp.[LatestInsert]
 		 FROM DevicesPolicies as dp
 		 INNER JOIN Computers as c ON c.[ID] = dp.[ComputerID]
 		 INNER JOIN Devices as d ON dp.[DeviceID] = d.[ID]
-		 INNER JOIN DevicePolicyStates as dps ON dps.[ID] = dp.[DevicePolicyStateID]
+		 INNER JOIN DeviceClassMode as dps ON dps.[ID] = dp.[DevicePolicyStateID]
 		 INNER JOIN DeviceTypes as dt ON dt.[ID] = d.[DeviceTypeID]'
 	IF @Where IS NOT NULL
 		SET @Query = @Query + N' WHERE ' + @Where
 	IF @OrderBy IS NOT NULL
 		SET @Query = @Query + N' ORDER BY ' + @OrderBy
 	SET @Query = @Query + N';
-		SELECT [ID], [ComputerID], [ComputerName], [DeviceID], [StateName],
+		SELECT [ID], [ComputerID], [ComputerName], [DeviceID], [ModeName],
 			[SerialNo], [TypeName], [Comment],[LatestInsert]
 		FROM @UnknownDevicesPolicy WHERE [RecID] BETWEEN (' +
 			+ STR(@RowCount) + N' * (' + STR(@Page) + N' - 1) + 1) AND (' +

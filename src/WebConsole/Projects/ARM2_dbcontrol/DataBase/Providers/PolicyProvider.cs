@@ -485,7 +485,7 @@ namespace VirusBlokAda.CC.DataBase
 
         public List<DevicePolicy> GetUnknownDevicesPolicyPage(Int32 index, Int32 pageCount, String where, String orderBy)
         {
-            String totalWhere = "StateName LIKE 'Undefined'";
+            String totalWhere = "ModeName LIKE 'Undefined'";
             if(!String.IsNullOrEmpty(where)) 
                 totalWhere  = String.Format("{0} AND {1}",totalWhere,where);
 
@@ -494,7 +494,7 @@ namespace VirusBlokAda.CC.DataBase
 
         public Int32 GetUnknownDevicesPolicyPageCount(String where)
         {
-            String totalWhere = "StateName LIKE 'Undefined'";
+            String totalWhere = "ModeName LIKE 'Undefined'";
             if (!String.IsNullOrEmpty(where))
                 totalWhere = String.Format("{0} AND {1}", totalWhere, where);
 

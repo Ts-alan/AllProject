@@ -25,9 +25,9 @@ AS
 			dp.[ID], d.[ID], d.[SerialNo], d.[Comment], c.[ComputerName], dp.[LatestInsert]
 		FROM Devices AS d
 		INNER JOIN DevicesPolicies AS dp ON d.[ID] = dp.[DeviceID]
-		INNER JOIN DevicePolicyStates AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
+		INNER JOIN DeviceClassMode AS dps ON dps.[ID] = dp.[DevicePolicyStateID]
 		INNER JOIN Computers AS c ON c.[ID] = dp.[ComputerID]
-		WHERE (dp.[LatestInsert] IS NOT NULL) AND dps.[StateName] = ''Undefined'''
+		WHERE (dp.[LatestInsert] IS NOT NULL) AND dps.[ModeName] = ''Undefined'''
 	IF @Where IS NOT NULL
 		SET @Query = @Query + N' AND ' + @Where	
 	IF @OrderBy IS NOT NULL

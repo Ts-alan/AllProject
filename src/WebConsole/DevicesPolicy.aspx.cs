@@ -61,7 +61,9 @@ public partial class DevicesPolicy : PageBase
         resource += "Error:'" + ResourceControl.GetStringForCurrentCulture("Error") + "',";
         resource += "ErrorRequestingDataFromServer:'" + ResourceControl.GetStringForCurrentCulture("ErrorRequestingDataFromServer") + "',";
         resource += "Computers:'" + ResourceControl.GetStringForCurrentCulture("Computers") + "',";
-        resource += "Computers:'" + ResourceControl.GetStringForCurrentCulture("Computers") + "',";
+        resource += "Enabled:'" + ResourceControl.GetStringForCurrentCulture("Enabled") + "',";
+        resource += "Disabled:'" + ResourceControl.GetStringForCurrentCulture("Disabled") + "',";
+        resource += "BlockWrite:'" + ResourceControl.GetStringForCurrentCulture("BlockWrite") + "',";
         resource += "Apply:'" + ResourceControl.GetStringForCurrentCulture("Apply") + "'";
         resource += "}";
         return resource;
@@ -268,14 +270,17 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
             switch (dp.State)
             {
-                case DevicePolicyState.Undefined:
+                case DeviceClassMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DevicePolicyState.Enabled:
+                case DeviceClassMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DevicePolicyState.Disabled:
+                case DeviceClassMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
+                    break;
+                case DeviceClassMode.BlockWrite:
+                    select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
             row += "<td>" + select + "</td>";
@@ -339,7 +344,7 @@ public partial class DevicesPolicy : PageBase
         ComputersEntity computer = new ComputersEntity();
         computer.ID = id;
         DevicePolicy dp = new DevicePolicy(device, computer);
-        dp.State = DevicePolicyState.Undefined;
+        dp.State = DeviceClassMode.Undefined;
         DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
         if (policy.Device.ID != 0)
         {
@@ -400,14 +405,17 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
             switch (dp.State)
             {
-                case DevicePolicyState.Undefined:
+                case DeviceClassMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DevicePolicyState.Enabled:
+                case DeviceClassMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DevicePolicyState.Disabled:
+                case DeviceClassMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
+                    break;
+                case DeviceClassMode.BlockWrite:
+                    select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
             row += "<td>" + select + "</td>";
@@ -689,14 +697,17 @@ public partial class DevicesPolicy : PageBase
         String select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp=" + comp.ID + " state=";
         switch (dp.State)
         {
-            case DevicePolicyState.Undefined:
+            case DeviceClassMode.Undefined:
                 select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                 break;
-            case DevicePolicyState.Enabled:
+            case DeviceClassMode.Enabled:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                 break;
-            case DevicePolicyState.Disabled:
+            case DeviceClassMode.Disabled:
                 select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
+                break;
+            case DeviceClassMode.BlockWrite:
+                select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                 break;
         }
         compString += "<td >" + select + "</td>";
@@ -728,7 +739,7 @@ public partial class DevicesPolicy : PageBase
             id = Convert.ToInt16(c);
             computer.ID = id;
             DevicePolicy dp = new DevicePolicy(device, computer);
-            dp.State = DevicePolicyState.Undefined;
+            dp.State = DeviceClassMode.Undefined;
             DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
             if (policy.Device.ID != 0) isSuccess = true;
 
@@ -745,9 +756,9 @@ public partial class DevicesPolicy : PageBase
         dp.Computer.ComputerName = computerName;
 
         if (action == "allow")
-            dp.State = DevicePolicyState.Enabled;
+            dp.State = DeviceClassMode.Enabled;
         else
-            dp.State = DevicePolicyState.Disabled;
+            dp.State = DeviceClassMode.Disabled;
 
         DBProviders.Policy.ChangeDevicePolicyStatusForComputer(dp);
     }

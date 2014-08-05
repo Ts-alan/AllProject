@@ -32,7 +32,7 @@ AS
 						  [DeviceID] = @DeviceID))
 	BEGIN
 		DECLARE @StateID smallint
-		SET @StateID = (SELECT [ID] FROM DevicePolicyStates WHERE [StateName] = 'undefined')
+		SET @StateID = (SELECT [ID] FROM DeviceClassMode WHERE [ModeName] = 'Undefined')
 
 		INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 		VALUES    (@ComputerID, @DeviceID, @StateID)

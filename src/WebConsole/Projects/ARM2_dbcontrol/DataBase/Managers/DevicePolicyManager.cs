@@ -85,7 +85,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -194,7 +194,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -379,7 +379,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -436,7 +436,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -584,7 +584,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
                     if (reader.GetValue(6) != DBNull.Value)
@@ -657,7 +657,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -722,7 +722,7 @@ namespace VirusBlokAda.CC.DataBase
 
                 dp.Device = device;
                 dp.Computer = devicePolicy.Computer;
-                dp.State = DevicePolicyState.Undefined;
+                dp.State = DeviceClassMode.Undefined;
 
                 return dp;
             }
@@ -743,7 +743,7 @@ namespace VirusBlokAda.CC.DataBase
 
                 cmd.Parameters.AddWithValue("@GroupID", groupID);
                 cmd.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-                cmd.Parameters.AddWithValue("@StateName", DevicePolicyState.Undefined.ToString());
+                cmd.Parameters.AddWithValue("@StateName", DeviceClassMode.Undefined.ToString());
 
                 con.Open();
                 Device device = new Device();
@@ -777,7 +777,7 @@ namespace VirusBlokAda.CC.DataBase
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-                cmd.Parameters.AddWithValue("@StateName", DevicePolicyState.Undefined.ToString());
+                cmd.Parameters.AddWithValue("@StateName", DeviceClassMode.Undefined.ToString());
 
                 con.Open();
                 Device device = new Device();
@@ -853,7 +853,7 @@ namespace VirusBlokAda.CC.DataBase
                     comp.ID = reader.GetInt16(1);
                     comp.ComputerName = reader.GetString(2);
 
-                    dp.State = DevicePolicyStateExtensions.Get(reader.GetString(3));
+                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(3));
 
                     if (reader.GetValue(4) != DBNull.Value)
                         dp.LatestInsert = reader.GetDateTime(4);

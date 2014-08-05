@@ -117,7 +117,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             String[] parts = ev.Comment.Split(new Char[] { '|' });
             DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
-            di.mount = (Byte)DevicePolicyState.Undefined;
+            di.mount = (Byte)DeviceClassMode.Undefined;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -259,7 +259,7 @@ namespace VirusBlokAda.CC.DataBase
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
-                di.mount = (Byte)DevicePolicyState.Undefined;
+                di.mount = (Byte)DeviceClassMode.Undefined;
 
                 cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
                 cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);

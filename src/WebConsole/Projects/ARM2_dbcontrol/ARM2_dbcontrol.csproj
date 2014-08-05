@@ -215,7 +215,6 @@
     <Compile Include="DataBase\Entities\DeviceType.cs" />
     <Compile Include="DataBase\Entities\DevicePolicy.cs" />
     <Compile Include="DataBase\Managers\DevicePolicyManager.cs" />
-    <Compile Include="DataBase\Entities\DevicePolicyState.cs" />
     <Compile Include="DataBase\Providers\GeneralPolicy.cs" />
     <Compile Include="DataBase\Entities\Policy.cs" />
     <Compile Include="DataBase\Managers\PolicyManager.cs" />
