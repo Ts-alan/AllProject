@@ -549,11 +549,12 @@
 
     $(document).on("click", 'a[deviceID]', function () {
         var id = $(this).attr('deviceID');
+        var uid = $(this).attr('deviceUID');
         var text = $(this).html();
         $.ajax({
             type: "POST",
             url: "DeviceClass.aspx/GetDeviceTreeDialog",
-            data: "{id:" + id + "}",
+            data: "{id:" + id + ",uid:'" + uid + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {

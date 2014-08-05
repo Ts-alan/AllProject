@@ -100,11 +100,11 @@ public partial class DeviceClassPage : PageBase
     }
 
     [WebMethod]
-    public static String GetDeviceTreeDialog(Int16 id)
+    public static String GetDeviceTreeDialog(Int16 id, String uid)
     {
         List<DeviceClassPolicy> policyList = DBProviders.Policy.GetDeviceClassComputerList(new DeviceClass(id, String.Empty, String.Empty, String.Empty));
         String addButton = "<button addcompdev='" + id + "'>" + ResourceControl.GetStringForCurrentCulture("Add") + "</button>";
-        return ConvertDeviceTreeDialog(policyList, GetBranchOfTreeByDevice(policyList), id) + addButton;
+        return ConvertDeviceTreeDialog(policyList, GetBranchOfTreeByDevice(policyList), id, uid) + addButton;
     }
 
     [WebMethod]
@@ -521,23 +521,23 @@ public partial class DeviceClassPage : PageBase
         return "{\"success\":\"true\", \"count\":\"1\", \"id\":\"" + device.ID + "\", \"uid\":\"" + device.UID + "\", \"comment\":\"" + device.Class + "\",\"className\":\"" + device.ClassName + "\"}";
     }
 
-    private static String ConvertDeviceTreeDialog(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID)
+    private static String ConvertDeviceTreeDialog(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID, String DeviceClassUID)
     {
         StringBuilder treeDialog = new StringBuilder("<div id='treeAccordion' treeacc=true>");
         foreach (BranchOfTree branch in tree.ChildrenBranchs)
         {
-            treeDialog.Append(ConvertDeviceBranchOfTree(compList, branch, DeviceClassID));
+            treeDialog.Append(ConvertDeviceBranchOfTree(compList, branch, DeviceClassID, DeviceClassUID));
         }
 
         if (tree.Computers.Count > 0)
-            treeDialog.Append(ConvertComputersWithoutGroupBranch(compList, tree, DeviceClassID));
+            treeDialog.Append(ConvertComputersWithoutGroupBranch(compList, tree, DeviceClassID, DeviceClassUID));
 
         treeDialog.Append("</div>");
 
         return treeDialog.ToString();
     }
 
-    private static String ConvertComputersWithoutGroupBranch(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID)
+    private static String ConvertComputersWithoutGroupBranch(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID, String DeviceClassUID)
     {
         String branchString = "<h3 treetabledevID=-1 treetableID=" + DeviceClassID + ">" + ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups") + "</h3>";
         branchString += "<div treetabledevID=-1>";
@@ -546,14 +546,14 @@ public partial class DeviceClassPage : PageBase
         foreach (ComputersEntity comp in tree.Computers)
         {
             cssStyle = (cssStyle == "gridViewRow") ? "gridViewRowAlternating" : "gridViewRow";
-            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceClassID, cssStyle);
+            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceClassID, DeviceClassUID, cssStyle);
         }
         branchString += "</table></div>";
 
         return branchString;
     }
 
-    private static String ConvertDeviceBranchOfTree(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID)
+    private static String ConvertDeviceBranchOfTree(List<DeviceClassPolicy> compList, BranchOfTree tree, Int16 DeviceClassID, String DeviceClassUID)
     {
         String branchString = "<h3 treetableID=" + DeviceClassID + " treetabledevID=" + tree.Root.ID + ">" + tree.Root.Name + "</h3>";
         branchString += "<div treetabledevID=" + tree.Root.ID + ">";
@@ -565,7 +565,7 @@ public partial class DeviceClassPage : PageBase
             branchString += "<div  id='treeAccordion_" + tree.Root.ID + "' treeacc=true>";
             foreach (BranchOfTree branch in tree.ChildrenBranchs)
             {
-                branchString += ConvertDeviceBranchOfTree(compList, branch, DeviceClassID);
+                branchString += ConvertDeviceBranchOfTree(compList, branch, DeviceClassID, DeviceClassUID);
             }
             branchString += "</div></td></tr>";
         }
@@ -574,7 +574,7 @@ public partial class DeviceClassPage : PageBase
         foreach (ComputersEntity comp in tree.Computers)
         {
             cssStyle = (cssStyle == "gridViewRow") ? "gridViewRowAlternating" : "gridViewRow";
-            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceClassID, cssStyle);
+            branchString += ConvertDeviceCompOfTree(compList, comp, DeviceClassID, DeviceClassUID, cssStyle);
         }
         branchString += "</table>";
         branchString += " </div>";
@@ -582,7 +582,7 @@ public partial class DeviceClassPage : PageBase
         return branchString;
     }
 
-    private static String ConvertDeviceCompOfTree(List<DeviceClassPolicy> compList, ComputersEntity comp, Int16 DeviceClassID, String cssStyle)
+    private static String ConvertDeviceCompOfTree(List<DeviceClassPolicy> compList, ComputersEntity comp, Int16 DeviceClassID, String DeviceClassUID, String cssStyle)
     {
         DeviceClassPolicy dp = compList.Find(
             delegate(DeviceClassPolicy dev)
@@ -591,9 +591,10 @@ public partial class DeviceClassPage : PageBase
             }
         );
 
+        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(VirusBlokAda.CC.Common.RegularExpressions.GUID);
         String compString = "<tr treedp='" + dp.ID + "' class='" + cssStyle + "'>";
         compString += "<td >" + comp.ComputerName + "</td>";
-        String select = "<img style='cursor:pointer'  treestatedev=" + DeviceClassID + " treestatecp=" + comp.ID + " state=";
+        String select = "<img style='cursor:pointer'  treestatedev=" + DeviceClassID + " treestatecp=" + comp.ID + (!reg.IsMatch(DeviceClassUID) ? " IsUsbClass=true" : " IsUsbClass=false") + " state=";
         switch (dp.Mode)
         {
             case DeviceClassMode.Undefined:

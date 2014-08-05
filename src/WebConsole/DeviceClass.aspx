@@ -72,13 +72,13 @@
                     <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" 
                         HeaderText='<%$ Resources:Resource, ClassName %>' SortExpression="ClassName">
                         <ItemTemplate>
-                            <asp:LinkButton deviceID='<%# Eval("ID") %>' runat="server" Text='<%# Eval("ClassName") %>' />
+                            <asp:LinkButton deviceID='<%# Eval("ID") %>' deviceUID='<%# Eval("UID") %>' runat="server" Text='<%# Eval("ClassName") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" 
                         HeaderText="UID" SortExpression="UID">
                         <ItemTemplate>
-                            <asp:LinkButton deviceID='<%# Eval("ID") %>' runat="server" Text='<%# Eval("UID") %>' />
+                            <asp:LinkButton deviceID='<%# Eval("ID") %>' deviceUID='<%# Eval("UID") %>' runat="server" Text='<%# Eval("UID") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" 
