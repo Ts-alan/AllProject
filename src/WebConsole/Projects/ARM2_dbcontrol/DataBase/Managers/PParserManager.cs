@@ -115,7 +115,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="name_value_map"></param>
         internal void ModifyDeviceEvent(EventsEntity ev)
         {
-            String[] parts = ev.Comment.Split(new Char[] { ' ' });
+            String[] parts = ev.Comment.Split(new Char[] { '|' });
             DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
             di.mount = (Byte)DevicePolicyState.Undefined;
 
@@ -249,7 +249,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="licenseCount"></param>
         internal void OnDeviceInsert(EventsEntity ev, Int16 licenseCount)
         {
-            String[] parts = ev.Comment.Split(new Char[] { ' ' });
+            String[] parts = ev.Comment.Split(new Char[] { '|' });
             if (parts[1] != "VDD_INSERTED")
                 return;
 
