@@ -273,17 +273,17 @@ public partial class Controls_TaskConfigureMonitor : System.Web.UI.UserControl,I
         for (Int32 i = 0; i < JournalEventTable.Rows.Count - 1; i++)
         {
 
-            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == false)
             {
-                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
+                je.Events[i].EventFlag ^= EventJournalFlags.WindowsJournal;
             }
-            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == false)
             {
-                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
+                je.Events[i].EventFlag ^= EventJournalFlags.LocalJournal;
             }
-            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == false)
             {
-                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
+                je.Events[i].EventFlag ^= EventJournalFlags.CCJournal;
             }
         }
         monitor.journalEvent = je;

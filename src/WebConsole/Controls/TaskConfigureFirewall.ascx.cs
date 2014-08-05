@@ -118,28 +118,6 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         firewall.NetworkType = (FirewallNetworkType)ddlFirewallNetworkType.SelectedIndex;
     }
 
-    private void SaveJournalEvents()
-    {
-        JournalEvent je = new JournalEvent(GetEvents());
-        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
-        {
-
-            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == true)
-            {
-                je.Events[i].EventFlag |= EventJournalFlags.WindowsJournal;
-            }
-            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == true)
-            {
-                je.Events[i].EventFlag |= EventJournalFlags.LocalJournal;
-            }
-            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == true)
-            {
-                je.Events[i].EventFlag |= EventJournalFlags.CCJournal;
-            }
-        }
-        firewall.journalEvent = je;
-    }
-
     public void LoadState(TaskUserEntity task)
     {
         if (task == null || task.Type != TaskType.Firewall)
@@ -653,7 +631,27 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         return row;
     }
 
+    private void SaveJournalEvents()
+    {
+        JournalEvent je = new JournalEvent(GetEvents());
+        for (int i = 0; i < JournalEventTable.Rows.Count - 1; i++)
+        {
 
+            if ((JournalEventTable.Rows[i + 1].Cells[1].Controls[0] as CheckBox).Checked == false)
+            {
+                je.Events[i].EventFlag ^= EventJournalFlags.WindowsJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[2].Controls[0] as CheckBox).Checked == false)
+            {
+                je.Events[i].EventFlag ^= EventJournalFlags.LocalJournal;
+            }
+            if ((JournalEventTable.Rows[i + 1].Cells[3].Controls[0] as CheckBox).Checked == false)
+            {
+                je.Events[i].EventFlag ^= EventJournalFlags.CCJournal;
+            }
+        }
+        firewall.journalEvent = je;
+    }
 
 
     #endregion

@@ -36,6 +36,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
             {
                 Events[i] = new SingleJournalEvent();
                 Events[i].EventName = EventNames[i];
+                Events[i].EventFlag = EventJournalFlags.CCJournal | EventJournalFlags.LocalJournal | EventJournalFlags.WindowsJournal;
             }
         }
 
@@ -58,7 +59,7 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
         {
             for (Int32 i = 0; i < _events.Length; i++)
             {
-                _events[i].EventFlag = EventJournalFlags.NoOneJournal;
+                _events[i].EventFlag = EventJournalFlags.CCJournal | EventJournalFlags.LocalJournal | EventJournalFlags.WindowsJournal;
             }
         }
 
