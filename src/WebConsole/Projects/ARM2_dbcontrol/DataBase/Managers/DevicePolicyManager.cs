@@ -289,7 +289,11 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++,
                         DeviceClassManager.SerializeToBase64(new CLASS_INFO(Convert.ToByte(dcp.ClassOfDevice.UID), (Byte)dcp.Mode)));
-                    listUsbClassesAll.Remove(dcp.ClassOfDevice);
+
+                    listUsbClassesAll.Remove(listDC.Find(delegate(DeviceClass dev)
+                    {
+                        return (dev.ID == dcp.ClassOfDevice.ID);
+                    }));
                 }
                 foreach (DeviceClass dc in listUsbClassesAll)
                 {
