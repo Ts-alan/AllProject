@@ -124,8 +124,9 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
     public enum EventJournalFlags
     {
         NoOneJournal = 0x00,
-        WindowsJournal = 0x01,
-        LocalJournal = 0x02,
-        CCJournal = 0x04
+        LocalJournal = 0x01,
+        CCJournal = 0x02,
+        WindowsJournal = 0x04       
+        
     }
 }
