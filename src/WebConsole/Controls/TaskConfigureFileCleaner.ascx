@@ -89,7 +89,9 @@
                 }
             };
             $('#AddProgramDialog').dialog(dOpt);
+            
             $('#divOverlay').css('display','inline');
+            $('#AddProgramDialog').parent().zIndex(101);
             $('#AddProgramDialog').parent().appendTo(jQuery("form:first"));
         }
 
@@ -156,6 +158,7 @@
                 $('#AddProgramDialog').dialog(dOpt);
 
                 $('#divOverlay').css('display','inline');
+                $('#AddProgramDialog').parent().zIndex(101);
                 $('#AddProgramDialog').parent().appendTo(jQuery("form:first"));
             };
 
@@ -204,6 +207,7 @@
             };
             $('#AddTemplateDialog').dialog(dOpt);
             $('#divOverlay2').css('display','inline');
+            $('#AddTemplateDialog').parent().zIndex(120);
             $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
             
        };
@@ -245,6 +249,7 @@
                 };
         $('#AddTemplateDialog').dialog(dOpt);
         $('#divOverlay2').css('display','inline');
+        $('#AddTemplateDialog').parent().zIndex(120);
         $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
     };
     function DeleteProgramDialogButtonClientClick()
@@ -424,6 +429,6 @@
             </tr>
         </table>
     </div>
-    <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none"></div>
-    <div id="divOverlay2" class="ui-widget-overlay ui-front" style="display: none;"></div>
+    <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none;z-index:100"></div>
+    <div id="divOverlay2" class="ui-widget-overlay ui-front" style="display: none;z-index:110"></div>
 </div>
