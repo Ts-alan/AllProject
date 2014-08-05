@@ -4,9 +4,11 @@
 <div class="divSettings">
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Tabs").tabs({ cookie: { expires: 30} });
+        });
         function pageLoad() 
         {
-            $("#Tabs").tabs({ cookie: { expires: 30} });
             $("input[class='control']").button();
             //IP4
             $('#<%= IP4AddTcpUdpRuleButton.ClientID %>').on("click", function () {

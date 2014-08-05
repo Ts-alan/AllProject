@@ -1,9 +1,11 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="TaskConfigureScanner.ascx.cs" Inherits="Controls_TaskConfigureScanner" %>
 <div class="tasksection" runat="server" id="HeaderName" style="width:100%"><%=Resources.Resource.TaskNameRunScanner%></div>
 <script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $("#ScannerTabs").tabs({ cookie: { expires: 30} });
+    });
     function pageLoad() {
         var defExts = ".COM.EXE.DLL.DRV.SYS.OV?.VXD.SCR.CPL.OCX.BPL.AX.PIF.DO?.XL?.HLP.RTF.WI?.WZ?.MSI.MSC.HT*.VB*.JS.JSE.ASP*.CGI.PHP*.?HTML.BAT.CMD.EML.NWS.MSG.XML.MSO.WPS.PPT.PUB.JPG.JPEG.ANI.INF.SWF.PDF";
-        $("#ScannerTabs").tabs({ cookie: { expires: 30} });
         $("input[class='control']").button();
         $("input[type='button']").button();
         if($('#<%= tboxScannerFileExtensions.ClientID %>').val()=='')

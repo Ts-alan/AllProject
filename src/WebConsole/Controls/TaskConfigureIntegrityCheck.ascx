@@ -4,9 +4,11 @@
     <%=Resources.Resource.TaskNameIntegrityCheck%></div>
 <div class="divSettings">
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#VICTabs").tabs({ cookie: { expires: 30} });
+        });
         function pageLoad() 
         {
-            $("#VICTabs").tabs({ cookie: { expires: 30} });
             $("input[class='control']").button();
 
              $('#<%= btnFilesAdd.ClientID %>').on("click", function () {

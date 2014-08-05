@@ -3,9 +3,10 @@
 
 <script language="javascript" type="text/javascript">
 
-    function pageLoad() {
+    $(document).ready(function () {
         $("#TabsQuarantine").tabs({ cookie: { expires: 30} });
-    };
+    });
+
 
 
 </script>

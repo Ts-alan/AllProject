@@ -4,9 +4,12 @@
     <%=Resources.Resource.TaskNameConfigureFileCleaner%></div>
 <div class="divSettings">
     <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#fileCleanerMainPanel").tabs({ cookie: { expires: 30} });
+        });
         function pageLoad() 
         {
-            $("#fileCleanerMainPanel").tabs({ cookie: { expires: 30} });
+            
             $("input[class='control']").button();
 
               $("[trProgramItemSelected]").hover(function(){
@@ -183,7 +186,7 @@
                 resizable: false,
                 close: function(event, ui)
                     {
-                        $('#divOverlay').css('display','none');
+                        $('#divOverlay2').css('display','none');
                         TemplateDialogSetDefaultValues(); 
                     },
                 buttons: {
@@ -200,7 +203,7 @@
                 }
             };
             $('#AddTemplateDialog').dialog(dOpt);
-            $('#divOverlay').css('display','inline');
+            $('#divOverlay2').css('display','inline');
             $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
             
        };
@@ -221,7 +224,7 @@
                 resizable: false,
                 close: function(event, ui)
                     {
-                        $('#divOverlay').css('display','none');
+                        $('#divOverlay2').css('display','none');
                         TemplateDialogSetDefaultValues(); 
                     },
                 buttons: {
@@ -239,9 +242,9 @@
                         
                         }
                     }
-                }
+                };
         $('#AddTemplateDialog').dialog(dOpt);
-        $('#divOverlay').css('display','inline');
+        $('#divOverlay2').css('display','inline');
         $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
     };
     function DeleteProgramDialogButtonClientClick()
@@ -264,7 +267,7 @@
         });
     }
     </script>
-    <div id='fileCleanerMainPanel'>
+    <div id='fileCleanerMainPanel'  style="width:550px">
         <ul>
             <li><a href="#tabVCF1"><%=Resources.Resource.Files %></a></li>
             <li><a href="#tabVCF2"><%=Resources.Resource.JournalEvents %></a> </li>
@@ -422,4 +425,5 @@
         </table>
     </div>
     <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none"></div>
+    <div id="divOverlay2" class="ui-widget-overlay ui-front" style="display: none;"></div>
 </div>
