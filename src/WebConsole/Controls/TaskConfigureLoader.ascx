@@ -81,6 +81,104 @@
             $('#AddUpdatePathDialog').parent().appendTo(jQuery("form:first"));
             $('#' + '<%=tboxAddDialogUpdatePath.ClientID %>').focus();
         });
+
+        $(document).on("click", '#<%= lbtnUserAdd.ClientID %>', function () {
+            var disabled = $('#<%= lbtnUserAdd.ClientID %>').attr("disabled");
+
+            if (disabled == "disabled") {
+                return;
+            }
+
+            var dOpt = {
+                width: 350,
+                resizable: false,
+                close: function (event, ui) {
+                    btnAddUserPathDialogSetDefaultValues();
+                    $('#divOverlay').css('display', 'none');
+                },
+                buttons: {
+                    '<%=Resources.Resource.Apply%>': function () {
+                        if (CheckUserName($('#<%=tboxAddDialogUser.ClientID %>').val())) {
+                            var btn = '<%=lbtnAddUserPathDialogApply.UniqueID %>';
+                            if (Page_ClientValidate('AddDialogUserPathValidationGroup')) {
+                                __doPostBack(btn, '');
+                                $('#AddUserPathDialog').dialog('close');
+                            }
+                        }
+                        else {
+                            alert("User already exists.");
+                        }
+                    },
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#AddUserPathDialog').dialog('close');
+                    }
+                }
+            };
+            $('#AddUserPathDialog').dialog(dOpt);
+            $('#divOverlay').css('display', 'inline');
+            $('#AddUserPathDialog').parent().appendTo(jQuery("form:first"));
+            $('#' + '<%=tboxAddDialogUser.ClientID %>').focus();
+        });
+
+        function btnAddUserPathDialogSetDefaultValues() {
+            $('#<%=tboxAddDialogUser.ClientID %>').val('');
+            $('#<%=tboxAddDialogPassword.ClientID %>').val('');
+        }
+
+        $(document).on("click", '#<%= lbtnUserChange.ClientID %>', function () {
+            var disabled = $('#<%= lbtnUserChange.ClientID %>').attr("disabled");
+
+            if (disabled == "disabled") {
+                return;
+            }
+            var lbox = '#<%=lboxUsers.ClientID %>';
+            if ($(lbox).prop("selectedIndex") < 0)
+                return;
+            $('#' + '<%=tboxAddDialogUser.ClientID %>').val($(lbox + " option:selected").text());
+            $('#' + '<%=tboxAddDialogPassword.ClientID %>').val($(lbox + " option:selected").attr("pass"));
+            var dOpt = {
+                width: 350,
+                resizable: false,
+                close: function (event, ui) {
+                    $('#divOverlay').css('display', 'none');
+                    btnAddUserPathDialogSetDefaultValues();
+                },
+                buttons: {
+                    '<%=Resources.Resource.Apply%>': function () {
+                        if (CheckUserName($('#<%=tboxAddDialogUser.ClientID %>').val())) {
+                            var btn = '<%=lbtnUserPathChange.UniqueID %>';
+                            if (Page_ClientValidate('AddDialogUserPathValidationGroup')) {
+                                __doPostBack(btn, '');
+                                $('#AddUserPathDialog').dialog('close');
+                            }
+                        }
+                        else {
+                            alert("User already exists.");
+                        }
+                    },
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#AddUserPathDialog').dialog('close');
+                    }
+                }
+            };
+            $('#AddUserPathDialog').dialog(dOpt);
+            $('#divOverlay').css('display', 'inline');
+            $('#AddUserPathDialog').parent().appendTo(jQuery("form:first"));
+            $('#' + '<%=tboxAddDialogUser.ClientID %>').focus();
+        });
+
+        function CheckUserName(name) {
+            var lbox = '#<%=lboxUsers.ClientID %>';
+            var result = true;
+            if ($(lbox + " option:selected").text() != name) {
+                $(lbox + ' option').each(function () {
+                    if ($(this).text() == name)
+                        result = false;
+                });
+            }
+
+            return result;
+        }
     });
     $(document).on("click", '#<%= lbtnUpdateDelete.ClientID %>', function () {
         var disabled = $('#<%= lbtnUpdateDelete.ClientID %>').attr("disabled");
@@ -89,6 +187,15 @@
             return;
         }
     });
+
+    $(document).on("click", '#<%= lbtnUserDelete.ClientID %>', function () {
+        var disabled = $('#<%= lbtnUserDelete.ClientID %>').attr("disabled");
+
+        if (disabled == "disabled") {
+            return;
+        }
+    });
+
     function HideTableLoader1() {
         var cbox = $("#<%= cboxProxyEnabled.ClientID %>").is(":checked");
         $("#<%=ddlProxyType.ClientID %>").prop("disabled", !cbox);
@@ -121,8 +228,7 @@
         <li><a href="#tabLoader1"><%=Resources.Resource.Main%></a> </li>
         <li><a href='#tabLoader2'><span><%=Resources.Resource.Proxy%></span></a></li>
         <li><a href='#tabLoader3'><span><%=Resources.Resource.Authorization %></span></a></li>
-        <%--<li><a href="#tabLoader4"><%=Resources.Resource.CongLdrPassword%></a> </li>--%>
-
+        <li><a href="#tabLoader4"><%=Resources.Resource.CongLdrPassword%></a> </li>
     </ul>
     <div id="tabLoader1" class="divSettings" >
         <asp:UpdatePanel runat="server">
@@ -206,56 +312,34 @@
             </div>               
         </div>
     </div>
-    <%--hidden div--%>
-    <div id="tabLoader4" class="divSettings" style="display:none">
-        <table class="ListContrastTable">
-             <tr>                 
-                <td colspan="2">
-                    <asp:UpdatePanel  runat="server">                    
-                        <ContentTemplate>
-                            <asp:HiddenField ID="PasswordHdnActiveRowNo" Value='0' runat="server" />
-                            <asp:Table  runat="server" Style="width: 500px" GridLines="Horizontal">
-                            <asp:TableHeaderRow>
-                                <asp:TableHeaderCell ColumnSpan="2">
-                                    <asp:Label  runat="server" Text="EDIT PASSWORDS" ></asp:Label>
-                                </asp:TableHeaderCell>
-                            </asp:TableHeaderRow>
-                                <asp:TableRow>
-                                    <asp:TableCell ColumnSpan="3">
-                                        <asp:Panel  runat="server" Width="400px" Height="160px" Style="overflow: scroll">
-                                            <asp:DataList ID="PasswordDataList" runat="server" Style="table-layout: fixed; word-break: break-all;" rules="all">
-                                                <ItemTemplate>
-                                                    <tr runat="server" id="trPasswordItem" PasswordRowSelected="false">
-                                                        <td  runat="server">
-                                                            <asp:HiddenField ID="PasswordHdnRowNo" Value="0" runat="server" />
-                                                            <asp:Label runat="server" ID="PasswordUser" Width="380px"></asp:Label>
-                                                        </td>
-                                                    </tr>
-                                                </ItemTemplate>
-                                            </asp:DataList>
-                                        </asp:Panel>
-                                    </asp:TableCell>
-                                    <asp:TableCell>
-                                        <asp:Table runat="server">
-                                            <asp:TableRow>
-                                                <asp:TableCell Height="50px" HorizontalAlign="Center">
-                                                    <asp:Button ID="btnPasswordAdd" runat="server" Text="<%$ Resources:Resource, Add %>" Width="120px" OnClientClick="return false;"/>
-                                                </asp:TableCell>
-                                            </asp:TableRow>
-                                            <asp:TableRow>
-                                                <asp:TableCell Height="50px" HorizontalAlign="Center"  >
-                                                    <asp:Button ID="btnPasswordChange" runat="server" Text="<%$ Resources:Resource, Change %>" Width="120px" OnClientClick="PasswordChangeButtonClientClick()" />
-                                                </asp:TableCell>
-                                            </asp:TableRow>
-                                        </asp:Table>
-                                    </asp:TableCell>
-                                </asp:TableRow>
-                            </asp:Table>
-                        </ContentTemplate>                                         
-                    </asp:UpdatePanel>
-               </td>
-            </tr>
-        </table>        
+    <div id="tabLoader4" class="divSettings">
+        <asp:UpdatePanel ID="upnlPasswords" runat="server">
+            <ContentTemplate>
+                <div style="width: 500px;padding-left:5px;" class="ListContrastTable">
+                    <div>
+                        <%=Resources.Resource.UserManaging%>
+                    </div>                       
+                    <div>
+                        <table>
+                            <tr>
+                                <td>
+                                    <asp:ListBox runat="server" ID="lboxUsers" style="width: 300px;height: 160px;" ></asp:ListBox> 
+                                </td>
+                                <td>
+                                    <asp:LinkButton ID="lbtnUserAdd" runat="server" SkinID="Button" OnClientClick="return false;" Width="100" ><%=Resources.Resource.Add %></asp:LinkButton>
+                                    <br />
+                                    <asp:LinkButton ID="lbtnUserDelete" runat="server" SkinID="Button" OnClick="lbtnUserDelete_Click" Width="100"><%=Resources.Resource.Delete %></asp:LinkButton>
+                                    <br />
+                                    <asp:LinkButton ID="lbtnUserChange" runat="server" SkinID="Button" OnClientClick="return false;" Width="100"><%=Resources.Resource.Change %></asp:LinkButton>
+                                    <asp:LinkButton ID="lbtnAddUserPathDialogApply" runat='server' Style="display: none" OnClick="lbtnAddUserPathDialogApply_Click" ></asp:LinkButton>
+                                    <asp:LinkButton ID="lbtnUserPathChange" runat='server' Style="display: none" OnClick="lbtnUserPathChange_Click" ></asp:LinkButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>                    
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>       
     </div>   
 </div>
 <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none" ></div>
@@ -267,5 +351,26 @@
     </asp:RequiredFieldValidator>
     <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogUpdatePath" runat="server"
         TargetControlID="AddDialogUpdatePathValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
+    </ajaxToolkit:ValidatorCalloutExtender2>
+</div>
+<div id="AddUserPathDialog" style="display: none;padding-bottom:20px;" class="ui-front">    
+    <%=Resources.Resource.User %>
+    <br />
+    <asp:TextBox ID="tboxAddDialogUser" Style="width: 300px" runat='server'></asp:TextBox>
+    <asp:RequiredFieldValidator ID="AddDialogUserValidator" runat="server" ErrorMessage='<%$ Resources:Resource, UserNameRequiredErrorMessage %>'
+        ControlToValidate="tboxAddDialogUser" Display="None" ValidationGroup="AddDialogUserPathValidationGroup" >
+    </asp:RequiredFieldValidator>
+    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogUser" runat="server"
+        TargetControlID="AddDialogUserValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
+    </ajaxToolkit:ValidatorCalloutExtender2>
+    <br />
+    <%=Resources.Resource.PasswordLabelText %>
+    <br />
+    <asp:TextBox ID="tboxAddDialogPassword" TextMode="Password" Style="width: 300px" runat='server'></asp:TextBox>
+    <asp:RequiredFieldValidator ID="AddDialogPasswordValidator" runat="server" ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>'
+        ControlToValidate="tboxAddDialogPassword" Display="None" ValidationGroup="AddDialogUserPathValidationGroup" >
+    </asp:RequiredFieldValidator>
+    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogPassword" runat="server"
+        TargetControlID="AddDialogPasswordValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
     </ajaxToolkit:ValidatorCalloutExtender2>
 </div>

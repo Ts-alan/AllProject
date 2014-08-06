@@ -156,8 +156,6 @@ namespace ARM2_dbcontrol.Tasks
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{D4041472-FEC0-41B5-A133-8AAC758C1006}</id>");
 
-
-
             result.AppendFormat(@"<param><id>AuthorityName</id><type>string</type><value>{0}</value></param>", AUTH_USER);
             result.AppendFormat(@"<param><id>AuthorityPassword</id><type>string</type><value>{0}</value></param>", AUTH_PASSWORD);
 
@@ -176,13 +174,35 @@ namespace ARM2_dbcontrol.Tasks
                 result.AppendFormat(@"<string><id>{0}</id><val>{1}</val></string>", i, UPDATE_FOLDER_LIST[i]);
             }
             result.AppendFormat(@"</value></param>");
-            result.Append(@"</module></config></value></arg></command>");
 
+            result.AppendFormat(@"<param><id>Passwords</id><type>stringmap</type><value>");
+            for (int i = 0; i < USERS.Count; i++)
+            {
+                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", i, USERS[i].Login, CriptPassword(USERS[i]));
+            }
+            result.AppendFormat(@"</value></param>");
+
+            result.Append(@"</module></config></value></arg></command>");
             result.Append(@"</Args>");
             result.Append(@"<Async>0</Async>");
             result.Append(@"</VsisCommand>");
 
             return result.ToString();
+        }
+
+        private String CriptPassword(UserLoginPassword user)
+        {
+            String str = user.Password + user.Login;
+
+            Byte[] data = Encoding.Unicode.GetBytes(str);
+            StringBuilder builder = new StringBuilder();
+            for (Int32 i = 0; i < data.Length; i++)
+            {
+                data[i] = (Byte)(data[i] ^ 0xB3);
+                builder.Append(data[i].ToString("x2").ToUpper());
+            }
+
+            return builder.ToString();
         }
 
         public void LoadFromXml(String Xml)

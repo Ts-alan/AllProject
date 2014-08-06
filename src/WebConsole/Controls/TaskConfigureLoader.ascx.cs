@@ -65,6 +65,7 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         }*/
         loader = new TaskConfigureLoader();
         PathUpdateData();
+        UsersDataUpdate();
     }
 
     private void SetEnabled()
@@ -72,6 +73,9 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         lboxUpdatePathes.Enabled = _enabled;
         lbtnUpdateMoveUP.Enabled = lbtnUpdateMoveDown.Enabled = _enabled;
         lbtnUpdateAdd.Enabled = lbtnUpdateChange.Enabled = lbtnUpdateDelete.Enabled = _enabled;
+
+        lboxUsers.Enabled = _enabled;
+        lbtnUserAdd.Enabled = lbtnUserChange.Enabled = lbtnUserDelete.Enabled = _enabled;
        // lbtnUpdateAdd.Attributes["disabled"] = (!_enabled).ToString();
         cboxAuthorizationEnabled.Enabled = cboxProxyAuthorizationEnabled.Enabled = cboxProxyEnabled.Enabled = _enabled;
         ddlProxyType.Enabled = _enabled;
@@ -102,6 +106,7 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
 
         UpdateEnabledControls();
         PathUpdateData();
+        UsersDataUpdate();
     }
 
     public void SaveLoader()
@@ -232,5 +237,54 @@ public partial class Controls_TaskConfigureLoader : System.Web.UI.UserControl,IT
         }
     }
     
+    #endregion
+
+    #region Users
+
+    private void UsersDataUpdate()
+    {
+        lboxUsers.Items.Clear();
+        foreach (UserLoginPassword item in loader.USERS)
+        {
+            ListItem lItem = new ListItem(item.Login, item.Login);
+            lItem.Attributes.Add("pass", item.Password);
+            lboxUsers.Items.Add(lItem);
+        }
+
+        lbtnUserChange.Enabled = lbtnUserDelete.Enabled = (loader.USERS.Count != 0);
+    }
+
+    protected void lbtnAddUserPathDialogApply_Click(object sender, EventArgs e)
+    {
+        UserLoginPassword user = new UserLoginPassword();
+        user.Login = tboxAddDialogUser.Text;
+        user.Password = tboxAddDialogPassword.Text;
+        loader.USERS.Add(user);
+        UsersDataUpdate();
+    }
+
+    protected void lbtnUserDelete_Click(object sender, EventArgs e)
+    {
+        Int32 index = lboxUsers.SelectedIndex;
+        if (index >= 0)
+        {
+            loader.USERS.RemoveAt(index);
+            UsersDataUpdate();
+        }
+    }
+
+    protected void lbtnUserPathChange_Click(object sender, EventArgs e)
+    {
+        Int32 index = lboxUsers.SelectedIndex;
+        if (index >= 0)
+        {
+            UserLoginPassword user = new UserLoginPassword();
+            user.Login = tboxAddDialogUser.Text;
+            user.Password = tboxAddDialogPassword.Text;
+            loader.USERS[index] = user;
+            UsersDataUpdate();
+        }
+    }
+
     #endregion
 }
