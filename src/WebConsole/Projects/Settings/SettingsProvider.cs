@@ -231,6 +231,9 @@ namespace VirusBlokAda.CC.Settings
                 ent.MailServer = GetString(key, "MailServer");
                 ent.MailFrom = GetString(key, "MailFrom");
                 ent.MailDisplayName = GetString(key, "MailDisplayName");
+                ent.MailUsername = GetString(key, "MailUsername");
+                ent.UseMailAuthorization = !String.IsNullOrEmpty(ent.MailUsername);
+                ent.MailPassword = GetString(key, "MailPassword");                    
 
                 ent.GlobalEpidemyLimit=GetNumber(key,"GlobalEpidemyLimit");
                 ent.GlobalEpidemyTimeLimit=GetNumber(key,"GlobalEpidemyTimeLimit");

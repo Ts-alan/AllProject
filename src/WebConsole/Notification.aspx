@@ -11,6 +11,7 @@
 
 <script type="text/javascript">
     var cboxUseMail = '#<%=cboxUseMail.ClientID %>';
+    var cboxUseMailAuthorization = '#<%=cboxAuthorizationEnabled.ClientID %>';    
     var cboxUseJabber = '#<%=cboxUseJabber.ClientID %>';
     var cboxUseFlowAnalysis = '#<%=cboxUseFlowAnalysis.ClientID %>';
 
@@ -21,6 +22,18 @@
             hideValidatorCallout("useMail");
             var enabled = $(this).is(":checked");
             $("[useMail]").each(function () {
+                $(this).attr('disabled', !enabled);
+            });
+
+            $("[useMailAuthorization]").each(function () {
+                $(this).attr('disabled', !(enabled && $(cboxUseMailAuthorization).is(":checked")));
+            });
+        });
+
+        $(document).on("click", cboxUseMailAuthorization, function () {
+            hideValidatorCallout("useMail");
+            var enabled = $(this).is(":checked");
+            $("[useMailAuthorization]").each(function () {
                 $(this).attr('disabled', !enabled);
             });
         });
@@ -92,6 +105,11 @@
         if ($(cboxUseMail).is(":checked")) {
             if (!Page_ClientValidate('MailValidator'))
                 valid = false;
+
+            if ($(cboxUseMailAuthorization).is(":checked")) {
+                if (!Page_ClientValidate('MailAuthorizationValidator'))
+                    valid = false;
+            }
         }
 
         if ($(cboxUseJabber).is(":checked")) {
@@ -178,6 +196,34 @@
                 </td> 
                 <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
                     <asp:TextBox ID="tboxMailDisplayName" runat="server" useMail></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 25px;padding-top: 5px;padding-bottom: 5px;" colspan="2">
+                    <input id="cboxAuthorizationEnabled" runat="server" type="checkbox" useMail />&nbsp;<%=Resources.Resource.UseAuthorization%>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 45px;">
+                    <%=Resources.Resource.User%>
+                </td>
+                <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
+                    <asp:TextBox runat="server" ID="tboxAuthorizationUserName" autocomplete="off" useMailAuthorization />
+
+                    <asp:RequiredFieldValidator runat="server" ID="requiredMailUsername" ControlToValidate="tboxAuthorizationUserName"
+                        ErrorMessage='<%$ Resources:Resource, UserNameRequiredErrorMessage %>' Display="None" ValidationGroup="MailAuthorizationValidator">
+                    </asp:RequiredFieldValidator>
+                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="regularMailUsernameCallout" HighlightCssClass="highlight" 
+                        TargetControlID="requiredMailUsername" PopupPosition="Right">
+                    </ajaxToolkit:ValidatorCalloutExtender2>
+                </td>
+            </tr>
+            <tr>                
+                <td style="padding-left: 45px;">
+                    <%=Resources.Resource.PasswordLabelText%>
+                </td>
+                <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
+                    <asp:TextBox runat="server" ID="tboxAuthorizationPassword" TextMode="Password" autocomplete="off" useMailAuthorization />
                 </td>
             </tr>
         </table>

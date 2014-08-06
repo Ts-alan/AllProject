@@ -112,6 +112,8 @@ public partial class Notification : PageBase
         if (ent == null)
         {
             tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
+            cboxAuthorizationEnabled.Checked = false;
+            tboxAuthorizationUserName.Text = tboxAuthorizationPassword.Text = String.Empty;
             isChecked = false;
         }
         else
@@ -119,12 +121,18 @@ public partial class Notification : PageBase
             tboxMailServer.Text = ent.MailServer;
             tboxMailFrom.Text = ent.MailFrom;
             tboxMailDisplayName.Text = ent.MailDisplayName;
+
+            cboxAuthorizationEnabled.Checked = ent.UseMailAuthorization;
+            tboxAuthorizationUserName.Text = ent.MailUsername;
+            tboxAuthorizationPassword.Text = ent.MailPassword;
         }
 
         if (isChecked && String.IsNullOrEmpty(tboxMailServer.Text))
             isChecked = false;
 
         cboxUseMail.Checked = tboxMailServer.Enabled = tboxMailFrom.Enabled = tboxMailDisplayName.Enabled = isChecked;
+        cboxAuthorizationEnabled.Disabled = !isChecked;
+        tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = isChecked && cboxAuthorizationEnabled.Checked;
     }
 
     /// <summary>
@@ -163,6 +171,8 @@ public partial class Notification : PageBase
         if (!cboxUseMail.Checked)
         {
             tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
+            tboxAuthorizationUserName.Text = tboxAuthorizationPassword.Text = String.Empty;
+            cboxAuthorizationEnabled.Checked = false;
             return true;
         }
 
@@ -356,6 +366,9 @@ public partial class Notification : PageBase
                 ent.MailServer = tboxMailServer.Text;
                 ent.MailFrom = tboxMailFrom.Text;
                 ent.MailDisplayName = tboxMailDisplayName.Text;
+                ent.UseMailAuthorization = cboxAuthorizationEnabled.Checked;
+                ent.MailUsername = ent.UseMailAuthorization ? tboxAuthorizationUserName.Text : "";
+                ent.MailPassword = ent.UseMailAuthorization ? tboxAuthorizationPassword.Text : "";
 
                 retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
             }

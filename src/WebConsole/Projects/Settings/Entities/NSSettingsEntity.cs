@@ -11,6 +11,9 @@ namespace VirusBlokAda.CC.Settings.Entities
         private String _MailServer = null;
         private String _MailFrom = null;
         private String _MailDisplayName = null;
+        private Boolean _UseMailAuthorization = false;
+        private String _MailUsername = null;
+        private String _MailPassword = null;
 
         private String _JabberServer = null;
         private String _JabberPassword = null;
@@ -51,6 +54,24 @@ namespace VirusBlokAda.CC.Settings.Entities
         {
             get { return _MailDisplayName; }
             set { _MailDisplayName = value; }
+        }
+
+        public Boolean UseMailAuthorization
+        {
+            get { return _UseMailAuthorization; }
+            set { _UseMailAuthorization = value; }
+        }
+
+        public String MailUsername
+        {
+            get { return _MailUsername; }
+            set { _MailUsername = value; }
+        }
+
+        public String MailPassword
+        {
+            get { return _MailPassword; }
+            set { _MailPassword = value; }
         }
 
         public String JabberServer
@@ -152,6 +173,9 @@ namespace VirusBlokAda.CC.Settings.Entities
                 xml.AppendFormat("<MailFrom type=" + "\"reg_sz\"" + ">{0}</MailFrom>", MailFrom);
             if (!String.IsNullOrEmpty(MailDisplayName))
                 xml.AppendFormat("<MailDisplayName type=" + "\"reg_sz\"" + ">{0}</MailDisplayName>", MailDisplayName);
+        
+            xml.AppendFormat("<MailUsername type=" + "\"reg_sz\"" + ">{0}</MailUsername>", UseMailAuthorization ? MailUsername : "");
+            xml.AppendFormat("<MailPassword type=" + "\"reg_sz\"" + ">{0}</MailPassword>", UseMailAuthorization ? MailPassword : "");
 
             if (!String.IsNullOrEmpty(JabberServer))
                 xml.AppendFormat("<JabberServer type=" + "\"reg_sz\"" + ">{0}</JabberServer>", JabberServer);

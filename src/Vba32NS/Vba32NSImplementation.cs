@@ -135,10 +135,16 @@ namespace Vba32.ControlCenter.NotificationService
                                         LoggerNS.log.Info(String.Format("Mail to {0}, message: {1}",
                                              addr, NotifyMessageBuilder.BuildBody(message, ev.Mail.Message)));
 
+                                        System.Net.NetworkCredential credential = null;
+                                        if(Vba32NS.settingsNS.UseMailAuthorization)
+                                        {
+                                            credential = new System.Net.NetworkCredential(Vba32NS.settingsNS.MailUsername, Vba32NS.settingsNS.MailPassword);
+                                        }
+
                                         Vba32NS.SendMail(Vba32NS.settingsNS.MailServer, Vba32NS.settingsNS.MailFrom, Vba32NS.settingsNS.MailDisplayName,
                                             NotifyMessageBuilder.BuildSubject(message, ev.Mail.Subject),
                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Mail.Message),
-                                            ev.Mail.Priority);
+                                            ev.Mail.Priority, credential);
                                     }
                                 else
                                     LoggerNS.log.Error("Vba32NS.OnRegisteredMessage():: The mail server hasn't been defined, but the event will be sent");

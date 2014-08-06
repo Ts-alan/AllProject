@@ -18,12 +18,17 @@ namespace Vba32.ControlCenter.NotificationService.Network
         static Boolean mailSent = true;
 
         public Boolean Send(String server, String fromMail,String displayName,
-            String toMail, String  subject, String body, MailPriority priority)
+            String toMail, String  subject, String body, MailPriority priority, NetworkCredential credential)
         {
             LoggerNS.log.Info("SMTPMessage.Send():: Started ");
 
             // Command line argument must the the SMTP host.
             SmtpClient client = new SmtpClient(server);
+            if (credential != null)
+            {
+                client.UseDefaultCredentials = false;
+                client.Credentials = credential;
+            }
             // Specify the e-mail sender.
             // Create a mailing address that includes a UTF8 character
             // in the display name.
