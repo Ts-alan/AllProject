@@ -75,24 +75,20 @@ public partial class MapComputers : PageBase
         if (time.Days != 0 || time.Hours != 0 || time.Minutes >= 10) return "vbagrey";
         List<ComponentsEntity> list;
 
-        list = DBProviders.Component.List(String.Format("ComputerName = \'{0}\' AND (ComponentName = \'Vba32 Loader\' OR ComponentName = \'Vba32 Monitor\')", entity.ComputerName), null, 1, Int16.MaxValue);
+        list = DBProviders.Component.List(String.Format("ComputerName = \'{0}\' AND  ComponentName = \'{{A3F5FCA0-46DC-4328-8568-5FDF961E87E6}}\'", entity.ComputerName), null, 1, Int16.MaxValue);
         
-        if (list != null && list.Count == 2)        
+        if (list != null && list.Count == 1)        
         {
             bool isMonitorOn = false;
             bool isLoaderOn = false;
 
-            if (list[0].ComponentName == "Vba32 Loader")
-            {
-                isLoaderOn = (list[0].ComponentState == "On");
-            }
-            else isMonitorOn = (list[0].ComponentState == "On");
+
+           
+            isLoaderOn = (list[0].ComponentState == "On" || list[0].ComponentState == "Off");
             
-            if (list[1].ComponentName == "Vba32 Loader")
-            {
-                isLoaderOn = (list[1].ComponentState == "On");
-            }
-            else isMonitorOn = (list[1].ComponentState == "On");
+            isMonitorOn = (list[0].ComponentState == "On");
+            
+           
 
             if (entity.Vba32KeyValid && entity.Vba32Integrity && isLoaderOn && isMonitorOn) return "vbagreen";
             else 
