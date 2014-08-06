@@ -138,7 +138,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         SchedulerTaskFromJSON jsonTask = new SchedulerTaskFromJSON();
         jsonTask.TaskType = (Int32)task.Type;
         jsonTask.TaskPeriod = (Int32)task.Period;
-        jsonTask.TaskDateTime = task.TaskDateTime.ToString();
+        jsonTask.TaskDateTime = task.TaskDateTime.ToString("dd.MM.yyyy hh:mm");
         jsonTask.IsConsideringSystemLoad = task.IsConsideringSystemLoad;
 
         return jsonTask;

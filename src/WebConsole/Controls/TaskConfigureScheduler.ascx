@@ -4,11 +4,12 @@
 <script type="text/javascript" src="js/Globalize.js"></script>
 <script language="javascript" type="text/javascript">
     $(document).ready(function(){
-        $( "#datepickerAddSchedulerTask" ).datepicker();
-        $( "#datepickerAddSchedulerTask" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
 
-        $( "#timePickerAddSchedulerTask" ).timespinner();
-        $( "#timePickerAddSchedulerTask" ).timespinner("option", "culture", "de-DE");
+        $("#<%= datePickerAddSchedulerTask.ClientID %>").datepicker();
+        $("#<%= datePickerAddSchedulerTask.ClientID %>").datepicker("option", "dateFormat", "dd.mm.yy");
+
+        $("#<%= timePickerAddSchedulerTask.ClientID %>").timespinner();
+        $("#<%= timePickerAddSchedulerTask.ClientID %>").timespinner("option", "culture", "de-DE");
 
         SchedulerAddDialogSetDefault();
         LoadTableFromJSON($('#<%=hdnSchedulerTableState.ClientID %>').val());
@@ -82,19 +83,23 @@
                 },
                 buttons: {
                     '<%=Resources.Resource.Apply%>': function () {
-                        var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
-                        var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
-                        var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
-                        var taskPeriodNo = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> ').val();
-                        var taskDate = $('#datepickerAddSchedulerTask').val();
-                        var taskTime = $('#timePickerAddSchedulerTask').val();
-                        var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') == true ? "1" : "0";
+                        if (Page_ClientValidate('TimeValidationGroup')) {
+                            var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
+                            var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
+                            var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
+                            var taskPeriodNo = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> ').val();
+
+                            var taskDate = $('#<%= datePickerAddSchedulerTask.ClientID %>').val();
+                            var taskTime = $("#<%= timePickerAddSchedulerTask.ClientID %>").val();
+
+                            var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') == true ? "1" : "0";
 
 
-                        $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
-                        SchedulerTableChangeStyle()
-                        SchedulerSaveTableState();
-                        $('#AddSchedulerTaskDialog').dialog('close');
+                            $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
+                            SchedulerTableChangeStyle()
+                            SchedulerSaveTableState();
+                            $('#AddSchedulerTaskDialog').dialog('close');
+                        }
                     },
                     '<%=Resources.Resource.CancelButtonText%>': function () {
                         $('#AddSchedulerTaskDialog').dialog('close');
@@ -126,43 +131,47 @@
 
             $('#<%=ddlAddSchedulerTaskType.ClientID %>').val(OldTaskTypeNo);
             $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val(OldTaskPeriodNo);
-            $('#datepickerAddSchedulerTask').val(OldTaskDate);
-            $('#timePickerAddSchedulerTask').val(OldTaskTime);
+
+            $('#<%= datePickerAddSchedulerTask.ClientID %>').val(OldTaskDate);
+            $('#<%= timePickerAddSchedulerTask.ClientID %>').val(OldTaskTime);
+
             $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', OldTaskIsConsideringSystemLoad);
- 
-                        
+
+
             var dOpt = {
-                width: 350,                                       
+                width: 350,
                 resizable: false,
-                close: function(event, ui)
-                    {
-                        $('#divOverlay').css('display','none');
-                        SchedulerAddDialogSetDefault();
-                    },
-                    buttons: {
-                        '<%=Resources.Resource.Apply%>': function () {
-                            var taskType=$('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
-                            var taskTypeNo=$('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
-                            var taskPeriod=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected' ).text();
-                            var taskPeriodNo=$('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val();
-                            var taskDate=$('#datepickerAddSchedulerTask').val();
-                            var taskTime=$('#timePickerAddSchedulerTask').val(); 
+                close: function (event, ui) {
+                    $('#divOverlay').css('display', 'none');
+                    SchedulerAddDialogSetDefault();
+                },
+                buttons: {
+                    '<%=Resources.Resource.Apply%>': function () {
+                        if (Page_ClientValidate('TimeValidationGroup')) {
+                            var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
+                            var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
+                            var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option:selected').text();
+                            var taskPeriodNo = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val();
+
+                            var taskDate = $('#<%= datePickerAddSchedulerTask.ClientID %>').val();
+                            var taskTime = $('#<%= timePickerAddSchedulerTask.ClientID %>').val();
                             var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked');
 
                             row.children()[0].innerHTML = taskType;
-                            row.children()[0].setAttribute("type",taskTypeNo);
+                            row.children()[0].setAttribute("type", taskTypeNo);
                             row.children()[1].innerHTML = taskPeriod;
-                            row.children()[1].setAttribute("period",taskPeriodNo);
+                            row.children()[1].setAttribute("period", taskPeriodNo);
                             row.children()[2].innerHTML = taskDate + ' ' + taskTime;
                             row.children()[3].innerHTML = taskIsConsideringSystemLoad ? "1" : "0";
 
                             SchedulerSaveTableState()
                             $('#AddSchedulerTaskDialog').dialog('close');
-                        },
-                        '<%=Resources.Resource.CancelButtonText%>': function () {                           
-                            $('#AddSchedulerTaskDialog').dialog('close');                           
                         }
+                    },
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#AddSchedulerTaskDialog').dialog('close');
                     }
+                }
             };
             $('#AddSchedulerTaskDialog').dialog(dOpt);
             $('#divOverlay').css('display','inline');
@@ -173,8 +182,9 @@
         {
             $('#<%=ddlAddSchedulerTaskType.ClientID %>').val("0");
             $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val("0");
-            $('#datepickerAddSchedulerTask').val("01.01.2014");
-            $('#timePickerAddSchedulerTask').val("00:00");
+
+            $('#<%=datePickerAddSchedulerTask.ClientID%>').val("01.01.2014");
+            $('#<%=datePickerAddSchedulerTask.ClientID%>').datepicker("setDate", "+0d");
             $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', false);
         }
 
@@ -247,7 +257,7 @@
     <asp:HiddenField ID="hdnSchedulerTableState" runat="server" Value=""  />
 </div>
 
-<div id="AddSchedulerTaskDialog" style="display:none; padding-bottom: 20px;" class="ui-front">
+<div id="AddSchedulerTaskDialog" style="display:none; padding-bottom: 20px; height:180px;" class="ui-front">
     <div><%=Resources.Resource.Schedule %></div>
     <div>
         <asp:DropDownList ID="ddlAddSchedulerTaskType" runat="server" style="width:230px;">
@@ -276,6 +286,25 @@
     </div>
     <div>
         <label ><%=Resources.Resource.DateAndTime%> </label>
-        <p><input type="text" id="datepickerAddSchedulerTask"/> <input id="timePickerAddSchedulerTask" name="spinner" value="00:00 AM"/></p>
+        <p>
+        <asp:TextBox ID="datePickerAddSchedulerTask" runat="server" style="width:140px;"></asp:TextBox>
+        <asp:RegularExpressionValidator ControlToValidate="datePickerAddSchedulerTask" ID="datepickerAddSchedulerTaskValidator" runat="server" ErrorMessage='<%$ Resources:Resource, DateIncorrect %>' ValidationGroup="TimeValidationGroup"
+            ValidationExpression="^((0[1-9])|([1-2][0-9])|(3[01]))\.((0[1-9])|(1[0-2]))\.20[0-9][0-9]$" Display="None"></asp:RegularExpressionValidator>  
+        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderDatepickerAddSchedulerTask" runat="server" TargetControlID="datepickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
+        <asp:RequiredFieldValidator ID="RequiredDatepickerAddSchedulerTask" runat="server" ErrorMessage='<%$ Resources:Resource, DateIncorrect %>'
+            ControlToValidate="datePickerAddSchedulerTask" Display="None" ValidationGroup="TimeValidationGroup">
+        </asp:RequiredFieldValidator>
+        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredDatepickerAddSchedulerTask" runat="server" TargetControlID="RequiredDatepickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
+        
+        <asp:TextBox ID="timePickerAddSchedulerTask" runat="server" style="width:120px;"></asp:TextBox>
+        <asp:RegularExpressionValidator ControlToValidate="timePickerAddSchedulerTask" ID="timePickerAddSchedulerTaskValidator" runat="server" ErrorMessage='<%$ Resources:Resource, TimeIncorrect %>' ValidationGroup="TimeValidationGroup"
+            ValidationExpression="^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$" Display="None"></asp:RegularExpressionValidator>  
+        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtendertimePickerAddSchedulerTask" runat="server" TargetControlID="timePickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
+        <asp:RequiredFieldValidator ID="RequiredtimePickerAddSchedulerTask" runat="server" ErrorMessage='<%$ Resources:Resource, TimeIncorrect %>'
+            ControlToValidate="timePickerAddSchedulerTask" Display="None" ValidationGroup="TimeValidationGroup">
+        </asp:RequiredFieldValidator>
+        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredtimePickerAddSchedulerTask" runat="server" TargetControlID="RequiredtimePickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
+        
+        </p>                   
     </div>
 </div>
