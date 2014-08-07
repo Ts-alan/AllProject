@@ -926,15 +926,18 @@
                 <asp:Label runat="server"><%=Resources.Resource.Name %></asp:Label><br /><asp:TextBox ID="IP6txtNameDialog" Style="width:200px" runat='server'></asp:TextBox><asp:RequiredFieldValidator ID="IP6requiredNameDialog" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
                     ControlToValidate="IP6txtNameDialog" Display="None" ValidationGroup="IP6AddressValidation"/>
                     <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxIP6requiredNameDialog" runat="server" TargetControlID="IP6requiredNameDialog" HighlightCssClass="highlight" PopupPosition="BottomRight" />
-                <br />
-                <br />
-                <asp:Label   runat="server" Text='<%$ Resources:Resource, LocalAddress%>'></asp:Label><br /><br /><asp:Table ID="IP6tblLocalDialog" runat="server" >
+                <br /><br />
+                <asp:Label   runat="server" Text='<%$ Resources:Resource, LocalAddress%>'></asp:Label>
+                <br /><br />
+                <asp:Table ID="IP6tblLocalDialog" runat="server" >
                     <asp:TableHeaderRow>
                         <asp:TableHeaderCell >
                             <asp:Label   runat='server'><%=Resources.Resource.LocalIP%></asp:Label>
                         </asp:TableHeaderCell><asp:TableHeaderCell>
                             <asp:Label  runat='server'><%=Resources.Resource.Port%></asp:Label>
-                        </asp:TableHeaderCell></asp:TableHeaderRow><asp:TableRow>
+                        </asp:TableHeaderCell>
+                    </asp:TableHeaderRow>
+                    <asp:TableRow>
                         <asp:TableCell Style="width:200px">
                             <asp:TextBox ID="IP6txtLocalIPDialog" Style="width:160px" runat="server" ></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="IP6requiredLocalIPDialog" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
@@ -943,7 +946,7 @@
                                 <asp:RegularExpressionValidator ControlToValidate="IP6txtLocalIPDialog" ID="regexIP6LocalIPDialog" runat="server" ErrorMessage='<%$ Resources:Resource, Ip6AddressInIncorrectFormat %>' ValidationGroup="IP6AddressValidation"
                                 ValidationExpression="^\*$|((^|:)([0-9a-fA-F]{0,4}|\*)){1,8}(-((^|:)([0-9a-fA-F]{0,4}|\*)){1,8})?$"
                                 Display="None"/>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxRegexIP6LocalIPDialog" runat="server" TargetControlID="regexLocalIPDialog" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                    
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxRegexIP6LocalIPDialog" runat="server" TargetControlID="regexIP6LocalIPDialog" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                    
                         </asp:TableCell><asp:TableCell Style="width:120px">
                             <asp:TextBox ID="IP6txtLocalPortDialog" Style="width:80px" runat="server"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="IP6requiredLocalIPPort" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
@@ -952,13 +955,20 @@
                                     <asp:RegularExpressionValidator ID="rangeIP6requiredLocalIPPort" runat="server" ControlToValidate="IP6txtLocalPortDialog" ErrorMessage='<%$ Resources:Resource, IpAddressInIncorrectFormat %>' ValidationGroup="IP6AddressValidation"  Display="None"
                                     ValidationExpression= "^\*$|^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])(-([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$" />
                                     <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="ajaxRangeIP6requiredLocalIPPort" TargetControlID="rangeIP6requiredLocalIPPort" HighlightCssClass="highlight" PopupPosition="Left"/>
-                        </asp:TableCell></asp:TableRow></asp:Table><br /><br /><asp:Label   runat="server" Text='<%$ Resources:Resource, DestinationAddress%>'></asp:Label><br /><br /><asp:Table ID="IP6tblDestinationDialog" runat="server" >
+                        </asp:TableCell>
+                    </asp:TableRow>
+                </asp:Table>
+                <br /><br />
+                <asp:Label   runat="server" Text='<%$ Resources:Resource, DestinationAddress%>'></asp:Label>
+                <br /><br />
+                <asp:Table ID="IP6tblDestinationDialog" runat="server" >
                     <asp:TableHeaderRow>
                         <asp:TableHeaderCell >
                             <asp:Label  runat="server" ><%=Resources.Resource.DestinationIP%></asp:Label>
                         </asp:TableHeaderCell><asp:TableHeaderCell>
                             <asp:Label   runat="server"><%=Resources.Resource.Port%></asp:Label>
-                        </asp:TableHeaderCell></asp:TableHeaderRow><asp:TableRow>
+                        </asp:TableHeaderCell></asp:TableHeaderRow>
+                    <asp:TableRow>
                         <asp:TableCell Style="width:200px">
                             <asp:TextBox ID="IP6txtDestinationIPDialog" Style="width:160px" runat="server"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="IP6RequiredDestinationIPDialog" runat="server" ErrorMessage='<%$ Resources:Resource, IpAddressRequired %>'
@@ -967,7 +977,7 @@
                                 <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxIP6RequiredDestinationIPDialog" runat="server" TargetControlID="IP6RequiredDestinationIPDialog" HighlightCssClass="highlight" PopupPosition="BottomLeft" />
                                 <asp:RegularExpressionValidator ControlToValidate="IP6txtDestinationIPDialog" ID="RegexIP6DestinationIPDialog" runat="server" ErrorMessage='<%$ Resources:Resource, Ip6AddressInIncorrectFormat %>' ValidationGroup="IP6AddressValidation"
                                 ValidationExpression="^\*$|((^|:)([0-9a-fA-F]{0,4}|\*)){1,8}(-((^|:)([0-9a-fA-F]{0,4}|\*)){1,8})?$" Display="None"></asp:RegularExpressionValidator>  
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxRegexIP6RequiredDestinationIPDialog" runat="server" TargetControlID="RegexDestinationIPDialog" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                                                                                 
+                                <ajaxToolkit:ValidatorCalloutExtender2 ID="ajaxRegexIP6RequiredDestinationIPDialog" runat="server" TargetControlID="RegexIP6DestinationIPDialog" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                                                                                 
                         </asp:TableCell>
                         <asp:TableCell Style="width:120px">
                             <asp:TextBox ID="IP6txtDestinationPortDialog" Style="width:80px" runat="server"></asp:TextBox>   
