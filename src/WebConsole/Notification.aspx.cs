@@ -124,7 +124,7 @@ public partial class Notification : PageBase
 
             cboxAuthorizationEnabled.Checked = ent.UseMailAuthorization;
             tboxAuthorizationUserName.Text = ent.MailUsername;
-            tboxAuthorizationPassword.Text = ent.MailPassword;
+            tboxAuthorizationPassword.Attributes.Add("value", ent.MailPassword);
         }
 
         if (isChecked && String.IsNullOrEmpty(tboxMailServer.Text))
