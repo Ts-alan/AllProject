@@ -20,7 +20,7 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (!Page.IsPostBack)
+        if (!Page.IsPostBack||fileCleaner==null)
         {
             InitFields();
         }
@@ -49,14 +49,24 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
         {
             fileCleaner = new TaskConfigureFileCleaner(GetEvents());
             fileCleaner.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
+            
         }
         else
         {
             fileCleaner.FullProgramList.Clear();
             fileCleaner.journalEvent.ClearEvents();
         }
-
+        AddDefaultWordExcel();
         FileCleanerUpdateData();
+    }
+
+    private void AddDefaultWordExcel()
+    {
+        
+        SingleCleaningTemplate word = new SingleCleaningTemplate("Word", new List<FileCleanerTemplate>());
+        fileCleaner.FullProgramList.Add(word);
+        SingleCleaningTemplate excel = new SingleCleaningTemplate("Excel", new List<FileCleanerTemplate>());
+        fileCleaner.FullProgramList.Add(excel);
     }
 
     private void SetEnabled()

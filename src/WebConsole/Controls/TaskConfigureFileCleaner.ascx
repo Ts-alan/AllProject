@@ -185,7 +185,7 @@
         function AddProgramDialogButtonClientClick()
         {
             var dOpt = {
-                width: 350,                                       
+                width: 420,                                      
                 resizable: false,
                 close: function(event, ui)
                     {
@@ -194,11 +194,13 @@
                     },
                 buttons: {
                     <%=Resources.Resource.Apply%>: function () {
+                        if(Page_ClientValidate('AddTemplateDialogPathValidationGroup')){
                             var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
                             var name=$('#<%=AddTemplateDialogName.ClientID %>').val();  
                             $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + path + '</td><td>'+name+'</td></tr>'); 
                             addProgramTableChangeStyle();                              
                             $('#AddTemplateDialog').dialog('close');
+                        }                        
                     },
                     <%=Resources.Resource.CancelButtonText%>: function () {                           
                         $('#AddTemplateDialog').dialog('close');                           
@@ -224,7 +226,7 @@
             $('#<%=AddTemplateDialogName.ClientID %>').val(Oldname);   
                         
             var dOpt = {
-                width: 350,                                       
+                width: 420,                                       
                 resizable: false,
                 close: function(event, ui)
                     {
@@ -409,7 +411,7 @@
             </asp:TableRow>
         </asp:Table>
     </div>
-    <div id="AddTemplateDialog" style="display: none;" class="ui-front">
+    <div id="AddTemplateDialog" style="display: none;height:62px;min-height:60px" class="ui-front">
         <table>
             <tr>
                 <td>
@@ -417,6 +419,10 @@
                 </td>
                 <td>
                     <asp:TextBox runat="server" ID="AddTemplateDialogPath" />
+                    <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogPath" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
+                        ControlToValidate="AddTemplateDialogPath" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
+                    </asp:RequiredFieldValidator>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredAddTemplateDialogPath" runat="server" TargetControlID="RequiredAddTemplateDialogPath" HighlightCssClass="highlight" PopupPosition="Right" Width="150px"/>
                 </td>
             </tr>
             <tr>
@@ -425,9 +431,14 @@
                 </td>
                 <td>
                     <asp:TextBox runat="server" ID="AddTemplateDialogName" />
+                    <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogName" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
+                        ControlToValidate="AddTemplateDialogName" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
+                    </asp:RequiredFieldValidator>
+                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredAddTemplateDialogName" runat="server" TargetControlID="RequiredAddTemplateDialogName" HighlightCssClass="highlight" PopupPosition="Right" Width="150px" />
                 </td>
             </tr>
         </table>
+        &nbsp;
     </div>
     <div id="divOverlay" class="ui-widget-overlay ui-front" style="display: none;z-index:100"></div>
     <div id="divOverlay2" class="ui-widget-overlay ui-front" style="display: none;z-index:110"></div>
