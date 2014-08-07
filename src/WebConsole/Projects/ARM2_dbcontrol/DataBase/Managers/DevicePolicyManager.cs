@@ -288,7 +288,7 @@ namespace VirusBlokAda.CC.DataBase
                 foreach (DeviceClassPolicy dcp in listUsbClasses)
                 {
                     policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++,
-                        DeviceClassManager.SerializeToBase64(new CLASS_INFO(Convert.ToByte(dcp.ClassOfDevice.UID), (Byte)dcp.Mode)));
+                        DeviceClassManager.SerializeToBase64(new CLASS_INFO(Convert.ToByte(dcp.ClassOfDevice.UID), (Byte)(dcp.Mode == DeviceClassMode.Enabled ? 1 : 0))));
 
                     listUsbClassesAll.Remove(listDC.Find(delegate(DeviceClass dev)
                     {
