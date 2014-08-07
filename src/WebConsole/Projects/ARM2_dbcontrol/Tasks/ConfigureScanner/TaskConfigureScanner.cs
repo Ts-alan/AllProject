@@ -187,36 +187,30 @@ namespace ARM2_dbcontrol.Tasks.ConfigureScanner
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{2E406790-5472-4E0C-9EBF-88D081AA09AC}</id>");
 
+            result.Append(journalEvent.GetTask());
             #region Settings
             Int32 index = 0;
 
            
             index = 0;
             result.Append(@"<param><id>ScanSettings</id><type>stringmap</type><value>");
-           // result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "AddSpyRiskWareAnalyze", IsDetectAdware ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "AddSpyRiskWareAnalyze", IsFindPotential ? "On" : "Off");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ArchiveAnalyze", IsCheckArchives ? "On" : "Off");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Authenticode", IsAuthenticode ? "On" : "Off");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Cache", IsEnableCache ? "On" : "Off");
-          //  result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Heuristic", HeuristicAnalysis == 0 ? "Off" : "On");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "Heuristic", "On");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MailAnalyze", IsCheckMail ? "On" : "Off");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "MaxArchiveSize", ArchiveMaxSize);
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SfxAnalyze", IsFindVirusInstalls ? "On" : "Off");
 
-         /*   if (IsCheckCure)
-            {
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", "Cure");
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
-            }
-            else
-            {
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", IfCureChecked == 2 ? "Delete" : "None");
-                result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", "None");
-            }
+
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstInfectedAction", InfectedAction.ToString());
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondInfectedAction", InfectedCases.ToString());           
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdInfectedAction", "None");
 
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstSuspectedAction", SuspiciousMode == 2 ? "Delete" : "None");
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "FirstSuspectedAction", SuspiciousAction.ToString());
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SecondSuspectedAction", "None");
-            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdSuspectedAction", "None");*/
+            result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "ThirdSuspectedAction", "None");
 
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "InfectedQuarantine", IsSaveInfectedToQuarantine ? "On" : "Off");
             result.AppendFormat(@"<string><id>{0}</id><key>{1}</key><val>{2}</val></string>", index++, "SuspectedQuarantine", IsSaveSuspiciousToQuarantine ? "On" : "Off");

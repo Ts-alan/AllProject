@@ -76,7 +76,7 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         chkScannerMaxSize.Enabled = chkScannerScanArchives.Enabled = chkScannerScanMail.Enabled = chkScannerTrustAuthenCode.Enabled = _enabled;
         chkSuspiciousSaveCopy.Enabled = chkInfectedSaveCopy.Enabled = _enabled;
         ddlInfectedActions.Enabled = ddlInfectedCases.Enabled = _enabled;
-        ddlSuspiciousActions.Enabled = ddlSuspiciousCases.Enabled = _enabled;
+        ddlSuspiciousActions.Enabled  = _enabled;
         tboxScannerMaxSize.Enabled = _enabled;
     }
     private String[] GetEvents()
@@ -178,7 +178,6 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         ddlInfectedActions.SelectedIndex = (int)scanner.InfectedAction;
         ddlInfectedCases.SelectedIndex = (int)scanner.InfectedCases;
         ddlSuspiciousActions.SelectedIndex = (int)scanner.SuspiciousAction;
-        ddlSuspiciousCases.SelectedIndex = (int)scanner.SuspiciousCases;
         chkInfectedSaveCopy.Checked = scanner.IsSaveInfectedToQuarantine;
         chkSuspiciousSaveCopy.Checked = scanner.IsSaveSuspiciousToQuarantine;
 
@@ -203,7 +202,6 @@ public partial class Controls_TaskConfigureScanner : System.Web.UI.UserControl, 
         scanner.InfectedAction = (ScannerActions)ddlInfectedActions.SelectedIndex  ;
         scanner.InfectedCases = (ScannerActions)ddlInfectedCases.SelectedIndex;
         scanner.SuspiciousAction = (ScannerActions)ddlSuspiciousActions.SelectedIndex;
-        scanner.SuspiciousCases = (ScannerActions)ddlSuspiciousCases.SelectedIndex;
         scanner.IsSaveInfectedToQuarantine = chkInfectedSaveCopy.Checked;
         scanner.IsSaveSuspiciousToQuarantine = chkSuspiciousSaveCopy.Checked;
     }

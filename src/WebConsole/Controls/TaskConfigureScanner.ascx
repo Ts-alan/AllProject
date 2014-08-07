@@ -190,16 +190,7 @@
                                         </td>
                                     </tr>
                                     <tr style="height: 25px">
-                                        <td>
-                                            <%= Resources.Resource.CongScannerCases %>
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList runat="server" ID="ddlSuspiciousCases" style="width:120px">
-                                                <asp:ListItem Text="<%$ Resources:Resource, CongScannerCure %>"></asp:ListItem>
-                                                <asp:ListItem Text="<%$ Resources:Resource, Delete %>"></asp:ListItem>
-                                                <asp:ListItem Text="<%$ Resources:Resource, No %>"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </td>
+                                    <td></td>                                        
                                     </tr>
                                     <tr style="height: 25px">
                                         <td colspan="2">
