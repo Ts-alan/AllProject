@@ -223,7 +223,7 @@ namespace ARM2_dbcontrol.Tasks
 
             result.AppendFormat(@"<string><id>{0}</id><key>FirstSuspectedAction</key><val>{1}</val></string>", index++, _SuspiciousAction1.ToString());
             result.AppendFormat(@"<string><id>{0}</id><key>SecondSuspectedAction</key><val>{1}</val></string>", index++, _SuspiciousAction2.ToString());
-            result.AppendFormat(@"<string><id>{0}</id><key>SuspiciousQuarantine</key><val>{1}</val></string>", index++, _IsSaveSuspiciousToQuarantine == true ? "On" : "Off");
+            result.AppendFormat(@"<string><id>{0}</id><key>SuspectedQuarantine</key><val>{1}</val></string>", index++, _IsSaveSuspiciousToQuarantine == true ? "On" : "Off");
 
 
             if (!String.IsNullOrEmpty(FileExtensions))
