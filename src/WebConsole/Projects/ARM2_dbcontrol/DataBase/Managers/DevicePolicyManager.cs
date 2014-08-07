@@ -310,9 +310,23 @@ namespace VirusBlokAda.CC.DataBase
                 index = 0;
                 foreach (DevicePolicy item in listDP)
                 {
-                    DEVICE_INFO di = DeviceManager.DeserializeFromBase64(item.Device.SerialNo);
-                    di.mount = (Byte)item.State;
-                    policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di));
+                    if (item.State != DeviceClassMode.Undefined)
+                    {
+                        DEVICE_INFO di = DeviceManager.DeserializeFromBase64(item.Device.SerialNo);
+                        switch (item.State)
+                        {
+                            case DeviceClassMode.Disabled:
+                                di.mount = (Byte)DeviceClassMode.Enabled;
+                                break;
+                            case DeviceClassMode.Enabled:
+                                di.mount = (Byte)DeviceClassMode.Disabled;
+                                break;
+                            case DeviceClassMode.BlockWrite:
+                                di.mount = (Byte)DeviceClassMode.BlockWrite;
+                                break;
+                        }
+                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di));
+                    }
                 }
                 policy.Append("</value></param>");
             }

@@ -34,8 +34,8 @@ namespace VirusBlokAda.CC.DataBase
 
             di.time = new Byte[8];
 
-            di.mount = buffer[12];
-            di.insert = 0;
+            di.mount = 0;
+            di.insert = buffer[13];
 
             di.dev_class = buffer[14];
             di.dev_subclass = buffer[15];
@@ -76,8 +76,8 @@ namespace VirusBlokAda.CC.DataBase
             Array.Copy(BitConverter.GetBytes(di.size), 0, buffer, 0, 4);
             Array.Copy(di.time, 0, buffer, 4, 8);
 
-            Array.Copy(BitConverter.GetBytes(di.insert), 0, buffer, 12, 1);
-            Array.Copy(BitConverter.GetBytes(di.mount), 0, buffer, 13, 1);
+            Array.Copy(BitConverter.GetBytes(di.mount), 0, buffer, 12, 1);
+            Array.Copy(BitConverter.GetBytes(di.insert), 0, buffer, 13, 1);
 
             Array.Copy(BitConverter.GetBytes(di.dev_class), 0, buffer, 14, 1);
             Array.Copy(BitConverter.GetBytes(di.dev_subclass), 0, buffer, 15, 1);
