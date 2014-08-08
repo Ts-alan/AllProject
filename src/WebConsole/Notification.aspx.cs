@@ -61,8 +61,8 @@ public partial class Notification : PageBase
         cboxUseJabber.Text = Resources.Resource.UseJabber;
         cboxUseFlowAnalysis.Text = Resources.Resource.UseFlowAnalysis;
 
-        regularMailServer.ValidationExpression = RegularExpressions.IPAddress;
         regularMailFrom.ValidationExpression = RegularExpressions.Email;
+        rangeMailPort.ErrorMessage = String.Format(Resources.Resource.ValueBetween, "1", "9999");
 
         rangeGlobalEpidemyCompCount.ErrorMessage = rangeGlobalEpidemyLimit.ErrorMessage = rangeGlobalEpidemyTimeLimit.ErrorMessage =
             rangeLimit.ErrorMessage = rangeLocalHearthLimit.ErrorMessage = rangeLocalHearthTimeLimit.ErrorMessage =
@@ -111,16 +111,18 @@ public partial class Notification : PageBase
         Boolean isChecked = true;         
         if (ent == null)
         {
-            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
-            cboxAuthorizationEnabled.Checked = false;
+            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = tboxMailPort.Text = String.Empty;
+            cboxAuthorizationEnabled.Checked = cboxEnableSsl.Checked = false;
             tboxAuthorizationUserName.Text = tboxAuthorizationPassword.Text = String.Empty;
             isChecked = false;
         }
         else
         {
             tboxMailServer.Text = ent.MailServer;
+            tboxMailPort.Text = ent.MailPort == 0 ? "" : ent.MailPort.ToString();
             tboxMailFrom.Text = ent.MailFrom;
             tboxMailDisplayName.Text = ent.MailDisplayName;
+            cboxEnableSsl.Checked = ent.MailEnableSsl;
 
             cboxAuthorizationEnabled.Checked = ent.UseMailAuthorization;
             tboxAuthorizationUserName.Text = ent.MailUsername;
@@ -130,7 +132,8 @@ public partial class Notification : PageBase
         if (isChecked && String.IsNullOrEmpty(tboxMailServer.Text))
             isChecked = false;
 
-        cboxUseMail.Checked = tboxMailServer.Enabled = tboxMailFrom.Enabled = tboxMailDisplayName.Enabled = isChecked;
+        cboxUseMail.Checked = tboxMailServer.Enabled = tboxMailFrom.Enabled = tboxMailDisplayName.Enabled = tboxMailPort.Enabled = isChecked;
+        cboxEnableSsl.Disabled = !isChecked;
         cboxAuthorizationEnabled.Disabled = !isChecked;
         tboxAuthorizationPassword.Enabled = tboxAuthorizationUserName.Enabled = isChecked && cboxAuthorizationEnabled.Checked;
     }
@@ -170,18 +173,13 @@ public partial class Notification : PageBase
     {
         if (!cboxUseMail.Checked)
         {
-            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = String.Empty;
+            tboxMailServer.Text = tboxMailFrom.Text = tboxMailDisplayName.Text = tboxMailPort.Text = String.Empty;
             tboxAuthorizationUserName.Text = tboxAuthorizationPassword.Text = String.Empty;
-            cboxAuthorizationEnabled.Checked = false;
+            cboxAuthorizationEnabled.Checked = cboxEnableSsl.Checked = false;
             return true;
         }
 
-        Regex reg = new Regex(RegularExpressions.IPAddress);
-        if (!reg.IsMatch(tboxMailServer.Text))
-            throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
-              + Resources.Resource.MailServer);
-
-        reg = new Regex(RegularExpressions.Email);
+        Regex reg = new Regex(RegularExpressions.Email);
         if (!reg.IsMatch(tboxMailFrom.Text))
             throw new ArgumentException(Resources.Resource.ErrorInvalidValue + ": "
               + Resources.Resource.MailFrom);
@@ -365,10 +363,12 @@ public partial class Notification : PageBase
                 ent.ReRead = true;
                 ent.MailServer = tboxMailServer.Text;
                 ent.MailFrom = tboxMailFrom.Text;
+                ent.MailPort = String.IsNullOrEmpty(tboxMailPort.Text) ? 0 : Convert.ToInt32(tboxMailPort.Text);
                 ent.MailDisplayName = tboxMailDisplayName.Text;
                 ent.UseMailAuthorization = cboxAuthorizationEnabled.Checked;
                 ent.MailUsername = ent.UseMailAuthorization ? tboxAuthorizationUserName.Text : "";
                 ent.MailPassword = ent.UseMailAuthorization ? tboxAuthorizationPassword.Text : "";
+                ent.MailEnableSsl = cboxEnableSsl.Checked;
 
                 retVal = remoteObject.ChangeRegistry(ent.GenerateXML());
             }

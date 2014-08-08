@@ -62,7 +62,7 @@ namespace Vba32.ControlCenter.NotificationService
         /// <param name="to">Кому</param>
         /// <param name="body">Текст письма</param>
         /// <returns></returns>
-        internal static Boolean SendMail(String server, String from, String displayName,
+        internal static Boolean SendMail(String server, Int32 port, Boolean useSSL, String from, String displayName,
             String subject, String to, String body, Int32 priority, System.Net.NetworkCredential credential)
         {
             LoggerNS.log.Info("Vba32NS.SendMail():: Started");
@@ -83,7 +83,7 @@ namespace Vba32.ControlCenter.NotificationService
                     mpriority = System.Net.Mail.MailPriority.Low;
                     break;
             }
-            return ob.Send(server, from, displayName, to, subject, body, mpriority, credential);
+            return ob.Send(server, port, useSSL, from, displayName, to, subject, body, mpriority, credential);
         }
 
         /// <summary>

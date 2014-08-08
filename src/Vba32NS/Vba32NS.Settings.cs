@@ -143,6 +143,7 @@ namespace Vba32.ControlCenter.NotificationService
                     else
                     {
                         LoggerNS.log.Info("MailServer=" + settingsNS.MailServer);
+                        LoggerNS.log.Info("MailPort=" + settingsNS.MailPort);
 
                         if (String.IsNullOrEmpty(settingsNS.MailFrom))
                         {

@@ -149,22 +149,32 @@
                     <%=Resources.Resource.MailServer %>:
                     <span style="color: Red;">*</span>
                 </td>
-                <td align="center" style="padding-top: 5px;">
+                <td align="left" style="padding-top: 5px;">
                     <asp:TextBox ID="tboxMailServer" runat="server" useMail></asp:TextBox>
                     
                     <asp:RequiredFieldValidator runat="server" ID="requiredMailServer" ControlToValidate="tboxMailServer"
                         ErrorMessage='<%$ Resources:Resource, ServerRequired %>' Display="None" ValidationGroup="MailValidator">
                     </asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator runat="server" ID="regularMailServer" ControlToValidate="tboxMailServer"
-                        ErrorMessage='<%$ Resources:Resource, IPAddressRegexErrorMessage %>' Display="None" ValidationGroup="MailValidator" >
-                    </asp:RegularExpressionValidator>                    
                     
                     <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredMailServerCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredMailServer" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="regularMailServerCallout" HighlightCssClass="highlight" 
-                        TargetControlID="regularMailServer" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender2>                    
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 25px;">
+                    <%=Resources.Resource.Port %>:                    
+                </td>
+                <td align="left" style="padding-top: 5px;">
+                    <asp:TextBox ID="tboxMailPort" runat="server" useMail style="width: 50px;"></asp:TextBox>
+                    
+                    <asp:RangeValidator runat="server" ID="rangeMailPort" ControlToValidate="tboxMailPort" Type="Integer" MinimumValue="1" MaximumValue="9999"
+                         Display="None" ValidationGroup="MailValidator">
+                    </asp:RangeValidator>
+                    
+                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeMailPortCallout" HighlightCssClass="highlight" 
+                        TargetControlID="rangeMailPort" PopupPosition="Right">
+                    </ajaxToolkit:ValidatorCalloutExtender2>                    
                 </td>
             </tr>
             <tr>
@@ -172,7 +182,7 @@
                     <%=Resources.Resource.MailFrom %>:
                     <span style="color: Red;">*</span>
                 </td>
-                <td align="center" style="padding-top: 5px;">
+                <td align="left" style="padding-top: 5px;">
                     <asp:TextBox ID="tboxMailFrom" runat="server" useMail></asp:TextBox>
                     
                     <asp:RequiredFieldValidator runat="server" ID="requiredMailFrom" ControlToValidate="tboxMailFrom"
@@ -194,8 +204,13 @@
                 <td style="padding-left: 25px;">
                     <%=Resources.Resource.MailDisplayName %>:
                 </td> 
-                <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
+                <td align="left" style="padding-top: 5px;padding-bottom: 5px;">
                     <asp:TextBox ID="tboxMailDisplayName" runat="server" useMail></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 25px;padding-top: 5px;padding-bottom: 5px;" colspan="2">
+                    <input id="cboxEnableSsl" runat="server" type="checkbox" useMail />&nbsp;<%=Resources.Resource.EnableSsl%>
                 </td>
             </tr>
             <tr>
@@ -207,7 +222,7 @@
                 <td style="padding-left: 45px;">
                     <%=Resources.Resource.User%>
                 </td>
-                <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
+                <td align="left" style="padding-top: 5px;padding-bottom: 5px;">
                     <asp:TextBox runat="server" ID="tboxAuthorizationUserName" autocomplete="off" useMailAuthorization />
 
                     <asp:RequiredFieldValidator runat="server" ID="requiredMailUsername" ControlToValidate="tboxAuthorizationUserName"
@@ -222,7 +237,7 @@
                 <td style="padding-left: 45px;">
                     <%=Resources.Resource.PasswordLabelText%>
                 </td>
-                <td align="center" style="padding-top: 5px;padding-bottom: 5px;">
+                <td align="left" style="padding-top: 5px;padding-bottom: 5px;">
                     <asp:TextBox runat="server" ID="tboxAuthorizationPassword" TextMode="Password" autocomplete="off" useMailAuthorization />
                 </td>
             </tr>

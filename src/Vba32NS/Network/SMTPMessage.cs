@@ -17,13 +17,15 @@ namespace Vba32.ControlCenter.NotificationService.Network
         private ManualResetEvent onEvent = new ManualResetEvent(false);
         static Boolean mailSent = true;
 
-        public Boolean Send(String server, String fromMail,String displayName,
+        public Boolean Send(String server, Int32 port, Boolean useSSL, String fromMail,String displayName,
             String toMail, String  subject, String body, MailPriority priority, NetworkCredential credential)
         {
             LoggerNS.log.Info("SMTPMessage.Send():: Started ");
 
             // Command line argument must the the SMTP host.
-            SmtpClient client = new SmtpClient(server);
+            SmtpClient client = (port == 0 ? new SmtpClient(server) : new SmtpClient(server, port));
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = useSSL;
             if (credential != null)
             {
                 client.UseDefaultCredentials = false;

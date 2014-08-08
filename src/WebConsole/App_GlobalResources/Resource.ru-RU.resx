@@ -3705,4 +3705,7 @@
   <data name="Terminate" xml:space="preserve">
     <value>Завершить</value>
   </data>
+  <data name="EnableSsl" xml:space="preserve">
+    <value>Включить SSL</value>
+  </data>
 </root>

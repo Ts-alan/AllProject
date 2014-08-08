@@ -141,7 +141,7 @@ namespace Vba32.ControlCenter.NotificationService
                                             credential = new System.Net.NetworkCredential(Vba32NS.settingsNS.MailUsername, Vba32NS.settingsNS.MailPassword);
                                         }
 
-                                        Vba32NS.SendMail(Vba32NS.settingsNS.MailServer, Vba32NS.settingsNS.MailFrom, Vba32NS.settingsNS.MailDisplayName,
+                                        Vba32NS.SendMail(Vba32NS.settingsNS.MailServer, Vba32NS.settingsNS.MailPort, Vba32NS.settingsNS.MailEnableSsl, Vba32NS.settingsNS.MailFrom, Vba32NS.settingsNS.MailDisplayName,
                                             NotifyMessageBuilder.BuildSubject(message, ev.Mail.Subject),
                                             addr, NotifyMessageBuilder.BuildBody(message, ev.Mail.Message),
                                             ev.Mail.Priority, credential);

@@ -3717,4 +3717,7 @@ system administrator.</value>
   <data name="Terminate" xml:space="preserve">
     <value>Terminate</value>
   </data>
+  <data name="EnableSsl" xml:space="preserve">
+    <value>Enable SSL</value>
+  </data>
 </root>
