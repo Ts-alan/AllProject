@@ -229,7 +229,8 @@ namespace VirusBlokAda.CC.Settings
                 ent.JabberPassword = GetString(key, "JabberPassword");
 
                 ent.MailServer = GetString(key, "MailServer");
-                ent.MailPort = (Int32)GetNumber(key, "MailPort");
+                Int32? tmp = GetNumber(key, "MailPort");
+                ent.MailPort = (tmp == null ? 0 : (Int32)tmp);
                 ent.MailFrom = GetString(key, "MailFrom");
                 ent.MailDisplayName = GetString(key, "MailDisplayName");
                 ent.MailEnableSsl = GetBoolean(key, "MailEnableSsl");
