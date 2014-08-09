@@ -3,3 +3,7 @@
 	color: Gray;
 	cursor: default;
 }
+.ui-state-default[disabled]
+{
+	color: Gray !important;
+}
