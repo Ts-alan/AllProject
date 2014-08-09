@@ -3708,4 +3708,7 @@
   <data name="EnableSsl" xml:space="preserve">
     <value>Включить SSL</value>
   </data>
+  <data name="FullAccess" xml:space="preserve">
+    <value>Полный доступ</value>
+  </data>
 </root>

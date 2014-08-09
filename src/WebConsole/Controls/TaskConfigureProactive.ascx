@@ -638,7 +638,7 @@
 	                </tr>
 	                </table>
                 </div>
-                <h3><a><span><%=Resources.Resource.Protected %></span></a></h3>
+                <h3><a><span><%=Resources.Resource.FullAccess %></span></a></h3>
                 <div>
                     <table>
                     <tr>
@@ -740,7 +740,7 @@
                                     <div class="ui-accordion ui-widget ui-helper-reset" style="width: 400px;">
                                         <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons 
                                                     ui-accordion-header-active ui-corner-top" style="cursor: default !important;">
-                                            <%=Resources.Resource.Protected%>
+                                            <%=Resources.Resource.FullAccess%>
                                         </h3>                        
                                         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
                                             <div>
