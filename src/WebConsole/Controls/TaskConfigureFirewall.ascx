@@ -306,10 +306,7 @@
             $('#' + '<%=IP4addRuleLocalIP.ClientID %>').val(localIP);         
             var destIP=tableRow.children().find("[id*='IP4lblDestinationIP']").text();
             $('#' + '<%=IP4addRuleDestinationIP.ClientID %>').val(destIP);
-             var chkAudit=tableRow.children().find("[id*='IP4hdnAudit']").attr('value');
-            if(chkAudit=="true" || chkAudit=="True")
-                $('#' + '<%=IP4chkAuditDialog.ClientID %>').prop('checked',true);
-            else $('#' + '<%=IP4chkAuditDialog.ClientID %>').prop('checked',false);
+
             var protocol=tableRow.children().find("[id*='IP4lblProtocol']").text();
             var protocolsType=protocol.split(',');            
             var number;
@@ -450,10 +447,7 @@
             $('#' + '<%=IP6addRuleLocalIP.ClientID %>').val(localIP);
             var destIP=tableRow.children().find("[id*='IP6lblDestinationIP']").text();
             $('#' + '<%=IP6addRuleDestinationIP.ClientID %>').val(destIP);
-            var chkAudit=tableRow.children().find("[id*='IP6hdnAudit']").attr('value');
-            if(chkAudit=="true" || chkAudit=="True")
-                $('#' + '<%=IP6chkAuditDialog.ClientID %>').prop('checked',true);
-            else $('#' + '<%=IP6chkAuditDialog.ClientID %>').prop('checked',false);
+           
             var protocol=tableRow.children().find("[id*='IP6lblProtocol']").text();
             var protocolsType=protocol.split(',');
             var number;
@@ -807,9 +801,6 @@
                         Display="None"></asp:RegularExpressionValidator><ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderIP4addRuleOtherProtocol" runat="server" TargetControlID="RegularIP4addRuleOtherProtocol" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                    
                     <br />        
                     <br />
-                    <asp:CheckBox runat='server' id="IP4chkAuditDialog" /><asp:Label  runat='server' Text='<%$ Resources:Resource, Audit%>' />
-                    <br />
-                    <br />
                     <br />
                     <asp:Table  runat='server' Width="250px">                             
                         <asp:TableRow>
@@ -1084,8 +1075,6 @@
                     Display="None"></asp:RegularExpressionValidator><ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderIP6addRuleOtherProtocol" runat="server" TargetControlID="RegularIP6addRuleOtherProtocol" HighlightCssClass="highlight" PopupPosition="BottomLeft" />                    
                                
                 <br />
-                <br />
-                <asp:CheckBox runat='server' id="IP6chkAuditDialog" /><asp:Label  runat='server' Text='<%$ Resources:Resource, Audit%>' />
                 <br />
                 <br />
                 <asp:Table  runat='server' Width="250px">                             

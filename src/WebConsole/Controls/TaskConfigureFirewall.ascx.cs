@@ -166,7 +166,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         rule.LocalPort = "*";
         rule.DestinationIP = IP4addRuleDestinationIP.Text;
         rule.DestinationPort = "*";
-        rule.Audit = IP4chkAuditDialog.Checked;
+      //  rule.Audit = IP4chkAuditDialog.Checked;
         String protocols = "";
         for (int i = 0; i < IP4dlAddRules.Items.Count; i++)
         {
@@ -288,7 +288,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
             rule.LocalPort = "*";
             rule.DestinationIP = IP4addRuleDestinationIP.Text;
             rule.DestinationPort = "*";
-            rule.Audit = IP4chkAuditDialog.Checked;
+           // rule.Audit = IP4chkAuditDialog.Checked;
             String protocols = "";
             for (int i = 0; i < IP4dlAddRules.Items.Count; i++)
             {
@@ -365,7 +365,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
         rule.LocalPort = "*";
         rule.DestinationIP = IP6addRuleDestinationIP.Text;
         rule.DestinationPort = "*";
-        rule.Audit = IP6chkAuditDialog.Checked;
+        //rule.Audit = IP6chkAuditDialog.Checked;
         String protocols = "";
         for (int i = 0; i < IP6dlAddRules.Items.Count; i++)
         {
@@ -487,7 +487,7 @@ public partial class Controls_TaskConfigureFirewall : System.Web.UI.UserControl,
             rule.LocalPort = "*";
             rule.DestinationIP = IP6addRuleDestinationIP.Text;
             rule.DestinationPort = "*";
-            rule.Audit = IP6chkAuditDialog.Checked;
+            //rule.Audit = IP6chkAuditDialog.Checked;
             String protocols = "";
             for (int i = 0; i < IP6dlAddRules.Items.Count; i++)
             {
