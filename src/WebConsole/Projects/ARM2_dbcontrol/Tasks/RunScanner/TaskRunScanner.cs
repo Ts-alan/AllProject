@@ -88,6 +88,7 @@ namespace ARM2_dbcontrol.Tasks
                 result.Append(@"<key>memory</key><value />");
 
             Int32 index = 0;
+            result.Append("</arg><arg>");
             foreach (String path in PathScan)
             {
                 result.AppendFormat(@"<key>path{0}</key><value>{1}</value>", index++, path.Replace('\\', '/'));
