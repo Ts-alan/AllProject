@@ -25,12 +25,25 @@ public partial class Computers2 : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         Page.Title = Resources.Resource.PageComputersTitle;
+
+        RegisterScript(@"js/jstree.js");
+        RegisterLink("~/App_Themes/" + (String)HttpContext.Current.Profile.GetPropertyValue("Theme") + @"/jsTree/style.css");
+  
+
         if (!IsPostBack)
         {
             InitFields();
         }
     }
-
+    protected void Page_LoadComplete(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            String where = FilterContainer1.GenerateSQL();
+            //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeLoaderStartScript", "setTimeout(function(){$get('" + btnReload.ClientID + "').onclick(\"" + where + "\");}, 1000);", true);
+            
+        }
+    }
     protected override void InitFields()
     {
         List<DDLPair> list = new List<DDLPair>();
@@ -59,7 +72,7 @@ public partial class Computers2 : PageBase
         }
         fltPolicy.DataSource = list;
         fltPolicy.DataBind();
-    }
+       }
 
     protected void FilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
     {

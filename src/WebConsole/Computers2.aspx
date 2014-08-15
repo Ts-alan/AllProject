@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MaintainScrollPositionOnPostback="true"  validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Computers2.aspx.cs" Inherits="Computers2" Title="Untitled Page" EnableEventValidation="false" %>
+<%@ Page Language="C#" MaintainScrollPositionOnPostback="true"  validateRequest="false" MasterPageFile="~/mstrPageNew.master" AutoEventWireup="true" CodeFile="Computers2.aspx.cs" Inherits="Computers2" Title="Untitled Page" EnableEventValidation="false" %>
 
 <%@ Register Src="~/Controls/CompositeFilter.ascx" TagName="CompositeFilter" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterText.ascx" TagName="FilterText" TagPrefix="flt" %>
@@ -73,7 +73,7 @@
                         { name: 'text', type: 'string' },
                         { name: 'ip', type: 'string' },
                         { name: 'os', type: 'string' }
-            /*    { name: 'duration', type: 'string' }*/
+
                      ]
         });
 
@@ -82,12 +82,7 @@
             proxy: {
                 type: 'ajax',
                 url: 'Handlers/ComputerPageHandler.ashx'
-                /*                ,
-                extraParams:
-                {
-                where: hdnWhere
-                }
-                */
+
             },
             root: {
                 text: 'Root',
@@ -148,6 +143,7 @@
         treeRoot.expand(false);
 
         /* Menu Actions */
+        
         var showInfoAction = Ext.create('Ext.Action', {
             text: '<%=Resources.Resource.MoreInfo %>',
             handler: showInfoNode,
@@ -304,7 +300,7 @@
             result += "</table><div style='padding-top: 7px;'><a href='CompInfo.aspx?CompName=" + compInfo.computerName + "'>" + MoreInfo + "</a></div></div>";
             $get('AdditionalInfoPanel').innerHTML = result;
         }
-        /* all=true, если для всех компов */
+        
         function getCompsInfo() {
             computers = new Array();
             compIP = new Array();
@@ -315,7 +311,7 @@
                     for (var i = 0; i < rootNode.childNodes.length; i++) {
                         RecursiveAddNodes(rootNode.childNodes[i]);
                     }
-                    /**/
+                    
                     if (rootNode.isLeaf() && (rootNode.get('checked'))) {
                         computers.push(rootNode.get("text").toLowerCase());
                         compIP.push(rootNode.get("ip"));
@@ -325,13 +321,167 @@
             $get('<%=hdnSelectedCompsNames.ClientID %>').value = computers.join('&');
             $get('<%=hdnSelectedCompsIP.ClientID %>').value = compIP.join('&');
         }
-        $get('<%=btnReload.ClientID%>').onclick = function (param) {
+        /*$get('<%=btnReload.ClientID%>').onclick = function (param) {
+            
             hdnWhere = param;
             treeStore.proxy.extraParams = { where: hdnWhere };
-            
+
             treeStore.load();
-        }
+        }*/
     });
+
+
+
+    var IPAddress = "<%=Resources.Resource.IPAddress %>";
+    var ControlCenter = "<%=Resources.Resource.ControlCenter %>";
+    var CPU = "<%=Resources.Resource.CPU %>" + "(" + "<%=Resources.Resource.Herz%>" + ")";
+    var DomainName = "<%=Resources.Resource.DomainName %>";
+    var VBA32Integrity = "<%=Resources.Resource.VBA32Integrity %>";
+    var LatestInfected = "<%=Resources.Resource.LatestInfected %>";
+    var LatestMalware = "<%=Resources.Resource.LatestMalware %>";
+    var LatestUpdate = "<%=Resources.Resource.LatestUpdate %>";
+    var OSType = "<%=Resources.Resource.OSType %>";
+    var RAM = "<%=Resources.Resource.RAM %>" + "(" + "<%=Resources.Resource.Megabyte%>" + ")";
+    var RecentActive = "<%=Resources.Resource.RecentActive %>";
+    var UserLogin = "<%=Resources.Resource.UserLogin %>";
+    var VBA32KeyValid = "<%=Resources.Resource.VBA32KeyValid %>";
+    var VBA32Version = "<%=Resources.Resource.VBA32Version %>";
+    var Description = "<%=Resources.Resource.Description %>";
+    var Policy = "<%=Resources.Resource.Policy %>";
+    var DefaultPolicy = "<%=Resources.Resource.DefaultPolicy%>";
+    var MachineName = "<%=Environment.MachineName%>";
+    var ShortMinValue = "<%=Int16.MinValue%>";
+    var DateTimeMinValue = "<%=DateTime.MinValue%>";
+    var Components = "<%=Resources.Resource.Components%>";
+    var ComponentName = "<%=Resources.Resource.ComponentName%>";
+    var ComponentState = "<%=Resources.Resource.State%>";
+    var MoreInfo = "<%=Resources.Resource.MoreInfo%>";
+
+    $(document).ready(function () {
+
+        $("input[type=button]").button();
+
+
+
+        $.ajax({
+            type: "GET",
+            url: "Handlers/ComputerPageHandler.ashx",
+            dataType: "json"
+        }).done(function (treeData) {
+            $('#divTree').jstree({
+                'core': {
+                    "check_callback": true,
+                    'data': treeData
+                },
+                'types': {
+                    "group": {
+                        "icon": "glyphicon glyphicon-flash"
+                    },
+                    "leaf": {
+                        "icon": " x-tree-icon-leaf "
+                    }
+                },
+                'plugins': ["checkbox", "state", "types"]
+            });
+        });
+
+
+        $('#divTree').on('changed.jstree', function (e, data) {
+            hideInfo();
+            if (data.node == null) return;
+            var node = data.node.original;
+
+
+            if (node) {
+                showInfoEnable(node.leaf);
+                $("#btnMoreInfo").attr("nodeId", node.id);
+            }
+        });
+
+        function showInfoEnable(enable) {
+            $("#btnMoreInfo").button("option", "disabled", !enable);
+        };
+
+        var hdnWhere = "";
+        $get('<%=btnReload.ClientID%>').onclick = function (param) {
+
+            hdnWhere = param;
+            $.ajax({
+                type: "GET",
+                url: "Handlers/ComputerPageHandler.ashx",
+                dataType: "json",
+                data: { where: hdnWhere }
+            }).done(function (treeData) {
+                /*$('#divTree').jstree('destroy');*/
+                $('#divTree').jstree({
+                    'core': {
+                        'data': treeData
+                    }
+                });
+                $('#divTree').jstree(true).refresh();
+            });
+
+        };
+
+
+    });
+
+
+
+  
+
+
+
+
+    function getInfo() {
+        var nodeId=$("#btnMoreInfo").attr("nodeId");
+        $.ajax({
+            type: "POST",
+            url: "Computers2.aspx/GetAdditionalInfo",
+            dataType: "json",
+            data: "{id:'" + nodeId + "'}",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {            
+                showInfo(JSON.parse(msg));
+            },
+            error: function (msg) { alert(msg.responseText) }
+        });
+    };
+    function hideInfo() {
+        $get('AdditionalInfoPanel').innerHTML = "";
+        $get('AdditionalInfoPanel').style.display = "none";
+    };
+
+    function showInfo(compInfo) {
+        $get('AdditionalInfoPanel').style.display = "";
+        var result = "<div style='margin-bottom: 10px;color: White;'><b>" + compInfo.computerName + "</b></div><div><table class='tableInfo'>";
+        result += "<tr><td class='r0'>" + IPAddress + "</td><td class='r0'>" + compInfo.ipAddress + "</td></tr>";
+        result += "<tr><td class='r1'>" + UserLogin + "</td><td class='r1'>" + (compInfo.userLogin == "" ? "-" : compInfo.userLogin) + "</td></tr>";
+        result += "<tr><td class='r0'>" + ControlCenter + "</td><td class='r0'><div class='" + ((compInfo.controlCenter || MachineName == compInfo.computerName) ? "enabledImage" : "disabledImage") + "'></div></td></tr>";
+        result += "<tr><td class='r1'>" + DomainName + "</td><td class='r1'>" + (compInfo.domainName == "" ? "-" : compInfo.domainName) + "</td></tr>";
+        result += "<tr><td class='r0'>" + OSType + "</td><td class='r0'>" + compInfo.osName + "</td></tr>";
+        result += "<tr><td class='r1'>" + RAM + "</td><td class='r1'>" + (compInfo.ram == ShortMinValue ? "-" : compInfo.ram) + "</td></tr>";
+        result += "<tr><td class='r0'>" + CPU + "</td><td class='r0'>" + (compInfo.cpu == ShortMinValue ? "-" : compInfo.cpu) + "</td></tr>";
+        result += "<tr><td class='r1'>" + RecentActive + "</td><td class='r1'>" + compInfo.recentActive + "</td></tr>";
+        result += "<tr><td class='r0'>" + LatestUpdate + "</td><td class='r0'>" + (compInfo.latestUpdate == DateTimeMinValue ? "-" : compInfo.latestUpdate) + "</td></tr>";
+        result += "<tr><td class='r1'>" + VBA32Version + "</td><td class='r1'>" + (compInfo.vba32Version == "" ? "-" : compInfo.vba32Version) + "</td></tr>";
+        result += "<tr><td class='r0'>" + LatestInfected + "</td><td class='r0'>" + (compInfo.latestInfected == DateTimeMinValue ? "-" : compInfo.latestInfected) + "</td></tr>";
+        result += "<tr><td class='r1'>" + LatestMalware + "</td><td class='r1'>" + (compInfo.latestMalware == "" ? "-" : compInfo.latestMalware) + "</td></tr>";
+        result += "<tr><td class='r0'>" + VBA32Integrity + "</td><td class='r0'><div class='" + (compInfo.vba32Integrity ? "enabledImage" : "disabledImage") + "'></div></td></tr>";
+        result += "<tr><td class='r1'>" + VBA32KeyValid + "</td><td class='r1'><div class='" + (compInfo.vba32KeyValid ? "enabledImage" : "disabledImage") + "'></div></td></tr>";
+        result += "<tr><td class='r0'>" + Description + "</td><td class='r0'>" + compInfo.description + "</td></tr>";
+
+        var defaultPolicyName = $get('<%=hdnDefaultPolicyName.ClientID%>').value;
+        var policyValue = !compInfo.policyName ? "-" : compInfo.policyName;
+        if (policyValue == "-" && defaultPolicyName != "") policyValue = defaultPolicyName + " (" + DefaultPolicy + ")";
+        result += "<tr><td class='r0'>" + Policy + "</td><td class='r0'>" + policyValue + "</td></tr>";
+        result += "</table><div style='padding: 10px 0px 5px 0px;'><b>" + Components + "</b></div><table class='tableInfo'><tr><td>" + ComponentName + "</td><td>" + ComponentState + "</td></tr>";
+        for (var i = 0; i < compInfo.components.length; i++) {
+            result += "<tr><td class='r" + i % 2 + "'>" + compInfo.components[i].name + "</td><td class='r" + i % 2 + "'>" + compInfo.components[i].state + "</td></tr>";
+        }
+        result += "</table><div style='padding-top: 7px;'><a href='CompInfo.aspx?CompName=" + compInfo.computerName + "'>" + MoreInfo + "</a></div></div>";
+        $get('AdditionalInfoPanel').innerHTML = result;
+    };
 
 </script>
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" EnableScriptGlobalization="true" >
@@ -429,6 +579,17 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 <div id="mainContainer" class="bigTree" style="width:410px;height:600px;float:left;"></div>
+<div id="divTreePanel">
+    <div id="divTreePanelButtons">
+        <input type="button" value="All" onclick="$('#divTree').jstree('check_all');">
+        <input type="button" value="None" onclick="$('#divTree').jstree('uncheck_all');">
+        <input type="button" value="Collapse All" onclick="$('#divTree').jstree('close_all');">
+        <input type="button" value="Expand All" onclick="$('#divTree').jstree('open_all');">
+        <input id="btnMoreInfo" type="button" value="More Info" onclick="return getInfo();">
+    </div>
+    <div id="divTree" class="bigTree"></div>
+</div>
+
 
 <div id="AdditionalInfoPanel" style="width: 300px; min-height: 150px; padding: 8px; margin: 5px 20px; background-color: Gray; float: left;display: none;"></div>
 
