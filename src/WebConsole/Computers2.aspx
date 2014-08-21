@@ -30,7 +30,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <script type="text/javascript">
 
-    Ext.onReady(function () {
+    /*Ext.onReady(function () {
         Ext.resetElement = Ext.getBody();
 
         var IPAddress = "<%=Resources.Resource.IPAddress %>";
@@ -144,7 +144,7 @@
 
         /* Menu Actions */
         
-        var showInfoAction = Ext.create('Ext.Action', {
+      /*  var showInfoAction = Ext.create('Ext.Action', {
             text: '<%=Resources.Resource.MoreInfo %>',
             handler: showInfoNode,
             disabled: true,
@@ -173,7 +173,7 @@
 
 
         /* contextMenu and Toolbar*/
-        var contextMenu = Ext.create('Ext.menu.Menu', {
+      /*  var contextMenu = Ext.create('Ext.menu.Menu', {
             items: [showInfoAction]
         });
 
@@ -184,7 +184,7 @@
         computersToolBar.resumeLayouts(true);
 
         /* Main Panel */
-        var ComputerTreePanel = new Ext.Panel({
+      /*  var ComputerTreePanel = new Ext.Panel({
             renderTo: 'mainContainer',
             region: 'east',
             layout: 'fit',
@@ -328,7 +328,9 @@
 
             treeStore.load();
         }*/
-    });
+
+
+   /* });*/
 
 
 
@@ -357,84 +359,152 @@
     var ComponentState = "<%=Resources.Resource.State%>";
     var MoreInfo = "<%=Resources.Resource.MoreInfo%>";
 
+    var hdnWhere = "";
     $(document).ready(function () {
 
         $("input[type=button]").button();
 
 
-
-        $.ajax({
-            type: "GET",
-            url: "Handlers/ComputerPageHandler.ashx",
-            dataType: "json"
-        }).done(function (treeData) {
-            $('#divTree').jstree({
-                'core': {
-                    "check_callback": true,
-                    'data': treeData
+        $.jstree.defaults.checkbox.whole_node = false;
+        $.jstree.defaults.checkbox.tie_selection = false;
+        $('#divTree').jstree({
+            'core': {
+                'check_callback': true,
+                'multiple': false,
+                'data': function (node, cb) {
+                    cb(loadTreeInfo());
+                }
+            },
+            'types': {
+                'group': {
+                    'icon': "App_Themes/Main/groups/images/group.png"
                 },
-                'types': {
-                    "group": {
-                        "icon": "glyphicon glyphicon-flash"
-                    },
-                    "leaf": {
-                        "icon": " x-tree-icon-leaf "
+                'computerGrey': {
+                    'icon': "App_Themes/Main/groups/images/computerGrey.png"
+                },
+                'computerRed': {
+                    'icon': "App_Themes/Main/groups/images/computerRed.png"
+                },
+                'computerGreen': {
+                    'icon': "App_Themes/Main/groups/images/computerGreen.png"
+                },
+                'computerYellow': {
+                    'icon': "App_Themes/Main/groups/images/computerYellow.png"
+                },
+                'server': {
+                    'icon': "App_Themes/Main/groups/images/server.png"
+                },
+                'default': {
+                }
+            },
+            'plugins': ["checkbox", "types", "contextmenu"],
+            'contextmenu': {
+                'items': function ($node) {
+                    var dis = ($node.type == "group");
+
+                    return {
+
+                        'MoreInfo': {
+                            'label': MoreInfo,
+                            '_disabled': dis,
+                            'action': function (obj) {
+
+                                MoreInfoFunction($node);
+                                getInfo();
+                            }
+                        }
                     }
-                },
-                'plugins': ["checkbox", "state", "types"]
-            });
-        });
-
-
-        $('#divTree').on('changed.jstree', function (e, data) {
-            hideInfo();
-            if (data.node == null) return;
-            var node = data.node.original;
-
-
-            if (node) {
-                showInfoEnable(node.leaf);
-                $("#btnMoreInfo").attr("nodeId", node.id);
+                }
             }
         });
 
-        function showInfoEnable(enable) {
-            $("#btnMoreInfo").button("option", "disabled", !enable);
-        };
+        $('#divTree').on('changed.jstree', function (e, data) {
+            MoreInfoFunction(data.node);
+        });
+        $('#divTree').on('check_node.jstree', function (e, data) {
+            getCheckedCompsInfo();
+        });
+        $('#divTree').on('uncheck_node.jstree', function (e, data) {
+            getCheckedCompsInfo();
+        });
+        $('#divTree').on('loaded.jstree', function (e, data) {
+            getCheckedCompsInfo();
+        });
+        $('#divTree').on('refresh.jstree', function (e, data) {
+            getCheckedCompsInfo();
 
-        var hdnWhere = "";
+        });
+
+
         $get('<%=btnReload.ClientID%>').onclick = function (param) {
-
             hdnWhere = param;
-            $.ajax({
-                type: "GET",
-                url: "Handlers/ComputerPageHandler.ashx",
-                dataType: "json",
-                data: { where: hdnWhere }
-            }).done(function (treeData) {
-                /*$('#divTree').jstree('destroy');*/
-                $('#divTree').jstree({
-                    'core': {
-                        'data': treeData
-                    }
-                });
-                $('#divTree').jstree(true).refresh();
-            });
-
+            $('#divTree').jstree('refresh');
         };
-
 
     });
+    /**/
+    function getCheckedCompsInfo() {
+        computers = new Array();
+        compIP = new Array();
+        var node;
+        var gr = $('#divTree').jstree(true).get_node('Group_1');
+        console.log(gr);
+        var checkedObj = $('#divTree').jstree('get_checked', true);
+        
+        for (i = 0; i < checkedObj.length; i++) {
+            if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
+                /*console.log(checkedObj[i]);*/
+                node = checkedObj[i].original;
+                if (node != null && node.leaf) {
+                    computers.push(node.text.toLowerCase());
+                    compIP.push(node.ip);
+                }
+            }
+        }
+        $get('<%=hdnSelectedCompsNames.ClientID %>').value = computers.join('&');
+        $get('<%=hdnSelectedCompsIP.ClientID %>').value = compIP.join('&');
+    };
 
+    function MoreInfoFunction(node) {
+        hideInfo();
+        if (node == null) return;
+        var node = node.original;
+        if (node) {
+            showInfoEnable(node.leaf);
+            if (node.leaf) $("#btnMoreInfo").attr("nodeId", node.id);
+            else $("#btnMoreInfo").attr("nodeId", -1);
+                
+        }
+        
+    };
 
+    function showInfoEnable(enable) {
+        $("#btnMoreInfo").button("option", "disabled", !enable);
+    };
 
-  
-
-
+    function loadTreeInfo() {
+        var d = "";
+        var hdnSelected = $get('<%=hdnSelectedCompsNames.ClientID %>').value;
+         $.ajax({
+            type: "GET",
+            async:false,
+            url: "Handlers/ComputerPageHandler.ashx",
+            dataType: "json",
+            data: { where: hdnWhere,selected:hdnSelected },
+            success: function (data) {
+                d = data;
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+        return d;
+    };
 
 
     function getInfo() {
-        var nodeId=$("#btnMoreInfo").attr("nodeId");
+        var nodeId = $("#btnMoreInfo").attr("nodeId");
+        if (nodeId == -1) return;
         $.ajax({
             type: "POST",
             url: "Computers2.aspx/GetAdditionalInfo",
@@ -578,14 +648,14 @@
             </tsk:TaskPanel>
         </ContentTemplate>
     </asp:UpdatePanel>
-<div id="mainContainer" class="bigTree" style="width:410px;height:600px;float:left;"></div>
-<div id="divTreePanel">
+<%--<div id="mainContainer" class="bigTree" style="width:410px;height:600px;float:left;"></div>--%>
+<div id="divTreePanel" class="bigTree" style="width:500px;height:600px;float:left;">
     <div id="divTreePanelButtons">
-        <input type="button" value="All" onclick="$('#divTree').jstree('check_all');">
-        <input type="button" value="None" onclick="$('#divTree').jstree('uncheck_all');">
-        <input type="button" value="Collapse All" onclick="$('#divTree').jstree('close_all');">
-        <input type="button" value="Expand All" onclick="$('#divTree').jstree('open_all');">
-        <input id="btnMoreInfo" type="button" value="More Info" onclick="return getInfo();">
+        <input type="button" value="<%=Resources.Resource.SelectAll %>" title="<%=Resources.Resource.SelectAllComputers %>" onclick="$('#divTree').jstree('check_all');"/>
+        <input type="button" value="<%=Resources.Resource.UnselectAll %>" title="<%=Resources.Resource.UnselectAllComputers %>" onclick="$('#divTree').jstree('uncheck_all');"/>
+        <input type="button" value="<%=Resources.Resource.Collapse %>" title="<%=Resources.Resource.CollapseAllGroups %>" onclick="$('#divTree').jstree('close_all');"/>
+        <input type="button" value="<%=Resources.Resource.Expand %>" title="<%=Resources.Resource.ExpandAllGroups %>" onclick="$('#divTree').jstree('open_all');"/>
+        <input id="btnMoreInfo" type="button" disabled="true" value="<%=Resources.Resource.MoreInfo %>" title="<%=Resources.Resource.ShowAdditionalInfo %>" onclick="return getInfo();"/>
     </div>
     <div id="divTree" class="bigTree"></div>
 </div>

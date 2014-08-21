@@ -27,7 +27,8 @@ public partial class Computers2 : PageBase
         Page.Title = Resources.Resource.PageComputersTitle;
 
         RegisterScript(@"js/jstree.js");
-        RegisterLink("~/App_Themes/" + (String)HttpContext.Current.Profile.GetPropertyValue("Theme") + @"/jsTree/style.css");
+       /* RegisterLink("~/App_Themes/" + (String)HttpContext.Current.Profile.GetPropertyValue("Theme") + @"/jsTree/style.css");*/
+        RegisterLink("~/App_Themes/" + (String)HttpContext.Current.Profile.GetPropertyValue("Theme") + @"/Groups/Groups.css");
   
 
         if (!IsPostBack)
@@ -101,20 +102,22 @@ public partial class Computers2 : PageBase
         //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
         SelectedComputersForTask selectedComps = GetSelectedCompsForTasks(e.AssignToAll);
 
-
-        Int64[] taskId = new Int64[selectedComps.Names.Count];
-
-        String userName = Anchor.GetStringForTaskGivedUser();
-        String service = ConfigurationManager.AppSettings["Service"];
-        String connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
-
-        Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
-
-        for (int i = 0; i < selectedComps.Names.Count; i++)
+        if (selectedComps.Names.Count > 0)
         {
-            taskId[i] = PreServAction.CreateTask(selectedComps.Names[i], e.TaskName, e.Xml, userName, connStr);
+            Int64[] taskId = new Int64[selectedComps.Names.Count];
+
+            String userName = Anchor.GetStringForTaskGivedUser();
+            String service = ConfigurationManager.AppSettings["Service"];
+            String connStr = ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
+
+            Vba32ControlCenterWrapper control = new Vba32ControlCenterWrapper(service);
+
+            for (int i = 0; i < selectedComps.Names.Count; i++)
+            {
+                taskId[i] = PreServAction.CreateTask(selectedComps.Names[i], e.TaskName, e.Xml, userName, connStr);
+            }
+            control.PacketCustomAction(taskId, selectedComps.IpAddresses.ToArray(), e.TaskXml);
         }
-        control.PacketCustomAction(taskId, selectedComps.IpAddresses.ToArray(), e.TaskXml);
     }
 
     private SelectedComputersForTask GetSelectedCompsForTasks(bool all)
@@ -122,9 +125,9 @@ public partial class Computers2 : PageBase
         SelectedComputersForTask selected;
         if (!all)
         {
-
-            selected.Names = new List<string>(hdnSelectedCompsNames.Value.Split('&'));
-            selected.IpAddresses = new List<string>(hdnSelectedCompsIP.Value.Split('&'));
+            char[] sep = new char[1] { '&' };
+            selected.Names = new List<string>(hdnSelectedCompsNames.Value.Split(sep,StringSplitOptions.RemoveEmptyEntries));
+            selected.IpAddresses = new List<string>(hdnSelectedCompsIP.Value.Split(sep, StringSplitOptions.RemoveEmptyEntries));
         }
         else
         {
