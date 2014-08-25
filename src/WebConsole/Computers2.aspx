@@ -447,8 +447,6 @@
         computers = new Array();
         compIP = new Array();
         var node;
-        var gr = $('#divTree').jstree(true).get_node('Group_1');
-        console.log(gr);
         var checkedObj = $('#divTree').jstree('get_checked', true);
         
         for (i = 0; i < checkedObj.length; i++) {
