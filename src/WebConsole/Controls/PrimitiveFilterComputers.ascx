@@ -29,208 +29,118 @@
             };
         } ();
 
-        var ComputersTree = function () {
-            var root;
-            var treeStore;
-            var tree;
-            function onTreeLoad(This, node) {
-                SetOnCheckChanged();
-                SetCheckedAccordingToText();
-            }
 
-            function SetOnCheckChanged() {
-                root.eachChild(function (group) {
-                    RecursiveSetOnCheckChanged(group);
-                });
-            }
 
-            function RecursiveSetOnCheckChanged(group) {
-                groupIsChecked=group.get('checked');
-                if(groupIsChecked)
-                    toggleParentCheck(group,groupIsChecked);
-                group.eachChild(function (node) {
-                    RecursiveSetOnCheckChanged(node);
-                });              
-            }
 
-            function SetCheckedAccordingToText() {
-                gen = ComputersTextBox.getRegex();
-                if (gen == null) return;
-                regex = new RegExp(gen, "i");
-                root.eachChild(function (group) {
-                    RecursiveIsChecked(group);
+        function pageLoad () {
 
-                    function RecursiveIsChecked(rootNode) {
-                        var childChecked = false;
-                        for (var i = 0; i < rootNode.childNodes.length; i++) {
-                            if (RecursiveIsChecked(rootNode.childNodes[i]))
-                                childChecked = true;
-                        }
-                        if (rootNode.isLeaf() && regex.test(rootNode.get("text"))) {
-                            childChecked = true;
-                            rootNode.set('checked', childChecked);
-                        }
+            $("input[type=button]").button();
 
-                        if (!rootNode.isLeaf()) {
-                            rootNode.set('checked',childChecked);
-                        }
-
-                        return childChecked;
+            $.jstree.defaults.checkbox.whole_node = false;
+            $.jstree.defaults.checkbox.tie_selection = false;
+            $('#compFilterTree').jstree({
+                'core': {
+                    'check_callback': true,
+                    'multiple': false,
+                    'data': function (node, cb) {
+                        cb(loadCompFilterTreeInfo());
                     }
-                });
-            }
-
-            //function to check/uncheck all  child nodes and parent path
-            function toggleCheck(node, isCheck) {
-                if (node) {
-                    var args = [isCheck];
-                    node.cascadeBy(function () {
-                        c = args[0];
-                        this.set('checked', c);
-                    }, null, args);
-                    toggleParentCheck(node, isCheck);
-
-                }
-            }
-            function toggleParentCheck(node, isCheck) {
-                while (node.parentNode != root) {
-                    parentChecked = false;
-                    node.parentNode.eachChild(function (next) {
-                        if (next.get('checked')) {
-                            parentChecked = true;
-                        }
-                    });
-                    node.parentNode.set('checked', parentChecked);
-                    node = node.parentNode;
-                }
-            }
-            return {
-                init: function (dialog) {
-                    Ext.tip.QuickTipManager.init();
-                    Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
-                        maxWidth: 200,
-                        minWidth: 100,
-                        showDelay: 500    // Show 500ms after entering target
-                    });
-                    treeStore = Ext.create('Ext.data.TreeStore', {
-                        proxy: {
-                            type: 'ajax',
-                            url: '<%=HandlerUrl%>'
-                        },
-                        root: {
-                            text: 'Root',
-                            draggable: false,
-                            id: 'TreeRoot',
-                            root: true,
-                            leaf: false,
-                            expanded: true
-                        },
-                        folderSort: true,
-                        sorters: [{
-                            property: 'text',
-                            direction: 'ASC'
-                        }],
-                        listeners: {
-                            load: function (thisStore, records, successful, eOpts) {
-                                if (!successful) {
-                                    if (response.responseText.indexOf("Logins.aspx?ReturnUrl=") > -1) {
-                                        location.reload(true);
-                                    }
-                                    else {
-                                        dialog.dialog('close');
-                                        Ext.Msg.alert('<%= Resources.Resource.Error  %>', '<%= Resources.Resource.ErrorRequestingDataFromServer%>');
-                                    }
-                                } else onTreeLoad(this, root);
-                            }
-                        }
-                    });
-                  
-                    var tree = Ext.create('Ext.tree.Panel', {
-                        id: "treeComputers",
-                        animate: true,
-                        store: treeStore,
-                        autoScroll: true,
-                        rootVisible: false,
-                        renderTo: 'dialog_div'
-                    });
-                    tree.on("checkchange", function (node, checked, eOpts) {
-                        toggleCheck(node, checked);
-                    });
-                    root = tree.getRootNode();
-                    root.expand(false);
                 },
-                reload: function () {
-                    treeStore.reload();
+                'types': {
+                    'group': {
+                        'icon': "App_Themes/Main/groups/images/group.png"
+                    },
+                    'computer': {
+                        'icon': "App_Themes/Main/groups/images/monitor.png"
+                    },
+                    'server': {
+                        'icon': "App_Themes/Main/groups/images/server.png"
+                    },
+                    'default': {
+                    }
                 },
-                generateText: function () {
-                    computers = new Array();
-                    root.eachChild(function (group) {
-                        RecursiveAdd(group);
+                'plugins': ["checkbox","state", "types"]
 
-                        function RecursiveAdd(rootNode) {
-                            for (var i = 0; i < rootNode.childNodes.length; i++) {
-                                RecursiveAdd(rootNode.childNodes[i]);
-                            }
-                            if (rootNode.isLeaf() && rootNode.get('checked'))
-                                computers.push(rootNode.get("text").toLowerCase());
-                        }
+            });
+        };
 
-                    });
-                    return computers.join('&');
+
+        function loadCompFilterTreeInfo() {
+            var d = "";
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: '<%=HandlerUrl%>',
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    d = data;
+                },
+                error: function (e) {
+                    alert('<%= Resources.Resource.ErrorRequestingDataFromServer%>');
+                }
+            });
+            return d;
+        };
+        function ShowComputerTreeDialog() {
+
+            var dOpt = {
+                width: 550,
+                modal: true,
+                resizable: false,
+                close: function (event, ui) {
+                },
+                buttons: {
+                    '<%=Resources.Resource.Apply%>': function () {
+                        ComputersTextBox.setText(GenerateCompFilterText());
+                        $('#compFilterTreeDialog').dialog('destroy');
+
+                    },
+                    '<%=Resources.Resource.CancelButtonText%>': function () {
+                        $('#compFilterTreeDialog').dialog('destroy');
+                    }
                 }
             };
-        } ();
+            SetCheckedAccordingToText();
+            $('#compFilterTreeDialog').dialog(dOpt);
 
-        var ComputersDialog = function () {
-            var dialog;
-            var asyncPostBack = false;
+            return false;
+        };
 
-            function onApply() {
-                ComputersTextBox.setText(ComputersTree.generateText());
+        function GenerateCompFilterText() {
+            computers = new Array();        
+            var node;
+            var checkedObj = $('#compFilterTree').jstree('get_checked', true);
+            for (i = 0; i < checkedObj.length; i++) {
+                if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
+                    node = checkedObj[i].original;
+                    if (node != null && node.leaf) {
+                        computers.push(node.text.toLowerCase());
+                    }
+                }
             }
-
-            function onHide() {
-                PageRequestManagerHelper.enableAsyncPostBack();
-            }
-
-            function onShow() {
-                PageRequestManagerHelper.abortAsyncPostBack();
-                PageRequestManagerHelper.disableAsyncPostBack();
-            }
-
-            return {
-                setAsyncPostBack: function () {
-                    asyncPostBack = true;
-                },
-                    show: function () {
-                    if ($('#<%= imgHelper.ClientID%>').attr("disabled") === "disabled") { return; }
-                    if (!dialog || asyncPostBack) {
-                        $('body').append('<div id="dialog_div"></div>');
-                        dialog = $('#dialog_div').dialog({
-                            title: '<%=Resources.Resource.Computers %>',
-                            width: 500,
-                            height: 300,
-                            modal: true,
-                            draggable: false,
-                            close: function () {
-                                onHide();
-                                $(this).dialog("destroy");
-                                dialog = false;
-                                $('#dialog_div').remove();
-                            },
-                            open: onShow,
-                            buttons: { '<%= Resources.Resource.Apply  %>': function () {onApply();dialog.dialog("close");}}
-                        });
-                        ComputersTree.init(dialog);
-                        asyncPostBack = false;
+            return computers.join('&');
+        };
+        function SetCheckedAccordingToText() {
+            gen = ComputersTextBox.getRegex();
+            if (gen == null) return;
+            regex = new RegExp(gen, "i");
+            var root = $('#compFilterTree').jstree('get_node', '#',false);
+            $.each(root.children_d, function (nodeId) {
+                var node = $('#compFilterTree').jstree('get_node', nodeId);
+                node = node.original;
+                if (node != null && node.leaf != null && node.leaf == true) {
+                    if (regex.test(node.text)) {
+                        $('#compFilterTree').jstree('check_node', nodeId);
                     }
                     else {
-                        ComputersTree.reload();
+                        $('#compFilterTree').jstree('uncheck_node', nodeId);
                     }
                 }
-            };
-        } ();
-
+            });
+        };
+                
     </script>
 <flt:PrimitiveFilterTemplate runat="server" ID="fltTemplate" TextFilter="Name">
     <FilterTemplate>
@@ -240,8 +150,12 @@
                 <ajaxToolkit:FilteredTextBoxExtender ID="fltComputers" runat="server" TargetControlID="tboxFilter"
                     FilterType="Custom" InvalidChars="`~!@#$%^()=+[]{}\|;:'&quot;,<>/?" FilterMode="InvalidChars">
                 </ajaxToolkit:FilteredTextBoxExtender>
+            </div>            
+            <div runat="server" class="ImageComputer" style="float:left; margin-left: 5px;" id="imgHelper" onclick="return ShowComputerTreeDialog();"></div>
+            <div id="compFilterTreeDialog" style="display:none">
+                <div id="compFilterTree">
+                </div>
             </div>
-            <div runat="server" class="ImageComputer" style="float:left; margin-left: 5px;" id="imgHelper" onclick="ComputersDialog.show(); return false;"></div>
         </div>
     </FilterTemplate>
 </flt:PrimitiveFilterTemplate>
