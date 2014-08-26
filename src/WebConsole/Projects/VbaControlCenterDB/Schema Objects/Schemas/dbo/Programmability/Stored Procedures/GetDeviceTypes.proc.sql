@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE [dbo].[GetDeviceTypes]
+WITH ENCRYPTION
+AS
+	SELECT TypeName FROM DeviceTypes
+	ORDER BY ID ASC

@@ -4,7 +4,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public enum DeviceType
     {
-        USB
+        USB,
+        NET
     }
 
     public static class DeviceTypeExtensions

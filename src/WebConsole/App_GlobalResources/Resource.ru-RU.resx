@@ -3714,4 +3714,7 @@
   <data name="SystemIdleProcess" xml:space="preserve">
     <value>% бездействия системы</value>
   </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>Тип устройств</value>
+  </data>
 </root>

@@ -9,7 +9,7 @@ using VirusBlokAda.CC.DataBase;
 /// </summary>
 public static class DeviceDataContainer
 {
-    public static List<Device> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
+    public static List<Device> Get(String where, String device_type, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<Device> list = new List<Device>();
         if (maximumRows < 1) return list;
@@ -33,24 +33,27 @@ public static class DeviceDataContainer
             orderBy = String.Format("{0} {1}", parts[0], descending ? "DESC" : "ASC");
         }
 
-        list = DBProviders.Policy.GetDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, where, orderBy);
+        list = DBProviders.Policy.GetDevicesList((Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows, String.Format("TypeName='{0}'{1}", device_type, !String.IsNullOrEmpty(where) ? String.Format(" AND ({0})", where) : ""), orderBy);
 
         return list;
     }
 
-    public static Int32 Count(String where)
+    public static Int32 Count(String where, String device_type)
     {
         Int32 count = 0;
 
-        count = DBProviders.Policy.GetDeviceCount(where);
+        count = DBProviders.Policy.GetDeviceCount(String.Format("TypeName='{0}'{1}", device_type, !String.IsNullOrEmpty(where) ? String.Format(" AND ({0})", where) : ""));
 
         return count;
     }
 
-    public static List<DevicePolicy> GetUnknown(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
+    public static List<DevicePolicy> GetUnknown(String where, String device_type, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<DevicePolicy> list = new List<DevicePolicy>();
         if (maximumRows < 1) return list;
+
+        if (DeviceTypeExtensions.Get(device_type) != DeviceType.USB)
+            return list;
         
         String orderBy = "SerialNo ASC";
         String[] parts = SortExpression.Split(' ');
@@ -90,9 +93,12 @@ public static class DeviceDataContainer
         return property;
     }
 
-    public static Int32 CountUnknown(String where)
+    public static Int32 CountUnknown(String where, String device_type)
     {
         Int32 count = 0;
+
+        if (DeviceTypeExtensions.Get(device_type) != DeviceType.USB)
+            return count;
 
         count = DBProviders.Policy.GetUnknownDeviceCount(where);
 

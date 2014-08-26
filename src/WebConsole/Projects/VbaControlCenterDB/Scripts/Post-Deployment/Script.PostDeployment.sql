@@ -136,6 +136,7 @@ GO
 PRINT N'[dbo].[DeviceTypes]...';
 GO
 INSERT INTO [dbo].[DeviceTypes]([TypeName]) VALUES(N'USB');
+INSERT INTO [dbo].[DeviceTypes]([TypeName]) VALUES(N'NET');
 GO
 PRINT N'[dbo].[DeviceTypes]: successfully.';
 GO

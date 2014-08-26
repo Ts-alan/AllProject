@@ -3726,4 +3726,7 @@ system administrator.</value>
   <data name="SystemIdleProcess" xml:space="preserve">
     <value>% system idle process</value>
   </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>Devices type</value>
+  </data>
 </root>

@@ -312,6 +312,31 @@ namespace VirusBlokAda.CC.DataBase
             }
         }
 
+        /// <summary>
+        /// Get device type list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetDeviceTypes()
+        {
+            List<String> list = new List<String>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetDeviceTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while(reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+                reader.Close();
+            }
+
+            return list;
+        }
+
         #endregion
     }
 }

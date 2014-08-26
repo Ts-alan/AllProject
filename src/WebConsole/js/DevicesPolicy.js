@@ -16,11 +16,12 @@ $(document).ready(function () {
             $("#accordion").mask(Resource.Loading);
             var id = $(this).attr('cp');
             var name = $(this).attr('name');
+            var device_type = $('[ddlDeviceTypes] option:selected').val();
             $.ajax({
                 type: "POST",
                 url: "DevicesPolicy.aspx/GetComputersData",
                 dataType: "json",
-                data: "{id:\"" + id + "\"}",
+                data: "{id:\"" + id + "\",device_type:'" + device_type + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     $("#divModalDialog").html('');
@@ -185,8 +186,14 @@ $(document).ready(function () {
                     state = "Disabled";
                     break;
                 case "Disabled":
-                    titleMsg = Resource.BlockWrite;
-                    state = "BlockWrite";
+                    if ($('select[ddlDeviceTypes] option:selected').val() == 'USB') {
+                        titleMsg = Resource.BlockWrite;
+                        state = "BlockWrite";
+                    }
+                    else {
+                        titleMsg = Resource.Enabled;
+                        state = "Enabled";
+                    }
                     break;
                 case "BlockWrite":
                     titleMsg = Resource.Enabled;
@@ -320,6 +327,7 @@ $(document).ready(function () {
             var gp = $(this).attr('gdp');
             var dp = $(this).attr('dp');
             var state = $(this).attr('state');
+            var img = $(this);
             //установка смены чекбоксов
             var titleMsg;
             switch (state) {
@@ -332,8 +340,14 @@ $(document).ready(function () {
                     state = "Disabled";
                     break;
                 case "Disabled":
-                    titleMsg = Resource.BlockWrite;
-                    state = "BlockWrite";
+                    if ($('select[ddlDeviceTypes] option:selected').val() == 'USB') {
+                        titleMsg = Resource.BlockWrite;
+                        state = "BlockWrite";
+                    }
+                    else {
+                        titleMsg = Resource.Enabled;
+                        state = "Enabled";
+                    }
                     break;
                 case "BlockWrite":
                     titleMsg = Resource.Enabled;
@@ -347,9 +361,9 @@ $(document).ready(function () {
                 data: "{dp:" + dp + " ,gp:" + gp + ",state:'" + state + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function () {
-                    $(this).attr('state', state);
-                    $(this).attr('title', titleMsg);
-                    $(this).attr('src', "App_Themes/Main/Images/" + state + ".gif");
+                    img.attr('state', state);
+                    img.attr('title', titleMsg);
+                    img.attr('src', "App_Themes/Main/Images/" + state + ".gif");
                 }
             });
         });
@@ -415,6 +429,7 @@ $(document).ready(function () {
         button.button();
         button.on("click", function (event) {
             var id = $(this).parent().attr('id');
+            var device_type = $('[ddlDeviceTypes] option:selected').val();
             var name = $(this).parent().find('a>span').text();
             if (id == "null") id = -1;
             event.stopImmediatePropagation();
@@ -424,7 +439,7 @@ $(document).ready(function () {
                 type: "POST",
                 url: "DevicesPolicy.aspx/GetGroupDeviceData",
                 dataType: "json",
-                data: "{id:\"" + id + "\"}",
+                data: "{id:\"" + id + "\",device_type:'" + device_type + "'}",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
 
@@ -711,4 +726,10 @@ $(document).ready(function () {
         });
         alert(m.Message);
     }
+
+    $(document).on("change", 'select[ddlDeviceTypes]', function () {
+        if ($('#tabs').tabs("option", "active") == 2)
+            $('#tabs').tabs("option", "active", 0);
+        $('li[onlyUSB]').css('display', $('select[ddlDeviceTypes] option:selected').val() == 'USB' ? '' : 'none');
+    });
 });

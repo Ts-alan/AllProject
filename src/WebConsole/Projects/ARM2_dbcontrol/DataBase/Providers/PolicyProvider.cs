@@ -313,6 +313,11 @@ namespace VirusBlokAda.CC.DataBase
 
         #region Admins action at devices
 
+        public List<String> GetDeviceTypes()
+        {
+            return deviceMng.GetDeviceTypes();
+        }
+
         public Device GetDevice(Int32 id)
         {
             return deviceMng.GetDevice(id);
@@ -418,14 +423,14 @@ namespace VirusBlokAda.CC.DataBase
             return devicePolicyMng.GetPoliciesByDevice(device);
         }
 
-        public List<DevicePolicy> GetDevicesPoliciesByComputer(String computerName)
+        public List<DevicePolicy> GetDevicesPoliciesByComputer(String computerName, DeviceType type)
         {
-            return devicePolicyMng.GetDeviceEntitiesFromComputer(computerName);
+            return devicePolicyMng.GetDeviceEntitiesFromComputer(computerName, type);
         }
 
-        public List<DevicePolicy> GetDevicesPoliciesByComputer(Int16 id)
+        public List<DevicePolicy> GetDevicesPoliciesByComputer(Int16 id, DeviceType type)
         {
-            return GetDevicesPoliciesByComputer(cm.GetComputer(id).ComputerName);
+            return GetDevicesPoliciesByComputer(cm.GetComputer(id).ComputerName, type);
         }
         
         public List<Device> GetDevicesList(Int32 index, Int32 pageCount, String where, String orderBy)
@@ -506,14 +511,14 @@ namespace VirusBlokAda.CC.DataBase
             return policyMng.GetComputersByPolicy(policy);
         }
         
-        public List<DevicePolicy> GetDevicesPoliciesByGroup(Int32 groupID)
+        public List<DevicePolicy> GetDevicesPoliciesByGroup(Int32 groupID, DeviceType type)
         {
-            return devicePolicyMng.GetDeviceEntitiesFromGroup(groupID);
+            return devicePolicyMng.GetDeviceEntitiesFromGroup(groupID, type);
         }
         
-        public List<DevicePolicy> GetDevicesPoliciesWithoutGroup()
+        public List<DevicePolicy> GetDevicesPoliciesWithoutGroup(DeviceType type)
         {
-            return devicePolicyMng.GetDeviceEntitiesWithoutGroup();
+            return devicePolicyMng.GetDeviceEntitiesWithoutGroup(type);
         }
 
         public void ChangeDevicePolicyStatusForGroup(Int16 deviceID, Int32 groupID, String state)

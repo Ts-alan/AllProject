@@ -33,7 +33,7 @@ namespace VirusBlokAda.CC.DataBase
             comp.ComputerName = computerName;
             comp.ID = compMngr.GetComputerID(computerName);
 
-            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
+            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName, DeviceType.USB), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace VirusBlokAda.CC.DataBase
         /// Return device policies to specific computer
         /// </summary>
         /// <param name="computerName">Computer name</param>
-        /// <param name="conn">Database connection</param>
+        /// <param name="device_type">Device type</param>
         /// <returns></returns>
-        internal List<DevicePolicy> GetDeviceEntitiesFromComputer(String computerName)
+        internal List<DevicePolicy> GetDeviceEntitiesFromComputer(String computerName, DeviceType type)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -176,6 +176,7 @@ namespace VirusBlokAda.CC.DataBase
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@ComputerName", computerName);
+                cmd.Parameters.AddWithValue("@DeviceType", type.ToString());                
 
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -366,7 +367,7 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="groupID">Group ID</param>
         /// <param name="conn">Database connection</param>
         /// <returns></returns>
-        internal List<DevicePolicy> GetDeviceEntitiesFromGroup(Int32 groupID)
+        internal List<DevicePolicy> GetDeviceEntitiesFromGroup(Int32 groupID, DeviceType type)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -374,6 +375,7 @@ namespace VirusBlokAda.CC.DataBase
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@GroupID", groupID);
+                cmd.Parameters.AddWithValue("@DeviceType", type.ToString());
 
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -425,12 +427,14 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="conn">Database connection</param>
         /// <returns></returns>
-        internal List<DevicePolicy> GetDeviceEntitiesWithoutGroup()
+        internal List<DevicePolicy> GetDeviceEntitiesWithoutGroup(DeviceType type)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("GetDevicesPageWithoutGroup", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@DeviceType", type.ToString());
 
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
