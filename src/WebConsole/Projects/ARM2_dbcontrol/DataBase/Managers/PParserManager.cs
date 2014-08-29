@@ -116,15 +116,15 @@ namespace VirusBlokAda.CC.DataBase
         internal void ModifyDeviceEvent(EventsEntity ev)
         {
             String[] parts = ev.Comment.Split(new Char[] { '|' });
-            DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
-            di.mount = (Byte)DeviceClassMode.Undefined;
+
+            String cleanSerial = GetCleanSerial(parts[0], DeviceTypeExtensions.Get(parts[3]));
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("GetDeviceBySN", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
+                cmd.Parameters.AddWithValue("@SerialNo", cleanSerial);
 
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -137,11 +137,31 @@ namespace VirusBlokAda.CC.DataBase
                 reader.Close();
                 if (String.IsNullOrEmpty(comment))
                 {
-                    comment = di.strings.Replace('\0', ' ');
+                    comment = parts[1];
                 }
-                ev.Comment = String.Concat(comment, parts[1]);
-                ev.Object = DeviceManager.SerializeToBase64(di);
+                ev.Comment = String.Concat(comment, parts[2], parts[3]);
+                ev.Object = cleanSerial;
             }
+        }
+
+        private String GetCleanSerial(String serial, DeviceType type)
+        {
+            String result = String.Empty;
+            switch (type)
+            {
+                case DeviceType.USB:
+                    DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
+                    di.mount = (Byte)DeviceMode.Undefined;
+                    result = DeviceManager.SerializeToBase64(di, type);
+                    break;
+                case DeviceType.NET:
+                    NET_DEVICE_INFO ndi = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
+                    ndi.mount = (Byte)DeviceMode.Undefined;
+                    result = DeviceManager.SerializeToBase64(ndi, type);
+                    break;
+            }
+
+            return result;
         }
         
         /// <summary>
@@ -250,20 +270,22 @@ namespace VirusBlokAda.CC.DataBase
         internal void OnDeviceInsert(EventsEntity ev, Int16 licenseCount)
         {
             String[] parts = ev.Comment.Split(new Char[] { '|' });
-            if (parts[1] != "VDD_INSERTED")
+            if (parts[2] != "VDD_INSERTED")
                 return;
+
+            DeviceType type = DeviceTypeExtensions.Get(parts[3]);
+            String serial = GetCleanSerial(parts[0], type);
+            String comment = parts[1];
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("OnInsertingDevice", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;                
 
-                DEVICE_INFO di = DeviceManager.DeserializeFromBase64(parts[0]);
-                di.mount = (Byte)DeviceClassMode.Undefined;
-
-                cmd.Parameters.AddWithValue("@SerialNo", DeviceManager.SerializeToBase64(di));
+                cmd.Parameters.AddWithValue("@SerialNo", serial);
                 cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);
-                cmd.Parameters.AddWithValue("@Comment", di.strings.Replace('\0', ' '));
+                cmd.Parameters.AddWithValue("@Comment", comment);
+                cmd.Parameters.AddWithValue("@TypeName", type.ToString());
                 cmd.Parameters.AddWithValue("@LicenseCount", licenseCount);
 
                 con.Open();

@@ -292,16 +292,16 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
             switch (dp.State)
             {
-                case DeviceClassMode.Undefined:
+                case DeviceMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DeviceClassMode.Enabled:
+                case DeviceMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DeviceClassMode.Disabled:
+                case DeviceMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case DeviceClassMode.BlockWrite:
+                case DeviceMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -370,7 +370,7 @@ public partial class DevicesPolicy : PageBase
         ComputersEntity computer = new ComputersEntity();
         computer.ID = id;
         DevicePolicy dp = new DevicePolicy(device, computer);
-        dp.State = DeviceClassMode.Undefined;
+        dp.State = DeviceMode.Undefined;
         DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
         if (policy.Device.ID != 0)
         {
@@ -434,16 +434,16 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
             switch (dp.State)
             {
-                case DeviceClassMode.Undefined:
+                case DeviceMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DeviceClassMode.Enabled:
+                case DeviceMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DeviceClassMode.Disabled:
+                case DeviceMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case DeviceClassMode.BlockWrite:
+                case DeviceMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -732,16 +732,16 @@ public partial class DevicesPolicy : PageBase
         String select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp=" + comp.ID + " state=";
         switch (dp.State)
         {
-            case DeviceClassMode.Undefined:
+            case DeviceMode.Undefined:
                 select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                 break;
-            case DeviceClassMode.Enabled:
+            case DeviceMode.Enabled:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                 break;
-            case DeviceClassMode.Disabled:
+            case DeviceMode.Disabled:
                 select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                 break;
-            case DeviceClassMode.BlockWrite:
+            case DeviceMode.BlockWrite:
                 select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                 break;
         }
@@ -774,7 +774,7 @@ public partial class DevicesPolicy : PageBase
             id = Convert.ToInt16(c);
             computer.ID = id;
             DevicePolicy dp = new DevicePolicy(device, computer);
-            dp.State = DeviceClassMode.Undefined;
+            dp.State = DeviceMode.Undefined;
             DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
             if (policy.Device.ID != 0) isSuccess = true;
 
@@ -791,9 +791,9 @@ public partial class DevicesPolicy : PageBase
         dp.Computer.ComputerName = computerName;
 
         if (action == "allow")
-            dp.State = DeviceClassMode.Enabled;
+            dp.State = DeviceMode.Enabled;
         else
-            dp.State = DeviceClassMode.Disabled;
+            dp.State = DeviceMode.Disabled;
 
         DBProviders.Policy.ChangeDevicePolicyStatusForComputer(dp);
     }

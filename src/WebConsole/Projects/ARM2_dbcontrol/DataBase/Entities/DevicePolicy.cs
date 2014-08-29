@@ -36,11 +36,11 @@ namespace VirusBlokAda.CC.DataBase
             set { _device = value; }
         }
 
-        private DeviceClassMode _state;
+        private DeviceMode _state;
         /// <summary>
         /// Type actions
         /// </summary>
-        public DeviceClassMode State
+        public DeviceMode State
         {
             get { return _state; }
             set { _state = value; }
@@ -56,7 +56,7 @@ namespace VirusBlokAda.CC.DataBase
         #endregion
 
         public DevicePolicy(Device device, ComputersEntity computer,
-            DeviceClassMode type, Int32 id)
+            DeviceMode type, Int32 id)
         {
             _device = device;
             _computer = computer;
@@ -66,13 +66,13 @@ namespace VirusBlokAda.CC.DataBase
         }
 
         public DevicePolicy(Device device, ComputersEntity computer,
-           DeviceClassMode type)
+           DeviceMode type)
             : this(device, computer, type, 0)
         {
         }
 
         public DevicePolicy(Device device, ComputersEntity computer)
-            : this(device, computer, DeviceClassMode.Undefined)
+            : this(device, computer, DeviceMode.Undefined)
         {
         }
     }

@@ -165,7 +165,7 @@ namespace VirusBlokAda.CC.DataBase
             //We must check whether the device registered in the database
 
             //!!! -- проверить атрибут VDD_INSERTED!
-            if (ev.EventName == "JE_VDD_AUDIT_USB")
+            if (ev.EventName == "JE_VDD_DEVICE")
             {
                 pMngr.OnDeviceInsert(ev, licenseCount);
                 pMngr.ModifyDeviceEvent(ev);

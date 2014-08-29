@@ -3456,9 +3456,6 @@ system administrator.</value>
   <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
     <value>Usb devices settings applied.</value>
   </data>
-  <data name="JE_VDD_AUDIT_USB" xml:space="preserve">
-    <value>Device %1% %2%.</value>
-  </data>
   <data name="JE_VDD_START" xml:space="preserve">
     <value>Access control module started.</value>
   </data>
@@ -3728,5 +3725,8 @@ system administrator.</value>
   </data>
   <data name="DeviceType" xml:space="preserve">
     <value>Devices type</value>
+  </data>
+  <data name="JE_VDD_DEVICE" xml:space="preserve">
+    <value>Device %4% %2% %3%.</value>
   </data>
 </root>

@@ -125,6 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataBase\Entities\AutomaticallyTaskEntity.cs" />
+    <Compile Include="DataBase\Entities\DeviceMode.cs" />
     <Compile Include="DataBase\Entities\UpdateEntity.cs" />
     <Compile Include="DataBase\Entities\UpdateStateEnum.cs" />
     <Compile Include="DataBase\Entities\DeviceClass.cs" />

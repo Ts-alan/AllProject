@@ -33,7 +33,7 @@ namespace VirusBlokAda.CC.DataBase
             comp.ComputerName = computerName;
             comp.ID = compMngr.GetComputerID(computerName);
 
-            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName, DeviceType.USB), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
+            return ConvertDeviceEntitiesToPolicy(GetDeviceEntitiesFromComputer(computerName, DeviceType.USB), GetDeviceEntitiesFromComputer(computerName, DeviceType.NET), dcMngr.GetPolicyList(comp), dcMngr.GetDeviceClassList(), jounalEvents);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -195,7 +195,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -225,7 +225,7 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="lists">Device policy list</param>
         /// <returns>Policy string</returns>
-        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> listDP, List<DeviceClassPolicy> listDCP, List<DeviceClass> listDC, String journalEvents)
+        private String ConvertDeviceEntitiesToPolicy(List<DevicePolicy> listDP_USB, List<DevicePolicy> listDP_NET, List<DeviceClassPolicy> listDCP, List<DeviceClass> listDC, String journalEvents)
         {
             Int32 index = 0;
             Regex reg = new Regex(RegularExpressions.GUID);
@@ -304,29 +304,37 @@ namespace VirusBlokAda.CC.DataBase
                 policy.Append("</value></param>");
             }
 
+            //NETDevices
+            if (listDP_NET.Count != 0)
+            {
+                policy.Append("<param><id>NetDevices</id><type>stringlist</type><value>");
+                index = 0;
+                foreach (DevicePolicy item in listDP_NET)
+                {
+                    if (item.State != DeviceMode.Undefined)
+                    {
+                        NET_DEVICE_INFO di = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.NET);
+                        di.mount = (Byte)item.State;
+
+                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.NET));
+                    }
+                }
+                policy.Append("</value></param>");
+            }
+
             //UsbDevices
-            if (listDP.Count != 0)
+            if (listDP_USB.Count != 0)
             {
                 policy.Append("<param><id>UsbDevices</id><type>stringlist</type><value>");
                 index = 0;
-                foreach (DevicePolicy item in listDP)
+                foreach (DevicePolicy item in listDP_USB)
                 {
-                    if (item.State != DeviceClassMode.Undefined)
+                    if (item.State != DeviceMode.Undefined)
                     {
-                        DEVICE_INFO di = DeviceManager.DeserializeFromBase64(item.Device.SerialNo);
-                        switch (item.State)
-                        {
-                            case DeviceClassMode.Disabled:
-                                di.mount = (Byte)DeviceClassMode.Enabled;
-                                break;
-                            case DeviceClassMode.Enabled:
-                                di.mount = (Byte)DeviceClassMode.Disabled;
-                                break;
-                            case DeviceClassMode.BlockWrite:
-                                di.mount = (Byte)DeviceClassMode.BlockWrite;
-                                break;
-                        }
-                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di));
+                        DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.USB);
+                        di.mount = (Byte)item.State;
+                        
+                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.USB));
                     }
                 }
                 policy.Append("</value></param>");
@@ -395,7 +403,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -454,7 +462,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -602,7 +610,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
                     if (reader.GetValue(6) != DBNull.Value)
@@ -675,7 +683,7 @@ namespace VirusBlokAda.CC.DataBase
 
                     device.ID = reader.GetInt16(3);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(4));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(4));
 
                     device.SerialNo = reader.GetString(5);
 
@@ -734,13 +742,14 @@ namespace VirusBlokAda.CC.DataBase
                         dpID = reader.GetDecimal(3);
                     dp.ID = Convert.ToInt32(dpID);
 
-                    device.Type = DeviceType.USB;
+                    if (reader.GetValue(4) != DBNull.Value)
+                        device.Type = DeviceTypeExtensions.Get(reader.GetString(4));
                 }
                 reader.Close();
 
                 dp.Device = device;
                 dp.Computer = devicePolicy.Computer;
-                dp.State = DeviceClassMode.Undefined;
+                dp.State = DeviceMode.Undefined;
 
                 return dp;
             }
@@ -761,7 +770,7 @@ namespace VirusBlokAda.CC.DataBase
 
                 cmd.Parameters.AddWithValue("@GroupID", groupID);
                 cmd.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-                cmd.Parameters.AddWithValue("@StateName", DeviceClassMode.Undefined.ToString());
+                cmd.Parameters.AddWithValue("@StateName", DeviceMode.Undefined.ToString());
 
                 con.Open();
                 Device device = new Device();
@@ -774,7 +783,8 @@ namespace VirusBlokAda.CC.DataBase
                         device.SerialNo = reader.GetString(1);
                     if (reader.GetValue(2) != DBNull.Value)
                         device.Comment = reader.GetString(2);
-                    device.Type = DeviceType.USB;
+                    if (reader.GetValue(3) != DBNull.Value)
+                        device.Type = DeviceTypeExtensions.Get(reader.GetString(3));
                 }
                 reader.Close();
 
@@ -795,7 +805,7 @@ namespace VirusBlokAda.CC.DataBase
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@SerialNo", dev.SerialNo);
-                cmd.Parameters.AddWithValue("@StateName", DeviceClassMode.Undefined.ToString());
+                cmd.Parameters.AddWithValue("@StateName", DeviceMode.Undefined.ToString());
 
                 con.Open();
                 Device device = new Device();
@@ -809,7 +819,8 @@ namespace VirusBlokAda.CC.DataBase
                         device.SerialNo = reader.GetString(1);
                     if (reader.GetValue(2) != DBNull.Value)
                         device.Comment = reader.GetString(2);
-                    device.Type = DeviceType.USB;
+                    if (reader.GetValue(3) != DBNull.Value)
+                        device.Type = DeviceTypeExtensions.Get(reader.GetString(3));
                 }
                 reader.Close();
 
@@ -871,7 +882,7 @@ namespace VirusBlokAda.CC.DataBase
                     comp.ID = reader.GetInt16(1);
                     comp.ComputerName = reader.GetString(2);
 
-                    dp.State = DeviceClassModeExtensions.Get(reader.GetString(3));
+                    dp.State = DeviceModeExtensions.Get(reader.GetString(3));
 
                     if (reader.GetValue(4) != DBNull.Value)
                         dp.LatestInsert = reader.GetDateTime(4);

@@ -67,9 +67,9 @@ public partial class Controls_TaskConfigureJornalEvents : System.Web.UI.UserCont
                          "JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK",
                          "JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED",
                          "JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK",
-                         "JE_VDD_AUDIT_USB",
                          "JE_VDD_START",
-                         "JE_VDD_STOP"
+                         "JE_VDD_STOP",
+                         "JE_VDD_DEVICE"
                      };
         return s;
     }

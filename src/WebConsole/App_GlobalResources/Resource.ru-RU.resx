@@ -3474,9 +3474,6 @@
   <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
     <value>Настройки usb-устройств применены.</value>
   </data>
-  <data name="JE_VDD_AUDIT_USB" xml:space="preserve">
-    <value>Устройство %1% %2%.</value>
-  </data>
   <data name="JE_VDD_START" xml:space="preserve">
     <value>Модуль управления доступом запущен.</value>
   </data>
@@ -3716,5 +3713,8 @@
   </data>
   <data name="DeviceType" xml:space="preserve">
     <value>Тип устройств</value>
+  </data>
+  <data name="JE_VDD_DEVICE" xml:space="preserve">
+    <value>Устройство %4% %2% %3%.</value>
   </data>
 </root>

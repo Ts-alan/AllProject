@@ -17,6 +17,8 @@ AS
 			INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 			VALUES    (@ComputerID, @DeviceID, @StateID)
 			
-			SELECT [ID],[SerialNo],[Comment], @@IDENTITY AS DevicePolicyID FROM Devices WHERE [ID]=@DeviceID
+			SELECT d.[ID], d.[SerialNo], d.[Comment], @@IDENTITY AS DevicePolicyID, dt.TypeName FROM Devices AS d
+			INNER JOIN DeviceTypes AS dt ON d.DeviceTypeID = dt.ID
+			WHERE d.[ID]=@DeviceID
 		END
 	END
