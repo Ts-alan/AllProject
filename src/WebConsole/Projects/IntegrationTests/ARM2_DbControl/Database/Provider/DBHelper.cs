@@ -13,7 +13,7 @@ namespace WebConsoleTests.ARM2_DbControl.Database.Provider
         public static String connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString;
         public static  void InitDataBase()
         {
-            string script = File.ReadAllText(@"..\..\..\src\WebConsole\Projects\VbaControlCenterDB\Scripts\Post-Deployment\Script.PostDeployment.sql");
+            string script = File.ReadAllText(@"..\..\..\..\src\WebConsole\Projects\VbaControlCenterDB\Scripts\Post-Deployment\Script.PostDeployment.sql");
 
             // split script on GO command
             IEnumerable<string> commandStrings = Regex.Split(script, @"^\s*GO\s*$",
