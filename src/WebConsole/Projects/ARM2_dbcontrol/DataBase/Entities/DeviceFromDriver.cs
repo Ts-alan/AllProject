@@ -39,4 +39,19 @@ namespace VirusBlokAda.CC.DataBase
             mount = _mount;
         }
     }
+
+    public struct NET_DEVICE_INFO
+    {
+        public UInt32 size;
+
+        public Byte[] time;
+
+        public Byte mount;
+        public Byte insert;
+
+        public UInt16 dev_descr_length;
+        public UInt16 hardware_id_length;
+        public UInt16 friendly_name_length;
+        public String strings;
+    }
 }

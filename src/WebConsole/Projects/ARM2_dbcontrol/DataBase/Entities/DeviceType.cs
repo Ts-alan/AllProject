@@ -4,7 +4,8 @@ namespace VirusBlokAda.CC.DataBase
 {
     public enum DeviceType
     {
-        USB
+        USB,
+        NET
     }
 
     public static class DeviceTypeExtensions
@@ -18,7 +19,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             foreach (DeviceType en in Enum.GetValues(typeof(DeviceType)))
             {
-                if (en.ToString() == name)
+                if (en.ToString().ToUpper() == name.ToUpper())
                     return en;
             }
 

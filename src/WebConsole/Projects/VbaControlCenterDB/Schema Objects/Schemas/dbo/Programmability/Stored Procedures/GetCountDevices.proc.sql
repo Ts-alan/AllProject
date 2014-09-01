@@ -7,22 +7,17 @@ AS
 		-- Table variable - for paging
 		DECLARE @DevicesPage TABLE(
 			[RecID] int IDENTITY(1, 1) NOT NULL,
-			[ID] smallint,
-			[SerialNo] nvarchar(256) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[Comment] nvarchar(128) COLLATE Cyrillic_General_CI_AS
+			[ID] smallint
 		)
 	
-		INSERT INTO @DevicesPage(
-			[ID], [SerialNo], [Comment])
+		INSERT INTO @DevicesPage([ID])
 
 		SELECT
-			d.[ID], d.[SerialNo], d.[Comment]
+			d.[ID]
 		FROM Devices AS d
-		LEFT JOIN DevicesPolicies AS dp ON d.[ID] = dp.[DeviceID]
-		LEFT JOIN DeviceClassMode AS dps ON dps.[ID] = dp.[DevicePolicyStateID]'
+		INNER JOIN DeviceTypes AS dt ON d.[DeviceTypeID] = dt.[ID]'
 	IF @Where IS NOT NULL
-		SET @Query = @Query + N' WHERE ' + @Where
-	SET @Query = @Query + N' GROUP BY d.[ID], d.[SerialNo], d.[Comment]'
+		SET @Query = @Query + N' WHERE ' + @Where	
 	SET @Query = @Query + N';
 		SELECT COUNT(*) FROM @DevicesPage'	
 

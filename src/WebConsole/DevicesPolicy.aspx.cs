@@ -29,6 +29,11 @@ public partial class DevicesPolicy : PageBase
         RegisterScript(@"js/PageRequestManagerHelper.js");
         RegisterScript(@"js/Groups/ext-4.1.1/ext-all-debug.js");
 
+        if (!IsPostBack)
+        {
+            InitFields();
+        }
+
         String scriptText = LoadResourceScript();
         RegisterBlockScript(scriptText);
 
@@ -38,12 +43,6 @@ public partial class DevicesPolicy : PageBase
         WithoutGroup.ID = -1;
         GetDictionaryOfGroups(null);
         GroupDictionary.Add(-1, WithoutGroup);
-
-
-        if (!IsPostBack)
-        {
-            InitFields();
-        }
 
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView1, ObjectDataSource1);
         Controls_PagerUserControl.AddGridViewExtendedAttributes(GridView2, ObjectDataSource2);
@@ -75,8 +74,22 @@ public partial class DevicesPolicy : PageBase
         GridView1.EmptyDataText = Resources.Resource.EmptyMessage;
         GridView2.EmptyDataText = Resources.Resource.EmptyMessage;
 
+        ddlDeviceType.DataSource = GetDataSourceDeviceTypes();
+        ddlDeviceType.DataBind();
+
         //fltState.DataSource = PolicyState.GetPolicyStates();
         //fltState.DataBind();
+    }
+
+    private object GetDataSourceDeviceTypes()
+    {
+        List<ListItem> list = new List<ListItem>();
+        foreach (String item in DBProviders.Policy.GetDeviceTypes())
+        {
+            list.Add(new ListItem(DatabaseNameLocalization.GetNameForCurrentCulture(item), item));
+        }
+
+        return list;
     }
 
     //protected void DeviceFilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
@@ -86,6 +99,7 @@ public partial class DevicesPolicy : PageBase
     //    GridView1.DataBind();
     //}
     #region GroupTab
+
     #region loadGroups
     /* начальный список групп*/
     [WebMethod]
@@ -95,6 +109,7 @@ public partial class DevicesPolicy : PageBase
         str += ConvertGroupData(null);
         return str;
     }
+
     /*конвертация начального списка*/
     [WebMethod]
     private static String ConvertListRootGroup()
@@ -108,6 +123,7 @@ public partial class DevicesPolicy : PageBase
         }
         return groupListData;
     }
+
     //получение данных группы по id
     [WebMethod]
     public static String GetData(String id)
@@ -127,6 +143,7 @@ public partial class DevicesPolicy : PageBase
         str += "\"}";
         return str;
     }
+
     //конвертирует список компьютеров для группы с id
     private static String ConvertCompListData(int groupID, bool isEmpty)
     {
@@ -151,6 +168,7 @@ public partial class DevicesPolicy : PageBase
         }
         return compListData;
     }
+
     //конвертирует список подгрупп для группы с id
     private static String ConvertSubGroupData(int groupID, out Boolean isEmpty)
     {
@@ -176,6 +194,7 @@ public partial class DevicesPolicy : PageBase
 
         return subGroupData;
     }
+
     //конвертирует содержание группы
     private static String ConvertGroupData(Group? group)
     {
@@ -201,6 +220,7 @@ public partial class DevicesPolicy : PageBase
         groupData += "<div><table width='100%' class='ListContrastTable'></table></div>";
         return groupData;
     }
+
     //без групп
     private static String ConvertWithoutGroupData()
     {
@@ -226,6 +246,7 @@ public partial class DevicesPolicy : PageBase
         }
         return withoutGroupData;
     }
+
     /* конвертирует данные компьютера */
     private static String ConvertComputerData(ComputersEntity comp)
     {
@@ -236,19 +257,20 @@ public partial class DevicesPolicy : PageBase
         compData += "<td width='50%' align='center'><div cp=" + comp.ID + "  name=" + comp.ComputerName + " comp=false >" + comp.IPAddress + "</div></td></tr>";
         return compData;
     }
-    #endregion
 
+    #endregion
 
     #region Computers
     
     /* получение данных о компьютере */
     [WebMethod]
-    public static String GetComputersData(int id)
+    public static String GetComputersData(Int32 id, String device_type)
     {
         System.Diagnostics.Debug.Write("GetComputersData:" + id);
         return ConvertComputerDataForClient(id,
-            DBProviders.Policy.GetDevicesPoliciesByComputer((Int16)id)); ;
+            DBProviders.Policy.GetDevicesPoliciesByComputer((Int16)id, DeviceTypeExtensions.Get(device_type))); ;
     }
+
     private static String ConvertComputerDataForClient(int id, List<DevicePolicy> list)
     {
         String table = "<table style='width:100% ' class='ListContrastTable' cp=" + id + "><thead class='gridViewHeader'><th style='text-align:center'>" +
@@ -270,16 +292,16 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp=" + dp.Device.ID + " cp=" + id + " state=";
             switch (dp.State)
             {
-                case DeviceClassMode.Undefined:
+                case DeviceMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DeviceClassMode.Enabled:
+                case DeviceMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DeviceClassMode.Disabled:
+                case DeviceMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case DeviceClassMode.BlockWrite:
+                case DeviceMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -298,6 +320,7 @@ public partial class DevicesPolicy : PageBase
                table = "";*/
         return table + text + button;
     }
+    
     /*изменение состояния */
     [WebMethod]
     public static void ChangeDevicePolicyStateComputer(int dp, int cp, String state)// deviceId,compId,state
@@ -305,6 +328,7 @@ public partial class DevicesPolicy : PageBase
         System.Diagnostics.Debug.Write("ChangeDevicePolicyState with id:" + dp + ", state:" + state);
         DBProviders.Policy.ChangeDevicePolicyStatusForComputer((Int16)dp, (Int16)cp, state);
     }
+
     [WebMethod]
     /* изменение комментария*/
     public static String GetChangeCommentDialog(int id)
@@ -318,6 +342,7 @@ public partial class DevicesPolicy : PageBase
 
         return label + text + button;
     }
+
     [WebMethod]
     public static void ChangeComment(int id, String comment)
     {
@@ -327,6 +352,7 @@ public partial class DevicesPolicy : PageBase
 
         DBProviders.Policy.EditDevice(device);
     }
+
     /* добавление нового устройства к компьютеру*/
     [WebMethod]
     public static String AddNewDevicePolicyToComputer(short id, String serial)
@@ -344,7 +370,7 @@ public partial class DevicesPolicy : PageBase
         ComputersEntity computer = new ComputersEntity();
         computer.ID = id;
         DevicePolicy dp = new DevicePolicy(device, computer);
-        dp.State = DeviceClassMode.Undefined;
+        dp.State = DeviceMode.Undefined;
         DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
         if (policy.Device.ID != 0)
         {
@@ -352,29 +378,32 @@ public partial class DevicesPolicy : PageBase
         }
         else return "{\"success\":\"false\"}";
     }
+
     private static String ConvertDevicePolicy(DevicePolicy dp)
     {
         return "{\"success\":\"true\", \"deviceID\":\"" + dp.Device.ID + "\", \"comment\":\"" + dp.Device.Comment + "\",\"policyID\":\"" + dp.ID + "\"}";
     }
+
     /* удаление устройства из компьютера*/
     [WebMethod]
     public static void RemoveDevicePolicy(int id)
     {
         DBProviders.Policy.DeleteDevicePolicyByID(id);
     }
+
     #endregion
 
-
     #region Group
+
     [WebMethod]
-    public static /*List<DevicePolicy>*/ String GetGroupDeviceData(int id)
+    public static /*List<DevicePolicy>*/ String GetGroupDeviceData(Int32 id, String device_type)
     {
 
         System.Diagnostics.Debug.Write("GetGroupDeviceData" + id);
         if (id < 0)
-            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesWithoutGroup());
+            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesWithoutGroup(DeviceTypeExtensions.Get(device_type)));
         else
-            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesByGroup(id));
+            return ConvertGroupDataForClient(id, DBProviders.Policy.GetDevicesPoliciesByGroup(id, DeviceTypeExtensions.Get(device_type)));
     }
 
     private static String ConvertGroupDataForClient(int groupID, List<DevicePolicy> list)
@@ -405,16 +434,16 @@ public partial class DevicesPolicy : PageBase
             String select = "<img style='cursor:pointer' dp= " + dp.Device.ID + " gdp=" + groupID + " state=";
             switch (dp.State)
             {
-                case DeviceClassMode.Undefined:
+                case DeviceMode.Undefined:
                     select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                     break;
-                case DeviceClassMode.Enabled:
+                case DeviceMode.Enabled:
                     select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                     break;
-                case DeviceClassMode.Disabled:
+                case DeviceMode.Disabled:
                     select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                     break;
-                case DeviceClassMode.BlockWrite:
+                case DeviceMode.BlockWrite:
                     select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                     break;
             }
@@ -435,6 +464,7 @@ public partial class DevicesPolicy : PageBase
 
         return table + text + button;
     }
+    
     [WebMethod]
     public static void ChangeDevicePolicyStateGroup(int dp, int gp, String state)//device,group,state
     {
@@ -443,6 +473,7 @@ public partial class DevicesPolicy : PageBase
         else
             DBProviders.Policy.ChangeDevicePolicyStatusForGroup((Int16)dp, gp, state);
     }
+
     //добавление устройства в группу
     [WebMethod]
     public static String AddNewDevicePolicyGroup(int id, String serial)
@@ -470,27 +501,32 @@ public partial class DevicesPolicy : PageBase
             return "{\"success\":\"false\"}";
         return "{\"success\":\"true\",\"id\":\"" + device.ID + "\",\"serial\":\"" + device.SerialNo + "\",\"comment\":\"" + device.Comment + "\"}";
     }
+
     /* удаление устройства из группы*/
     [WebMethod]
     public static void RemoveDevicePolicyGroup(int devid, int groupid)
     {
         DBProviders.Policy.RemoveDevicePolicyGroup((Int16)devid, groupid);
     }
+
     [WebMethod]
     public static void RemoveDevicePolicyWithoutGroup(int id)
     {
         DBProviders.Policy.RemoveDevicePolicyWithoutGroup((Int16)id);
     }
+
     #endregion
 
     #endregion
 
     #region DevicesTab
+    
     [WebMethod]
     public static String GetAllDevices()
     {
         return ConvertDevicesList(DBProviders.Policy.GetDevicesList());
     }
+
     private static String ConvertDevicesList(List<Device> list)
     {
         String table = "<table style='width:100% text-align:left !important' class='ListContrastTable' ><thead><th style='text-align:left'>" +
@@ -524,6 +560,7 @@ public partial class DevicesPolicy : PageBase
         device.ID = id;
         DBProviders.Policy.DeleteDevice(device);
     }
+
     #endregion
 
     public static void GetDictionaryOfGroups(Group? root)
@@ -558,7 +595,6 @@ public partial class DevicesPolicy : PageBase
 
     public static BranchOfTree GetBranchOfTreeByDevice(List<DevicePolicy> compList)
     {
-
         BranchOfTree tree = new BranchOfTree();
         foreach (DevicePolicy dp in compList)
         {
@@ -571,7 +607,6 @@ public partial class DevicesPolicy : PageBase
             branch.AddComputer(dp.Computer);
             while (!tree.IsRootExist(rootName))
             {
-
                 int? parentGroupID = group.ParentID;
                 if (parentGroupID != null)
                 {
@@ -697,16 +732,16 @@ public partial class DevicesPolicy : PageBase
         String select = "<img style='cursor:pointer'  treestatedev=" + DeviceID + " treestatecp=" + comp.ID + " state=";
         switch (dp.State)
         {
-            case DeviceClassMode.Undefined:
+            case DeviceMode.Undefined:
                 select += "Undefined src=\'App_Themes/Main/Images/undefined.gif\' />";
                 break;
-            case DeviceClassMode.Enabled:
+            case DeviceMode.Enabled:
                 select += "Enabled src=\'App_Themes/Main/Images/enabled.gif\' />";
                 break;
-            case DeviceClassMode.Disabled:
+            case DeviceMode.Disabled:
                 select += "Disabled src=\'App_Themes/Main/Images/disabled.gif\' />";
                 break;
-            case DeviceClassMode.BlockWrite:
+            case DeviceMode.BlockWrite:
                 select += "BlockWrite src=\'App_Themes/Main/Images/BlockWrite.gif\' />";
                 break;
         }
@@ -739,7 +774,7 @@ public partial class DevicesPolicy : PageBase
             id = Convert.ToInt16(c);
             computer.ID = id;
             DevicePolicy dp = new DevicePolicy(device, computer);
-            dp.State = DeviceClassMode.Undefined;
+            dp.State = DeviceMode.Undefined;
             DevicePolicy policy = DBProviders.Policy.AddDevicePolicyToComputer(dp);
             if (policy.Device.ID != 0) isSuccess = true;
 
@@ -756,9 +791,9 @@ public partial class DevicesPolicy : PageBase
         dp.Computer.ComputerName = computerName;
 
         if (action == "allow")
-            dp.State = DeviceClassMode.Enabled;
+            dp.State = DeviceMode.Enabled;
         else
-            dp.State = DeviceClassMode.Disabled;
+            dp.State = DeviceMode.Disabled;
 
         DBProviders.Policy.ChangeDevicePolicyStatusForComputer(dp);
     }
@@ -791,8 +826,8 @@ public partial class DevicesPolicy : PageBase
     protected void DeviceFilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
     {
         GridView1.PageIndex = 0;
-        GridView1.Where = e.Where;
-        GridView1.DataBind();
+        GridView1.Where = e.Where;        
+        GridView1.DataBind();        
     }
 
     protected void UnknownDeviceFilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
@@ -801,4 +836,13 @@ public partial class DevicesPolicy : PageBase
         GridView2.Where = e.Where;
         GridView2.DataBind();
     }
+
+    protected void ddlDeviceType_SelectedIndexChanged(Object sender, EventArgs e)
+    {
+        updatePanelDevicesGrid.Update();
+        
+        //divUnknownDevices.Visible = DeviceTypeExtensions.Get(ddlDeviceType.SelectedValue) == DeviceType.USB;
+        updatePanelDevicesGrid2.Update();
+    }
+    
 }

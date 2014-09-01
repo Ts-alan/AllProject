@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetDevicesPageForGroup]
-	@GroupID int
+	@GroupID int,
+	@DeviceType nvarchar(256)
 WITH ENCRYPTION
 AS
 	DECLARE @ComputerPage TABLE(
@@ -37,7 +38,8 @@ AS
 		d.[ID], MAX(dp.[LatestInsert]), COUNT(DISTINCT(dp.[DevicePolicyStateID])), COUNT(dp.[DevicePolicyStateID])
 	FROM DevicesPolicies AS dp
 	INNER JOIN Devices AS d ON d.[ID] = dp.[DeviceID]
-	WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage)
+	INNER JOIN DeviceTypes AS dt ON dt.[ID] = d.[DeviceTypeID]
+	WHERE dp.[ComputerID] IN (SELECT [ID] FROM @ComputerPage) AND dt.TypeName = @DeviceType
 	GROUP BY d.[ID]
 
 	SELECT 

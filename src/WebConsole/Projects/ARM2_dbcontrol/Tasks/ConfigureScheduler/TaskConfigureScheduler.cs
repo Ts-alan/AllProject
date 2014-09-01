@@ -69,15 +69,15 @@ namespace ARM2_dbcontrol.Tasks
             result.Append(@"<param><id>tasks</id><type>stringlist</type><value>");
             for (int i = 0; i < _schedulerTasksList.Count; i++)
             {
-                result.AppendFormat(@"<string><id>{0}</id><val>{1}_{2}</val></string>", i, SchedulerTasksList[i].Type.ToString(), i + 1);
+                result.AppendFormat(@"<string><id>{0}</id><val>{1}_{2}</val></string>", i, SchedulerTasksList[i].Name, i + 1);
             }
             result.Append(@"</value></param>");
 
             for (int i = 0; i < _schedulerTasksList.Count; i++)
             {
-                result.AppendFormat(@"<param><id>{0}_{1}_type</id><type>ulong</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, (SchedulerTasksList[i].IsConsideringSystemLoad ? 524288 : 0) + (UInt32)SchedulerTasksList[i].Period);
-                result.AppendFormat(@"<param><id>{0}_{1}_time</id><type>string</type><value>{2}</value></param>", SchedulerTasksList[i].Type.ToString(), i + 1, SchedulerTasksList[i].TaskDateTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                result.AppendFormat(@"<param><id>{0}_{1}_command</id><type>stringmap</type><value>",SchedulerTasksList[i].Type.ToString(), i + 1);
+                result.AppendFormat(@"<param><id>{0}_{1}_type</id><type>ulong</type><value>{2}</value></param>", SchedulerTasksList[i].Name, i + 1, GetType(SchedulerTasksList[i]));
+                result.AppendFormat(@"<param><id>{0}_{1}_time</id><type>string</type><value>{2}</value></param>", SchedulerTasksList[i].Name, i + 1, SchedulerTasksList[i].TaskDateTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                result.AppendFormat(@"<param><id>{0}_{1}_command</id><type>stringmap</type><value>", SchedulerTasksList[i].Name, i + 1);
                 result.AppendFormat(@"<string><id>0</id><key>command</key><val>{0}</val></string>",SchedulerTasksList[i].Type.ToString());
                 String guid = "";
                 switch (SchedulerTasksList[i].Type)
@@ -124,6 +124,14 @@ namespace ARM2_dbcontrol.Tasks
             this._Vba32CCUser = task.Vba32CCUser;
         }
 
+        private UInt32 GetType(SchedulerTask schedulerTask)
+        {
+            if (!schedulerTask.IsConsideringSystemLoad)
+                return (UInt32)schedulerTask.Period;
+
+            return (1 << 16) | ((UInt32)schedulerTask.Period << 8) | schedulerTask.SystemIdleProcess;
+        }
+
         #endregion
 
         #region IConfigureTask Members
@@ -136,10 +144,12 @@ namespace ARM2_dbcontrol.Tasks
 
     public struct SchedulerTask
     {
+        public String Name;
         public ActionTypeEnum Type;
         public PeriodicityEnum Period;
         public DateTime TaskDateTime;
         public Boolean IsConsideringSystemLoad;
+        public UInt32 SystemIdleProcess;
     }
 
     public enum PeriodicityEnum

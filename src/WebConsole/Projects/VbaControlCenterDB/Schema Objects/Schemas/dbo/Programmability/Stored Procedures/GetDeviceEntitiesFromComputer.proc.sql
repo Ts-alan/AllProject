@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[GetDeviceEntitiesFromComputer]
-	@ComputerName nvarchar(64)
+	@ComputerName nvarchar(64),
+	@DeviceType nvarchar(256)
 WITH ENCRYPTION
 AS
 	 SELECT dp.[ID], dp.[ComputerID], c.[ComputerName], dp.[DeviceID], dps.[ModeName],
@@ -9,4 +10,4 @@ AS
 	 INNER JOIN Devices as d ON dp.[DeviceID] = d.[ID]
 	 INNER JOIN DeviceClassMode as dps ON dps.[ID] = dp.[DevicePolicyStateID]
 	 INNER JOIN DeviceTypes as dt ON dt.[ID] = d.[DeviceTypeID]
-	 WHERE c.[ComputerName] = @ComputerName
+	 WHERE c.[ComputerName] = @ComputerName AND dt.TypeName = @DeviceType

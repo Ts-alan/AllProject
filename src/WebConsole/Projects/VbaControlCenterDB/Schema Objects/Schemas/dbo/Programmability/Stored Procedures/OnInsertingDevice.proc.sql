@@ -2,6 +2,7 @@
 	@SerialNo nvarchar(256),
 	@ComputerName nvarchar(64),
 	@Comment nvarchar(128),
+	@TypeName nvarchar(256),
 	@LicenseCount smallint
 WITH ENCRYPTION
 AS
@@ -18,8 +19,10 @@ AS
 	--device not exist
 	IF NOT EXISTS ((SELECT [ID] FROM [Devices] WHERE [SerialNo] = @SerialNo))
 	BEGIN
+		DECLARE @TypeID smallint
+		SET @TypeID = (SELECT [ID] FROM [DeviceTypes] WHERE TypeName = @TypeName)
 		--insert device
-		INSERT INTO [Devices](SerialNo, DeviceTypeID, Comment) VALUES (@SerialNo, 1, @Comment);
+		INSERT INTO [Devices](SerialNo, DeviceTypeID, Comment) VALUES (@SerialNo, @TypeID, @Comment);
 	END
 	
 	--get device id
@@ -37,6 +40,7 @@ AS
 		INSERT INTO [DevicesPolicies] (ComputerID, DeviceID, DevicePolicyStateID)
 		VALUES    (@ComputerID, @DeviceID, @StateID)
 	END
-	
-	UPDATE DevicesPolicies SET [LatestInsert] = GetDate()
+
+	UPDATE DevicesPolicies 
+	SET [LatestInsert] = GetDate()
 	WHERE [DeviceID] = @DeviceID AND [ComputerID] = @ComputerID

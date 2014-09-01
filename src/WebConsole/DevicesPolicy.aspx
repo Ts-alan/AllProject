@@ -12,33 +12,41 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager runat="server" ID="ScriptManager1" EnableScriptGlobalization="true"></ajaxToolkit:ToolkitScriptManager>
-    <div class="title"><%=Resources.Resource.DeviceManagment %></div>  
-    <script type="text/javascript">
+  <div class="title"><%=Resources.Resource.DeviceManagment %></div>  
+  <script type="text/javascript">
         $(document).ready(function () {
             $("#tabs").tabs({ cookie: { expires: 30} });
         });
-    </script>
-  
+  </script>
+  <div style="padding: 10px;">
+    <asp:UpdatePanel  runat="server" ID="upnlDeviceTypes" >
+        <ContentTemplate>
+            <%=Resources.Resource.DeviceType%>:&nbsp;<asp:DropDownList runat="server" ID="ddlDeviceType" OnSelectedIndexChanged="ddlDeviceType_SelectedIndexChanged" AutoPostBack="true" ddlDeviceTypes></asp:DropDownList>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+  </div>
     <div id="tabs">
     <ul>
     <li><a href="#tab1"><%= Resources.Resource.Groups %></a> </li>
     <li><a href="#tab2"><%= Resources.Resource.Devices %></a> </li>
-    <li><a href="#tab3"><%= Resources.Resource.Assignment%></a> </li>
+    <li onlyUSB><a href="#tab3"><%= Resources.Resource.Assignment%></a> </li>
     </ul>
     <div id="tab1">
       <p><div id="accordion" style="font-size:1em !important"></div></p>
    </div>
    <div id="tab2">    
       <div class="divSettings"> 
-            <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True"
-                SelectCountMethod="Count" SelectMethod="Get" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
-                <SelectParameters>
-                    <asp:Parameter Name="where" Type="String" />
-                </SelectParameters>
-            </asp:ObjectDataSource>
-        
             <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid" UpdateMode='Conditional'  RenderMode='Block'  >
             <ContentTemplate>
+                <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" EnablePaging="True"
+                    SelectCountMethod="Count" SelectMethod="Get" 
+                    TypeName="DeviceDataContainer" SortParameterName="SortExpression" >
+                    <SelectParameters>
+                        <asp:Parameter Name="where" Type="String" />
+                        <asp:ControlParameter Name="device_type" ControlID="ddlDeviceType" PropertyName="SelectedValue" DefaultValue="USB" />
+                    </SelectParameters>                
+                </asp:ObjectDataSource>
+
                 <flt:CompositeFilter ID="DeviceFilterContainer" UserFiltersTemproraryStorageName="DevicesFiltersTemp"
                     InformationListType="Devices" UserFiltersProfileKey="DeviceFilters" runat="server"
                     OnActiveFilterChange="DeviceFilterContainer_ActiveFilterChanged">
@@ -98,15 +106,18 @@
         </div>
    </div>
     <div id='tab3'>       
-     <div class="divSettings"> 
-            <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" EnablePaging="True"
-                SelectCountMethod="CountUnknown" SelectMethod="GetUnknown" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
-                <SelectParameters>
-                    <asp:Parameter Name="where" Type="String" />
-                </SelectParameters>
-            </asp:ObjectDataSource>
+     <div class="divSettings" > 
             <asp:UpdatePanel  runat="server" ID="updatePanelDevicesGrid2" UpdateMode='Conditional'  RenderMode='Block'  >
                 <ContentTemplate>
+                <div runat="server" id="divUnknownDevices">
+                    <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" EnablePaging="True"
+                        SelectCountMethod="CountUnknown" SelectMethod="GetUnknown" TypeName="DeviceDataContainer" SortParameterName="SortExpression">
+                        <SelectParameters>
+                            <asp:Parameter Name="where" Type="String" />
+                            <asp:ControlParameter Name="device_type" ControlID="ddlDeviceType" PropertyName="SelectedValue" DefaultValue="USB" />
+                        </SelectParameters>
+                    </asp:ObjectDataSource>
+
                     <flt:CompositeFilter ID="UnknownDeviceFilterContainer" UserFiltersTemproraryStorageName="UnknownDevicesFiltersTemp"
                         InformationListType="UnknownDevices" UserFiltersProfileKey="UnknownDeviceFilters" runat="server"
                         OnActiveFilterChange="UnknownDeviceFilterContainer_ActiveFilterChanged">
@@ -176,6 +187,7 @@
                     <AlternatingRowStyle CssClass = "gridViewRowAlternating" />
                     <RowStyle CssClass="gridViewRow" />
                     </custom:GridViewExtended>
+                </div>
                 </ContentTemplate>
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnUpdateAsync" EventName="Click" />

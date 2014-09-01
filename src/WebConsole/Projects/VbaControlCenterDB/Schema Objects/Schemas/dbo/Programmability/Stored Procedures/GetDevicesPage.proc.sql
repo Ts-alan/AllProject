@@ -21,11 +21,9 @@ AS
 		SELECT
 			d.[ID], d.[SerialNo], d.[Comment]
 		FROM Devices AS d
-		LEFT JOIN DevicesPolicies AS dp ON d.[ID] = dp.[DeviceID]
-		LEFT JOIN DeviceClassMode AS dps ON dps.[ID] = dp.[DevicePolicyStateID]'
+		INNER JOIN DeviceTypes AS dt ON d.[DeviceTypeID] = dt.[ID]'
 	IF @Where IS NOT NULL
-		SET @Query = @Query + N' WHERE ' + @Where
-	SET @Query = @Query + N' GROUP BY d.[ID], d.[SerialNo], d.[Comment]'
+		SET @Query = @Query + N' WHERE ' + @Where	
 	IF @OrderBy IS NOT NULL
 		SET @Query = @Query + N' ORDER BY ' + @OrderBy
 	SET @Query = @Query + N';

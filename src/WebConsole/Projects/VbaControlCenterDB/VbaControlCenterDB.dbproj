@@ -1042,6 +1042,9 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\DeviceClassPolicy.FK_DeviceClassPolicy_Computers.fkey.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Programmability\Stored Procedures\GetDeviceTypes.proc.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <ArtifactReference Include="Schema Objects\Schemas\master.dbschema">

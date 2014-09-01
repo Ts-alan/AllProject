@@ -3,7 +3,7 @@
 <div class="tasksection" runat="server" id="HeaderName" style="width:670px"><%=Resources.Resource.ConfigureScheduler%></div>
 <script type="text/javascript" src="js/Globalize.js"></script>
 <script language="javascript" type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $("#<%= datePickerAddSchedulerTask.ClientID %>").datepicker();
         $("#<%= datePickerAddSchedulerTask.ClientID %>").datepicker("option", "dateFormat", "dd.mm.yy");
@@ -13,8 +13,12 @@
 
         SchedulerAddDialogSetDefault();
         LoadTableFromJSON($('#<%=hdnSchedulerTableState.ClientID %>').val());
- 
-  });
+
+
+        $(document).on("click", '#<%= cboxConsideringSystemLoad.ClientID %>', function () {
+            $('#<%=tboxSystemIdleProcess.ClientID %>').attr("disabled", !$('#<%= cboxConsideringSystemLoad.ClientID %>').is(":checked"));
+        });
+    });
         /*  Hover/Click Templates   */
         $(document).on("mouseenter","[trSchedulerItemSelected]",function () {
             if ($(this).attr('trSchedulerItemSelected') == "true") return;
@@ -65,8 +69,9 @@
                 var taskPeriod = $('#<%=ddlAddSchedulerTaskPeriod.ClientID %> option[value=' + item.TaskPeriod + ']').text();                
                 var taskDateTime=item.TaskDateTime.substr(0,16);
                 var taskIsConsideringSystemLoad = item.IsConsideringSystemLoad ? "1" : "0";
+                var taskSystemIdleProcess = item.SystemIdleProcess;
 
-                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
+                $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + item.TaskType + '>' + taskType + '</td><td period=' + item.TaskPeriod + '>' + taskPeriod + '</td><td>' + taskDateTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td><td style="display:none;">' + taskSystemIdleProcess + '</tr>');
             }
             SchedulerTableChangeStyle();
         };
@@ -83,6 +88,8 @@
                 },
                 buttons: {
                     '<%=Resources.Resource.Apply%>': function () {
+                        if ($('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') && !Page_ClientValidate("SystemIdleProcessValidation"))
+                            return;
                         if (Page_ClientValidate('TimeValidationGroup')) {
                             var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
                             var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
@@ -93,9 +100,10 @@
                             var taskTime = $("#<%= timePickerAddSchedulerTask.ClientID %>").val();
 
                             var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') == true ? "1" : "0";
+                            var taskSystemIdleProcess = GetCorrectSystemIdleProcess($('#<%=tboxSystemIdleProcess.ClientID %>').val(), taskIsConsideringSystemLoad);
 
 
-                            $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td></tr>');
+                            $('#tblSchedulerTasks tbody').append('<tr trSchedulerItemSelected="false" ><td type=' + taskTypeNo + '>' + taskType + '</td><td period=' + taskPeriodNo + '>' + taskPeriod + '</td><td>' + taskDate + ' ' + taskTime + '</td><td style="display:none;">' + taskIsConsideringSystemLoad + '</td><td style="display:none;">' + taskSystemIdleProcess + '</td></tr>');
                             SchedulerTableChangeStyle()
                             SchedulerSaveTableState();
                             $('#AddSchedulerTaskDialog').dialog('close');
@@ -128,6 +136,7 @@
             var OldTaskDate=OldTaskDateTime[0];
             var OldTaskTime = OldTaskDateTime[1];
             var OldTaskIsConsideringSystemLoad = row.children()[3].innerHTML == "1" ? true : false;
+            var OldTaskSystemIdleProcess = row.children()[4].innerHTML;
 
             $('#<%=ddlAddSchedulerTaskType.ClientID %>').val(OldTaskTypeNo);
             $('#<%=ddlAddSchedulerTaskPeriod.ClientID %>').val(OldTaskPeriodNo);
@@ -136,7 +145,8 @@
             $('#<%= timePickerAddSchedulerTask.ClientID %>').val(OldTaskTime);
 
             $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', OldTaskIsConsideringSystemLoad);
-
+            $('#<%=tboxSystemIdleProcess.ClientID %>').val(OldTaskSystemIdleProcess)
+            $('#<%=tboxSystemIdleProcess.ClientID %>').attr("disabled", !OldTaskIsConsideringSystemLoad);
 
             var dOpt = {
                 width: 350,
@@ -147,6 +157,8 @@
                 },
                 buttons: {
                     '<%=Resources.Resource.Apply%>': function () {
+                        if ($('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked') && !Page_ClientValidate("SystemIdleProcessValidation"))
+                            return;
                         if (Page_ClientValidate('TimeValidationGroup')) {
                             var taskType = $('#<%=ddlAddSchedulerTaskType.ClientID %> option:selected').text();
                             var taskTypeNo = $('#<%=ddlAddSchedulerTaskType.ClientID %>').val();
@@ -156,6 +168,7 @@
                             var taskDate = $('#<%= datePickerAddSchedulerTask.ClientID %>').val();
                             var taskTime = $('#<%= timePickerAddSchedulerTask.ClientID %>').val();
                             var taskIsConsideringSystemLoad = $('#<%=cboxConsideringSystemLoad.ClientID %>').is(':checked');
+                            var taskSystemIdleProcess = $('#<%=tboxSystemIdleProcess.ClientID %>').val();
 
                             row.children()[0].innerHTML = taskType;
                             row.children()[0].setAttribute("type", taskTypeNo);
@@ -163,6 +176,7 @@
                             row.children()[1].setAttribute("period", taskPeriodNo);
                             row.children()[2].innerHTML = taskDate + ' ' + taskTime;
                             row.children()[3].innerHTML = taskIsConsideringSystemLoad ? "1" : "0";
+                            row.children()[4].innerHTML = GetCorrectSystemIdleProcess(taskSystemIdleProcess, taskIsConsideringSystemLoad);
 
                             SchedulerSaveTableState()
                             $('#AddSchedulerTaskDialog').dialog('close');
@@ -178,6 +192,16 @@
             $('#AddSchedulerTaskDialog').parent().appendTo(jQuery("form:first"));
         };
 
+        function GetCorrectSystemIdleProcess(tbox, cbox) {
+            var result = "70";
+            if (cbox && tbox != "") {
+                result = tbox;
+            }
+            
+            $('#<%=tboxSystemIdleProcess.ClientID %>').val(result);
+            return result;
+        }
+
         function SchedulerAddDialogSetDefault()
         {
             $('#<%=ddlAddSchedulerTaskType.ClientID %>').val("0");
@@ -186,6 +210,8 @@
             $('#<%=datePickerAddSchedulerTask.ClientID%>').val("01.01.2014");
             $('#<%=datePickerAddSchedulerTask.ClientID%>').datepicker("setDate", "+0d");
             $('#<%=cboxConsideringSystemLoad.ClientID %>').prop('checked', false);
+            $('#<%=tboxSystemIdleProcess.ClientID %>').attr("disabled", true);
+            $('#<%=tboxSystemIdleProcess.ClientID %>').val("70");
         }
 
         function SchedulerTaskDeleteButtonClick()
@@ -206,6 +232,7 @@
                 item.TaskPeriod = row.children()[1].getAttribute("period");
                 item.TaskDateTime = row.children()[2].innerHTML;
                 item.IsConsideringSystemLoad = row.children()[3].innerHTML == "1" ? true : false;
+                item.SystemIdleProcess = row.children()[4].innerHTML;
                 array.push(item);
             });
             var json=JSON.stringify(array);
@@ -243,6 +270,8 @@
                 <%=Resources.Resource.Time%>
             </th>
             <th runat="server" id="tdSchedulerTaskIsConsideringSystemLoad" style="display:none;" class="gridViewHeader">
+            </th>
+            <th runat="server" id="tdSystemIdleProcess" style="display:none;" class="gridViewHeader">
             </th>
         </thead>
         <tbody></tbody>
@@ -283,6 +312,12 @@
     </div>
     <div>
         <asp:CheckBox runat="server" ID="cboxConsideringSystemLoad" /> &nbsp;<%=Resources.Resource.ConsideringSystemLoad%>
+    </div>
+    <div style="padding-left: 20px;">
+        <%=Resources.Resource.SystemIdleProcess%>:&nbsp;<asp:TextBox runat="server" ID="tboxSystemIdleProcess" style="width: 40px;"></asp:TextBox>
+        <asp:RangeValidator ControlToValidate="tboxSystemIdleProcess" ID="rangeSystemIdleProcess" runat="server" ValidationGroup="SystemIdleProcessValidation"
+             MinimumValue="0" MaximumValue="99" Type="Integer" Display="None"></asp:RangeValidator>  
+        <ajaxToolkit:ValidatorCalloutExtender2 ID="rangeSystemIdleProcessCallout" runat="server" TargetControlID="rangeSystemIdleProcess" HighlightCssClass="highlight" PopupPosition="Left" />
     </div>
     <div>
         <label ><%=Resources.Resource.DateAndTime%> </label>

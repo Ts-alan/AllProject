@@ -55,7 +55,9 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
             scheduler = new TaskConfigureScheduler();
             scheduler.Vba32CCUser = Anchor.GetStringForTaskGivedUser();
         }
-        else scheduler.SchedulerTasksList.Clear();    
+        else scheduler.SchedulerTasksList.Clear();
+
+        rangeSystemIdleProcess.ErrorMessage = String.Format(Resources.Resource.ValueBetween, "0", "99");
     }
 
     public bool ValidateFields()
@@ -124,11 +126,42 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
     
     private SchedulerTask ConvertJSONTaskToScheduler(SchedulerTaskFromJSON jsonTask)
     {
-        SchedulerTask task = new SchedulerTask();
+        SchedulerTask task = new SchedulerTask();        
         task.Type = (ActionTypeEnum)jsonTask.TaskType;
+        switch(task.Type)
+        {
+            case ActionTypeEnum.VAS_SCHD_SCANNER:
+                task.Name = Resources.Resource.ActionScan;
+                break;
+                case ActionTypeEnum.SCHD_UPDATER:
+                task.Name = Resources.Resource.ActionUpdate;
+                break;
+                case ActionTypeEnum.SCHD_CLEANING:
+                task.Name = Resources.Resource.Action_SCHD_CLEANING;
+                break;
+                case ActionTypeEnum.check_devices:
+                task.Name = Resources.Resource.Action_check_devices;
+                break;
+                case ActionTypeEnum.check_files:
+                task.Name = Resources.Resource.Action_check_files;
+                break;
+                case ActionTypeEnum.check_registry:
+                task.Name = Resources.Resource.Action_check_registry;
+                break;
+                case ActionTypeEnum.save_devices:
+                task.Name = Resources.Resource.Action_save_devices;
+                break;
+                case ActionTypeEnum.save_files:
+                task.Name = Resources.Resource.Action_save_files;
+                break;
+                case ActionTypeEnum.save_registry:
+                task.Name = Resources.Resource.Action_save_registry;
+                break;
+        }
         task.Period = (PeriodicityEnum)jsonTask.TaskPeriod;
         task.TaskDateTime = DateTime.Parse(jsonTask.TaskDateTime);
         task.IsConsideringSystemLoad = jsonTask.IsConsideringSystemLoad;
+        task.SystemIdleProcess = jsonTask.SystemIdleProcess;
 
         return task;
     }
@@ -140,6 +173,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         jsonTask.TaskPeriod = (Int32)task.Period;
         jsonTask.TaskDateTime = task.TaskDateTime.ToString("dd.MM.yyyy hh:mm");
         jsonTask.IsConsideringSystemLoad = task.IsConsideringSystemLoad;
+        jsonTask.SystemIdleProcess = task.SystemIdleProcess;
 
         return jsonTask;
     }
@@ -150,6 +184,7 @@ public partial class Controls_TaskConfigureScheduler : System.Web.UI.UserControl
         public Int32 TaskPeriod;
         public String TaskDateTime;
         public Boolean IsConsideringSystemLoad;
+        public UInt32 SystemIdleProcess;
     }
 
     #endregion

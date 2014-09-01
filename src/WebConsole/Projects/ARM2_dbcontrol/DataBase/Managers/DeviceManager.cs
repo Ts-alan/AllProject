@@ -22,7 +22,23 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         /// <param name="text">Base64 string</param>
         /// <returns>DEVICE_INFO entity</returns>
-        internal static DEVICE_INFO DeserializeFromBase64(String text)
+        internal static Object DeserializeFromBase64(String text, DeviceType type)
+        {
+            Object result = null;
+            switch (type)
+            {
+                case DeviceType.USB:
+                    result = DeserializeDeviceInfo(text);
+                    break;
+                case DeviceType.NET:
+                    result = DeserializeNetDeviceInfo(text);
+                    break;
+            }
+
+            return result;
+        }
+
+        private static DEVICE_INFO DeserializeDeviceInfo(String text)
         {
             Byte[] buffer = Convert.FromBase64String(text);
             Byte[] tmp = new Byte[buffer.Length];
@@ -34,7 +50,7 @@ namespace VirusBlokAda.CC.DataBase
 
             di.time = new Byte[8];
 
-            di.mount = 0;
+            di.mount = buffer[12];
             di.insert = buffer[13];
 
             di.dev_class = buffer[14];
@@ -64,12 +80,57 @@ namespace VirusBlokAda.CC.DataBase
             return di;
         }
 
+        private static NET_DEVICE_INFO DeserializeNetDeviceInfo(String text)
+        {
+            Byte[] buffer = Convert.FromBase64String(text);
+            Byte[] tmp = new Byte[buffer.Length];
+
+            NET_DEVICE_INFO di = new NET_DEVICE_INFO();
+
+            Array.Copy(buffer, 0, tmp, 0, 4);
+            di.size = BitConverter.ToUInt32(tmp, 0);
+
+            di.time = new Byte[8];
+
+            di.mount = buffer[12];
+            di.insert = buffer[13];
+
+            Array.Copy(buffer, 14, tmp, 0, 2);
+            di.dev_descr_length = BitConverter.ToUInt16(tmp, 0);
+
+            Array.Copy(buffer, 16, tmp, 0, 2);
+            di.hardware_id_length = BitConverter.ToUInt16(tmp, 0);
+
+            Array.Copy(buffer, 18, tmp, 0, 2);
+            di.friendly_name_length = BitConverter.ToUInt16(tmp, 0);
+
+            di.strings = Encoding.Unicode.GetString(buffer, 20, di.dev_descr_length + di.hardware_id_length + di.friendly_name_length);
+
+            return di;
+        }
+
         /// <summary>
         /// Serialize DEVICE_INFO entity to Base64 string
         /// </summary>
         /// <param name="di">DEVICE_INFO entity</param>
         /// <returns>Base64 string</returns>
-        internal static String SerializeToBase64(DEVICE_INFO di)
+        internal static String SerializeToBase64(Object obj, DeviceType type)
+        {
+            String result = String.Empty;
+            switch (type)
+            {
+                case DeviceType.USB:
+                    result = SerializeDeviceInfo((DEVICE_INFO)obj);
+                    break;
+                case DeviceType.NET:
+                    result = SerializeNetDeviceInfo((NET_DEVICE_INFO)obj);
+                    break;
+            }
+            
+            return result;
+        }
+
+        private static String SerializeDeviceInfo(DEVICE_INFO di)
         {
             Byte[] buffer = new Byte[di.size];
 
@@ -91,6 +152,25 @@ namespace VirusBlokAda.CC.DataBase
             Array.Copy(BitConverter.GetBytes(di.serial_number_length), 0, buffer, 25, 2);
 
             Array.Copy(Encoding.Unicode.GetBytes(di.strings), 0, buffer, 27, di.manufacturer_length + di.product_length + di.serial_number_length);
+
+            return Convert.ToBase64String(buffer);
+        }
+
+        private static String SerializeNetDeviceInfo(NET_DEVICE_INFO di)
+        {
+            Byte[] buffer = new Byte[di.size];
+
+            Array.Copy(BitConverter.GetBytes(di.size), 0, buffer, 0, 4);
+            Array.Copy(di.time, 0, buffer, 4, 8);
+
+            Array.Copy(BitConverter.GetBytes(di.mount), 0, buffer, 12, 1);
+            Array.Copy(BitConverter.GetBytes(di.insert), 0, buffer, 13, 1);
+
+            Array.Copy(BitConverter.GetBytes(di.dev_descr_length), 0, buffer, 14, 2);
+            Array.Copy(BitConverter.GetBytes(di.hardware_id_length), 0, buffer, 16, 2);
+            Array.Copy(BitConverter.GetBytes(di.friendly_name_length), 0, buffer, 18, 2);
+
+            Array.Copy(Encoding.Unicode.GetBytes(di.strings), 0, buffer, 20, di.dev_descr_length + di.hardware_id_length + di.friendly_name_length);
 
             return Convert.ToBase64String(buffer);
         }
@@ -310,6 +390,31 @@ namespace VirusBlokAda.CC.DataBase
 
                 return device;
             }
+        }
+
+        /// <summary>
+        /// Get device type list
+        /// </summary>
+        /// <returns></returns>
+        internal List<String> GetDeviceTypes()
+        {
+            List<String> list = new List<String>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetDeviceTypes", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while(reader.Read())
+                {
+                    if (reader.GetValue(0) != DBNull.Value)
+                        list.Add(reader.GetString(0));
+                }
+                reader.Close();
+            }
+
+            return list;
         }
 
         #endregion
