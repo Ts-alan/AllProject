@@ -5,17 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CD279344-0D32-481F-8812-C7E0D141C771}</ProjectGuid>
+    <ProjectGuid>{1BFC32C7-1BC9-48AC-BC50-6CDC88BCDF7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebConsoleTests</RootNamespace>
-    <AssemblyName>WebConsoleTests</AssemblyName>
+    <RootNamespace>IntegrationTests</RootNamespace>
+    <AssemblyName>IntegrationTests</AssemblyName>
+    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\Tests\Integration</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\..\.bin\Tests\Integration\$(Configuration)</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\Tests\Unit</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\Tests\Unit\$(Configuration)</OutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\make\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -34,44 +33,61 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit">
-      <HintPath>..\..\bin\AjaxControlToolkit.dll</HintPath>
+    <Reference Include="NDbUnit.Core">
+      <HintPath>..\..\..\..\make\packages\NDbUnit.Core.1.6.8.0\lib\Net35\NDbUnit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NDbUnit.SqlClient">
+      <HintPath>..\..\..\..\make\packages\NDbUnit.SqlClient.1.6.8.0\lib\Net35\NDbUnit.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>..\..\..\..\make\packages\NSubstitute.1.7.2.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\make\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\System.Web.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AjaxControlToolkitX\AjaxControlToolkitXTests.cs" />
+    <Compile Include="ARM2_DbControl\Database\Provider\ComputerProviderTests.cs" />
+    <Compile Include="ARM2_DbControl\Database\Provider\DBHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AjaxControlToolkitX\AjaxControlToolkitX.csproj">
-      <Project>{4B1FCD41-E001-41BE-97B1-E67D79300466}</Project>
-      <Name>AjaxControlToolkitX</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ARM2_DbControl\Database\TestXML\DataBase.xsc">
+      <DependentUpon>DataBase.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ARM2_DbControl\Database\TestXML\DataBase.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ARM2_DbControl\Database\TestXML\DataBase.xss">
+      <DependentUpon>DataBase.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir)CleanSrcDir.bat $(ProjectDir)</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
