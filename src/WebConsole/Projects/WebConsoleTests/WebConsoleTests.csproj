@@ -37,6 +37,13 @@
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit">
       <HintPath>..\..\bin\AjaxControlToolkit.dll</HintPath>
@@ -55,12 +62,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AjaxControlToolkitX\AjaxControlToolkitXTests.cs" />
+    <Compile Include="ARM2_dbcontrol\DataBase\DeviceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AjaxControlToolkitX\AjaxControlToolkitX.csproj">
       <Project>{4B1FCD41-E001-41BE-97B1-E67D79300466}</Project>
       <Name>AjaxControlToolkitX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+      <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
