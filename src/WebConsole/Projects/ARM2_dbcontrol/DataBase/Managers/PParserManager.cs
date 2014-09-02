@@ -117,7 +117,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             String[] parts = ev.Comment.Split(new Char[] { '|' });
 
-            String cleanSerial = GetCleanSerial(parts[0], DeviceTypeExtensions.Get(parts[3]));
+            String cleanSerial = PolicyProvider.ChangeDeviceMode(parts[0], DeviceTypeExtensions.Get(parts[3]), DeviceMode.Undefined);
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -142,26 +142,6 @@ namespace VirusBlokAda.CC.DataBase
                 ev.Comment = String.Concat(comment, parts[2], parts[3]);
                 ev.Object = cleanSerial;
             }
-        }
-
-        private String GetCleanSerial(String serial, DeviceType type)
-        {
-            String result = String.Empty;
-            switch (type)
-            {
-                case DeviceType.USB:
-                    DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
-                    di.mount = (Byte)DeviceMode.Undefined;
-                    result = DeviceManager.SerializeToBase64(di, type);
-                    break;
-                case DeviceType.NET:
-                    NET_DEVICE_INFO ndi = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
-                    ndi.mount = (Byte)DeviceMode.Undefined;
-                    result = DeviceManager.SerializeToBase64(ndi, type);
-                    break;
-            }
-
-            return result;
         }
         
         /// <summary>
@@ -274,7 +254,7 @@ namespace VirusBlokAda.CC.DataBase
                 return;
 
             DeviceType type = DeviceTypeExtensions.Get(parts[3]);
-            String serial = GetCleanSerial(parts[0], type);
+            String serial = PolicyProvider.ChangeDeviceMode(parts[0], type, DeviceMode.Undefined);
             String comment = parts[1];
 
             using (SqlConnection con = new SqlConnection(connectionString))

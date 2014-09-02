@@ -317,10 +317,7 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     if (item.State != DeviceMode.Undefined)
                     {
-                        NET_DEVICE_INFO di = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.NET);
-                        di.mount = (Byte)item.State;
-
-                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.NET));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, PolicyProvider.ChangeDeviceMode(item.Device.SerialNo, DeviceType.NET, item.State));
                     }
                 }
 
@@ -342,10 +339,7 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     if (item.State != DeviceMode.Undefined)
                     {
-                        DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.USB);
-                        di.mount = (Byte)item.State;
-                        
-                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.USB));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, PolicyProvider.ChangeDeviceMode(item.Device.SerialNo, DeviceType.USB, item.State));
                     }
                 }
 
