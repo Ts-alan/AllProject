@@ -244,6 +244,8 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("<arg><key>command</key><value>apply_settings</value></arg>");
             policy.Append("<arg><key>settings</key><value><config><id>Normal</id><module><id>{87005109-1276-483A-B0A9-F3119AFA4E5B}</id>");
 
+            policy.Append(@"<param><id>NetProtect</id><type>string</type><value>enable</value></param>");
+
             //AcceptableClassesRules
             if (listDC.Count != 0)
             {
@@ -304,10 +306,12 @@ namespace VirusBlokAda.CC.DataBase
                 policy.Append("</value></param>");
             }
 
+            StringBuilder sb;
+
             //NETDevices
             if (listDP_NET.Count != 0)
             {
-                policy.Append("<param><id>NetDevices</id><type>stringlist</type><value>");
+                sb = new StringBuilder(512);
                 index = 0;
                 foreach (DevicePolicy item in listDP_NET)
                 {
@@ -316,16 +320,23 @@ namespace VirusBlokAda.CC.DataBase
                         NET_DEVICE_INFO di = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.NET);
                         di.mount = (Byte)item.State;
 
-                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.NET));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.NET));
                     }
                 }
-                policy.Append("</value></param>");
+
+                if (sb.Length != 0)
+                {
+                    policy.Append("<param><id>NetDevices</id><type>stringlist</type><value>");
+                    policy.Append(sb.ToString());
+                    policy.Append("</value></param>");
+                }
             }
 
             //UsbDevices
             if (listDP_USB.Count != 0)
             {
-                policy.Append("<param><id>UsbDevices</id><type>stringlist</type><value>");
+                sb = new StringBuilder(512);
+                
                 index = 0;
                 foreach (DevicePolicy item in listDP_USB)
                 {
@@ -334,10 +345,16 @@ namespace VirusBlokAda.CC.DataBase
                         DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(item.Device.SerialNo, DeviceType.USB);
                         di.mount = (Byte)item.State;
                         
-                        policy.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.USB));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.SerializeToBase64(di, DeviceType.USB));
                     }
                 }
-                policy.Append("</value></param>");
+
+                if (sb.Length != 0)
+                {
+                    policy.Append("<param><id>UsbDevices</id><type>stringlist</type><value>");
+                    policy.Append(sb.ToString());
+                    policy.Append("</value></param>");
+                }
             }
 
             policy.Append("</module></config></value></arg>");
