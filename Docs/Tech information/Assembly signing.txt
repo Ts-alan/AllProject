@@ -1,0 +1,14 @@
+Подписывание сборок.
+
+1) Ключ лежит в make\Keys\sgKey.snk
+2) Interop.vsisLib.dll (src\WebConsole\bin\) создается из vsis.tlb (src\WebConsole\Projects\ARM2_dbcontrol\Service\VSIS\), для создания dll и ее подписи необходимо выполнить следующую команду:
+	"tlbimp vsis.tlb /primary /keyfile:sgKey.snk /out:Interop.vsisLib.dll"
+3) Остальные сборки подписываются при компиляции.
+4) Public key is
+0024000004800000940000000602000000240000525341310004000001000100030db3e9d207bc
+1b533607edf91f33e630f3e668c2c8f6906ebbbe68d9a6cc143522617259b28e79d1c33966b3f6
+162aa017adffb750ad53f9ea4a0e7ccf30eac0c66647a30b378411fd8d17b90792d39a5c13b29d
+444a50b4a6fe30f560d77971fea72065d7a937bf819dd8b6fec0e875fd5e1dbd52d7ed22c029cd
+ce2522ba
+
+Public key token is e3989b2db6257093

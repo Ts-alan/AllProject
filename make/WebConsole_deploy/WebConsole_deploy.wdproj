@@ -30,6 +30,7 @@
     <SingleAssemblyName>
     </SingleAssemblyName>
     <ContentAssemblyName>Vba32CCWebConsole</ContentAssemblyName>
+    <KeyFile>..\Keys\sgKey.snk</KeyFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\WebConsole\Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj">

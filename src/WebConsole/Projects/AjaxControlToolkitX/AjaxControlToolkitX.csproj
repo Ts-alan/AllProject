@@ -34,6 +34,12 @@
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>sgKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit">
       <HintPath>..\..\bin\AjaxControlToolkit.dll</HintPath>
@@ -61,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ValidatorCallout\ValidatorCallout2.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sgKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
