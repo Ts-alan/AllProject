@@ -317,7 +317,7 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     if (item.State != DeviceMode.Undefined)
                     {
-                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, PolicyProvider.ChangeDeviceMode(item.Device.SerialNo, DeviceType.NET, item.State));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.ChangeDeviceMode(item.Device.SerialNo, DeviceType.NET, item.State));
                     }
                 }
 
@@ -339,7 +339,7 @@ namespace VirusBlokAda.CC.DataBase
                 {
                     if (item.State != DeviceMode.Undefined)
                     {
-                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, PolicyProvider.ChangeDeviceMode(item.Device.SerialNo, DeviceType.USB, item.State));
+                        sb.AppendFormat("<string><id>{0}</id><val>{1}</val></string>", index++, DeviceManager.ChangeDeviceMode(item.Device.SerialNo, DeviceType.USB, item.State));
                     }
                 }
 

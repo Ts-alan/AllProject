@@ -117,7 +117,7 @@ namespace VirusBlokAda.CC.DataBase
         {
             String[] parts = ev.Comment.Split(new Char[] { '|' });
 
-            String cleanSerial = PolicyProvider.ChangeDeviceMode(parts[0], DeviceTypeExtensions.Get(parts[3]), DeviceMode.Undefined);
+            String cleanSerial = DeviceManager.ChangeDeviceMode(parts[0], DeviceTypeExtensions.Get(parts[3]), DeviceMode.Undefined);
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -254,7 +254,7 @@ namespace VirusBlokAda.CC.DataBase
                 return;
 
             DeviceType type = DeviceTypeExtensions.Get(parts[3]);
-            String serial = PolicyProvider.ChangeDeviceMode(parts[0], type, DeviceMode.Undefined);
+            String serial = DeviceManager.ChangeDeviceMode(parts[0], type, DeviceMode.Undefined);
             String comment = parts[1];
 
             using (SqlConnection con = new SqlConnection(connectionString))

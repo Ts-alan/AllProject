@@ -409,26 +409,6 @@ namespace VirusBlokAda.CC.DataBase
             return dev;
         }
 
-        public static String ChangeDeviceMode(String serial, DeviceType type, DeviceMode mode)
-        {
-            String result = String.Empty;
-            switch (type)
-            {
-                case DeviceType.USB:
-                    DEVICE_INFO di = (DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
-                    di.mount = (Byte)mode;
-                    result = DeviceManager.SerializeToBase64(di, type);
-                    break;
-                case DeviceType.NET:
-                    NET_DEVICE_INFO ndi = (NET_DEVICE_INFO)DeviceManager.DeserializeFromBase64(serial, type);
-                    ndi.mount = (Byte)mode;
-                    result = DeviceManager.SerializeToBase64(ndi, type);
-                    break;
-            }
-
-            return result;
-        }
-
         #endregion
 
         #region Statistic actions
