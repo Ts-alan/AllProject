@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using vsisLib;
+using Interop.vsisLib;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {

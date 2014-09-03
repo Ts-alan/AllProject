@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Interop.vsisLib;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
@@ -8,8 +9,8 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
     {
         #region Properties
 
-        private vsisLib.Settings _settings;
-        internal vsisLib.Settings SettingsClass
+        private Interop.vsisLib.Settings _settings;
+        internal Interop.vsisLib.Settings SettingsClass
         {
             get { return _settings; }
             set { _settings = value; }
@@ -97,7 +98,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
             if (properties.ExpandPathesList != null && properties.ExpandPathesList.Length > 0)
             {
-                List<vsisLib.PairString> list = new List<vsisLib.PairString>(properties.ExpandPathesList);
+                List<PairString> list = new List<PairString>(properties.ExpandPathesList);
                 if (!isRewrite)
                 {
                     /*
@@ -123,7 +124,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
         internal UpdateProperties GetUpdateParameters(String module_id)
         {
             UpdateProperties properties = new UpdateProperties();
-            properties.ExpandPathesList = new vsisLib.PairString[0];
+            properties.ExpandPathesList = new PairString[0];
             properties.UpdatePathes = new String[0];
             Object parameter;
             UInt32 settingsType;

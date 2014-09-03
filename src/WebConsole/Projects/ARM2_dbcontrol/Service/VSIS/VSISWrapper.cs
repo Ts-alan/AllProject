@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using vsisLib;
 using VirusBlokAda.CC.DataBase;
+using Interop.vsisLib;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
 {
@@ -71,7 +71,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
             try
             {
-                _updateService.UpdateClass = _service.GetInterface(GUID_UpdateClass, GUID_UpdateInterface) as vsisLib.Update;
+                _updateService.UpdateClass = _service.GetInterface(GUID_UpdateClass, GUID_UpdateInterface) as Update;
             }
             catch (Exception e)
             {
@@ -80,7 +80,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
             try
             {
-                _settings.SettingsClass = _service.GetInterface(GUID_SettingClass, GUID_SettingInterface) as vsisLib.Settings;
+                _settings.SettingsClass = _service.GetInterface(GUID_SettingClass, GUID_SettingInterface) as Interop.vsisLib.Settings;
             }
             catch (Exception e)
             {

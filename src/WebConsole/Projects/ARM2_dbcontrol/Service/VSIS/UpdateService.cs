@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using vsisLib;
+using Interop.vsisLib;
 using VirusBlokAda.CC.DataBase;
 
 namespace VirusBlokAda.Vba32CC.Service.VSIS
@@ -11,16 +11,16 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
     {
         #region Properties
 
-        private vsisLib.Update _update;
-        public vsisLib.Update UpdateClass
+        private Update _update;
+        public Update UpdateClass
         {
             get { return _update; }
             set
             {
                 _update = value;
-                _update.OnNeedStop += new vsisLib._IUpdateEvents_OnNeedStopEventHandler(OnNeedStop);
-                _update.OnNeedStopReason += new vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler(OnNeedStopReason);
-                _update.OnApplyFinish += new vsisLib._IUpdateEvents_OnApplyFinishEventHandler(OnApplyFinish);
+                _update.OnNeedStop += new _IUpdateEvents_OnNeedStopEventHandler(OnNeedStop);
+                _update.OnNeedStopReason += new _IUpdateEvents_OnNeedStopReasonEventHandler(OnNeedStopReason);
+                _update.OnApplyFinish += new _IUpdateEvents_OnApplyFinishEventHandler(OnApplyFinish);
             }
         }
 
@@ -118,34 +118,35 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
 
         internal void SetEvents(UpdateEvents events)
         {
+            
             if (events.OnDownloadStart != null)
-                _update.OnDownloadStart += new vsisLib._IUpdateEvents_OnDownloadStartEventHandler(events.OnDownloadStart);
+                _update.OnDownloadStart += new _IUpdateEvents_OnDownloadStartEventHandler(events.OnDownloadStart);
             if (events.OnDownloadProgress != null)
-                _update.OnDownloadProgress += new vsisLib._IUpdateEvents_OnDownloadProgressEventHandler(events.OnDownloadProgress);
+                _update.OnDownloadProgress += new _IUpdateEvents_OnDownloadProgressEventHandler(events.OnDownloadProgress);
             if (events.OnDownloadFinish != null)
-                _update.OnDownloadFinish += new vsisLib._IUpdateEvents_OnDownloadFinishEventHandler(events.OnDownloadFinish);
+                _update.OnDownloadFinish += new _IUpdateEvents_OnDownloadFinishEventHandler(events.OnDownloadFinish);
 
             if (events.OnApplyStart != null)
-                _update.OnApplyStart += new vsisLib._IUpdateEvents_OnApplyStartEventHandler(events.OnApplyStart);
+                _update.OnApplyStart += new _IUpdateEvents_OnApplyStartEventHandler(events.OnApplyStart);
             if (events.OnApplyProgress != null)
-                _update.OnApplyProgress += new vsisLib._IUpdateEvents_OnApplyProgressEventHandler(events.OnApplyProgress);
+                _update.OnApplyProgress += new _IUpdateEvents_OnApplyProgressEventHandler(events.OnApplyProgress);
             if (events.OnApplyFinish != null)
-                _update.OnApplyFinish += new vsisLib._IUpdateEvents_OnApplyFinishEventHandler(events.OnApplyFinish);
+                _update.OnApplyFinish += new _IUpdateEvents_OnApplyFinishEventHandler(events.OnApplyFinish);
 
             if (events.OnInfoMessage != null)
-                _update.OnInfoMessage += new vsisLib._IUpdateEvents_OnInfoMessageEventHandler(events.OnInfoMessage);
+                _update.OnInfoMessage += new _IUpdateEvents_OnInfoMessageEventHandler(events.OnInfoMessage);
 
             if (events.OnNeedStop != null)
-                _update.OnNeedStop += new vsisLib._IUpdateEvents_OnNeedStopEventHandler(events.OnNeedStop);
+                _update.OnNeedStop += new _IUpdateEvents_OnNeedStopEventHandler(events.OnNeedStop);
             if (events.OnNeedStopReason != null)
-                _update.OnNeedStopReason += new vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler(events.OnNeedStopReason);
+                _update.OnNeedStopReason += new _IUpdateEvents_OnNeedStopReasonEventHandler(events.OnNeedStopReason);
 
             if (events.OnError != null)
-                _update.OnError += new vsisLib._IUpdateEvents_OnErrorEventHandler(events.OnError);
+                _update.OnError += new _IUpdateEvents_OnErrorEventHandler(events.OnError);
             if (events.OnReactionOnUpdate != null)
-                _update.OnReactionOnUpdate += new vsisLib._IUpdateEvents_OnReactionOnUpdateEventHandler(events.OnReactionOnUpdate);
+                _update.OnReactionOnUpdate += new _IUpdateEvents_OnReactionOnUpdateEventHandler(events.OnReactionOnUpdate);
             if (events.OnReserveProgress != null)
-                _update.OnReserveProgress += new vsisLib._IUpdateEvents_OnReserveProgressEventHandler(events.OnReserveProgress);
+                _update.OnReserveProgress += new _IUpdateEvents_OnReserveProgressEventHandler(events.OnReserveProgress);
         }
 
         internal void Update()
