@@ -37,8 +37,8 @@ namespace WebConsoleTests.ARM2_dbcontrol.DataBase
         [TestCase("", DeviceType.NET, DeviceMode.Undefined, ExpectedException = typeof(ArgumentException))]
         [TestCase("ngAAAAAAAAAAAAAAAAEkAGQAAABSAEEAUwAgAEEAcwB5AG4AYwAgAEEAZABhAHAAdABlAHIAAABTAFcAXAB7AEUARQBBAEIANw", DeviceType.NET, DeviceMode.Undefined, ExpectedException = typeof(FormatException))]
         public String PolicyProvider_ChangeDeviceMode_NET(String serial, DeviceType type, DeviceMode mode)
-        {            
-            return PolicyProvider.ChangeDeviceMode(serial, type, mode);
+        {
+            return DeviceManager.ChangeDeviceMode(serial, type, mode);
         }
                
     }
