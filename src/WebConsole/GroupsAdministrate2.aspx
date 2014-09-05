@@ -8,10 +8,25 @@
 
             $(document).tooltip({
                 content: function () {
-                    return $(this).attr('title');
+                    if ($(this).prop('tagName') == 'LI')
+                        return $(this).attr('title');
                 }
             });
             $("input[type=button]").button();
+
+            $("div[forbutton]").hover(
+                function () {
+                    if($(this).attr('forbutton')=='true')
+                        $(this).addClass('button-hover');
+
+                },
+                function () {
+                    $(this).removeClass('button-hover');
+                }
+            );
+
+
+
 
             $.jstree.defaults.checkbox.whole_node = false;
             $.jstree.defaults.checkbox.tie_selection = false;
@@ -19,6 +34,7 @@
                 'core': {
                     'check_callback': function (operation, node, node_parent, node_position, more) {
                         if (operation == 'move_node') {
+                            if (node.type == 'group' || node.type == '#') return false;
                             if (node_parent.type != 'group' && node_parent.type != '#') return false;
                         }
                         return true;
@@ -36,14 +52,11 @@
                     'default': {
                     }
                 },
+
                 'plugins': ["state", "types", "dnd", "sort"]
 
             });
-            $(document).on('dnd_stop.vakata', function (e, data) {
-                console.log(data);
-                var ccc = $('#groupTree').jstree('get_node', data.data.nodes[0]);
-                console.log(ccc);
-            });
+
             $.jstree.defaults.sort = function (a, b) {
                 a = this.get_node(a);
                 b = this.get_node(b);
@@ -79,7 +92,7 @@
                                 var root = $('#groupTree').jstree(true).get_node('#');
                                 isSuccess = compareNames(root, node_position, node.id);
                                 if (isSuccess == false) {
-                                    messageBox('<%=Resources.Resource.ErrorRenamingGroup%>', '<%=Resources.Resource.CanNotRename%>' + e.originalValue +
+                                    messageBox('<%=Resources.Resource.ErrorRenamingGroup%>', '<%=Resources.Resource.CanNotRename%>' + node_position +
                                         '<%=Resources.Resource.GroupAllreadyExists%>');
                                     return false;
                                 }
@@ -105,6 +118,33 @@
                 'dnd': {
                     'is_draggable': function (node) { return true; }
                 },
+                "contextmenu": {
+                    "items": function (node) {
+                        if (node.type != 'group' && node.type != '#') return false;
+                        return {
+                            addGroup: {
+                                "label": "<%=Resources.Resource.Add %>",
+                                "icon":"add-opt",
+                                "action": function (obj) { return addNewGroup(); }
+                            },
+                            renameGroup: {
+                                "label": "<%=Resources.Resource.Rename %>",
+                                "icon": "rename",
+                                "action": function (obj) { return renameNode(); }
+                            },
+                            deleteGroup: {
+                                "label": "<%=Resources.Resource.Delete %>",
+                                "icon":"remove",
+                                "action": function (obj) { return deleteGroup(); }
+                            },
+                            commentGroup: {
+                                "label": "<%=Resources.Resource.Comment %>",
+                                "icon":"comment",
+                                "action": function (obj) { return commentGroup(); }
+                            }
+                        };
+                    }
+                },
                 'plugins': ["state", "types", "dnd", "sort", "contextmenu"]
 
             });
@@ -112,10 +152,47 @@
             $('#groupTree').on('dblclick.jstree', function (e, data) {
                 renameNode();
             });
+            $('#groupTree').on('loaded.jstree', function (e, data) {
+                var ref = $('#groupTree').jstree(true);
+                var treeRoot = ref.get_node('#');
+                var title = "";
+                for (var i = 0; i < treeRoot.children_d.length; i++) {
+                    title = ref.get_node(treeRoot.children_d[i]).original.qtip;
+                    $("#" + treeRoot.children_d[i]).prop('title', title);
+                }
+            });
+            $('#noGroupTree').on('loaded.jstree', function (e, data) {
+                var ref = $('#noGroupTree').jstree(true);
+                var treeRoot = ref.get_node('#');
+                var title = "";
+                for (var i = 0; i < treeRoot.children_d.length; i++) {
+                    title = ref.get_node(treeRoot.children_d[i]).original.qtip;
+                    $("#" + treeRoot.children_d[i]).prop('title', title);
+                }
+            });
+
+            $('#noGroupTree').on('copy_node.jstree', function (e, data) {
+                data.node.original = data.original.original;
+                data.instance.set_id(data.node, data.original.id);
+                $('#' + data.node.id).prop('title', data.node.original.qtip);
+
+            });
+            $('#groupTree').on('copy_node.jstree', function (e, data) {
+                data.node.original = data.original.original;
+                data.instance.set_id(data.node, data.original.id);
+                $('#' + data.node.id).prop('title', data.node.original.qtip);
+
+            });
+            $('#groupTree').on('select_node.jstree', function (e, data) {
+                if (data.node.type != 'group' && data.node.type != '#') setButtonsEnabled(false);
+                else setButtonsEnabled(true);
+            });
             $('#groupTree').on('hover_node.jstree', function (e, data) {
+
                 $("#" + data.node.id).prop('title', data.node.original.qtip);
             });
             $('#noGroupTree').on('hover_node.jstree', function (e, data) {
+
                 $("#" + data.node.id).prop('title', data.node.original.qtip);
             });
         });
@@ -286,7 +363,8 @@
                         if (newComment == '') {
                             newComment = 'No comment';
                         }
-                        sel.original.qtip=newComment;
+                        sel.original.qtip = newComment;
+                        $("#" + sel.id).prop('title', newComment);
                         $('#commentEditBox').dialog('close');
 
                     },
@@ -356,20 +434,43 @@
                         else {
                             messageBox('<%=Resources.Resource.SaveInfoToServer %>', '<%=Resources.Resource.Error %>' + ': ' + resultMessage);
                             //failed to add info to database
-
                         }
                     },
                     error: function (e) {
                         messageBox('<%=Resources.Resource.SaveInfoToServer %>', '<%=Resources.Resource.Error %>' + ': no answer from server');
                     }
-                });  
+                });
             };
+            function setButtonsEnabled(enabled) {                
+
+                if (enabled) {
+                    $('#groupTreeToolbarCommentButton').removeClass('x-btn-disabled');
+                    $('#groupTreeToolbarCommentButton').attr('forbutton', true);
+                    $('#groupTreeToolbarAddButton').removeClass('x-btn-disabled');
+                    $('#groupTreeToolbarAddButton').attr('forbutton', true);
+                    $('#groupTreeToolbarRenameButton').removeClass('x-btn-disabled');
+                    $('#groupTreeToolbarRenameButton').attr('forbutton', true);
+                    $('#groupTreeToolbarDeleteButton').removeClass('x-btn-disabled');
+                    $('#groupTreeToolbarDeleteButton').attr('forbutton', true);
+                }
+                else {
+                    $('#groupTreeToolbarCommentButton').addClass('x-btn-disabled');
+                    $('#groupTreeToolbarCommentButton').attr('forbutton', false);
+                    $('#groupTreeToolbarAddButton').addClass('x-btn-disabled');
+                    $('#groupTreeToolbarAddButton').attr('forbutton', false);
+                    $('#groupTreeToolbarRenameButton').addClass('x-btn-disabled');
+                    $('#groupTreeToolbarRenameButton').attr('forbutton', false);
+                    $('#groupTreeToolbarDeleteButton').addClass('x-btn-disabled');
+                    $('#groupTreeToolbarDeleteButton').attr('forbutton', false);
+                }
+            };
+
             function messageBox(title,text) {
                 $('#messageText').html(text);
                 $("#dialog-message").dialog({
                     title: title,
                     modal: true,
-                    width: 250,
+                    width: 350,
                     resizable: false,
                     buttons: {
                         Ok: function () {
@@ -383,39 +484,99 @@
         <%=Resources.Resource.GroupManagment%>
     </div>
     <div id="mainContainer" style="width: 800px; height: 500px;">
-        <table >
+        <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 800px; height: 500px; left: 0px; top: 0px;">
+            <div id="noGroupTreePanel" class="x-panel x-box-item" style="width: 300px; height: 475px; margin: 0px; left: 0px; top: 0px;">
+                <div id="noGroupTreePanelHeader" class=" x-docked x-panel-header-default" style=" left: 0px; top: 0px;right:0px;">
+                    <span class=" x-panel-header-text-default" ><%=Resources.Resource.ComputersWithoutGroups %></span>
+                </div>
+                <div id="noGroupTreeBody" class="tree-panel-body" style=" left: 0px; top: 25px; height: 450px;right:0px">
+                    <div id="noGroupTree" style=""></div>
+                </div>
+            </div>
+
+            <div id="groupTreePanel" class="x-panel x-box-item" style="width: 500px; height: 475px; margin: 0px; left: 300px; top: 0px;">
+                <div id="groupTreePanelHeader" class="x-docked x-panel-header-default" style="width: 500px; left: 0px; top: 0px;">
+                    <span class="x-panel-header-text-default" ><%=Resources.Resource.ComputersWithGroups %></span>
+                </div>
+                <div id="groupTreeToolbar" class="x-toolbar x-docked x-toolbar-default" style="width: 500px; left: 0px; top: 25px; height:25px;">
+                    <div id="groupTreeToolbarAddButton" forbutton='true' class="x-btn  x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left"  style="border-width: 1px;  top: 0px; margin: 0px;float:left">
+                        <button id="addGroupButton" class="x-btn-center" type="button" onclick="return addNewGroup();">
+                            <span class="x-btn-icon add-opt"></span>
+                            <span class="x-btn-inner"><%=Resources.Resource.Add %></span>
+                        </button>
+                    </div>
+                    <div id="groupTreeToolbarRenameButton" forbutton='false' class="x-btn  x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; top: 0px; margin: 0px;float:left">
+                        <button id="renameGroupButton" class="x-btn-center" type="button" onclick="return renameNode();">
+                            <span class="x-btn-icon rename"></span>
+                            <span class="x-btn-inner"><%=Resources.Resource.Rename %></span>
+                        </button>
+                    </div>
+                    <div id="groupTreeToolbarDeleteButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; left: 140px; top: 0px; margin: 0px;float:left">
+                        <button id="deleteGroupButton" class="x-btn-center" type="button" onclick="return deleteGroup();">
+                            <span class="x-btn-icon remove"></span>
+                            <span class="x-btn-inner"><%=Resources.Resource.Delete %></span>
+                        </button>
+                    </div>
+                    <div id="groupTreeToolbarCommentButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; left: 210px; top: 0px; margin: 0px;float:left">
+                        <button id="commentGroupButton" class="x-btn-center" type="button" onclick="return commentGroup();">
+                            <span class="x-btn-icon comment"></span>
+                            <span class="x-btn-inner"><%=Resources.Resource.Comment %></span>
+                        </button>
+                    </div>
+                </div>
+                <div id="groupTreeBody" class="tree-panel-body x-grid-body x-layout-fit" style="width: 500px; left: 0px; top: 55px; height: 444px;">
+                    <div id="groupTree" style="height:300px"></div>
+                </div>
+            </div>
+            <div class="x-toolbar x-docked x-toolbar-default" style="border-width: 1px; left: 0px; bottom:0px;right:0px;">
+                <div style="width: 794px; height: 22px;" class="x-box-inner " role="presentation">
+                    <div  style="position:absolute;width:20000px;left:0px;top:0px;height:1px"></div>
+                        <div forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left" style="border-width: 1px; left: 0px; top: 0px; margin: 0px;float:left" id="reloadButtonToolbar">
+                            <button id="reloadTreesButton" style="height: 16px;"  type="button" class="x-btn-center" hidefocus="true" role="button" autocomplete="off" onclick="return reloadTrees();">
+                                <span class="x-btn-icon reload"></span>
+                                <span class="x-btn-inner"><%=Resources.Resource.Reload %></span>                                
+                            </button>
+                        </div>                     
+                        <div forbutton='true' class="x-btn  x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left" style="border-width: 1px; top: 0px;margin:0px;float:right" id="saveButtonToolbar">
+                            <button   id="saveTreesButton" type="button" class="x-btn-center"  onclick="return saveTrees();">
+                                <span class="x-btn-icon save"></span>
+                                <span class="x-btn-inner"><%=Resources.Resource.Save %></span>                                
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <%--<table >
             <thead>
                 <th><%=Resources.Resource.ComputersWithoutGroups %> </th>
                 <th><%=Resources.Resource.ComputersWithGroups %></th>
             </thead>
             <tr>
                 <td>
-                    <div id="noGroupTree">
-                        <ul>
-                            <li><%=Resources.Resource.Computers %></li>
-                        </ul>
+                   <div id="noGroupTree" style="height:300px">
                     </div>
                 </td>
                 <td>
                     <p>
-                        <input type="button" id="addGroupButton" value="<%=Resources.Resource.Add %>" title="<%=Resources.Resource.AddNewGroup %>" onclick="return addNewGroup();"/>
+                    
+                        <input type="button" id="addGroupButton" value="<%=Resources.Resource.Add %>" title="<%=Resources.Resource.AddNewGroup %>" class="x-btn" onclick="return addNewGroup();"/>
                         <input type="button" id="renameGroupButton" value="<%=Resources.Resource.Rename %>" title="<%=Resources.Resource.RenameSelectedGroup %>" onclick="return renameNode();"/>
                         <input type="button" id="deleteGroupButton" value="<%=Resources.Resource.Delete %>" title="<%=Resources.Resource.RemoveSelectedGroup %>" onclick="return deleteGroup();"/>
                         <input type="button" id="commentGroupButton" value="<%=Resources.Resource.Comment %>" title="<%=Resources.Resource.ChangeCommentSelectedGroup %>" onclick="return commentGroup();"/>
                     </p>
                     <p>
-                        <div id="groupTree"></div>
+                        <div id="groupTree" style="height:300px"></div>
                     </p>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="button" id="reloadTreesButton" value="<%=Resources.Resource.Reload %>" title='<%=Resources.Resource.ReloadInfoFromServer %>' onclick="return reloadTrees();"/>
+                   <input type="button" id="reloadTreesButton" value="<%=Resources.Resource.Reload %>" title='<%=Resources.Resource.ReloadInfoFromServer %>' onclick="return reloadTrees();"/>
                     <input type="button" id="saveTreesButton" value="<%=Resources.Resource.Save%>" title='<%=Resources.Resource.SaveInfoToServer %>' onclick="return saveTrees();"/>
 
                 </td>
             </tr>
-        </table>   
+        </table>   --%>
     </div>
     <div id="commentEditBox" style="display:none">
         <p> <%=Resources.Resource.ChangeComment %></p>
