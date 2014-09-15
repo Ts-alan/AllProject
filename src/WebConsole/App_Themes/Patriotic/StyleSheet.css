@@ -1318,3 +1318,27 @@ div.EditComment[disabled]
     width: 100px;
     cursor: pointer;
 }
+
+.word-wrap-cell
+{
+	white-space: pre-wrap; /* css-3 */    
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */    
+    white-space: -o-pre-wrap; /* Opera 7 */    
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.device-serial-col
+{
+	max-width: 500px;
+}
+
+.device-comment-col
+{
+	max-width: 500px;
+}
+
+.device-serial-col-small
+{
+	max-width: 400px;
+}
