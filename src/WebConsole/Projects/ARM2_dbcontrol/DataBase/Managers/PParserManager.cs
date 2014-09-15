@@ -118,12 +118,20 @@ namespace VirusBlokAda.CC.DataBase
             if (!String.IsNullOrEmpty(ev.Comment))
                 return;
 
+            Int32 index = 0;
+            if (ev.EventName == "JE_VDD_DEVICE")
+            {
+                index = 1;
+            }
+
             StringBuilder sb = new StringBuilder(256);
-            for (Int32 index = 0; index < ev.Comment_parts.Length; index++)
+            while (index < ev.Comment_parts.Length)
             {
                 if (index != 0)
-                    sb.Append(@"<br/>");
+                    sb.Append(@"<br>");
                 sb.Append(ev.Comment_parts[index]);
+                
+                index++;
             }
 
             ev.Comment = sb.ToString();
