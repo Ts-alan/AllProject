@@ -74,15 +74,17 @@
                     <asp:LinkButton deviceID='<%# Eval("ID") %>' runat='server' Text='<%# Eval("SerialNo") %>' />
                      <%--   <asp:Label   runat='server' Text='<%# Eval("SerialNo") %>' ></asp:Label> --%>
                     </ItemTemplate>
+                    <ItemStyle CssClass="word-wrap-cell device-serial-col" />
                 </asp:TemplateField > 
 
                  <asp:TemplateField HeaderStyle-Width="250px" HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, Comment %>' SortExpression="Comment">
-                    
+                    <ItemStyle CssClass="word-wrap-cell device-comment-col" />
                     <ItemTemplate >
                         <asp:Label   runat='server' Text='<%# Eval("Comment") %>' dp='<%# Eval("ID") %>' type='comment'></asp:Label> 
-                    </ItemTemplate></asp:TemplateField>        
-                     <asp:TemplateField  HeaderStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, Actions %>'>
-                   
+                    </ItemTemplate>
+                 </asp:TemplateField>        
+                 
+                 <asp:TemplateField  HeaderStyle-Width="50px" HeaderStyle-HorizontalAlign="Center" HeaderText='<%$ Resources:Resource, Actions %>'>
                    <ItemTemplate>
                     <asp:Image comdp='<%# Eval("ID") %>' serialdp='<%# Eval("SerialNo") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' runat=server /> 
                        <%--  <asp:ImageButton ID="ImageButton1" comdp='<%# Eval("ID") %>' serialdp='<%# Eval("SerialNo") %>' ImageUrl="~/App_Themes/Main/Images/comment.png" ToolTip='<%$ Resources:Resource, ChangeComment %>' runat=server /> 

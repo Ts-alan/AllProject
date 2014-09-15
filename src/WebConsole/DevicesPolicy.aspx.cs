@@ -92,7 +92,7 @@ public partial class DevicesPolicy : PageBase
         return list;
     }
 
-    //protected void DeviceFilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
+    //protected void DeviGetComputerceFilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
     //{
     //    GridView1.PageIndex = 0;
     //    GridView1.Where = e.Where;
@@ -283,7 +283,7 @@ public partial class DevicesPolicy : PageBase
        
         foreach (DevicePolicy dp in list)
         {
-            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/ dp.Device.SerialNo + "</td>";
+            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td class='word-wrap-cell device-serial-col-small'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/ dp.Device.SerialNo + "</td>";
             String comment = Anchor.ConvertComment(dp.Device.Comment);
 
             row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
@@ -424,7 +424,7 @@ public partial class DevicesPolicy : PageBase
             {
                 all = "<img nfadp=" + dp.Device.ID + " src=\'App_Themes/Main/Images/notForAll.gif \' />";
             }
-            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + all + "</td><td style='white-space:pre'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/dp.Device.SerialNo + "</td>";
+            String row = "<tr style='text-align:center' class='" + cssStyle + "'><td>" + all + "</td><td class='word-wrap-cell device-serial-col-small'>" + /*Anchor.FixString(dp.Device.SerialNo, 30)*/dp.Device.SerialNo + "</td>";
             String comment = Anchor.ConvertComment(dp.Device.Comment);
 
             row += "<td type='comment' dp=" + dp.Device.ID + ">" + comment + "</td>";
