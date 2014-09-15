@@ -12,8 +12,8 @@ AS
 			[RecID] int IDENTITY(1, 1) NOT NULL,
 			[PolicyID] int,
 			[ID] smallint,
-			[SerialNo] nvarchar(256) COLLATE Cyrillic_General_CI_AS NOT NULL,
-			[Comment] nvarchar(128) COLLATE Cyrillic_General_CI_AS,
+			[SerialNo] nvarchar(1024) COLLATE Cyrillic_General_CI_AS NOT NULL,
+			[Comment] nvarchar(256) COLLATE Cyrillic_General_CI_AS,
 			[ComputerName] nvarchar(64) COLLATE Cyrillic_General_CI_AS NOT NULL,
 			[LatestInsert] smalldatetime
 		)

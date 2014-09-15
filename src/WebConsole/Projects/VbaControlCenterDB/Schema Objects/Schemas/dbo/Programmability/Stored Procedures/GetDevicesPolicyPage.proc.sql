@@ -14,9 +14,9 @@ AS
 			[ComputerName] nvarchar(64) NOT NULL,
 			[DeviceID] smallint NOT NULL,
 			[ModeName] nvarchar(64) NOT NULL,
-			[SerialNo] nvarchar(256) NOT NULL ,
+			[SerialNo] nvarchar(1024) NOT NULL ,
 			[TypeName] nvarchar(256) NOT NULL,
-			[Comment] nvarchar(128) NULL,
+			[Comment] nvarchar(256) NULL,
 			[LatestInsert] smalldatetime NULL
 		)
 	

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [GetDeviceID]
-	@SerialNo nvarchar(256),
+	@SerialNo nvarchar(1024),
 	@Type smallint,
 	@Comment nvarchar(256),
 	@InsertIfNotExists tinyint = 0

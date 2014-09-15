@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[AddDevicePolicyToGroup]
 	@GroupID int,
-	@SerialNo nvarchar(256),
+	@SerialNo nvarchar(1024),
 	@StateName nvarchar(64)
 WITH ENCRYPTION
 AS

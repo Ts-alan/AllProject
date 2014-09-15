@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetDeviceBySN]
-	@SerialNo nvarchar(256)
+	@SerialNo nvarchar(1024)
 WITH ENCRYPTION
 AS	
 	SELECT	d.[ID], d.[SerialNo], d.[Comment]

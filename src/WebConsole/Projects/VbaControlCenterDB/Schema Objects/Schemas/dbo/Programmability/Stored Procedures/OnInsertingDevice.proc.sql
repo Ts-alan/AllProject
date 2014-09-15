@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [OnInsertingDevice]
-	@SerialNo nvarchar(256),
+	@SerialNo nvarchar(1024),
 	@ComputerName nvarchar(64),
-	@Comment nvarchar(128),
+	@Comment nvarchar(256),
 	@TypeName nvarchar(256),
 	@LicenseCount smallint
 WITH ENCRYPTION
