@@ -168,9 +168,9 @@ namespace VirusBlokAda.CC.DataBase
             if (ev.EventName == "JE_VDD_DEVICE")
             {
                 pMngr.OnDeviceInsert(ev, licenseCount);
-                pMngr.ModifyDeviceEvent(ev);
             }
 
+            pMngr.ModifyEvent(ev);
             pMngr.InsertEvent(ev);
         }
 

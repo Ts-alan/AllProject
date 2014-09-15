@@ -113,35 +113,20 @@ namespace VirusBlokAda.CC.DataBase
         /// Add convertation logic if this event is related to devices 
         /// </summary>
         /// <param name="name_value_map"></param>
-        internal void ModifyDeviceEvent(EventsEntity ev)
+        internal void ModifyEvent(EventsEntity ev)
         {
-            String[] parts = ev.Comment.Split(new Char[] { '|' });
+            if (!String.IsNullOrEmpty(ev.Comment))
+                return;
 
-            String cleanSerial = DeviceManager.ChangeDeviceMode(parts[0], DeviceTypeExtensions.Get(parts[3]), DeviceMode.Undefined);
-
-            using (SqlConnection con = new SqlConnection(connectionString))
+            StringBuilder sb = new StringBuilder(256);
+            for (Int32 index = 0; index < ev.Comment_parts.Length; index++)
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceBySN", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@SerialNo", cleanSerial);
-
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                String comment = String.Empty;
-                if (reader.Read())
-                {
-                    if (reader.GetValue(2) != DBNull.Value)
-                        comment = reader.GetString(2);
-                }
-                reader.Close();
-                if (String.IsNullOrEmpty(comment))
-                {
-                    comment = parts[1];
-                }
-                ev.Comment = String.Concat(comment, parts[2], parts[3]);
-                ev.Object = cleanSerial;
+                if (index != 0)
+                    sb.Append(@"<br/>");
+                sb.Append(ev.Comment_parts[index]);
             }
+
+            ev.Comment = sb.ToString();
         }
         
         /// <summary>
@@ -249,13 +234,12 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="licenseCount"></param>
         internal void OnDeviceInsert(EventsEntity ev, Int16 licenseCount)
         {
-            String[] parts = ev.Comment.Split(new Char[] { '|' });
-            if (parts[2] != "VDD_INSERTED")
+            if (ev.Comment_parts[2] != "VDD_INSERTED")
                 return;
 
-            DeviceType type = DeviceTypeExtensions.Get(parts[3]);
-            String serial = DeviceManager.ChangeDeviceMode(parts[0], type, DeviceMode.Undefined);
-            String comment = parts[1];
+            DeviceType type = DeviceTypeExtensions.Get(ev.Comment_parts[3]);
+            String serial = DeviceManager.ChangeDeviceMode(ev.Comment_parts[0], type, DeviceMode.Undefined);
+            String comment = ev.Comment_parts[1];
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {

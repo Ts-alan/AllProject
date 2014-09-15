@@ -20,6 +20,7 @@ namespace VirusBlokAda.CC.DataBase
         protected String ipAddress = String.Empty;
         protected String description = String.Empty;
 
+        private String[] comment_parts;
 
 		//Default constructor
 		public EventsEntity() {}
@@ -37,6 +38,7 @@ namespace VirusBlokAda.CC.DataBase
             //this.componentID = componentID;
 			this._object = _object;
 			this.comment = comment;
+            this.comment_parts = new String[0];
 		}
 
         public EventsEntity(StringDictionary name_value_map)
@@ -53,10 +55,24 @@ namespace VirusBlokAda.CC.DataBase
             this.componentName = name_value_map["Component"];
             this._object = name_value_map["Object"];
             this.comment = name_value_map["Comment"];
+            if (!String.IsNullOrEmpty(name_value_map["Count"]))
+            {
+                Int32 count = Convert.ToInt32(name_value_map["Count"]);
+                this.comment_parts = new String[count];
+                for (Int32 index = 0; index < count; index++)
+                {
+                    this.comment_parts[index] = name_value_map[String.Format("Param{0}", index)];
+                }
+            }
         }
 		
 		#region Public Properties
-		
+
+        public String[] Comment_parts
+        {
+            get { return comment_parts; }
+        }
+
         public String ComputerName
         {
             get { return computerName; }
