@@ -151,7 +151,7 @@
                 }
                 $('#<%= tboxSaveAsName.ClientID %>').val("");
                 $('#<%= lblSaveAsError.ClientID %>').html("");
-                dialog.dialog("show");
+                dialog.dialog("open");
             }
         };
     } ();
