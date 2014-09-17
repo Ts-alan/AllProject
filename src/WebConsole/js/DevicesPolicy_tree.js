@@ -1,182 +1,136 @@
-﻿
-
-        var ComputersTreeDevice = function () {
-            var root;
-            var treeStore;
-            var tree;
-           function onTreeLoad(This, node) {}
-           
-
-
-
-            //function to check/uncheck all  child nodes and parent path
-            function toggleCheck(node, isCheck) {
-                if (node) {
-                    var args = [isCheck];
-                    node.cascadeBy(function () {
-                        c = args[0];
-                        this.set('checked', c);
-                    }, null, args);
-                    toggleParentCheck(node, isCheck);
-
-                }
+﻿function ComputerTreeDeviceInit() {
+    $.jstree.defaults.checkbox.whole_node = false;
+    $.jstree.defaults.checkbox.tie_selection = false;
+    $('#dialog_div').jstree({
+        'core': {
+            'check_callback': true,
+            'multiple': false,
+            'data': function (node, cb) {
+                cb(loadTreeInfo());
             }
-            function toggleParentCheck(node, isCheck) {
-                while (node.parentNode != root) {
-                    parentChecked = false;
-                    node.parentNode.eachChild(function (next) {
-                        if (next.get('checked')) {
-                            parentChecked = true;
-                        }
-                    });
-                    node.parentNode.set('checked', parentChecked);
-                    node = node.parentNode;
-                }
+        },
+        'types': {
+            'group': {
+                'icon': "App_Themes/Main/groups/images/group.png"
+            },
+            'computer': {
+                'icon': "App_Themes/Main/groups/images/monitor.png"
+            },
+            'server': {
+                'icon': "App_Themes/Main/groups/images/server.png"
+            },
+            'default': {
             }
-            return {
-                init: function (dialog) {
-                    Ext.tip.QuickTipManager.init();
-                    Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
-                        maxWidth: 200,
-                        minWidth: 100,
-                        showDelay: 500    // Show 500ms after entering target
-                    });
-                    treeStore = Ext.create('Ext.data.TreeStore', {
-                        proxy: {
-                            type: 'ajax',
-                            url: 'Handlers/CheckedComputerTreeHandler.ashx'
-                        },
-                        root: {
-                            text: 'Root',
-                            draggable: false,
-                            id: 'TreeRoot',
-                            root: true,
-                            leaf: false,
-                            expanded: true
-                        },
-                        folderSort: true,
-                        sorters: [{
-                            property: 'text',
-                            direction: 'ASC'
-                        }],
-                        listeners: {
-                            load: function (thisStore, records, successful, eOpts) {
-                                if (!successful) {
-                                   
-                                        dialog.dialog('close');
-                                        Ext.Msg.alert(Resource.Error, Resource.ErrorRequestingDataFromServer);
-                                    
-                                } 
-                            }
-                        }
-                    });
-                  
-                    var tree = Ext.create('Ext.tree.Panel', {
-                        id: "treeComputers",
-                        animate: true,
-                        store: treeStore,
-                        autoScroll: true,
-                        rootVisible: false,
-                        renderTo: 'dialog_div'
-                    });
-                    tree.on("checkchange", function (node, checked, eOpts) {
-                        toggleCheck(node, checked);
-                    });
-                    root = tree.getRootNode();
-                    root.expand(false);
-                },
-                reload: function () {
-                    if(treeStore)
-                        treeStore.reload();
-                     
-                },
-                generateText: function () {
-                    computers = new Array();
-                    root.eachChild(function (group) {
-                        RecursiveAdd(group);
+        },
+        'plugins': ["checkbox", "types"]
+    });
+};
 
-                        function RecursiveAdd(rootNode) {
-                            for (var i = 0; i < rootNode.childNodes.length; i++) {
-                                RecursiveAdd(rootNode.childNodes[i]);
-                            }
-                            if (rootNode.isLeaf() && rootNode.get('checked'))
-                                computers.push(rootNode.get("id").toLowerCase());
-                        }
+function ComputerTreeDeviceReload() {
+    $('#dialog_div').jstree('refresh');
+};
 
-                    });
-                    return computers.join('&');
+function ComputerTreeDeviceGenerateText() {
+    computers = new Array();
+    var node;
+    var checkedObj = $('#dialog_div').jstree('get_checked', true);
+
+    for (i = 0; i < checkedObj.length; i++) {
+        if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
+            node = checkedObj[i].original;
+            if (node != null && node.leaf) {
+                computers.push(node.id.toLowerCase());
+            }
+        }
+    }
+    return computers.join('&');
+};
+
+function loadTreeInfo() {
+    var d = "";
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "Handlers/CheckedComputerTreeHandler.ashx",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            d = data;
+        },
+        error: function (e) {
+            dialog.dialog('close');
+            console.log(e);
+            alert(Resource.ErrorRequestingDataFromServer);
+        }
+    });
+    return d;
+};
+
+var ComputersDialogDevice = function () {
+    var dialog;
+    var asyncPostBack = false;
+
+    function onApply(serial) {
+
+        comps = ComputerTreeDeviceGenerateText();
+        $.ajax({
+            type: "POST",
+            url: "DevicesPolicy.aspx/AddNewDevicePolicyByComputerList",
+            dataType: "json",
+
+            data: "{serial:'" + serial + "',comps:'" + comps + "'}",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+
+                if (msg == true) {
+                    $("a:contains('" + serial + "')").trigger("click");
                 }
-                
-            };
-        } ();
+                else alert(Resource.NothingIsAdded);
+            },
+            error: function (msg) { alert(msg.responseText) }
+        });
 
-        var ComputersDialogDevice = function () {
-            var dialog;
-            var asyncPostBack = false;
+    }
 
-            function onApply(serial) {
+    function onHide() {
+        PageRequestManagerHelper.enableAsyncPostBack();
+    }
 
-                comps = ComputersTreeDevice.generateText();
+    function onShow() {
+        PageRequestManagerHelper.abortAsyncPostBack();
+        PageRequestManagerHelper.disableAsyncPostBack();
+    }
 
+    return {
+        setAsyncPostBack: function () {
+            asyncPostBack = true;
+        },
+        show: function (serial) {
 
-                $.ajax({
-                    type: "POST",
-                    url: "DevicesPolicy.aspx/AddNewDevicePolicyByComputerList",
-                    dataType: "json",
-
-                    data: "{serial:'" + serial + "',comps:'" + comps + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (msg) {
-
-                        if (msg == true) {
-                            $("a:contains('" + serial + "')").trigger("click");
-                        }
-                        else alert("Ничего не добавлено");
+            var Apply = Resource.Apply.toString();
+            if (!dialog || asyncPostBack) {
+                $('body').append('<div id="dialog_div"></div>');
+                dialog = $('#dialog_div').dialog({
+                    title: Resource.Computers,
+                    width: 500,
+                    height: 300,
+                    modal: true,
+                    draggable: false,
+                    close: function () {
+                        onHide();
+                        $(this).dialog("destroy");
+                        dialog = false;
+                        $('#dialog_div').remove();
                     },
-                    error: function (msg) { alert(msg.responseText) }
-                });
-
+                    open: onShow,
+                    buttons: { Apply: function () { onApply(serial); dialog.dialog("close"); } }
+                });                        
+                ComputerTreeDeviceInit();
+                asyncPostBack = false;
             }
-
-            function onHide() {
-                PageRequestManagerHelper.enableAsyncPostBack();
+            else {
+                ComputerTreeDeviceReload();
             }
-
-            function onShow() {
-                PageRequestManagerHelper.abortAsyncPostBack();
-                PageRequestManagerHelper.disableAsyncPostBack();
-            }
-
-            return {
-                setAsyncPostBack: function () {
-                    asyncPostBack = true;
-                },
-                show: function (serial) {
-
-                    var Apply = Resource.Apply.toString();
-                    if (!dialog || asyncPostBack) {
-                        $('body').append('<div id="dialog_div"></div>');
-                        dialog = $('#dialog_div').dialog({
-                            title: Resource.Computers,
-                            width: 500,
-                            height: 300,
-                            modal: true,
-                            draggable: false,
-                            close: function () {
-                                onHide();
-                                $(this).dialog("destroy");
-                                dialog = false;
-                                $('#dialog_div').remove();
-                            },
-                            open: onShow,
-                            buttons: { Apply: function () { onApply(serial); dialog.dialog("close"); } }
-                        });
-                        ComputersTreeDevice.init(dialog);
-                        asyncPostBack = false;
-                    }
-                    else {
-                        ComputersTreeDevice.reload();
-                    }
-                }
-            };
-        } ();
+        }
+    };
+} ();

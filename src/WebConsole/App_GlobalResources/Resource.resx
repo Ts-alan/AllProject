@@ -3723,4 +3723,7 @@ system administrator.</value>
   <data name="FullAccess" xml:space="preserve">
     <value>Full access</value>
   </data>
+  <data name="NothingIsAdded" xml:space="preserve">
+    <value>Nothing is added</value>
+  </data>
 </root>
