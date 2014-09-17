@@ -96,8 +96,9 @@
                         <asp:BoundField DataField="Object" SortExpression="Object" HeaderText='<%$ Resources:Resource, Object %>'>
                             <HeaderStyle Width="150px" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="Comment" SortExpression="Comment" HeaderText='<%$ Resources:Resource, Comment %>'>
+                        <asp:BoundField DataField="Comment" SortExpression="Comment" HtmlEncode="false" HeaderText='<%$ Resources:Resource, Comment %>'>
                             <HeaderStyle Width="100px" />
+                            <ItemStyle CssClass="word-wrap-cell device-serial-col" />
                         </asp:BoundField>
                     </Columns>
                     <PagerSettings Position="TopAndBottom" Visible="true" />
