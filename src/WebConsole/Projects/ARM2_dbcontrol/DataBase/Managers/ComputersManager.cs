@@ -138,7 +138,7 @@ namespace VirusBlokAda.CC.DataBase
             if (reader.GetValue(24) != DBNull.Value)
                 group.Name = reader.GetString(24);
             if (reader.GetValue(25) != DBNull.Value)
-                policy.ID = reader.GetInt32(25);
+                policy.ID = reader.GetInt16(25);
             if (reader.GetValue(26) != DBNull.Value)
                 policy.Name = reader.GetString(26);
 
