@@ -244,8 +244,6 @@ namespace VirusBlokAda.CC.DataBase
             policy.Append("<arg><key>command</key><value>apply_settings</value></arg>");
             policy.Append("<arg><key>settings</key><value><config><id>Normal</id><module><id>{87005109-1276-483A-B0A9-F3119AFA4E5B}</id>");
 
-            policy.Append(@"<param><id>NetProtect</id><type>string</type><value>enable</value></param>");
-
             //AcceptableClassesRules
             if (listDC.Count != 0)
             {
@@ -323,6 +321,8 @@ namespace VirusBlokAda.CC.DataBase
 
                 if (sb.Length != 0)
                 {
+                    policy.Append(@"<param><id>NetProtect</id><type>string</type><value>enable</value></param>");
+
                     policy.Append("<param><id>NetDevices</id><type>stringlist</type><value>");
                     policy.Append(sb.ToString());
                     policy.Append("</value></param>");
