@@ -488,6 +488,9 @@
 					                    <asp:LinkButton id="lbtnEventName" CommandName="SelectCommand" CommandArgument="EventName" runat="server" Text='<%# DatabaseNameLocalization.GetNameForCurrentCulture(DataBinder.Eval(Container.DataItem, "EventName").ToString())%>' EventName='<%# DataBinder.Eval(Container.DataItem, "EventName")%>' SkinId="LabelContrast"></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:BoundField DataField="EventName" SortExpression="EventName" HeaderText='<%$ Resources:Resource, EventName %>'>
+                                    <HeaderStyle Width="150px" />
+                                </asp:BoundField>
                             </Columns>
                             <PagerSettings Position="TopAndBottom" Visible="true" />
                             <PagerTemplate>
