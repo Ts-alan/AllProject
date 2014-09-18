@@ -49,10 +49,6 @@
       <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
       <Name>CustomControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\DateControl\DateControl.csproj">
-      <Project>{523F3FD9-CEB7-48A0-843F-2BE730C90644}</Project>
-      <Name>DateControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\Filters\Filters.csproj">
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
