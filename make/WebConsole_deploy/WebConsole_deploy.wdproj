@@ -53,10 +53,6 @@
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\PagingControl\PagingControl.csproj">
-      <Project>{6F6EC59B-465E-4499-A2DD-F3FA09674823}</Project>
-      <Name>PagingControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj">
       <Project>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</Project>
       <Name>RemoteOperations</Name>
