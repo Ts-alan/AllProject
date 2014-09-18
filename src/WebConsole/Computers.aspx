@@ -2,7 +2,6 @@
 <%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 <%@ Register Src="Controls/CompFiltersMain.ascx" TagName="CompFiltersMain" TagPrefix="uc1" %>
 <%@ Register Src="Controls/CompFiltersExtra.ascx" TagName="CompFiltersExtra" TagPrefix="uc2" %>
-<%@ Register Src="Controls/CompFiltersDate.ascx" TagName="CompFiltersDate" TagPrefix="uc3" %>
 <%@ Register Src="Controls/CompFiltersBool.ascx" TagName="CompFiltersBool" TagPrefix="uc4" %>
 
 <%@ Register Src="Controls/TaskCreateProcess.ascx" TagName="TaskUser" TagPrefix="tskCreateProcess" %>
@@ -104,7 +103,6 @@
                             <ZoneTemplate>
                                 <uc1:CompFiltersMain ID="cmpfltMain" runat="server"  />
                                 <uc2:CompFiltersExtra ID="cmpfltExtra" runat="server" />
-                                <uc3:CompFiltersDate ID="cmpfltDate" runat="server" />
                                 <uc4:CompFiltersBool ID="cmpfltBool" runat="server" />
                             </ZoneTemplate>               
                                 <PartStyle CssClass="WebpartsBody" />
