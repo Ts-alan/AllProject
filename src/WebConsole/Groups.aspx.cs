@@ -131,26 +131,6 @@ public partial class Groups : PageBase
         //lbtnGiveTask.Text = Resources.Resource.GiveTask;
         lbtnExcel.Text = Resources.Resource.ExportToExcel;
 
-        pcPaging.CurrentPageIndex = 1;
-        pcPaging.PageCount = 1;
-        pcPaging.PageText = Resources.Resource.Page;
-        pcPaging.OfText = Resources.Resource.Of;
-        pcPaging.NextText = Resources.Resource.Next;
-        pcPaging.PrevText = Resources.Resource.Prev;
-
-        pcPaging.HomeText = Resources.Resource.HomePaging;
-        pcPaging.LastText = Resources.Resource.LastPaging;
-
-        pcPagingTop.CurrentPageIndex = 1;
-        pcPagingTop.PageCount = 1;
-        pcPagingTop.PageText = Resources.Resource.Page;
-        pcPagingTop.OfText = Resources.Resource.Of;
-        pcPagingTop.NextText = Resources.Resource.Next;
-        pcPagingTop.PrevText = Resources.Resource.Prev;
-
-        pcPagingTop.HomeText = Resources.Resource.HomePaging;
-        pcPagingTop.LastText = Resources.Resource.LastPaging;
-
         //Page size init
 
         if (ddlPageSize.Items.Count == 0)
@@ -298,7 +278,7 @@ public partial class Groups : PageBase
                 count = DBProviders.Group.Count(filter.GetSQLWhereStatement);
                 groups = DBProviders.Group.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["GroupSorting"]),
-                        pcPaging.CurrentPageIndex, Convert.ToInt32(Session["GroupPageSize"]));
+                        1, Convert.ToInt32(Session["GroupPageSize"]));
 
                 
                 break;
@@ -309,11 +289,6 @@ public partial class Groups : PageBase
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
-
-        pcPaging.PageCount = pageCount;
-        pcPagingTop.PageCount = pageCount;
-
-        Session["GroupsCurrentPageIndex"] = pcPaging.CurrentPageIndex;
 
         DataList1.DataSource = groups;
         DataList1.DataBind();
@@ -326,8 +301,6 @@ public partial class Groups : PageBase
     /// <param name="e"></param>
     protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
         Session["GroupPageSize"] = ddlPageSize.SelectedValue;
         Session["GroupSelectAll"] = true;
         UpdateData();
@@ -376,9 +349,6 @@ public partial class Groups : PageBase
             Session["CurrentGroupFilter"] = fltr;
         }
         else Session["CurrentGroupFilter"] = null;//default*/
-
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
 
         cmpfltMain.Clear();
 
@@ -586,10 +556,6 @@ public partial class Groups : PageBase
     #region Paging events
     protected void pcPaging_NextPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -599,10 +565,6 @@ public partial class Groups : PageBase
 
     protected void pcPaging_PrevPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -612,9 +574,6 @@ public partial class Groups : PageBase
 
     protected void pcPaging_HomePage(object sender, EventArgs e)
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -623,10 +582,6 @@ public partial class Groups : PageBase
     }
     protected void pcPaging_LastPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).PageCount;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -651,10 +606,6 @@ public partial class Groups : PageBase
 
         filter.CheckFilters();
         filter.GenerateSQLWhereStatement();
-
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
-
 
         if (filter.GetSQLWhereStatement != String.Empty)
             Session["CurrentGroupFilter"] = filter;

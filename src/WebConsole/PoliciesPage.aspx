@@ -1,7 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" MasterPageFile="~/mstrPageMain.master" CodeFile="PoliciesPage.aspx.cs" Inherits="_PoliciesPage" %>
 
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
-
 <%@ Register Src="Controls/TaskConfigureMonitor.ascx" TagName="TaskConfigureMonitor"    TagPrefix="uc" %>
 <%@ Register Src="Controls/TaskConfigureQuarantine.ascx" TagName="TaskConfigureQuarantine"    TagPrefix="uc" %>
 <%@ Register Src="Controls/TaskConfigureLoader.ascx" TagName="TaskConfigureLoader"    TagPrefix="uc" %>
