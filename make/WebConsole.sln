@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", "..\src\WebConsole\", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{92AE384B-3F82-42AB-872F-98636FD00B12}|ARM2_dbcontrol.dll;{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}|RemoteOperations.dll;{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}|CustomControls.dll;{C09A5B35-526F-4A85-9046-909E9D811BBD}|Filters.dll;{4B1FCD41-E001-41BE-97B1-E67D79300466}|AjaxControlToolkitX.dll;{C8F6D412-C657-438C-BBE3-842FB4466440}|Common.dll;{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}|Tasks.dll;{28D5DA26-7732-44A5-9720-BA779BCC2D29}|Settings.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/WebConsole"
 		Debug.AspNetCompiler.PhysicalPath = "..\src\WebConsole\"
@@ -72,14 +72,16 @@ Global
 		Release|Mixed Platforms = Release|Mixed Platforms
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|.NET.ActiveCfg = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|.NET.Build.0 = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Any CPU.ActiveCfg = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Mixed Platforms.Build.0 = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|.NET.ActiveCfg = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Any CPU.ActiveCfg = Debug|.NET
-		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{870FD66C-2B79-4B36-86EC-5A252C2208A5}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D35BFB5F-CF61-4B3B-A3E7-C988FA7786E8}.Debug|Any CPU.Build.0 = Debug|Any CPU

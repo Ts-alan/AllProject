@@ -14,7 +14,7 @@
     <SourceWebPhysicalPath>..\..\src\WebConsole</SourceWebPhysicalPath>
     <SourceWebProject>{870FD66C-2B79-4B36-86EC-5A252C2208A5}|D:\Projects\Vba32ControlCenter\src\WebConsole</SourceWebProject>
     <SourceWebVirtualPath>/WebConsole</SourceWebVirtualPath>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OutputPath>..\..\.bin\WebConsole_deploy\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
