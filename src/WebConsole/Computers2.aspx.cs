@@ -77,7 +77,7 @@ public partial class Computers2 : PageBase
 
     protected void FilterContainer_ActiveFilterChanged(object sender, FilterEventArgs e)
     {
-        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeLoaderScript", "Ext.onReady(function(){ $get('" + btnReload.ClientID + "').onclick(\"" + e.Where + "\"); });", true);
+        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeLoaderScript", "$(document).ready(function(){ $get('" + btnReload.ClientID + "').onclick(\"" + e.Where + "\"); });", true);
     }
 
     #region WebMethods
@@ -99,7 +99,7 @@ public partial class Computers2 : PageBase
     #region Tasks
     protected void CompositeTaskPanel_TaskAssign(object sender, TaskEventArgs e)
     {
-        //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "treeGetCompsInfo", "Ext.onReady(function(){ $get('" + btnGetCompsInfo.ClientID + "').onclick(\""+e.AssignToAll+"\"); });", true);
+
         SelectedComputersForTask selectedComps = GetSelectedCompsForTasks(e.AssignToAll);
 
         if (selectedComps.Names.Count > 0)

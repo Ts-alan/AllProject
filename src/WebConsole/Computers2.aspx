@@ -196,17 +196,18 @@
         function loadTreeInfo() {
             var d = "";
             var hdnSelected = $get('<%=hdnSelectedCompsNames.ClientID %>').value;
-             $.ajax({
+            $.ajax({
                 type: "GET",
-                async:false,
+                async: false,
                 url: "Handlers/ComputerPageHandler.ashx",
                 dataType: "json",
-                data: { where: hdnWhere,selected:hdnSelected },
+                data: { where: hdnWhere, selected: hdnSelected },
                 success: function (data) {
                     d = data;
                 },
                 error: function (e) {
-                    alert(e);
+                    console.log(e);
+                    alert(e.responseText);
                 }
             });
             return d;
@@ -359,8 +360,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 400px; height: 500px; left: 0px; top: 0px;float:left">
-        <div id="divTreePanel" class="x-panel x-box-item " style="width: 400px; height: 475px; margin: 0px; top: 0px;">
+    <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 400px; height: 452px; left: 0px; top: 0px;float:left">
+        <div id="divTreePanel" class="x-panel x-box-item " style="width: 400px; height: 450px; margin: 0px; top: 0px;">
             <div id="divTreePanelHeader" class="x-docked x-panel-header-default" style="width: 400px; left: 0px; top: 0px;">
                 <span class="x-panel-header-text-default" ><%=Resources.Resource.Computers %></span>
             </div>
@@ -375,23 +376,23 @@
                         <span ><%=Resources.Resource.UnselectAll %></span>
                     </button>
                 </div>
-                <div id="groupTreeToolbarCollapseButton" forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left"  style="border-width: 1px; left: 140px; top: 0px; margin: 0px;float:left">
+                <div id="groupTreeToolbarCollapseButton" forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left"  style="border-width: 1px; top: 0px; margin: 0px;float:left">
                     <button class="x-btn-center" style="min-width:50px; text-align:center" type="button" onclick="$('#divTree').jstree('close_all');">                            
                         <span ><%=Resources.Resource.Collapse %></span>
                     </button>
                 </div>
-                <div id="groupTreeToolbarExpandButton" forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left"  style="border-width: 1px; left: 210px; top: 0px; margin: 0px;float:left">
+                <div id="groupTreeToolbarExpandButton" forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left"  style="border-width: 1px;top: 0px; margin: 0px;float:left">
                     <button  class="x-btn-center" style="min-width:50px; text-align:center" type="button" onclick="$('#divTree').jstree('open_all');">                            
                         <span ><%=Resources.Resource.Expand %></span>
                     </button>
                 </div>
-                <div id="groupTreeToolbarMoreInfoButton" forbutton='false' nodeId="-1" class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; left: 210px; top: 0px; margin: 0px;float:left">
+                <div id="groupTreeToolbarMoreInfoButton" forbutton='false' nodeId="-1" class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px;top: 0px; margin: 0px;float:left">
                     <button  class="x-btn-center" type="button" onclick=" return getInfo();">                            
                         <span ><%=Resources.Resource.MoreInfo %></span>
                     </button>
                 </div>
             </div>
-            <div id="groupTreeBody" class="tree-panel-body x-grid-body x-layout-fit" style="width: 400px; left: 0px; top: 55px; height: 444px;">
+            <div id="groupTreeBody" class="tree-panel-body x-grid-body x-layout-fit" style="width: 400px; left: 0px; top: 55px; height: 400px;">
                 <div id="divTree" style="height:300px"></div>
             </div>
         </div>

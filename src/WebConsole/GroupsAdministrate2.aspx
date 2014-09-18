@@ -511,13 +511,13 @@
                             <span class="x-btn-inner"><%=Resources.Resource.Rename %></span>
                         </button>
                     </div>
-                    <div id="groupTreeToolbarDeleteButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; left: 140px; top: 0px; margin: 0px;float:left">
+                    <div id="groupTreeToolbarDeleteButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; top: 0px; margin: 0px;float:left">
                         <button id="deleteGroupButton" class="x-btn-center" type="button" onclick="return deleteGroup();">
                             <span class="x-btn-icon remove"></span>
                             <span class="x-btn-inner"><%=Resources.Resource.Delete %></span>
                         </button>
                     </div>
-                    <div id="groupTreeToolbarCommentButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; left: 210px; top: 0px; margin: 0px;float:left">
+                    <div id="groupTreeToolbarCommentButton" forbutton='false' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left x-btn-disabled"  style="border-width: 1px; top: 0px; margin: 0px;float:left">
                         <button id="commentGroupButton" class="x-btn-center" type="button" onclick="return commentGroup();">
                             <span class="x-btn-icon comment"></span>
                             <span class="x-btn-inner"><%=Resources.Resource.Comment %></span>
@@ -546,37 +546,6 @@
                 </div>
             </div>
         </div>
-        <%--<table >
-            <thead>
-                <th><%=Resources.Resource.ComputersWithoutGroups %> </th>
-                <th><%=Resources.Resource.ComputersWithGroups %></th>
-            </thead>
-            <tr>
-                <td>
-                   <div id="noGroupTree" style="height:300px">
-                    </div>
-                </td>
-                <td>
-                    <p>
-                    
-                        <input type="button" id="addGroupButton" value="<%=Resources.Resource.Add %>" title="<%=Resources.Resource.AddNewGroup %>" class="x-btn" onclick="return addNewGroup();"/>
-                        <input type="button" id="renameGroupButton" value="<%=Resources.Resource.Rename %>" title="<%=Resources.Resource.RenameSelectedGroup %>" onclick="return renameNode();"/>
-                        <input type="button" id="deleteGroupButton" value="<%=Resources.Resource.Delete %>" title="<%=Resources.Resource.RemoveSelectedGroup %>" onclick="return deleteGroup();"/>
-                        <input type="button" id="commentGroupButton" value="<%=Resources.Resource.Comment %>" title="<%=Resources.Resource.ChangeCommentSelectedGroup %>" onclick="return commentGroup();"/>
-                    </p>
-                    <p>
-                        <div id="groupTree" style="height:300px"></div>
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                   <input type="button" id="reloadTreesButton" value="<%=Resources.Resource.Reload %>" title='<%=Resources.Resource.ReloadInfoFromServer %>' onclick="return reloadTrees();"/>
-                    <input type="button" id="saveTreesButton" value="<%=Resources.Resource.Save%>" title='<%=Resources.Resource.SaveInfoToServer %>' onclick="return saveTrees();"/>
-
-                </td>
-            </tr>
-        </table>   --%>
     </div>
     <div id="commentEditBox" style="display:none">
         <p> <%=Resources.Resource.ChangeComment %></p>

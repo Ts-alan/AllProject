@@ -21,7 +21,8 @@ namespace VirusBlokAda.CC.JSON
                 qtip = GenerateShortQTIP(group);
             else
                 qtip = GenerateQTIP(group);
-            
+            if(group.ID<0)
+                return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "root", qtip, new NodeState(isExpanded, isChecked, false), isAllowDrag, isAllowDrop, isLeaf/*, isExpanded*/);
             return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "group", qtip,new NodeState(isExpanded,isChecked,false), isAllowDrag, isAllowDrop,
                                           isLeaf/*, isExpanded*/);
         }

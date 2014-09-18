@@ -167,7 +167,6 @@ public partial class Controls_CompositeFilter : System.Web.UI.UserControl, IComp
 
     private void RegisterScripts()
     {
-        //Page.ClientScript.RegisterClientScriptInclude("Ext-All", @"js/Groups/ext-4.1.1/ext-all-debug.js");
         Page.ClientScript.RegisterClientScriptInclude("PageRequestManagerHelper", @"js/PageRequestManagerHelper.js");
     }
 

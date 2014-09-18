@@ -16,6 +16,7 @@ public class ComputerPageHandler : IHttpHandler {
         String selected = context.Request.Params.Get("selected");
         
         List<String> selectedComps=null;
+        if (String.IsNullOrEmpty(selected)) selected = null;
         if (selected != null)
             selectedComps = new List<string>(selected.Split('&'));
         

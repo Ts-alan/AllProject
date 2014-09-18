@@ -48,13 +48,13 @@ public partial class DeviceClassPage : PageBase
 
     private void RegisterScripts()
     {
+        RegisterScript(@"js/jstree.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
         RegisterScript(@"js/DeviceClass.js");
         RegisterScript(@"js/json2.js");
         RegisterScript(@"js/jQuery/jquery.loadmask.js");
         RegisterScript(@"js/DeviceClass_Tree.js");
         RegisterScript(@"js/PageRequestManagerHelper.js");
-        RegisterScript(@"js/Groups/ext-4.1.1/ext-all-debug.js");
     }
 
     private String[] GetResourcesList()
