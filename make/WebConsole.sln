@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebConsole", "..\src\WebConsole\", "{870FD66C-2B79-4B36-86EC-5A252C2208A5}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
-		ProjectReferences = "{92AE384B-3F82-42AB-872F-98636FD00B12}|ARM2_dbcontrol.dll;{523F3FD9-CEB7-48A0-843F-2BE730C90644}|DateControl.dll;{6F6EC59B-465E-4499-A2DD-F3FA09674823}|PagingControl.dll;{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}|RemoteOperations.dll;{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}|CustomControls.dll;{C09A5B35-526F-4A85-9046-909E9D811BBD}|Filters.dll;{4B1FCD41-E001-41BE-97B1-E67D79300466}|AjaxControlToolkitX.dll;{C8F6D412-C657-438C-BBE3-842FB4466440}|Common.dll;{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}|Tasks.dll;{28D5DA26-7732-44A5-9720-BA779BCC2D29}|Settings.dll;"
+		ProjectReferences = "{92AE384B-3F82-42AB-872F-98636FD00B12}|ARM2_dbcontrol.dll;{6F6EC59B-465E-4499-A2DD-F3FA09674823}|PagingControl.dll;{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}|RemoteOperations.dll;{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}|CustomControls.dll;{C09A5B35-526F-4A85-9046-909E9D811BBD}|Filters.dll;{4B1FCD41-E001-41BE-97B1-E67D79300466}|AjaxControlToolkitX.dll;{C8F6D412-C657-438C-BBE3-842FB4466440}|Common.dll;{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}|Tasks.dll;{28D5DA26-7732-44A5-9720-BA779BCC2D29}|Settings.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/WebConsole"
 		Debug.AspNetCompiler.PhysicalPath = "..\src\WebConsole\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebConsole\"
@@ -37,8 +37,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{1198B89E-E557-43B3-8F27-E8C5B72B400C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateControl", "..\src\WebConsole\Projects\DateControl\DateControl.csproj", "{523F3FD9-CEB7-48A0-843F-2BE730C90644}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagingControl", "..\src\WebConsole\Projects\PagingControl\PagingControl.csproj", "{6F6EC59B-465E-4499-A2DD-F3FA09674823}"
 EndProject
