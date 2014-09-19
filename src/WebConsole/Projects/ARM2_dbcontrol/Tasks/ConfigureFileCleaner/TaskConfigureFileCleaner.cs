@@ -116,17 +116,16 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
                 }
             }
             builder.Append("</value></param>");
-            builder.Append("<param>");
-            builder.Append("<id>CleaningTemplate</id>");
-            builder.Append("<type>stringmap</type>");
-            builder.Append("<value>");
+            
+
             for (Int32 i = 0; i < _FullProgramList.Count; i++)
-            {
-                builder.AppendFormat("<string><id>{0}</id>{1}</string>", i, FullProgramList[i].GetTask());
-            }
-            builder.Append("</value></param>");
+            {                
+                builder.Append(FullProgramList[i].GetTask());                
+            } 
 
             builder.Append(journalEvent.GetTask());
+
+
 
             builder.Append("<param>");
             builder.Append("<id>FullProgramsList</id>");

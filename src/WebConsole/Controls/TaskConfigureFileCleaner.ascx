@@ -6,6 +6,8 @@
     <script type="text/javascript" language="javascript">
         $(document).ready(function () {
             $("#fileCleanerMainPanel").tabs({ cookie: { expires: 30} });
+            $("#AddProgramDialogTabs").tabs({ cookie: { expires: 30} });
+            
         });
         function pageLoad() 
         {
@@ -66,13 +68,23 @@
                             var btn = '<%=AddProgramHiddenButton.UniqueID %>'; 
                             
                             var tbody=$('#addProgramTable tbody').children("tr");
+                            
                             var array=[];
                             $('#addProgramTable tbody').children("tr").each(function(index){
-                                
-                                template=new Object();
-                                template.path=$(this).children()[0].innerHTML;
-                                template.filename=$(this).children()[1].innerHTML
-                                array.push(template);                                
+
+                                    template=new Object();
+                                    template.path=$(this).children()[0].innerHTML;
+                                    template.filename=$(this).children()[1].innerHTML;
+                                    template.type="File"
+                                    array.push(template);                                                                 
+                            });
+                            $('#addProgramRegisterTable tbody').children("tr").each(function(index){
+
+                                    template=new Object();
+                                    template.path=$(this).children()[0].innerHTML;
+                                    template.filename=$(this).children()[1].innerHTML;
+                                    template.type="Registry"
+                                    array.push(template);                                                                 
                             });
                             var json=JSON.stringify(array);
                                 __doPostBack(btn, json);                          
@@ -96,7 +108,7 @@
         }
 
 
-        /* Change Phrogram */
+        /* Change Program */
         function ChangeProgramButtonClientClick()
         {
             var index=$('#<%=FileCleanerhdnActiveRowNo.ClientID %>').attr('value');
@@ -111,9 +123,10 @@
             var HdnJson=tableRow.children().find("[id*='hdnProgramJson']");
             var jsonTable=jQuery.parseJSON(HdnJson.val());
             $('#addProgramTable tbody').children("tr").remove();
+            $('#addProgramRegisterTable tbody').children("tr").remove();
             $('#<%=AddProgramDialogName.ClientID %>').val(name);
              var dOpt = {
-                    width: 550,                                       
+                    width: 600,                                       
                     resizable: false,
                     close: function(event, ui)
                         {
@@ -126,14 +139,26 @@
                         {
                             var btn = '<%=ChangeProgramRulesHiddenButton.UniqueID %>';
                             var tbody=$('#addProgramTable tbody').children("tr");
+                            
                             var array=[];
+
                             $('#addProgramTable tbody').children("tr").each(function(index){
 
                                     template=new Object();
                                     template.path=$(this).children()[0].innerHTML;
                                     template.filename=$(this).children()[1].innerHTML;
+                                    template.type="File"
                                     array.push(template);                                                                 
                             });
+                            $('#addProgramRegisterTable tbody').children("tr").each(function(index){
+
+                                    template=new Object();
+                                    template.path=$(this).children()[0].innerHTML;
+                                    template.filename=$(this).children()[1].innerHTML;
+                                    template.type="Registry"
+                                    array.push(template);                                                                 
+                            });
+
                             var json=JSON.stringify(array);
                             HdnJson.val(json);
                              __doPostBack(btn, json);                                                        
@@ -149,12 +174,18 @@
                         }
                     }
                 var len=jsonTable.length;
-
+                console.log(jsonTable);
                 for(var i=0;i<len;i++)
                 {
-                    $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + jsonTable[i].Path + '</td><td>'+jsonTable[i].FileName+'</td></tr>');
+                    if(jsonTable[i].Type==0){
+                        $('#addProgramTable tbody').append('<tr trAddProgramItemSelected="false" ><td>' + jsonTable[i].Path + '</td><td>'+jsonTable[i].FileName+'</td></tr>');
+                    }
+                    else{               
+                    $('#addProgramRegisterTable tbody').append('<tr trAddProgramRegisterItemSelected="false" ><td>' + jsonTable[i].Path + '</td><td>'+jsonTable[i].FileName+'</td></tr>');
+                    }
                 }
                 addProgramTableChangeStyle();
+                addProgramTableRegisterChangeStyle();
                 $('#AddProgramDialog').dialog(dOpt);
 
                 $('#divOverlay').css('display','inline');
@@ -259,9 +290,127 @@
         $("[trAddProgramItemSelected=true]").remove();
         addProgramTableChangeStyle();
     }
+
+
+
+
+            /*  Hover/Click Register Templates   */
+        $(document).on("mouseenter","[trAddProgramRegisterItemSelected]",function () {
+            if ($(this).attr('trAddProgramRegisterItemSelected') == "true") return;
+            $(this).css('background-color', 'yellow');
+        });
+        $(document).on("mouseleave", "[trAddProgramRegisterItemSelected]",function () {
+            if ($(this).attr('trAddProgramRegisterItemSelected') == "true") return;
+            $(this).css('background-color', '');
+        });
+        $(document).on("click","[trAddProgramRegisterItemSelected]",function(){
+            if($(this).attr("trAddProgramRegisterItemSelected")=="true") return;
+            $(this).css('background-color', '#3399ff');
+            $("[trAddProgramRegisterItemSelected=true]").css('background-color', '');
+            $("[trAddProgramRegisterItemSelected=true]").attr('trAddProgramRegisterItemSelected',false);
+            $(this).attr('trAddProgramRegisterItemSelected',true);              
+        });
+     /*  Add/Delete/Change   TemplatesRegister */
+
+        function AddProgramDialogRegisterButtonClientClick()
+        {
+            var dOpt = {
+                width: 420,                                      
+                resizable: false,
+                close: function(event, ui)
+                    {
+                        $('#divOverlay2').css('display','none');
+                        TemplateDialogSetDefaultValues(); 
+                    },
+                buttons: {
+                    <%=Resources.Resource.Apply%>: function () {
+                        if(Page_ClientValidate('AddTemplateDialogPathValidationGroup')){
+                            var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
+                            var name=$('#<%=AddTemplateDialogName.ClientID %>').val();  
+                            $('#addProgramRegisterTable tbody').append('<tr trAddProgramRegisterItemSelected="false" ><td>' + path + '</td><td>'+name+'</td></tr>'); 
+                            addProgramTableRegisterChangeStyle();                            
+                            $('#AddTemplateDialog').dialog('close');
+                        }                        
+                    },
+                    <%=Resources.Resource.CancelButtonText%>: function () {                           
+                        $('#AddTemplateDialog').dialog('close');                           
+                    }
+                }
+            };
+            $('#AddTemplateDialog').dialog(dOpt);
+            $('#divOverlay2').css('display','inline');
+            $('#AddTemplateDialog').parent().zIndex(120);
+            $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
+            
+       };
+       function ChangeProgramDialogRegisterButtonClientClick()
+        {        
+            var row=$("[trAddProgramRegisterItemSelected=true]"); 
+            
+           if(row.children().length==0) return;
+            
+            var Oldpath=row.children()[0].innerHTML;
+            var Oldname=row.children()[1].innerHTML;
+
+            $('#<%=AddTemplateDialogPath.ClientID %>').val(Oldpath);
+            $('#<%=AddTemplateDialogName.ClientID %>').val(Oldname);   
+                        
+            var dOpt = {
+                width: 420,                                       
+                resizable: false,
+                close: function(event, ui)
+                    {
+                        $('#divOverlay2').css('display','none');
+                        TemplateDialogSetDefaultValues(); 
+                    },
+                buttons: {
+                    <%=Resources.Resource.Apply%>: function () {
+                        var path=$('#<%=AddTemplateDialogPath.ClientID %>').val();
+                        var name=$('#<%=AddTemplateDialogName.ClientID %>').val();                            
+                        row.children()[0].innerHTML=path;
+                        row.children()[1].innerHTML=name;    
+                                                            
+                        $('#AddTemplateDialog').dialog('close');
+                            
+                    },
+                    <%=Resources.Resource.CancelButtonText%>: function () {                           
+                        $('#AddTemplateDialog').dialog('close');
+                        
+                        }
+                    }
+                };
+        $('#AddTemplateDialog').dialog(dOpt);
+        $('#divOverlay2').css('display','inline');
+        $('#AddTemplateDialog').parent().zIndex(120);
+        $('#AddTemplateDialog').parent().appendTo(jQuery("form:first"));
+    };
+    function DeleteProgramDialogRegisterButtonClientClick()
+    {
+        $("[trAddProgramRegisterItemSelected=true]").remove();
+        addProgramTableRegisterChangeStyle();
+    }
+
+
+
+
+
     function addProgramTableChangeStyle() {
         var i = 0;
         $('#addProgramTable tbody').children("tr").each(function (index) {
+            if (i % 2 == 0) {
+                gridStyle = "gridViewRow";
+            }
+            else
+                gridStyle = "gridViewRowAlternating";
+            var row = $(this);
+            row.removeClass();
+            row.addClass(gridStyle);
+            i++;
+        });
+    }
+     function addProgramTableRegisterChangeStyle() {
+        var i = 0;
+        $('#addProgramRegisterTable tbody').children("tr").each(function (index) {
             if (i % 2 == 0) {
                 gridStyle = "gridViewRow";
             }
@@ -367,50 +516,103 @@
     <%--Диалог для добавления новых правил--%>
     <div id="AddProgramDialog" style="display: none;" class="ui-front">
         <asp:HiddenField ID="AddProgramDialogActiveRowNo" Value='0' runat="server" />
-        <asp:Table runat="server">
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="3">
-                    <asp:Label runat="server"><%=Resources.Resource.Name %></asp:Label>
-                    <asp:TextBox ID="AddProgramDialogName" Style="width: 200px" runat='server'></asp:TextBox>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>&nbsp</asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="3">
-                    <div style="height: 200px; width: 500px; overflow: scroll">
-                        <table id="addProgramTable" rules="cols">
-                            <thead class="gridViewHeader">
-                                <th runat="server" id="tdAddProgramPath" style="width: 350px; text-align: center;">
-                                    <%=Resources.Resource.Path%>
-                                </th>
-                                <th runat="server" id="tdAddProgramDialogTemplate" style="width: 150px; text-align: center;">
-                                    <%=Resources.Resource.Template%>
-                                </th>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell HorizontalAlign='Center'>
-                    <asp:Button ID="AddProgramDialogAddTemplate" runat='server' Text='<%$ Resources:Resource, Add %>'
-                        OnClientClick="AddProgramDialogButtonClientClick(); return false;" />
-                </asp:TableCell>
-                <asp:TableCell HorizontalAlign='Center'>
-                    <asp:Button ID="AddProgramDialogChangeTemplate" runat='server' Text='<%$ Resources:Resource, Change %>'
-                        OnClientClick="ChangeProgramDialogButtonClientClick(); return false;" />
-                </asp:TableCell>
-                <asp:TableCell HorizontalAlign='Right'>
-                    <asp:Button ID="AddProgramDialogDeleteTemplate" runat="server" Text='<%$ Resources:Resource, Delete %>'
-                        OnClientClick="DeleteProgramDialogButtonClientClick(); return false" />
-                </asp:TableCell>
-            </asp:TableRow>
-        </asp:Table>
-    </div>
+        <asp:Table  runat="server">
+                <asp:TableRow>
+                    <asp:TableCell ColumnSpan="3">
+                        <asp:Label   runat="server"><%=Resources.Resource.Name %></asp:Label>
+                        <asp:TextBox ID="AddProgramDialogName" Style="width: 200px" runat='server'></asp:TextBox>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>&nbsp</asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <div id='AddProgramDialogTabs'  style="width:550px">
+                            <ul>
+                                <li><a href="#DialogTab1"><%=Resources.Resource.Files %></a></li>
+                                <li><a href="#DialogTab2"><%=Resources.Resource.Registry %></a> </li>
+                            </ul>
+                            <div id='DialogTab1'>
+                                <asp:Table runat="server">
+                                    <asp:TableRow>
+                                        <asp:TableCell ColumnSpan="3">
+                                            <div style="height: 200px; width: 500px; overflow: scroll">
+                                                <table id="addProgramTable" rules="cols">
+                                                    <thead class="gridViewHeader">
+                                                        <th runat="server" id="tdAddProgramPath" style="width: 350px; text-align: center;">
+                                                            <%=Resources.Resource.Path%>
+                                                        </th>
+                                                        <th runat="server" id="tdAddProgramDialogTemplate" style="width: 150px; text-align: center;">
+                                                            <%=Resources.Resource.Template%>
+                                                        </th>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </asp:TableCell>
+                                    </asp:TableRow>
+                                    <asp:TableRow>
+                                        <asp:TableCell HorizontalAlign='Center'>
+                                            <asp:Button ID="AddProgramDialogAddTemplate" runat='server' Text='<%$ Resources:Resource, Add %>'
+                                                OnClientClick="AddProgramDialogButtonClientClick(); return false;" />
+                                        </asp:TableCell>
+                                        <asp:TableCell HorizontalAlign='Center'>
+                                            <asp:Button ID="AddProgramDialogChangeTemplate" runat='server' Text='<%$ Resources:Resource, Change %>'
+                                                OnClientClick="ChangeProgramDialogButtonClientClick(); return false;" />
+                                        </asp:TableCell>
+                                        <asp:TableCell HorizontalAlign='Right'>
+                                            <asp:Button ID="AddProgramDialogDeleteTemplate" runat="server" Text='<%$ Resources:Resource, Delete %>'
+                                                OnClientClick="DeleteProgramDialogButtonClientClick(); return false" />
+                                        </asp:TableCell>
+                                    </asp:TableRow>
+                                </asp:Table>
+                            </div>
+                            <div id='DialogTab2'>
+                                <asp:Table runat="server">
+                                    <asp:TableRow>
+                                        <asp:TableCell ColumnSpan="3">
+                                            <div style="height: 200px; width: 500px; overflow: scroll">
+                                                <table id="addProgramRegisterTable" rules="cols">
+                                                    <thead class="gridViewHeader">
+                                                        <th runat="server" id="tdAddProgramRegisterPath" style="width: 350px; text-align: center;">
+                                                            <%=Resources.Resource.Path%>
+                                                        </th>
+                                                        <th runat="server" id="tdAddProgramDialogRegisterTemplate" style="width: 150px; text-align: center;">
+                                                            <%=Resources.Resource.Template%>
+                                                        </th>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </asp:TableCell>
+                                    </asp:TableRow>
+                                    <asp:TableRow>
+                                        <asp:TableCell HorizontalAlign='Center'>
+                                            <asp:Button ID="AddProgramDialogRegisterAddTemplate" runat='server' Text='<%$ Resources:Resource, Add %>'
+                                                OnClientClick="AddProgramDialogRegisterButtonClientClick(); return false;" />
+                                        </asp:TableCell>
+                                        <asp:TableCell HorizontalAlign='Center'>
+                                            <asp:Button ID="AddProgramDialogChangeRegisterTemplate" runat='server' Text='<%$ Resources:Resource, Change %>'
+                                                OnClientClick="ChangeProgramDialogRegisterButtonClientClick(); return false;" />
+                                        </asp:TableCell>
+                                        <asp:TableCell HorizontalAlign='Right'>
+                                            <asp:Button ID="AddProgramDialogDeleteRegisterTemplate" runat="server" Text='<%$ Resources:Resource, Delete %>'
+                                                OnClientClick="DeleteProgramDialogRegisterButtonClientClick(); return false" />
+                                        </asp:TableCell>
+                                    </asp:TableRow>
+                                </asp:Table>
+                            </div>
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
+        </div>
+        
+
+
+
     <div id="AddTemplateDialog" style="display: none;height:62px;min-height:60px" class="ui-front">
         <table>
             <tr>
@@ -418,7 +620,7 @@
                     <%=Resources.Resource.Path%>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="AddTemplateDialogPath" />
+                    <asp:TextBox runat="server" ID="AddTemplateDialogPath"  style="width:300px"/>
                     <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogPath" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                         ControlToValidate="AddTemplateDialogPath" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
                     </asp:RequiredFieldValidator>
@@ -430,7 +632,7 @@
                     <%=Resources.Resource.Template%>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="AddTemplateDialogName" />
+                    <asp:TextBox runat="server" ID="AddTemplateDialogName" style="width:300px"/>
                     <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogName" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                         ControlToValidate="AddTemplateDialogName" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
                     </asp:RequiredFieldValidator>

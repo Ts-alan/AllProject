@@ -117,6 +117,7 @@ public partial class Controls_TaskConfigureFileCleaner : System.Web.UI.UserContr
     private void FileCleanerUpdateData()
     {
         ProgramListDataList.DataSource = fileCleaner.FullProgramList;
+        FileCleanerRulesCount = 0;
         ProgramListDataList.DataBind();
     }
 

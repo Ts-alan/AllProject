@@ -98,19 +98,39 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
 
         public String GetTask()
         {
-            StringBuilder task = new StringBuilder(256);
 
-            task.Append("<key>" + Name + "</key>");
-            task.Append("<val>");
+            StringBuilder task = new StringBuilder(256);
+            task.Append("<param>");
+            task.Append(GetTaskType(FileCleanerTemplateType.File));
+            task.Append("</param>");
+            task.Append("<param>");
+            task.Append(GetTaskType(FileCleanerTemplateType.Registry));
+            task.Append("</param>");
+            
+            return task.ToString();
+        }
+        private String GetTaskType(FileCleanerTemplateType type)
+        {
+            String ID = "";
+            StringBuilder task = new StringBuilder(128);
+            if (type == FileCleanerTemplateType.File)
+                ID = "CleaningTemplateFiles_" + Name;
+            else ID = "CleaningTemplateRegistry_" + Name;
+
+            task.Append("<id>" + ID + "</id>");
+            task.Append("<type>stringmap</type><value>");
+            Int32 j = 0;
             for (Int32 i = 0; i < _Templates.Count; i++)
             {
-                task.AppendFormat("{0}|{1}", _Templates[i].Path, _Templates[i].FileName);
-                if (i != _Templates.Count - 1)
+                if (_Templates[i].Type == type)
                 {
-                    task.Append("|");
+                    task.Append("<string>");
+                    task.AppendFormat("<id>{0}</id><key>{1}</key><val>{2}</val>", j, _Templates[i].Path, _Templates[i].FileName);
+                    task.AppendFormat("</string>");
+                    j++;
                 }
             }
-            task.Append("</val>");
+            task.Append("</value>");
             return task.ToString();
         }
         #endregion
@@ -131,5 +151,11 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
     {
         public String Path;
         public String FileName;
+        public FileCleanerTemplateType Type;
+    }
+    public enum FileCleanerTemplateType
+    {
+        File,
+        Registry
     }
 }
