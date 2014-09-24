@@ -48,46 +48,6 @@ namespace VirusBlokAda.CC.JSON
         }
 
 
-      /*  private Boolean? _isChecked = false;
-        [JsonProperty("checked", NullValueHandling=NullValueHandling.Ignore)]
-        public Boolean? IsChecked
-        {
-            get { return _isChecked; }
-            set { _isChecked = value; }
-        }*/
-
-        private Boolean _allowDrag = false;
-        [JsonProperty("allowDrag")]
-        public Boolean AllowDrag
-        {
-            get { return _allowDrag; }
-            set { _allowDrag = value; }
-        }
-
-        private Boolean _allowDrop = false;
-        [JsonProperty("allowDrop")]
-        public Boolean AllowDrop
-        {
-            get { return _allowDrop; }
-            set { _allowDrop = value; }
-        }
-
-        private Boolean _isLeaf = false;
-        [JsonProperty("leaf")]
-        public Boolean IsLeaf
-        {
-            get { return _isLeaf; }
-            set { _isLeaf = value; }
-        }
-
-    /*    private Boolean _isExpanded = false;
-        [JsonProperty("expanded")]
-        public Boolean IsExpanded
-        {
-            get { return _isExpanded; }
-            set { _isExpanded = value; }
-        }*/
-
         private String _ipAddress = String.Empty;
         [JsonProperty("ip", NullValueHandling = NullValueHandling.Ignore)]
         public String IPAddress
@@ -112,14 +72,7 @@ namespace VirusBlokAda.CC.JSON
             set { _children = value; }
         }
 
-/*        private CompAdditionalInfo _compAdditionalInfo = null;
-        [JsonProperty("compAdditionalInfo", NullValueHandling = NullValueHandling.Ignore)]
-        public CompAdditionalInfo ComputerAdditionalInfo
-        {
-            get { return _compAdditionalInfo; }
-            set { _compAdditionalInfo = value; }
-        }
-*/
+
         #endregion
 
         #region Constructors
@@ -127,43 +80,28 @@ namespace VirusBlokAda.CC.JSON
         {
             _children = new List<TreeNodeJSONEntity>();
         }
-        public TreeNodeJSONEntity(String text, String id, String nodeType, String qtip,NodeState state
-           /* Boolean? isChecked*/, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, /*Boolean isExpanded*/ List<TreeNodeJSONEntity> children)
-            : this(text, id, nodeType, qtip,state,/* isChecked*/ allowDrag, allowDrop, isLeaf /*isExpanded*/)
+        public TreeNodeJSONEntity(String text, String id, String nodeType, String qtip,NodeState state,List<TreeNodeJSONEntity> children)
+            : this(text, id, nodeType, qtip,state)
         {
             this._children = children;
         }
 
-    /*    public TreeNodeJSONEntity(String text, String id, String iconClassStyle, String qtip,
-            Boolean? isChecked, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf, Boolean isExpanded,
-            List<TreeNodeJSONEntity> children, CompAdditionalInfo info)
-            : this(text, id, iconClassStyle, qtip, isChecked, allowDrag, allowDrop, isLeaf, isExpanded, children)
-        {
-            this._compAdditionalInfo = info;
-        }
-*/
+  
             public TreeNodeJSONEntity(String text, String id, String nodeType, String qtip,NodeState state
-            /*Boolean? isChecked*/, Boolean allowDrag, Boolean allowDrop, Boolean isLeaf,/* Boolean isExpanded,*/String ipAddress, String osName,
-            List<TreeNodeJSONEntity> children)
-            : this(text, id, nodeType, qtip,state, /*isChecked,*/ allowDrag, allowDrop, isLeaf, /*isExpanded,*/ children)
+           ,String ipAddress, String osName,List<TreeNodeJSONEntity> children)
+            : this(text, id, nodeType, qtip,state, children)
         {
             this._ipAddress = ipAddress;
             this._OSName = osName;
         }
 
-        public TreeNodeJSONEntity(String text, String id, String nodeType, String qtip,NodeState state,
-           /* Boolean? isChecked,*/ Boolean allowDrag, Boolean allowDrop, Boolean isLeaf/*, Boolean isExpanded*/)
+        public TreeNodeJSONEntity(String text, String id, String nodeType, String qtip,NodeState state)
         {
             this._text = text;
             this._id = id;
             this._nodeType = nodeType;
             this._qtip = qtip;
             this._state = state;
-           /* this._isChecked = isChecked;*/
-            this._allowDrag = allowDrag;
-            this._allowDrop = allowDrop;
-            this._isLeaf = isLeaf;
-           /* this._isExpanded = isExpanded;*/
             this._ipAddress = null;
             this._OSName = null;
 

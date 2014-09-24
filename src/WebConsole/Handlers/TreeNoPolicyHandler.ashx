@@ -16,23 +16,23 @@ public class TreeNoPolicyHandler : IHttpHandler {
         context.Response.ContentType = "text/plain";
         GroupProvider providerGroup = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         List<Group> list = providerGroup.GetGroups();
-        TreeNodeJSONEntity gr = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(-1, Resources.Resource.NotAssignedExplicitly, Resources.Resource.NotAssignedExplicitly, null), null, false, false, false, true, true);
+        TreeNodeJSONEntity gr = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(-1, Resources.Resource.NotAssignedExplicitly, Resources.Resource.NotAssignedExplicitly, null), null,true, true);
         
         //with groups
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
             
-           gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, false, false, true, true));
+           gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, true));
            RecursiveAddChildren(gr.Children[gr.Children.Count - 1], list, index, providerGroup);
             index++;
         }
 
         //without group
-        gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, false, false, true, true));
+        gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, true));
         foreach (ComputersEntity comp in providerGroup.GetComputersByGroupAndPolicy(null, null))
         {
-            gr.Children[gr.Children.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
+            gr.Children[gr.Children.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null,true, true));
         }
 
         //Deleting empty nodes
@@ -55,7 +55,7 @@ public class TreeNoPolicyHandler : IHttpHandler {
 
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode,TreeNodeJSONEntity rootNode)
     {
-        if (node.IsLeaf) return false;
+        if (node.Children==null) return false;
 
         for (Int32 index = node.Children.Count - 1; index >= 0; index--)
         {
@@ -82,14 +82,14 @@ public class TreeNoPolicyHandler : IHttpHandler {
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, false, false, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, true));
             RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, providerGroup);
             i++;
         }
         //Comps
         foreach (ComputersEntity comp in providerGroup.GetComputersByGroupAndPolicy(list[indexList], null))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
         }
     }
 

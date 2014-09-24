@@ -30,14 +30,14 @@ public class ComputerPageHandler : IHttpHandler {
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
-            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false, false, false, false));
+            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false));
             RecursiveAddChildren(tree[tree.Count - 1], list, index, where, provider,selectedComps);
             index++;
         }
 
         //without group
         bool isSelected = false;
-        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, Resources.Resource.CompWithoutGroup, null), false, false, false, false, false, false));
+        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, Resources.Resource.CompWithoutGroup, null), false,false, false));
         foreach (ComputersEntityEx comp in provider.GetComputersExWithoutGroup(where))
         {
             for (index = 0; index < comp.Components.Count; index++)
@@ -50,7 +50,7 @@ public class ComputerPageHandler : IHttpHandler {
                 if (selectedComps.Contains(comp.ComputerName.ToLower()))
                     isSelected = true;
             }
-            tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, isSelected, false, false, true, false, false));
+            tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, isSelected, false, false));
         }
 
         //Deleting empty nodes
@@ -71,7 +71,7 @@ public class ComputerPageHandler : IHttpHandler {
 
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode)
     {
-        if (node.IsLeaf) return false;
+        if (node.Children==null) return false;
 
         for (Int32 index = node.Children.Count - 1; index >= 0; index--)
         {
@@ -98,7 +98,7 @@ public class ComputerPageHandler : IHttpHandler {
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], false, false, false, false, true, false));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], false,true, false));
             RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, where, provider,selectedComps);
             i++;
         }
@@ -116,7 +116,7 @@ public class ComputerPageHandler : IHttpHandler {
                 if (selectedComps.Contains(comp.ComputerName.ToLower()))
                     isSelected = true;
             }
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, isSelected, false, false, true, false, false));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, isSelected,false, false));
         }
     }
 

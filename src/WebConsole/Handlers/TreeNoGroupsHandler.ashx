@@ -14,12 +14,13 @@ public class TreeNoGroupsHandler : IHttpHandler {
 
         List<TreeNodeJSONEntity> tree = new List<TreeNodeJSONEntity>();
         GroupProvider providerGroup = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
-
+        TreeNodeJSONEntity gr = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(-1, Resources.Resource.ComputersWithoutGroups, Resources.Resource.ComputersWithoutGroups, null), null, true, true);
+        
         foreach (ComputersEntity comp in providerGroup.GetComputersWithoutGroup())
         {
-            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, false, true));
+            gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null,false, true));
         }
-
+        tree.Add(gr);
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(tree));   
     }
  
