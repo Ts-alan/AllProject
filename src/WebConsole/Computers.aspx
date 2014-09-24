@@ -1,8 +1,6 @@
 <%@ Page Language="C#" MaintainScrollPositionOnPostback="true"  validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Computers.aspx.cs" Inherits="Computers" Title="Untitled Page" EnableEventValidation="false" %>
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 <%@ Register Src="Controls/CompFiltersMain.ascx" TagName="CompFiltersMain" TagPrefix="uc1" %>
 <%@ Register Src="Controls/CompFiltersExtra.ascx" TagName="CompFiltersExtra" TagPrefix="uc2" %>
-<%@ Register Src="Controls/CompFiltersDate.ascx" TagName="CompFiltersDate" TagPrefix="uc3" %>
 <%@ Register Src="Controls/CompFiltersBool.ascx" TagName="CompFiltersBool" TagPrefix="uc4" %>
 
 <%@ Register Src="Controls/TaskCreateProcess.ascx" TagName="TaskUser" TagPrefix="tskCreateProcess" %>
@@ -104,7 +102,6 @@
                             <ZoneTemplate>
                                 <uc1:CompFiltersMain ID="cmpfltMain" runat="server"  />
                                 <uc2:CompFiltersExtra ID="cmpfltExtra" runat="server" />
-                                <uc3:CompFiltersDate ID="cmpfltDate" runat="server" />
                                 <uc4:CompFiltersBool ID="cmpfltBool" runat="server" />
                             </ZoneTemplate>               
                                 <PartStyle CssClass="WebpartsBody" />
@@ -323,7 +320,7 @@
                     <table class="ListContrastTableMain">
                         <tbody>
                             <tr>
-                                <td align="left"><cc1:PagingControl id="pcPagingTop" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl> </td>
+                                <td align="left"></td>
                                 <td align="right"><a runat="server" ID="lbtnColorsTop" ><%=Resources.Resource.ColorMap %></a>&nbsp;&nbsp;&nbsp;<asp:Label id="lblCount" runat="server" SkinId="LabelContrast" ></asp:Label> </td>
                             </tr>
                             <tr>
@@ -430,7 +427,6 @@
 		                    </tr>
 		                    <tr>
 			                    <td align="left">
-				                    <cc1:PagingControl id="pcPaging" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl>
 			                    </td>
 			                    <td align="right">
 			                        <a ID="lbtnColorsBottom" runat="server"><%=Resources.Resource.ColorMap %></a>&nbsp;&nbsp;

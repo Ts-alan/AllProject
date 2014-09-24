@@ -14,7 +14,7 @@
     <SourceWebPhysicalPath>..\..\src\WebConsole</SourceWebPhysicalPath>
     <SourceWebProject>{870FD66C-2B79-4B36-86EC-5A252C2208A5}|D:\Projects\Vba32ControlCenter\src\WebConsole</SourceWebProject>
     <SourceWebVirtualPath>/WebConsole</SourceWebVirtualPath>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OutputPath>..\..\.bin\WebConsole_deploy\$(Configuration)</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,17 +49,9 @@
       <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
       <Name>CustomControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\DateControl\DateControl.csproj">
-      <Project>{523F3FD9-CEB7-48A0-843F-2BE730C90644}</Project>
-      <Name>DateControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\Filters\Filters.csproj">
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\PagingControl\PagingControl.csproj">
-      <Project>{6F6EC59B-465E-4499-A2DD-F3FA09674823}</Project>
-      <Name>PagingControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj">
       <Project>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</Project>

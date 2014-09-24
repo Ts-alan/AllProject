@@ -43,12 +43,10 @@ public partial class CompFilters : System.Web.UI.Page
             if (Request.QueryString["Filter"] != null)
             {
                 cmpfltBool.Clear();
-                cmpfltDate.Clear();
                 cmpfltExtra.Clear();
                 cmpfltMain.Clear();
 
                 cmpfltBool.LoadFilter(Request.QueryString["Filter"]);
-                cmpfltDate.LoadFilter(Request.QueryString["Filter"]);
                 cmpfltExtra.LoadFilter(Request.QueryString["Filter"]);
                 cmpfltMain.LoadFilter(Request.QueryString["Filter"]);
 
@@ -61,12 +59,10 @@ public partial class CompFilters : System.Web.UI.Page
                     CompFilterEntity filter = (CompFilterEntity)Session["CurrentCompFilter"];
 
                     cmpfltBool.Clear();
-                    cmpfltDate.Clear();
                     cmpfltExtra.Clear();
                     cmpfltMain.Clear();
 
                     cmpfltBool.LoadFilter(filter);
-                    cmpfltDate.LoadFilter(filter);
                     cmpfltExtra.LoadFilter(filter);
                     cmpfltMain.LoadFilter(filter);
                 }
@@ -108,7 +104,6 @@ public partial class CompFilters : System.Web.UI.Page
        //Init filter object
         CompFilterEntity filter = new CompFilterEntity();
         cmpfltMain.GetCurrentStateFilter(ref filter);
-        cmpfltDate.GetCurrentStateFilter(ref filter);
         cmpfltExtra.GetCurrentStateFilter(ref filter);
         cmpfltBool.GetCurrentStateFilter(ref filter);
 

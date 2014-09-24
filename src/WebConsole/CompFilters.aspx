@@ -1,7 +1,6 @@
 <%@ Page Language="C#" validateRequest=false MasterPageFile="~/mstrPageMain.master"  AutoEventWireup="true" CodeFile="CompFilters.aspx.cs" Inherits="CompFilters" Title="Untitled Page" %>
 <%@ Register Src="~/Controls/CompFiltersMain.ascx" TagName="CompFilters" TagPrefix="cmpfltMain" %>
 <%@ Register Src="~/Controls/CompFiltersExtra.ascx" TagName="CompFilters" TagPrefix="cmpfltExtra" %>
-<%@ Register Src="~/Controls/CompFiltersDate.ascx" TagName="CompFilters" TagPrefix="cmpfltDate" %>
 <%@ Register Src="~/Controls/CompFiltersBool.ascx" TagName="CompFilters" TagPrefix="cmpfltBool" %>
 <%@ OutputCache Location="None" %>
 
@@ -56,7 +55,6 @@ function ValidationFilterName()
         </tr>
          <tr>
           <td colspan="2" class="area">
-            <cmpfltDate:CompFilters runat="server" ID="cmpfltDate" />
           </td>
           </tr>
          <tr>

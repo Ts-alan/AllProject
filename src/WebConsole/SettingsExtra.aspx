@@ -1,6 +1,5 @@
-<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" validateRequest=false MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="SettingsExtra.aspx.cs" Inherits="SettingsExtra" Title="Untitled Page" %>
+<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="SettingsExtra.aspx.cs" Inherits="SettingsExtra" Title="Untitled Page" %>
 
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 <%@ OutputCache Location="None" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" />
@@ -415,7 +414,6 @@
 							</td>
 							</EditItemTemplate>
 						</asp:datalist>  
-						<cc1:PagingControl ID="pcPaging" runat="server" OnNextPage="pcPaging_NextPage" OnPrevPage="pcPaging_PrevPage" OnHomePage="pcPaging_HomePage" OnLastPage="pcPaging_LastPage"/>          
 					</td>
 				</tr>
 			</table>

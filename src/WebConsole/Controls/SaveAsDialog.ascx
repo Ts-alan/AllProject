@@ -159,7 +159,7 @@
 <div id="dlgSaveAs" runat="server" style="display:none;" title='<%$Resources:Resource, SaveAs %>'>
         <asp:TextBox ID="tboxSaveAsName" runat="server"></asp:TextBox>
         <ajaxToolkit:FilteredTextBoxExtender ID="ftboxSaveAsName" TargetControlID="tboxSaveAsName" 
-        runat="server" InvalidChars="'&quot;""" FilterMode="InvalidChars" />
+        runat="server" InvalidChars="'&quot;" FilterMode="InvalidChars" ></ajaxToolkit:FilteredTextBoxExtender>
         <br />
         <asp:Label ID="lblSaveAsError" runat="server"></asp:Label>
 </div>

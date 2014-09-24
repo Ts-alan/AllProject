@@ -47,17 +47,6 @@ public partial class SettingsExtra : PageBase
     /// </summary>
     protected override void InitFields()
     {
-        //Init paging control
-        pcPaging.CurrentPageIndex = 1;
-        pcPaging.PageCount = 1;
-        pcPaging.PageText = Resources.Resource.Page;
-        pcPaging.OfText = Resources.Resource.Of;
-        pcPaging.NextText = Resources.Resource.Next;
-        pcPaging.PrevText = Resources.Resource.Prev;
-
-        pcPaging.HomeText = Resources.Resource.HomePaging;
-        pcPaging.LastText = Resources.Resource.LastPaging;
-
         InitializeColorOptions();
 
         if (Roles.IsUserInRole("Administrator"))
@@ -84,9 +73,7 @@ public partial class SettingsExtra : PageBase
         int pageSize = 20;
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
-        pcPaging.PageCount = pageCount;
-
-        dlEvents.DataSource = DBProviders.Event.GetEventTypeList(filter, sort, (Int16)pcPaging.CurrentPageIndex, (Int16)pageSize);
+        dlEvents.DataSource = DBProviders.Event.GetEventTypeList(filter, sort, 1, (Int16)pageSize);
 
         dlEvents.DataBind();
         //LoadStateFromDataBase();
@@ -203,8 +190,6 @@ public partial class SettingsExtra : PageBase
 
     protected void pcPaging_HomePage(object sender, EventArgs e)
     {
-        pcPaging.CurrentPageIndex = 1;
-
         dlEvents.EditItemIndex = -1;
         UpdateData();
         //Anchor.ScrollToObj(pcPaging.ClientID, Page);
@@ -212,9 +197,6 @@ public partial class SettingsExtra : PageBase
 
     protected void pcPaging_LastPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).PageCount;
-        pcPaging.CurrentPageIndex = index;
-
         dlEvents.EditItemIndex = -1;
         UpdateData();
         //Anchor.ScrollToObj(pcPaging.ClientID, Page);

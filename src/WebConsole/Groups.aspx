@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" MaintainScrollPositionOnPostback="true"  validateRequest="false" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true" CodeFile="Groups.aspx.cs" Inherits="Groups" Title="Untitled Page" EnableEventValidation="false" %>
-<%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 <%@ Register Src="Controls/GroupFiltersMain.ascx" TagName="GroupFiltersMain" TagPrefix="uc1" %>
 
 <%@ Register Src="Controls/TaskCreateProcess.ascx" TagName="TaskUser" TagPrefix="tskCreateProcess" %>
@@ -255,7 +254,6 @@
                     <table class="ListContrastTable">
                         <tr>
                             <td align="left">
-                                <cc1:PagingControl id="pcPagingTop" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl>
                             </td>
                             <td align="right">
                                 <asp:Label id="lblCount" runat="server" SkinId="LabelContrast" ></asp:Label> 
@@ -309,7 +307,6 @@
 					    </tr>
 						<tr>
 						    <td align="left">
-						        <cc1:PagingControl id="pcPaging" runat="server" OnLastPage="pcPaging_LastPage" OnHomePage="pcPaging_HomePage" OnPrevPage="pcPaging_PrevPage" OnNextPage="pcPaging_NextPage" ></cc1:PagingControl>
 						    </td>
 						    <td align="right">					    
 						        <asp:LinkButton ID="lbtnExcel" runat="server" OnClick="lbtnExcel_Click"></asp:LinkButton>

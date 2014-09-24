@@ -182,27 +182,6 @@ public partial class Computers : PageBase
 
         InitRights();
 
-        pcPaging.CurrentPageIndex = 1;
-        pcPaging.PageCount = 1;
-        pcPaging.PageText = Resources.Resource.Page;
-        pcPaging.OfText = Resources.Resource.Of;
-        pcPaging.NextText = Resources.Resource.Next;
-        pcPaging.PrevText = Resources.Resource.Prev;
-
-        pcPaging.HomeText = Resources.Resource.HomePaging;
-        pcPaging.LastText = Resources.Resource.LastPaging;
-
-        pcPagingTop.CurrentPageIndex = 1;
-        pcPagingTop.PageCount = 1;
-        pcPagingTop.PageText = Resources.Resource.Page;
-        pcPagingTop.OfText = Resources.Resource.Of;
-        pcPagingTop.NextText = Resources.Resource.Next;
-        pcPagingTop.PrevText = Resources.Resource.Prev;
-
-        pcPagingTop.HomeText = Resources.Resource.HomePaging;
-        pcPagingTop.LastText = Resources.Resource.LastPaging;
-
-        //Page size init
 
         if (ddlPageSize.Items.Count == 0)
         {
@@ -261,7 +240,6 @@ public partial class Computers : PageBase
 
             cmpfltMain.LoadFilter(filter);
             cmpfltExtra.LoadFilter(filter);
-            cmpfltDate.LoadFilter(filter);
             cmpfltBool.LoadFilter(filter);
         }
         if (ddlFilter.SelectedIndex == 0)
@@ -444,7 +422,7 @@ public partial class Computers : PageBase
                 count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
                 computers = DBProviders.Computer.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
-                        (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
+                        1, Convert.ToInt16(Session["CompPageSize"]));
                 break;
             //use policy
             case 2:
@@ -458,7 +436,7 @@ public partial class Computers : PageBase
                 Policy policy = DBProviders.Policy.GetPolicyByName(selectedPolicyName);
 
                 count = DBProviders.Policy.GetComputerByPolicyCount(policy);
-                computers = DBProviders.Policy.GetComputersByPolicyPage(policy, (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]),
+                computers = DBProviders.Policy.GetComputersByPolicyPage(policy, (Int16)1, Convert.ToInt16(Session["CompPageSize"]),
                     Convert.ToString(Session["CompSorting"]));
 
                 divPolicyHeader.Attributes["class"] = "GiveButton1";
@@ -488,7 +466,7 @@ public partial class Computers : PageBase
                 count = DBProviders.Computer.Count(filter.GetSQLWhereStatement);
                 computers = DBProviders.Computer.List(filter.GetSQLWhereStatement,
                         Convert.ToString(Session["CompSorting"]),
-                        (Int16)pcPaging.CurrentPageIndex, Convert.ToInt16(Session["CompPageSize"]));
+                        (Int16)1, Convert.ToInt16(Session["CompPageSize"]));
                 //(tmpGroup.FindControl("mainDiv") as HtmlContainerControl).Attributes.Add("class", "menu");
                 divPolicyMenu.Attributes.Add("class", "menu");
                 break;
@@ -499,11 +477,6 @@ public partial class Computers : PageBase
         int pageCount = (int)Math.Ceiling((double)count / pageSize);
 
         lblCount.Text = Resources.Resource.Found + ": " + count.ToString();
-
-        pcPaging.PageCount = pageCount;
-        pcPagingTop.PageCount = pageCount;
-
-        Session["ComputersCurrentPageIndex"] = pcPaging.CurrentPageIndex;
 
         DataList1.DataSource = computers;
         DataList1.DataBind();
@@ -516,8 +489,6 @@ public partial class Computers : PageBase
     /// <param name="e"></param>
     protected void ddlPageSize_SelectedIndexChanged(object sender, EventArgs e)
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
         Session["CompPageSize"] = ddlPageSize.SelectedValue;
         Session["CompSelectAll"] = true;
         UpdateData();
@@ -535,7 +506,6 @@ public partial class Computers : PageBase
         {
             cmpfltMain.Clear();
             cmpfltExtra.Clear();
-            cmpfltDate.Clear();
             cmpfltBool.Clear();
             //btnApplyFilter_Click(this, null);
             Session["CurrentCompFilter"] = null;
@@ -573,16 +543,11 @@ public partial class Computers : PageBase
         }
         else Session["CurrentCompFilter"] = null;//default*/
        
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
-
         cmpfltBool.Clear();
-        cmpfltDate.Clear();
         cmpfltExtra.Clear();
         cmpfltMain.Clear();
 
         cmpfltBool.LoadFilter(fltr);
-        cmpfltDate.LoadFilter(fltr);
         cmpfltExtra.LoadFilter(fltr);
         cmpfltMain.LoadFilter(fltr);
         if (divPolicyHeader.Attributes["class"] == "GiveButton1") Session["CompShowMode"] = 2;
@@ -1149,10 +1114,6 @@ public partial class Computers : PageBase
     #region Paging events
     protected void pcPaging_NextPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -1162,10 +1123,6 @@ public partial class Computers : PageBase
 
     protected void pcPaging_PrevPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).CurrentPageIndex;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -1175,9 +1132,6 @@ public partial class Computers : PageBase
 
     protected void pcPaging_HomePage(object sender, EventArgs e)
     {
-        pcPaging.CurrentPageIndex = 1;
-        pcPagingTop.CurrentPageIndex = 1;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -1186,10 +1140,6 @@ public partial class Computers : PageBase
     }
     protected void pcPaging_LastPage(object sender, EventArgs e)
     {
-        int index = ((PagingControls.PagingControl)sender).PageCount;
-        pcPaging.CurrentPageIndex = index;
-        pcPagingTop.CurrentPageIndex = index;
-
         DataList1.EditItemIndex = -1;
         Page.MaintainScrollPositionOnPostBack = false;
         Anchor.ScrollToTop(Page);
@@ -1214,16 +1164,10 @@ public partial class Computers : PageBase
             CompFilterEntity filter = new CompFilterEntity();
 
             cmpfltMain.GetCurrentStateFilter(ref filter);
-            cmpfltDate.GetCurrentStateFilter(ref filter);
             cmpfltExtra.GetCurrentStateFilter(ref filter);
             cmpfltBool.GetCurrentStateFilter(ref filter);
             filter.CheckFilters();
             filter.GenerateSQLWhereStatement();
-
-
-            pcPaging.CurrentPageIndex = 1;
-            pcPagingTop.CurrentPageIndex = 1;
-
 
             if (filter.GetSQLWhereStatement != String.Empty)
                 Session["CurrentCompFilter"] = filter;
@@ -1285,7 +1229,6 @@ public partial class Computers : PageBase
         divFilterHeader.Attributes["class"] = "GiveButton";
         
         cmpfltBool.Clear();
-        cmpfltDate.Clear();
         cmpfltExtra.Clear();
         cmpfltMain.Clear();
 
@@ -1315,7 +1258,6 @@ public partial class Computers : PageBase
             CompFilterEntity filter = new CompFilterEntity();
 
             cmpfltMain.GetCurrentStateFilter(ref filter);
-            cmpfltDate.GetCurrentStateFilter(ref filter);
             cmpfltExtra.GetCurrentStateFilter(ref filter);
             cmpfltBool.GetCurrentStateFilter(ref filter);
             filter.GenerateSQLWhereStatement();
@@ -1387,7 +1329,6 @@ public partial class Computers : PageBase
         {
             CompFilterEntity filter = (CompFilterEntity)Session["CurrentCompFilter"];
             cmpfltMain.LoadFilter(filter);
-            cmpfltDate.LoadFilter(filter);
             cmpfltExtra.LoadFilter(filter);
             cmpfltBool.LoadFilter(filter);
         }

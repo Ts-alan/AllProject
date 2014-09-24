@@ -1,6 +1,6 @@
 ﻿namespace AjaxControlToolkit
 {
-    public enum ValidatorCalloutPosition
+    public enum ValidatorCalloutPosition1
     {
         Right = 0,
         Left = 1,
