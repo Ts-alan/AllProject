@@ -20,7 +20,7 @@ using Microsoft.Win32;
 using VirusBlokAda.CC.Common.Xml;
 using VirusBlokAda.CC.Settings.Common;
 
-public partial class _PoliciesPage : PageBase
+public partial class PoliciesPage : PageBase
 {
     protected void Page_Init(object sender, EventArgs e)
     {
@@ -34,7 +34,6 @@ public partial class _PoliciesPage : PageBase
             Response.Redirect("Default.aspx");
         }
 
-        RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/resources/css/ext-all.css");
         RegisterLink("~/App_Themes/" + Profile.Theme + @"/Groups/Groups.css");
         
 

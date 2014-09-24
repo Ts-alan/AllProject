@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" MasterPageFile="~/mstrPageMain.master" CodeFile="PoliciesPage.aspx.cs" Inherits="_PoliciesPage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" MasterPageFile="~/mstrPageMain.master" CodeFile="PoliciesPage.aspx.cs" Inherits="PoliciesPage" %>
 
 <%@ Register Assembly="PagingControl" Namespace="PagingControls" TagPrefix="cc1" %>
 
@@ -9,459 +9,465 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
 
-<script type="text/javascript">   
-        
-    function OnClientCheck()
-    {
-        var tbox = $get('<%=tboxPolicyName.ClientID%>');
-        var expr = new RegExp('<%=VirusBlokAda.CC.Common.RegularExpressions.PolicyName %>');
-        if(!expr.test(tbox.value))
-        {
-            alert('<%=Resources.Resource.ErrorPolicyName%>');
-            return false;            
-        }
-        else
-        {
-            return true;
-        }
-    }   
-        
-</script>
-
-<script type="text/javascript" src="js/Groups/ext-4.1.1/ext-all.js"></script>
-
-  <script language="javascript" type="text/javascript">
-        Ext.require(['*']);
-        Ext.onReady(function () {
-            var TabsExample = {
-                init: function () {
-                    var tabs = Ext.widget('tabpanel',
-                 {
-                     renderTo: 'tabs1',
-                     height: '800px',
-                     plain: true,
-                     activeTab: 1,
-                     defaults: {
-                         bodyPadding: 10
-                     },
-                     items: []
-                 });
-                    tabs.add({
-                        id: 'paneltab1',
-
-                        title: "<%=Resources.Resource.Management %>",
-                        contentEl: 'tab1'
-                    }, {
-                        id: 'paneltab2',
-
-                        title: "<%=Resources.Resource.AppointmentPolicy %>",
-                        contentEl: 'tab2'
-                    });
-                    tabs.setActiveTab('paneltab2');
-                    tabs.setActiveTab('paneltab1');
-                }
+ <script type="text/javascript" src="js/jstree.js"></script>
+    <script language="javascript" type="text/javascript">
+        function OnClientCheck() {
+            var tbox = $get('<%=tboxPolicyName.ClientID%>');
+            var expr = new RegExp('<%=VirusBlokAda.CC.Common.RegularExpressions.PolicyName %>');
+            if (!expr.test(tbox.value)) {
+                alert('<%=Resources.Resource.ErrorPolicyName%>');
+                return false;
             }
-            Ext.EventManager.onDocumentReady(TabsExample.init);
-
-
-            /*  ***************************************************************************************************************
-            Container and layout generation
-            ***************************************************************************************************************  */
-            // turn on quick tips
-
-            Ext.tip.QuickTipManager.init();
-            Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
-                maxWidth: 200,
-                minWidth: 100,
-                showDelay: 500    // Show 500ms after entering target
-            });
-
-
-
-
-
-            /*  ***************************************************************************************************************
-            Container and layout generation finished
-            ***************************************************************************************************************  */
-
-            /*  ***************************************************************************************************************
-            Save and reload realization
-            ***************************************************************************************************************  */
-
-            //reloading trees from server
-            function reload() {
-                noPolicyStore.reload();
-                policyStore.reload();
-            }
-
-            //constructor to class containing info for nodes in tree
-            function myNode(text, id, parentId, comment, isLeaf) {
-                this.text = text;
-                this.id = id;
-                this.parentId = parentId;
-                this.comment = comment;
-                this.isLeaf = isLeaf;
-            }
-
-            //save edited groups to server
-            function save() {
-                MainPanel.setLoading('<%=Resources.Resource.SendingDataToServer %>' + '...');
-                //generate arrays containing nodes info
-                var policyTreeArray = new Array();
-                policyTreeRoot.eachChild(function (root) {
-                    RecursiveSaving(root, root.get("id"));
-                });
-
-                function RecursiveSaving(root, policyID) {
-                    var length = root.childNodes.length;
-                    for (var i = 0; i < length; i++) {
-                        RecursiveSaving(root.childNodes[i], policyID);
-                    }
-                    if (root.getDepth() == 0) return;
-
-                    if (root.isLeaf()) {
-                        policyTreeArray[policyTreeArray.length++] = new myNode(root.get("text"), root.get("id"), policyID, "", root.isLeaf() ? "true" : "false");
-                    }
-                }
-                //query .net handler with ajax
-                Ext.Ajax.request({
-                    url: '<%=Request.ApplicationPath%>/Handlers/GetTreePoliciesDataHandler.ashx',                                                    //url
-                    params: { policyTreeArray: Ext.JSON.encode(policyTreeArray) },
-                    method: 'POST',                                                         //method
-                    callback: function (options, success, response) {                       //callback function
-                        if (success == false) {  //ajax request failed to complete
-                            Ext.Msg.show({
-                                title: '<%=Resources.Resource.SaveInfoToServer %>',
-                                msg: '<%=Resources.Resource.Error %>' + ': no answer from server',
-                                minWidth: 200,
-                                buttons: Ext.MessageBox.OK,
-                                multiline: false
-                            });
-                        }
-                        else {   //ajax request copmleted successfully
-                            var jsonData = Ext.JSON.decode(response.responseText); //decode response
-                            var resultMessage = jsonData.data.result;                   //passed result string
-                            var resultSuccess = jsonData.success;                       //passed query result
-                            if (resultSuccess == true) {  //added info to database successfully
-                                Ext.Msg.show({
-                                    title: '<%=Resources.Resource.SaveInfoToServer %>',
-                                    msg: '<%=Resources.Resource.TaskStateCompletedSuccessfully %>',
-                                    minWidth: 200,
-                                    buttons: Ext.MessageBox.OK,
-                                    multiline: false
-                                });
-                            }
-                            else {  //failed to add info to database
-                                Ext.Msg.show({  //show error message
-                                    title: '<%=Resources.Resource.SaveInfoToServer %>',
-                                    msg: '<%=Resources.Resource.Error %>' + ': ' + resultMessage,
-                                    minWidth: 200,
-                                    buttons: Ext.MessageBox.OK
-                                });
-                            }
-                        }
-                        MainPanel.setLoading(false);
-                    }
-                });
-            }
-
-            /*  ***************************************************************************************************************
-            Save and reload realization finished
-            ***************************************************************************************************************  */
-
-            /*  ***************************************************************************************************************
-            Policy tree
-            policy tree generation, set up and its root creation
-            ***************************************************************************************************************  */
-            var policyStore = Ext.create('Ext.data.TreeStore', {
-                proxy: {
-                    type: 'ajax',
-                    url: '<%=Request.ApplicationPath%>/Handlers/TreeWithPolicyHandler.ashx'
-                },
-                root: {
-                    text: 'Policies Root',
-                    draggable: false,
-                    id: 'policyTreeRoot',
-                    root: true,
-                    leaf: false,
-                    expanded: true
-                },
-                listeners:
-                {
-                    move: function (node, parentOld, parentNew, index) {
-                        parentNew.removeChild(node, true);
-                        RecursiveDeleteGroups(parentOld);
-
-                    }
-                },
-                folderSort: true,
-                sorters: [{
-                    property: 'text',
-                    direction: 'ASC'
-                }]
-            });
-            var newGroupId = 0;
-            var policyTree = Ext.create('Ext.tree.Panel', {
-                id: 'policyTree',
-                store: policyStore,
-                rootVisible: false,
-                region: 'east',
-                layout: 'fit',
-                width: 400,
-                minWidth: 300,
-                hideHeaders: true,
-                border: 1,
-                split: true,
-                viewConfig:
-        {
-            markDirty: false,
-            listeners:
-            {
-            },
-            plugins:
-            {
-                ptype: 'treeviewdragdrop',
-                toggleOnDblClick: false,
-                appendOnly: true
-            }
-        }
-            });
-            var policyTreeRoot = policyTree.getRootNode();
-            policyTreeRoot.data.allowDrop = false;
-            function RecursiveDeleteGroups(root) {
-                if (root.childNodes.length == 0 && root.get("id").search('Group') != -1) {
-                    var parentNode = root.parentNode;
-                    root.remove(true);
-                    RecursiveDeleteGroups(parentNode);
-                }
-            }
-
-
-
-
-            policyTreeRoot.expand(false, false);
-
-            // policy tree selection model
-            var sm = policyTree.getSelectionModel();
-
-            //stop event on navigation key pressed
-
-            policyTree.on('keypress', function (e) {
-                if (e.isNavKeyPress()) {
-                    e.stopEvent();
-                }
-            });
-
-            //Fires before a new child is appended, return false to cancel the append.        
-            policyTree.on('beforeitemmove', function (childNode, parentNodeOld, parentNodeNew, index) {
-                onBeforeMove(childNode, parentNodeOld, parentNodeNew, index);
+            else {
                 return true;
+            }
+        }
+        $(document).ready(function () {
+            $("#tabs1").tabs({ cookie: { expires: 30} });
+            $(document).tooltip({
+                content: function () {
+                    if ($(this).prop('tagName') == 'LI')
+                        return $(this).attr('title');
+                }
             });
+            $("input[type=button]").button();
 
-            /*  ***************************************************************************************************************
-            Policy tree finish
-            ***************************************************************************************************************  */
+            $("div[forbutton]").hover(
+                function () {
+                    if ($(this).attr('forbutton') == 'true')
+                        $(this).addClass('button-hover');
 
-            /*  ***************************************************************************************************************
-            No Policy tree
-            no policy tree generation, set up and its root creation
-            ***************************************************************************************************************  */
-            var noPolicyStore = Ext.create('Ext.data.TreeStore', {
-                proxy: {
-                    type: 'ajax',
-                    url: '<%=Request.ApplicationPath%>/Handlers/TreeNoPolicyHandler.ashx'
                 },
-                root: {
-                    text: '<%=Resources.Resource.NotAssignedExplicitly %>',
-                    id: 'noPolicyTreeRoot',
-                    root: true,
-                    expanded: true,
-                    allowDrag: false,
-                    allowDrop: true
-                },
-                listeners: {
-                    move: function (node, parentOld, parentNew, index) {
-                        parentNew.removeChild(node, true);
-                        RecursiveDeleteGroups(parentOld);
-                    }
-                },
-
-
-                folderSort: true,
-                sorters: [{
-                    property: 'text',
-                    direction: 'ASC'
-                }]
-            });
-            var noPolicyTree = Ext.create('Ext.tree.Panel', {
-                id: 'noPolicyTree',
-                width: 300,
-                height: 400,
-                minWidth: 200,
-                region: 'center',
-                layout: 'fit',
-                store: noPolicyStore,
-                split: true,
-                border: 1,
-                viewConfig:
-                {
-                    markDirty: false,
-                    plugins:
-                    {
-                        ptype: 'treeviewdragdrop',
-                        appendOnly: true
-                    }
+                function () {
+                    $(this).removeClass('button-hover');
                 }
-            });
-            var noPolicyTreeRoot = noPolicyTree.getRootNode();
-            /* ************************************************************************************************
-            noPolicyTree and noPolicyStore generation finished
-            ********************************************************************************* */
-
-            noPolicyTreeRoot.expand(false, false);
-
-            //Fires before a new child is appended, return false to cancel the append.        
-            noPolicyTree.on('beforeitemmove', function (childNode, parentNodeOld, parentNodeNew, index) {
-                if (parentNodeNew.id == noPolicyTreeRoot.id) return false;
-                onBeforeMove(childNode, parentNodeOld, parentNodeNew, index);
-                return true;
-            });
-
-
-            /* Moving nodes*/
-            function getId(id) {
-                var index = id.indexOf("!");
-                var newId;
-                if (index == -1) {
-                    newId = id;
-                }
-                else {
-                    var newId = id.substring(0, index);
-                }
-                return newId;
-            }
-            function changeId(id, parentId) {
-                var newId = getId(id);
-                newId = newId.concat("!", parentId);
-                return newId;
-            }
-
-            function onBeforeMove(childNode, parentNodeOld, parentNodeNew, index) {
-
-                var parent = parentNodeOld;
-                var arrayNodes = new Array();
-
-                if (!childNode.isLeaf()) //if not LEAF
-                    arrayNodes.push(childNode);
-                while (parent.data.id.search("Group") != -1) {//no group
-                    arrayNodes.push(parent);
-                    parent = parent.parentNode;
-                }
-                parent = parentNodeNew;
-                var tmp = new Object();
-                var indexNode = -1;
-                for (var i = arrayNodes.length - 1; i > -1; i--) {
-                    tmp = arrayNodes[i].copy(null, false);
-                    tmp.data.id = changeId(arrayNodes[i].get("id"), parent.get("id"));
-
-                    indexNode = FindIndexOfChild(parent, tmp);
-
-                    if (indexNode == -1) {
-                        parent.appendChild(tmp);
-                        parent = tmp;
-                    }
-
-                    else parent = parent.childNodes[indexNode];
-                }
-
-                if (childNode.isLeaf()) {
-                    if (FindIndexOfChild(parent, childNode) == -1) {
-                        var newNode = childNode.copy(null, false)
-                        parent.appendChild(newNode);
-                    }
-                }
-                else {
-                    RecursiveAppending(parent, childNode.childNodes);
-                }
-            }
-
-            function RecursiveAppending(root, arrayNodes) {
-
-                for (var i = 0; i < arrayNodes.length; i++) {
-                    var index = FindIndexOfChild(root, arrayNodes[i]);
-                    var newNode;
-                    if (index == -1) {
-                        var newId = changeId(arrayNodes[i].data.id, root.data.id);
-                        newNode = arrayNodes[i].copy(null, false);
-                        newNode.data.id = newId;
-                        root.appendChild(newNode);
-                    }
-                    else {
-                        newNode = root.childNodes[index];
-                    }
-                    RecursiveAppending(newNode, arrayNodes[i].childNodes);
-                }
-            }
-
-            function FindIndexOfChild(root, node) {
-                for (var index = 0; index < root.childNodes.length; index++) {
-                    var rootChildName = root.childNodes[index].get("text");
-                    var nodeName = node.get("text");
-                    if (rootChildName == nodeName) return index;
-                }
-                return -1;
-            }
-
-            // create the bottom toolbar
-            var bottomToolBar = Ext.create('Ext.toolbar.Toolbar');
-            bottomToolBar.suspendLayouts();
-            bottomToolBar.add(
-            {
-                id: 'reload',
-                text: '<%=Resources.Resource.Reload %>',
-                iconCls: 'reload',  // <-- icon
-                tooltip: '<%=Resources.Resource.ReloadInfoFromServer %>',
-                handler: reload
-
-            }, '->', {
-                id: 'save',
-                text: '<%=Resources.Resource.Save %>',
-                handler: save,
-                iconCls: 'save',
-                tooltip: '<%=Resources.Resource.SaveInfoToServer %>'
-            }
             );
-            bottomToolBar.resumeLayouts(true);
 
 
-            /*  ***************************************************************************************************************
-            No Policy tree finish
-            ***************************************************************************************************************  */
-            var MainPanel = new Ext.Panel({
-                renderTo: 'mainContainer',
-                layout: 'border',
-                width: 700,
-                height: 500,
-                border: 1,
-                bodyStyle: { 'z-index': 0
+            $.jstree.defaults.checkbox.whole_node = false;
+            $.jstree.defaults.checkbox.tie_selection = false;
+            $.jstree.defaults.dnd.always_copy = false;
+            $('#noPolicyTree').jstree({
+                'core': {
+                    'check_callback': function (operation, node, node_parent, node_position, more) {
+                        if (operation == 'move_node') {
+                            if (node.type == 'root' || node.type == 'folder') return false;
+                            if (node_parent.type != 'folder' && node_parent.type != 'root') return false;
+                            if (node == false) return false;
+
+                            var parChild = node_parent.children_d;
+                            if (parChild.indexOf(node.id) >= 0) return false;
+                            return true;
+                        }
+
+                        if (operation == 'delete_node') {
+
+                            return true;
+                        }
+                        if (operation == 'copy_node') {
+                            if (node.type == 'root') return false;
+                            if (node_parent.type != 'folder' && node_parent.type != 'root') return false;
+                            if (node == false) return false;
+                            nodeMoving(node, node_parent, false, true);
+                            return false;
+
+                        }
+                        return true;
+                    },
+                    'multiple': false,
+                    'data': function (node, cb) { cb(loadPolicyTreeInfo(false)); }
                 },
-                items: [
-                policyTree, noPolicyTree,
-                {
-                    region: 'south',
-                    //   layout: 'fit',
-                    tbar: bottomToolBar,
-                    border: 1
-                }]
-                /*  bbar: bottomToolBar*/
+                'types': {
+                    'group': {
+                        'icon': "App_Themes/Main/groups/images/group.png"
+                    },
+                    'computer': {
+                        'icon': "App_Themes/Main/groups/images/monitor.png"
+                    },
+                    'root': {
+                    },
+                    'default': {
+                    }
+                },
+                'plugins': ["state", "types", "dnd", "sort"]
+
             });
-            bottomToolBar.setBorder('1');
+
+            $.jstree.defaults.sort = function (a, b) {
+                a = this.get_node(a);
+                b = this.get_node(b);
+                if (a.type == 'group' && b.type != 'group') return -1;
+                if (a.type != 'group' && b.type == 'group') return 1;
+                return this.get_text(a) > this.get_text(b) ? 1 : -1;
+            };
+
+            $('#policyTree').jstree({
+                'core': {
+                    'check_callback': function (operation, node, node_parent, node_position, more) {
+                        if (operation == 'move_node') {
+
+                            if (node.type == 'root' || node.type == 'folder') return false;
+
+                            if (node_parent.type != 'folder') return false;
+                            if (node == false) return false;
+                            var nodeParents = node.parents;
+                            var root = this.get_node('#');
+                            /* move to own parent*/
+                            if (nodeParents.indexOf(node_parent.id) >= 0) return false;
+                            console.log(more);
+                            /* node and parent from one tree*/
+                            if (more.is_multi ==false) {
+                                if (more.core == true) {
+                                    nodeMoving(node, node_parent, true, true);
+                                    return false;
+                                }
+                            }
+
+                            return true;
+
+                        }
+                        if (operation == 'copy_node') {
+                            if (node.type == 'root') return false;
+                            if (node_parent.type != 'folder' && node_parent.type != 'root') return false;
+                            if (node == false) return false;
+
+                            nodeMoving(node, node_parent, true, false);
+                            return false;
+
+                        }
+                        return true;
+                    },
+                    'multiple': false,
+                    'data': function (node, cb) { cb(loadPolicyTreeInfo(true)); }
+                },
+                'types': {
+                    'group': {
+                        'icon': "App_Themes/Main/groups/images/group.png"
+                    },
+                    'computer': {
+                        'icon': "App_Themes/Main/groups/images/monitor.png"
+                    },
+                    'folder': {
+                        'icon': "App_Themes/Main/groups/images/folder.gif"
+                    },
+                    'root': {
+                    },
+                    'default': {
+                    }
+                },
+                'dnd': {
+                    'is_draggable': function (node) { return true; }
+                },
+                'plugins': ["state", "types", "dnd", "sort"]
+
+            });
+
+            $('#policyTree').on('loaded.jstree', function (e, data) {
+                var ref = $('#policyTree').jstree(true);
+                var treeRoot = ref.get_node('#');
+                var title = "";
+                for (var i = 0; i < treeRoot.children_d.length; i++) {
+                    title = ref.get_node(treeRoot.children_d[i]).original.qtip;
+                    $("#" + treeRoot.children_d[i]).prop('title', title);
+                }
+            });
+            $('#noPolicyTree').on('loaded.jstree', function (e, data) {
+                var ref = $('#noPolicyTree').jstree(true);
+                var treeRoot = ref.get_node('#');
+                var title = "";
+                for (var i = 0; i < treeRoot.children_d.length; i++) {
+                    title = ref.get_node(treeRoot.children_d[i]).original.qtip;
+                    $("#" + treeRoot.children_d[i]).prop('title', title);
+                }
+            });
+
+            $('#policyTree').on('hover_node.jstree', function (e, data) {
+
+                $("#" + data.node.id).prop('title', data.node.original.qtip);
+            });
+            $('#noPolicyTree').on('hover_node.jstree', function (e, data) {
+
+                $("#" + data.node.id).prop('title', data.node.original.qtip);
+            });
         });
 
+        function loadPolicyTreeInfo(isPolicy) {
+            var d = "";
+            var handlerUrl = "";
+            if (isPolicy) {
+                handlerUrl = '<%=Request.ApplicationPath%>/Handlers/TreeWithPolicyHandler.ashx';
+            } else handlerUrl = '<%=Request.ApplicationPath%>/Handlers/TreeNoPolicyHandler.ashx';
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: handlerUrl,
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    d = data;
+                },
+                error: function (e) {
+                    alert('<%= Resources.Resource.ErrorRequestingDataFromServer%>');
+                }
+            });
+            return d;
+        };
+
+
+
+        function getId(id) {
+            var index = id.indexOf("+");
+            var newId;
+            if (index == -1) {
+                newId = id;
+            }
+            else {
+                var newId = id.substring(0, index);
+            }
+            return newId;
+        }
+        function changeId(id, parentId) {
+            var newId = getId(id);
+            newId = newId.concat("+", parentId);
+            return newId;
+        }
+
+        function FindIndexOfChild(root, node, ref) {
+
+            for (var index = 0; index < root.children.length; index++) {
+                var childNode = ref.get_node(root.children[index]);
+                var rootChildName = childNode.text;
+                var nodeName = node.text;
+                if (rootChildName == nodeName) return index;
+            }
+            return -1;
+        }
+
+
+        function nodeMoving(childNode, newParent, fromPolicy,isToPolicy) {
+            var oldRef, ref;
+            
+            if (fromPolicy == false) {
+                oldRef = $('#noPolicyTree').jstree(true);
+                
+            }
+            else {
+                
+                oldRef = $('#policyTree').jstree(true);
+            }
+            if (isToPolicy==true) {
+                ref = $('#policyTree').jstree(true);
+            }
+            else {
+                ref = $('#noPolicyTree').jstree(true);
+            }
+            var parent;
+            var arrayNodes = new Array();
+            var deleteNodes = new Array();
+            arrayNodes.push(childNode);
+            parent = ref.get_node(childNode.parent);
+            while (parent.type == 'group') {
+
+                arrayNodes.push(parent);
+                parent = ref.get_node(parent.parent);
+            }
+            parent = newParent;
+            var tmp = new Object();
+            var indexNode = -1;
+            var oldId, oldOriginal;
+            for (var i = arrayNodes.length - 1; i > -1; i--) {
+                tmp = new Object();
+                tmp = copyNodeInfo(arrayNodes[i], parent.id);
+                oldId = tmp.id;
+
+                indexNode = FindIndexOfChild(parent, tmp, oldRef);
+
+                if (indexNode == -1) {
+                    oldOriginal = tmp.original;
+                    var newId = oldRef.create_node(parent,tmp);                    
+                    tmp = oldRef.get_node(newId);
+                    oldRef.set_id(tmp, oldId);
+                    tmp.original = oldOriginal;
+                    if (tmp.type != 'computer')
+                        parent = tmp;                    
+                }
+                else {
+                    parent = oldRef.get_node(parent.children[indexNode]);                   
+                }
+            }
+
+            if (childNode.type == 'group') {
+                recursiveSaveChildNodes(parent, childNode.children, deleteNodes, ref, oldRef);
+            }
+            deleteNodes = deleteNodes.concat(arrayNodes);
+
+            deleteOldNodes(deleteNodes, ref);
+            setRightIdComps(ref);
+        }
+
+        function recursiveSaveChildNodes(root,childNodes,arrayNodes,ref,oldRef) {
+
+            for (var i = 0; i < childNodes.length; i++) {
+                var tmp = new Object();
+                var child = ref.get_node(childNodes[i]);
+                tmp = copyNodeInfo(child, root.id);
+                oldId = tmp.id;
+                indexNode = FindIndexOfChild(root, tmp, oldRef);
+                if (indexNode == -1) {
+                    oldOriginal = tmp.original;
+                    var newId = oldRef.create_node(root,tmp);
+                    tmp = oldRef.get_node(newId);
+                    oldRef.set_id(tmp, oldId);
+                    tmp.original = oldOriginal;
+                }
+                else {
+                    tmp=oldRef.get_node(root.children[indexNode]);
+                }
+                recursiveSaveChildNodes(tmp, child.children, arrayNodes, ref, oldRef);
+                arrayNodes.push(child);
+            }
+        }
+
+        function copyNodeInfo(node,parentId) {
+            var tmp = new Object();
+            tmp.a_attr = node.attr;
+            tmp.children = [];
+            tmp.children_d = [];
+            tmp.data = null;
+            tmp.icon = node.icon;
+            tmp.original = node.original;
+            tmp.parent = parentId;
+            tmp.parents = [];
+            tmp.parents.push(parentId);
+            tmp.state = node.state;
+            tmp.text = node.text;
+            tmp.type = node.type;
+            tmp.li_attr = new Object();
+            if (tmp.type == 'computer') {
+                tmp.li_attr.id = node.li_attr.id+"+";
+                tmp.id = node.id+"+";
+            }
+            else {
+                tmp.li_attr.id = node.li_attr.id + "+" + parentId;
+                tmp.id = node.id + "+" + parentId;
+            }
+            return tmp;
+        }
+
+        function deleteOldNodes(arrayNodes, ref) {
+            for (var i = 0; i < arrayNodes.length; i++) {
+                if (arrayNodes[i].type == 'computer') {
+                    
+                    ref.delete_node(arrayNodes[i]);
+                }else if (arrayNodes[i].children.length == 0) {
+                    ref.delete_node(arrayNodes[i]);
+                } else {
+                return;
+                }
+            }
+        }
+        function setRightIdComps(ref) {
+            var root = ref.get_node('#');
+            var node;
+            for (var i = 0; i < root.children_d.length; i++) {
+                node = ref.get_node(root.children_d[i]);
+                if (node.type == 'computer') {
+                    
+                    var id = node.id;
+                    if (id[id.length - 1] == '+') {
+                        id = id.substr(0, id.length - 1);
+                        ref.set_id(node, id);
+                    }
+                }
+            }
+        }
+
+        function reloadTrees() {
+            $('#policyTree').jstree('refresh');
+            $('#noPolicyTree').jstree('refresh');
+        };
+        function myNode(text, id, parentId, comment, isLeaf) {
+            this.text = text;
+            this.id = id;
+            this.parentId = parentId;
+            this.comment = comment;
+            this.isLeaf = isLeaf;
+        };
+        function saveTrees() {
+            //generate arrays containing nodes info
+            var policyTreeArray = new Array();
+            var ref = $('#policyTree').jstree(true);
+            var policyTreeRoot = $('#policyTree').jstree('get_node', '#');
+            for (var i = 0; i < policyTreeRoot.children.length; i++) {
+                var policy = $('#policyTree').jstree('get_node', policyTreeRoot.children[i]);
+                RecursiveSaving(policy, policy.id);
+            }
+            var noPolicyTreeArray = new Array();
+            var noGroupRoot = $('#noPolicyTree').jstree('get_node', '#');
+            for (var i = 0; i < noGroupRoot.children.length; i++) {
+                comp = $('#noPolicyTree').jstree('get_node', noGroupRoot.children[i]);
+                noPolicyTreeArray[noPolicyTreeArray.length++] = new myNode(comp.text, comp.id, '0', '');
+            }
+            function RecursiveSaving(root,parentId) {
+                var length = root.children.length;
+                for (var i = 0; i < length; i++) {
+                    RecursiveSaving($('#policyTree').jstree('get_node', root.children[i]),parentId);
+                }
+                if (root.type=='#') return;
+                var comment = '';
+                if(root.type=='computer')
+                    policyTreeArray[policyTreeArray.length++] = new myNode(root.text, root.id, parentId, comment, root.type != 'group' ? "true" : "false");
+            }
+            var policyJSON = JSON.stringify(policyTreeArray);
+            var noGroupJSON = JSON.stringify(noPolicyTreeArray);
+            $.ajax({
+                type: "POST",
+                url: '<%=Request.ApplicationPath%>/Handlers/GetTreePoliciesDataHandler.ashx',
+                dataType: "json",
+                data: { 'policyTreeArray': policyJSON },
+                success: function (d) {
+
+                    var resultMessage = d.data.result;                   //passed result string
+                    var resultSuccess = d.success;                       //passed query result
+                    if (resultSuccess == true) {                          //added info to database successfully
+
+                        messageBox('<%=Resources.Resource.SaveInfoToServer %>', '<%=Resources.Resource.TaskStateCompletedSuccessfully %>');
+
+                    }
+                    else {
+                        messageBox('<%=Resources.Resource.SaveInfoToServer %>', '<%=Resources.Resource.Error %>' + ': ' + resultMessage);
+                        //failed to add info to database
+                    }
+                },
+                error: function (e) {
+                    messageBox('<%=Resources.Resource.SaveInfoToServer %>', '<%=Resources.Resource.Error %>' + ': no answer from server');
+                }
+            });
+        };
+
+        function messageBox(title, text) {
+            $('#messageText').html(text);
+            $("#dialog-message").dialog({
+                title: title,
+                modal: true,
+                width: 350,
+                resizable: false,
+                buttons: {
+                    Ok: function () {
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        };
     </script>
 
 <div class="title"><%=Resources.Resource.PolicySettings%></div>
 <div id='tabs1'>      
+    <ul>
+        <li><a href="#tab1"><%=Resources.Resource.Management %></a> </li>
+        <li><a href="#tab2"><%=Resources.Resource.AppointmentPolicy %></a> </li>    
+    </ul>
       <div id='tab1' class="tab-content">
         <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" runat="server" />
         <div>
@@ -572,10 +578,42 @@
            <asp:LinkButton ID="lbtnCancelEditing" OnClick="lbtnCancelEditing_Click" runat="server" SkinID="Button"></asp:LinkButton>
         </div>
       </div>
-      <div id='tab2' class="tab-content">
-            <div id="mainContainer">
+
+
+    <div id='tab2' class="tab-content">
+        <div id="mainContainer" style="width: 800px; height: 500px;">
+            <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 700px; height: 500px; left: 0px; top: 0px;">
+                <div id="noPolicyTreePanel" class="x-panel x-box-item" style="width: 300px; height: 475px; margin: 0px; left: 0px; top: 0px;">
+                    <div id="noPolicyTreeBody" class="tree-panel-body" style=" left: 0px; top: 0px; height: 475px;right:0px">
+                        <div id="noPolicyTree" style=""></div>
+                    </div>
+                </div>
+
+                <div id="policyTreePanel" class="x-panel x-box-item" style="width: 400px; height: 475px; margin: 0px; left: 300px; top: 0px;">           
+                    <div id="policyTreeBody" class="tree-panel-body x-grid-body x-layout-fit" style="width: 400px; left: 0px; top: 0px; height: 475px;">
+                        <div id="policyTree" style="height:400px"></div>
+                    </div>
+                </div>
+                <div class="x-toolbar x-docked x-toolbar-default" style="border-width: 1px; left: 0px; bottom:0px;right:0px;">
+                    <div style="width: 694px; height: 22px;" class="x-box-inner " role="presentation">
+                        <div  style="position:absolute;width:20000px;left:0px;top:0px;height:1px"></div>
+                        <div forbutton='true' class="x-btn x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left" style="border-width: 1px; left: 0px; top: 0px; margin: 0px;float:left" id="reloadButtonToolbar">
+                            <button id="reloadTreesButton" style="height: 16px;"  type="button" class="x-btn-center" hidefocus="true" role="button" autocomplete="off" onclick="return reloadTrees();">
+                                <span class="x-btn-icon reload"></span>
+                                <span class="x-btn-inner"><%=Resources.Resource.Reload %></span>                                
+                            </button>
+                        </div>                     
+                        <div forbutton='true' class="x-btn  x-btn-default-toolbar-small x-btn-default-toolbar-small-icon-text-left" style="border-width: 1px; top: 0px;margin:0px;float:right" id="saveButtonToolbar">
+                            <button id="saveTreesButton" type="button" class="x-btn-center"  onclick="return saveTrees();">
+                                <span class="x-btn-icon save"></span>
+                                <span class="x-btn-inner"><%=Resources.Resource.Save %></span>                                
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-      </div>
+        </div>
+    </div>
 </div>
 
 <asp:Button runat="server" ID="btnHiddenMessage" style="visibility:hidden" />
