@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true"
-    CodeFile="GroupsAdministrate.aspx.cs" Inherits="GroupsAdministrate" Title="Untitled Page" %>
+    CodeFile="GroupsAdministrate2.aspx.cs" Inherits="GroupsAdministrate2" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
     <script type="text/javascript" src="js/jstree.js"></script>
