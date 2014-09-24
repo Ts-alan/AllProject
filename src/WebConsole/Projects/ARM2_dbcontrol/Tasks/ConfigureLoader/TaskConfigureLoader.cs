@@ -156,12 +156,12 @@ namespace ARM2_dbcontrol.Tasks
             result.Append(@"<arg><key>command</key><value>apply_settings</value></arg>");
             result.Append(@"<arg><key>settings</key><value><config><id>Normal</id><module><id>{D4041472-FEC0-41B5-A133-8AAC758C1006}</id>");
 
-            result.AppendFormat(@"<param><id>AuthorityName</id><type>string</type><value>{0}</value></param>", AUTH_USER);
-            result.AppendFormat(@"<param><id>AuthorityPassword</id><type>string</type><value>{0}</value></param>", AUTH_PASSWORD);
+            result.AppendFormat(@"<param><id>AuthorityName</id><type>string</type><value><![CDATA[{0}]]></value></param>", AUTH_USER);
+            result.AppendFormat(@"<param><id>AuthorityPassword</id><type>string</type><value><![CDATA[{0}]]></value></param>", AUTH_PASSWORD);
 
-            result.AppendFormat(@"<param><id>ProxyAddress</id><type>string</type><value>{0}</value></param>", PROXY_ADDRESS);
-            result.AppendFormat(@"<param><id>ProxyAuthorityName</id><type>string</type><value>{0}</value></param>", PROXY_USER);
-            result.AppendFormat(@"<param><id>ProxyAuthorityPassword</id><type>string</type><value>{0}</value></param>", PROXY_PASSWORD);
+            result.AppendFormat(@"<param><id>ProxyAddress</id><type>string</type><value><![CDATA[{0}]]></value></param>", PROXY_ADDRESS);
+            result.AppendFormat(@"<param><id>ProxyAuthorityName</id><type>string</type><value><![CDATA[{0}]]></value></param>", PROXY_USER);
+            result.AppendFormat(@"<param><id>ProxyAuthorityPassword</id><type>string</type><value><![CDATA[{0}]]></value></param>", PROXY_PASSWORD);
 
             result.AppendFormat(@"<param><id>ProxyPort</id><type>ulong</type><value>{0}</value></param>", PROXY_PORT);
             result.AppendFormat(@"<param><id>ProxyType</id><type>ulong</type><value>{0}</value></param>", (int)PROXY_TYPE);
@@ -171,7 +171,7 @@ namespace ARM2_dbcontrol.Tasks
             result.AppendFormat(@"<param><id>UpdatePathes</id><type>stringlist</type><value>");
             for (int i = 0; i < UPDATE_FOLDER_LIST.Count; i++)
             {
-                result.AppendFormat(@"<string><id>{0}</id><val>{1}</val></string>", i, UPDATE_FOLDER_LIST[i]);
+                result.AppendFormat(@"<string><id>{0}</id><val><![CDATA[{1}]]></val></string>", i, UPDATE_FOLDER_LIST[i]);
             }
             result.AppendFormat(@"</value></param>");
 
