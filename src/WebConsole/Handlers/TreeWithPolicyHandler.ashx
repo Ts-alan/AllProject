@@ -71,15 +71,15 @@ public class TreeWithPolicyHandler : IHttpHandler
         }
         //PolicyBranch is created.
 
-        TreeNodeJSONEntity node = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(policy, null, false, true, false, true, true);
+        TreeNodeJSONEntity node = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(policy, null, true, true);
         node.Children = RecursiveConvertToTreeNodeJSON(policyBranch.Branches, new List<ComputersEntity>());
         if (policyBranch.Computers.Count != 0)
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, false, false, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, true));
             node.Children[node.Children.Count - 1].Children = new List<TreeNodeJSONEntity>();
             foreach (ComputersEntity comp in policyBranch.Computers)
             {
-                node.Children[node.Children.Count-1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
+                node.Children[node.Children.Count-1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
             }
         }
         
@@ -105,12 +105,12 @@ public class TreeWithPolicyHandler : IHttpHandler
         List<TreeNodeJSONEntity> list = new List<TreeNodeJSONEntity>();
         foreach (ComputersEntity comp in computers)
         {
-            list.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true)); 
+            list.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null,true, true)); 
         }
 
         foreach (BranchOfTree branch in branches)
         {
-            TreeNodeJSONEntity tmpNode = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(branch.Root, null, true, false, false, true, true);
+            TreeNodeJSONEntity tmpNode = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(branch.Root, null, true, true);
             tmpNode.Children = RecursiveConvertToTreeNodeJSON(branch.ChildrenBranchs, branch.Computers);
             list.Add(tmpNode);
         }

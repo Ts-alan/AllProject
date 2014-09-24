@@ -3708,6 +3708,9 @@
   <data name="FullAccess" xml:space="preserve">
     <value>Полный доступ</value>
   </data>
+  <data name="NothingIsAdded" xml:space="preserve">
+    <value>Ничего не добавлено</value>
+  </data>
   <data name="SystemIdleProcess" xml:space="preserve">
     <value>% бездействия системы</value>
   </data>

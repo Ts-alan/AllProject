@@ -16,30 +16,32 @@ public class TreeNoPolicyHandler : IHttpHandler {
         context.Response.ContentType = "text/plain";
         GroupProvider providerGroup = new GroupProvider(ConfigurationManager.ConnectionStrings["ARM2DataBase"].ConnectionString);
         List<Group> list = providerGroup.GetGroups();
-
+        TreeNodeJSONEntity gr = TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(-1, Resources.Resource.NotAssignedExplicitly, Resources.Resource.NotAssignedExplicitly, null), null,true, true);
+        
         //with groups
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
-            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, false, false, true, true));
-            RecursiveAddChildren(tree[tree.Count - 1], list, index, providerGroup);
+            
+           gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, true));
+           RecursiveAddChildren(gr.Children[gr.Children.Count - 1], list, index, providerGroup);
             index++;
         }
 
         //without group
-        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, false, false, true, true));
+        gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, Resources.Resource.ComputersWithoutGroups, "", null), null, true, true));
         foreach (ComputersEntity comp in providerGroup.GetComputersByGroupAndPolicy(null, null))
         {
-            tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
+            gr.Children[gr.Children.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null,true, true));
         }
 
         //Deleting empty nodes
-        for (index = 0; index < tree.Count; index++)
+        for (index = 0; index < gr.Children.Count; index++)
         {
-            if (DeleteEmptyNodes(tree[index], null))
+            if (DeleteEmptyNodes(gr.Children[index], gr,gr))
                 index--;
         }
-
+        tree.Add(gr);
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(tree));        
     }
 
@@ -51,22 +53,22 @@ public class TreeNoPolicyHandler : IHttpHandler {
         }
     }
 
-    private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode)
+    private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode,TreeNodeJSONEntity rootNode)
     {
-        if (node.IsLeaf) return false;
+        if (node.Children==null) return false;
 
         for (Int32 index = node.Children.Count - 1; index >= 0; index--)
         {
-            DeleteEmptyNodes(node.Children[index], node);             
+            DeleteEmptyNodes(node.Children[index], node,rootNode);             
         }
 
         if (node.Children.Count == 0)
         {
-            if (parentNode != null)
+            if (parentNode != rootNode)
                 parentNode.Children.Remove(node);
             else
             {
-                tree.Remove(node);
+                rootNode.Children.Remove(node);
                 return true;
             }
         }
@@ -80,14 +82,14 @@ public class TreeNoPolicyHandler : IHttpHandler {
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, false, false, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], null, true, true));
             RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, providerGroup);
             i++;
         }
         //Comps
         foreach (ComputersEntity comp in providerGroup.GetComputersByGroupAndPolicy(list[indexList], null))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, false, true, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
         }
     }
 

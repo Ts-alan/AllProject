@@ -43,6 +43,15 @@
         };
     } ();
 
+
+
+   function AddIpClick(){
+        IpAddressListBox.add(); 
+        return false;
+    };
+
+
+
     var NewIpAddressTextBox = function () {
         return {
             getText: function () {
@@ -296,10 +305,7 @@
 
                     });
                     asyncPostBack = false;
-                    $('#<%= lbtnAddIpAddress.ClientID %>').click(function(){
-                        IpAddressListBox.add(); 
-                        return false;
-                    });
+
                 }
                 IpAddressValidator.disable();
                 IpAddressListBox.populate(IpAddressTextBox.getText());
@@ -329,7 +335,7 @@
 </flt:PrimitiveFilterTemplate>
 <div id="dlgIpAddress" runat="server" style="display:none" >
     <p>
-        <asp:LinkButton ID="lbtnAddIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Add%></asp:LinkButton>
+        <asp:LinkButton ID="lbtnAddIpAddress" runat="server" OnClientClick="return AddIpClick();"><%=Resources.Resource.Add%></asp:LinkButton>
         <asp:LinkButton ID="lbtnEditIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Edit%></asp:LinkButton>
         <asp:LinkButton ID="lbtnDeleteIpAddress" runat="server" OnClientClick="return false;"><%=Resources.Resource.Delete%></asp:LinkButton>
         <asp:TextBox ID="tboxNewIpAddress" runat="server"  Style="width: 300px; margin-top: 8px;  margin-bottom: 10px;"></asp:TextBox>

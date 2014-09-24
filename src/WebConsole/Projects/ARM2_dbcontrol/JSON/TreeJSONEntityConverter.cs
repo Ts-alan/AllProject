@@ -10,9 +10,6 @@ namespace VirusBlokAda.CC.JSON
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         Group group,
                         Boolean? isChecked,
-                        Boolean isAllowDrag,
-                        Boolean isAllowDrop,
-                        Boolean isLeaf,
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
@@ -21,25 +18,22 @@ namespace VirusBlokAda.CC.JSON
                 qtip = GenerateShortQTIP(group);
             else
                 qtip = GenerateQTIP(group);
-
-            return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "group", qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded);
+            if(group.ID<0)
+                return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "root", qtip, new NodeState(isExpanded, isChecked, false));
+            return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "group", qtip,new NodeState(isExpanded,isChecked,false));
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         ComputersEntity comp,
-                        Boolean? isChecked,
-                        Boolean isAllowDrag,
-                        Boolean isAllowDrop,
-                        Boolean isLeaf,
+                        Boolean? isChecked,                       
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
-            String iconStyle;
+            String nodeType;
             if (!String.IsNullOrEmpty(comp.OSName) && comp.OSName.ToLower().Contains("server"))
-                iconStyle = "server";
+                nodeType = "server";
             else
-                iconStyle = "computer";
+                nodeType = "computer";
 
             String qtip = String.Empty;
             if (isShortQTip)
@@ -47,16 +41,12 @@ namespace VirusBlokAda.CC.JSON
             else
                 qtip = GenerateQTIP(comp);
 
-            return new TreeNodeJSONEntity(comp.ComputerName, comp.ID.ToString(), iconStyle, qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded,comp.IPAddress,comp.OSName, null);
+            return new TreeNodeJSONEntity(comp.ComputerName, comp.ID.ToString(), nodeType, qtip, new NodeState(isExpanded, isChecked, false),comp.IPAddress,comp.OSName, null);
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         ComputersEntityEx compEx,
-                        Boolean? isChecked,
-                        Boolean isAllowDrag,
-                        Boolean isAllowDrop,
-                        Boolean isLeaf,
+                        Boolean? isChecked,                       
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
@@ -66,16 +56,12 @@ namespace VirusBlokAda.CC.JSON
             else
                 qtip = GenerateQTIP(compEx);
 
-            return new TreeNodeJSONEntity(compEx.ComputerName, compEx.ID.ToString(), GetComputerState(compEx), qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded,compEx.IPAddress,compEx.OSName, null/*, new CompAdditionalInfo(compEx)*/);
+            return new TreeNodeJSONEntity(compEx.ComputerName, compEx.ID.ToString(), GetComputerState(compEx), qtip, new NodeState(isExpanded, isChecked, false),compEx.IPAddress,compEx.OSName, null);
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         Policy policy,
-                        Boolean? isChecked,
-                        Boolean isAllowDrag,
-                        Boolean isAllowDrop,
-                        Boolean isLeaf,
+                        Boolean? isChecked,                        
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
@@ -85,27 +71,23 @@ namespace VirusBlokAda.CC.JSON
             else
                 qtip = GenerateQTIP(policy);
 
-            return new TreeNodeJSONEntity(policy.Name, String.Format("Policy_{0}", policy.ID), "folder", qtip, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded);
+            return new TreeNodeJSONEntity(policy.Name, String.Format("Policy_{0}", policy.ID), "folder", qtip, new NodeState(isExpanded, isChecked, false));
         }
 
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         String Text,
                         Boolean? isChecked,
-                        Boolean isAllowDrag,
-                        Boolean isAllowDrop,
                         Boolean isLeaf,
                         Boolean isExpanded,
                         Boolean isShortQTip)
         {
-            String iconStyle;
+            String nodeType;
             if (isLeaf)
-                iconStyle = "computer";
+                nodeType = "computer";
             else
-                iconStyle = "folder";
-            
-            return new TreeNodeJSONEntity(Text, Text, iconStyle, Text, isChecked, isAllowDrag, isAllowDrop,
-                                          isLeaf, isExpanded);
+                nodeType = "folder";
+
+            return new TreeNodeJSONEntity(Text, Text, nodeType, Text, new NodeState(isExpanded, isChecked, false));
         }
 
         #region QTip

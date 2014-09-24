@@ -76,19 +76,27 @@
     }
 
     function lbtnDelete_OnClientClick() {
-        Ext.MessageBox.buttonText.yes = '<%= Resources.Resource.Yes %>';
-        Ext.MessageBox.buttonText.no = '<%= Resources.Resource.No %>';
-        Ext.MessageBox.confirm('<%= Resources.Resource.Delete %>', '<%= Resources.Resource.AreYouSureFilter %>',
-            function (btn) {
-                if (btn == "yes") {
+        $( "#dialog-message" ).dialog({
+            modal: true,
+            buttons: {
+                    '<%= Resources.Resource.Yes %>': function() {
                     document.getElementById('<%= lbtnDelete.ClientID %>').onclick = null;
                     window.location.href = document.getElementById('<%= lbtnDelete.ClientID %>').href;
+                    $( this ).dialog( "close" );
+                    },
+                    '<%= Resources.Resource.No %>': function() {
+                        $( this ).dialog( "close" );
+                    }
                 }
             });
-
-    }
+        }
 </script>
 <cc1:SaveAsDialog ID="saveAsDialogFilter" runat="server" NameEmptyErrorMessage="<%$ Resources:Resource, ErrorFilterNameEmpty %>"
     NameRestrictedErrorMessage="<%$ Resources:Resource, ErrorFilterNameRestricted %>" 
     NameExistsConfirmRewriteMessage="<%$ Resources:Resource, ConfirmRewriteFilter %>" 
     CallbackFunction="FilterSaveAsDialogCallback"/>
+<div id="dialog-message" title="<%= Resources.Resource.Delete %>" style="display:none">
+  <p>
+   <%= Resources.Resource.AreYouSureFilter %>
+  </p>
+</div>

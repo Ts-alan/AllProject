@@ -5,9 +5,9 @@ AS
 	DECLARE @Query nvarchar(4000)
 	SET @Query =  N'
 		SELECT	* FROM ComputersExtended
-		WHERE g.[GroupID] IS NULL'
+		WHERE [GroupID] IS NULL'
 	IF @Where IS NOT NULL
-		SET @Query = @Query + ' AND ' + @Where
+		SET @Query = @Query + ' AND (' + @Where +')'
 
 	SET @Query = @Query + N' ORDER BY [ComputerName] ASC'
 

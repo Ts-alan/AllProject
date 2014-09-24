@@ -30,7 +30,6 @@ public partial class Controls_PrimitiveFilterIpAddress : System.Web.UI.UserContr
 
     private void RegisterScripts()
     {
-        Page.ClientScript.RegisterClientScriptInclude("Ext-All", @"js/Groups/ext-4.1.1/ext-all.js");
         Page.ClientScript.RegisterClientScriptInclude("PageRequestManagerHelper", @"js/PageRequestManagerHelper.js"); 
     }
 

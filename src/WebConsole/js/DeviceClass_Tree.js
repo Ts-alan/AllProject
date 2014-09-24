@@ -1,112 +1,78 @@
-﻿var ComputersTreeDeviceClass = function () {
-    var root;
-    var treeStore;
-    var tree;
-    function onTreeLoad(This, node) {}
+﻿function ComputerTreeDeviceClassInit() {
+    $.jstree.defaults.checkbox.whole_node = false;
+    $.jstree.defaults.checkbox.tie_selection = false;
+    $('#dialog_div').jstree({
+        'core': {
+            'check_callback': true,
+            'multiple': false,
+            'data': function (node, cb) {
+                cb(loadTreeInfo());
+            }
+        },
+        'types': {
+            'group': {
+                'icon': "App_Themes/Main/groups/images/group.png"
+            },
+            'computer': {
+                'icon': "App_Themes/Main/groups/images/monitor.png"
+            },
+            'server': {
+                'icon': "App_Themes/Main/groups/images/server.png"
+            },
+            'default': {
+            }
+        },
+        'plugins': ["checkbox", "types"]
+    });
+};
 
-    //function to check/uncheck all  child nodes and parent path
-    function toggleCheck(node, isCheck) {
-        if (node) {
-            var args = [isCheck];
-            node.cascadeBy(function () {
-                c = args[0];
-                this.set('checked', c);
-            }, null, args);
-            toggleParentCheck(node, isCheck);
+function ComputerTreeDeviceClassReload() {
+    $('#dialog_div').jstree('refresh');
+};
+
+function ComputerTreeDeviceClassGenerateText() {
+    computers = new Array();
+    var node;
+    var checkedObj = $('#dialog_div').jstree('get_checked', true);
+
+    for (i = 0; i < checkedObj.length; i++) {
+        if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
+            node = checkedObj[i].original;
+            if (node != null && node.leaf) {
+                computers.push(node.id.toLowerCase());
+            }
         }
     }
+    return computers.join('&');
+};
 
-    function toggleParentCheck(node, isCheck) {
-        while (node.parentNode != root) {
-            parentChecked = false;
-            node.parentNode.eachChild(function (next) {
-                if (next.get('checked')) {
-                    parentChecked = true;
-                }
-            });
-            node.parentNode.set('checked', parentChecked);
-            node = node.parentNode;
-        }
-    }
-
-    return {
-        init: function (dialog) {
-            Ext.tip.QuickTipManager.init();
-            Ext.apply(Ext.tip.QuickTipManager.getQuickTip(), {
-                maxWidth: 200,
-                minWidth: 100,
-                showDelay: 500    // Show 500ms after entering target
-            });
-            treeStore = Ext.create('Ext.data.TreeStore', {
-                proxy: {
-                    type: 'ajax',
-                    url: 'Handlers/CheckedComputerTreeHandler.ashx'
-                },
-                root: {
-                    text: 'Root',
-                    draggable: false,
-                    id: 'TreeRoot',
-                    root: true,
-                    leaf: false,
-                    expanded: true
-                },
-                folderSort: true,
-                sorters: [{
-                    property: 'text',
-                    direction: 'ASC'
-                }],
-                listeners: {
-                    load: function (thisStore, records, successful, eOpts) {
-                        if (!successful) {
-                                dialog.dialog('close');
-                                Ext.Msg.alert(Resource.Error, Resource.ErrorRequestingDataFromServer);
-                        } 
-                    }
-                }
-            });
-                  
-            var tree = Ext.create('Ext.tree.Panel', {
-                id: "treeComputers",
-                animate: true,
-                store: treeStore,
-                autoScroll: true,
-                rootVisible: false,
-                renderTo: 'dialog_div'
-            });
-    
-            tree.on("checkchange", function (node, checked, eOpts) {
-                toggleCheck(node, checked);
-            });
-            root = tree.getRootNode();
-            root.expand(false);
+function loadTreeInfo() {
+    var d = "";
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "Handlers/CheckedComputerTreeHandler.ashx",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            d = data;
         },
-        reload: function () {
-            treeStore.reload();
-        },
-        generateText: function () {
-            computers = new Array();
-            root.eachChild(function (group) {
-                RecursiveAdd(group);
-
-                function RecursiveAdd(rootNode) {
-                    for (var i = 0; i < rootNode.childNodes.length; i++) {
-                        RecursiveAdd(rootNode.childNodes[i]);
-                    }
-                    if (rootNode.isLeaf() && rootNode.get('checked'))
-                        computers.push(rootNode.get("id").toLowerCase());
-                }
-            });
-            return computers.join('&');
+        error: function (e) {
+            dialog.dialog('close');
+            console.log(e);
+            alert(Resource.ErrorRequestingDataFromServer);
         }
-    };
-} ();
+    });
+    return d;
+}; 
+
 
 var ComputersDialogDeviceClass = function () {
     var dialog;
     var asyncPostBack = false;
 
     function onApply(classId) {
-        comps = ComputersTreeDeviceClass.generateText();
+        comps = ComputerTreeDeviceClassGenerateText();
         $.ajax({
             type: "POST",
             url: "DeviceClass.aspx/AddNewDeviceClassPolicyByComputerList",
@@ -117,7 +83,7 @@ var ComputersDialogDeviceClass = function () {
                 if (msg == true) {
                     $("a[deviceId=" + classId + "]").trigger("click");
                 }
-                else alert("Ничего не добавлено");
+                else alert(Resource.NothingIsAdded);
             },
             error: function (msg) { alert(msg.responseText) }
         });
@@ -159,11 +125,11 @@ var ComputersDialogDeviceClass = function () {
                     }
                     }
                 });
-                ComputersTreeDeviceClass.init(dialog);
+                ComputerTreeDeviceClassInit(dialog);
                 asyncPostBack = false;
             }
             else {
-                ComputersTreeDeviceClass.reload();
+                ComputerTreeDeviceClassReload();
             }
         }
     };

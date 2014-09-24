@@ -13,34 +13,18 @@ public partial class Controls_PrimitiveFilterComputers : System.Web.UI.UserContr
     #region LifeCycle
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterScripts();        
-        FixComputersDialogOnAsyncPostBack();              
+        RegisterScripts();            
     }
 
-
-
-    private void FixComputersDialogOnAsyncPostBack()
-    {
-        //asp.net ajax unregistered all events on async postback
-        //make sure that computers dialog\tree are recreated in this case
-        ScriptManager sm = ScriptManager.GetCurrent(Page);
-        if (sm == null) return;
-        if (sm.IsInAsyncPostBack)
-        {
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "PrimitiveFilterComputersFix",
-                "ComputersDialog.setAsyncPostBack()", true);
-        }            
-    }
 
     private void RegisterScripts()
     {
-        Page.ClientScript.RegisterClientScriptInclude("Ext-All", @"js/Groups/ext-4.1.1/ext-all.js");
+        Page.ClientScript.RegisterClientScriptInclude("jsTree", "js/jstree.js");
         Page.ClientScript.RegisterClientScriptInclude("PageRequestManagerHelper", @"js/PageRequestManagerHelper.js"); 
     }
 
     #endregion
     #region IPrimitiveFilter Members
-
 
     public string GenerateSQL()
     {

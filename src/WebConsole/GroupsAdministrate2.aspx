@@ -1,5 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/mstrPageMain.master" AutoEventWireup="true"
-    CodeFile="GroupsAdministrate.aspx.cs" Inherits="GroupsAdministrate" Title="Untitled Page" %>
+    CodeFile="GroupsAdministrate2.aspx.cs" Inherits="GroupsAdministrate" Title="Untitled Page" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" runat="Server">
     <script type="text/javascript" src="js/jstree.js"></script>
@@ -16,7 +16,7 @@
 
             $("div[forbutton]").hover(
                 function () {
-                    if ($(this).attr('forbutton') == 'true')
+                    if($(this).attr('forbutton')=='true')
                         $(this).addClass('button-hover');
 
                 },
@@ -34,8 +34,8 @@
                 'core': {
                     'check_callback': function (operation, node, node_parent, node_position, more) {
                         if (operation == 'move_node') {
-                            if (node.type == 'group' || node.type == '#' || node.type == 'root') return false;
-                            if (node_parent.type != 'group' && node_parent.type != 'root') return false;
+                            if (node.type == 'group' || node.type == '#') return false;
+                            if (node_parent.type != 'group' && node_parent.type != '#') return false;
                         }
                         return true;
                     },
@@ -48,8 +48,6 @@
                     },
                     'computer': {
                         'icon': "App_Themes/Main/groups/images/monitor.png"
-                    },
-                    'root': {
                     },
                     'default': {
                     }
@@ -71,8 +69,8 @@
                 'core': {
                     'check_callback': function (operation, node, node_parent, node_position, more) {
                         if (operation == 'move_node') {
-                            if (node.type == 'root') return false;
-                            if (node_parent.type != 'group' ) return false;
+
+                            if (node_parent.type != 'group' && node_parent.type != '#') return false;
                             var level = getLevel(node_parent);
 
                             var innerLevel = getInnerLevel(node);
@@ -114,8 +112,6 @@
                     'computer': {
                         'icon': "App_Themes/Main/groups/images/monitor.png"
                     },
-                    'root': {
-                    },
                     'default': {
                     }
                 },
@@ -128,7 +124,7 @@
                         return {
                             addGroup: {
                                 "label": "<%=Resources.Resource.Add %>",
-                                "icon": "add-opt",
+                                "icon":"add-opt",
                                 "action": function (obj) { return addNewGroup(); }
                             },
                             renameGroup: {
@@ -138,12 +134,12 @@
                             },
                             deleteGroup: {
                                 "label": "<%=Resources.Resource.Delete %>",
-                                "icon": "remove",
+                                "icon":"remove",
                                 "action": function (obj) { return deleteGroup(); }
                             },
                             commentGroup: {
                                 "label": "<%=Resources.Resource.Comment %>",
-                                "icon": "comment",
+                                "icon":"comment",
                                 "action": function (obj) { return commentGroup(); }
                             }
                         };

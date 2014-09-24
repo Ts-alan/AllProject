@@ -49,7 +49,8 @@ public class GetTreeDataHandler : IHttpHandler
         for (Int32 i = groupList.Count - 1; i >= 0; i--)
         {
             Int32 parentID = 0;
-            Int32.TryParse(groupList[i].ParentID.Substring(6), out parentID);
+            if(groupList[i].ParentID.Length>6)
+                Int32.TryParse(groupList[i].ParentID.Substring(6), out parentID);
             if (!groupList[i].IsLeaf)
             {
 

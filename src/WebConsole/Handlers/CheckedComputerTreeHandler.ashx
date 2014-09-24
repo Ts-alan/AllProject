@@ -20,16 +20,16 @@ public class CheckedComputerTreeHandler : IHttpHandler {
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
         {
-            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, false, false, true, true));
+            tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], false, false, true));
             RecursiveAddChildren(tree[tree.Count - 1], list, index, provider);
             index++;
         }
 
         //without group
-        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups"), "", null), false, false, false, false, true, true));
+        tree.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(new Group(0, ResourceControl.GetStringForCurrentCulture("ComputersWithoutGroups"), "", null), false, true, true));
         foreach (ComputersEntity comp in provider.GetComputersWithoutGroup())
         {
-            tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, false, true, false, true));
+            tree[tree.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, true));
         }
 
         //Deleting empty nodes
@@ -50,7 +50,7 @@ public class CheckedComputerTreeHandler : IHttpHandler {
 
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode)
     {
-        if (node.IsLeaf) return false;
+        if (node.Children==null) return false;
 
         for (Int32 index = node.Children.Count - 1; index >= 0; index--)
         {
@@ -77,14 +77,14 @@ public class CheckedComputerTreeHandler : IHttpHandler {
         Int32 i = 0;
         while (NextGroup(list, list[indexList].ID, ref i))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], false, false, false, false, true, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[i], false, true, true));
             RecursiveAddChildren(node.Children[node.Children.Count - 1], list, i, provider);
             i++;
         }
         //Comps
         foreach (ComputersEntity comp in provider.GetComputersByGroup(list[indexList].ID))
         {
-            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, false, true, false, true));
+            node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, true));
         }
     }
 

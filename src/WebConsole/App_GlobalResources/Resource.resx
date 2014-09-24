@@ -3720,6 +3720,9 @@ system administrator.</value>
   <data name="FullAccess" xml:space="preserve">
     <value>Full access</value>
   </data>
+  <data name="NothingIsAdded" xml:space="preserve">
+    <value>Nothing is added</value>
+  </data>
   <data name="SystemIdleProcess" xml:space="preserve">
     <value>% system idle process</value>
   </data>

@@ -20,6 +20,7 @@ public partial class DevicesPolicy : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        RegisterScript(@"js/jstree.js");
         RegisterScript(@"js/jQuery/jquery.cookie.js");
         RegisterScript(@"js/DevicesPolicy.js");
         RegisterScript(@"js/json2.js");
@@ -27,7 +28,6 @@ public partial class DevicesPolicy : PageBase
 
         RegisterScript(@"js/DevicesPolicy_tree.js");
         RegisterScript(@"js/PageRequestManagerHelper.js");
-        RegisterScript(@"js/Groups/ext-4.1.1/ext-all-debug.js");
 
         if (!IsPostBack)
         {
@@ -63,6 +63,7 @@ public partial class DevicesPolicy : PageBase
         resource += "Enabled:'" + ResourceControl.GetStringForCurrentCulture("Enabled") + "',";
         resource += "Disabled:'" + ResourceControl.GetStringForCurrentCulture("Disabled") + "',";
         resource += "BlockWrite:'" + ResourceControl.GetStringForCurrentCulture("BlockWrite") + "',";
+        resource += "NothingIsAdded:'" + ResourceControl.GetStringForCurrentCulture("NothingIsAdded") + "',";
         resource += "Apply:'" + ResourceControl.GetStringForCurrentCulture("Apply") + "'";
         resource += "}";
         return resource;

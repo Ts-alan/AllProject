@@ -9,7 +9,7 @@ AS
 		WHERE [GroupID] = ' + CAST(@GroupID AS nvarchar(32));
 	
 	IF @Where IS NOT NULL
-		SET @Query = @Query + ' AND ' + @Where
+		SET @Query = @Query + ' AND (' + @Where + ')'
 	
 	SET @Query = @Query + N' ORDER BY [ComputerName] ASC'
 
