@@ -429,7 +429,8 @@
                     for (var i = 0; i < length; i++) {
                         RecursiveSaving($('#groupTree').jstree('get_node', root.children[i]));
                     }
-                    if (getLevel(root) == 0) return;
+                    console.log(getLevel(root));
+                    if (getLevel(root) == 1) return;
                     var comment = '';
                     if (root.type=='group') comment = root.original.qtip;
                     if (comment == 'No comment') {

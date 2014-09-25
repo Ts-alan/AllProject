@@ -51,6 +51,7 @@ public class GetTreeDataHandler : IHttpHandler
             Int32 parentID = 0;
             if(groupList[i].ParentID.Length>6)
                 Int32.TryParse(groupList[i].ParentID.Substring(6), out parentID);
+            if (parentID <= 0) parentID = 0;
             if (!groupList[i].IsLeaf)
             {
 
@@ -58,7 +59,7 @@ public class GetTreeDataHandler : IHttpHandler
                 if (groupList[i].NodeID.Contains("GroupNew_"))
                 {
                     // Add new group                    
-                    id = provider.Add(new Group(groupList[i].NodeName, groupList[i].Comment, parentID == 0 ? (Int32?)null : parentID));
+                    id = provider.Add(new Group(groupList[i].NodeName, groupList[i].Comment, parentID ==0 ? (Int32?)null : parentID));
                     ChangeParentID(ref groupList, groupList[i].NodeID, String.Format("Group_{0}", id));
                     groupList[i] = new TreeNodeEntity(String.Format("Group_{0}", id), groupList[i].NodeName, groupList[i].ParentID, groupList[i].Comment, groupList[i].IsLeaf);
                 }
