@@ -71,16 +71,25 @@
                 'core': {
                     'check_callback': function (operation, node, node_parent, node_position, more) {
                         if (operation == 'move_node') {
-                            if (node.type == 'root') return false;
-                            if (node_parent.type != 'group' ) return false;
-                            var level = getLevel(node_parent);
 
+                            if (node.type == 'root') return false;
+                            if (node.type == 'group') {
+                                if (node_parent.type != 'root') return false;
+                            }
+                            else {
+                                if (node_parent.type != 'group') return false;
+                            }
+
+                            var level = getLevel(node_parent);
                             var innerLevel = getInnerLevel(node);
+
                             if (level + innerLevel > MAX_DEPTH) {
                                 messageBox('<%=Resources.Resource.AddNewGroup %>', '<%=Resources.Resource.ErrorOfNestingLavel %>' + ' (max:' + MAX_DEPTH + ')');
 
                                 return false;
                             }
+
+                            return true;
                         }
                         if (operation == 'rename_node') {
                             if (node.type != 'group') return false;
@@ -149,7 +158,7 @@
                         };
                     }
                 },
-                'plugins': ["state", "types", "dnd", "sort", "contextmenu"]
+                'plugins': ["types", "dnd", "sort", "contextmenu"]
 
             });
 
@@ -164,6 +173,7 @@
                     title = ref.get_node(treeRoot.children_d[i]).original.qtip;
                     $("#" + treeRoot.children_d[i]).prop('title', title);
                 }
+                ref.select_node('Group_-1');
             });
             $('#noGroupTree').on('loaded.jstree', function (e, data) {
                 var ref = $('#noGroupTree').jstree(true);
@@ -188,6 +198,12 @@
 
             });
             $('#groupTree').on('select_node.jstree', function (e, data) {
+                if (data.node.type == 'root') {
+                    setButtonsEnabled(false);
+                    $('#groupTreeToolbarAddButton').removeClass('x-btn-disabled');
+                    $('#groupTreeToolbarAddButton').attr('forbutton', true);
+                    return;
+                }
                 if (data.node.type != 'group' && data.node.type != '#') setButtonsEnabled(false);
                 else setButtonsEnabled(true);
             });
@@ -225,7 +241,7 @@
         };
 
         var newGroupID = 0;
-        var MAX_DEPTH = 5;
+        var MAX_DEPTH = 6;
         var MAX_NAME_LENGTH = 64;
         function getLevel(node) {
             var ref = $('#groupTree').jstree(true);
@@ -241,7 +257,7 @@
             var ref = $('#groupTree').jstree(true);
             if (node.type == null)
                 node = ref.get_node(node);
-            if (node.type != 'group' && node.type != '#') return 0;
+            if (node.type != 'group' && node.type != '#' && node.type != 'root' ) return 0;
             else {
                 return 1 + Math.max(getInnerLevel(node.children));
             }
@@ -251,13 +267,13 @@
         function addNewGroup() {
             var ref = $('#groupTree').jstree(true),
 			sel = ref.get_selected(true);
-            var treeRoot = ref.get_node('#');
+            var treeRoot = ref.get_node('Group_-1');
             if (!sel.length) {
                 sel = treeRoot;
             }
             else {
                 sel = sel[0];
-                if (sel.type != 'group') return false;
+                if (sel.type != 'group'&&sel.type!='root') return false;
             }
             var level = getLevel(sel);
             if (level == MAX_DEPTH) {
@@ -321,24 +337,26 @@
         
         function deleteGroup() {
             var ref = $('#groupTree').jstree(true);
-            var groupRoot=$('#groupTree').jstree('get_node', '#');
-            var noGroupRoot=$('#noGroupTree').jstree('get_node', '#');
+            var groupRoot = $('#groupTree').jstree('get_node', 'Group_-1');
+            var noGroupRoot = $('#noGroupTree').jstree('get_node', 'Group_-1');
 			sel = ref.get_selected(true);
             if (!sel.length) { return false; }
             sel = sel[0];
-            if (sel.id == '#') return false;
+            if (sel.id == '#'||sel.type=='root') return false;
             if (sel.type != 'group') return false;
             var childNode;
             while (sel.children.length > 0) {
                 childNode = $('#groupTree').jstree('get_node', sel.children[0]);
                 if (childNode.type == 'group') {
                     $('#groupTree').jstree('move_node', childNode, groupRoot);
+
                 }
 
                 else {
+                    
                     $('#noGroupTree').jstree('move_node', childNode, noGroupRoot);
                 }
-
+                
             }
             ref.delete_node(sel.id);
         };
@@ -398,10 +416,10 @@
                 //generate arrays containing nodes info
             var groupTreeArray = new Array();
             var ref = $('#groupTree').jstree(true);
-            var groupTreeRoot=$('#groupTree').jstree('get_node', '#');
+            var groupTreeRoot = $('#groupTree').jstree('get_node', 'Group_-1');
             RecursiveSaving(groupTreeRoot);
             var noGroupTreeArray = new Array();
-            var noGroupRoot=$('#noGroupTree').jstree('get_node', '#');
+            var noGroupRoot = $('#noGroupTree').jstree('get_node', 'Group_-1');
             for(var i=0;i<noGroupRoot.children.length;i++) {
                 comp=$('#noGroupTree').jstree('get_node',noGroupRoot.children[i]);
                 noGroupTreeArray[noGroupTreeArray.length++] = new myNode(comp.text, comp.id, '0', '');
