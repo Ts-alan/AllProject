@@ -63,7 +63,7 @@ public partial class DeviceClassPage : PageBase
             "DeviceClass", "Error", "ErrorRequestingDataFromServer",
             "Computers", "Computers", "Apply", "ErrorFieldIsEmpty",
             "ClassName", "GuidRegexErrorMessage", "AddNewDeviceClass",
-            "Enabled", "Disabled", "BlockWrite", "ErrorExistPolicy"
+            "Enabled", "Disabled", "BlockWrite", "ErrorExistPolicy","NothingIsAdded"
         };
     }
 

@@ -38,7 +38,7 @@ function ComputerTreeDeviceClassGenerateText() {
     for (i = 0; i < checkedObj.length; i++) {
         if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
             node = checkedObj[i].original;
-            if (node != null && node.leaf) {
+            if (node != null && node.type=="computer") {
                 computers.push(node.id.toLowerCase());
             }
         }
