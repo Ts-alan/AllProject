@@ -1,5 +1,15 @@
 ﻿
 $(document).ready(function () {
+
+
+    $(document).tooltip({
+        content: function () {
+            if ($(this).prop('tagName') == 'LI')
+                return $(this).attr('title');
+        }
+    });
+
+
     function acc_activate(event, ui) {
 
         var acc = $(ui.newHeader).attr('acc');
@@ -27,7 +37,7 @@ $(document).ready(function () {
                     $("#divModalDialog").html('');
                     $("#divModalDialog").dialog('destroy');
                     var d = $("#divModalDialog");
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: name,
                         width: 1000,
@@ -74,7 +84,7 @@ $(document).ready(function () {
                 data: "{id:" + id + "}",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var jsonmsg = JSON.parse(msg);
+                    var jsonmsg = JSON.parse(msg.d);
                     $(ui.newPanel).html('<table class="ListContrastTable"><tbody>' + jsonmsg.text + '</tbody></table>');
                     var acc = jsonmsg.acc;
                     /**/
@@ -113,7 +123,7 @@ $(document).ready(function () {
                 success: function (msg) {
                     $("#commentDialog").html('');
                     var d = $('#commentDialog');
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: serial,
                         width: '700px',
@@ -232,7 +242,7 @@ $(document).ready(function () {
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var deviceMsg = JSON.parse(msg);
+                    var deviceMsg = JSON.parse(msg.d);
                     var success = deviceMsg.success;
                     if (success == "true") {
                         var row = "<td>" + serial.toString() + "</td>";
@@ -281,7 +291,7 @@ $(document).ready(function () {
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var deviceMsg = JSON.parse(msg);
+                    var deviceMsg = JSON.parse(msg.d);
                     var success = deviceMsg.success;
                     if (success == "true") {
 
@@ -446,7 +456,7 @@ $(document).ready(function () {
                     $("#divModalDialog").html('');
                     $("#divModalDialog").dialog("destroy");
                     var d = $("#divModalDialog");
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: name,
                         width: 1000,
@@ -475,7 +485,7 @@ $(document).ready(function () {
             data: "{}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                $("#accordion").append(msg).accordion({ beforeActivate: function (event, ui) { acc_before_activate(event, ui); }, activate: function (event, ui) { acc_activate(event, ui); }, collapsible: true, heightStyle: "content", autoHeight: false, active: false });
+                $("#accordion").append(msg.d).accordion({ beforeActivate: function (event, ui) { acc_before_activate(event, ui); }, activate: function (event, ui) { acc_activate(event, ui); }, collapsible: true, heightStyle: "content", autoHeight: false, active: false });
 
                 HeaderFunction("#accordion");
             },
@@ -493,7 +503,7 @@ $(document).ready(function () {
             data: "{}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                $("#tab2").html(msg);
+                $("#tab2").html(msg.d);
             },
             error: function (msg) { ShowJSONMessage(msg); }
         });
@@ -563,7 +573,7 @@ $(document).ready(function () {
             success: function (msg) {
                 $("#commentDialog").html('');
                 var d = $('#commentDialog');
-                d.html(msg);
+                d.html(msg.d);
                 var dOpt = {
                     title: serial,
                     width: '700px',
@@ -591,7 +601,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (msg) {
                 var d = $('#deviceTreeDialog');
-                d.html(msg);
+                d.html(msg.d);
                 var dOpt = {
                     title: serial,
                     width: '700px',

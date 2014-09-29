@@ -24,6 +24,11 @@
         },
         'plugins': ["checkbox", "types"]
     });
+    $('#dialog_div').on('hover_node.jstree', function (e, data) {
+
+        $("#" + data.node.id).prop('title', data.node.original.qtip);
+        $("li[id='" + data.node.id + "']").attr('title', data.node.original.qtip);
+    });
 };
 
 function ComputerTreeDeviceReload() {
@@ -82,7 +87,7 @@ var ComputersDialogDevice = function () {
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
 
-                if (msg == true) {
+                if (msg.d == true) {
                     $("a:contains('" + serial + "')").trigger("click");
                 }
                 else alert(Resource.NothingIsAdded);
