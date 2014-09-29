@@ -25,9 +25,6 @@
                 }
             );
 
-
-
-
             $.jstree.defaults.checkbox.whole_node = false;
             $.jstree.defaults.checkbox.tie_selection = false;
             $('#noGroupTree').jstree({
@@ -74,7 +71,7 @@
 
                             if (node.type == 'root') return false;
                             if (node.type == 'group') {
-                                if (node_parent.type != 'root') return false;
+                                if (node_parent.type != 'root'&& node_parent.type != 'group') return false;
                             }
                             else {
                                 if (node_parent.type != 'group') return false;
@@ -333,34 +330,37 @@
             sel = sel[0];
             if (sel.type != 'group') return false;
             ref.edit(sel);
-        };
-        
+        };       
+
         function deleteGroup() {
             var ref = $('#groupTree').jstree(true);
             var groupRoot = $('#groupTree').jstree('get_node', 'Group_-1');
-            var noGroupRoot = $('#noGroupTree').jstree('get_node', 'Group_-1');
-			sel = ref.get_selected(true);
+
+            sel = ref.get_selected(true);
             if (!sel.length) { return false; }
             sel = sel[0];
-            if (sel.id == '#'||sel.type=='root') return false;
+            if (sel.id == '#' || sel.type == 'root') return false;
             if (sel.type != 'group') return false;
+            recursiveDeleteGroups(sel);
+           
+        };
+        function recursiveDeleteGroups(group) {
+            
+            var ref = $('#groupTree').jstree(true);
+            var noGroupRoot = $('#noGroupTree').jstree('get_node', 'Group_-1');
             var childNode;
-            while (sel.children.length > 0) {
-                childNode = $('#groupTree').jstree('get_node', sel.children[0]);
-                if (childNode.type == 'group') {
-                    $('#groupTree').jstree('move_node', childNode, groupRoot);
+            while ( group.children.length>0) {
+                childNode = $('#groupTree').jstree('get_node', group.children[0]);
+                if (childNode.type != 'group') {
 
-                }
-
-                else {
-                    
                     $('#noGroupTree').jstree('move_node', childNode, noGroupRoot);
                 }
-                
+                else {
+                    recursiveDeleteGroups(childNode);
+                }
             }
-            ref.delete_node(sel.id);
-        };
-
+            ref.delete_node(group.id);
+        }
         function commentGroup() {
             var ref = $('#groupTree').jstree(true);
             sel = ref.get_selected(true);
