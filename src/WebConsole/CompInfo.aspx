@@ -41,7 +41,7 @@
                  contentType: "application/json; charset=utf-8",
                  dataType: "json",
                  success: function (msg) {
-                     $('div[dpc]').html(msg);
+                     $('div[dpc]').html(msg.d);
                      $('button[dpc]').css('display', 'none');
                      $('input[dpc]').css('display', 'none');
                  }

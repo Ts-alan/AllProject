@@ -8,7 +8,7 @@
             data: "{}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                $("#accordion").append(msg).accordion({
+                $("#accordion").append(msg.d).accordion({
                     beforeActivate: function (event, ui) { acc_before_activate(event, ui); },
                     activate: function (event, ui) { acc_activate(event, ui); },
                     collapsible: true,
@@ -18,7 +18,7 @@
                 });
                 HeaderFunction("#accordion");
             },
-            error: function (msg) { alert("Error"); ShowJSONMessage(msg); }
+            error: function (msg) { alert("Error"); ShowJSONMessage(msg.d); }
         });
     };
 
@@ -55,7 +55,7 @@
                     $("#divModalDialog").html('');
                     $("#divModalDialog").dialog('destroy');
                     var d = $("#divModalDialog");
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: name,
                         width: 700,
@@ -70,7 +70,7 @@
                     d.dialog(dOpt);
                     d.find("button").button();
                 },
-                error: function (msg) { ShowJSONMessage(msg); }
+                error: function (msg) { ShowJSONMessage(msg.d); }
             });
             $("#accordion").unmask();
         });
@@ -102,7 +102,7 @@
                 data: "{id:" + id + "}",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var jsonmsg = JSON.parse(msg);
+                    var jsonmsg = JSON.parse(msg.d);
                     $(ui.newPanel).html('<table class="ListContrastTable"><tbody>' + jsonmsg.text + '</tbody></table>');
                     var acc = jsonmsg.acc;
                     /**/
@@ -142,7 +142,7 @@
                     $("#divModalDialog").html('');
                     $("#divModalDialog").dialog("destroy");
                     var d = $("#divModalDialog");
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: name,
                         width: 650,
@@ -157,7 +157,7 @@
                     d.dialog(dOpt);
                     d.find("button").button();
                 },
-                error: function (msg) { ShowJSONMessage(msg); }
+                error: function (msg) { ShowJSONMessage(msg.d); }
             });
         }
         );
@@ -183,7 +183,7 @@
                 success: function (msg) {
                     $("#commentDialog").html('');
                     var d = $('#commentDialog');
-                    d.html(msg);
+                    d.html(msg.d);
                     var dOpt = {
                         title: uid,
                         width: '700px',
@@ -194,7 +194,7 @@
                     d.find("button").button();
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             })
         });
@@ -215,7 +215,7 @@
                     $("#commentDialog").dialog('close');
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
             return false;
@@ -235,7 +235,7 @@
                     $("img[deldp=" + devId + "]").parent().parent().remove();
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
             return false;
@@ -329,7 +329,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var deviceMsg = JSON.parse(msg);
+                    var deviceMsg = JSON.parse(msg.d);
                     var success = deviceMsg.success;
                     if (success == "true") {
                         var row = "<td>" + deviceMsg.className + "</td>";
@@ -356,7 +356,7 @@
                     }
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
             return false;
@@ -379,7 +379,7 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
-                    var deviceMsg = JSON.parse(msg);
+                    var deviceMsg = JSON.parse(msg.d);
                     var success = deviceMsg.success;
                     if (success == "true") {
                         if (deviceMsg.count == "0") {
@@ -421,7 +421,7 @@
                     }
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
 
@@ -486,7 +486,7 @@
                     $("img[delgroupdevid=" + devId + "]").parent().parent().remove();
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
             return false;
@@ -504,7 +504,7 @@
                     $("img[delwithoutgroupdevid=" + id + "]").parent().parent().remove();
                 },
                 error: function (msg) {
-                    ShowJSONMessage(msg);
+                    ShowJSONMessage(msg.d);
                 }
             });
             return false;
@@ -541,7 +541,7 @@
                 }
             },
             error: function (msg) {
-                ShowJSONMessage(msg);
+                ShowJSONMessage(msg.d);
             }
         });
         return false;
@@ -559,7 +559,7 @@
             dataType: "json",
             success: function (msg) {
                 var d = $('#deviceTreeDialog');
-                d.html(msg);
+                d.html(msg.d);
                 var dOpt = {
                     title: text,
                     width: '700px',
@@ -621,7 +621,7 @@
                             }
                         },
                         error: function (msg) {
-                            ShowJSONMessage(msg);
+                            ShowJSONMessage(msg.d);
                         }
                     });
                     return false;
@@ -672,7 +672,7 @@
                             }
                         },
                         error: function (msg) {
-                            ShowJSONMessage(msg);
+                            ShowJSONMessage(msg.d);
                         }
                     });
 

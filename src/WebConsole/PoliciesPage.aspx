@@ -112,9 +112,8 @@
                             var root = this.get_node('#');
                             /* move to own parent*/
                             if (nodeParents.indexOf(node_parent.id) >= 0) return false;
-                            console.log(more);
                             /* node and parent from one tree*/
-                            if (more.is_multi ==false) {
+                            if (more.is_multi == false) {
                                 if (more.core == true) {
                                     nodeMoving(node, node_parent, true, true);
                                     return false;
@@ -182,10 +181,11 @@
             $('#policyTree').on('hover_node.jstree', function (e, data) {
 
                 $("#" + data.node.id).prop('title', data.node.original.qtip);
+                $("li[id='" + data.node.id + "']").attr('title', data.node.original.qtip);
             });
             $('#noPolicyTree').on('hover_node.jstree', function (e, data) {
-
                 $("#" + data.node.id).prop('title', data.node.original.qtip);
+                $("li[id='" + data.node.id + "']").attr('title', data.node.original.qtip);
             });
         });
 
@@ -276,6 +276,7 @@
             var oldId, oldOriginal;
             for (var i = arrayNodes.length - 1; i > -1; i--) {
                 tmp = new Object();
+                console.log(arrayNodes[i]);
                 tmp = copyNodeInfo(arrayNodes[i], parent.id);
                 oldId = tmp.id;
 

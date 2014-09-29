@@ -80,7 +80,7 @@ var ComputersDialogDeviceClass = function () {
             data: "{id:" + classId + ",comps:'" + comps + "'}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                if (msg == true) {
+                if (msg.d == true) {
                     $("a[deviceId=" + classId + "]").trigger("click");
                 }
                 else alert(Resource.NothingIsAdded);
