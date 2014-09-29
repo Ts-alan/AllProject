@@ -50,7 +50,7 @@
         var MachineName = "<%=Environment.MachineName%>";
         var ShortMinValue = "<%=Int16.MinValue%>";
         var DateTimeMinValue = "<%=DateTime.MinValue%>";
-        var Components = "<%=Resources.Resource.Components%>";
+        var Componentss = "<%=Resources.Resource.Components%>";
         var ComponentName = "<%=Resources.Resource.ComponentName%>";
         var ComponentState = "<%=Resources.Resource.State%>";
         var MoreInfo = "<%=Resources.Resource.MoreInfo%>";
@@ -132,6 +132,12 @@
             $('#divTree').on('uncheck_node.jstree', function (e, data) {
                 getCheckedCompsInfo();
             });
+            $('#divTree').on('check_all.jstree', function (e, data) {
+                getCheckedCompsInfo();
+            });
+            $('#divTree').on('uncheck_all.jstree', function (e, data) {
+                getCheckedCompsInfo();
+            });
             $('#divTree').on('loaded.jstree', function (e, data) {
                 getCheckedCompsInfo();
             });
@@ -152,12 +158,12 @@
             computers = new Array();
             compIP = new Array();
             var node;
-            var checkedObj = $('#divTree').jstree('get_checked', true);
-        
+            var checkedObj = $('#divTree').jstree('get_checked', true);            
             for (i = 0; i < checkedObj.length; i++) {
                 if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
                     node = checkedObj[i].original;
-                    if (node != null && node.leaf) {
+                    
+                    if (node != null && node.type!='group') {
                         computers.push(node.text.toLowerCase());
                         compIP.push(node.ip);
                     }
@@ -172,8 +178,9 @@
             if (node == null) return;
             var node = node.original;
             if (node) {
-                showInfoEnable(node.leaf);
-                if (node.leaf) $("#groupTreeToolbarMoreInfoButton").attr("nodeId", node.id);
+                var show=(node.type!='group');
+                showInfoEnable(show);
+                if (show) $("#groupTreeToolbarMoreInfoButton").attr("nodeId", node.id);
                 else $("#groupTreeToolbarMoreInfoButton").attr("nodeId", -1);
                 
             }
@@ -194,7 +201,7 @@
         };
 
         function loadTreeInfo() {
-            var d = "";
+            var dd = "";
             var hdnSelected = $get('<%=hdnSelectedCompsNames.ClientID %>').value;
             $.ajax({
                 type: "GET",
@@ -203,14 +210,14 @@
                 dataType: "json",
                 data: { where: hdnWhere, selected: hdnSelected },
                 success: function (data) {
-                    d = data;
+                    dd = data;
                 },
                 error: function (e) {
                     console.log(e);
                     alert(e.responseText);
                 }
             });
-            return d;
+            return dd;
         };
 
         function getInfo() {
@@ -222,8 +229,9 @@
                 dataType: "json",
                 data: "{id:'" + nodeId + "'}",
                 contentType: "application/json; charset=utf-8",
-                success: function (msg) {            
-                    showInfo(JSON.parse(msg));
+                success: function (msg) {
+
+                    showInfo(JSON.parse(msg.d));
                 },
                 error: function (msg) { alert(msg.responseText) }
             });
@@ -256,7 +264,7 @@
             var policyValue = !compInfo.policyName ? "-" : compInfo.policyName;
             if (policyValue == "-" && defaultPolicyName != "") policyValue = defaultPolicyName + " (" + DefaultPolicy + ")";
             result += "<tr><td class='r0'>" + Policy + "</td><td class='r0'>" + policyValue + "</td></tr>";
-            result += "</table><div style='padding: 10px 0px 5px 0px;'><b>" + Components + "</b></div><table class='tableInfo'><tr><td>" + ComponentName + "</td><td>" + ComponentState + "</td></tr>";
+            result += "</table><div style='padding: 10px 0px 5px 0px;'><b>" + Componentss + "</b></div><table class='tableInfo'><tr><td>" + ComponentName + "</td><td>" + ComponentState + "</td></tr>";
             for (var i = 0; i < compInfo.components.length; i++) {
                 result += "<tr><td class='r" + i % 2 + "'>" + compInfo.components[i].name + "</td><td class='r" + i % 2 + "'>" + compInfo.components[i].state + "</td></tr>";
             }
@@ -360,8 +368,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 400px; height: 452px; left: 0px; top: 0px;float:left">
-        <div id="divTreePanel" class="x-panel x-box-item " style="width: 400px; height: 450px; margin: 0px; top: 0px;">
+    <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 400px; height: 432px; left: 0px; top: 0px;float:left">
+        <div id="divTreePanel" class="x-panel x-box-item " style="width: 400px; height: 430px; margin: 0px; top: 0px;">
             <div id="divTreePanelHeader" class="x-docked x-panel-header-default" style="width: 400px; left: 0px; top: 0px;">
                 <span class="x-panel-header-text-default" ><%=Resources.Resource.Computers %></span>
             </div>

@@ -115,11 +115,12 @@
             for (i = 0; i < checkedObj.length; i++) {
                 if (checkedObj[i].state != null && checkedObj[i].state.checked == true) {
                     node = checkedObj[i].original;
-                    if (node != null && node.leaf) {
+                    if (node != null && node.type=="computer") {
                         computers.push(node.text.toLowerCase());
                     }
                 }
             }
+            
             return computers.join('&');
         };
         function SetCheckedAccordingToText() {
@@ -130,7 +131,7 @@
             $.each(root.children_d, function (nodeId) {
                 var node = $('#compFilterTree').jstree('get_node', nodeId);
                 node = node.original;
-                if (node != null && node.leaf != null && node.leaf == true) {
+                if (node != null && node.type == "computer") {
                     if (regex.test(node.text)) {
                         $('#compFilterTree').jstree('check_node', nodeId);
                     }
