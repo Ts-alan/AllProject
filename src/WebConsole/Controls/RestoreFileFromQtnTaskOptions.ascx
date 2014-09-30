@@ -10,7 +10,7 @@
                 <asp:TextBox ID="tboxRestoreFileFromQtn" runat="server" Style="width: 300px"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="tboxRestoreFileFromQtn"
                     runat="server" ErrorMessage="RequiredFieldValidator" ValidationGroup="TaskValidation" Display="None"></asp:RequiredFieldValidator>
-                <ajaxToolkit:ValidatorCalloutExtender2 PopupPosition="BottomLeft" ID="ValidatorCalloutExtender21"
+                <ajaxToolkit:ValidatorCalloutExtender PopupPosition="BottomLeft" ID="ValidatorCalloutExtender21"
                     runat="server" TargetControlID="RequiredFieldValidator1" HighlightCssClass="highlight" Width="300"/>
             </td>
         </tr>

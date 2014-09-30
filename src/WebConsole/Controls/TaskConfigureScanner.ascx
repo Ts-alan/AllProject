@@ -69,10 +69,10 @@
                     <asp:RegularExpressionValidator ID="ScannerFileExtensionsRegularExpressionValidator"
                         ControlToValidate="tboxScannerFileExtensions" ValidationExpression="^(\.[\w|\?|\*]+)*$"
                         ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>" runat="server" />
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCallouttboxScannerFileExtensions"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCallouttboxScannerFileExtensions"
                         runat="server" TargetControlID="tboxScannerFileExtensionsValidator" HighlightCssClass="highlight"
                         PopupPosition="BottomRight" />
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="RegularValidatorCallouttboxScannerFileExtensions"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="RegularValidatorCallouttboxScannerFileExtensions"
                         runat="server" TargetControlID="ScannerFileExtensionsRegularExpressionValidator"
                         HighlightCssClass="highlight" PopupPosition="BottomRight" />
                 </p>
@@ -83,7 +83,7 @@
                     <asp:RegularExpressionValidator ID="ScannerFilesExcludedRegularExpressionValidator"
                         ControlToValidate="tboxScannerFilesExcluded" ValidationExpression="^(\.[\w|\?|\*]+)*$"
                         ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>" runat="server" />
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerFilesExcludedRegularExpressionValidatorCalloutExtender"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="ScannerFilesExcludedRegularExpressionValidatorCalloutExtender"
                         runat="server" TargetControlID="ScannerFilesExcludedRegularExpressionValidator"
                         HighlightCssClass="highlight" PopupPosition="BottomRight" />
                 </p>
@@ -119,7 +119,7 @@
                         <td style="padding-left:30px"> 
                             <asp:TextBox ID="tboxScannerMaxSize" runat="server"  Enabled="false"/>
                             <asp:RegularExpressionValidator id="ScannerMaxSizeRegularExpressionValidator" ControlToValidate="tboxScannerMaxSize" ValidationExpression="^([\d])*$" ErrorMessage="<%$Resources:Resource, WrongArchivesSize %>"  runat="server"/>
-                            <ajaxToolkit:ValidatorCalloutExtender2 ID="ScannerMaxSizeRegularExpressionValidatorCalloutExtender" runat="server"
+                            <ajaxToolkit:ValidatorCalloutExtender ID="ScannerMaxSizeRegularExpressionValidatorCalloutExtender" runat="server"
                                 TargetControlID="ScannerMaxSizeRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
                         </td>
                         <td>

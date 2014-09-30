@@ -87,9 +87,9 @@
                     <asp:RequiredFieldValidator ID="requiredUserName" runat="server" ControlToValidate="tbUserName"
                         ErrorMessage="<%$ Resources:Resource, UserNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredUserNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredUserNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredUserName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -105,12 +105,12 @@
                         Display="None" ErrorMessage="<%$ Resources:Resource, InvalidPasswordErrorMessage %>"
                         ValidationGroup="CreateUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender ID="regexPasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -125,12 +125,12 @@
                     <asp:CompareValidator ID="comparePassword" runat="server" ControlToCompare="tbPassword"
                         ControlToValidate="tbConfirmPassword" Display="None" ErrorMessage="<%$ Resources:Resource, ConfirmPasswordCompareErrorMessage %>"
                         ValidationGroup="CreateUserValidation"></asp:CompareValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredConfirmPasswordCalloutExtender" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredConfirmPasswordCalloutExtender" PopupPosition="BottomLeft"
                         runat="server" TargetControlID="requiredConfirmPassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="comparePasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender ID="comparePasswordCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="comparePassword" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -145,12 +145,12 @@
                     <asp:RegularExpressionValidator ID="regexEmail" runat="server" ControlToValidate="tbEmail"
                         Display="None" ErrorMessage="<%$ Resources:Resource, ErrorInvalidEmail  %>" ValidationGroup="CreateUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredEmail" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender ID="regexEmailCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexEmail" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -162,9 +162,9 @@
                     <asp:RequiredFieldValidator ID="requiredFirstName" runat="server" ControlToValidate="tbFirstName"
                         ErrorMessage="<%$ Resources:Resource, FirstNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredFirstNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredFirstNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredFirstName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -176,9 +176,9 @@
                     <asp:RequiredFieldValidator ID="requiredLastName" runat="server" ControlToValidate="tbLastName"
                         ErrorMessage="<%$ Resources:Resource, LastNameRequiredErrorMessage %>" ValidationGroup="CreateUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredLastNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredLastNameCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredLastName" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -335,12 +335,12 @@
                     <asp:RegularExpressionValidator ID="regexEmailEdit" runat="server" ControlToValidate="tbEmailEdit"
                         Display="None" ErrorMessage="<%$ Resources:Resource, ErrorInvalidEmail  %>" ValidationGroup="EditUserValidation">
                     </asp:RegularExpressionValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredEmailEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="regexEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender ID="regexEmailEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="regexEmailEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -352,9 +352,9 @@
                     <asp:RequiredFieldValidator ID="requiredFirstNameEdit" runat="server" ControlToValidate="tbFirstNameEdit"
                         ErrorMessage="<%$ Resources:Resource, FirstNameRequiredErrorMessage %>" ValidationGroup="EditUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredFirstNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredFirstNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredFirstNameEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -366,9 +366,9 @@
                     <asp:RequiredFieldValidator ID="requiredLastNameEdit" runat="server" ControlToValidate="tbLastNameEdit"
                         ErrorMessage="<%$ Resources:Resource, LastNameRequiredErrorMessage %>" ValidationGroup="EditUserValidation"
                         Display="None"></asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredLastNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="requiredLastNameEditCalloutExtender" runat="server" PopupPosition="BottomLeft"
                         TargetControlID="requiredLastNameEdit" HighlightCssClass="highlight">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>

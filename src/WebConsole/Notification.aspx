@@ -156,9 +156,9 @@
                         ErrorMessage='<%$ Resources:Resource, ServerRequired %>' Display="None" ValidationGroup="MailValidator">
                     </asp:RequiredFieldValidator>
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredMailServerCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredMailServerCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredMailServer" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>                    
+                    </ajaxToolkit:ValidatorCalloutExtender>                    
                 </td>
             </tr>
             <tr>
@@ -172,9 +172,9 @@
                          Display="None" ValidationGroup="MailValidator">
                     </asp:RangeValidator>
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeMailPortCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeMailPortCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeMailPort" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>                    
+                    </ajaxToolkit:ValidatorCalloutExtender>                    
                 </td>
             </tr>
             <tr>
@@ -192,12 +192,12 @@
                         ErrorMessage='<%$ Resources:Resource, ErrorInvalidEmail %>' Display="None" ValidationGroup="MailValidator" >
                     </asp:RegularExpressionValidator> 
 
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredMailFromCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredMailFromCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredMailFrom" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="regularMailFromCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="regularMailFromCallout" HighlightCssClass="highlight" 
                         TargetControlID="regularMailFrom" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -228,9 +228,9 @@
                     <asp:RequiredFieldValidator runat="server" ID="requiredMailUsername" ControlToValidate="tboxAuthorizationUserName"
                         ErrorMessage='<%$ Resources:Resource, UserNameRequiredErrorMessage %>' Display="None" ValidationGroup="MailAuthorizationValidator">
                     </asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="regularMailUsernameCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="regularMailUsernameCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredMailUsername" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>                
@@ -263,9 +263,9 @@
                         ErrorMessage='<%$ Resources:Resource, ServerRequired %>' Display="None" ValidationGroup="JabberValidator">
                     </asp:RequiredFieldValidator>
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredJabberServerCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredJabberServerCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredJabberServer" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>                    
+                    </ajaxToolkit:ValidatorCalloutExtender>                    
                 </td>
             </tr>
             <tr>
@@ -280,9 +280,9 @@
                         ErrorMessage='<%$ Resources:Resource, SenderRequired %>' Display="None" ValidationGroup="JabberValidator">
                     </asp:RequiredFieldValidator>
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredJabberFromCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredJabberFromCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredJabberFrom" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -297,9 +297,9 @@
                         ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>' Display="None" ValidationGroup="JabberValidator">
                     </asp:RequiredFieldValidator>
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredJabberPasswordCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredJabberPasswordCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredJabberPassword" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
         </table>
@@ -338,12 +338,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredGlobalEpidemyLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredGlobalEpidemyLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredGlobalEpidemyLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeGlobalEpidemyLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeGlobalEpidemyLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeGlobalEpidemyLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td>
                     <asp:TextBox ID="tboxGlobalEpidemyTimeLimit" style="width:40px" runat="server" useFlowAnalysis />
@@ -355,12 +355,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredGlobalEpidemyTimeLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredGlobalEpidemyTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredGlobalEpidemyTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeGlobalEpidemyTimeLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeGlobalEpidemyTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeGlobalEpidemyTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td>
                     <asp:TextBox ID="tboxGlobalEpidemyCompCount" style="width:40px" runat="server" useFlowAnalysis />
@@ -372,12 +372,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredGlobalEpidemyCompCountCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredGlobalEpidemyCompCountCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredGlobalEpidemyCompCount" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeGlobalEpidemyCompCountCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeGlobalEpidemyCompCountCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeGlobalEpidemyCompCount" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
             </tr>
             <tr>
@@ -394,12 +394,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredLocalHearthLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredLocalHearthLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredLocalHearthLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeLocalHearthLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeLocalHearthLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeLocalHearthLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td>
                     <asp:TextBox ID="tboxLocalHearthTimeLimit" style="width:40px" runat="server" useFlowAnalysis />
@@ -411,12 +411,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredLocalHearthTimeLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredLocalHearthTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredLocalHearthTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeLocalHearthTimeLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeLocalHearthTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeLocalHearthTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td></td>
             </tr>
@@ -434,12 +434,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td style="padding-bottom: 5px;">
                     <asp:TextBox ID="tboxTimeLimit" style="width:40px" runat="server" useFlowAnalysis />
@@ -451,12 +451,12 @@
                         Type="Integer" MinimumValue="0" MaximumValue="1000" Display="None" ValidationGroup="FlowAnalysisValidator" >
                     </asp:RangeValidator>                    
                     
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="requiredTimeLimitCallout" HighlightCssClass="highlight" 
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="requiredTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="requiredTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
-                    <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="rangeTimeLimitCallout" HighlightCssClass="highlight" 
+                    </ajaxToolkit:ValidatorCalloutExtender>
+                    <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="rangeTimeLimitCallout" HighlightCssClass="highlight" 
                         TargetControlID="rangeTimeLimit" PopupPosition="Right">
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                 </td>
                 <td></td>
             </tr>

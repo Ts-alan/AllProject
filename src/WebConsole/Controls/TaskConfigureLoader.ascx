@@ -349,9 +349,9 @@
     <asp:RequiredFieldValidator ID="AddDialogUpdatePathValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
         ControlToValidate="tboxAddDialogUpdatePath" Display="None" ValidationGroup="AddDialogUpdatePathValidationGroup" >
     </asp:RequiredFieldValidator>
-    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogUpdatePath" runat="server"
+    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutAddDialogUpdatePath" runat="server"
         TargetControlID="AddDialogUpdatePathValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-    </ajaxToolkit:ValidatorCalloutExtender2>
+    </ajaxToolkit:ValidatorCalloutExtender>
 </div>
 <div id="AddUserPathDialog" style="display: none;padding-bottom:20px;" class="ui-front">    
     <%=Resources.Resource.User %>
@@ -360,9 +360,9 @@
     <asp:RequiredFieldValidator ID="AddDialogUserValidator" runat="server" ErrorMessage='<%$ Resources:Resource, UserNameRequiredErrorMessage %>'
         ControlToValidate="tboxAddDialogUser" Display="None" ValidationGroup="AddDialogUserPathValidationGroup" >
     </asp:RequiredFieldValidator>
-    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogUser" runat="server"
+    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutAddDialogUser" runat="server"
         TargetControlID="AddDialogUserValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-    </ajaxToolkit:ValidatorCalloutExtender2>
+    </ajaxToolkit:ValidatorCalloutExtender>
     <br />
     <%=Resources.Resource.PasswordLabelText %>
     <br />
@@ -370,7 +370,7 @@
     <asp:RequiredFieldValidator ID="AddDialogPasswordValidator" runat="server" ErrorMessage='<%$ Resources:Resource, PasswordRequiredErrorMessage %>'
         ControlToValidate="tboxAddDialogPassword" Display="None" ValidationGroup="AddDialogUserPathValidationGroup" >
     </asp:RequiredFieldValidator>
-    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddDialogPassword" runat="server"
+    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutAddDialogPassword" runat="server"
         TargetControlID="AddDialogPasswordValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-    </ajaxToolkit:ValidatorCalloutExtender2>
+    </ajaxToolkit:ValidatorCalloutExtender>
 </div>

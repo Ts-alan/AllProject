@@ -114,12 +114,12 @@
                                 <asp:RangeValidator ID="RangeDeliveryTimeoutCheck" runat="server" ControlToValidate="tboxDeliveryTimeoutCheck"
                                     Display="None" ValidationGroup="SettingsValidation" MinimumValue="60" MaximumValue="14400" Type="Integer">
                                 </asp:RangeValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RequiredDeliveryTimeoutCheckEx" runat="server" TargetControlID="RequiredDeliveryTimeoutCheck"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RequiredDeliveryTimeoutCheckEx" runat="server" TargetControlID="RequiredDeliveryTimeoutCheck"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RangeDeliveryTimeoutCheckEx" runat="server" TargetControlID="RangeDeliveryTimeoutCheck"
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RangeDeliveryTimeoutCheckEx" runat="server" TargetControlID="RangeDeliveryTimeoutCheck"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                            </td>
                         </tr>
                         <tr>
@@ -138,12 +138,12 @@
                                 <asp:RegularExpressionValidator ID="RegularExpressionServer" runat="server" ControlToValidate="tboxServer"
                                     Display="None" ValidationGroup="MaintenanceSettingsValidation" ErrorMessage='<%$ Resources:Resource, IPAddressRegexErrorMessage %>'>
                                 </asp:RegularExpressionValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RequiredServerEx" runat="server" TargetControlID="RequiredServer"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RequiredServerEx" runat="server" TargetControlID="RequiredServer"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RegularExpressionServerEx" runat="server" TargetControlID="RegularExpressionServer"
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RegularExpressionServerEx" runat="server" TargetControlID="RegularExpressionServer"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                             </td>
                         </tr>
                         <tr>
@@ -170,12 +170,12 @@
                                 <asp:RangeValidator ID="RangeDaysToDelete" runat="server" ControlToValidate="tboxDaysToDelete"
                                     Display="None" ValidationGroup="SettingsValidation" MinimumValue="0" MaximumValue="360" Type="Integer">
                                 </asp:RangeValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RequiredDaysToDeleteEx" runat="server" TargetControlID="RequiredDaysToDelete"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RequiredDaysToDeleteEx" runat="server" TargetControlID="RequiredDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RangeDaysToDeleteEx" runat="server" TargetControlID="RangeDaysToDelete"
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RangeDaysToDeleteEx" runat="server" TargetControlID="RangeDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                             </td>
                         </tr>
                         <tr>
@@ -189,12 +189,12 @@
                                 <asp:RangeValidator ID="RangeTasksDaysToDelete" runat="server" ControlToValidate="tboxTasksDaysToDelete"
                                     Display="None" ValidationGroup="SettingsValidation" MinimumValue="0" MaximumValue="360" Type="Integer">
                                 </asp:RangeValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RequiredTasksDaysToDeleteEx" runat="server" TargetControlID="RequiredTasksDaysToDelete"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RequiredTasksDaysToDeleteEx" runat="server" TargetControlID="RequiredTasksDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="RangeTasksDaysToDeleteEx" runat="server" TargetControlID="RangeTasksDaysToDelete"
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="RangeTasksDaysToDeleteEx" runat="server" TargetControlID="RangeTasksDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                             </td>
                         </tr>
                         <tr>
@@ -210,12 +210,12 @@
                                 <asp:RangeValidator ID="rangeComputersDaysToDelete" runat="server" ControlToValidate="tboxComputersDaysToDelete"
                                     Display="None" ValidationGroup="SettingsValidation" MinimumValue="0" MaximumValue="360" Type="Integer">
                                 </asp:RangeValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredComputersDaysToDeleteExt" runat="server" TargetControlID="requiredComputersDaysToDelete"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="requiredComputersDaysToDeleteExt" runat="server" TargetControlID="requiredComputersDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="rangeComputersDaysToDeleteExt" runat="server" TargetControlID="rangeComputersDaysToDelete"
+                                </ajaxToolkit:ValidatorCalloutExtender>
+                                <ajaxToolkit:ValidatorCalloutExtender ID="rangeComputersDaysToDeleteExt" runat="server" TargetControlID="rangeComputersDaysToDelete"
                                     HighlightCssClass="highlight">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                             </td>
                         </tr>
                     </table>

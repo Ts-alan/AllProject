@@ -624,7 +624,7 @@
                     <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogPath" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                         ControlToValidate="AddTemplateDialogPath" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
                     </asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredAddTemplateDialogPath" runat="server" TargetControlID="RequiredAddTemplateDialogPath" HighlightCssClass="highlight" PopupPosition="Right" Width="150px"/>
+                    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtenderRequiredAddTemplateDialogPath" runat="server" TargetControlID="RequiredAddTemplateDialogPath" HighlightCssClass="highlight" PopupPosition="Right" Width="150px"/>
                 </td>
             </tr>
             <tr>
@@ -636,7 +636,7 @@
                     <asp:RequiredFieldValidator ID="RequiredAddTemplateDialogName" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                         ControlToValidate="AddTemplateDialogName" Display="None" ValidationGroup="AddTemplateDialogPathValidationGroup">
                     </asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredAddTemplateDialogName" runat="server" TargetControlID="RequiredAddTemplateDialogName" HighlightCssClass="highlight" PopupPosition="Right" Width="150px" />
+                    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtenderRequiredAddTemplateDialogName" runat="server" TargetControlID="RequiredAddTemplateDialogName" HighlightCssClass="highlight" PopupPosition="Right" Width="150px" />
                 </td>
             </tr>
         </table>

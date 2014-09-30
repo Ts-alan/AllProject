@@ -81,7 +81,7 @@
                                                 <asp:RequiredFieldValidator ID="reqAppsTrusted" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxAppsTrusted" Display="None" ValidationGroup="AppsTrustedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqAppsTrustedCallout" HighlightCssClass="highlight" TargetControlID="reqAppsTrusted"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqAppsTrustedCallout" HighlightCssClass="highlight" TargetControlID="reqAppsTrusted"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                                 <asp:RequiredFieldValidator ID="reqAppsProtected" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxAppsProtected" Display="None" ValidationGroup="AppsProtectedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqAppsProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqAppsProtected"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqAppsProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqAppsProtected"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFolderReadOnly" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFolderReadOnly" Display="None" ValidationGroup="FolderReadOnlyValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFolderReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqFolderReadOnly"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFolderReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqFolderReadOnly"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFileReadOnly" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFileReadOnly" Display="None" ValidationGroup="FileReadOnlyValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFileReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqFileReadOnly"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFileReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqFileReadOnly"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +208,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFolderProtected" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFolderProtected" Display="None" ValidationGroup="FolderProtectedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFolderProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqFolderProtected"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFolderProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqFolderProtected"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFileProtected" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFileProtected" Display="None" ValidationGroup="FileProtectedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFileProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqFileProtected"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFileProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqFileProtected"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -271,7 +271,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFolderExcluded" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFolderExcluded" Display="None" ValidationGroup="FolderExcludedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFolderExcludedCallout" HighlightCssClass="highlight" TargetControlID="reqFolderExcluded"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFolderExcludedCallout" HighlightCssClass="highlight" TargetControlID="reqFolderExcluded"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFileExcluded" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFileExcluded" Display="None" ValidationGroup="FileExcludedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFileExcludedCallout" HighlightCssClass="highlight" TargetControlID="reqFileExcluded"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFileExcludedCallout" HighlightCssClass="highlight" TargetControlID="reqFileExcluded"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -338,7 +338,7 @@
                                                 <asp:RequiredFieldValidator ID="reqKeyReadOnly" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxKeyReadOnly" Display="None" ValidationGroup="KeyReadOnlyValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqKeyReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqKeyReadOnly"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqKeyReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqKeyReadOnly"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -366,7 +366,7 @@
                                                 <asp:RequiredFieldValidator ID="reqValueReadOnly" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxValueReadOnly" Display="None" ValidationGroup="ValueReadOnlyValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqValueReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqValueReadOnly"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqValueReadOnlyCallout" HighlightCssClass="highlight" TargetControlID="reqValueReadOnly"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -401,7 +401,7 @@
                                                 <asp:RequiredFieldValidator ID="reqKeyProtected" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxKeyProtected" Display="None" ValidationGroup="KeyProtectedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqKeyProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqKeyProtected"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqKeyProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqKeyProtected"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -429,7 +429,7 @@
                                                 <asp:RequiredFieldValidator ID="reqValueProtected" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxValueProtected" Display="None" ValidationGroup="ValueProtectedValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqValueProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqValueProtected"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqValueProtectedCallout" HighlightCssClass="highlight" TargetControlID="reqValueProtected"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -467,9 +467,9 @@
                                     Display="None" ErrorMessage='<%$ Resources:Resource, LoginRequiredErrorMessage %>'
                                     ValidationGroup="AddUserValidation">
                                 </asp:RequiredFieldValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 ID="requiredUserNameExt" runat="server" TargetControlID="requiredUserName"
+                                <ajaxToolkit:ValidatorCalloutExtender ID="requiredUserNameExt" runat="server" TargetControlID="requiredUserName"
                                     HighlightCssClass="highlight" PopupPosition="BottomLeft">
-                                </ajaxToolkit:ValidatorCalloutExtender2>
+                                </ajaxToolkit:ValidatorCalloutExtender>
                             </td>
                         </tr>
                         <tr>
@@ -566,7 +566,7 @@
                                                 <asp:RequiredFieldValidator ID="reqAppsTrustedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxAppsTrustedUsers" Display="None" ValidationGroup="AppsTrustedUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqAppsTrustedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqAppsTrustedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqAppsTrustedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqAppsTrustedUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -600,7 +600,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFolderReadOnlyUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFolderReadOnlyUsers" Display="None" ValidationGroup="FolderReadOnlyUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFolderReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFolderReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFolderReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFolderReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -628,7 +628,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFileReadOnlyUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFileReadOnlyUsers" Display="None" ValidationGroup="FileReadOnlyUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFileReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFileReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFileReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFileReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -663,7 +663,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFolderProtectedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFolderProtectedUsers" Display="None" ValidationGroup="FolderProtectedUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFolderProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFolderProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFolderProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFolderProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -691,7 +691,7 @@
                                                 <asp:RequiredFieldValidator ID="reqFileProtectedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxFileProtectedUsers" Display="None" ValidationGroup="FileProtectedUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqFileProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFileProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqFileProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqFileProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -727,7 +727,7 @@
                                                 <asp:RequiredFieldValidator ID="reqKeyReadOnlyUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxKeyReadOnlyUsers" Display="None" ValidationGroup="KeyReadOnlyUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqKeyReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqKeyReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqKeyReadOnlyUsersCallout" HighlightCssClass="highlight" TargetControlID="reqKeyReadOnlyUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -755,7 +755,7 @@
                                                 <asp:RequiredFieldValidator ID="reqKeyProtectedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                             ControlToValidate="tboxKeyProtectedUsers" Display="None" ValidationGroup="KeyProtectedUsersValidation">
                                                 </asp:RequiredFieldValidator>
-                                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqKeyProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqKeyProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqKeyProtectedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqKeyProtectedUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                             </div>
                                         </div>
                                     </div>
@@ -786,7 +786,7 @@
                                         <asp:RequiredFieldValidator ID="reqPrinterTrustedUsers" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                     ControlToValidate="tboxPrinterTrustedUsers" Display="None" ValidationGroup="PrinterTrustedUsersValidation">
                                         </asp:RequiredFieldValidator>
-                                        <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqPrinterTrustedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrustedUsers"></ajaxToolkit:ValidatorCalloutExtender2>
+                                        <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqPrinterTrustedUsersCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrustedUsers"></ajaxToolkit:ValidatorCalloutExtender>
                                     </div>
                                 </div>
                             </div>
@@ -817,7 +817,7 @@
                                 <asp:RequiredFieldValidator ID="reqPrinterTrusted" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                             ControlToValidate="tboxPrinterTrusted" Display="None" ValidationGroup="PrinterTrustedValidation">
                                 </asp:RequiredFieldValidator>
-                                <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqPrinterTrustedCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrusted"></ajaxToolkit:ValidatorCalloutExtender2>
+                                <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqPrinterTrustedCallout" HighlightCssClass="highlight" TargetControlID="reqPrinterTrusted"></ajaxToolkit:ValidatorCalloutExtender>
                             </div>
                         </div>
                     </div>
@@ -832,9 +832,9 @@
                 <asp:RegularExpressionValidator id="tboxProcessedExtensionsRegularExpressionValidator" ControlToValidate="tboxProcessedExtensions" 
                     ValidationExpression="^([\w|.\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server" Display="None">
                 </asp:RegularExpressionValidator>
-                <ajaxToolkit:ValidatorCalloutExtender2 ID="tboxProcessedExtensionsRegularExpressionValidatorCalloutExtender" runat="server"
+                <ajaxToolkit:ValidatorCalloutExtender ID="tboxProcessedExtensionsRegularExpressionValidatorCalloutExtender" runat="server"
                         TargetControlID="tboxProcessedExtensionsRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="Right" >
-                </ajaxToolkit:ValidatorCalloutExtender2>
+                </ajaxToolkit:ValidatorCalloutExtender>
             </div>
         </div>
         <div id="mainTabProactive3">

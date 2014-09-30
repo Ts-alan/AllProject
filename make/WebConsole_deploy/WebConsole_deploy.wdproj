@@ -33,10 +33,6 @@
     <KeyFile>..\Keys\sgKey.snk</KeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\AjaxControlToolkitX\AjaxControlToolkitX.csproj">
-      <Project>{4B1FCD41-E001-41BE-97B1-E67D79300466}</Project>
-      <Name>AjaxControlToolkitX</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\WebConsole\Projects\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>

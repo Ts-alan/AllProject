@@ -41,7 +41,7 @@
                                         <asp:RequiredFieldValidator ID="reqScanPathes" runat="server" ErrorMessage='<%$ Resources:Resource, ValueRequired %>'
                                                     ControlToValidate="tboxPath" Display="None" ValidationGroup="ScanPathValidation">
                                         </asp:RequiredFieldValidator>
-                                        <ajaxToolkit:ValidatorCalloutExtender2 runat="server" ID="reqScanPathesCallout" HighlightCssClass="highlight" TargetControlID="reqScanPathes"></ajaxToolkit:ValidatorCalloutExtender2>
+                                        <ajaxToolkit:ValidatorCalloutExtender runat="server" ID="reqScanPathesCallout" HighlightCssClass="highlight" TargetControlID="reqScanPathes"></ajaxToolkit:ValidatorCalloutExtender>
                                     </div>
                                 </div>
                             </div>

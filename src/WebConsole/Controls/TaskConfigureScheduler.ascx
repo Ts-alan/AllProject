@@ -317,7 +317,7 @@
         <%=Resources.Resource.SystemIdleProcess%>:&nbsp;<asp:TextBox runat="server" ID="tboxSystemIdleProcess" style="width: 40px;"></asp:TextBox>
         <asp:RangeValidator ControlToValidate="tboxSystemIdleProcess" ID="rangeSystemIdleProcess" runat="server" ValidationGroup="SystemIdleProcessValidation"
              MinimumValue="0" MaximumValue="99" Type="Integer" Display="None"></asp:RangeValidator>  
-        <ajaxToolkit:ValidatorCalloutExtender2 ID="rangeSystemIdleProcessCallout" runat="server" TargetControlID="rangeSystemIdleProcess" HighlightCssClass="highlight" PopupPosition="Left" />
+        <ajaxToolkit:ValidatorCalloutExtender ID="rangeSystemIdleProcessCallout" runat="server" TargetControlID="rangeSystemIdleProcess" HighlightCssClass="highlight" PopupPosition="Left" />
     </div>
     <div>
         <label ><%=Resources.Resource.DateAndTime%> </label>
@@ -325,20 +325,20 @@
         <asp:TextBox ID="datePickerAddSchedulerTask" runat="server" style="width:140px;"></asp:TextBox>
         <asp:RegularExpressionValidator ControlToValidate="datePickerAddSchedulerTask" ID="datepickerAddSchedulerTaskValidator" runat="server" ErrorMessage='<%$ Resources:Resource, DateIncorrect %>' ValidationGroup="TimeValidationGroup"
             ValidationExpression="^((0[1-9])|([1-2][0-9])|(3[01]))\.((0[1-9])|(1[0-2]))\.20[0-9][0-9]$" Display="None"></asp:RegularExpressionValidator>  
-        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderDatepickerAddSchedulerTask" runat="server" TargetControlID="datepickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
+        <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtenderDatepickerAddSchedulerTask" runat="server" TargetControlID="datepickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
         <asp:RequiredFieldValidator ID="RequiredDatepickerAddSchedulerTask" runat="server" ErrorMessage='<%$ Resources:Resource, DateIncorrect %>'
             ControlToValidate="datePickerAddSchedulerTask" Display="None" ValidationGroup="TimeValidationGroup">
         </asp:RequiredFieldValidator>
-        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredDatepickerAddSchedulerTask" runat="server" TargetControlID="RequiredDatepickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
+        <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtenderRequiredDatepickerAddSchedulerTask" runat="server" TargetControlID="RequiredDatepickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
         
         <asp:TextBox ID="timePickerAddSchedulerTask" runat="server" style="width:120px;"></asp:TextBox>
         <asp:RegularExpressionValidator ControlToValidate="timePickerAddSchedulerTask" ID="timePickerAddSchedulerTaskValidator" runat="server" ErrorMessage='<%$ Resources:Resource, TimeIncorrect %>' ValidationGroup="TimeValidationGroup"
             ValidationExpression="^(([0,1][0-9])|(2[0-3])):[0-5][0-9]$" Display="None"></asp:RegularExpressionValidator>  
-        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtendertimePickerAddSchedulerTask" runat="server" TargetControlID="timePickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
+        <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtendertimePickerAddSchedulerTask" runat="server" TargetControlID="timePickerAddSchedulerTaskValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />                    
         <asp:RequiredFieldValidator ID="RequiredtimePickerAddSchedulerTask" runat="server" ErrorMessage='<%$ Resources:Resource, TimeIncorrect %>'
             ControlToValidate="timePickerAddSchedulerTask" Display="None" ValidationGroup="TimeValidationGroup">
         </asp:RequiredFieldValidator>
-        <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutExtenderRequiredtimePickerAddSchedulerTask" runat="server" TargetControlID="RequiredtimePickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
+        <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtenderRequiredtimePickerAddSchedulerTask" runat="server" TargetControlID="RequiredtimePickerAddSchedulerTask" HighlightCssClass="highlight" PopupPosition="BottomRight" Width="120px" />
         
         </p>                   
     </div>

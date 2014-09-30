@@ -271,7 +271,7 @@
                 ControlToValidate="FilesAddDialogPath" Display="None" ValidationGroup="FilesAddValidationGroup" />
             <%--<asp:RegularExpressionValidator id="FilesAddRegularExpressionValidator" ControlToValidate="FilesAddDialogPath" ValidationExpression="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.([a-z])$" ErrorMessage="ZIP code must be 5 numeric digits"  runat="server"/>
             --%>
-            <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutFilesAddDialogPath" runat="server"
+            <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutFilesAddDialogPath" runat="server"
                 TargetControlID="FilesAddDialogValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
             <%-- <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutFilesAddRegularExpressionPath" runat="server"
                 TargetControlID="FilesAddRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" />
@@ -355,7 +355,7 @@
                 ControlToValidate="RegistryAddDialogPath" Display="None" ValidationGroup="RegistryAddValidationGroup" />
             <%--<asp:RegularExpressionValidator id="FilesAddRegularExpressionValidator" ControlToValidate="FilesAddDialogPath" ValidationExpression="^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.([a-z])$" ErrorMessage="ZIP code must be 5 numeric digits"  runat="server"/>
             --%>
-            <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutRegistryAddDialogPath"
+            <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutRegistryAddDialogPath"
                 runat="server" TargetControlID="RegistryAddDialogValidator" HighlightCssClass="highlight"
                 PopupPosition="BottomRight" />
             <%-- <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutFilesAddRegularExpressionPath" runat="server"

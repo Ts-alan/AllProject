@@ -104,9 +104,9 @@
                     <asp:RequiredFieldValidator ID="MonitorFileExtensionsTextBoxValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
                         ControlToValidate="tboxMonitorFileExtensions" Display="None" ValidationGroup="MonitorFileExtensionsValidationGroup" >
                     </asp:RequiredFieldValidator>
-                    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutMonitorFileExtensionsTextBox" runat="server"
+                    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutMonitorFileExtensionsTextBox" runat="server"
                         TargetControlID="MonitorFileExtensionsTextBoxValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-                    </ajaxToolkit:ValidatorCalloutExtender2>
+                    </ajaxToolkit:ValidatorCalloutExtender>
                                 
                     <asp:LinkButton runat="server" ID="lbtnMonitorFileExtensionReset" SkinID="Button" Width="120" OnClientClick="return false;"><%= Resources.Resource.DefaultFiles %></asp:LinkButton>
                 </p>
@@ -114,9 +114,9 @@
                 <asp:TextBox runat="server" ID="tboxMonitorFilesExcluded" style="width:420px"></asp:TextBox>
                 <asp:RegularExpressionValidator id="MonitorFilesExcludedRegularExpressionValidator" ControlToValidate="tboxMonitorFilesExcluded" ValidationExpression="^(\.[\w|\?|\*]+)*$" ErrorMessage="<%$Resources:Resource, WrongExtensionValidator %>"  runat="server">
                 </asp:RegularExpressionValidator>
-                <ajaxToolkit:ValidatorCalloutExtender2 ID="MonitorFilesExcludedRegularExpressionValidatorCalloutExtender" runat="server"
+                <ajaxToolkit:ValidatorCalloutExtender ID="MonitorFilesExcludedRegularExpressionValidatorCalloutExtender" runat="server"
                         TargetControlID="MonitorFilesExcludedRegularExpressionValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-                </ajaxToolkit:ValidatorCalloutExtender2>
+                </ajaxToolkit:ValidatorCalloutExtender>
             </div>
             <div style="margin:10px">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">                    
@@ -291,7 +291,7 @@
     <asp:RequiredFieldValidator ID="AddExcludedDialogValidator" runat="server" ErrorMessage='<%$ Resources:Resource, FirstNameRequiredErrorMessage %>'
         ControlToValidate="tboxAddExcludedDialogPath" Display="None" ValidationGroup="AddExcludedDialogValidationGroup" >
     </asp:RequiredFieldValidator>
-    <ajaxToolkit:ValidatorCalloutExtender2 ID="ValidatorCalloutAddExcludedDialogPath" runat="server"
+    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutAddExcludedDialogPath" runat="server"
         TargetControlID="AddExcludedDialogValidator" HighlightCssClass="highlight" PopupPosition="BottomRight" >
-    </ajaxToolkit:ValidatorCalloutExtender2>
+    </ajaxToolkit:ValidatorCalloutExtender>
 </div>
