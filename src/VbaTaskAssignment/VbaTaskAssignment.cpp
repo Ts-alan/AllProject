@@ -35,7 +35,9 @@ public:
 
 	HRESULT Run(int nShowCmd) throw()
 	{
-        LOG_FILE_ENABLE();
+        LOG_FILE_ENABLE_NAME(L"log_cc_task_assignment.txt");
+        LOG() % L"-----------";
+        LOG() % L"Run service";
         LOG_DEBUG_VIEW_ENABLE();
         DLOG() % LOG_FUNC % L" Enable log.";
 		mp_task_sender = vba::AutoSingleton<TaskSender>::Instance();
@@ -43,8 +45,17 @@ public:
 		return __super::Run(nShowCmd);
 	}
 
+    void OnShutdown()
+    {
+        LOG() % L"Stop service on shutdown";
+        mp_task_sender->m_action_q_init = false;
+		mp_task_sender->_Uninitialize();
+		return __super::OnStop();
+    }
+
 	void OnStop()
 	{
+        LOG() % L"Stop service";
 		mp_task_sender->m_action_q_init = false;
 		mp_task_sender->_Uninitialize();
 		return __super::OnStop();
@@ -53,9 +64,7 @@ public:
 
     HRESULT InitializeSecurity() throw()
 	{
-	    CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
-
-        return S_OK;
+        return CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
 	}
 
     bool ParseCommandLine(LPCTSTR lpCmdLine, HRESULT* pnRetCode);
@@ -547,18 +556,5 @@ CVbaTaskAssignmentModule<> _AtlModule;
 extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-    LOG_DEBUG_VIEW_ENABLE();
-
-    DLOG() % L"{" %GetCurrentThreadId() % L"}" % L"Task assigment test.";
-
-
-	VbaTaskSender::SenderThreadPool* p_thread_pool = vba::AutoSingleton<VbaTaskSender::SenderThreadPool>::Instance();
-	p_thread_pool->Init(THREADPOOL_SIZE);
-
-	int res = _AtlModule.WinMain(nShowCmd);
-
-	p_thread_pool->FreeInst();
-    int i = _AtlModule.WinMain(nShowCmd);
-    LOG_DEBUG_VIEW_DISABLE();
-    return i;
+    return _AtlModule.WinMain(nShowCmd);
 }

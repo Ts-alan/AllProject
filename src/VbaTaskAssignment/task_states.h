@@ -10,4 +10,4 @@ enum TASK_STATE
 	TASK_STATE_CANCELLED
 };
 
-std::wstring STATES[];
+extern std::wstring STATES[];

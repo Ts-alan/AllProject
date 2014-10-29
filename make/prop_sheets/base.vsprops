@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="base"
+	OutputDirectory="$(SolutionDir)../.bin/$(ConfigurationName)_$(PlatformName)"
+	IntermediateDirectory="$(SolutionDir)../.bin/.int/$(ConfigurationName)_$(PlatformName)/$(ProjectName)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalOptions="/MP"
+		AdditionalIncludeDirectories="$(ProjectDir);$(SolutionDir)../deps;$(SolutionDir)../src;$(SolutionDir)../src/external/wtl/include"
+		PreprocessorDefinitions="WIN32;_BIND_TO_CURRENT_CRT_VERSION;_SECURE_ATL;_WIN32_WINNT=0x0501;WIN32_LEAN_AND_MEAN"
+		UsePrecompiledHeader="2"
+		ObjectFile="$(IntDir)\obj\"
+		WarningLevel="4"
+		DisableSpecificWarnings="4250"
+		ForcedIncludeFiles="stdafx.h"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		AdditionalIncludeDirectories="&quot;$(SolutionDir)..\src\&quot;"
+	/>
+	<Tool
+		Name="VCPostBuildEventTool"
+		CommandLine="$(SolutionDir)..\tools\sym_upload.bat $(TargetDir)$(ProjectName).pdb &quot;KANOE $(ConfigurationName)&quot; $(TargetPath)"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		PreprocessorDefinitions="VBA_PROJECT_NAME=\&quot;$(ProjectName)\&quot;"
+		AdditionalIncludeDirectories="&quot;$(SolutionDir)../src&quot;;&quot;$(SolutionDir)../src/external/wtl/include&quot;"
+	/>
+</VisualStudioPropertySheet>

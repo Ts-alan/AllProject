@@ -2,23 +2,25 @@
 #include "vba_socket.h"
 #include "common/log.h"
 
-VbaSocket::VbaSocket()
+VbaSocket::VbaSocket(): m_socket(INVALID_SOCKET), m_res (-1)
 {}					  
 
 VbaSocket::~VbaSocket()
-{}
+{
+    Uninitialize();
+}
 
 bool VbaSocket::Initialize()
 {
 	WSADATA wsaData;
-    int res = WSAStartup(MAKEWORD(2,2), &wsaData);
-    if (res != 0)
+    m_res = WSAStartup(MAKEWORD(2,2), &wsaData);
+    if (m_res != 0)
     {
         LOG_WARN() % L" WSAStartup error("
-			% res 
+			% m_res 
 			% L") (eror)."; 
     }
-	return (res == 0);
+	return (m_res == 0);
 }
 
 bool VbaSocket::ConnectSocket(unsigned long address, unsigned short port)
@@ -104,10 +106,14 @@ void VbaSocket::Uninitialize()
     {
 		closesocket(m_socket);   
     }
-	if ( WSACleanup()!=0 )
-	{		
-		LOG_WARN() % L" WSACleanup error("
-			% WSAGetLastError() 
-			% L") (fail)."; 
-	}
+	if ( m_res == 0)
+    {
+        if(WSACleanup()!=0 )
+	    {		
+		    LOG_WARN() % L" WSACleanup error("
+			    % WSAGetLastError() 
+			    % L") (fail)."; 
+	    }
+        m_res = -1;
+    }
 }

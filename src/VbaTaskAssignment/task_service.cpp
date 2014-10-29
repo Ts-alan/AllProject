@@ -69,11 +69,10 @@ STDMETHODIMP TaskService::PacketListProcesses(SAFEARRAY** p_task_ids, SAFEARRAY*
 
 bool TaskService::BuildTask(TaskType task_type, SAFEARRAY** p_task_ids, SAFEARRAY **p_ip_addresses, BSTR param1, BSTR param2, DWORD param3)
 {
-    DLOG() % LOG_FUNC % L"{" %GetCurrentThreadId() % L"}" % L" Build task start ..."; 
-
 	mp_tasks_report = vba::AutoSingleton<ReportTasks>::Instance();
 	if ( (!p_task_ids) || (!p_ip_addresses) )
     {
+        DLOG() % LOG_FUNC % L"{" %GetCurrentThreadId() % L"}" % L" Build task start ..."; 
         return false;
     }
 
@@ -95,6 +94,7 @@ bool TaskService::BuildTask(TaskType task_type, SAFEARRAY** p_task_ids, SAFEARRA
 	AddressesList::iterator iter_addr = addr_list.begin();
 	for(IdsList::iterator iter_id = id_list.begin(); iter_id!= id_list.end(); ++iter_id)
 	{
+        LOG() %  L" Build task " % *iter_id % "("% iter_addr %")"; 
         vba::utf8_string packet;
         bool res = false;
 		switch (task_type)
@@ -159,7 +159,7 @@ bool TaskService::BuildTask(TaskType task_type, SAFEARRAY** p_task_ids, SAFEARRA
 
         if (!res)
         {
-            DLOG() % LOG_FUNC % L"{" %GetCurrentThreadId() % L"}" % L" Build task. Crypt failed (fail)."; 
+            LOG_WARN() % L"{" %GetCurrentThreadId() % L"}" % L" Build task. Crypt failed (fail)."; 
         }
 
 		TaskParam task_param;

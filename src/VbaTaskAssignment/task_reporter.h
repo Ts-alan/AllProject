@@ -8,12 +8,12 @@
 #include "common/patterns.h"
 #include "common/critical_section.h"
 #include "task_states.h"
-#include "thread_pool.h"
 #include "vba_socket.h"
 #include <list>
 #include "windows.h"
 #include "common/log.h"
 #include "common/patterns/action_queue.h"
+#include "common/time.h"
 
 class VbaTaskReporter :	public vba::deprecated::ActionQueue<std::wstring>
 {
@@ -21,11 +21,9 @@ public:
 	bool VbaTaskReporter::SaveTaskState(INT64 id_task, TASK_STATE task_state)
 	{
 		wchar_t date[32]={0};
-		wchar_t str_state[512]={0};
 		SYSTEMTIME st;
 		GetLocalTime(&st);	
-		
-		swprintf(date, L"%04u-%02u-%02u %02u:%02u:%02u", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+        swprintf_s(date, 32, L"%04u-%02u-%02u %02u:%02u:%02u", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
 		return AddAction(vba::ToWString(vba::FormatString(L"<TaskState><ID>%1%</ID><State>%2%</State><Date>%3%</Date></TaskState>"
 			) % static_cast<unsigned int>(id_task) % STATES[task_state] % date));		
 	}

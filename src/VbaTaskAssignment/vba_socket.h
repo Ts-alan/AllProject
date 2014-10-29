@@ -17,4 +17,5 @@ public:
 private:
 	SOCKET m_socket;
 	SOCKADDR_IN m_addr;
+    int m_res;
 };
