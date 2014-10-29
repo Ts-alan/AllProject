@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Startup routines">
+      <UniqueIdentifier>{65265d24-67e7-4542-9f48-84e191e7392c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Socket server">
+      <UniqueIdentifier>{179bc5c5-02cb-487a-ac47-48c3535d09b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network routines">
+      <UniqueIdentifier>{65e4d193-2872-4fca-840e-8a8256c4571d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Business logic">
+      <UniqueIdentifier>{049c01e2-1672-4bae-86aa-609f4fa4144d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Update">
+      <UniqueIdentifier>{3eaad167-568a-47c6-b94b-8e6866fb05d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exception handling">
+      <UniqueIdentifier>{602dd50b-b467-4904-bb82-8426ecaedc1b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vba32CCService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="startup_routines.cpp">
+      <Filter>Startup routines</Filter>
+    </ClCompile>
+    <ClCompile Include="IOPool.cpp">
+      <Filter>Socket server</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketServer.cpp">
+      <Filter>Socket server</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>Socket server</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPoolWorkerThread.cpp">
+      <Filter>Socket server</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Network routines</Filter>
+    </ClCompile>
+    <ClCompile Include="BusinessLogic.cpp">
+      <Filter>Business logic</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_parser_callbacks.cpp">
+      <Filter>Business logic</Filter>
+    </ClCompile>
+    <ClCompile Include="update.cpp">
+      <Filter>Update</Filter>
+    </ClCompile>
+    <ClCompile Include="update_events.cpp">
+      <Filter>Update</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>Exception handling</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="startup_routines.h">
+      <Filter>Startup routines</Filter>
+    </ClInclude>
+    <ClInclude Include="IOPool.h">
+      <Filter>Socket server</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketServer.h">
+      <Filter>Socket server</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>Socket server</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPoolWorkerThread.h">
+      <Filter>Socket server</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Network routines</Filter>
+    </ClInclude>
+    <ClInclude Include="BusinessLogic.h">
+      <Filter>Business logic</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_parser_callbacks.h">
+      <Filter>Business logic</Filter>
+    </ClInclude>
+    <ClInclude Include="update.h">
+      <Filter>Update</Filter>
+    </ClInclude>
+    <ClInclude Include="update_events.h">
+      <Filter>Update</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Exception handling</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Vba32CCService.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
