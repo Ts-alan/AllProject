@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,11 +16,21 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class TaskManager
     {
         private readonly String connectionString; 
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public TaskManager(String connectionString)
+        public TaskManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public TaskManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public TaskManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -35,18 +46,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<TaskEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTasksPage", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTasksPage";
 
-                cmd.Parameters.AddWithValue("@page", (Int64)page);
-                cmd.Parameters.AddWithValue("@rowcount", (Int64)size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@page";
+                param.Value = (Int64)page;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@rowcount";
+                param.Value = (Int64)size;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@where";
+                param.Value=where;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@orderby";
+                param.Value=order;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<TaskEntity> list = new List<TaskEntity>();
                 while (reader.Read())
                 {
@@ -86,13 +116,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<TaskEntity> ListTaskTypes()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTaskTypesList", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTaskTypesList";
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<TaskEntity> list = new List<TaskEntity>();
                 while (reader.Read())
                 {
@@ -116,18 +150,36 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Object CreateTask(String computerName, String taskName, String taskParams, String taskUser)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("CreateTask", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
-                cmd.Parameters.AddWithValue("@TaskName", taskName);
-                cmd.Parameters.AddWithValue("@TaskParams", taskParams);
-                cmd.Parameters.AddWithValue("@TaskUser", taskUser);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "CreateTask";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@TaskName";
+                param.Value = taskName;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@TaskParams";
+                param.Value=taskParams;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@TaskUser";
+                param.Value=taskUser;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-
                 return cmd.ExecuteScalar();
             }
         }
@@ -140,16 +192,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Int16> GetTaskTypeID(String taskName, Boolean insertIfNotExists)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTaskTypeID", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTaskTypeID";
 
-                cmd.Parameters.AddWithValue("@TaskName", taskName);
-                cmd.Parameters.AddWithValue("@InsertIfNotExists", insertIfNotExists);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@TaskName";
+                param.Value = taskName;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@InsertIfNotExists";
+                param.Value = insertIfNotExists;
+                cmd.Parameters.Add(param);
+               
                 con.Open();                
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Int16> list = new List<Int16>();
                 while (reader.Read())
                 {
@@ -167,15 +230,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>id</returns>
         internal TaskEntity Get(Int64 tasksID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTaskByID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ID", tasksID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTaskByID";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = tasksID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 TaskEntity task = new TaskEntity();
                 if (reader.Read())
                 {
@@ -200,15 +270,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal String GetIPAddressByTaskID(Int64 tasksID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetIPAddressByTaskID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ID", tasksID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetIPAddressByTaskID";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = tasksID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 String ip = String.Empty;
                 if (reader.Read())
                 {
@@ -227,12 +304,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTasksCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTasksCount";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
@@ -245,13 +329,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> ListTaskStates()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTaskStatesList", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTaskStatesList";
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<String> list = new List<String>();
                 while (reader.Read())
                 {
@@ -271,15 +359,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal AutomaticallyTaskEntity GetAutomaticallyTask(String eventName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetTaskByEventType", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@EventName", eventName);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetTaskByEventType";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@EventName";
+                param.Value = eventName;
+                cmd.Parameters.Add(param);
 
                 con.Open();                                
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 AutomaticallyTaskEntity task = new AutomaticallyTaskEntity();
                 if (reader.Read())
                 {
@@ -306,16 +401,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal void GetComputersInfo(ref List<String> compNames, ref List<String> ipAddresses)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputerNamesAndIP", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-                                
+                cmd.CommandText = "GetComputerNamesAndIP";
+      
                 compNames.Clear();
                 ipAddresses.Clear();
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (reader.Read())
                 {
                     if (reader.GetValue(0) != DBNull.Value)
@@ -335,16 +434,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean IsRunningTask(String computerName, Int16 taskID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("IsRunningTask", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
-                cmd.Parameters.AddWithValue("@TaskID", taskID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "IsRunningTask";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@TaskID";
+                param.Value = taskID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 String state = String.Empty;
                 Int32 minuteDiff = Int32.MaxValue;                
 
@@ -370,12 +480,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal void ChangeDeliveryState(DateTime dt)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateDeliveryState", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Date", dt);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateDeliveryState";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Date";
+                param.Value = dt;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -388,12 +505,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="dt"></param>
         internal void ClearOldTasks(DateTime dt)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteOldTasks", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Date", dt);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteOldTasks";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Date";
+                param.Value = dt;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -406,13 +530,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> GetIPAddressListForConfigure()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetIPAddressListForConfigure", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetIPAddressListForConfigure";
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<String> list = new List<String>();
                 while (reader.Read())
                 {

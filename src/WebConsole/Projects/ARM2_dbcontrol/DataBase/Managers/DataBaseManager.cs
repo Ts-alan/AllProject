@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class DataBaseManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
+
 
         #region Constructors
-        public DataBaseManager(String connectionString)
+        public DataBaseManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public DataBaseManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public DataBaseManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;            
         }
         #endregion
+       
 
         #region Methods
 
@@ -26,12 +38,15 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>DataBaseEntity</returns>
         internal DataBaseEntity Get(String dbName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand(String.Format("sp_helpfile '{0}'", dbName), con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandText = String.Format("sp_helpfile '{0}'", dbName);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 DataBaseEntity db = new DataBaseEntity();
                 if (reader.Read())
                 {
@@ -56,9 +71,13 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="targetPercent">Is the desired percentage of free space left in the database file after the database has been shrunk</param>
         internal void ShrinkDataBase(Int32 targetPercent)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand(String.Format("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent.ToString()), con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.CommandText = String.Format("DBCC SHRINKDATABASE (VbaControlCenterDb, {0})", targetPercent.ToString());
 
                 con.Open();
                 cmd.ExecuteScalar();

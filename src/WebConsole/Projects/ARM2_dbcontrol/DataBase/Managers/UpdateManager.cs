@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,11 +16,21 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class UpdateManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public UpdateManager(String connectionString)
+        public UpdateManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public UpdateManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public UpdateManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -32,15 +43,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal UpdateEntity GetLast(UpdateStateEnum state)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetLastUpdate", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetLastUpdate";
 
-                cmd.Parameters.AddWithValue("@State", state.ToString());
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@State";
+                param.Value = state.ToString();
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 UpdateEntity ent = new UpdateEntity();
                 if (reader.Read())
                 {
@@ -63,12 +81,19 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void InsertUpdate()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("InsertUpdate", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@State", UpdateStateEnum.Processing.ToString());
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertUpdate";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@State";
+                param.Value = UpdateStateEnum.Processing.ToString();
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -81,15 +106,30 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="ent"></param>
         internal void Update(UpdateEntity ent)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateInsertedUpdate", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateInsertedUpdate";
 
-                cmd.Parameters.AddWithValue("@DeployDatetime", ent.DeployDatetime);
-                cmd.Parameters.AddWithValue("@State", ent.State.ToString());
-                cmd.Parameters.AddWithValue("@Description", ent.Description);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeployDatetime";
+                param.Value = ent.DeployDatetime;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@State";
+                param.Value = ent.State.ToString();
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Description";
+                param.Value=ent.Description;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
                 cmd.ExecuteNonQuery();
             }

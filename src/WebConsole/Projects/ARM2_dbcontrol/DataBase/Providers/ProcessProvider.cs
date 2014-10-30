@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -9,6 +10,7 @@ namespace VirusBlokAda.CC.DataBase
 
         private ProcessesManager prcMngr;
 
+        #region Constructors
         public ProcessProvider(String connectionString)
         {
             InitManagers(connectionString);
@@ -18,7 +20,25 @@ namespace VirusBlokAda.CC.DataBase
         {
             prcMngr = new ProcessesManager(connectionString);
         }
+        public ProcessProvider(String connectionString,DbProviderFactory factory)
+        {
+            InitManagers(connectionString,factory);
+        }
 
+        private void InitManagers(String connectionString, DbProviderFactory factory)
+        {
+            prcMngr = new ProcessesManager(connectionString,factory);
+        }
+        public ProcessProvider(String connectionString,String factoryName)
+        {
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            prcMngr = new ProcessesManager(connectionString,factoryName);
+        }
+        #endregion
         #region Methods
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -11,6 +12,7 @@ namespace VirusBlokAda.CC.DataBase
         //private EventsFlowManager evFlowMngr;
         private EventTypesManager etMngr;
 
+        #region Constructors
         public EventProvider(String connectionString)
         {
             InitManagers(connectionString);
@@ -22,7 +24,29 @@ namespace VirusBlokAda.CC.DataBase
             //evFlowMngr = new EventsFlowManager(connection);
             etMngr = new EventTypesManager(connectionString);
         }
+        public EventProvider(String connectionString,DbProviderFactory factory)
+        {
+            InitManagers(connectionString,factory);
+        }
 
+        private void InitManagers(String connectionString,DbProviderFactory factory)
+        {
+            eventMngr = new EventsManager(connectionString,factory);
+            //evFlowMngr = new EventsFlowManager(connection);
+            etMngr = new EventTypesManager(connectionString,factory);
+        }
+        public EventProvider(String connectionString,String factoryName)
+        {
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            eventMngr = new EventsManager(connectionString,factoryName);
+            //evFlowMngr = new EventsFlowManager(connection);
+            etMngr = new EventTypesManager(connectionString,factoryName);
+        }
+        #endregion
         #region Methods
 
         /// <summary>

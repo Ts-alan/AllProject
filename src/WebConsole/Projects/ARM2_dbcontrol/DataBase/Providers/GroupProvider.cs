@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -12,6 +13,7 @@ namespace VirusBlokAda.CC.DataBase
         private ComponentsManager cmptMngr;
         private ComputersManager compMngr;
 
+        #region Constructors
         public GroupProvider(String connectionString)
         {
             InitManagers(connectionString);
@@ -24,6 +26,30 @@ namespace VirusBlokAda.CC.DataBase
             compMngr = new ComputersManager(connectionString);
         }
 
+        public GroupProvider(String connectionString,DbProviderFactory factory)
+        {
+            InitManagers(connectionString,factory);
+        }
+
+        private void InitManagers(String connectionString,DbProviderFactory factory)
+        {
+            groupMngr = new GroupManager(connectionString,factory);
+            cmptMngr = new ComponentsManager(connectionString,factory);
+            compMngr = new ComputersManager(connectionString,factory);
+        }
+
+        public GroupProvider(String connectionString,String factoryName)
+        {
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            groupMngr = new GroupManager(connectionString,factoryName);
+            cmptMngr = new ComponentsManager(connectionString,factoryName);
+            compMngr = new ComputersManager(connectionString,factoryName);
+        }
+        #endregion
         #region Methods
 
         #region Administration

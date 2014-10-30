@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -11,6 +12,7 @@ namespace VirusBlokAda.CC.DataBase
         private PParserManager pMngr;
         private EventsFlowManager eMngr;
 
+        #region Constructors
         public PParserProvider(String connectionString)
         {
             InitManagers(connectionString);
@@ -21,11 +23,31 @@ namespace VirusBlokAda.CC.DataBase
             pMngr = new PParserManager(connectionString);
             eMngr = new EventsFlowManager(connectionString);
         }
+        public PParserProvider(String connectionString,DbProviderFactory factory)
+        {
+            InitManagers(connectionString,factory);
+        }
 
+        private void InitManagers(String connectionString,DbProviderFactory factory)
+        {
+            pMngr = new PParserManager(connectionString,factory);
+            eMngr = new EventsFlowManager(connectionString,factory);
+        }
+        public PParserProvider(String connectionString,String factoryName)
+        {
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            pMngr = new PParserManager(connectionString,factoryName);
+            eMngr = new EventsFlowManager(connectionString,factoryName);
+        }
+        #endregion
         #region EventsFlowManager properties
 
         #region Local hearth property
-        
+
         /// <summary>
         /// Временной порог срабатывания на очаг
         /// </summary>

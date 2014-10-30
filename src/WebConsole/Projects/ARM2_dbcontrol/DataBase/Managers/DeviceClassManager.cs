@@ -3,17 +3,30 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class DeviceClassManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
-        public DeviceClassManager(String connectionString)
+        #region Constructors
+        public DeviceClassManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public DeviceClassManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public DeviceClassManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
+        #endregion
 
         #region Methods
 
@@ -58,15 +71,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal DeviceClass GetDeviceClass(String uid)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClass", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClass";
 
-                cmd.Parameters.AddWithValue("@UID", uid);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = uid;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 DeviceClass d = null;
                 while (reader.Read())
                 {
@@ -92,14 +111,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal DeviceClass Add(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddNewDeviceClass", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddNewDeviceClass";
 
-                cmd.Parameters.AddWithValue("@UID", deviceClass.UID);
-                cmd.Parameters.AddWithValue("@Class", deviceClass.Class);
-                cmd.Parameters.AddWithValue("@ClassName", deviceClass.ClassName);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@UID";
+                param.Value = deviceClass.UID;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Class";
+                param.Value=deviceClass.Class;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@ClassName";
+                param.Value=deviceClass.ClassName;
+                cmd.Parameters.Add(param); 
 
                 DeviceClass d = (DeviceClass)deviceClass.Clone();
                 con.Open();
@@ -114,12 +147,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="deviceClass"></param>
         internal void Delete(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassByUID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassByUID";
 
-                cmd.Parameters.AddWithValue("@UID", deviceClass.UID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@UID";
+                param.Value = deviceClass.UID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -132,13 +171,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="deviceClass"></param>
         internal void ChangeComment(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("ChangeCommentDeviceClassByUID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ChangeCommentDeviceClassByUID";
 
-                cmd.Parameters.AddWithValue("@UID", deviceClass.UID);
-                cmd.Parameters.AddWithValue("@Comment", deviceClass.Class);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@UID";
+                param.Value = deviceClass.UID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Comment";
+                param.Value = deviceClass.Class;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteScalar();
@@ -151,13 +200,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<DeviceClass> GetDeviceClassList()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassList", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassList";
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClass> list = new List<DeviceClass>();
                 DeviceClass deviceClass;
                 while (reader.Read())
@@ -186,18 +238,36 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<DeviceClass> GetDeviceClassListByFilter(String where, String orderBy, Int32 index, Int32 pageCount)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassListByFilter", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassListByFilter";
 
-                cmd.Parameters.AddWithValue("@Page", index);
-                cmd.Parameters.AddWithValue("@RowCount", pageCount);
-                cmd.Parameters.AddWithValue("@OrderBy", orderBy);
-                cmd.Parameters.AddWithValue("@Where", where);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Page";
+                param.Value = index;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@RowCount";
+                param.Value = pageCount;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@OrderBy";
+                param.Value = orderBy;
+                cmd.Parameters.Add(param);
+ 
+                param=cmd.CreateParameter();
+                param.ParameterName="@Where";
+                param.Value=where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClass> list = new List<DeviceClass>();
                 DeviceClass deviceClass;
                 while (reader.Read())
@@ -226,12 +296,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 GetDeviceClassCount(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassCount", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassCount";
 
-                cmd.Parameters.AddWithValue("@Where", where);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -249,14 +325,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal DeviceClassPolicy AddPolicy(DeviceClassPolicy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddDeviceClassPolicy", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddDeviceClassPolicy";
 
-                cmd.Parameters.AddWithValue("@ComputerID", policy.Computer.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = policy.Computer.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param); 
 
                 DeviceClassPolicy d = (DeviceClassPolicy)policy.Clone();
                 con.Open();
@@ -274,14 +364,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>added policy count</returns>
         internal Int32 AddPolicy(DeviceClassPolicy policy, Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddDeviceClassPolicyToGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddDeviceClassPolicyToGroup";
 
-                cmd.Parameters.AddWithValue("@GroupID", group.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = group.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -295,13 +399,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group">groupID</param>
         internal Int32 AddPolicyWithoutGroup(DeviceClassPolicy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddDeviceClassPolicyWithoutGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddDeviceClassPolicyWithoutGroup";
 
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -315,14 +429,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group">groupID</param>
         internal void ChangeMode(DeviceClassPolicy policy, Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("ChangeDeviceClassModeToGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ChangeDeviceClassModeToGroup";
 
-                cmd.Parameters.AddWithValue("@GroupID", group.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = group.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param); 
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -335,13 +463,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="policy">DeviceClassID, DeviceClassMode</param>
         internal void ChangeModeWithoutGroup(DeviceClassPolicy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("ChangeDeviceClassModeWithoutGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ChangeDeviceClassModeWithoutGroup";
 
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param);             
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -355,14 +493,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>ID updated item, 0 - not update</returns>
         internal Int32 ChangeMode(DeviceClassPolicy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("ChangeModeToDeviceClassPolicy", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ChangeModeToDeviceClassPolicy";
 
-                cmd.Parameters.AddWithValue("@ComputerID", policy.Computer.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassMode", policy.Mode.ToString());
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = policy.Computer.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassMode";
+                param.Value = policy.Mode.ToString();
+                cmd.Parameters.Add(param); 
 
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -377,14 +529,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="policy">ComputerID, DeviceClassID</param>
         internal void DeletePolicy(DeviceClassPolicy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicy", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicy";
 
-                cmd.Parameters.AddWithValue("@ComputerID", policy.Computer.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", policy.ClassOfDevice.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = policy.Computer.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = policy.ClassOfDevice.ID;
+                cmd.Parameters.Add(param);
+              
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -396,12 +558,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="deviceClass">ID</param>        
         internal void DeletePolicy(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicyByDeviceClassID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicyByDeviceClassID";
 
-                cmd.Parameters.AddWithValue("@DeviceClassID", deviceClass.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = deviceClass.ID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -414,12 +582,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="computer">ID</param>
         internal void DeletePolicy(ComputersEntity computer)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicyByComputerID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicyByComputerID";
 
-                cmd.Parameters.AddWithValue("@ComputerID", computer.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = computer.ID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -433,14 +607,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group">ID</param>
         internal void DeletePolicy(DeviceClass deviceClass, Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicyFromGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicyFromGroup";
 
-                cmd.Parameters.AddWithValue("@GroupID", group.ID);
-                cmd.Parameters.AddWithValue("@DeviceClassID", deviceClass.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = group.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = deviceClass.ID;
+                cmd.Parameters.Add(param);
+              
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -453,12 +637,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group">ID</param>
         internal void DeletePolicyWithoutGroup(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicyWithoutGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicyWithoutGroup";
 
-                cmd.Parameters.AddWithValue("@DeviceClassID", deviceClass.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = deviceClass.ID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -471,13 +661,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group">ID</param>
         internal void DeletePolicy(Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteDeviceClassPolicyFromGroupByGroupID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteDeviceClassPolicyFromGroupByGroupID";
 
-                cmd.Parameters.AddWithValue("@GroupID", group.ID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = group.ID;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -492,15 +688,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<DeviceClassPolicy> GetPolicyList(ComputersEntity computer)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassPolicyListByComputerID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassPolicyListByComputerID";
 
-                cmd.Parameters.AddWithValue("@ComputerID", computer.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = computer.ID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClassPolicy> list = new List<DeviceClassPolicy>();
                 DeviceClassPolicy policy;
                 while (reader.Read())
@@ -535,15 +737,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>DeviceClassPolicy.ID is [All]-flag (1 - this policy is applied to all computer from group)</returns>
         internal List<DeviceClassPolicy> GetPolicyList(Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassPolicyListByGroupID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassPolicyListByGroupID";
 
-                cmd.Parameters.AddWithValue("@GroupID", group.ID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = group.ID;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClassPolicy> list = new List<DeviceClassPolicy>();
                 DeviceClassPolicy policy;
                 while (reader.Read())
@@ -576,13 +784,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>DeviceClassPolicy.ID is [All]-flag (1 - this policy is applied to all computer from group)</returns>
         internal List<DeviceClassPolicy> GetPolicyList()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassPolicyListWithoutGroup", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                cmd.CommandText = "GetDeviceClassPolicyListWithoutGroup";
+              
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClassPolicy> list = new List<DeviceClassPolicy>();
                 DeviceClassPolicy policy;
                 while (reader.Read())
@@ -616,15 +827,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>DeviceClassPolicy.ID is [GroupID] (0 - if computer without group)</returns>
         internal List<DeviceClassPolicy> GetComputerList(DeviceClass deviceClass)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputerListByDeviceClassID", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputerListByDeviceClassID";
 
-                cmd.Parameters.AddWithValue("@DeviceClassID", deviceClass.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@DeviceClassID";
+                param.Value = deviceClass.ID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<DeviceClassPolicy> list = new List<DeviceClassPolicy>();
                 DeviceClassPolicy policy;
                 while (reader.Read())
@@ -656,13 +873,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> GetDeviceClassModeList()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetDeviceClassModeList", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetDeviceClassModeList";
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<String> list = new List<String>();
                 while (reader.Read())
                 {

@@ -4,17 +4,30 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Win32;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class PolicyManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
-        public PolicyManager(String connectionString)
+        #region Constructors
+        public PolicyManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public PolicyManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public PolicyManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
+        #endregion
 
         #region Methods
 
@@ -63,18 +76,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="content">Body of policy</param>
         internal Policy Add(Policy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetPolicyID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@TypeName", policy.Name);
-                cmd.Parameters.AddWithValue("@Params", policy.Content);
-                cmd.Parameters.AddWithValue("@Comment", policy.Comment);
-                cmd.Parameters.AddWithValue("@InsertIfNotExists", true);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetPolicyID";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@TypeName";
+                param.Value = policy.Name;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Params";
+                param.Value = policy.Content;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@Comment";
+                param.Value=policy.Comment;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@InsertIfNotExists";
+                param.Value=true;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 if (reader.Read())
                     policy.ID = reader.GetInt16(0);
                 reader.Close();
@@ -89,13 +121,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="policy">policy name</param>
         internal void Delete(Policy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeletePolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeletePolicy";
 
-                cmd.Parameters.AddWithValue("@ID", policy.ID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = policy.ID;
+                cmd.Parameters.Add(param);
+             
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -108,14 +147,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="content">Body of policy</param>
         internal void Edit(Policy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdatePolicy", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@TypeName", policy.Name);
-                cmd.Parameters.AddWithValue("@Params", policy.Content);
-                cmd.Parameters.AddWithValue("@Comment", policy.Comment);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdatePolicy";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@TypeName";
+                param.Value = policy.Name;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Params";
+                param.Value = policy.Content;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@Comment";
+                param.Value=policy.Comment;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -129,15 +183,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Policy GetPolicyByName(String name)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetPolicyByName", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@TypeName", name);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetPolicyByName";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@TypeName";
+                param.Value = name;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 Policy policy = new Policy();
                 if (reader.Read())
                 {
@@ -167,14 +228,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="compName"></param>
         private void AddComputerToPolicy(Policy policy, String compName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddComputerToPolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddComputerToPolicy";
 
-                cmd.Parameters.AddWithValue("@ComputerName", compName);
-                cmd.Parameters.AddWithValue("@PolicyID", policy.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = compName;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@PolicyID";
+                param.Value = policy.ID;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -196,12 +268,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="compName"></param>
         internal void RemoveComputerFromAllPolicies(String compName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("RemoveComputerFromAllPolicies", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", compName);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RemoveComputerFromAllPolicies";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = compName;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -224,14 +303,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="compName">Computer name</param>
         private void RemoveComputerFromPolicy(Policy policy, String compName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("RemoveComputerFromPolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RemoveComputerFromPolicy";
 
-                cmd.Parameters.AddWithValue("@ComputerName", compName);
-                cmd.Parameters.AddWithValue("@RowCount", policy.ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = compName;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@RowCount";
+                param.Value = policy.ID;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -255,15 +345,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersByPolicy(Policy policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersByPolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersByPolicy";
 
-                cmd.Parameters.AddWithValue("@PolicyID", policy.ID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@PolicyID";
+                param.Value = policy.ID;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> computers = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
 
@@ -280,17 +377,32 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersWithoutPolicyPage(Int32 index, Int32 pageCount, String orderBy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutPolicyPage", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Page", index);
-                cmd.Parameters.AddWithValue("@RowCount", pageCount);
-                cmd.Parameters.AddWithValue("@OrderBy", orderBy);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutPolicyPage";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Page";
+                param.Value = index;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@RowCount";
+                param.Value = pageCount;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@OrderBy";
+                param.Value=orderBy;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> computers = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
 
@@ -304,10 +416,14 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 GetComputersWithoutPolicyCount()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutPolicyPageCount", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutPolicyPageCount";
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
@@ -321,15 +437,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Policy GetPolicyToComputer(String computerName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetPoliciesToComputer", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetPoliciesToComputer";
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
-
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 Policy policy = new Policy();
 
                 if (reader.Read())
@@ -374,13 +493,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Policy> GetPolicyType()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetPolicyTypes", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetPolicyTypes";
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Policy> policies = GetPoliciesFromReader(reader);
                 reader.Close();
 
@@ -393,10 +516,14 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void ClearAllPolicy()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("ClearAllPolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "ClearAllPolicy";
 
                 con.Open();
                 cmd.ExecuteNonQuery();

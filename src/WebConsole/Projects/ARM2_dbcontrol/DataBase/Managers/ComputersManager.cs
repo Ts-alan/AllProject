@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,11 +16,21 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class ComputersManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public ComputersManager(String connectionString)
+        public ComputersManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public ComputersManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public ComputersManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -169,12 +180,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>id</returns>
         internal void Delete(Int16 computersID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("DeleteComputer", con);
-                cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@ID", computersID);
+            using (IDbConnection con = factory.CreateConnection())
+            {
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteComputer";
+
+              
+                IDbDataParameter param= cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = computersID;
+                cmd.Parameters.Add(param);
+                
 
                 con.Open();
                 cmd.ExecuteScalar();
@@ -191,18 +211,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> List(String where, String order, Int16 page, Int16 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersPage", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.Parameters.AddWithValue("@rowcount", size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersPage";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@page";
+                param.Value = page;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@rowcount";
+                param.Value = size;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@orderby";
+                param.Value = order;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = GetComputersFromReader(reader);
                 reader.Close();
                 return list;
@@ -216,12 +255,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersCount";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+               
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
@@ -236,16 +283,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputers(String where, String orderBy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputers", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputers";
 
-                cmd.Parameters.AddWithValue("@Where", where);
-                cmd.Parameters.AddWithValue("@OrderBy", orderBy);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@OrderBy";
+                param.Value = orderBy;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = GetComputersFromReader(reader);
                 reader.Close();
                 return list;
@@ -260,16 +318,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntityEx> GetComputersEx(String where, String orderBy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputers", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Where", where);
-                cmd.Parameters.AddWithValue("@OrderBy", orderBy);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputers";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@OrderBy";
+                param.Value = orderBy;
+                cmd.Parameters.Add(param);
+
+                
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntityEx> list = GetComputersExFromReader(reader);
                 reader.Close();
                 return list;
@@ -283,13 +354,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="description">New description</param>
         internal void UpdateDescription(Int16 id, String description)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateComputerDescription", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ID", id);
-                cmd.Parameters.AddWithValue("@Description", description);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateComputerDescription";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = id;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Description";
+                param.Value = description;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -303,12 +385,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer ID. If computer wasn't existed return -1</returns>
         internal Int16 GetComputerID(String computerName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputerIDWeb", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersIDWeb";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 Object ret = cmd.ExecuteScalar();
@@ -325,15 +414,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Computer entity</returns>
         internal ComputersEntity GetComputer(Int16 id)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputer", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ID", id);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputer";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = id;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 ComputersEntity computer = null;
                 if (reader.Read())
                 {
@@ -350,11 +446,16 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>List of IPAddresses</returns>
         internal List<String> GetRegisteredCompList()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("SELECT [IPAddress] FROM Computers", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandText="SELECT [IPAddress] FROM Computers";
+
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<String> list = new List<String>();
                 while (reader.Read())
                 {
@@ -374,15 +475,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Extension version of computer entity</returns>
         internal ComputersEntityEx GetComputerEx(Int16 computersID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputer", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ID", computersID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputer";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = computersID;
+                cmd.Parameters.Add(param);
+              
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 ComputersEntityEx computer = null;
                 if (reader.Read())
                 {
@@ -403,15 +512,22 @@ namespace VirusBlokAda.CC.DataBase
             if (String.IsNullOrEmpty(where))
                 where = null;
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetSelectionComputerForTask", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetSelectionComputerForTask";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 SelectedComputersForTask selected;
                 selected.Names = new List<String>();
                 selected.IpAddresses = new List<String>();
@@ -433,13 +549,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="dt">Date</param>
         internal void ClearOldComputers(DateTime dt)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteOldComputers", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteOldComputers";
 
                 if (DateTime.Now.Subtract(dt).Days > 0)
-                    cmd.Parameters.AddWithValue("@Date", dt);
+                {
+                    IDbDataParameter param = cmd.CreateParameter();
+                    param.ParameterName = "@Date";
+                    param.Value = dt;
+                    cmd.Parameters.Add(param);
+                }
 
                 con.Open();
                 cmd.ExecuteNonQuery();

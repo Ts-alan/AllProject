@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,11 +16,21 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class ProcessesManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public ProcessesManager(String connectionString)
+        public ProcessesManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public ProcessesManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public ProcessesManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -35,18 +46,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ProcessesEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetProcessesPage", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetProcessesPage";
 
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.Parameters.AddWithValue("@rowcount", size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@page";
+                param.Value = page;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@rowcount";
+                param.Value = size;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@where";
+                param.Value=where;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@orderby";
+                param.Value=where;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ProcessesEntity> list = new List<ProcessesEntity>();
                 while (reader.Read())
                 {
@@ -75,12 +105,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetProcessesCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetProcessesCount";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();

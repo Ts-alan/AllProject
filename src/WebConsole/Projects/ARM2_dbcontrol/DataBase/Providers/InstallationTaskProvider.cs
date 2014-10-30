@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -9,6 +10,7 @@ namespace VirusBlokAda.CC.DataBase
         
         private InstallationTaskManager installMngr;
 
+        #region Constructors
         public InstallationTaskProvider(String connectionString)
         {
             InitManagers(connectionString);
@@ -18,7 +20,25 @@ namespace VirusBlokAda.CC.DataBase
         {
             installMngr = new InstallationTaskManager(connectionString);            
         }
+        public InstallationTaskProvider(String connectionString,DbProviderFactory factory)
+        {
+            InitManagers(connectionString,factory);
+        }
 
+        private void InitManagers(String connectionString,DbProviderFactory factory)
+        {
+            installMngr = new InstallationTaskManager(connectionString,factory);
+        }
+        public InstallationTaskProvider(String connectionString,String factoryName)
+        {
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            installMngr = new InstallationTaskManager(connectionString,factoryName);
+        }
+        #endregion
         #region Methods
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Text;
 using VirusBlokAda.CC.DataBase;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -48,7 +49,36 @@ namespace VirusBlokAda.CC.DataBase
             gm = new GroupManager(connectionString);
             deviceClassMng = new DeviceClassManager(connectionString);
         }
+        public PolicyProvider(String connectionString,DbProviderFactory factory)
+        {
+            this.connectionString = connectionString;
+            InitManagers(connectionString,factory);
+        }
 
+        private void InitManagers(String connectionString,DbProviderFactory factory)
+        {
+            policyMng = new PolicyManager(connectionString,factory);
+            deviceMng = new DeviceManager(connectionString,factory);
+            devicePolicyMng = new DevicePolicyManager(connectionString,factory);
+            cm = new ComputersManager(connectionString,factory);
+            gm = new GroupManager(connectionString,factory);
+            deviceClassMng = new DeviceClassManager(connectionString,factory);
+        }
+        public PolicyProvider(String connectionString,String factoryName)
+        {
+            this.connectionString = connectionString;
+            InitManagers(connectionString,factoryName);
+        }
+
+        private void InitManagers(String connectionString,String factoryName)
+        {
+            policyMng = new PolicyManager(connectionString,factoryName);
+            deviceMng = new DeviceManager(connectionString,factoryName);
+            devicePolicyMng = new DevicePolicyManager(connectionString,factoryName);
+            cm = new ComputersManager(connectionString,factoryName);
+            gm = new GroupManager(connectionString,factoryName);
+            deviceClassMng = new DeviceClassManager(connectionString,factoryName);
+        }
         #endregion
 
         #region Response logic

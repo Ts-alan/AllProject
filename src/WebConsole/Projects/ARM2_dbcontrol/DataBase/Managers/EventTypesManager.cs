@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,13 +16,23 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class EventTypesManager
 	{
         private readonly String connectionString;
-		
-		#region Constructors
-        public EventTypesManager(String connectionString)
-		{
+		private readonly DbProviderFactory factory;
+
+        #region Constructors
+        public EventTypesManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public EventTypesManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public EventTypesManager(String connectionString, DbProviderFactory factory)
+        {
             this.connectionString = connectionString;
-		}
-		#endregion
+            this.factory = factory;
+            
+        }
+        #endregion
 		
 		#region Methods
 
@@ -31,14 +42,25 @@ namespace VirusBlokAda.CC.DataBase
 		/// <param name="eventTypes">entity to update</param>
         internal void UpdateColor(EventTypesEntity eventTypes)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateEventColor", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateEventColor";
 
-                cmd.Parameters.AddWithValue("@ID", eventTypes.ID);
-                cmd.Parameters.AddWithValue("@Color", eventTypes.Color);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = eventTypes.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Color";
+                param.Value = eventTypes.Color;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -50,14 +72,25 @@ namespace VirusBlokAda.CC.DataBase
 		/// <param name="eventTypes">entity to update</param>
         internal void UpdateSend(EventTypesEntity eventTypes)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateEventSend", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateEventSend";
 
-                cmd.Parameters.AddWithValue("@ID", eventTypes.ID);
-                cmd.Parameters.AddWithValue("@Send", eventTypes.Send);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = eventTypes.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Send";
+                param.Value = eventTypes.Send;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -69,14 +102,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="eventTypes">entity to update</param>
         internal void UpdateNoDelete(EventTypesEntity eventTypes)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateEventNoDelete", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateEventNoDelete";
 
-                cmd.Parameters.AddWithValue("@ID", eventTypes.ID);
-                cmd.Parameters.AddWithValue("@NoDelete", eventTypes.NoDelete);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = eventTypes.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@NoDelete";
+                param.Value = eventTypes.NoDelete;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -88,14 +132,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="eventTypes">entity to update</param>
         internal void UpdateNotify(EventTypesEntity eventTypes)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateEventNotify", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateEventNotify";
 
-                cmd.Parameters.AddWithValue("@ID", eventTypes.ID);
-                cmd.Parameters.AddWithValue("@Notify", eventTypes.Notify);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = eventTypes.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Notify";
+                param.Value = eventTypes.Notify;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -111,18 +166,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<EventTypesEntity> List(String where, String order, Int16 page, Int16 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventTypesPage", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.Parameters.AddWithValue("@rowcount", size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventTypesPage";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@page";
+                param.Value = page;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@rowcount";
+                param.Value = size;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@where";
+                param.Value=where;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@orderby";
+                param.Value=order;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<EventTypesEntity> list = new List<EventTypesEntity>();
                 while (reader.Read())
                 {
@@ -154,12 +228,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>Count of event types</returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventTypesCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventTypesCount";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();

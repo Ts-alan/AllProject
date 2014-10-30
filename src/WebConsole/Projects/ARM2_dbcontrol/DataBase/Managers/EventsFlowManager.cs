@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -130,11 +131,22 @@ namespace VirusBlokAda.CC.DataBase
         #endregion
 
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
-        public EventsFlowManager(String connectionString)
+        #region Constructors
+        public EventsFlowManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public EventsFlowManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public EventsFlowManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;            
         }
+        #endregion
 
         #region Methods
 
@@ -172,17 +184,32 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean IsGlobalEpidemy(EventsEntity currEvent)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventsCountByComment", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@EventTime", currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit));
-                cmd.Parameters.AddWithValue("@Comment", currEvent.Comment);
-                cmd.Parameters.AddWithValue("@EventName", currEvent.EventName);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventsCountByComment";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@EventTime";
+                param.Value = currEvent.EventTime.AddMinutes(0 - this.GlobalEpidemyTimeLimit);
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Comment";
+                param.Value = currEvent.Comment;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@EventName";
+                param.Value = currEvent.EventName;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
                 Int32 sum = 0;
                 Int32 compCount = 0;
@@ -212,13 +239,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean FlowAnalysis(EventsEntity currEvent)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventsCountByName", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@EventTime", currEvent.EventTime.AddMinutes(0 - this.TimeLimit));
-                cmd.Parameters.AddWithValue("@EventName", currEvent.EventName);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventsCountByName";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@EventTime";
+                param.Value = currEvent.EventTime.AddMinutes(0 - this.TimeLimit);
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@EventName";
+                param.Value = currEvent.EventName;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar() <= this.Limit;

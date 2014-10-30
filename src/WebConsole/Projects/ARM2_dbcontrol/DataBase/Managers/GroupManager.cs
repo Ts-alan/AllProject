@@ -4,23 +4,32 @@ using System.Text;
 using VirusBlokAda.CC.DataBase;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class GroupManager
     {
         private readonly String connectionString;
-		
-		#region Constructors
+		private readonly DbProviderFactory factory;
 
-        public GroupManager(String connectionString)
-		{
+        #region Constructors
+        public GroupManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public GroupManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public GroupManager(String connectionString, DbProviderFactory factory)
+        {
             this.connectionString = connectionString;
-		}
+            this.factory = factory;
+            
+        }
+        #endregion
 
-		#endregion
-
-        #region Metods
+        #region Methods
 
         #region Administration
 
@@ -31,15 +40,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Add(Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddGroup", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@GroupName", group.Name);
-                cmd.Parameters.AddWithValue("@Comment", group.Comment);
-                if (group.ParentID != null)
-                cmd.Parameters.AddWithValue("@ParentID", group.ParentID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddGroup";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupName";
+                param.Value = group.Name;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Comment";
+                param.Value = group.Comment;
+                cmd.Parameters.Add(param);
+               
+                param=cmd.CreateParameter();
+                param.ParameterName="@ParentID";
+                param.Value=group.ParentID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -52,12 +75,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="group"></param>
         internal void Delete(Group group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("RemoveGroupByName", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@GroupName", group.Name);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RemoveGroupByName";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupName";
+                param.Value = group.Name;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -71,16 +101,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="newGroupName"></param>
         internal void Update(String groupName, String newGroupName, String newComment, Int32? newParentID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateGroup", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@GroupName", groupName);
-                cmd.Parameters.AddWithValue("@NewGroupName", newGroupName);
-                cmd.Parameters.AddWithValue("@NewComment", newComment);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateGroup";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupName";
+                param.Value = groupName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@NewGroupName";
+                param.Value = newGroupName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@NewComment";
+                param.Value = newComment;
+                cmd.Parameters.Add(param);
+
                 if (newParentID != null)
-                cmd.Parameters.AddWithValue("@NewParentID", newParentID);
+                {
+                    param = cmd.CreateParameter();
+                    param.ParameterName = "@NewParentID";
+                    param.Value = newParentID;
+                    cmd.Parameters.Add(param);
+                }
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -94,13 +145,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetListGroupsCount", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetListGroupsCount";
 
-                cmd.Parameters.AddWithValue("@Where", where);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
@@ -113,13 +171,24 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="NewGroupID"></param>
         internal void MoveComputerBetweenGroups(Int16 compID, Int32 NewGroupID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("MoveComputerBetweenGroups", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerID", compID);
-                cmd.Parameters.AddWithValue("@GroupID", NewGroupID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "MoveComputerBetweenGroups";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = compID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = NewGroupID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -132,12 +201,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="compID"></param>
         internal void DeleteComputerFromGroup(Int16 compID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("RemoveComputerFromGroup", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerID", compID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RemoveComputerFromGroup";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = compID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -151,14 +227,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="groupID"></param>
         internal void AddComputerInGroup(Int16 compID, Int32 groupID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddComputerInGroup", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddComputerInGroup";
 
-                cmd.Parameters.AddWithValue("@ComputerID", compID);
-                cmd.Parameters.AddWithValue("@GroupID", groupID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = compID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = groupID;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -171,15 +258,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<String> GetAllComputersNameByGroup(Int32 groupID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetAllComputersByGroup", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@GroupID", groupID);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetAllComputersByGroup";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = groupID;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<String> list = new List<String>();
                 while (reader.Read())
                 {
@@ -198,16 +292,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersByGroup(Int32 groupID, String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersByGroupWithFilter", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersByGroupWithFilter";
 
-                cmd.Parameters.AddWithValue("@GroupID", groupID);
-                cmd.Parameters.AddWithValue("@Where", where);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = groupID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
                 return list;
@@ -221,16 +326,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntityEx> GetComputersExByGroup(Int32 groupID, String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersByGroupWithFilter", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@GroupID", groupID);
-                cmd.Parameters.AddWithValue("@Where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersByGroupWithFilter";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@GroupID";
+                param.Value = groupID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntityEx> list = ComputersManager.GetComputersExFromReader(reader);
                 reader.Close();
                 return list;
@@ -243,13 +359,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetGroups()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetGroupTypes", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetGroupTypes";
+
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Group> list = new List<Group>();
                 Group gr;
                 while (reader.Read())
@@ -276,16 +397,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetSubgroups(Int32 groupId)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetSubgroupTypes", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetSubgroupTypes";
+
+
 
                 if (groupId != 0)
-                cmd.Parameters.AddWithValue("@ParentID", groupId);
+                {
+                    IDbDataParameter param = cmd.CreateParameter();
+                    param.ParameterName = "@ParentID";
+                    param.Value = groupId;
+                    cmd.Parameters.Add(param);
+                }
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Group> list = new List<Group>();
                 Group gr;
                 while (reader.Read())
@@ -312,16 +444,25 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetSubgroups(Group? group)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetSubgroupTypes", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetSubgroupTypes";
 
                 if (group != null)
-                cmd.Parameters.AddWithValue("@ParentID", ((Group)group).ID);
-
+                {
+                    IDbDataParameter param = cmd.CreateParameter();
+                    param.ParameterName = "@ParentID";
+                    param.Value = ((Group)group).ID;
+                    cmd.Parameters.Add(param);
+                }
+             
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Group> list = new List<Group>();
                 Group gr;
                 while (reader.Read())
@@ -348,18 +489,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<GroupEx> List(String where, String order, Int32 page, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetListGroups", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Page", page);
-                cmd.Parameters.AddWithValue("@RowCount", size);
-                cmd.Parameters.AddWithValue("@OrderBy", order);
-                cmd.Parameters.AddWithValue("@Where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetListGroups";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Page";
+                param.Value = page;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@RowCount";
+                param.Value = size;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@OrderBy";
+                param.Value=order;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Where";
+                param.Value=where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<GroupEx> list = new List<GroupEx>();
                 GroupEx gr;
                 while (reader.Read())
@@ -390,13 +550,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersWithoutGroup()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPage", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutGroupPage";
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
 
@@ -410,15 +575,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersWithoutGroup(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPageWithFilter", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutGroupPageWithFilter";
 
-                cmd.Parameters.AddWithValue("@Where", where);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
 
@@ -432,15 +604,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntityEx> GetComputersExWithoutGroup(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPageWithFilter", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutGroupPageWithFilter";
 
-                cmd.Parameters.AddWithValue("@Where", where);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntityEx> list = ComputersManager.GetComputersExFromReader(reader);
                 reader.Close();
 
@@ -454,12 +633,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 GetComputersWithoutGroupCount()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithoutGroupPageCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithoutGroupPageCount";
+             
                 con.Open();
+               
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }
         }
@@ -470,13 +654,17 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ChildParentEntity> GetComputersWithGroups()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersWithGroupPage", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersWithGroupPage";
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ChildParentEntity> list = new List<ChildParentEntity>();
                 ChildParentEntity ent;
                 while (reader.Read())
@@ -507,18 +695,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComputersEntity> GetComputersByGroupAndPolicy(Group? group, Policy? policy)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputersByGroupAndPolicy", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputersByGroupAndPolicy";
 
-                if (group != null)
-                cmd.Parameters.AddWithValue("@GroupID", ((Group)group).ID);
-                if (policy != null)
-                cmd.Parameters.AddWithValue("@PolicyID", ((Policy)policy).ID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                if (group != null){
+                param.ParameterName = "@GroupID";
+                param.Value = ((Group)group).ID;
+                cmd.Parameters.Add(param);
+                }
+                if (policy != null){
+                param = cmd.CreateParameter();
+                param.ParameterName = "@PolicyID";
+                param.Value = ((Policy)policy).ID;
+                cmd.Parameters.Add(param);
+                }
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComputersEntity> list = ComputersManager.GetComputersFromReader(reader);
                 reader.Close();
 
@@ -532,15 +731,22 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<Group> GetGroupListByComputerID(Int16 compID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetGroupListByComputerID", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetGroupListByComputerID";
 
-                cmd.Parameters.AddWithValue("@ComputerID", compID);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerID";
+                param.Value = compID;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<Group> list = new List<Group>();
                 Group ent;
                 while (reader.Read())

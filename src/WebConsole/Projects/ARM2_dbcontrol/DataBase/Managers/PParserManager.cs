@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class PParserManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public PParserManager(String connectionString)
+        public PParserManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public PParserManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public PParserManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -25,13 +36,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="computer_name"></param>
         internal void DeleteProcessInfo(String computer_name)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteProcessInfo", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteProcessInfo";
 
-                cmd.Parameters.AddWithValue("@ComputerName", computer_name);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computer_name;
+                cmd.Parameters.Add(param);
+             
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -45,14 +63,28 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="settings"></param>
         internal void InsertComponentSettings(String computer_name, String component_name, String settings)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateComponentSettings", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", computer_name);
-                cmd.Parameters.AddWithValue("@ComponentName", component_name);
-                cmd.Parameters.AddWithValue("@ComponentSettings", settings);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateComponentSettings";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computer_name;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ComponentName";
+                param.Value = component_name;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@ComponentSettings";
+                param.Value=settings;
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -68,16 +100,35 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="version"></param>
         internal void InsertComponentState(String computerName, String componentName, String componentState, String version)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateComponentState", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateComponentState";
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
-                cmd.Parameters.AddWithValue("@ComponentName", componentName);
-                cmd.Parameters.AddWithValue("@ComponentState", componentState);
-                cmd.Parameters.AddWithValue("@Version", version);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ComponentName";
+                param.Value = componentName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@ComponentState";
+                param.Value=componentState;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Version";
+                param.Value=version;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -92,17 +143,44 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="componentName"></param>
         internal void InsertEvent(EventsEntity ev)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddEvent", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);
-                cmd.Parameters.AddWithValue("@EventName", ev.EventName);
-                cmd.Parameters.AddWithValue("@EventTime", ev.EventTime);
-                cmd.Parameters.AddWithValue("@ComponentName", String.IsNullOrEmpty(ev.ComponentName) ? "(unknown)" : ev.ComponentName);
-                cmd.Parameters.AddWithValue("@Object", ev.Object);
-                cmd.Parameters.AddWithValue("@Comment", ev.Comment);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddEvent";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = ev.ComputerName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@EventName";
+                param.Value = ev.EventName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@EventTime";
+                param.Value=ev.EventTime;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName="@ComponentName";
+                param.Value=String.IsNullOrEmpty(ev.ComponentName) ? "(unknown)" : ev.ComponentName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Object";
+                param.Value=ev.Object;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Comment";
+                param.Value=ev.Comment;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -145,15 +223,34 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="memorySize"></param>
         internal void InsertProcessInfo(String computerName, String processName, Int32 memorySize)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateProcessInfo", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
-                cmd.Parameters.AddWithValue("@ProcessName", processName);
-                cmd.Parameters.AddWithValue("@MemorySize", memorySize);
-                cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateProcessInfo";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ProcessName";
+                param.Value = processName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@MemorySize";
+                param.Value=memorySize;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Date";
+                param.Value=DateTime.Now;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -167,25 +264,84 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="licenceCount"></param>
         internal void InsertSystemInfo(ComputersEntity comp, Int16 licenceCount)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateComputerSystemInfo", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@ComputerName", comp.ComputerName);
-                cmd.Parameters.AddWithValue("@IPAddress", comp.IPAddress);
-                cmd.Parameters.AddWithValue("@DomainName", comp.DomainName);
-                cmd.Parameters.AddWithValue("@UserLogin", comp.UserLogin);
-                cmd.Parameters.AddWithValue("@OSName", comp.OSName);
-                cmd.Parameters.AddWithValue("@RAM", comp.RAM);
-                cmd.Parameters.AddWithValue("@CPUClock", comp.CPUClock);
-                cmd.Parameters.AddWithValue("@Vba32Version", comp.Vba32Version);
-                cmd.Parameters.AddWithValue("@Vba32Integrity", comp.Vba32Integrity);
-                cmd.Parameters.AddWithValue("@Vba32KeyValid", comp.Vba32KeyValid);
-                cmd.Parameters.AddWithValue("@ControlCenter", comp.ControlCenter);
-                cmd.Parameters.AddWithValue("@LicenseCount", licenceCount);
-                cmd.Parameters.AddWithValue("@MACAddress", comp.MacAddress);
-                cmd.Parameters.AddWithValue("@ControlName", comp.AdditionalInfo.ControlDeviceType.ToString());
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateComputerSystemInfo";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = comp.ComputerName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@IPAddress";
+                param.Value = comp.IPAddress;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@DomainName";
+                param.Value = comp.DomainName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@UserLogin";
+                param.Value = comp.UserLogin;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@OSName";
+                param.Value = comp.OSName;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@RAM";
+                param.Value = comp.RAM;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@CPUClock";
+                param.Value = comp.CPUClock;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Vba32Version";
+                param.Value = comp.Vba32Version;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Vba32Integrity";
+                param.Value = comp.Vba32Integrity;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Vba32KeyValid";
+                param.Value = comp.Vba32KeyValid;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ControlCenter";
+                param.Value = comp.ControlCenter;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@LicenseCount";
+                param.Value = licenceCount;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@MACAddress";
+                param.Value = comp.MacAddress;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ControlName";
+                param.Value = comp.AdditionalInfo.ControlDeviceType.ToString();
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -198,16 +354,35 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="task"></param>
         internal void InsertTaskState(TaskEntity task)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("UpdateTaskState", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UpdateTaskState";
 
-                cmd.Parameters.AddWithValue("@TaskID", task.ID);
-                cmd.Parameters.AddWithValue("@TaskState", task.TaskState);
-                cmd.Parameters.AddWithValue("@Date", task.DateUpdated);
-                cmd.Parameters.AddWithValue("@Description", task.TaskDescription);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@TaskID";
+                param.Value = task.ID;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@TaskState";
+                param.Value = task.TaskState;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Date";
+                param.Value=task.DateUpdated;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Description";
+                param.Value=task.TaskDescription;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -221,15 +396,30 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="settings"></param>
         internal void InsertSettings(String macAddress, String componentName, String settings)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("InsertSettings", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertSettings";
 
-                cmd.Parameters.AddWithValue("@MAC", macAddress);
-                cmd.Parameters.AddWithValue("@ComponentName", componentName);
-                cmd.Parameters.AddWithValue("@Settings", settings);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@MAC";
+                param.Value = macAddress;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ComponentName";
+                param.Value = componentName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Settings";
+                param.Value=settings;
+                cmd.Parameters.Add(param);
+                
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -249,16 +439,39 @@ namespace VirusBlokAda.CC.DataBase
             String serial = DeviceManager.ChangeDeviceMode(ev.Comment_parts[0], type, DeviceMode.Undefined);
             String comment = ev.Comment_parts[1];
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("OnInsertingDevice", con);
-                cmd.CommandType = CommandType.StoredProcedure;                
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@SerialNo", serial);
-                cmd.Parameters.AddWithValue("@ComputerName", ev.ComputerName);
-                cmd.Parameters.AddWithValue("@Comment", comment);
-                cmd.Parameters.AddWithValue("@TypeName", type.ToString());
-                cmd.Parameters.AddWithValue("@LicenseCount", licenseCount);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "OnInsertingDevice";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@SerialNo";
+                param.Value = serial;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = ev.ComputerName;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@Comment";
+                param.Value=comment;
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@TypeName";
+                param.Value=type.ToString();
+                cmd.Parameters.Add(param);
+
+                param=cmd.CreateParameter();
+                param.ParameterName="@LicenseCount";
+                param.Value=licenseCount;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -272,13 +485,21 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal String GetComputerIPAddress(String computerName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComputerIPAddress", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComputerIPAddress";
 
-                cmd.Parameters.AddWithValue("@ComputerName", computerName);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ComputerName";
+                param.Value = computerName;
+                cmd.Parameters.Add(param);
 
+               
                 con.Open();
                 String ipAddress = String.Empty;
                 ipAddress = cmd.ExecuteScalar().ToString();
@@ -294,13 +515,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Boolean GetEventTypeNotify(String event_name)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventTypeNotify", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventTypeNotify";
 
-                cmd.Parameters.AddWithValue("@EventName", event_name);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@EventName";
+                param.Value = event_name;
+                cmd.Parameters.Add(param);
+             
                 con.Open();
                 Boolean isNeed = false;
                 isNeed = Convert.ToBoolean(cmd.ExecuteScalar());

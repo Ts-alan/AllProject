@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,11 +16,22 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class ComponentsManager
     {
         private readonly String connectionString;
+        private readonly DbProviderFactory factory;
 
         #region Constructors
-        public ComponentsManager(String connectionString)
+        public ComponentsManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public ComponentsManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+
+        public ComponentsManager(String connectionString, DbProviderFactory factory)
         {
             this.connectionString = connectionString;
+            this.factory = factory;
+            
         }
         #endregion
 
@@ -75,18 +87,41 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComponentsEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+
+            using (IDbConnection con=factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentsPage", con);
+                con.ConnectionString = connectionString;
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.Parameters.AddWithValue("@rowcount", size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                cmd.CommandText = "GetComponentsPage";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@page";
+                param.Value = page;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@rowcount";
+                param.Value = size;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@orderby";
+                param.Value = order;
+                cmd.Parameters.Add(param);
+
+
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComponentsEntity> list = GetComponentsFromReader(reader);
                 reader.Close();
                 return list;
@@ -100,15 +135,23 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>List of components</returns>
         internal List<ComponentsEntity> GetComponentsPageByComputerID(Int16 ID)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentsPageByComputerID", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComponentsPageByComputerID";
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@ID", ID);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@ID";
+                param.Value = ID;
+                cmd.Parameters.Add(param);
                 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComponentsEntity> list = GetComponentsFromReader(reader);
                 reader.Close();
                 return list;
@@ -122,12 +165,20 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentsCount", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComponentsCount";
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
@@ -140,13 +191,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComponentsEntity> ListComponentState()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentStateList", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText ="GetComponentStateList";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComponentsEntity> list = new List<ComponentsEntity>();
                 while (reader.Read())
                 {
@@ -166,13 +222,18 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<ComponentsEntity> ListComponentType()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentTypeList", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComponentTypeList";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<ComponentsEntity> list = new List<ComponentsEntity>();
                 while (reader.Read())
                 {
@@ -194,16 +255,29 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns>XML serializable settings</returns>
         internal String GetCurrentSettings(Int16 compID, String componentName)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetComponentCurrentSettings", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetComponentCurrentSettings";
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@compId", compID);
-                cmd.Parameters.AddWithValue("@name", componentName);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@compId";
+                param.Value = compID;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@name";
+                param.Value = componentName;
+                cmd.Parameters.Add(param);
+
 
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 String result = String.Empty;
                 if (reader.Read())
                     if (reader.GetValue(1) != DBNull.Value)

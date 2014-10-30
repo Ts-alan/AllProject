@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
@@ -15,13 +16,23 @@ namespace VirusBlokAda.CC.DataBase
     internal sealed class EventsManager
 	{
         private readonly String connectionString;
-		
-		#region Constructors
-        internal EventsManager(String connectionString)
-		{
+		private readonly DbProviderFactory factory;
+
+        #region Constructors
+        public EventsManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public EventsManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public EventsManager(String connectionString, DbProviderFactory factory)
+        {
             this.connectionString = connectionString;
-		}
-		#endregion
+            this.factory = factory;
+            
+        }
+        #endregion
 		
 		#region Methods
 
@@ -35,18 +46,37 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<EventsEntity> List(String where, String order, Int32 page, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventsPage", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventsPage";
 
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.Parameters.AddWithValue("@rowcount", size);
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@orderby", order);
+                IDbDataParameter param=cmd.CreateParameter();
+                param.ParameterName="@page";
+                param.Value=page;
+                cmd.Parameters.Add(param);
 
+                param=cmd.CreateParameter();
+                param.ParameterName="@rowcount";
+                param.Value=size;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
+
+                param = cmd.CreateParameter();
+                param.ParameterName = "@orderBy";
+                param.Value = order;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<EventsEntity> list = new List<EventsEntity>();
                 while (reader.Read())
                 {
@@ -95,16 +125,27 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetStatistics", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetStatistics";
 
-                cmd.Parameters.AddWithValue("@where", where);
-                cmd.Parameters.AddWithValue("@OrderBy", groupBy);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@OrderBy";
+                param.Value = groupBy;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                IDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 List<StatisticEntity> list = new List<StatisticEntity>();
                 Int32 i = 0;
                 while (reader.Read())
@@ -131,12 +172,19 @@ namespace VirusBlokAda.CC.DataBase
 		/// <returns></returns>
         internal Int32 Count(String where)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetEventsCount", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@where", where);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetEventsCount";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@where";
+                param.Value = where;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 return (Int32)cmd.ExecuteScalar();
@@ -149,12 +197,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <param name="dt">Date</param>
         internal void ClearOldEvents(DateTime dt)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteOldEvents", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@Date", dt);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteOldEvents";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@Date";
+                param.Value = dt;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

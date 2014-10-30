@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace VirusBlokAda.CC.DataBase
 {
     internal sealed class ScanningObjectManager
     {
         private readonly String connectionString;
-		
-		#region Constructors
-        public ScanningObjectManager(String connectionString)
-		{
+		private readonly DbProviderFactory factory;
+
+        #region Constructors
+        public ScanningObjectManager(String connectionString):this(connectionString,"System.Data.SqlClient")
+        {            
+        }
+
+        public ScanningObjectManager(String connectionString,String DbFactoryName):this(connectionString,DbProviderFactories.GetFactory(DbFactoryName))
+        {            
+        }
+        public ScanningObjectManager(String connectionString, DbProviderFactory factory)
+        {
             this.connectionString = connectionString;
-		}
-		#endregion
+            this.factory = factory;
+            
+        }
+        #endregion
 		
 		#region Methods
 
@@ -24,14 +35,25 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void AddComment(ScanningObjectEntity entity)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AddCommentByIP", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "AddCommentByIP";
 
-                cmd.Parameters.AddWithValue("@IP", entity.IPAddress);
-                cmd.Parameters.AddWithValue("@Comment", entity.Comment);
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@IP";
+                param.Value = entity.IPAddress;
+                cmd.Parameters.Add(param);
 
+                param = cmd.CreateParameter();
+                param.ParameterName = "@Comment";
+                param.Value = entity.Comment;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteScalar();
             }
@@ -42,13 +64,20 @@ namespace VirusBlokAda.CC.DataBase
         /// </summary>
         internal void DeleteComment(String ip)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("DeleteCommentByIP", con);
+                con.ConnectionString = connectionString;
+
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DeleteCommentByIP";
 
-                cmd.Parameters.AddWithValue("@IP", ip);
-
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@IP";
+                param.Value = ip;
+                cmd.Parameters.Add(param);
+               
                 con.Open();
                 cmd.ExecuteScalar();
             }
@@ -61,12 +90,19 @@ namespace VirusBlokAda.CC.DataBase
         /// <returns></returns>
         internal String GetComment(String ip)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = factory.CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("GetCommentByIP", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                con.ConnectionString = connectionString;
 
-                cmd.Parameters.AddWithValue("@IP", ip);
+                IDbCommand cmd = factory.CreateCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "GetCommentByIP";
+
+                IDbDataParameter param = cmd.CreateParameter();
+                param.ParameterName = "@IP";
+                param.Value = ip;
+                cmd.Parameters.Add(param);
 
                 con.Open();
                 Object res = cmd.ExecuteScalar();
