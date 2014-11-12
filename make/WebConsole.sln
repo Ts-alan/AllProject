@@ -40,7 +40,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteOperations", "..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj", "{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "..\src\WebConsole\Projects\CustomControls\CustomControls.csproj", "{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "..\src\Libraries\CustomControls\CustomControls.csproj", "{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "..\src\WebConsole\Projects\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
 EndProject
