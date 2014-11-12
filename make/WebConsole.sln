@@ -56,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{818B75A6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebConsoleTests", "..\src\WebConsole\Projects\WebConsoleTests\WebConsoleTests.csproj", "{CD279344-0D32-481F-8812-C7E0D141C771}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "..\src\WebConsole\Projects\Settings\Settings.csproj", "{28D5DA26-7732-44A5-9720-BA779BCC2D29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "..\src\Libraries\Settings\Settings.csproj", "{28D5DA26-7732-44A5-9720-BA779BCC2D29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "..\src\WebConsole\Projects\IntegrationTests\IntegrationTests.csproj", "{1BFC32C7-1BC9-48AC-BC50-6CDC88BCDF7C}"
 EndProject
