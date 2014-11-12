@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "..\src\WebConsole\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{43CF80B1-F9AF-4BAB-9C93-9474B54D697F}"
 EndProject
-Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "VbaControlCenterDB", "..\src\WebConsole\Projects\VbaControlCenterDB\VbaControlCenterDB.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "VbaControlCenterDB", "..\src\DB\VbaControlCenterDB\VbaControlCenterDB.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{818B75A6-3810-43F5-B5E1-0585E469E715}"
 EndProject
