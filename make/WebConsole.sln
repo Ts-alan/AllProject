@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "packet_parser", "..\src\pac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{1198B89E-E557-43B3-8F27-E8C5B72B400C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteOperations", "..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj", "{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}"
 EndProject
