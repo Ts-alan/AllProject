@@ -46,7 +46,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "..\src\Libraries
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\src\Libraries\Common\Common.csproj", "{C8F6D412-C657-438C-BBE3-842FB4466440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "..\src\WebConsole\Projects\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasks", "..\src\Libraries\Tasks\Tasks.csproj", "{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{43CF80B1-F9AF-4BAB-9C93-9474B54D697F}"
 EndProject
