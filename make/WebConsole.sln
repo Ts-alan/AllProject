@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteOperations", "..\src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "..\src\Libraries\CustomControls\CustomControls.csproj", "{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "..\src\WebConsole\Projects\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filters", "..\src\Libraries\Filters\Filters.csproj", "{C09A5B35-526F-4A85-9046-909E9D811BBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\src\Libraries\Common\Common.csproj", "{C8F6D412-C657-438C-BBE3-842FB4466440}"
 EndProject
