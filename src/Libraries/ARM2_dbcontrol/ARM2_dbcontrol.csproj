@@ -43,8 +43,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\WebConsole\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\WebConsole\$(AssemblyName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Libraries\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Libraries\$(AssemblyName)\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -98,12 +98,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.vsisLib">
-      <HintPath>..\..\bin\Interop.vsisLib.dll</HintPath>
+      <HintPath>..\..\WebConsole\bin\Interop.vsisLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\make\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\make\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

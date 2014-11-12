@@ -12,8 +12,8 @@
     <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\WebConsole\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\WebConsole\$(AssemblyName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Libraries\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Libraries\$(AssemblyName)\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>

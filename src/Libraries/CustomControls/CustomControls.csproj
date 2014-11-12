@@ -15,8 +15,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\WebConsole\$(AssemblyName)\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\WebConsole\$(AssemblyName)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Libraries\$(AssemblyName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Libraries\$(AssemblyName)\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>

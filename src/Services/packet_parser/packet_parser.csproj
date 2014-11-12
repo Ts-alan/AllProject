@@ -15,8 +15,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <BaseIntermediateOutputPath>..\..\.bin\int\packet_parser\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\packet_parser\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Services\packet_parser\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Services\packet_parser\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -63,15 +63,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+    <ProjectReference Include="..\..\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
       <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Settings\Settings.csproj">
+    <ProjectReference Include="..\..\Libraries\Settings\Settings.csproj">
       <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
       <Name>Settings</Name>
     </ProjectReference>

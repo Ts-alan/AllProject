@@ -17,8 +17,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
-    <BaseIntermediateOutputPath>..\..\.bin\int\Vba32SS\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\Vba32SS\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Services\Vba32SS\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Services\Vba32SS\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -81,11 +81,11 @@
     <Content Include="SS.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Settings\Settings.csproj">
+    <ProjectReference Include="..\..\Libraries\Settings\Settings.csproj">
       <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
       <Name>Settings</Name>
     </ProjectReference>

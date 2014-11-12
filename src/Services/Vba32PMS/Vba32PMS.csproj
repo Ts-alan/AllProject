@@ -32,8 +32,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BaseIntermediateOutputPath>..\..\.bin\int\Vba32PMS\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\.bin\Vba32PMS\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Services\Vba32PMS\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Services\Vba32PMS\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -125,23 +125,23 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+    <ProjectReference Include="..\..\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
       <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Common\Common.csproj">
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Filters\Filters.csproj">
+    <ProjectReference Include="..\..\Libraries\Filters\Filters.csproj">
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Settings\Settings.csproj">
+    <ProjectReference Include="..\..\Libraries\Settings\Settings.csproj">
       <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
       <Name>Settings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebConsole\Projects\Tasks\Tasks.csproj">
+    <ProjectReference Include="..\..\Libraries\Tasks\Tasks.csproj">
       <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
       <Name>Tasks</Name>
     </ProjectReference>

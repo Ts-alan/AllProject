@@ -61,7 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+    <ProjectReference Include="..\..\..\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
       <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>

@@ -22,8 +22,8 @@
     <DefaultSchema>dbo</DefaultSchema>
     <PreviousProjectVersion>4.0</PreviousProjectVersion>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <BaseIntermediateOutputPath>..\..\..\..\.bin\int\Sql\</BaseIntermediateOutputPath>
-    <OutputPath>..\..\..\..\.bin\Sql\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>..\..\..\.bin\int\Sql\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\..\.bin\Sql\$(Configuration)</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
