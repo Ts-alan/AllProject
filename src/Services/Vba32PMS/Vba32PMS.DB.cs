@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Diagnostics;
-using System.Data.SqlClient;
 
 using Vba32.ControlCenter.PeriodicalMaintenanceService.Xml;
 using VirusBlokAda.CC.DataBase;
