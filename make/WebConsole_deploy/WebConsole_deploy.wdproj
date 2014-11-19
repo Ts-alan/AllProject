@@ -33,31 +33,31 @@
     <KeyFile>..\Keys\sgKey.snk</KeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\Common\Common.csproj">
+    <ProjectReference Include="..\..\src\Libraries\Common\Common.csproj">
       <Project>{C8F6D412-C657-438C-BBE3-842FB4466440}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+    <ProjectReference Include="..\..\src\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
       <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\CustomControls\CustomControls.csproj">
+    <ProjectReference Include="..\..\src\Libraries\CustomControls\CustomControls.csproj">
       <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
       <Name>CustomControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\Filters\Filters.csproj">
+    <ProjectReference Include="..\..\src\Libraries\Filters\Filters.csproj">
       <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
       <Name>Filters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\RemoteOperations\RemoteOperations.csproj">
+    <ProjectReference Include="..\..\src\Libraries\RemoteOperations\RemoteOperations.csproj">
       <Project>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</Project>
       <Name>RemoteOperations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\Settings\Settings.csproj">
+    <ProjectReference Include="..\..\src\Libraries\Settings\Settings.csproj">
       <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
       <Name>Settings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\WebConsole\Projects\Tasks\Tasks.csproj">
+    <ProjectReference Include="..\..\src\Libraries\Tasks\Tasks.csproj">
       <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
       <Name>Tasks</Name>
     </ProjectReference>
