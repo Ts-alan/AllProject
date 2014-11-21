@@ -2223,7 +2223,7 @@ SELECT ID, State FROM UpdateStates WHERE (ID = @ID)</CommandText>
               <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="256" />
+                    <xs:maxLength value="1024" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -2231,7 +2231,7 @@ SELECT ID, State FROM UpdateStates WHERE (ID = @ID)</CommandText>
               <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="128" />
+                    <xs:maxLength value="256" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
