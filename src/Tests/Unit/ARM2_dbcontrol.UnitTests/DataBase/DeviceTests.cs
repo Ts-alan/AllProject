@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using VirusBlokAda.CC.DataBase;
 
-namespace WebConsoleTests.ARM2_dbcontrol.DataBase
+namespace ARM2_dbcontrol.UnitTests.DataBase
 {
     [TestFixture]
     public class DeviceTests

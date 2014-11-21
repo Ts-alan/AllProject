@@ -5,13 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WebConsoleTests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ARM2_dbcontrol.UnitTests.dll")]
+[assembly: AssemblyDescription("Unit tests for ARM2_dbcontrol.dll")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WebConsoleTests")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("VirusBlokAda Ltd.")]
+[assembly: AssemblyProduct("ARM2_dbcontrol.UnitTests")]
+[assembly: AssemblyCopyright("Copyright (c) 2014 VirusBlokAda Ltd.")]
+[assembly: AssemblyTrademark("Vba32")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3aa64bf2-99ba-4650-bbcc-f993ec9a6558")]
+[assembly: Guid("c3ed5886-494b-428f-a79a-aa3a9c09705f")]
 
 // Version information for an assembly consists of the following four values:
 //
