@@ -57,10 +57,23 @@ IF NOT EXIST %1WEBCONSOLE (
    )
 )
 
-RMDIR /S /Q "%bindirCC%\Projects\"
+ECHO WebConsole: unnecessary files deleting...
+
 RMDIR /S /Q "%bindirCC%\Temp\"
 ERASE /F /S /Q "%bindirCC%\bin\*.pdb"
 ERASE /F /S /Q "%bindirCC%\ConnectionStrings.config"
+
+ECHO AjaxControlToolkit localization files deleting...
+
+CD %bindirCC%\bin\
+
+FOR /D %%d in (*.*) DO (
+ if "%%d" neq "ru" (
+  if "%%d" neq "ru-RU" (
+   rmdir /S /Q "%%d"
+  )
+ )
+)
 
 
 ECHO WebConsole files copying...
