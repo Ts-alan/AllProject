@@ -1,0 +1,45 @@
+//Диалог имеет вид
+ <div id="dialog" style="display:none; width:400px">
+        <input type="checkbox" id="chk" onclick="chkClick()"/>
+        <asp:TextBox runat="server" ID="txtNumber" style="width:350px;"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="Req1" runat="server" ErrorMessage="Required" Display="None"
+            ControlToValidate="txtNumber"  ValidationGroup="ValGroup" >
+    </asp:RequiredFieldValidator>
+    <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtender1" runat="server"
+        TargetControlID="Req1" HighlightCssClass="highlight" PopupPosition="BottomRight" BehaviorID="val1">
+    </ajaxToolkit:ValidatorCalloutExtender>
+    <asp:RegularExpressionValidator runat="server" ID="Regular1" ControlToValidate="txtNumber" Display="None"
+            ValidationExpression="\d{4}"     ErrorMessage="####" ValidationGroup="ValGroup" style="z-index:100"/>
+        <ajaxToolkit:ValidatorCalloutExtender ID="ValidatorCalloutExtender2" runat="server" TargetControlID="Regular1" BehaviorID="val2"
+            HighlightCssClass="highlight">
+ </ajaxToolkit:ValidatorCalloutExtender> 
+
+
+
+
+//при включенном чекбоксе валидаторы работают
+//при отключенном валидаторы не срабатывают( Page_ClientValidate('ValGroup') также не срабатывает
+//сообщение об ошибке и стиль принудительно убираются
+
+    function chkClick() {
+        var isChecked = $('#chk').is(':checked');
+        $('#<%=txtNumber.ClientID %>').attr('disabled', !isChecked);
+
+        if (isChecked == false) {
+            $('#val1_popupTable').hide();
+            $('#val2_popupTable').hide();
+            $('#<%=txtNumber.ClientID %>').removeClass('highlight');
+        }
+        else {
+            $('#val1_popupTable').show();
+            $('#val2_popupTable').show();
+        }
+
+        var reqval = document.getElementById("<%=Req1.ClientID%>");
+        var regularVal = document.getElementById("<%=Regular1.ClientID%>");
+
+        ValidatorEnable(reqval, isChecked);
+        ValidatorEnable(regularVal, isChecked);
+       
+    };
+
