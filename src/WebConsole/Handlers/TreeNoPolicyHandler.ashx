@@ -21,8 +21,7 @@ public class TreeNoPolicyHandler : IHttpHandler {
         //with groups
         Int32 index = 0;
         while (NextGroup(list, null, ref index))
-        {
-            
+        {            
            gr.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(list[index], null, true, true));
            RecursiveAddChildren(gr.Children[gr.Children.Count - 1], list, index, providerGroup);
             index++;
@@ -52,7 +51,14 @@ public class TreeNoPolicyHandler : IHttpHandler {
             return false;
         }
     }
-
+    
+    /// <summary>
+    /// Удаление пустых вершин
+    /// </summary>
+    /// <param name="node">удаляемая вершина</param>
+    /// <param name="parentNode">родительская вершина</param>
+    /// <param name="rootNode">корневая вершина</param>
+    /// <returns></returns>
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode,TreeNodeJSONEntity rootNode)
     {
         if (node.Children==null) return false;
@@ -72,10 +78,15 @@ public class TreeNoPolicyHandler : IHttpHandler {
                 return true;
             }
         }
-
         return false;
     }
-
+    /// <summary>
+    /// Рекурсивное добавление вершин
+    /// </summary>
+    /// <param name="node">родительская вершина</param>
+    /// <param name="list">список групп</param>
+    /// <param name="indexList">индекс</param>
+    /// <param name="providerGroup">провайдер</param>
     private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, GroupProvider providerGroup)
     {
         //Groups
@@ -92,7 +103,13 @@ public class TreeNoPolicyHandler : IHttpHandler {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
         }
     }
-
+    /// <summary>
+    /// Поиск подгрупп
+    /// </summary>
+    /// <param name="list">список групп</param>
+    /// <param name="parentID">ID родительской вершины</param>
+    /// <param name="index">индекс начала поиска</param>
+    /// <returns>true, если подгруппа найдена</returns>
     private Boolean NextGroup(List<Group> list, Int32? parentID, ref Int32 index)
     {
         for (Int32 i = index; i < list.Count; i++)
@@ -105,5 +122,4 @@ public class TreeNoPolicyHandler : IHttpHandler {
         }
         return false;
     }
-
 }

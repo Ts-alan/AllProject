@@ -10,6 +10,14 @@ using System.Configuration;
 
 public static class InstallTasksDataContainer
 {
+    /// <summary>
+    /// Получение списка заданий установок
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список заданий установок</returns>
     public static List<InstallationTaskEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         if (maximumRows < 1) 
@@ -41,12 +49,19 @@ public static class InstallTasksDataContainer
         }
         return list;
     }
-
+    /// <summary>
+    /// подсчет количества заданий установок
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns>количество заданий установок</returns>
     public static Int32 Count(String where)
     {
         return DBProviders.InstallationTask.Count(where);
     }
-
+    /// <summary>
+    /// получение списка статусов заданий установок
+    /// </summary>
+    /// <returns>список статусов заданий установок</returns>
     public static List<String> GetStatuses()
     {
         return DBProviders.InstallationTask.GetStatuses();

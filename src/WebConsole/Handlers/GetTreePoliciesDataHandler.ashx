@@ -34,7 +34,10 @@ public class GetTreePoliciesDataHandler : IHttpHandler
     }
     
     #region Private Metods
-
+    /// <summary>
+    /// Сохранить изменения
+    /// </summary>
+    /// <param name="policyTreeArray">список вершин дерева политик</param>
     private void SaveChanges(String policyTreeArray)
     {
         List<TreeNodeEntity> policyList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(policyTreeArray);
@@ -47,7 +50,13 @@ public class GetTreePoliciesDataHandler : IHttpHandler
             provider.AddComputersToPolicy(policy, GetComputersByPolicy(policy, policyList));            
         }
     }
-
+    
+    /// <summary>
+    /// Получение компьютеров по политике
+    /// </summary>
+    /// <param name="policy">политика</param>
+    /// <param name="nodes">список вершин дерева</param>
+    /// <returns>список компьютеров</returns>
     private List<String> GetComputersByPolicy(Policy policy, List<TreeNodeEntity> nodes)
     {
         List<String> list = new List<String>();
@@ -58,6 +67,5 @@ public class GetTreePoliciesDataHandler : IHttpHandler
         }
         return list;
     }
-
     #endregion
 }

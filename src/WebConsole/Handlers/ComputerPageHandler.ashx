@@ -68,7 +68,13 @@ public class ComputerPageHandler : IHttpHandler {
             return false;
         }
     }
-
+    
+    /// <summary>
+    /// Удаление вершин
+    /// </summary>
+    /// <param name="node">Удаляемая вершина</param>
+    /// <param name="parentNode">Родительская вершина </param>
+    /// <returns></returns>
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode)
     {
         if (node.Children==null) return false;
@@ -88,10 +94,19 @@ public class ComputerPageHandler : IHttpHandler {
                 return true;
             }
         }
-
         return false;
     }
 
+    /// <summary>
+    /// Рекурсивно добавление дочерних узлов
+    /// </summary>
+    /// <param name="node">Исходная вершина</param>
+    /// <param name="list">список групп</param>
+    /// <param name="indexList">индекс</param>
+    /// <param name="where">условие выбора</param>
+    /// <param name="provider">провайдер групп</param>
+    /// <param name="selectedComps">выбранные компьютеры</param>
+    /// <returns></returns>
     private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, String where, GroupProvider provider,List<String> selectedComps)
     {
         //Groups
@@ -120,6 +135,13 @@ public class ComputerPageHandler : IHttpHandler {
         }
     }
 
+    /// <summary>
+    /// Поиск подгрупп в списке
+    /// </summary>
+    /// <param name="list">список групп </param>
+    /// <param name="parentID">ID группы </param>
+    /// <param name="index">индекс начала поиска</param>
+    /// <returns>true, если подгруппа найдена</returns>
     private Boolean NextGroup(List<Group> list, Int32? parentID, ref Int32 index)
     {
         for (Int32 i = index; i < list.Count; i++)

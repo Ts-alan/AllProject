@@ -37,19 +37,31 @@ public static class Anchor
     {
         return String.Format("<font color={1}>{0}</font>",str,color);
     }
-
+    /// <summary>
+    ///  Скролл к элементу страницы
+    /// </summary>
+    /// <param name="controlId">Ид элемента</param>
+    /// <param name="_Page">страница</param>
     public static void ScrollToObj(String controlId, Page _Page)
     {
         if (!_Page.ClientScript.IsStartupScriptRegistered("obj"))
             _Page.ClientScript.RegisterStartupScript(typeof(Page), "obj", "document.getElementById('" + controlId + "').scrollIntoView(true);", true);
     }
-
+    /// <summary>
+    /// Скролл к вершине страницы
+    /// </summary>
+    /// <param name="_Page">страница</param>
     public static void ScrollToTop(Page _Page)
     {
         if (!_Page.ClientScript.IsStartupScriptRegistered("top"))
             _Page.ClientScript.RegisterStartupScript(typeof(Page), "top", "window.scrollTo(0,0);", true);
     }
-
+    /// <summary>
+    /// Добавление тэга перевода строки
+    /// </summary>
+    /// <param name="source">исходная строка</param>
+    /// <param name="size">длина</param>
+    /// <returns>строка с тэгами</returns>
     public static String FixString(String source, int size)
     {
         String dest = String.Empty;
@@ -67,7 +79,13 @@ public static class Anchor
         }
             return dest;
     }
-
+    /// <summary>
+    /// Добавление тэга перевода строки
+    /// </summary>
+    /// <param name="source">исходная строка</param>
+    /// <param name="size">длина</param>
+    /// <param name="symbol">символ, после которого возможен перевод</param>
+    /// <returns>строка с тэгами</returns>
     public static String FixString(String source, Int32 size, Char symbol)
     {
         String dest = String.Empty;
@@ -89,7 +107,11 @@ public static class Anchor
         }
         return dest;
     }
-    
+    /// <summary>
+    /// Конвертация комментария
+    /// </summary>
+    /// <param name="comment">комментарий</param>
+    /// <returns>комментарий с тэгами перевода строки</returns>
     public static String ConvertComment(String comment)
     {
         String result = "";
@@ -103,7 +125,10 @@ public static class Anchor
         return result;
     }
 
-
+    /// <summary>
+    ///  Получение списка интервалов времени и даты
+    /// </summary>
+    /// <returns></returns>
     public static List<String> GetDateIntervals()
     {
         List<String> list = new List<String>();

@@ -10,6 +10,14 @@ using System.Configuration;
 
 public static class ComponentsDataContainer
 {
+    /// <summary>
+    /// ѕолучение списка компонентов
+    /// </summary>
+    /// <param name="where">условие получени€</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество р€дов</param>
+    /// <param name="startRowIndex">индекс начального р€да</param>
+    /// <returns>список компонентов</returns>
     public static List<ComponentsEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<ComponentsEntity> list = new List<ComponentsEntity>();
@@ -44,11 +52,19 @@ public static class ComponentsDataContainer
         return list;
     }
 
+    /// <summary>
+    /// подсчет количества компонентов
+    /// </summary>
+    /// <param name="where">условие получени€</param>
+    /// <returns></returns>
     public static Int32 Count(String where)
     {
         return DBProviders.Component.Count(where);
     }
-
+    /// <summary>
+    /// получение типов компонентов
+    /// </summary>
+    /// <returns></returns>
     public static List<String> GetTypes()
     {
         List<String> list = new List<String>();
@@ -59,7 +75,10 @@ public static class ComponentsDataContainer
 
         return list;
     }
-
+    /// <summary>
+    ///  получение состо€ний компонентов
+    /// </summary>
+    /// <returns></returns>
     public static List<String> GetStates()
     {
         List<String> list = new List<String>();

@@ -12,6 +12,13 @@ using System.Diagnostics;
 public static class UsersDataContainer
 {
     #region Data
+    /// <summary>
+    /// Получение списка пользователей
+    /// </summary>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список пользователей</returns>
     public static List<UserEntity> Get(string sortExpression, int maximumRows, int startRowIndex)
     {
         UpdateCollection();
@@ -59,6 +66,9 @@ public static class UsersDataContainer
         }
         return list;      
     }
+    /// <summary>
+    /// Обновление коллекции
+    /// </summary>
     private static void UpdateCollection()
     {
         listFull = new List<UserEntity>();
@@ -83,7 +93,10 @@ public static class UsersDataContainer
     }
 
     private static List<UserEntity> listFull = null;
-
+    /// <summary>
+    /// Количество пользователей
+    /// </summary>
+    /// <returns></returns>
     public static int Count()
     {
         return listFull.Count;
@@ -120,7 +133,14 @@ public static class UsersDataContainer
                 return Resources.Resource.UnknownError;
         }
     }
-
+    /// <summary>
+    /// Создание пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="password">пароль</param>
+    /// <param name="email">email</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность создания</returns>
     private static bool MembershipCreateUser(string username, string password, string email, out string error)
     {
         try
@@ -141,7 +161,13 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// Добавление пользователя к роли
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="role">роль</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность добавления</returns>
     private static bool AddUserToRole(string username, string role, out string error)
     {
         try
@@ -158,7 +184,10 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// удаление пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
     private static void MembershipDeleteUser(string username)
     {
         try
@@ -170,7 +199,14 @@ public static class UsersDataContainer
             Debug.WriteLine("Error deleting user: " + ex.Message);
         }
     }
-
+    /// <summary>
+    /// Создание профиля пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="firstname">имя</param>
+    /// <param name="lastname">фамилия</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность создания</returns>
     private static bool CreateUserProfile(string username, string firstname, string lastname, out string error)
     {
         try
@@ -190,7 +226,17 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// Создание пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="password">пароль</param>
+    /// <param name="email">почта</param>
+    /// <param name="firstname">имя</param>
+    /// <param name="lastname">фамилия</param>
+    /// <param name="role">роль</param>
+    /// <param name="message">сообщение</param>
+    /// <returns>успешность создания</returns>
     public static bool Create(string username, string password, string email, string firstname,
         string lastname, string role, out string message)
     {
@@ -221,6 +267,16 @@ public static class UsersDataContainer
     #endregion
 
     #region Update
+    /// <summary>
+    /// обновление информации о пользователе
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="email">почта</param>
+    /// <param name="firstname">имя</param>
+    /// <param name="lastname">фамилия</param>
+    /// <param name="role">роль</param>
+    /// <param name="message">сообщение</param>
+    /// <returns>успешность обновления</returns>
     public static bool Update (string username, string email, string firstname, string lastname,
         string role, out string message)
     {
@@ -313,7 +369,13 @@ public static class UsersDataContainer
         return true;
     }
 
-
+    /// <summary>
+    /// Смена роли пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="role">роль</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность смены роли</returns>
     private static bool ChangeUserRole(string username, string role ,out string error)
     {
         try
@@ -331,7 +393,11 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// смена роли пользователя без сообщения об ошибке
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="role">роль</param>
     private static void ChangeUserRoleSilent(string username, string role)
     {
         try
@@ -344,7 +410,13 @@ public static class UsersDataContainer
             Debug.WriteLine("Error changing user role: " + ex.Message);
         }
     }
-
+    /// <summary>
+    /// получение роли пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="role">роль</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns></returns>
     private static bool GetUserRole(string username, out string role, out string error)
     {
         try
@@ -362,7 +434,13 @@ public static class UsersDataContainer
         role = String.Empty;
         return false;
     }
-
+    /// <summary>
+    /// получение почты пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="email">почта</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns></returns>
     private static bool GetUserEmail(string username, out string email, out string error)
     {
         try
@@ -381,7 +459,13 @@ public static class UsersDataContainer
         email = String.Empty;
         return false;
     }
-
+    /// <summary>
+    /// смена почты пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="email">почта</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns></returns>
     private static bool ChangeUserEmail(string username, string email, out string error)
     {
         try
@@ -405,7 +489,11 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// смена почты пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="email">почта</param>
     private static void ChangeUserEmailSilent(string username, string email)
     {
         try
@@ -421,7 +509,14 @@ public static class UsersDataContainer
     }
 
     private static ProfileCommon defaultProfile = new ProfileCommon();
-
+    /// <summary>
+    /// смена профиля пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="firstname">имя</param>
+    /// <param name="lastname">фамилия</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns></returns>
     private static bool ChangeUserProfile(string username, string firstname, string lastname, out string error)
     {
         try
@@ -441,7 +536,14 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// Получение профиля пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="firstname">имя</param>
+    /// <param name="lastname">фамилия</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns></returns>
     private static bool GetUserProfile(string username, out string firstname, out string lastname, out string error)
     {
         try
@@ -465,6 +567,12 @@ public static class UsersDataContainer
     #endregion
 
     #region Delete
+    /// <summary>
+    /// удаление пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="message">сообщение</param>
+    /// <returns>успешность удаления</returns>
     public static bool Delete(string username, out string message)
     {
         message = String.Empty;
@@ -482,7 +590,12 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// удаление пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность удаления</returns>
     private static bool MembershipDeleteUser(string username, out string error)
     {
         try
@@ -498,7 +611,12 @@ public static class UsersDataContainer
         }
         return false;
     }
-
+    /// <summary>
+    /// удаление роли пользователя
+    /// </summary>
+    /// <param name="username">логин пользователя</param>
+    /// <param name="error">сообщение об ошибке</param>
+    /// <returns>успешность удаления</returns>
     private static bool RemoveUserRoles(string username,out string error)
     {
         try

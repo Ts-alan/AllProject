@@ -10,6 +10,14 @@ using System.Configuration;
 
 public static class ProcessDataContainer
 {
+    /// <summary>
+    /// Получение списка процессов
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список процессов</returns>
     public static List<ProcessesEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         if (maximumRows < 1) 
@@ -36,7 +44,11 @@ public static class ProcessDataContainer
 
         return DBProviders.Process.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
     }
-
+    /// <summary>
+    /// подсчет количества процессов
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns>количество процессов</returns>
     public static Int32 Count(String where)
     {
         return DBProviders.Process.Count(where);

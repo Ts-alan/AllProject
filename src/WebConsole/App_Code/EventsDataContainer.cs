@@ -10,6 +10,14 @@ using System.Configuration;
 
 public static class EventsDataContainer
 {
+    /// <summary>
+    /// Получение списка событий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список событий</returns>
     public static List<EventsEntity> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         if (maximumRows < 1) 
@@ -36,14 +44,25 @@ public static class EventsDataContainer
 
         return DBProviders.Event.List(where, orderBy, (Int32)((Double)startRowIndex / (Double)maximumRows) + 1, maximumRows);
     }
-
+    /// <summary>
+    /// подсчет количества событий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns>количество событий</returns>
     public static Int32 Count(String where)
     {
         return DBProviders.Event.Count(where);
     }
 
     #region Notification
-
+    /// <summary>
+    /// Получение списка типов событий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список типов событий</returns>
     public static List<EventTypesEntity> GetForNotification(String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         if (maximumRows < 1) 
@@ -70,7 +89,11 @@ public static class EventsDataContainer
 
         return DBProviders.Event.GetEventTypeList("EventName like '%'", orderBy, (Int16)((Int32)((Double)startRowIndex / (Double)maximumRows) + 1), (Int16)maximumRows);
     }
-
+    /// <summary>
+    /// подсчет количества типов событий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns>количество типов событий</returns>
     public static Int32 CountForNotification()
     {
         return DBProviders.Event.GetEventTypesCount("EventName like '%'");

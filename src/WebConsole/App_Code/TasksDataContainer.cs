@@ -10,6 +10,14 @@ using System.Configuration;
 
 public static class TasksDataContainer
 {
+    /// <summary>
+    /// Получение списка заданий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список заданий</returns>
     public static List<TaskEntityShow> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<TaskEntityShow> list = new List<TaskEntityShow>();
@@ -41,7 +49,11 @@ public static class TasksDataContainer
 
         return list;
     }
-
+    /// <summary>
+    /// подсчет количества заданий
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns></returns>
     public static Int32 Count(String where)
     {
         return DBProviders.Task.Count(where);

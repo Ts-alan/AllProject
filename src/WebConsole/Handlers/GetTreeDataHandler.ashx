@@ -39,6 +39,11 @@ public class GetTreeDataHandler : IHttpHandler
 
     #region Private Metods
 
+    /// <summary>
+    /// Сохранить изменения
+    /// </summary>
+    /// <param name="groupTreeArray">список вершин дерева</param>
+    /// <returns></returns>
     private void SaveChanges(String groupTreeArray)
     {
         List<TreeNodeEntity> groupList = JsonConvert.DeserializeObject<List<TreeNodeEntity>>(groupTreeArray);
@@ -138,6 +143,12 @@ public class GetTreeDataHandler : IHttpHandler
         #endregion
     }
 
+    /// <summary>
+    /// Поиск ID родителя
+    /// </summary>
+    /// <param name="compID">ID компьютера</param>
+    /// <param name="groupList">список вершин дерева</param>
+    /// <returns>ID родителя или null</returns>
     private Int32? GetParentID(Int32 compID, List<TreeNodeEntity> groupList)
     {
         //with group
@@ -149,14 +160,18 @@ public class GetTreeDataHandler : IHttpHandler
                 if (Int32.TryParse(node.ParentID.Substring(6), out ParentId))
                     return ParentId;
                 else return null;
-
             }
         }
-
         //without group
         return null;
     }
 
+    /// <summary>
+    /// Смена ID родителя
+    /// </summary>
+    ///<param name="list"> список вершин дерева</param>
+    ///<param name="oldID"> старый ID</param>
+    ///<param name="newID"> новый ID</param>
     private void ChangeParentID(ref List<TreeNodeEntity> list, String oldID, String newID)
     {
         for (Int32 i = 0; i < list.Count; i++)
@@ -167,27 +182,33 @@ public class GetTreeDataHandler : IHttpHandler
             }
         }
     }
-
+    /// <summary>
+    /// Поиск индекса группы по ID
+    /// </summary>
+    /// <param name="list">список групп</param>
+    /// <param name="id">ID группы</param>
+    /// <returns>индекс или -1, если не найдено</returns>
     private Int32 FindGroupIndexByID(List<Group> list, Int32 id)
     {
         for (Int32 i = 0; i < list.Count; i++)
         {
             if (list[i].ID == id) return i;
         }
-
         return -1;
     }
-
+    /// <summary>
+    /// Поиск индекса группы по ID
+    /// </summary>
+    /// <param name="list">список вершин</param>
+    /// <param name="id">ID группы</param>
+    /// <returns>индекс или -1, если не найдено</returns>
     private int FindGroupIndexByID(List<TreeNodeEntity> list, Int32 id)
     {
         for (Int32 i = 0; i < list.Count; i++)
         {
             if (list[i].NodeID == String.Format("Group_{0}", id)) return i;
         }
-
         return -1;
-    }
-
-        
+    }        
     #endregion
 }

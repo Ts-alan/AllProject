@@ -9,6 +9,15 @@ using VirusBlokAda.CC.DataBase;
 /// </summary>
 public static class DeviceDataContainer
 {
+    /// <summary>
+    /// Получение списка устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="device_type">тип устройства</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список устройств</returns>
     public static List<Device> Get(String where, String device_type, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<Device> list = new List<Device>();
@@ -37,7 +46,12 @@ public static class DeviceDataContainer
 
         return list;
     }
-
+    /// <summary>
+    /// подсчет количества устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="device_type">тип устройства</param>
+    /// <returns>количество устройств</returns>
     public static Int32 Count(String where, String device_type)
     {
         Int32 count = 0;
@@ -46,7 +60,15 @@ public static class DeviceDataContainer
 
         return count;
     }
-
+    /// <summary>
+    /// Получение списка неизвестных устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="device_type">тип устройства</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список политик устройств</returns>
     public static List<DevicePolicy> GetUnknown(String where, String device_type, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<DevicePolicy> list = new List<DevicePolicy>();
@@ -92,7 +114,12 @@ public static class DeviceDataContainer
         }
         return property;
     }
-
+    /// <summary>
+    /// подсчет количества неизвестных устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="device_type">тип устройства</param>
+    /// <returns>количество неизвестных устройств</returns>
     public static Int32 CountUnknown(String where, String device_type)
     {
         Int32 count = 0;

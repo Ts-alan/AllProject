@@ -9,6 +9,14 @@ using VirusBlokAda.CC.DataBase;
 /// </summary>
 public static class DeviceClassDataContainer
 {
+    /// <summary>
+    /// Получение списка классов устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <param name="SortExpression">выражение сортировки</param>
+    /// <param name="maximumRows">максимальное количество рядов</param>
+    /// <param name="startRowIndex">индекс начального ряда</param>
+    /// <returns>список классов устройств</returns>
     public static List<DeviceClass> Get(String where, String SortExpression, Int32 maximumRows, Int32 startRowIndex)
     {
         List<DeviceClass> list = new List<DeviceClass>();
@@ -37,7 +45,11 @@ public static class DeviceClassDataContainer
 
         return list;
     }
-
+    /// <summary>
+    /// подсчет количества классов устройств
+    /// </summary>
+    /// <param name="where">условие получения</param>
+    /// <returns>количество классов устройств</returns>
     public static Int32 Count(String where)
     {
         return DBProviders.Policy.GetDeviceClassCount(where);

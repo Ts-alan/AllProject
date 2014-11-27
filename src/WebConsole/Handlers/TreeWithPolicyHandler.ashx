@@ -10,7 +10,8 @@ using VirusBlokAda.CC.DataBase;
 public class TreeWithPolicyHandler : IHttpHandler
 {
     public int idCount = 0;
-    public void ProcessRequest (HttpContext context) {
+    public void ProcessRequest(HttpContext context)
+    {
         context.Response.ContentType = "text/plain";
         List<TreeNodeJSONEntity> tree = new List<TreeNodeJSONEntity>();
         TreeNodeJSONEntity policyNode;
@@ -22,11 +23,16 @@ public class TreeWithPolicyHandler : IHttpHandler
             policyId = policy.ID.ToString();
             policyNode = BuildPolicyNode(policy, provider.GetComputersByPolicyPage(policy, 1, Int16.MaxValue, null), providerGroup);
             UpdateGroupId(policyNode.Children, policyId);
-            tree.Add(policyNode);  
+            tree.Add(policyNode);
         }
-        
         context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(tree));
     }
+
+    /// <summary>
+    /// Изменить ID группы
+    /// </summary>
+    /// <param name="tree">список вершин дерева</param>
+    /// <param name="policyId">ID политики</param>
     private void UpdateGroupId(List<TreeNodeJSONEntity> tree, String policyId)
     {
         if (tree.Count == 0)
@@ -39,18 +45,24 @@ public class TreeWithPolicyHandler : IHttpHandler
             {
                 if (node.Id.Contains("Group"))
                 {
-                    node.Id = node.Id +"__"+ policyId;
+                    node.Id = node.Id + "__" + policyId;
                     UpdateGroupId(node.Children, policyId);
                 }
             }
         }
     }
-    public Boolean IsReusable {
-        get {
-            return false;
-        }
+    public Boolean IsReusable
+    {
+        get { return false; }
     }
 
+    /// <summary>
+    /// Создание вершины для политики
+    /// </summary>
+    /// <param name="policy">политика</param>
+    /// <param name="comps">список компьютеров</param>
+    /// <param name="providerGroup">провайдер</param>
+    /// <returns>созданная вершина</returns>
     private TreeNodeJSONEntity BuildPolicyNode(Policy policy, List<ComputersEntity> comps, GroupProvider providerGroup)
     {
         List<Group> list;
@@ -65,7 +77,6 @@ public class TreeWithPolicyHandler : IHttpHandler
             }
             else
             {
-               
                 policyBranch.AddBranch(BuildBranch(comp, list.Count - 1, list));
             }
         }
@@ -79,13 +90,19 @@ public class TreeWithPolicyHandler : IHttpHandler
             node.Children[node.Children.Count - 1].Children = new List<TreeNodeJSONEntity>();
             foreach (ComputersEntity comp in policyBranch.Computers)
             {
-                node.Children[node.Children.Count-1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
+                node.Children[node.Children.Count - 1].Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
             }
         }
-        
         return node;
     }
 
+    /// <summary>
+    /// Построение ветки дерева
+    /// </summary>
+    /// <param name="comp">компьютер</param>
+    /// <param name="index">индекс списка</param>
+    /// <param name="list">список групп</param>
+    /// <returns></returns>
     private BranchOfTree BuildBranch(ComputersEntity comp, Int32 index, List<Group> list)
     {
         BranchOfTree branch = new BranchOfTree(list[index]);
@@ -100,12 +117,18 @@ public class TreeWithPolicyHandler : IHttpHandler
         return branch;
     }
 
+    /// <summary>
+    /// Рекурсивная конвертация в TreeNodeJSON
+    /// </summary>
+    /// <param name="branches">список веток дерева</param>
+    /// <param name="computers">список компьютеров</param>
+    /// <returns>список вершин дерева</returns>
     private List<TreeNodeJSONEntity> RecursiveConvertToTreeNodeJSON(List<BranchOfTree> branches, List<ComputersEntity> computers)
     {
         List<TreeNodeJSONEntity> list = new List<TreeNodeJSONEntity>();
         foreach (ComputersEntity comp in computers)
         {
-            list.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null,true, true)); 
+            list.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, null, true, true));
         }
 
         foreach (BranchOfTree branch in branches)
@@ -114,8 +137,6 @@ public class TreeWithPolicyHandler : IHttpHandler
             tmpNode.Children = RecursiveConvertToTreeNodeJSON(branch.ChildrenBranchs, branch.Computers);
             list.Add(tmpNode);
         }
-
-        return list;         
+        return list;
     }
-
 }

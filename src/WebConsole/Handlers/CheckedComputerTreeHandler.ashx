@@ -48,6 +48,12 @@ public class CheckedComputerTreeHandler : IHttpHandler {
         }
     }
 
+    /// <summary>
+    /// Удаление пустых вершин
+    /// </summary>
+    /// <param name="node">Удаляемая вершина</param>
+    /// <param name="parentNode">Родительская вершина </param>
+    /// <returns></returns>
     private Boolean DeleteEmptyNodes(TreeNodeJSONEntity node, TreeNodeJSONEntity parentNode)
     {
         if (node.Children==null) return false;
@@ -67,10 +73,16 @@ public class CheckedComputerTreeHandler : IHttpHandler {
                 return true;
             }
         }
-
         return false;
     }
-
+    
+    /// <summary>
+    /// Рекурсивно добавляет дочерние узлы
+    /// </summary>
+    /// <param name="node">Исходная вершина</param>
+    /// <param name="list">список групп </param>
+    /// <param name="indexList">индекс </param>
+    /// <param name="provider">провайдер групп </param>
     private void RecursiveAddChildren(TreeNodeJSONEntity node, List<Group> list, Int32 indexList, GroupProvider provider)
     {
         //Groups
@@ -87,7 +99,14 @@ public class CheckedComputerTreeHandler : IHttpHandler {
             node.Children.Add(TreeJSONEntityConverter.ConvertToTreeNodeJsonEntity(comp, false, false, true));
         }
     }
-
+    
+    /// <summary>
+    /// Поиск подгрупп
+    /// </summary>
+    /// <param name="list">список групп </param>
+    /// <param name="parentID">ID группы </param>
+    /// <param name="index">индекс начала поиска </param>
+    /// <returns>true, если подгруппа найдена</returns>
     private Boolean NextGroup(List<Group> list, Int32? parentID, ref Int32 index)
     {
         for (Int32 i = index; i < list.Count; i++)
