@@ -39,7 +39,11 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
                 Events[i].EventFlag = EventJournalFlags.CCJournal | EventJournalFlags.LocalJournal | EventJournalFlags.WindowsJournal;
             }
         }
-
+        /// <summary>
+        /// Конвертация события в строковый формат
+        /// </summary>
+        /// <param name="journalEvent"></param>
+        /// <returns></returns>
         private String ConvertEventForTask(SingleJournalEvent journalEvent)
         {
             UInt32 val = 0;
@@ -54,7 +58,9 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
 
             return String.Format("<key>{0}</key><val>{1}</val>", journalEvent.EventName, val.ToString("X"));
         }
-
+        /// <summary>
+        /// Установка событий по умолчанию
+        /// </summary>
         public void ClearEvents()
         {
             for (Int32 i = 0; i < _events.Length; i++)
@@ -64,7 +70,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
         }
 
         #region IConfigureTask Members
-
+        /// <summary>
+        /// Сохранить в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             XmlSerializer serializer = new XmlSerializer(this.GetType());
@@ -72,7 +81,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        /// Загрузить из xml
+        /// </summary>
+        /// <param name="xml"></param>
         public void LoadFromXml(String xml)
         {
             if (String.IsNullOrEmpty(xml))
@@ -92,7 +104,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureJournalEvent
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// Выдача задачи
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder task = new StringBuilder(256);

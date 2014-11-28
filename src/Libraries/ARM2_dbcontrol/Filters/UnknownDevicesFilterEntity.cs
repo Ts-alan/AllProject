@@ -90,7 +90,10 @@ namespace ARM2_dbcontrol.Filters
         {
             return true;
         }
-
+        /// <summary>
+        /// построение запроса
+        /// </summary>
+        /// <param name="keyword">ключевое слово</param>
         private void BuildQuery(string keyword)
         {
             if (termSerialNumber == keyword)
@@ -150,7 +153,10 @@ namespace ARM2_dbcontrol.Filters
                 }
             }
         }
-
+        /// <summary>
+        /// генерация запроса
+        /// </summary>
+        /// <returns></returns>
         public override bool GenerateSQLWhereStatement()
         {
             base.sqlWhereStatement = null;

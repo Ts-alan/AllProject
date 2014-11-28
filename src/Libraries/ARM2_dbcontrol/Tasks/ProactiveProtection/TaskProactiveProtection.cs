@@ -114,7 +114,10 @@ namespace ARM2_dbcontrol.Tasks
 
             serializer = new XmlSerializer(this.GetType());
         }
-
+        /// <summary>
+        /// Получение правила по умолчанию
+        /// </summary>
+        /// <returns></returns>
         private ProactiveRule GetDefaultUserRule()
         {
             ProactiveRule defaultRule = new ProactiveRule("<Default>");
@@ -129,7 +132,9 @@ namespace ARM2_dbcontrol.Tasks
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Очистка задачи проактивной защиты
+        /// </summary>
         public void Clear()
         {
             _IsUserAudit = _IsEnabled=_IsPrinterControl=_IsUserFiltering = false;
@@ -142,14 +147,20 @@ namespace ARM2_dbcontrol.Tasks
         }
 
         #region IConfigureTask Members
-
+        /// <summary>
+        /// Сохранение в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        /// Выдача задач
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(1024);
@@ -514,7 +525,10 @@ namespace ARM2_dbcontrol.Tasks
 
             return result.ToString();
         }
-
+        /// <summary>
+        /// Загрузка из xml
+        /// </summary>
+        /// <param name="xml"></param>
         public void LoadFromXml(String xml)
         {
             if (String.IsNullOrEmpty(xml))

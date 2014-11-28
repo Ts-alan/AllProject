@@ -51,6 +51,11 @@ namespace VirusBlokAda.CC.Diagram
         //
         //*********************************************************************
 
+        /// <summary>
+        ///  Сбор и вычисление значений для гистограммы
+        /// </summary>
+        /// <param name="labels">значения х</param>
+        /// <param name="values">значения у</param>
         public void CollectDataPoints(string[] xValues, string[] yValues)
         {
             _total = 0.0f;
@@ -81,7 +86,10 @@ namespace VirusBlokAda.CC.Diagram
         // фактически рисует круговую диаграмму и ее легенду.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// создание растрового рисунка диаграммы
+        /// </summary>
+        /// <returns></returns>
         public override Bitmap Draw()
         {
             int perimeter = _perimeter;
@@ -151,7 +159,9 @@ namespace VirusBlokAda.CC.Diagram
         //  Этот метод вычисляет пространство, необходимое для рисования легенды диаграммы.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// вычисление пространства для рисования легенды диаграммы
+        /// </summary>
         private void CalculateLegendWidthHeight()
         {
             Font fontLegend = new Font(_legendFontStyle, _legendFontSize);

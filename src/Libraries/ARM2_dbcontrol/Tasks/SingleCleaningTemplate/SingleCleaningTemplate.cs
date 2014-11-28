@@ -73,14 +73,20 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Сохранение в чьд
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        /// Загрузка из xml
+        /// </summary>
+        /// <param name="Xml"></param>
         public void LoadFromXml(String Xml)
         {
             if (String.IsNullOrEmpty(Xml))
@@ -95,7 +101,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
             this._Templates = task.Templates;
             this._Name = task.Name;      
         }
-
+        /// <summary>
+        /// Выдача задач
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
 
@@ -109,6 +118,11 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleanerCleaningTemplate
             
             return task.ToString();
         }
+        /// <summary>
+        /// Получение типа задачи
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private String GetTaskType(FileCleanerTemplateType type)
         {
             String ID = "";

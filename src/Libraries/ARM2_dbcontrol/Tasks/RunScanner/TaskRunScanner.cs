@@ -48,7 +48,10 @@ namespace ARM2_dbcontrol.Tasks
         #endregion
 
         #region IConfigureTask Members
-
+        /// <summary>
+        /// Сохранение в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("task");
@@ -73,7 +76,10 @@ namespace ARM2_dbcontrol.Tasks
 
             return xml.Result;
         }
-
+        /// <summary>
+        /// Выдача задачи
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(256);
@@ -101,7 +107,10 @@ namespace ARM2_dbcontrol.Tasks
 
             return result.ToString();
         }
-
+        /// <summary>
+        /// Загрузка из xml
+        /// </summary>
+        /// <param name="xml"></param>
         public void LoadFromXml(String xml)
         {
             XmlTaskParser pars = new XmlTaskParser(xml);

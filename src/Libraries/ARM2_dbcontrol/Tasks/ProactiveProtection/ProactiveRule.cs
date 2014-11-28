@@ -147,7 +147,11 @@ namespace ARM2_dbcontrol.Tasks
         #endregion
 
         #region Methods
-
+        /// <summary>
+        ///Клон правила проактивной защиты
+        /// </summary>
+        /// <param name="newName"></param>
+        /// <returns></returns>
         public ProactiveRule Clone(String newName)
         {
             ProactiveRule clone = new ProactiveRule(newName);
@@ -161,7 +165,9 @@ namespace ARM2_dbcontrol.Tasks
             clone.TrustedPrinters = new List<String>(this.TrustedPrinters);
             return clone;
         }
-
+        /// <summary>
+        /// Очистка правила
+        /// </summary>
         public void Clear()
         {
             this.TrustedApplications.Clear();

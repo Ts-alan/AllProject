@@ -130,6 +130,11 @@ namespace VirusBlokAda.CC.Diagram
         //
         //*********************************************************************
 
+        /// <summary>
+        ///  Сбор и вычисление значений для гистограммы
+        /// </summary>
+        /// <param name="labels">метки - значения х</param>
+        /// <param name="values">значения - значения у</param>
         public void CollectDataPoints(string[] labels, string[] values)
         {
             if (labels.Length == values.Length)
@@ -172,7 +177,10 @@ namespace VirusBlokAda.CC.Diagram
         // Как и выше; вызывается, если пользователь не вводит значения x
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Сбор и вычисление значений для гистограммы(без ввода значений х)
+        /// </summary>
+        /// <param name="values">значения у</param>
         public void CollectDataPoints(string[] values)
         {
             string[] labels = values;
@@ -185,7 +193,10 @@ namespace VirusBlokAda.CC.Diagram
         // вычисления всех значений и точек данных.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Создание растрового рисунка гистограммы
+        /// </summary>
+        /// <returns></returns>
         public override Bitmap Draw()
         {
             int height = Convert.ToInt32(_totalHeight);
@@ -216,7 +227,10 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод рисует все столбцы диаграммы.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Рисование столбцов диаграммы
+        /// </summary>
+        /// <param name="graph"></param>
         private void DrawBars(Graphics graph)
         {
             SolidBrush brsFont = null;
@@ -266,7 +280,10 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод рисует метку y, деления, цифры делений и ось Y.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Рисование оси Y с метками и делениями
+        /// </summary>
+        /// <param name="graph"></param>
         private void DrawVerticalLabelArea(Graphics graph)
         {
             Font lblFont = null;
@@ -320,7 +337,10 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод рисует ось x и все метки x
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Рисование оси Х с метками и делениями
+        /// </summary>
+        /// <param name="graph"></param>
         private void DrawXLabelArea(Graphics graph)
         {
             Font lblFont = null;
@@ -371,7 +391,10 @@ namespace VirusBlokAda.CC.Diagram
         // Он рисует границу легенды, описание и цветовой код.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Рисование легенды диаграммы
+        /// </summary>
+        /// <param name="graph"></param>
         private void DrawLegend(Graphics graph)
         {
             Font lblFont = null;
@@ -425,7 +448,9 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод вычисляет все необходимые для гистограммы значения на основе указанных точек данных
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Вычисление необходимых для гистограммы значений на основе указанных точек данных
+        /// </summary>
         private void CalculateGraphDimension()
         {
             FindLongestTickValue();
@@ -459,7 +484,9 @@ namespace VirusBlokAda.CC.Diagram
         // Это необходимо для вычисления правильного размера графа.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// Нахаждение самого длинного значения отметки
+        /// </summary>
         private void FindLongestTickValue()
         {
             float currentTick;
@@ -478,7 +505,13 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод вычисляет ширину изображения в пикселах для указанного текста
         //
         //*********************************************************************
-
+        /// <summary>
+        /// вычисление ширины изображения
+        /// </summary>
+        /// <param name="text">текст</param>
+        /// <param name="size">размер</param>
+        /// <param name="family">семейство шрифтов</param>
+        /// <returns></returns>
         private float CalculateImgFontWidth(string text, int size, string family)
         {
             Bitmap bmp = null;
@@ -509,7 +542,11 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод создает краткий текст из длинного описания, который используется при создании легенды
         //
         //*********************************************************************
-
+        /// <summary>
+        /// создание краткого текста из длинного описания
+        /// </summary>
+        /// <param name="text">текст</param>
+        /// <returns></returns>
         private string MakeShortLabel(string text)
         {
             string label = text;
@@ -526,7 +563,9 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод вычисляет максимальное значение и значение каждого знака отметки для построения гистограммы.
         //
         //*********************************************************************
-
+        /// <summary>
+        /// вычисление знаков отметки для построения гистограммы
+        /// </summary>
         private void CalculateTickAndMax()
         {
             float tempMax = 0.0f;
@@ -558,7 +597,9 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод вычисляет высоты каждого столбца в графе
         //
         //*********************************************************************
-
+        /// <summary>
+        /// вычисление высоты столбца в графе
+        /// </summary>
         private void CalculateSweepValues()
         {
             // Вызывается, когда все значения и шкалы известны
@@ -580,7 +621,11 @@ namespace VirusBlokAda.CC.Diagram
         // Этот метод вычисляет ширину каждого столбца в графе
         //
         //*********************************************************************
-
+        /// <summary>
+        /// вычисление ширины столбца
+        /// </summary>
+        /// <param name="dataCount"></param>
+        /// <param name="barGraphWidth"></param>
         private void CalculateBarWidth(int dataCount, float barGraphWidth)
         {
             // Белое пространство между столбцами имеет ту же ширину, что и сами столбцы
@@ -594,7 +639,9 @@ namespace VirusBlokAda.CC.Diagram
         // из конструкторов гистограмм
         //
         //*********************************************************************
-
+        /// <summary>
+        /// задание значений по умолчанию
+        /// </summary>
         private void AssignDefaultSettings()
         {
             // значения по умолчанию

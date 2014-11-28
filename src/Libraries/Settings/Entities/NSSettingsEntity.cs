@@ -175,7 +175,10 @@ namespace VirusBlokAda.CC.Settings.Entities
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Генерация Xml
+        /// </summary>
+        /// <returns></returns>
         public String GenerateXML()
         {
             StringBuilder xml = new StringBuilder(1024);

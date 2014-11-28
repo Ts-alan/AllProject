@@ -7,6 +7,14 @@ namespace VirusBlokAda.CC.JSON
 {
     public static class TreeJSONEntityConverter
     {
+        /// <summary>
+        /// Конвертирование в TreeNodeJSONEntity
+        /// </summary>
+        /// <param name="group">группа</param>
+        /// <param name="isChecked">отмечен</param>
+        /// <param name="isExpanded">раскрыт</param>
+        /// <param name="isShortQTip">есть подсказка</param>
+        /// <returns></returns>
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         Group group,
                         Boolean? isChecked,
@@ -22,7 +30,14 @@ namespace VirusBlokAda.CC.JSON
                 return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "root", qtip, new NodeState(isExpanded, isChecked, false));
             return new TreeNodeJSONEntity(group.Name, String.Format("Group_{0}", group.ID), "group", qtip,new NodeState(isExpanded,isChecked,false));
         }
-
+        /// <summary>
+        /// Конвертирование в TreeNodeJSONEntity
+        /// </summary>
+        /// <param name="comp">компьютер</param>
+        /// <param name="isChecked">отмечен</param>
+        /// <param name="isExpanded">раскрыт</param>
+        /// <param name="isShortQTip">есть подсказка</param>
+        /// <returns></returns>
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         ComputersEntity comp,
                         Boolean? isChecked,                       
@@ -43,7 +58,14 @@ namespace VirusBlokAda.CC.JSON
 
             return new TreeNodeJSONEntity(comp.ComputerName, comp.ID.ToString(), nodeType, qtip, new NodeState(isExpanded, isChecked, false),comp.IPAddress,comp.OSName, null);
         }
-
+        /// <summary>
+        /// Конвертирование в TreeNodeJSONEntity
+        /// </summary>
+        /// <param name="compEx">компьютер</param>
+        /// <param name="isChecked">отмечен</param>
+        /// <param name="isExpanded">раскрыт</param>
+        /// <param name="isShortQTip">есть подсказка</param>
+        /// <returns></returns>
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         ComputersEntityEx compEx,
                         Boolean? isChecked,                       
@@ -58,7 +80,14 @@ namespace VirusBlokAda.CC.JSON
 
             return new TreeNodeJSONEntity(compEx.ComputerName, compEx.ID.ToString(), GetComputerState(compEx), qtip, new NodeState(isExpanded, isChecked, false),compEx.IPAddress,compEx.OSName, null);
         }
-
+        /// <summary>
+        /// Конвертирование в TreeNodeJSONEntity
+        /// </summary>
+        /// <param name="policy">политика</param>
+        /// <param name="isChecked">отмечен</param>
+        /// <param name="isExpanded">раскрыт</param>
+        /// <param name="isShortQTip">есть подсказка</param>
+        /// <returns></returns>
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         Policy policy,
                         Boolean? isChecked,                        
@@ -73,7 +102,15 @@ namespace VirusBlokAda.CC.JSON
 
             return new TreeNodeJSONEntity(policy.Name, String.Format("Policy_{0}", policy.ID), "folder", qtip, new NodeState(isExpanded, isChecked, false));
         }
-
+        /// <summary>
+        /// Конвертирование в TreeNodeJSONEntity
+        /// </summary>
+        /// <param name="Text">имя</param>
+        /// <param name="isChecked">отмечен</param>
+        /// <param name="isLeaf"> является листом</param>
+        /// <param name="isExpanded">раскрыт</param>
+        /// <param name="isShortQTip">есть подсказка</param>
+        /// <returns></returns>
         public static TreeNodeJSONEntity ConvertToTreeNodeJsonEntity(
                         String Text,
                         Boolean? isChecked,
@@ -133,6 +170,11 @@ namespace VirusBlokAda.CC.JSON
         #endregion
 
         #region Icon style
+        /// <summary>
+        /// получения стиля иконки
+        /// </summary>
+        /// <param name="entity">компьютер</param>
+        /// <returns>стиль иконки</returns>
         private static String GetComputerState(ComputersEntityEx entity)
         {
             TimeSpan time = DateTime.Now.Subtract(entity.RecentActive);

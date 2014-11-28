@@ -40,13 +40,20 @@ namespace ARM2_dbcontrol.Filters
 				return((CompFilterEntity)this.List[index]); 
 			}
 		}
-		
+		/// <summary>
+		/// добавление фильтра компьютеров
+		/// </summary>
+		/// <param name="filter">фильтр компьютера</param>
 		public void Add(CompFilterEntity filter)
 		{    
 			this.List.Add(filter); 
 			this.filters = this.Serialize();
 		}
-
+        /// <summary>
+        /// получение фильтра компьютера
+        /// </summary>
+        /// <param name="name">имя фильтра</param>
+        /// <returns></returns>
 		public CompFilterEntity Get(string name)
 		{
 			foreach(CompFilterEntity filter in Deserialize())
@@ -55,7 +62,10 @@ namespace ARM2_dbcontrol.Filters
 			}
 			return new CompFilterEntity();
 		}
-
+        /// <summary>
+        /// изменение фильтра
+        /// </summary>
+        /// <param name="filter">фильтр</param>
 		public void Update(CompFilterEntity filter)
 		{
 			CompFilterCollection temp = new CompFilterCollection();
@@ -74,7 +84,10 @@ namespace ARM2_dbcontrol.Filters
 			this.filters = temp.filters;
 		}
 
-
+        /// <summary>
+        ///  удаление фильтра
+        /// </summary>
+        /// <param name="name">имя фильтра</param>
 		public void Delete(string name)
 		{
 			CompFilterCollection temp = new CompFilterCollection();

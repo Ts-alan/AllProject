@@ -25,7 +25,10 @@ namespace VirusBlokAda.CC.Common.Collection
         {
             return null;
         }
-
+        /// <summary>
+        /// Чтение xml
+        /// </summary>
+        /// <param name="reader"></param>
         public void ReadXml(System.Xml.XmlReader reader)
         {
             XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
@@ -49,7 +52,10 @@ namespace VirusBlokAda.CC.Common.Collection
             }
             reader.ReadEndElement();
         }
-
+        /// <summary>
+        /// Запись Xml
+        /// </summary>
+        /// <param name="writer"></param>
         public void WriteXml(System.Xml.XmlWriter writer)
         {
             XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));

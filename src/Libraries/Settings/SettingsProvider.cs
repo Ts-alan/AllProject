@@ -133,7 +133,10 @@ namespace VirusBlokAda.CC.Settings
                 return level;
             }
         }
-
+        /// <summary>
+        /// Получение политики по умолчанию
+        /// </summary>
+        /// <returns></returns>
         public static String GetDefaultPolicy()
         {
             lock (lockToken)

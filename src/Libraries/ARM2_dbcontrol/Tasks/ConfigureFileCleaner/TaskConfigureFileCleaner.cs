@@ -71,14 +71,20 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Сохранить в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        ///  Загрузить из xml
+        /// </summary>
+        /// <param name="Xml"></param>
         public void LoadFromXml(String Xml)
         {
             if (String.IsNullOrEmpty(Xml))
@@ -95,7 +101,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureFileCleaner
             this._Type = task.Type;
             this._Vba32CCUser = task.Vba32CCUser;
         }
-
+        /// <summary>
+        /// Get XML for agent
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder builder = new StringBuilder(512);

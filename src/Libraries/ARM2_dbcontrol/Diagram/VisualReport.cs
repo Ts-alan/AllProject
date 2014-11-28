@@ -26,7 +26,13 @@ namespace VirusBlokAda.CC.Diagram
         {
             _connectionString = connectionString;
         }
-
+        /// <summary>
+        ///  получение статистики
+        /// </summary>
+        /// <param name="groupBy">группировка</param>
+        /// <param name="where">условие получения</param>
+        /// <param name="size">размер</param>
+        /// <returns></returns>
         public List<StatisticEntity> GetStatistics(String groupBy, String where, Int32 size)
         {
             EventProvider db = new EventProvider(ConnectionString);

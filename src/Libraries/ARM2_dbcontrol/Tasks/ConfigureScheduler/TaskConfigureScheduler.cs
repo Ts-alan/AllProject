@@ -47,14 +47,20 @@ namespace ARM2_dbcontrol.Tasks
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Сохранить в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        /// Выдача задачи
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(512);
@@ -110,7 +116,10 @@ namespace ARM2_dbcontrol.Tasks
 
             return result.ToString();
         }
-
+        /// <summary>
+        ///  Загрузка из xml
+        /// </summary>
+        /// <param name="Xml"></param>
         public void LoadFromXml(String Xml)
         {
             if (String.IsNullOrEmpty(Xml))

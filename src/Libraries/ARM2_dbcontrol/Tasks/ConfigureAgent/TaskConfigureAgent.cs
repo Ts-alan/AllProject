@@ -97,7 +97,10 @@ namespace ARM2_dbcontrol.Tasks
         }
 
         #region IConfigureTask Members
-
+        /// <summary>
+        /// Сохранить в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             XmlBuilder xml = new XmlBuilder("ConfigureAgent");
@@ -110,7 +113,10 @@ namespace ARM2_dbcontrol.Tasks
 
             return xml.Result;
         }
-
+        /// <summary>
+        /// Загрузить из Xml
+        /// </summary>
+        /// <param name="xml">xml</param>
         public void LoadFromXml(String xml)
         {
             XmlTaskParser parser = new XmlTaskParser(xml);

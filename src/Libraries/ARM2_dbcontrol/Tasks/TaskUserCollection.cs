@@ -41,13 +41,20 @@ namespace ARM2_dbcontrol.Tasks
                 return ((TaskUserEntity)this.List[index]);
             }
         }
-
+        /// <summary>
+        /// Добавление задач
+        /// </summary>
+        /// <param name="task">задача</param>
         public void Add(TaskUserEntity task)
         {
             this.List.Add(task);
             this.tasks = this.Serialize();
         }
-
+        /// <summary>
+        /// получение задач
+        /// </summary>
+        /// <param name="name">имя задачи</param>
+        /// <returns></returns>
         public TaskUserEntity Get(string name)
         {
             foreach (TaskUserEntity task in Deserialize())
@@ -56,7 +63,10 @@ namespace ARM2_dbcontrol.Tasks
             }
             return new TaskUserEntity();
         }
-
+        /// <summary>
+        /// Изменение задачи
+        /// </summary>
+        /// <param name="task">задача</param>
         public void Update(TaskUserEntity task)
         {
             TaskUserCollection temp = new TaskUserCollection();
@@ -75,7 +85,10 @@ namespace ARM2_dbcontrol.Tasks
             this.tasks = temp.tasks;
         }
 
-
+        /// <summary>
+        /// удаление задачи
+        /// </summary>
+        /// <param name="name">имя задачи</param>
         public void Delete(string name)
         {
             TaskUserCollection temp = new TaskUserCollection();
@@ -89,7 +102,10 @@ namespace ARM2_dbcontrol.Tasks
 
             this.tasks = temp.tasks;
         }
-
+        /// <summary>
+        /// получение всех задач
+        /// </summary>
+        /// <returns></returns>
         public TaskUserCollection GetAll()
         {
             return this.Deserialize();

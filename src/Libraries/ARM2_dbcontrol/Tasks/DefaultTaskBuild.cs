@@ -14,14 +14,23 @@ namespace ARM2_dbcontrol.Tasks
         {
             this.collection = collection;    
         }
-
+        /// <summary>
+        /// Добавление заданий по умолчанию
+        /// </summary>
+        /// <param name="cancelTaskName"></param>
+        /// <param name="systemInfoName"></param>
+        /// <param name="listProcessesName"></param>
         public void AddDefaultTasks(string cancelTaskName, string systemInfoName, string listProcessesName)
         {
             AddTask(cancelTaskName,TaskType.CancelTask);
             AddTask(systemInfoName,TaskType.SystemInfo);
             AddTask(listProcessesName,TaskType.ListProcesses);
         }
-       
+       /// <summary>
+       /// Добавление заданий
+       /// </summary>
+       /// <param name="name">имя</param>
+       /// <param name="type">тип</param>
         public void AddTask(string name, TaskType type)
         {
             TaskUserEntity task = new TaskUserEntity();

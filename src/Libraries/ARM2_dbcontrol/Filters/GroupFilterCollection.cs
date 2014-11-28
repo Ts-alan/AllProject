@@ -42,13 +42,20 @@ namespace ARM2_dbcontrol.Filters
                 return ((GroupFilterEntity)this.List[index]);
             }
         }
-
+        /// <summary>
+        /// добавление фильтра групп
+        /// </summary>
+        /// <param name="filter">фильтр</param>
         public void Add(GroupFilterEntity filter)
         {
             this.List.Add(filter);
             this.filters = this.Serialize();
         }
-
+        /// <summary>
+        /// получение фильтра групп
+        /// </summary>
+        /// <param name="name">имя фильтра</param>
+        /// <returns>фильтр</returns>
         public GroupFilterEntity Get(string name)
         {
             foreach (GroupFilterEntity filter in Deserialize())
@@ -57,7 +64,10 @@ namespace ARM2_dbcontrol.Filters
             }
             return new GroupFilterEntity();
         }
-
+        /// <summary>
+        /// изменение фильтра групп
+        /// </summary>
+        /// <param name="filter">фильтр</param>
         public void Update(GroupFilterEntity filter)
         {
             GroupFilterCollection temp = new GroupFilterCollection();
@@ -76,7 +86,10 @@ namespace ARM2_dbcontrol.Filters
             this.filters = temp.filters;
         }
 
-
+        /// <summary>
+        /// удаление фильтра групп
+        /// </summary>
+        /// <param name="name">имя фильтра</param>
         public void Delete(string name)
         {
             GroupFilterCollection temp = new GroupFilterCollection();
@@ -90,7 +103,10 @@ namespace ARM2_dbcontrol.Filters
 
             this.filters = temp.filters;
         }
-
+        /// <summary>
+        /// получение всех фильтров
+        /// </summary>
+        /// <returns></returns>
         public GroupFilterCollection GetAll()
         {
             return this.Deserialize();

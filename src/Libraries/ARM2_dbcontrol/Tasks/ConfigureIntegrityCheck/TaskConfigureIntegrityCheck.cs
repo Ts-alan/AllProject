@@ -75,14 +75,20 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Сохранить в xml
+        /// </summary>
+        /// <returns></returns>
         public String SaveToXml()
         {
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, this);
             return sw.ToString();
         }
-
+        /// <summary>
+        /// Загрузить из Xml
+        /// </summary>
+        /// <param name="xml">xml</param>
         public void LoadFromXml(String Xml)
         {
             if (String.IsNullOrEmpty(Xml))
@@ -98,7 +104,10 @@ namespace ARM2_dbcontrol.Tasks.ConfigureIntegrityCheck
             this._Vba32CCUser = task.Vba32CCUser;
             this._journalEvent = task.journalEvent;
         }
-
+        /// <summary>
+        /// Выдыча задачи
+        /// </summary>
+        /// <returns></returns>
         public String GetTask()
         {
             StringBuilder result = new StringBuilder(512);
