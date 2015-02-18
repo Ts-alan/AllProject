@@ -106,14 +106,14 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
                     UInt32 oldSettingsType;
                     _settings.GetParameter(module_id, "ExpandPathesList", out oldList, out oldSettingsType);
                     if (oldList != null)
-                        list.AddRange((vsisLib.PairString[])oldList);
+                        list.AddRange((Interop.vsisLib.PairString[])oldList);
                     */
 
                 }
                 _settings.SetParameter(module_id, "ExpandPathesList", list.ToArray(), settingsType);
             }
             //else
-            //    _settings.SetParameter(module_id, "ExpandPathesList", new vsisLib.PairString[0], settingsType);
+            //    _settings.SetParameter(module_id, "ExpandPathesList", new Interop.vsisLib.PairString[0], settingsType);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
             if (parameter != null) properties.UpdatePathes = (String[])parameter;
 
             //_settings.GetParameter(module_id, "ExpandPathesList", out parameter, out settingsType);
-            //if (parameter != null) properties.ExpandPathesList = (vsisLib.PairString[])parameter;
+            //if (parameter != null) properties.ExpandPathesList = (Interop.vsisLib.PairString[])parameter;
             
             return properties;
         }

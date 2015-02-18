@@ -57,7 +57,7 @@ namespace VirusBlokAda.Vba32CC.Service.VSIS
             }
             catch (Exception e)
             {
-                throw new Exception("Cannot create vsisLib.ServiceClass: " + e.Message);
+                throw new Exception("Cannot create Interop.vsisLib.ServiceClass: " + e.Message);
             }
             
             //Wait when VSIS worked

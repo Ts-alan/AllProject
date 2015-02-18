@@ -295,6 +295,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Fakes Include="Fakes\Interop.vsisLib.fakes" />
     <None Include="packages.config" />
     <None Include="sgKey.snk" />
   </ItemGroup>

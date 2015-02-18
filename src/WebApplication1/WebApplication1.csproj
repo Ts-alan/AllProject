@@ -1,0 +1,1388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6DD40855-67CE-4494-9B0E-2FE3D9C93C1D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApplication1</RootNamespace>
+    <AssemblyName>WebApplication1</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\packages\AjaxControlToolkit.7.1213\lib\40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxMin">
+      <HintPath>..\packages\AjaxMin.4.97.4951.28483\lib\net40\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="Common, Version=3.12.10.0, Culture=neutral, PublicKeyToken=e3989b2db6257093, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\.bin\Libraries\Common\Debug\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, PublicKeyToken=e3989b2db6257093, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WebConsole\bin\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.vsisLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e3989b2db6257093, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\WebConsole\bin\Interop.vsisLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\packages\WindowsAzure.Storage.2.1.0.3\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="VbaCompressionLibrary, Version=3.12.1.1, Culture=neutral, PublicKeyToken=e3989b2db6257093, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WebConsole\bin\VbaCompressionLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\eng.png" />
+    <Content Include="App_Themes\Main\Groups\Groups.css" />
+    <Content Include="App_Themes\Main\Groups\images\add.png" />
+    <Content Include="App_Themes\Main\Groups\images\comment.png" />
+    <Content Include="App_Themes\Main\Groups\images\computerGreen.png" />
+    <Content Include="App_Themes\Main\Groups\images\computerGrey.png" />
+    <Content Include="App_Themes\Main\Groups\images\computerRed.png" />
+    <Content Include="App_Themes\Main\Groups\images\computerYellow.png" />
+    <Content Include="App_Themes\Main\Groups\images\cross.gif" />
+    <Content Include="App_Themes\Main\Groups\images\delete.png" />
+    <Content Include="App_Themes\Main\Groups\images\folder.gif" />
+    <Content Include="App_Themes\Main\Groups\images\group.png" />
+    <Content Include="App_Themes\Main\Groups\images\group_edit.png" />
+    <Content Include="App_Themes\Main\Groups\images\monitor.png" />
+    <Content Include="App_Themes\Main\Groups\images\monitorAll.png" />
+    <Content Include="App_Themes\Main\Groups\images\reload.png" />
+    <Content Include="App_Themes\Main\Groups\images\rename.png" />
+    <Content Include="App_Themes\Main\Groups\images\save.gif" />
+    <Content Include="App_Themes\Main\Groups\images\server.png" />
+    <Content Include="App_Themes\Main\Images\add.png" />
+    <Content Include="App_Themes\Main\Images\arrow_down.gif" />
+    <Content Include="App_Themes\Main\Images\arrow_up.gif" />
+    <Content Include="App_Themes\Main\Images\BlockWrite.gif" />
+    <Content Include="App_Themes\Main\Images\buttonbg.jpg" />
+    <Content Include="App_Themes\Main\Images\ButtonBG.png" />
+    <Content Include="App_Themes\Main\Images\buttonbgHover.jpg" />
+    <Content Include="App_Themes\Main\Images\ButtonBG_disabled.png" />
+    <Content Include="App_Themes\Main\Images\Calendar_scheduleHS.png" />
+    <Content Include="App_Themes\Main\Images\chart-bar-disabled.png" />
+    <Content Include="App_Themes\Main\Images\chart-bar.png" />
+    <Content Include="App_Themes\Main\Images\chart-line-disabled.png" />
+    <Content Include="App_Themes\Main\Images\chart-line.png" />
+    <Content Include="App_Themes\Main\Images\chart-pie-disabled.png" />
+    <Content Include="App_Themes\Main\Images\chart-pie.png" />
+    <Content Include="App_Themes\Main\Images\Close.gif" />
+    <Content Include="App_Themes\Main\Images\cog.png" />
+    <Content Include="App_Themes\Main\Images\cog_disabled.png" />
+    <Content Include="App_Themes\Main\Images\cog_disabled_loading.PNG" />
+    <Content Include="App_Themes\Main\Images\cog_enabled.png" />
+    <Content Include="App_Themes\Main\Images\cog_enabled_loading.PNG" />
+    <Content Include="App_Themes\Main\Images\comment.png" />
+    <Content Include="App_Themes\Main\Images\DDImage.bmp" />
+    <Content Include="App_Themes\Main\Images\delete.gif" />
+    <Content Include="App_Themes\Main\Images\deleteicon.png" />
+    <Content Include="App_Themes\Main\Images\disabled.gif" />
+    <Content Include="App_Themes\Main\Images\disabled2.gif" />
+    <Content Include="App_Themes\Main\Images\document-edit.png" />
+    <Content Include="App_Themes\Main\Images\enabled.gif" />
+    <Content Include="App_Themes\Main\Images\erase.JPG" />
+    <Content Include="App_Themes\Main\Images\erase_disabled.JPG" />
+    <Content Include="App_Themes\Main\Images\error_icon.png" />
+    <Content Include="App_Themes\Main\Images\gridViewHeaderBG.jpg" />
+    <Content Include="App_Themes\Main\Images\HeaderBackground_Main.gif" />
+    <Content Include="App_Themes\Main\Images\HeaderBackground_Main_2.gif" />
+    <Content Include="App_Themes\Main\Images\HeaderMenuBackground.gif" />
+    <Content Include="App_Themes\Main\Images\ip.png" />
+    <Content Include="App_Themes\Main\Images\linkbg.jpg" />
+    <Content Include="App_Themes\Main\Images\loading-transparent.gif" />
+    <Content Include="App_Themes\Main\Images\loading.gif" />
+    <Content Include="App_Themes\Main\Images\logout_sprite.png" />
+    <Content Include="App_Themes\Main\Images\Logo_Main.gif" />
+    <Content Include="App_Themes\Main\Images\MenuHeader.jpg" />
+    <Content Include="App_Themes\Main\Images\MenuHeaderHover.jpg" />
+    <Content Include="App_Themes\Main\Images\notForAll.gif" />
+    <Content Include="App_Themes\Main\Images\page-first-disabled.gif" />
+    <Content Include="App_Themes\Main\Images\page-first.gif" />
+    <Content Include="App_Themes\Main\Images\page-last-disabled.gif" />
+    <Content Include="App_Themes\Main\Images\page-last.gif" />
+    <Content Include="App_Themes\Main\Images\page-next-disabled.gif" />
+    <Content Include="App_Themes\Main\Images\page-next.gif" />
+    <Content Include="App_Themes\Main\Images\page-prev-disabled.gif" />
+    <Content Include="App_Themes\Main\Images\page-prev.gif" />
+    <Content Include="App_Themes\Main\Images\page_white_copy.png" />
+    <Content Include="App_Themes\Main\Images\pagingBG.jpg" />
+    <Content Include="App_Themes\Main\Images\progressbar.gif" />
+    <Content Include="App_Themes\Main\Images\progressbg.gif" />
+    <Content Include="App_Themes\Main\Images\sectionbg.jpg" />
+    <Content Include="App_Themes\Main\Images\success_icon.png" />
+    <Content Include="App_Themes\Main\Images\SwitchOff.png" />
+    <Content Include="App_Themes\Main\Images\SwitchOn.png" />
+    <Content Include="App_Themes\Main\Images\table_edit.png" />
+    <Content Include="App_Themes\Main\Images\titlebg.jpg" />
+    <Content Include="App_Themes\Main\Images\Title_Main.gif" />
+    <Content Include="App_Themes\Main\Images\ui-icons_222222_256x240.png" />
+    <Content Include="App_Themes\Main\Images\ui-icons_454545_256x240.png" />
+    <Content Include="App_Themes\Main\Images\ui-icons_888888_256x240.png" />
+    <Content Include="App_Themes\Main\Images\undefined.gif" />
+    <Content Include="App_Themes\Main\Images\UnderHeader.gif" />
+    <Content Include="App_Themes\Main\Images\user_delete.png" />
+    <Content Include="App_Themes\Main\Images\user_edit.png" />
+    <Content Include="App_Themes\Main\Images\vba32ccwi.gif" />
+    <Content Include="App_Themes\Main\Images\VBAGreen.png" />
+    <Content Include="App_Themes\Main\Images\VBAGrey.png" />
+    <Content Include="App_Themes\Main\Images\VBARed.png" />
+    <Content Include="App_Themes\Main\Images\VBAYellow.png" />
+    <Content Include="App_Themes\Main\jquery.additional.css" />
+    <Content Include="App_Themes\Main\jquery.contextMenu.css" />
+    <Content Include="App_Themes\Main\jquery.jqplot.css" />
+    <Content Include="App_Themes\Main\jquery.loadmask.css" />
+    <Content Include="App_Themes\Main\jquery.menu.css" />
+    <Content Include="App_Themes\Main\jsTree\32px.png" />
+    <Content Include="App_Themes\Main\jsTree\40px.png" />
+    <Content Include="App_Themes\Main\jsTree\style.css" />
+    <Content Include="App_Themes\Main\jsTree\style.min.css" />
+    <Content Include="App_Themes\Main\jsTree\throbber.gif" />
+    <Content Include="App_Themes\Main\Menu.ContextMenu.css" />
+    <Content Include="App_Themes\Main\StyleSheet.css" />
+    <Content Include="App_Themes\Main\ui\images\animated-overlay.gif" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_flat_0_7193DB_40x100.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_glass_100_7193DB_1x400.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_glass_75_7193DB_1x400.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_glass_85_3369CD_1x400.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_gloss-wave_55_7193DB_500x100.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="App_Themes\Main\ui\images\ui-icons_fff_256x240.png" />
+    <Content Include="App_Themes\Main\ui\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="App_Themes\Patriotic\Groups\Groups.css" />
+    <Content Include="App_Themes\Patriotic\Groups\images\add.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\comment.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\computerGreen.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\computerGrey.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\computerRed.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\computerYellow.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\cross.gif" />
+    <Content Include="App_Themes\Patriotic\Groups\images\delete.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\group.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\group_edit.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\monitor.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\monitorAll.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\reload.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\rename.png" />
+    <Content Include="App_Themes\Patriotic\Groups\images\save.gif" />
+    <Content Include="App_Themes\Patriotic\Groups\images\server.png" />
+    <Content Include="App_Themes\Patriotic\Images\add.png" />
+    <Content Include="App_Themes\Patriotic\Images\arrow_down.gif" />
+    <Content Include="App_Themes\Patriotic\Images\arrow_up.gif" />
+    <Content Include="App_Themes\Patriotic\Images\BlockWrite.gif" />
+    <Content Include="App_Themes\Patriotic\Images\buttonbg.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\ButtonBG.png" />
+    <Content Include="App_Themes\Patriotic\Images\buttonbgHover.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\ButtonBG_disabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\Calendar_scheduleHS.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-bar-disabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-bar.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-line-disabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-line.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-pie-disabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\chart-pie.png" />
+    <Content Include="App_Themes\Patriotic\Images\Close.gif" />
+    <Content Include="App_Themes\Patriotic\Images\cog.png" />
+    <Content Include="App_Themes\Patriotic\Images\cog_disabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\cog_disabled_loading.PNG" />
+    <Content Include="App_Themes\Patriotic\Images\cog_enabled.png" />
+    <Content Include="App_Themes\Patriotic\Images\cog_enabled_loading.PNG" />
+    <Content Include="App_Themes\Patriotic\Images\comment.png" />
+    <Content Include="App_Themes\Patriotic\Images\DDImage.bmp" />
+    <Content Include="App_Themes\Patriotic\Images\delete.gif" />
+    <Content Include="App_Themes\Patriotic\Images\deleteicon.png" />
+    <Content Include="App_Themes\Patriotic\Images\disabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\disabled2.gif" />
+    <Content Include="App_Themes\Patriotic\Images\document-edit.png" />
+    <Content Include="App_Themes\Patriotic\Images\enabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\erase.JPG" />
+    <Content Include="App_Themes\Patriotic\Images\erase_disabled.JPG" />
+    <Content Include="App_Themes\Patriotic\Images\error_icon.png" />
+    <Content Include="App_Themes\Patriotic\Images\gridViewHeaderBG.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\HeaderBackground_Main.gif" />
+    <Content Include="App_Themes\Patriotic\Images\HeaderBackground_Main_2.gif" />
+    <Content Include="App_Themes\Patriotic\Images\HeaderMenuBackground.gif" />
+    <Content Include="App_Themes\Patriotic\Images\ip.png" />
+    <Content Include="App_Themes\Patriotic\Images\linkbg.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\loading-transparent.gif" />
+    <Content Include="App_Themes\Patriotic\Images\loading.gif" />
+    <Content Include="App_Themes\Patriotic\Images\Logo_Main.gif" />
+    <Content Include="App_Themes\Patriotic\Images\MenuHeader.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\MenuHeaderHover.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\notForAll.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-first-disabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-first.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-last-disabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-last.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-next-disabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-next.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-prev-disabled.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page-prev.gif" />
+    <Content Include="App_Themes\Patriotic\Images\page_white_copy.png" />
+    <Content Include="App_Themes\Patriotic\Images\pagingBG.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\progressbar.gif" />
+    <Content Include="App_Themes\Patriotic\Images\progressbg.gif" />
+    <Content Include="App_Themes\Patriotic\Images\sectionbg.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\success_icon.png" />
+    <Content Include="App_Themes\Patriotic\Images\SwitchOff.png" />
+    <Content Include="App_Themes\Patriotic\Images\SwitchOn.png" />
+    <Content Include="App_Themes\Patriotic\Images\table_edit.png" />
+    <Content Include="App_Themes\Patriotic\Images\titlebg.jpg" />
+    <Content Include="App_Themes\Patriotic\Images\Title_Main.gif" />
+    <Content Include="App_Themes\Patriotic\Images\ui-icons_222222_256x240.png" />
+    <Content Include="App_Themes\Patriotic\Images\ui-icons_454545_256x240.png" />
+    <Content Include="App_Themes\Patriotic\Images\ui-icons_888888_256x240.png" />
+    <Content Include="App_Themes\Patriotic\Images\undefined.gif" />
+    <Content Include="App_Themes\Patriotic\Images\UnderHeader.gif" />
+    <Content Include="App_Themes\Patriotic\Images\user_delete.png" />
+    <Content Include="App_Themes\Patriotic\Images\user_edit.png" />
+    <Content Include="App_Themes\Patriotic\Images\vba32ccwi.gif" />
+    <Content Include="App_Themes\Patriotic\Images\VBAGreen.png" />
+    <Content Include="App_Themes\Patriotic\Images\VBAGrey.png" />
+    <Content Include="App_Themes\Patriotic\Images\VBARed.png" />
+    <Content Include="App_Themes\Patriotic\Images\VBAYellow.png" />
+    <Content Include="App_Themes\Patriotic\jquery.additional.css" />
+    <Content Include="App_Themes\Patriotic\jquery.contextMenu.css" />
+    <Content Include="App_Themes\Patriotic\jquery.jqplot.css" />
+    <Content Include="App_Themes\Patriotic\jquery.loadmask.css" />
+    <Content Include="App_Themes\Patriotic\jquery.menu.css" />
+    <Content Include="App_Themes\Patriotic\jsTree\32px.png" />
+    <Content Include="App_Themes\Patriotic\jsTree\40px.png" />
+    <Content Include="App_Themes\Patriotic\jsTree\style.css" />
+    <Content Include="App_Themes\Patriotic\jsTree\style.min.css" />
+    <Content Include="App_Themes\Patriotic\jsTree\throbber.gif" />
+    <Content Include="App_Themes\Patriotic\Menu.ContextMenu.css" />
+    <Content Include="App_Themes\Patriotic\StyleSheet.css" />
+    <Content Include="App_Themes\Patriotic\ui\images\animated-overlay.gif" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_diagonals-thick_75_f3d8d8_40x40.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_dots-small_65_659772_2x2.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_flat_0_333333_40x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_flat_65_FE4D47_40x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_flat_75_DDFFDD_40x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_glass_55_fbf8ee_1x400.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_highlight-hard_100_F98078_1x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_highlight-hard_100_FE1D19_1x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-bg_highlight-soft_15_FE5C59_1x100.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-icons_004276_256x240.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="App_Themes\Patriotic\ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="App_Themes\Patriotic\ui\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="App_Themes\ru.png" />
+    <Content Include="App_Themes\style.css" />
+    <Content Include="AsynchLanScan.aspx" />
+    <Content Include="AsynchRequestErrorHandler.js" />
+    <Content Include="bin\Elmah.dll" />
+    <Content Include="bin\Interop.vsisLib.dll" />
+    <Content Include="bin\VbaCompressionLibrary.dll" />
+    <Content Include="ChangeLog.txt" />
+    <Content Include="ChartGenerator.aspx" />
+    <Content Include="CompFilters.aspx" />
+    <Content Include="CompInfo.aspx" />
+    <Content Include="Components.aspx" />
+    <Content Include="Computers.aspx" />
+    <Content Include="Computers2.aspx" />
+    <Content Include="ControlCenter.aspx" />
+    <Content Include="Controls\AsyncLoadingStateControl.ascx" />
+    <Content Include="Controls\AutoUpdateControl.ascx" />
+    <Content Include="Controls\ChangeDeviceProtectTaskOptions.ascx" />
+    <Content Include="Controls\CollapsiblePanelSwitch.ascx" />
+    <Content Include="Controls\CompFiltersBool.ascx" />
+    <Content Include="Controls\CompFiltersExtra.ascx" />
+    <Content Include="Controls\CompFiltersMain.ascx" />
+    <Content Include="Controls\CompositeFilter.ascx" />
+    <Content Include="Controls\ConfigurePasswordTaskOptions.ascx" />
+    <Content Include="Controls\CreateProcessTaskOptions.ascx" />
+    <Content Include="Controls\CustomizableTask.ascx" />
+    <Content Include="Controls\ExportToExcel.ascx" />
+    <Content Include="Controls\GroupFiltersMain.ascx" />
+    <Content Include="Controls\MultipleSelectionDropDownList.ascx" />
+    <Content Include="Controls\NotifyCnfg.ascx" />
+    <Content Include="Controls\PagerUserControl.ascx" />
+    <Content Include="Controls\PrimitiveFilterComputers.ascx" />
+    <Content Include="Controls\PrimitiveFilterDateTime.ascx" />
+    <Content Include="Controls\PrimitiveFilterDropDownList.ascx" />
+    <Content Include="Controls\PrimitiveFilterDropDownListForStatistics.ascx" />
+    <Content Include="Controls\PrimitiveFilterIpAddress.ascx" />
+    <Content Include="Controls\PrimitiveFilterRange.ascx" />
+    <Content Include="Controls\PrimitiveFilterTemplate.ascx" />
+    <Content Include="Controls\PrimitiveFilterText.ascx" />
+    <Content Include="Controls\ProductInstallTaskOptions.ascx" />
+    <Content Include="Controls\RestoreFileFromQtnTaskOptions.ascx" />
+    <Content Include="Controls\SaveAsDialog.ascx" />
+    <Content Include="Controls\SimpleTask.ascx" />
+    <Content Include="Controls\TaskAgentSettings.ascx" />
+    <Content Include="Controls\TaskCancelTask.ascx" />
+    <Content Include="Controls\TaskClearVFC.ascx" />
+    <Content Include="Controls\TaskComponentState.ascx" />
+    <Content Include="Controls\TaskConfigureAgent.ascx" />
+    <Content Include="Controls\TaskConfigureFileCleaner.ascx" />
+    <Content Include="Controls\TaskConfigureFirewall.ascx" />
+    <Content Include="Controls\TaskConfigureIntegrityCheck.ascx" />
+    <Content Include="Controls\TaskConfigureJornalEvents.ascx" />
+    <Content Include="Controls\TaskConfigureLoader.ascx" />
+    <Content Include="Controls\TaskConfigureMonitor.ascx" />
+    <Content Include="Controls\TaskConfigurePassword.ascx" />
+    <Content Include="Controls\TaskConfigureProactive.ascx" />
+    <Content Include="Controls\TaskConfigureQuarantine.ascx" />
+    <Content Include="Controls\TaskConfigureScanner.ascx" />
+    <Content Include="Controls\TaskConfigureScheduler.ascx" />
+    <Content Include="Controls\TaskCreateProcess.ascx" />
+    <Content Include="Controls\TaskDetachAgent.ascx" />
+    <Content Include="Controls\TaskListProcesses.ascx" />
+    <Content Include="Controls\TaskMonitorOff.ascx" />
+    <Content Include="Controls\TaskMonitorOn.ascx" />
+    <Content Include="Controls\TaskOptionsDialog.ascx" />
+    <Content Include="Controls\TaskPanel.ascx" />
+    <Content Include="Controls\TaskProductInstall.ascx" />
+    <Content Include="Controls\TaskProductUninstall.ascx" />
+    <Content Include="Controls\TaskProgramAndDataBaseUpdate.ascx" />
+    <Content Include="Controls\TaskRequestPolicy.ascx" />
+    <Content Include="Controls\TaskRestoreFileFromQtn.ascx" />
+    <Content Include="Controls\TaskRunScanner.ascx" />
+    <Content Include="Controls\TaskSaveIntegrityCheck.ascx" />
+    <Content Include="Controls\TaskSendFile.ascx" />
+    <Content Include="Controls\TaskSystemInfo.ascx" />
+    <Content Include="Controls\TemporaryGroupFilter.ascx" />
+    <Content Include="Controls\TestTaskOptions.ascx" />
+    <Content Include="Controls\UninstallTaskOptions.ascx" />
+    <Content Include="Default.aspx" />
+    <Content Include="DeviceClass.aspx" />
+    <Content Include="DevicesPolicy.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="ErrorSql.aspx" />
+    <Content Include="Events.aspx" />
+    <Content Include="GetPolicy.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="GroupFilters.aspx" />
+    <Content Include="Groups.aspx" />
+    <Content Include="GroupsAdministrate.aspx" />
+    <Content Include="js\CollapsiblePanelSwitch.js" />
+    <Content Include="js\DeviceClass.js" />
+    <Content Include="js\DeviceClass_Tree.js" />
+    <Content Include="js\DevicesPolicy.js" />
+    <Content Include="js\DevicesPolicy_tree.js" />
+    <Content Include="js\Globalize.js" />
+    <Content Include="js\jQuery\jqplot\jqplot.barRenderer.js" />
+    <Content Include="js\jQuery\jqplot\jqplot.categoryAxisRenderer.js" />
+    <Content Include="js\jQuery\jqplot\jqplot.pieRenderer.js" />
+    <Content Include="js\jQuery\jqplot\jqplot.pointLabels.js" />
+    <Content Include="js\jQuery\jqplot\jquery.jqplot.js" />
+    <Content Include="js\jQuery\jquery-1.10.2.min.js" />
+    <Content Include="js\jQuery\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="js\jQuery\jquery.contextMenu.js" />
+    <Content Include="js\jQuery\jquery.cookie.js" />
+    <Content Include="js\jQuery\jquery.loadmask.js" />
+    <Content Include="js\jQuery\jquery.menu.js" />
+    <Content Include="js\jQuery\jquery.progressbar.js" />
+    <Content Include="js\jQuery\jquery.ui.position.js" />
+    <Content Include="js\json2.js" />
+    <Content Include="js\jstree.js" />
+    <Content Include="js\MapComputers.js" />
+    <Content Include="js\MultipleSelectionDropDownList.js" />
+    <Content Include="js\PageRequestManagerHelper.js" />
+    <Content Include="js\PrimitiveFilterDateTime.js" />
+    <Content Include="js\Safari3AjaxHack.js" />
+    <Content Include="js\TabPanel.js" />
+    <Content Include="js\TaskHelper.js" />
+    <Content Include="js\Timer.js" />
+    <Content Include="Logins.aspx" />
+    <Content Include="MapComputers.aspx" />
+    <Content Include="Notification.aspx" />
+    <Content Include="PoliciesPage.aspx" />
+    <Content Include="Portable.aspx" />
+    <Content Include="Processes.aspx" />
+    <Content Include="Registration.aspx" />
+    <Content Include="SettingsExtra.aspx" />
+    <Content Include="SettingsMain.aspx" />
+    <Content Include="Settings\Vba32HelperService.exe" />
+    <Content Include="Settings\Vba32MSI.xml" />
+    <Content Include="Settings\Vba32Versions.xml" />
+    <Content Include="Statistic.aspx" />
+    <Content Include="Task.aspx" />
+    <Content Include="TaskCreate.aspx" />
+    <Content Include="TasksInstall.aspx" />
+    <Content Include="Temp\Default2.aspx" />
+    <Content Include="Temp\Default3.aspx" />
+    <Content Include="Temp\readme_tasks.txt" />
+    <Content Include="Temp\ToDo.txt" />
+    <Content Include="Temp\Validators.txt" />
+    <Content Include="TestTreePage.aspx" />
+    <Content Include="UpdateCC.aspx" />
+    <Content Include="UserManager.aspx" />
+    <Content Include="Visual.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsynchLanScan.aspx.designer.cs">
+      <DependentUpon>AsynchLanScan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChartGenerator.aspx.designer.cs">
+      <DependentUpon>ChartGenerator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompFilters.aspx.designer.cs">
+      <DependentUpon>CompFilters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompInfo.aspx.designer.cs">
+      <DependentUpon>CompInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Components.aspx.designer.cs">
+      <DependentUpon>Components.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Computers.aspx.designer.cs">
+      <DependentUpon>Computers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Computers2.aspx.designer.cs">
+      <DependentUpon>Computers2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ControlCenter.aspx.designer.cs">
+      <DependentUpon>ControlCenter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AsyncLoadingStateControl.ascx.designer.cs">
+      <DependentUpon>AsyncLoadingStateControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AutoUpdateControl.ascx.designer.cs">
+      <DependentUpon>AutoUpdateControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ChangeDeviceProtectTaskOptions.ascx.designer.cs">
+      <DependentUpon>ChangeDeviceProtectTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CollapsiblePanelSwitch.ascx.designer.cs">
+      <DependentUpon>CollapsiblePanelSwitch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CompFiltersBool.ascx.designer.cs">
+      <DependentUpon>CompFiltersBool.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CompFiltersExtra.ascx.designer.cs">
+      <DependentUpon>CompFiltersExtra.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CompFiltersMain.ascx.designer.cs">
+      <DependentUpon>CompFiltersMain.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CompositeFilter.ascx.designer.cs">
+      <DependentUpon>CompositeFilter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigurePasswordTaskOptions.ascx.designer.cs">
+      <DependentUpon>ConfigurePasswordTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateProcessTaskOptions.ascx.designer.cs">
+      <DependentUpon>CreateProcessTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomizableTask.ascx.designer.cs">
+      <DependentUpon>CustomizableTask.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExportToExcel.ascx.designer.cs">
+      <DependentUpon>ExportToExcel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GroupFiltersMain.ascx.designer.cs">
+      <DependentUpon>GroupFiltersMain.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MultipleSelectionDropDownList.ascx.designer.cs">
+      <DependentUpon>MultipleSelectionDropDownList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NotifyCnfg.ascx.designer.cs">
+      <DependentUpon>NotifyCnfg.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PagerUserControl.ascx.designer.cs">
+      <DependentUpon>PagerUserControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterComputers.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterComputers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDateTime.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterDateTime.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDropDownList.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterDropDownList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDropDownListForStatistics.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterDropDownListForStatistics.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterIpAddress.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterIpAddress.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterRange.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterRange.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterTemplate.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterText.ascx.designer.cs">
+      <DependentUpon>PrimitiveFilterText.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProductInstallTaskOptions.ascx.designer.cs">
+      <DependentUpon>ProductInstallTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RestoreFileFromQtnTaskOptions.ascx.designer.cs">
+      <DependentUpon>RestoreFileFromQtnTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SaveAsDialog.ascx.designer.cs">
+      <DependentUpon>SaveAsDialog.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SimpleTask.ascx.designer.cs">
+      <DependentUpon>SimpleTask.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskAgentSettings.ascx.designer.cs">
+      <DependentUpon>TaskAgentSettings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskCancelTask.ascx.designer.cs">
+      <DependentUpon>TaskCancelTask.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskClearVFC.ascx.designer.cs">
+      <DependentUpon>TaskClearVFC.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskComponentState.ascx.designer.cs">
+      <DependentUpon>TaskComponentState.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureAgent.ascx.designer.cs">
+      <DependentUpon>TaskConfigureAgent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureFileCleaner.ascx.designer.cs">
+      <DependentUpon>TaskConfigureFileCleaner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureFirewall.ascx.designer.cs">
+      <DependentUpon>TaskConfigureFirewall.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureIntegrityCheck.ascx.designer.cs">
+      <DependentUpon>TaskConfigureIntegrityCheck.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureJornalEvents.ascx.designer.cs">
+      <DependentUpon>TaskConfigureJornalEvents.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureLoader.ascx.designer.cs">
+      <DependentUpon>TaskConfigureLoader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureMonitor.ascx.designer.cs">
+      <DependentUpon>TaskConfigureMonitor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigurePassword.ascx.designer.cs">
+      <DependentUpon>TaskConfigurePassword.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureProactive.ascx.designer.cs">
+      <DependentUpon>TaskConfigureProactive.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureQuarantine.ascx.designer.cs">
+      <DependentUpon>TaskConfigureQuarantine.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureScanner.ascx.designer.cs">
+      <DependentUpon>TaskConfigureScanner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureScheduler.ascx.designer.cs">
+      <DependentUpon>TaskConfigureScheduler.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskCreateProcess.ascx.designer.cs">
+      <DependentUpon>TaskCreateProcess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskDetachAgent.ascx.designer.cs">
+      <DependentUpon>TaskDetachAgent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskListProcesses.ascx.designer.cs">
+      <DependentUpon>TaskListProcesses.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskMonitorOff.ascx.designer.cs">
+      <DependentUpon>TaskMonitorOff.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskMonitorOn.ascx.designer.cs">
+      <DependentUpon>TaskMonitorOn.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskOptionsDialog.ascx.designer.cs">
+      <DependentUpon>TaskOptionsDialog.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskPanel.ascx.designer.cs">
+      <DependentUpon>TaskPanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskProductInstall.ascx.designer.cs">
+      <DependentUpon>TaskProductInstall.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskProductUninstall.ascx.designer.cs">
+      <DependentUpon>TaskProductUninstall.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskProgramAndDataBaseUpdate.ascx.designer.cs">
+      <DependentUpon>TaskProgramAndDataBaseUpdate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskRequestPolicy.ascx.designer.cs">
+      <DependentUpon>TaskRequestPolicy.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskRestoreFileFromQtn.ascx.designer.cs">
+      <DependentUpon>TaskRestoreFileFromQtn.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskRunScanner.ascx.designer.cs">
+      <DependentUpon>TaskRunScanner.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskSaveIntegrityCheck.ascx.designer.cs">
+      <DependentUpon>TaskSaveIntegrityCheck.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskSendFile.ascx.designer.cs">
+      <DependentUpon>TaskSendFile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskSystemInfo.ascx.designer.cs">
+      <DependentUpon>TaskSystemInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TemporaryGroupFilter.ascx.designer.cs">
+      <DependentUpon>TemporaryGroupFilter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TestTaskOptions.ascx.designer.cs">
+      <DependentUpon>TestTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UninstallTaskOptions.ascx.designer.cs">
+      <DependentUpon>UninstallTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceClass.aspx.designer.cs">
+      <DependentUpon>DeviceClass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DevicesPolicy.aspx.designer.cs">
+      <DependentUpon>DevicesPolicy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorSql.aspx.designer.cs">
+      <DependentUpon>ErrorSql.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Events.aspx.designer.cs">
+      <DependentUpon>Events.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GetPolicy.aspx.designer.cs">
+      <DependentUpon>GetPolicy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GroupFilters.aspx.designer.cs">
+      <DependentUpon>GroupFilters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Groups.aspx.designer.cs">
+      <DependentUpon>Groups.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GroupsAdministrate.aspx.designer.cs">
+      <DependentUpon>GroupsAdministrate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logins.aspx.designer.cs">
+      <DependentUpon>Logins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MapComputers.aspx.designer.cs">
+      <DependentUpon>MapComputers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mstrPageMain.master.designer.cs">
+      <DependentUpon>mstrPageMain.master</DependentUpon>
+    </Compile>
+    <Compile Include="mstrPageNew.master.designer.cs">
+      <DependentUpon>mstrPageNew.master</DependentUpon>
+    </Compile>
+    <Compile Include="Notification.aspx.designer.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Old_App_Code\Anchor.cs" />
+    <Compile Include="Old_App_Code\AuthInfo.cs" />
+    <Compile Include="Old_App_Code\ComponentsDataContainer.cs" />
+    <Compile Include="Old_App_Code\CompressionHelper.cs" />
+    <Compile Include="Old_App_Code\ControlsExtensions.cs" />
+    <Compile Include="Old_App_Code\DatabaseNameLocalization.cs" />
+    <Compile Include="Old_App_Code\DataGridToExcel.cs" />
+    <Compile Include="Old_App_Code\DBProviders.cs" />
+    <Compile Include="Old_App_Code\DeviceClassDataContainer.cs" />
+    <Compile Include="Old_App_Code\DeviceDataContainer.cs" />
+    <Compile Include="Old_App_Code\EventsDataContainer.cs" />
+    <Compile Include="Old_App_Code\FileUtility.cs" />
+    <Compile Include="Old_App_Code\FilterState.cs" />
+    <Compile Include="Old_App_Code\HTMLClearer.cs" />
+    <Compile Include="Old_App_Code\IFilter.cs" />
+    <Compile Include="Old_App_Code\InformationListTypes.cs" />
+    <Compile Include="Old_App_Code\InstallTasksDataContainer.cs" />
+    <Compile Include="Old_App_Code\PackViewState.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\ProcessDataContainer.cs" />
+    <Compile Include="Old_App_Code\ResourceControl.cs" />
+    <Compile Include="Old_App_Code\SelectedComputersSet.cs" />
+    <Compile Include="Old_App_Code\SettingsEntityAccessor.cs" />
+    <Compile Include="Old_App_Code\TaskIcons.cs" />
+    <Compile Include="Old_App_Code\TasksDataContainer.cs" />
+    <Compile Include="Old_App_Code\TemporaryGroupContainer.cs" />
+    <Compile Include="Old_App_Code\UserEntity.cs" />
+    <Compile Include="Old_App_Code\UsersDataContainer.cs" />
+    <Compile Include="App_GlobalResources\Resource.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resource.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AsynchLanScan.aspx.cs">
+      <DependentUpon>AsynchLanScan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChartGenerator.aspx.cs">
+      <DependentUpon>ChartGenerator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompFilters.aspx.cs">
+      <DependentUpon>CompFilters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompInfo.aspx.cs">
+      <DependentUpon>CompInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components.aspx.cs">
+      <DependentUpon>Components.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Computers.aspx.cs">
+      <DependentUpon>Computers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Computers2.aspx.cs">
+      <DependentUpon>Computers2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlCenter.aspx.cs">
+      <DependentUpon>ControlCenter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\AsyncLoadingStateControl.ascx.cs">
+      <DependentUpon>AsyncLoadingStateControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\AutoUpdateControl.ascx.cs">
+      <DependentUpon>AutoUpdateControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ChangeDeviceProtectTaskOptions.ascx.cs">
+      <DependentUpon>ChangeDeviceProtectTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CollapsiblePanelSwitch.ascx.cs">
+      <DependentUpon>CollapsiblePanelSwitch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CompFiltersBool.ascx.cs">
+      <DependentUpon>CompFiltersBool.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CompFiltersExtra.ascx.cs">
+      <DependentUpon>CompFiltersExtra.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CompFiltersMain.ascx.cs">
+      <DependentUpon>CompFiltersMain.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CompositeFilter.ascx.cs">
+      <DependentUpon>CompositeFilter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigurePasswordTaskOptions.ascx.cs">
+      <DependentUpon>ConfigurePasswordTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CreateProcessTaskOptions.ascx.cs">
+      <DependentUpon>CreateProcessTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomizableTask.ascx.cs">
+      <DependentUpon>CustomizableTask.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ExportToExcel.ascx.cs">
+      <DependentUpon>ExportToExcel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\GroupFiltersMain.ascx.cs">
+      <DependentUpon>GroupFiltersMain.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MultipleSelectionDropDownList.ascx.cs">
+      <DependentUpon>MultipleSelectionDropDownList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\NotifyCnfg.ascx.cs">
+      <DependentUpon>NotifyCnfg.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PagerUserControl.ascx.cs">
+      <DependentUpon>PagerUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterComputers.ascx.cs">
+      <DependentUpon>PrimitiveFilterComputers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDateTime.ascx.cs">
+      <DependentUpon>PrimitiveFilterDateTime.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDropDownList.ascx.cs">
+      <DependentUpon>PrimitiveFilterDropDownList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterDropDownListForStatistics.ascx.cs">
+      <DependentUpon>PrimitiveFilterDropDownListForStatistics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterIpAddress.ascx.cs">
+      <DependentUpon>PrimitiveFilterIpAddress.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterRange.ascx.cs">
+      <DependentUpon>PrimitiveFilterRange.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterTemplate.ascx.cs">
+      <DependentUpon>PrimitiveFilterTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimitiveFilterText.ascx.cs">
+      <DependentUpon>PrimitiveFilterText.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ProductInstallTaskOptions.ascx.cs">
+      <DependentUpon>ProductInstallTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\RestoreFileFromQtnTaskOptions.ascx.cs">
+      <DependentUpon>RestoreFileFromQtnTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SaveAsDialog.ascx.cs">
+      <DependentUpon>SaveAsDialog.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\SimpleTask.ascx.cs">
+      <DependentUpon>SimpleTask.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskAgentSettings.ascx.cs">
+      <DependentUpon>TaskAgentSettings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskCancelTask.ascx.cs">
+      <DependentUpon>TaskCancelTask.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskClearVFC.ascx.cs">
+      <DependentUpon>TaskClearVFC.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskComponentState.ascx.cs">
+      <DependentUpon>TaskComponentState.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureAgent.ascx.cs">
+      <DependentUpon>TaskConfigureAgent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureFileCleaner.ascx.cs">
+      <DependentUpon>TaskConfigureFileCleaner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureFirewall.ascx.cs">
+      <DependentUpon>TaskConfigureFirewall.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureIntegrityCheck.ascx.cs">
+      <DependentUpon>TaskConfigureIntegrityCheck.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureJornalEvents.ascx.cs">
+      <DependentUpon>TaskConfigureJornalEvents.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureLoader.ascx.cs">
+      <DependentUpon>TaskConfigureLoader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureMonitor.ascx.cs">
+      <DependentUpon>TaskConfigureMonitor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigurePassword.ascx.cs">
+      <DependentUpon>TaskConfigurePassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureProactive.ascx.cs">
+      <DependentUpon>TaskConfigureProactive.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureQuarantine.ascx.cs">
+      <DependentUpon>TaskConfigureQuarantine.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureScanner.ascx.cs">
+      <DependentUpon>TaskConfigureScanner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskConfigureScheduler.ascx.cs">
+      <DependentUpon>TaskConfigureScheduler.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskCreateProcess.ascx.cs">
+      <DependentUpon>TaskCreateProcess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskDetachAgent.ascx.cs">
+      <DependentUpon>TaskDetachAgent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskListProcesses.ascx.cs">
+      <DependentUpon>TaskListProcesses.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskMonitorOff.ascx.cs">
+      <DependentUpon>TaskMonitorOff.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskMonitorOn.ascx.cs">
+      <DependentUpon>TaskMonitorOn.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskOptionsDialog.ascx.cs">
+      <DependentUpon>TaskOptionsDialog.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskPanel.ascx.cs">
+      <DependentUpon>TaskPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskProductInstall.ascx.cs">
+      <DependentUpon>TaskProductInstall.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskProductUninstall.ascx.cs">
+      <DependentUpon>TaskProductUninstall.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskProgramAndDataBaseUpdate.ascx.cs">
+      <DependentUpon>TaskProgramAndDataBaseUpdate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskRequestPolicy.ascx.cs">
+      <DependentUpon>TaskRequestPolicy.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskRestoreFileFromQtn.ascx.cs">
+      <DependentUpon>TaskRestoreFileFromQtn.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskRunScanner.ascx.cs">
+      <DependentUpon>TaskRunScanner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskSaveIntegrityCheck.ascx.cs">
+      <DependentUpon>TaskSaveIntegrityCheck.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskSendFile.ascx.cs">
+      <DependentUpon>TaskSendFile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TaskSystemInfo.ascx.cs">
+      <DependentUpon>TaskSystemInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TemporaryGroupFilter.ascx.cs">
+      <DependentUpon>TemporaryGroupFilter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TestTaskOptions.ascx.cs">
+      <DependentUpon>TestTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\UninstallTaskOptions.ascx.cs">
+      <DependentUpon>UninstallTaskOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeviceClass.aspx.cs">
+      <DependentUpon>DeviceClass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DevicesPolicy.aspx.cs">
+      <DependentUpon>DevicesPolicy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorSql.aspx.cs">
+      <DependentUpon>ErrorSql.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Events.aspx.cs">
+      <DependentUpon>Events.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetPolicy.aspx.cs">
+      <DependentUpon>GetPolicy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GroupFilters.aspx.cs">
+      <DependentUpon>GroupFilters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Groups.aspx.cs">
+      <DependentUpon>Groups.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GroupsAdministrate.aspx.cs">
+      <DependentUpon>GroupsAdministrate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logins.aspx.cs">
+      <DependentUpon>Logins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MapComputers.aspx.cs">
+      <DependentUpon>MapComputers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mstrPageMain.master.cs">
+      <DependentUpon>mstrPageMain.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mstrPageNew.master.cs">
+      <DependentUpon>mstrPageNew.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Notification.aspx.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Old_App_Code\WebProfileBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PoliciesPage.aspx.cs">
+      <DependentUpon>PoliciesPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PoliciesPage.aspx.designer.cs">
+      <DependentUpon>PoliciesPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Portable.aspx.cs">
+      <DependentUpon>Portable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Portable.aspx.designer.cs">
+      <DependentUpon>Portable.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Processes.aspx.cs">
+      <DependentUpon>Processes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Processes.aspx.designer.cs">
+      <DependentUpon>Processes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration.aspx.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registration.aspx.designer.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsExtra.aspx.cs">
+      <DependentUpon>SettingsExtra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SettingsExtra.aspx.designer.cs">
+      <DependentUpon>SettingsExtra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsMain.aspx.cs">
+      <DependentUpon>SettingsMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SettingsMain.aspx.designer.cs">
+      <DependentUpon>SettingsMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Statistic.aspx.cs">
+      <DependentUpon>Statistic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Statistic.aspx.designer.cs">
+      <DependentUpon>Statistic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Task.aspx.cs">
+      <DependentUpon>Task.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Task.aspx.designer.cs">
+      <DependentUpon>Task.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskCreate.aspx.cs">
+      <DependentUpon>TaskCreate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskCreate.aspx.designer.cs">
+      <DependentUpon>TaskCreate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TasksInstall.aspx.cs">
+      <DependentUpon>TasksInstall.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TasksInstall.aspx.designer.cs">
+      <DependentUpon>TasksInstall.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Temp\Default2.aspx.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Temp\Default2.aspx.designer.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Temp\Default3.aspx.cs">
+      <DependentUpon>Default3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Temp\Default3.aspx.designer.cs">
+      <DependentUpon>Default3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTreePage.aspx.cs">
+      <DependentUpon>TestTreePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTreePage.aspx.designer.cs">
+      <DependentUpon>TestTreePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCC.aspx.cs">
+      <DependentUpon>UpdateCC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UpdateCC.aspx.designer.cs">
+      <DependentUpon>UpdateCC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserManager.aspx.cs">
+      <DependentUpon>UserManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManager.aspx.designer.cs">
+      <DependentUpon>UserManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Visual.aspx.cs">
+      <DependentUpon>Visual.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Visual.aspx.designer.cs">
+      <DependentUpon>Visual.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\Main\Menu.ContextMenu.skin" />
+    <Content Include="App_Themes\Main\SkinFile.skin" />
+    <Content Include="App_Themes\Patriotic\Menu.ContextMenu.skin" />
+    <Content Include="App_Themes\Patriotic\SkinFile.skin" />
+    <Content Include="ConnectionStrings.config" />
+    <Content Include="Handlers\CheckedComputerTreeHandler.ashx" />
+    <Content Include="Handlers\CheckedInstallComputerTreeHandler.ashx" />
+    <Content Include="Handlers\ComputerPageHandler.ashx" />
+    <Content Include="Handlers\GetTreeDataHandler.ashx" />
+    <Content Include="Handlers\GetTreePoliciesDataHandler.ashx" />
+    <Content Include="Handlers\TreeNoGroupsHandler.ashx" />
+    <Content Include="Handlers\TreeNoPolicyHandler.ashx" />
+    <Content Include="Handlers\TreeWithGroupsHandler.ashx" />
+    <Content Include="Handlers\TreeWithPolicyHandler.ashx" />
+    <Content Include="mstrPageMain.master" />
+    <Content Include="mstrPageNew.master" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Settings\Vba32MSI.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Settings\Vba32Versions.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Web.sitemap" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\Resource.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.ru-RU.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\TestProject\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92ae384b-3f82-42ab-872f-98636fd00b12}</Project>
+      <Name>ARM2_dbcontrol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\CustomControls\CustomControls.csproj">
+      <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\Filters\Filters.csproj">
+      <Project>{C09A5B35-526F-4A85-9046-909E9D811BBD}</Project>
+      <Name>Filters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\RemoteOperations\RemoteOperations.csproj">
+      <Project>{B2BE16C6-0F9A-48B8-A200-7415ABDC8A50}</Project>
+      <Name>RemoteOperations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\Settings\Settings.csproj">
+      <Project>{28D5DA26-7732-44A5-9720-BA779BCC2D29}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Libraries\Tasks\Tasks.csproj">
+      <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
+      <Name>Tasks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>27977</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:27977/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Import Project="packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

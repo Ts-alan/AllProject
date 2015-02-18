@@ -1,0 +1,3723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcountCreate" xml:space="preserve">
+    <value>Новый аккаунт был успешно создан</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="ActionName" xml:space="preserve">
+    <value>Имя действия</value>
+  </data>
+  <data name="ActionProcess" xml:space="preserve">
+    <value>Процесс</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+  <data name="ActionScan" xml:space="preserve">
+    <value>Сканирование</value>
+  </data>
+  <data name="ActionType" xml:space="preserve">
+    <value>Тип действия</value>
+  </data>
+  <data name="ActionUpdate" xml:space="preserve">
+    <value>Обновление</value>
+  </data>
+  <data name="ActivateRule" xml:space="preserve">
+    <value>Активизировать правило</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Активно</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="AddAllFromPage" xml:space="preserve">
+    <value>Добавить со всех страниц</value>
+  </data>
+  <data name="AddFromPage" xml:space="preserve">
+    <value>Добавить со страницы</value>
+  </data>
+  <data name="AddNewGroup" xml:space="preserve">
+    <value>Добавить новую группу</value>
+  </data>
+  <data name="Addresses" xml:space="preserve">
+    <value>Адреса получателей</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Администрирование</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Администратор</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Агент</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Разрешить</value>
+  </data>
+  <data name="AllowRead" xml:space="preserve">
+    <value>Позволять чтение</value>
+  </data>
+  <data name="AND" xml:space="preserve">
+    <value>И</value>
+  </data>
+  <data name="AntivirusMonitoring" xml:space="preserve">
+    <value>Антивирусная проверка</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Внешний вид</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Приложение</value>
+  </data>
+  <data name="Applications" xml:space="preserve">
+    <value>Приложения</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="ApplyPolicy" xml:space="preserve">
+    <value>Применить политику</value>
+  </data>
+  <data name="AppointmentPolicy" xml:space="preserve">
+    <value>Назначение</value>
+  </data>
+  <data name="AreYouSureComp" xml:space="preserve">
+    <value>Вы действительно хотите удалить выбранные компьютеры?</value>
+  </data>
+  <data name="AreYouSureFilter" xml:space="preserve">
+    <value>Вы действительно хотите удалить фильтр?</value>
+  </data>
+  <data name="AreYouSurePolicy" xml:space="preserve">
+    <value>Вы действительно хотите удалить выбранную политику?</value>
+  </data>
+  <data name="AreYouSureSelected" xml:space="preserve">
+    <value>Вы действительно хотите удалить выбранные элементы?</value>
+  </data>
+  <data name="AreYouSureTask" xml:space="preserve">
+    <value>Вы действительно хотите удалить задачу?</value>
+  </data>
+  <data name="AreYouSureUser" xml:space="preserve">
+    <value>Вы действительно хотите удалить пользователя?</value>
+  </data>
+  <data name="Ask" xml:space="preserve">
+    <value>Дополнительный запрос</value>
+  </data>
+  <data name="AsScanFinished" xml:space="preserve">
+    <value>Сканирование завершено</value>
+  </data>
+  <data name="AsScanStarted" xml:space="preserve">
+    <value>Идет сканирование сети</value>
+  </data>
+  <data name="AsScanStopped" xml:space="preserve">
+    <value>Сканирование остановлено</value>
+  </data>
+  <data name="Assignment" xml:space="preserve">
+    <value>Назначение</value>
+  </data>
+  <data name="Authentification" xml:space="preserve">
+    <value>Аутентификация</value>
+  </data>
+  <data name="Authorization" xml:space="preserve">
+    <value>Авторизация</value>
+  </data>
+  <data name="AuthorizationNTLMEnabled" xml:space="preserve">
+    <value>NTLM-авторизация</value>
+  </data>
+  <data name="BackgroundScanning" xml:space="preserve">
+    <value>Фоновая проверка</value>
+  </data>
+  <data name="BadKey" xml:space="preserve">
+    <value>Ошибка при проверке подписи ключа</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>Гистограмма</value>
+  </data>
+  <data name="Bases" xml:space="preserve">
+    <value>Искать при запуске обновления баз</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Блокировать</value>
+  </data>
+  <data name="BlockAutorunUSB" xml:space="preserve">
+    <value>Блокировать автозапуск USB-устройств</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Текст</value>
+  </data>
+  <data name="Bool" xml:space="preserve">
+    <value>Логические</value>
+  </data>
+  <data name="BrowserType" xml:space="preserve">
+    <value>Тип браузера</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="CancelEditing" xml:space="preserve">
+    <value>Отменить редактирование</value>
+  </data>
+  <data name="CancelTask" xml:space="preserve">
+    <value>Задача отменена</value>
+  </data>
+  <data name="ChangePasswordButtonText" xml:space="preserve">
+    <value>Изменить пароль</value>
+  </data>
+  <data name="ChangePasswordFailureText" xml:space="preserve">
+    <value>Некорректный пароль</value>
+  </data>
+  <data name="ChangePasswordTitleText" xml:space="preserve">
+    <value>Смена пароля</value>
+  </data>
+  <data name="CleanFilesToReport" xml:space="preserve">
+    <value>Включить имена 'чистых' файлов в отчет</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="ColorMap" xml:space="preserve">
+    <value>Карта цветов</value>
+  </data>
+  <data name="ColorSettings" xml:space="preserve">
+    <value>Настройка цветов</value>
+  </data>
+  <data name="CommandLine" xml:space="preserve">
+    <value>Командная строка</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Комментарий</value>
+  </data>
+  <data name="Component" xml:space="preserve">
+    <value>Компонент</value>
+  </data>
+  <data name="ComponentName" xml:space="preserve">
+    <value>Имя компонента</value>
+  </data>
+  <data name="ComponentNotInstalled" xml:space="preserve">
+    <value>Не установлен</value>
+  </data>
+  <data name="ComponentOff" xml:space="preserve">
+    <value>Выключен</value>
+  </data>
+  <data name="ComponentOn" xml:space="preserve">
+    <value>Включен</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Компоненты</value>
+  </data>
+  <data name="ComponentState" xml:space="preserve">
+    <value>Состояние компонента</value>
+  </data>
+  <data name="ComputerInfo" xml:space="preserve">
+    <value>Компьютер</value>
+  </data>
+  <data name="ComputerLimit" xml:space="preserve">
+    <value>Лимит рабочих станций</value>
+  </data>
+  <data name="ComputerName" xml:space="preserve">
+    <value>Имя компьютера</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Компьютеры</value>
+  </data>
+  <data name="ComputersCount" xml:space="preserve">
+    <value>Количество компьютеров</value>
+  </data>
+  <data name="ComputersMap" xml:space="preserve">
+    <value>Карта компьютеров</value>
+  </data>
+  <data name="ComputersWithGroups" xml:space="preserve">
+    <value>Компьютеры с группами</value>
+  </data>
+  <data name="ComputersWithoutGroups" xml:space="preserve">
+    <value>Компьютеры без групп</value>
+  </data>
+  <data name="ComSpec" xml:space="preserve">
+    <value>Запускать через командный интерпретатор</value>
+  </data>
+  <data name="ConfigureScheduler" xml:space="preserve">
+    <value>Настроить Планировщик</value>
+  </data>
+  <data name="ConfigureSettings" xml:space="preserve">
+    <value>Конфигурация</value>
+  </data>
+  <data name="ConfirmNewPasswordLabelText" xml:space="preserve">
+    <value>Подтвердите новый пароль</value>
+  </data>
+  <data name="ConfirmPasswordCompareErrorMessage" xml:space="preserve">
+    <value>Пароль и его подтверждение должны совпадать</value>
+  </data>
+  <data name="ConfirmPasswordLabelText" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется подтверждение пароля</value>
+  </data>
+  <data name="CongLdrAccessToUpdate" xml:space="preserve">
+    <value>Доступ к ресурсам обновлений</value>
+  </data>
+  <data name="CongLdrAdd" xml:space="preserve">
+    <value>Дописывать</value>
+  </data>
+  <data name="CongLdrAddress" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="CongLdrConfigureLoader" xml:space="preserve">
+    <value>Настроить Диспетчер</value>
+  </data>
+  <data name="CongLdrConfigureMonitor" xml:space="preserve">
+    <value>Настроить Монитор</value>
+  </data>
+  <data name="CongLdrDisplayLoadingProgress" xml:space="preserve">
+    <value>Показывать процесс загрузки</value>
+  </data>
+  <data name="CongLdrEnableMonitorAtStart" xml:space="preserve">
+    <value>Включать монитор при старте Диспетчера</value>
+  </data>
+  <data name="CongLdrInitialization" xml:space="preserve">
+    <value>Инициализация</value>
+  </data>
+  <data name="CongLdrInteractive" xml:space="preserve">
+    <value>Интерактивное</value>
+  </data>
+  <data name="CongLdrKeep" xml:space="preserve">
+    <value>Вести</value>
+  </data>
+  <data name="CongLdrLanguage" xml:space="preserve">
+    <value>Язык интерфейса</value>
+  </data>
+  <data name="CongLdrLaunchLoaderAtStart" xml:space="preserve">
+    <value>Загружать диспетчер при старте Windows</value>
+  </data>
+  <data name="CongLdrLoaderStartup" xml:space="preserve">
+    <value>При загрузке Диспетчера</value>
+  </data>
+  <data name="CongLdrMaximumSizeLog" xml:space="preserve">
+    <value>Максимальный размер, Кб</value>
+  </data>
+  <data name="CongLdrPassword" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="CongLdrPath" xml:space="preserve">
+    <value>Путь</value>
+  </data>
+  <data name="CongLdrPort" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+  <data name="CongLdrProtectProcess" xml:space="preserve">
+    <value>Защищать процесс Диспетчера</value>
+  </data>
+  <data name="CongLdrReportFile" xml:space="preserve">
+    <value>Файл отчета</value>
+  </data>
+  <data name="CongLdrScanBoot" xml:space="preserve">
+    <value>Обрабатывать загрузчики</value>
+  </data>
+  <data name="CongLdrScanBootFloppy" xml:space="preserve">
+    <value>Обрабатывать загрузчики дискет</value>
+  </data>
+  <data name="CongLdrScanMemory" xml:space="preserve">
+    <value>Обрабатывать память и файлы, запускаемые при старте системы</value>
+  </data>
+  <data name="CongLdrScanMemoryModeExcessive" xml:space="preserve">
+    <value>Избыточный режим</value>
+  </data>
+  <data name="CongLdrScanMemoryModeFast" xml:space="preserve">
+    <value>Быстрый режим</value>
+  </data>
+  <data name="CongLdrScanMemoryModeFull" xml:space="preserve">
+    <value>Полный режим</value>
+  </data>
+  <data name="CongLdrScanStartupFiles" xml:space="preserve">
+    <value>Обрабатывать файлы, запускаемые при старте системы</value>
+  </data>
+  <data name="CongLdrSoundWarning" xml:space="preserve">
+    <value>Звуковое оповещение</value>
+  </data>
+  <data name="CongLdrTimeIntervals" xml:space="preserve">
+    <value>Периодическое, часов</value>
+  </data>
+  <data name="CongLdrTrayIcon" xml:space="preserve">
+    <value>Индикатор обработки</value>
+  </data>
+  <data name="CongLdrUpdate" xml:space="preserve">
+    <value>Обновление</value>
+  </data>
+  <data name="CongLdrUseAccount" xml:space="preserve">
+    <value>Использовать учетную запись</value>
+  </data>
+  <data name="CongLdrUseProxyServer" xml:space="preserve">
+    <value>Использовать прокси-сервер</value>
+  </data>
+  <data name="CongLdrUserName" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="CongMonitorDetectWare" xml:space="preserve">
+    <value>Детектировать Spyware, Adware, Riskware</value>
+  </data>
+  <data name="CongMonitorExcluding" xml:space="preserve">
+    <value>Исключая</value>
+  </data>
+  <data name="CongMonitorExcludingFoldersAndFiles" xml:space="preserve">
+    <value>Список необрабатываемых путей</value>
+  </data>
+  <data name="CongMonitorFuncConditions" xml:space="preserve">
+    <value>Условия работы</value>
+  </data>
+  <data name="CongMonitorHeuristicAnalysis" xml:space="preserve">
+    <value>Экспертный анализ</value>
+  </data>
+  <data name="CongMonitorIfPreviousFails" xml:space="preserve">
+    <value>При невозможности</value>
+  </data>
+  <data name="CongMonitorIncludingSubFolders" xml:space="preserve">
+    <value>Включая вложенные подкаталоги</value>
+  </data>
+  <data name="CongMonitorInfected" xml:space="preserve">
+    <value>Инфицированные</value>
+  </data>
+  <data name="CongMonitorInformationAboutCleanFiles" xml:space="preserve">
+    <value>Информация о "чистых" файлах</value>
+  </data>
+  <data name="CongMonitorListOfPathToScan" xml:space="preserve">
+    <value>Список обрабатываемых путей</value>
+  </data>
+  <data name="CongMonitorMaximumCPUUsege" xml:space="preserve">
+    <value>Максимальная загрузка процессора, %</value>
+  </data>
+  <data name="CongMonitorMaximumDiskActivity" xml:space="preserve">
+    <value>Максимальная дисковая активность, %</value>
+  </data>
+  <data name="CongMonitorMaximumDisplacement" xml:space="preserve">
+    <value>Максимальное перемещение мыши, пикселей/с </value>
+  </data>
+  <data name="CongMonitorMinimumBattery" xml:space="preserve">
+    <value>Минимальный заряд батареи, %</value>
+  </data>
+  <data name="CongMonitorNotifyOfMonitor" xml:space="preserve">
+    <value>Сообщать о действиях Монитора</value>
+  </data>
+  <data name="CongMonitorObjects" xml:space="preserve">
+    <value>Объекты</value>
+  </data>
+  <data name="CongMonitorReport" xml:space="preserve">
+    <value>Отчет</value>
+  </data>
+  <data name="CongMonitorSaveCopyQuarantine" xml:space="preserve">
+    <value>Сохранять копию в Карантин</value>
+  </data>
+  <data name="CongMonitorScanAllTypes" xml:space="preserve">
+    <value>Обрабатывать все типы файлов</value>
+  </data>
+  <data name="CongMonitorScanFilesByUser" xml:space="preserve">
+    <value>Проверять файлы, часто запускаемые пользователем</value>
+  </data>
+  <data name="CongMonitorScanInBackGround" xml:space="preserve">
+    <value>Проверять файлы в фоновом режиме</value>
+  </data>
+  <data name="CongMonitorScanOnlyNew" xml:space="preserve">
+    <value>Обрабатывать только новые файлы</value>
+  </data>
+  <data name="CongMonitorScanSelectedTypes" xml:space="preserve">
+    <value>Обрабатывать заданные типы файлов</value>
+  </data>
+  <data name="CongMonitorScanStandartSet" xml:space="preserve">
+    <value>Обрабатывать типовой набор файлов</value>
+  </data>
+  <data name="CongMonitorScanStartupFiles" xml:space="preserve">
+    <value>Проверять файлы, запускаемые при старте системы</value>
+  </data>
+  <data name="CongMonitorSuspicious" xml:space="preserve">
+    <value>Подозрительные</value>
+  </data>
+  <data name="CongQtnAutomaticallySendSuspiciousObject" xml:space="preserve">
+    <value>Автоматически отправлять подозрительные объекты</value>
+  </data>
+  <data name="CongQtnGeneral" xml:space="preserve">
+    <value>Общее</value>
+  </data>
+  <data name="CongQtnInteractiveMaintenance" xml:space="preserve">
+    <value>Интерактивное обслуживание</value>
+  </data>
+  <data name="CongQtnMaintenance" xml:space="preserve">
+    <value>Обслуживание</value>
+  </data>
+  <data name="CongQtnMaintenancePeriod" xml:space="preserve">
+    <value>Период обслуживания, часов</value>
+  </data>
+  <data name="CongQtnMaximumQuarantineSize" xml:space="preserve">
+    <value>Максимальный размер Карантина, Мб</value>
+  </data>
+  <data name="CongQtnMaximumStorageTime" xml:space="preserve">
+    <value>Максимальное время хранения, дней</value>
+  </data>
+  <data name="CongQtnRemoteStorage" xml:space="preserve">
+    <value>Удаленное Хранилище</value>
+  </data>
+  <data name="CongScannerAdd" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="CongScannerAdditional" xml:space="preserve">
+    <value>Дополнительно</value>
+  </data>
+  <data name="CongScannerArchivesSize" xml:space="preserve">
+    <value>Максимальный размер, KB</value>
+  </data>
+  <data name="CongScannerCheckArchives" xml:space="preserve">
+    <value>Сканировать архивы</value>
+  </data>
+  <data name="CongScannerCheckMacros" xml:space="preserve">
+    <value>Просмотреть список макросов в документах</value>
+  </data>
+  <data name="CongScannerCheckMail" xml:space="preserve">
+    <value>Сканировать почту</value>
+  </data>
+  <data name="CongScannerCheckMemory" xml:space="preserve">
+    <value>Обрабатывать память</value>
+  </data>
+  <data name="CongScannerCheckObjects" xml:space="preserve">
+    <value>Обрабатываемые объекты</value>
+  </data>
+  <data name="CongScannerCleanFiles" xml:space="preserve">
+    <value>Включение имен "чистых" файлов в отчет </value>
+  </data>
+  <data name="CongScannerCure" xml:space="preserve">
+    <value>Лечить</value>
+  </data>
+  <data name="CongScannerCureBoot" xml:space="preserve">
+    <value>Обезвреживать загрузочные сектора </value>
+  </data>
+  <data name="CongScannerDeleteArchives" xml:space="preserve">
+    <value>Удалять архивы с вирусами</value>
+  </data>
+  <data name="CongScannerDeleteMail" xml:space="preserve">
+    <value>Удалять письма с вирусами</value>
+  </data>
+  <data name="CongScannerDetectAdware" xml:space="preserve">
+    <value>Детектировать Adware</value>
+  </data>
+  <data name="CongScannerEnableCache" xml:space="preserve">
+    <value>Использовать кэш</value>
+  </data>
+  <data name="CongScannerExclude" xml:space="preserve">
+    <value>Исключенные</value>
+  </data>
+  <data name="CongScannerExtension" xml:space="preserve">
+    <value>Расширения</value>
+  </data>
+  <data name="CongScannerHeuristic" xml:space="preserve">
+    <value>Режим обработки</value>
+  </data>
+  <data name="CongScannerHeuristicAnalysis" xml:space="preserve">
+    <value>Экспертный анализ</value>
+  </data>
+  <data name="CongScannerInfected" xml:space="preserve">
+    <value>Зараженные файлы</value>
+  </data>
+  <data name="CongScannerKeep" xml:space="preserve">
+    <value>Сохранять отчет в файл</value>
+  </data>
+  <data name="CongScannerPathToScanner" xml:space="preserve">
+    <value>Путь к сканеру</value>
+  </data>
+  <data name="CongScannerRemovePathToInfected" xml:space="preserve">
+    <value>Путь для перемещения инфицированных файлов</value>
+  </data>
+  <data name="CongScannerSaveCopyToQuarantine" xml:space="preserve">
+    <value>Сохранить копию в карантине</value>
+  </data>
+  <data name="CongScannerSaveInfectedToReport" xml:space="preserve">
+    <value>Сохранение списка инфицированных файлов в отчет</value>
+  </data>
+  <data name="CongScannerSaveSusToQuarantine" xml:space="preserve">
+    <value>Копии подозрительных файлов в Карантин</value>
+  </data>
+  <data name="CongScannerScanBootSectors" xml:space="preserve">
+    <value>Обрабатывать загрузчики </value>
+  </data>
+  <data name="CongScannerScanStartup" xml:space="preserve">
+    <value>Обрабатывать автозагрузку</value>
+  </data>
+  <data name="CongScannerSet" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="CongScannerSFX" xml:space="preserve">
+    <value>Детектировать вирусные инсталляторы</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Соединение</value>
+  </data>
+  <data name="ContainComputersFromBase" xml:space="preserve">
+    <value>Включать компьютеры, зарегистрированные в базе</value>
+  </data>
+  <data name="ContainNoPingComputers" xml:space="preserve">
+    <value>Включать недоступные компьютеры</value>
+  </data>
+  <data name="ContainWithAgentComputers" xml:space="preserve">
+    <value>Включать компьютеры с агентом</value>
+  </data>
+  <data name="ContinueButtonText" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="ControlCenter" xml:space="preserve">
+    <value>Центр управления</value>
+  </data>
+  <data name="CountOfCompActiveToday" xml:space="preserve">
+    <value>Активных компьютеров за текущий день</value>
+  </data>
+  <data name="CountOfCompRegistred" xml:space="preserve">
+    <value>Зарегистрированных компьютеров</value>
+  </data>
+  <data name="CountOfEventRegistred" xml:space="preserve">
+    <value>Зарегистированных событий</value>
+  </data>
+  <data name="CountOfEventToday" xml:space="preserve">
+    <value>Cобытий за текущий день</value>
+  </data>
+  <data name="CountOfTaskRegistred" xml:space="preserve">
+    <value>Зарегистрированных задач</value>
+  </data>
+  <data name="CountOfTaskTodayCompleted" xml:space="preserve">
+    <value>Завершено задач сегодня</value>
+  </data>
+  <data name="CountOfTaskTodayIssued" xml:space="preserve">
+    <value>Выдано задач сегодня</value>
+  </data>
+  <data name="CountOfTaskTodayUpdated" xml:space="preserve">
+    <value>Обновлено задач сегодня</value>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="CreatePolicy" xml:space="preserve">
+    <value>Создание политики</value>
+  </data>
+  <data name="CreatePrivateRule" xml:space="preserve">
+    <value>Создать частное правило</value>
+  </data>
+  <data name="CreateProcess" xml:space="preserve">
+    <value>Создание процесса</value>
+  </data>
+  <data name="CreateTask" xml:space="preserve">
+    <value>Создание задачи</value>
+  </data>
+  <data name="CreateUserButtonText" xml:space="preserve">
+    <value>Создать пользователя</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Дата создания</value>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Реквизиты</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Обезвредить</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Пользовательские</value>
+  </data>
+  <data name="CustomAction" xml:space="preserve">
+    <value>Другое</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Имя клиента</value>
+  </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Ежедневно</value>
+  </data>
+  <data name="DataBaseServer" xml:space="preserve">
+    <value>Сервер базы данных</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Даты</value>
+  </data>
+  <data name="DateComplete" xml:space="preserve">
+    <value>Завершено</value>
+  </data>
+  <data name="DateIssued" xml:space="preserve">
+    <value>Дата выдачи</value>
+  </data>
+  <data name="DateUpdated" xml:space="preserve">
+    <value>Дата обновления</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>день</value>
+  </data>
+  <data name="Day2" xml:space="preserve">
+    <value>дня</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>дня (-ей)</value>
+  </data>
+  <data name="Days2" xml:space="preserve">
+    <value>дней</value>
+  </data>
+  <data name="DaysOfMonth" xml:space="preserve">
+    <value>Номера дней месяца</value>
+  </data>
+  <data name="DaysToDelete" xml:space="preserve">
+    <value>Удалять события старше (дней)</value>
+  </data>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Выключить</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="DefaultFiles" xml:space="preserve">
+    <value>По умолчанию</value>
+  </data>
+  <data name="DefaultPolicy" xml:space="preserve">
+    <value>Политика по умолчанию</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="DeleteArchive" xml:space="preserve">
+    <value>Удалить архив</value>
+  </data>
+  <data name="DeleteComputers" xml:space="preserve">
+    <value>Удалить компьютеры</value>
+  </data>
+  <data name="DeleteMail" xml:space="preserve">
+    <value>Удалить письмо</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Design" xml:space="preserve">
+    <value>Дизайн</value>
+  </data>
+  <data name="DestinationFile" xml:space="preserve">
+    <value>Файл назначения</value>
+  </data>
+  <data name="DetectInstallers" xml:space="preserve">
+    <value>Детектировать вирусные инсталляторы</value>
+  </data>
+  <data name="DeviceInsertedDate" xml:space="preserve">
+    <value>Вставлено</value>
+  </data>
+  <data name="DeviceManagment" xml:space="preserve">
+    <value>Управление устройствами</value>
+  </data>
+  <data name="DeviceProtect" xml:space="preserve">
+    <value>Включить/выключить защиту USB</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Устройства</value>
+  </data>
+  <data name="Diagram" xml:space="preserve">
+    <value>Диаграмма</value>
+  </data>
+  <data name="DiagramType" xml:space="preserve">
+    <value>Тип диаграммы</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Направление</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Запретить</value>
+  </data>
+  <data name="DisableAll" xml:space="preserve">
+    <value>Запретить все</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Выключен</value>
+  </data>
+  <data name="DisabledDevice" xml:space="preserve">
+    <value>Запрещено</value>
+  </data>
+  <data name="DisplayTabChanges" xml:space="preserve">
+    <value>Чтобы отобразились изменения на всех вкладках, перегрузите страницу</value>
+  </data>
+  <data name="DistrustedApplications" xml:space="preserve">
+    <value>Недоверенные приложения</value>
+  </data>
+  <data name="DomainName" xml:space="preserve">
+    <value>Домен</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Вниз</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="EditComment" xml:space="preserve">
+    <value>Редактирование комментария</value>
+  </data>
+  <data name="EditPolicy" xml:space="preserve">
+    <value>Редактирование политики</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Пусто</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Разрешить</value>
+  </data>
+  <data name="EnableAJAX" xml:space="preserve">
+    <value>Разрешить асинхронное обновление</value>
+  </data>
+  <data name="EnableAll" xml:space="preserve">
+    <value>Разрешить все</value>
+  </data>
+  <data name="EnableAutoUpdate" xml:space="preserve">
+    <value>Разрешить автоматическое обновление</value>
+  </data>
+  <data name="EnableCache" xml:space="preserve">
+    <value>Включить кэш</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Разрешено</value>
+  </data>
+  <data name="Epidemy" xml:space="preserve">
+    <value>Эпидемия</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ErrorAccessDenied" xml:space="preserve">
+    <value>Отказано в доступе</value>
+  </data>
+  <data name="ErrorChangeAdmin" xml:space="preserve">
+    <value>Нельзя изменять этого пользователя</value>
+  </data>
+  <data name="ErrorClearSession" xml:space="preserve">
+    <value>Если ошибка повторяется, попробуйте очистить некоторые внутренние переменные. Для этого щелкните </value>
+  </data>
+  <data name="ErrorCompNameNotExist" xml:space="preserve">
+    <value>Компьютер с таким именем не существует в базе данных</value>
+  </data>
+  <data name="ErrorCreateTaskWithBaseName" xml:space="preserve">
+    <value>Введеное вами имя совпадает с названием базовой задачи на одном из используемых системой языков</value>
+  </data>
+  <data name="ErrorCreateUser" xml:space="preserve">
+    <value>Ошибка при создании пользователя</value>
+  </data>
+  <data name="ErrorCriticalError" xml:space="preserve">
+    <value>Критическая ошибка</value>
+  </data>
+  <data name="ErrorDescription" xml:space="preserve">
+    <value>Ошибка в описании</value>
+  </data>
+  <data name="ErrorExistingFilter" xml:space="preserve">
+    <value>Фильтр с таким именем существует!</value>
+  </data>
+  <data name="ErrorHere" xml:space="preserve">
+    <value>здесь</value>
+  </data>
+  <data name="ErrorIncorrectFilterName" xml:space="preserve">
+    <value>Неправильное имя фильтра</value>
+  </data>
+  <data name="ErrorInvalidCompName" xml:space="preserve">
+    <value>Неверное имя компьютера</value>
+  </data>
+  <data name="ErrorInvalidDate" xml:space="preserve">
+    <value>Неправильная дата</value>
+  </data>
+  <data name="ErrorInvalidEmail" xml:space="preserve">
+    <value>Неправильный email</value>
+  </data>
+  <data name="ErrorInvalidFirstName" xml:space="preserve">
+    <value>Неверное имя пользователя</value>
+  </data>
+  <data name="ErrorInvalidIP" xml:space="preserve">
+    <value>Неправильный IP-адрес</value>
+  </data>
+  <data name="ErrorInvalidLastName" xml:space="preserve">
+    <value>Неверная фамилия пользователя</value>
+  </data>
+  <data name="ErrorInvalidTaskType" xml:space="preserve">
+    <value>Неправильный тип задачи</value>
+  </data>
+  <data name="ErrorInvalidUserName" xml:space="preserve">
+    <value>Неверное имя пользователя</value>
+  </data>
+  <data name="ErrorInvalidValue" xml:space="preserve">
+    <value>Неправильное значение</value>
+  </data>
+  <data name="ErrorMessageError" xml:space="preserve">
+    <value>Сообщение об ошибке</value>
+  </data>
+  <data name="ErrorNotSelectProfile" xml:space="preserve">
+    <value>Не выбран профиль</value>
+  </data>
+  <data name="ErrorPolicyExistInCollection" xml:space="preserve">
+    <value>Политика с таким именем существует</value>
+  </data>
+  <data name="ErrorPolicyName" xml:space="preserve">
+    <value>Некорректное название политики.</value>
+  </data>
+  <data name="ErrorRunTime" xml:space="preserve">
+    <value>Ошибка времени выполнения</value>
+  </data>
+  <data name="ErrorSelectTaskToEdit" xml:space="preserve">
+    <value>Не выбрана задача для редактирования</value>
+  </data>
+  <data name="ErrorService" xml:space="preserve">
+    <value>Проверьте сервис VbaTaskAssignment. Возможно он не доступен</value>
+  </data>
+  <data name="ErrorSql" xml:space="preserve">
+    <value>Ошибка! Необходимо обновить схему БД и sql-скрипты.</value>
+  </data>
+  <data name="ErrorTaskExistInCollection" xml:space="preserve">
+    <value>Задача с таким именем существует в коллекции</value>
+  </data>
+  <data name="ErrorTryAgain" xml:space="preserve">
+    <value>Чтобы попробовать еще раз, щелкните</value>
+  </data>
+  <data name="ErrorWrongXmlFile" xml:space="preserve">
+    <value>Поврежденный xml-файл</value>
+  </data>
+  <data name="EventARM" xml:space="preserve">
+    <value>Событие ARM</value>
+  </data>
+  <data name="EventColorTableTitle" xml:space="preserve">
+    <value>Цвета событий</value>
+  </data>
+  <data name="EventFlow" xml:space="preserve">
+    <value>Поток уведомлений</value>
+  </data>
+  <data name="EventName" xml:space="preserve">
+    <value>Событие</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>События</value>
+  </data>
+  <data name="EventsCount" xml:space="preserve">
+    <value>Количество сообщений</value>
+  </data>
+  <data name="EventSendTableTitle" xml:space="preserve">
+    <value>События для отсылки</value>
+  </data>
+  <data name="EventTime" xml:space="preserve">
+    <value>Дата </value>
+  </data>
+  <data name="Excel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="Excessive" xml:space="preserve">
+    <value>Избыточен</value>
+  </data>
+  <data name="ExcessMode" xml:space="preserve">
+    <value>Избыточный</value>
+  </data>
+  <data name="Excluding" xml:space="preserve">
+    <value>Исключая</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Дата истечения срока действия</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Время действия ключа истекло</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Экспорт</value>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Экспорт данных в Excel</value>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>Дополнительно</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>Ложь</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Быстрый</value>
+  </data>
+  <data name="FastMode" xml:space="preserve">
+    <value>Быстрый</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Поле</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Файловая система</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Фильтр</value>
+  </data>
+  <data name="FilterDelete" xml:space="preserve">
+    <value>Фильтр был удален</value>
+  </data>
+  <data name="FilterSave" xml:space="preserve">
+    <value>Фильтр был сохранен</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="Fix" xml:space="preserve">
+    <value>Включить автообновление содержимого</value>
+  </data>
+  <data name="FlowAnalysis" xml:space="preserve">
+    <value>Интеллектуальная обработка потока уведомлений</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>для</value>
+  </data>
+  <data name="Found" xml:space="preserve">
+    <value>Найдено</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Пятница</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>с</value>
+  </data>
+  <data name="GiveTask" xml:space="preserve">
+    <value>Выдать задачу</value>
+  </data>
+  <data name="GoodState" xml:space="preserve">
+    <value>Все в порядке</value>
+  </data>
+  <data name="GroupManagment" xml:space="preserve">
+    <value>Управление группами</value>
+  </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>Имя группы обязательно</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Группы</value>
+  </data>
+  <data name="Herz" xml:space="preserve">
+    <value>MГц</value>
+  </data>
+  <data name="Heuristic" xml:space="preserve">
+    <value>Экспертный анализ</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="HideScaning" xml:space="preserve">
+    <value>Прятать окно сканирования</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>Высокий</value>
+  </data>
+  <data name="HighDate" xml:space="preserve">
+    <value>Больше</value>
+  </data>
+  <data name="HomePaging" xml:space="preserve">
+    <value>&lt;&lt;</value>
+  </data>
+  <data name="HostAddress" xml:space="preserve">
+    <value>Host-адрес</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>час</value>
+  </data>
+  <data name="Hour2" xml:space="preserve">
+    <value>часа</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>часов</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Идентификатор</value>
+  </data>
+  <data name="IDText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Impersonation" xml:space="preserve">
+    <value>Использовать имперсонирование</value>
+  </data>
+  <data name="Impersonations" xml:space="preserve">
+    <value>Имперсонирование</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>в</value>
+  </data>
+  <data name="IncludeSubdirectories" xml:space="preserve">
+    <value>Включать поддиректории</value>
+  </data>
+  <data name="IncludeSubkeys" xml:space="preserve">
+    <value>Включать подключи</value>
+  </data>
+  <data name="Including" xml:space="preserve">
+    <value>Включая</value>
+  </data>
+  <data name="InfectedFiles" xml:space="preserve">
+    <value>Инфицированные</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="InitialCatalog" xml:space="preserve">
+    <value>Каталог</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Установка</value>
+  </data>
+  <data name="Integrity" xml:space="preserve">
+    <value>Целостность</value>
+  </data>
+  <data name="InterruptProgram" xml:space="preserve">
+    <value>Прерывать выполнение программы</value>
+  </data>
+  <data name="InvalidPasswordErrorMessage" xml:space="preserve">
+    <value>Минимальная длина пароля - 7. Количество символов, отличных от цифры и буквы - 1.</value>
+  </data>
+  <data name="InvalidTime" xml:space="preserve">
+    <value>Время установлено неправильно</value>
+  </data>
+  <data name="Invert" xml:space="preserve">
+    <value>Обратить</value>
+  </data>
+  <data name="InvisibilityMode" xml:space="preserve">
+    <value>Режим невидимости</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP адрес</value>
+  </data>
+  <data name="IPRange" xml:space="preserve">
+    <value>IP диапазон</value>
+  </data>
+  <data name="Jabber" xml:space="preserve">
+    <value>Jabber</value>
+  </data>
+  <data name="JabberFrom" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="JabberPassword" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="JabberServer" xml:space="preserve">
+    <value>Сервер Jabber</value>
+  </data>
+  <data name="JabberSettings" xml:space="preserve">
+    <value>Настройки Jabber</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="KeyNotFound" xml:space="preserve">
+    <value>Ключ не найден.</value>
+  </data>
+  <data name="KeyNoValid" xml:space="preserve">
+    <value>Ключ не валиден.</value>
+  </data>
+  <data name="KeyState" xml:space="preserve">
+    <value>Состояние ключа</value>
+  </data>
+  <data name="Kilobyte" xml:space="preserve">
+    <value>Кб</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LanScan" xml:space="preserve">
+    <value>Сканирование</value>
+  </data>
+  <data name="LanScanSettings" xml:space="preserve">
+    <value>Настройки сканирования</value>
+  </data>
+  <data name="LastActive" xml:space="preserve">
+    <value>Последняя активность</value>
+  </data>
+  <data name="LastInfected" xml:space="preserve">
+    <value>Последнее заражение</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Последний логин</value>
+  </data>
+  <data name="LastLoginDate" xml:space="preserve">
+    <value>Дата последнего логина</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="LastPaging" xml:space="preserve">
+    <value>&gt;&gt;</value>
+  </data>
+  <data name="LastSelect" xml:space="preserve">
+    <value>Последняя выборка из базы данных</value>
+  </data>
+  <data name="LastSend" xml:space="preserve">
+    <value>Последнее отправление на сервер</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Последнее обновление</value>
+  </data>
+  <data name="LatestInfected" xml:space="preserve">
+    <value>Последнее заражение</value>
+  </data>
+  <data name="LatestMalware" xml:space="preserve">
+    <value>Последний вирус</value>
+  </data>
+  <data name="LatestUpdate" xml:space="preserve">
+    <value>Последнее обновление</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Менее</value>
+  </data>
+  <data name="LicenseKey" xml:space="preserve">
+    <value>Лицензионный ключ</value>
+  </data>
+  <data name="LicenseNumber" xml:space="preserve">
+    <value>Номер лицензии</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Список</value>
+  </data>
+  <data name="ListInfected" xml:space="preserve">
+    <value>Сохранить список инфицированных файлов в файл</value>
+  </data>
+  <data name="ListInfectedAdd" xml:space="preserve">
+    <value>Добавить список инфицированных файлов в файл</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="Loader" xml:space="preserve">
+    <value>Диспетчер</value>
+  </data>
+  <data name="LoaderLoaded" xml:space="preserve">
+    <value>Диспетчер загружен</value>
+  </data>
+  <data name="LocalHearth" xml:space="preserve">
+    <value>Локальный очаг заражения</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Локальные порты</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Отчет</value>
+  </data>
+  <data name="LogEvents" xml:space="preserve">
+    <value>Регистрировать события</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="LoginFailureText" xml:space="preserve">
+    <value>Неправильный логин или пароль. Попробуйте еще раз.</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Низкий</value>
+  </data>
+  <data name="LowDate" xml:space="preserve">
+    <value>Меньше</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Почта</value>
+  </data>
+  <data name="MailDisplayName" xml:space="preserve">
+    <value>Отображаемое имя</value>
+  </data>
+  <data name="MailFrom" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="MailServer" xml:space="preserve">
+    <value>Почтовый сервер</value>
+  </data>
+  <data name="MailSettings" xml:space="preserve">
+    <value>Настройки почты</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="MainControlCenterIP" xml:space="preserve">
+    <value>Родительский АРМ</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Обслуживание</value>
+  </data>
+  <data name="MaintenanceEnable" xml:space="preserve">
+    <value>Периодически отсылать события на родительский ЦУ</value>
+  </data>
+  <data name="MaintenanceInterval" xml:space="preserve">
+    <value>Интервал обслуживания (секунд)</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Управление</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Карта</value>
+  </data>
+  <data name="MasterPage" xml:space="preserve">
+    <value>Шаблон страницы</value>
+  </data>
+  <data name="MaxArchiveSize" xml:space="preserve">
+    <value>Максимальный размер архива</value>
+  </data>
+  <data name="Maximum" xml:space="preserve">
+    <value>Максимален</value>
+  </data>
+  <data name="Megabyte" xml:space="preserve">
+    <value>Мб</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Проверять память</value>
+  </data>
+  <data name="MemorySize" xml:space="preserve">
+    <value>Память</value>
+  </data>
+  <data name="MenuSystemInfo" xml:space="preserve">
+    <value>Получить информацию о системе</value>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>минуты</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>минут</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Режим</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Понедельник</value>
+  </data>
+  <data name="MonitorEnabled" xml:space="preserve">
+    <value>Монитор включен</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>месяц</value>
+  </data>
+  <data name="Month2" xml:space="preserve">
+    <value>месяца</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Ежемесячно</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>месяца</value>
+  </data>
+  <data name="Months2" xml:space="preserve">
+    <value>месяцев</value>
+  </data>
+  <data name="MoreThan" xml:space="preserve">
+    <value>Более</value>
+  </data>
+  <data name="MSIPathes" xml:space="preserve">
+    <value>Пути MSI</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="NameProfile" xml:space="preserve">
+    <value>Название профиля</value>
+  </data>
+  <data name="NetApiProvider" xml:space="preserve">
+    <value>NetApi</value>
+  </data>
+  <data name="NeutralApplications" xml:space="preserve">
+    <value>Нейтральные приложения</value>
+  </data>
+  <data name="NewPasswordLabelText" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="NewPasswordRegularExpressionErrorMessage" xml:space="preserve">
+    <value>Введите более сложный пароль</value>
+  </data>
+  <data name="NewPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется новый пароль</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="NextSend" xml:space="preserve">
+    <value>Следующая отправка по расписанию</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="NoDelete" xml:space="preserve">
+    <value>Не удалять</value>
+  </data>
+  <data name="NoIntegrity" xml:space="preserve">
+    <value>Программа повреждена.</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ничего</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Нормальный</value>
+  </data>
+  <data name="NoSection" xml:space="preserve">
+    <value>Нет секции для нужной программы</value>
+  </data>
+  <data name="NoSelected" xml:space="preserve">
+    <value>Нет выбранных элементов</value>
+  </data>
+  <data name="NoSelectedComputers" xml:space="preserve">
+    <value>Нет выбранных компьютеров</value>
+  </data>
+  <data name="NoSelectFile" xml:space="preserve">
+    <value>Сначала выберите файл...</value>
+  </data>
+  <data name="NOT" xml:space="preserve">
+    <value>НЕ</value>
+  </data>
+  <data name="NotAssignedExplicitly" xml:space="preserve">
+    <value>Не назначено явно</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Недоступно</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Не найден ключевой файл</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="Notify" xml:space="preserve">
+    <value>Уведомлять</value>
+  </data>
+  <data name="Object" xml:space="preserve">
+    <value>Объект</value>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value>из</value>
+  </data>
+  <data name="Once" xml:space="preserve">
+    <value>Каждые</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>Онлайн</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Оператор</value>
+  </data>
+  <data name="Optimal" xml:space="preserve">
+    <value>Оптимален</value>
+  </data>
+  <data name="Option" xml:space="preserve">
+    <value>Настройки выполнения</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>ИЛИ</value>
+  </data>
+  <data name="OSType" xml:space="preserve">
+    <value>Тип ОС</value>
+  </data>
+  <data name="Overwrite" xml:space="preserve">
+    <value>Перезаписать</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Страница</value>
+  </data>
+  <data name="PageCompInfoTitle" xml:space="preserve">
+    <value>Компьютер</value>
+  </data>
+  <data name="PageComponentsFilterTitle" xml:space="preserve">
+    <value>Фильтры компонентов</value>
+  </data>
+  <data name="PageComponentsTitle" xml:space="preserve">
+    <value>Список компонентов</value>
+  </data>
+  <data name="PageComputersFilterTitle" xml:space="preserve">
+    <value>Фильтры компьютеров</value>
+  </data>
+  <data name="PageComputersTitle" xml:space="preserve">
+    <value>Список компьютеров</value>
+  </data>
+  <data name="PageControlCenterSettings" xml:space="preserve">
+    <value>Настройки ЦУ</value>
+  </data>
+  <data name="PageDefaultTitle" xml:space="preserve">
+    <value>Главная страница</value>
+  </data>
+  <data name="PageDiagramTitle" xml:space="preserve">
+    <value>Диаграммы</value>
+  </data>
+  <data name="PageEventsFilterTitle" xml:space="preserve">
+    <value>Фильтры событий</value>
+  </data>
+  <data name="PageEventsTitle" xml:space="preserve">
+    <value>Список событий</value>
+  </data>
+  <data name="PageLanScanTitle" xml:space="preserve">
+    <value>Сканирование локальной сети</value>
+  </data>
+  <data name="PageLoginTitle" xml:space="preserve">
+    <value>Центр управления: вход</value>
+  </data>
+  <data name="PagePortableTitle" xml:space="preserve">
+    <value>Экспорт/Импорт</value>
+  </data>
+  <data name="PageProcessFiltersTitle" xml:space="preserve">
+    <value>Фильтры процессов</value>
+  </data>
+  <data name="PageProcessTitle" xml:space="preserve">
+    <value>Список процессов</value>
+  </data>
+  <data name="PageRegistrationTitle" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="PageSettingsExtraTitle" xml:space="preserve">
+    <value>Вспомогательные настройки</value>
+  </data>
+  <data name="PageSettingsMainTitle" xml:space="preserve">
+    <value>Основные настройки</value>
+  </data>
+  <data name="PageSize" xml:space="preserve">
+    <value>Размер страницы</value>
+  </data>
+  <data name="PageStatisticTitle" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
+  <data name="PageTaskCreateTitle" xml:space="preserve">
+    <value>Создание задачи</value>
+  </data>
+  <data name="PageTasksFilterTitle" xml:space="preserve">
+    <value>Фильтры задач</value>
+  </data>
+  <data name="PageTaskTitle" xml:space="preserve">
+    <value>Список выданных задач</value>
+  </data>
+  <data name="PageUpdateTitle" xml:space="preserve">
+    <value>Настройки обновления управляющего центра</value>
+  </data>
+  <data name="PageUserManaging" xml:space="preserve">
+    <value>Управление пользователями</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Параметр</value>
+  </data>
+  <data name="PasswordLabelText" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется пароль</value>
+  </data>
+  <data name="PasswordSuccessText" xml:space="preserve">
+    <value>Ваш пароль был изменен!</value>
+  </data>
+  <data name="PasswordSuccessTitleText" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Путь</value>
+  </data>
+  <data name="PathRegistry" xml:space="preserve">
+    <value>Ветвь реестра</value>
+  </data>
+  <data name="PeriodicalUpdateInterval" xml:space="preserve">
+    <value>Интервал периодического обновления, минут</value>
+  </data>
+  <data name="PeriodicityDays" xml:space="preserve">
+    <value>Дни</value>
+  </data>
+  <data name="PeriodicityFixedDate" xml:space="preserve">
+    <value>Фиксированная дата</value>
+  </data>
+  <data name="PeriodicityHours" xml:space="preserve">
+    <value>Часы</value>
+  </data>
+  <data name="PeriodicityMinutes" xml:space="preserve">
+    <value>Минуты</value>
+  </data>
+  <data name="PeriodicityMonths" xml:space="preserve">
+    <value>Месяцы</value>
+  </data>
+  <data name="PeriodicityType" xml:space="preserve">
+    <value>Периодичность</value>
+  </data>
+  <data name="PeriodicityWeeks" xml:space="preserve">
+    <value>Недели</value>
+  </data>
+  <data name="Pie" xml:space="preserve">
+    <value>Диаграмма</value>
+  </data>
+  <data name="Policies" xml:space="preserve">
+    <value>Политики</value>
+  </data>
+  <data name="Policy" xml:space="preserve">
+    <value>Политика</value>
+  </data>
+  <data name="PolicyApplied" xml:space="preserve">
+    <value>Политика применена.</value>
+  </data>
+  <data name="PolicyEmpty" xml:space="preserve">
+    <value>Выбрана пустая политика</value>
+  </data>
+  <data name="PolicySaved" xml:space="preserve">
+    <value>Политика была сохранена</value>
+  </data>
+  <data name="PolicySettings" xml:space="preserve">
+    <value>Настройки политики</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Порт</value>
+  </data>
+  <data name="PortableDelete" xml:space="preserve">
+    <value>Удалено</value>
+  </data>
+  <data name="PortableSuccess" xml:space="preserve">
+    <value>Перенос выполнен</value>
+  </data>
+  <data name="PortsAndProtocols" xml:space="preserve">
+    <value>Порты и протоколы</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="PrivateInformation" xml:space="preserve">
+    <value>Личная информация</value>
+  </data>
+  <data name="PrivateRule" xml:space="preserve">
+    <value>Частное правило</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Создать процесс</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Процессы</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Имя процесса</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Процессор</value>
+  </data>
+  <data name="ProfileManagement" xml:space="preserve">
+    <value>Управление профилями</value>
+  </data>
+  <data name="ProfileOptions" xml:space="preserve">
+    <value>Настройка профиля</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Профили</value>
+  </data>
+  <data name="PromtForAddDevice" xml:space="preserve">
+    <value>Для добавления устройства кликните по строке с именем требуемого компьютера</value>
+  </data>
+  <data name="PromtForInputComputerName" xml:space="preserve">
+    <value>Введите имя компьютера</value>
+  </data>
+  <data name="PromtForInputSerialNumber" xml:space="preserve">
+    <value>Введите серийный номер устройства</value>
+  </data>
+  <data name="Protocol" xml:space="preserve">
+    <value>Протокол</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Провайдер</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Прокси-сервер</value>
+  </data>
+  <data name="QtnFilePath" xml:space="preserve">
+    <value>Полный путь к файлу в карантине</value>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>ОЗУ</value>
+  </data>
+  <data name="RebootAfterInstall" xml:space="preserve">
+    <value>Перезагрузить после установки</value>
+  </data>
+  <data name="RecentActive" xml:space="preserve">
+    <value>Активность</value>
+  </data>
+  <data name="RegisteredEvents" xml:space="preserve">
+    <value>Зарегистрированные события</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="RegistrationNewUser" xml:space="preserve">
+    <value>Регистрация нового пользователя</value>
+  </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Реестр</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="ReloadInfoFromServer" xml:space="preserve">
+    <value>Обновить с сервера</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Удаленные порты</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Перемещать</value>
+  </data>
+  <data name="RemoveSelectedGroup" xml:space="preserve">
+    <value>Удалить выбранную группу</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
+  <data name="RenameSelectedGroup" xml:space="preserve">
+    <value>Переименовать выбранную группу</value>
+  </data>
+  <data name="ReplaceAllFromPage" xml:space="preserve">
+    <value>Заменить со всех страниц</value>
+  </data>
+  <data name="ReplaceFromPage" xml:space="preserve">
+    <value>Заменить со страницы</value>
+  </data>
+  <data name="ReportAddToFile" xml:space="preserve">
+    <value>Добавить отчет в файл</value>
+  </data>
+  <data name="ReportIntoFile" xml:space="preserve">
+    <value>Сохранить отчет в файл</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Востановить</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
+  </data>
+  <data name="RolledBackTime" xml:space="preserve">
+    <value>Время откручено назад</value>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Правила</value>
+  </data>
+  <data name="RunAnytime" xml:space="preserve">
+    <value>Выполнять в любое время</value>
+  </data>
+  <data name="RunAt" xml:space="preserve">
+    <value>Выполнять в</value>
+  </data>
+  <data name="RuningEvery" xml:space="preserve">
+    <value>Запускать задание каждые</value>
+  </data>
+  <data name="RunMissedAction" xml:space="preserve">
+    <value>Запускать пропущенную задачу</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Безопасный</value>
+  </data>
+  <data name="SafeMode" xml:space="preserve">
+    <value>Безопасный</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Суббота</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Сохранить как</value>
+  </data>
+  <data name="SaveInfoToServer" xml:space="preserve">
+    <value>Сохранить на сервере</value>
+  </data>
+  <data name="SaveToQtn" xml:space="preserve">
+    <value>Сохранить копию в карантин</value>
+  </data>
+  <data name="ScanArchives" xml:space="preserve">
+    <value>Проверять архивы</value>
+  </data>
+  <data name="ScanBoot" xml:space="preserve">
+    <value>Проверять загрузочные сектора</value>
+  </data>
+  <data name="ScaningFiles" xml:space="preserve">
+    <value>Проверяемые файлы</value>
+  </data>
+  <data name="ScanMail" xml:space="preserve">
+    <value>Проверять почту</value>
+  </data>
+  <data name="ScanMode" xml:space="preserve">
+    <value>Режим сканирования</value>
+  </data>
+  <data name="ScanPath" xml:space="preserve">
+    <value>Пути сканирования</value>
+  </data>
+  <data name="ScanStartup" xml:space="preserve">
+    <value>Обрабатывать файлы, автоматически запускаемые при запуске системы</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Расписание</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>секунд</value>
+  </data>
+  <data name="SelectedComputers" xml:space="preserve">
+    <value>Выбранные компьютеры</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Выберите файл</value>
+  </data>
+  <data name="SelectText" xml:space="preserve">
+    <value>+</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Отправлять</value>
+  </data>
+  <data name="SendDataInterval" xml:space="preserve">
+    <value>Интервал отсылки данных</value>
+  </data>
+  <data name="SendFile" xml:space="preserve">
+    <value>Передать файл</value>
+  </data>
+  <data name="SendFileUploadFileInfo" xml:space="preserve">
+    <value>Загруженный файл:&lt;b&gt;{0}&lt;/b&gt;&lt;br /&gt;  Размер файла (байт):&lt;b&gt; {1:N0}&lt;/b&gt;&lt;br /&gt; Тип содержимого:&lt;b&gt; {2}&lt;/b&gt;</value>
+  </data>
+  <data name="SendingDataToServer" xml:space="preserve">
+    <value>Отправка данных на сервер</value>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>Серийный номер</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Сервер</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Сервисы</value>
+  </data>
+  <data name="SetLoaderSettings" xml:space="preserve">
+    <value>Задать настройки Диспетчера</value>
+  </data>
+  <data name="SetMonitorSettings" xml:space="preserve">
+    <value>Задать настройки Монитора</value>
+  </data>
+  <data name="SetQtnSettings" xml:space="preserve">
+    <value>Задать настройки Карантина</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsForMaintenanceService" xml:space="preserve">
+    <value>Установки для сервиса периодического обслуживания</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="ShowComputers" xml:space="preserve">
+    <value>Отобразить компьютеры</value>
+  </data>
+  <data name="ShowComputerTableFieldsText" xml:space="preserve">
+    <value>Отображать поля в списке компьютеров</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Включить звуковую сигнализацию</value>
+  </data>
+  <data name="SourceFile" xml:space="preserve">
+    <value>Исходный файл</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="StartupOptionsLoaderAndMonitor" xml:space="preserve">
+    <value>Параметры Диспетчера, Монитора и Защиты USB</value>
+  </data>
+  <data name="StatCountEvent" xml:space="preserve">
+    <value>Количество событий</value>
+  </data>
+  <data name="StatCountEventToday" xml:space="preserve">
+    <value>Количество событий за сегодня</value>
+  </data>
+  <data name="StatCountVirus" xml:space="preserve">
+    <value>Количество вирусов</value>
+  </data>
+  <data name="StatCountVirusToday" xml:space="preserve">
+    <value>Количество вирусов за сегодня</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Состояние</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="StatVirusTopMonth" xml:space="preserve">
+    <value>Встречаемость вирусов за месяц</value>
+  </data>
+  <data name="StatVirusTopToDay" xml:space="preserve">
+    <value>Встречаемость вирусов за день</value>
+  </data>
+  <data name="StatVirusTotalTop" xml:space="preserve">
+    <value>Общая встречаемость вирусов</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="Subdirs" xml:space="preserve">
+    <value>Поддиректории</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="Subkeys" xml:space="preserve">
+    <value>Подключи</value>
+  </data>
+  <data name="Subnetwork" xml:space="preserve">
+    <value>Подсеть</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Ключ в порядке</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Воскресенье</value>
+  </data>
+  <data name="SuspiciousFiles" xml:space="preserve">
+    <value>Подозрительные</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Таблица</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Задача</value>
+  </data>
+  <data name="TaskChangeDeviceProtect" xml:space="preserve">
+    <value>Настроить защиту устройств</value>
+  </data>
+  <data name="TaskCreate" xml:space="preserve">
+    <value>Создание задачи</value>
+  </data>
+  <data name="TaskDaysToDelete" xml:space="preserve">
+    <value>Удалять задачи старше (дней)</value>
+  </data>
+  <data name="TaskDeleted" xml:space="preserve">
+    <value>Задача была удалена</value>
+  </data>
+  <data name="TaskGiveAll" xml:space="preserve">
+    <value>Выдать задачу всем компьютерам, удовлетворяющим фильтру</value>
+  </data>
+  <data name="TaskGived" xml:space="preserve">
+    <value>Задача была выдана</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Имя задачи</value>
+  </data>
+  <data name="TaskNameCancelTask" xml:space="preserve">
+    <value>Отмена задачи</value>
+  </data>
+  <data name="TaskNameComponentState" xml:space="preserve">
+    <value>Получить состояние компонентов</value>
+  </data>
+  <data name="TaskNameConfigureFirewall" xml:space="preserve">
+    <value>Настроить Файрвол</value>
+  </data>
+  <data name="TaskNameConfigurePassword" xml:space="preserve">
+    <value>Установить пароль</value>
+  </data>
+  <data name="TaskNameConfigureProactiveProtection" xml:space="preserve">
+    <value>Настроить Проактивная защита</value>
+  </data>
+  <data name="TaskNameConfigureQuarantine" xml:space="preserve">
+    <value>Настроить Карантин</value>
+  </data>
+  <data name="TaskNameListProcesses" xml:space="preserve">
+    <value>Получить список процессов</value>
+  </data>
+  <data name="TaskNameRestoreFileFromQtn" xml:space="preserve">
+    <value>Восстановить файл из карантина</value>
+  </data>
+  <data name="TaskNameRunScanner" xml:space="preserve">
+    <value>Запустить сканер</value>
+  </data>
+  <data name="TaskNameSystemInfo" xml:space="preserve">
+    <value>Получить информацию о системе</value>
+  </data>
+  <data name="TaskNameVba32LoaderDisable" xml:space="preserve">
+    <value>Диспетчер - выгрузить</value>
+  </data>
+  <data name="TaskNameVba32LoaderEnable" xml:space="preserve">
+    <value>Диспетчер - загрузить</value>
+  </data>
+  <data name="TaskNameVba32MonitorDisable" xml:space="preserve">
+    <value>Монитор - выключить</value>
+  </data>
+  <data name="TaskNameVba32MonitorEnable" xml:space="preserve">
+    <value>Монитор - включить</value>
+  </data>
+  <data name="TaskNameVba32ProgramAndDataBaseUpdate" xml:space="preserve">
+    <value>Обновить комплекс и базы</value>
+  </data>
+  <data name="TaskParams" xml:space="preserve">
+    <value>Параметры</value>
+  </data>
+  <data name="TaskRequestPolicy" xml:space="preserve">
+    <value>Запросить политику</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Задачи</value>
+  </data>
+  <data name="TaskSaved" xml:space="preserve">
+    <value>Задача была сохранена</value>
+  </data>
+  <data name="TaskSeparator" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="TaskState" xml:space="preserve">
+    <value>Состояние</value>
+  </data>
+  <data name="TaskStateCompletedSuccessfully" xml:space="preserve">
+    <value>Завершена успешно</value>
+  </data>
+  <data name="TaskStateDelivery" xml:space="preserve">
+    <value>Выдача</value>
+  </data>
+  <data name="TaskStateDeliveryTimeout" xml:space="preserve">
+    <value>Таймаут выдачи</value>
+  </data>
+  <data name="TaskStateExecution" xml:space="preserve">
+    <value>Выполнение</value>
+  </data>
+  <data name="TaskStateExecutionError" xml:space="preserve">
+    <value>Завершена с ошибкой</value>
+  </data>
+  <data name="TaskStateExecutionTimeout" xml:space="preserve">
+    <value>Таймаут выполнения</value>
+  </data>
+  <data name="TaskStateStopped" xml:space="preserve">
+    <value>Остановлена</value>
+  </data>
+  <data name="TaskType" xml:space="preserve">
+    <value>Тип задачи</value>
+  </data>
+  <data name="TaskUninstall" xml:space="preserve">
+    <value>Удаление</value>
+  </data>
+  <data name="TemporaryFileSize" xml:space="preserve">
+    <value>Размер временных файлов (Кб)</value>
+  </data>
+  <data name="TemporaryFilter" xml:space="preserve">
+    <value>Временный фильтр</value>
+  </data>
+  <data name="TemporaryGroup" xml:space="preserve">
+    <value>Временная группа</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="ThoroughSearch" xml:space="preserve">
+    <value>Избыточный поиск</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Четверг</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="TimeInterval" xml:space="preserve">
+    <value>Промежуток времени (мин)</value>
+  </data>
+  <data name="TimerSettings" xml:space="preserve">
+    <value>Настройки автоматического самообновления</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>по</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Истина</value>
+  </data>
+  <data name="TrustedApplications" xml:space="preserve">
+    <value>Доверенные приложения</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Вторник</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="TypeApplications" xml:space="preserve">
+    <value>Тип приложений</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Неопределено</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Вверх</value>
+  </data>
+  <data name="UpdateButtonText" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="UpdateCC" xml:space="preserve">
+    <value>Обновление</value>
+  </data>
+  <data name="UpdateInfo" xml:space="preserve">
+    <value>Обновить информацию</value>
+  </data>
+  <data name="UpdatePath" xml:space="preserve">
+    <value>Путь обновления</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="UseAuthorization" xml:space="preserve">
+    <value>Использовать авторизацию</value>
+  </data>
+  <data name="UseComputersFromList" xml:space="preserve">
+    <value>Использовать только компьютеры из списка</value>
+  </data>
+  <data name="UseFlowAnalysis" xml:space="preserve">
+    <value>Использовать интеллектуальную обработку</value>
+  </data>
+  <data name="UseJabber" xml:space="preserve">
+    <value>Использовать Jabber</value>
+  </data>
+  <data name="UseMail" xml:space="preserve">
+    <value>Использовать почту</value>
+  </data>
+  <data name="UseNetSend" xml:space="preserve">
+    <value>Использовать NetSend</value>
+  </data>
+  <data name="UseProxy" xml:space="preserve">
+    <value>Использовать прокси-сервер</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="UserIdentityName" xml:space="preserve">
+    <value>Identity name пользователя</value>
+  </data>
+  <data name="UserLogin" xml:space="preserve">
+    <value>Логин</value>
+  </data>
+  <data name="UserManaging" xml:space="preserve">
+    <value>Пользователи</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется имя пользователя</value>
+  </data>
+  <data name="UsersTasks" xml:space="preserve">
+    <value>Пользовательские задачи</value>
+  </data>
+  <data name="UseStartupOptionsLoaderAndMonitor" xml:space="preserve">
+    <value>Использовать параметры Диспетчера, Монитора</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="Vba32CCServicesState" xml:space="preserve">
+    <value>Состояние сервисов Центра Управления</value>
+  </data>
+  <data name="Vba32ControlCenterTitle" xml:space="preserve">
+    <value>Центр Управления, Веб-оснастка</value>
+  </data>
+  <data name="VBA32Integrity" xml:space="preserve">
+    <value>Целостность</value>
+  </data>
+  <data name="VBA32KeyValid" xml:space="preserve">
+    <value>Ключ</value>
+  </data>
+  <data name="Vba32NSSettings" xml:space="preserve">
+    <value>Настройка сервиса уведомлений</value>
+  </data>
+  <data name="Vba32SSUnavailable" xml:space="preserve">
+    <value>Эта ошибка могла возникнуть при попытке вызвать сервис Settings Service. Проверьте, запущен ли он.</value>
+  </data>
+  <data name="VBA32Version" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Viewer" xml:space="preserve">
+    <value>Наблюдатель</value>
+  </data>
+  <data name="Ware" xml:space="preserve">
+    <value>Детектировать Spyware, Adware, Riskware</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Среда</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>неделя</value>
+  </data>
+  <data name="Week2" xml:space="preserve">
+    <value>недели</value>
+  </data>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Дни недели</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Еженедельно</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>недели</value>
+  </data>
+  <data name="Weeks2" xml:space="preserve">
+    <value>недель</value>
+  </data>
+  <data name="WMI" xml:space="preserve">
+    <value>WMI</value>
+  </data>
+  <data name="WMISettings" xml:space="preserve">
+    <value>Настройки WMI</value>
+  </data>
+  <data name="WriteReport" xml:space="preserve">
+    <value>Записать в файл отчета</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>год</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Да/Нет</value>
+  </data>
+  <data name="ZoneFriendlyIP" xml:space="preserve">
+    <value>Зона дружественных IP-адресов</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Включить</value>
+  </data>
+  <data name="ChoiseEvent" xml:space="preserve">
+    <value>Выберите событие</value>
+  </data>
+  <data name="PageGroupsTitle" xml:space="preserve">
+    <value>Группы</value>
+  </data>
+  <data name="ActiveCount" xml:space="preserve">
+    <value>Количество активных</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Имя группы</value>
+  </data>
+  <data name="TotalCount" xml:space="preserve">
+    <value>Общее количество</value>
+  </data>
+  <data name="TaskGiveAllGroups" xml:space="preserve">
+    <value>Выдать задачу всем группам, удовлетворяющим фильтру</value>
+  </data>
+  <data name="PageGroupsFilterTitle" xml:space="preserve">
+    <value>Фильтры групп</value>
+  </data>
+  <data name="NoSelectedGroups" xml:space="preserve">
+    <value>Нет выделенных групп</value>
+  </data>
+  <data name="CopyToFilter" xml:space="preserve">
+    <value>Скопировать в фильтр</value>
+  </data>
+  <data name="DisplayMessage" xml:space="preserve">
+    <value>Отображены {0}-{1} из {2}</value>
+  </data>
+  <data name="EmptyMessage" xml:space="preserve">
+    <value>Нет элементов</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>Перейти</value>
+  </data>
+  <data name="ItemsPerPageMessage" xml:space="preserve">
+    <value>Элементов на странице</value>
+  </data>
+  <data name="TotalMessage" xml:space="preserve">
+    <value>из {0}</value>
+  </data>
+  <data name="EnableDisableMultithreading" xml:space="preserve">
+    <value>Включить\выключить многопоточность</value>
+  </data>
+  <data name="Multithreading" xml:space="preserve">
+    <value>Многопоточность</value>
+  </data>
+  <data name="ThreadsCount" xml:space="preserve">
+    <value>Количество потоков</value>
+  </data>
+  <data name="ShowProgressScan" xml:space="preserve">
+    <value>Отображать прогресс сканирования</value>
+  </data>
+  <data name="NoCorrectName" xml:space="preserve">
+    <value>Некорректное имя!</value>
+  </data>
+  <data name="NoCorrectPath" xml:space="preserve">
+    <value>Некорректный путь!</value>
+  </data>
+  <data name="Date2" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="CorrectOnlyMSI" xml:space="preserve">
+    <value>Выберете файл с расширением .msi </value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="SelectAllOnPage" xml:space="preserve">
+    <value>Все на странице</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Сортировать</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Ни одного</value>
+  </data>
+  <data name="UnselectAllOnPage" xml:space="preserve">
+    <value>Ни одного на странице</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Опции</value>
+  </data>
+  <data name="DateIncorrect" xml:space="preserve">
+    <value>Неправильное значение даты.</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>Введите дату.</value>
+  </data>
+  <data name="DaysIncorrect" xml:space="preserve">
+    <value>Неправильное значение дней.</value>
+  </data>
+  <data name="DaysRequired" xml:space="preserve">
+    <value>Введите дни.</value>
+  </data>
+  <data name="HoursIncorrect" xml:space="preserve">
+    <value>Неправильное значение часов.</value>
+  </data>
+  <data name="HoursRequired" xml:space="preserve">
+    <value>Введите часы.</value>
+  </data>
+  <data name="MinutesIncorrect" xml:space="preserve">
+    <value>Неправильное значение минут.</value>
+  </data>
+  <data name="MinutesRequired" xml:space="preserve">
+    <value>Введите минуты.</value>
+  </data>
+  <data name="TimeIncorrect" xml:space="preserve">
+    <value>Неправильное значение времени.</value>
+  </data>
+  <data name="TimeRequired" xml:space="preserve">
+    <value>Введите время.</value>
+  </data>
+  <data name="DaysSequenceIncorrect" xml:space="preserve">
+    <value>Дни месяца должны быть в формате день1,день2,... или день1.</value>
+  </data>
+  <data name="DaysSequenceRequired" xml:space="preserve">
+    <value>Введите дни месяца.</value>
+  </data>
+  <data name="RemoteService" xml:space="preserve">
+    <value>Удаленный сервис</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="DomainRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется домен</value>
+  </data>
+  <data name="LoginRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется логин</value>
+  </data>
+  <data name="CheckCredentials" xml:space="preserve">
+    <value>Проверьте реквизиты</value>
+  </data>
+  <data name="EmptyIPListAfterExclusion" xml:space="preserve">
+    <value>После исключения список IP адресов пуст</value>
+  </data>
+  <data name="DefaultSorting" xml:space="preserve">
+    <value>Сортировка по умолчанию</value>
+  </data>
+  <data name="IPRangeRegexErrorMessage" xml:space="preserve">
+    <value>IP адреса должны быть в формате x.x.x.x-y.y.y.y или x.x.x.x</value>
+  </data>
+  <data name="NewCompRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется IP адрес</value>
+  </data>
+  <data name="ProfileName" xml:space="preserve">
+    <value>Имя профиля</value>
+  </data>
+  <data name="ProfileSaved" xml:space="preserve">
+    <value>Профиль был сохранен</value>
+  </data>
+  <data name="CanNotRename" xml:space="preserve">
+    <value>Не удается переименовать </value>
+  </data>
+  <data name="ErrorRenamingGroup" xml:space="preserve">
+    <value>Ошибка при переименовании группы.</value>
+  </data>
+  <data name="GroupAllreadyExists" xml:space="preserve">
+    <value>. Группа с указанным именем существует. Задайте другое имя.</value>
+  </data>
+  <data name="LoadOnlyMSI" xml:space="preserve">
+    <value>Разрешается загрузка файлов только с расширением msi.</value>
+  </data>
+  <data name="ErrorSettingsAutoUpdateIntervalRange" xml:space="preserve">
+    <value>Период  самообновления между 30 и 1800 секундами.</value>
+  </data>
+  <data name="AreYouSureProfile" xml:space="preserve">
+    <value>Вы действительно хотите удалить профиль?</value>
+  </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>Неправильное значение </value>
+  </data>
+  <data name="NotDefined" xml:space="preserve">
+    <value>Не определено</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется email</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется имя</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется фамилия</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Изменить пользователя</value>
+  </data>
+  <data name="AcountEdit" xml:space="preserve">
+    <value>Аккаунт был успешно изменен</value>
+  </data>
+  <data name="CannotAddUserToRole" xml:space="preserve">
+    <value>Не удалось добавить пользователя к роли. </value>
+  </data>
+  <data name="CannotChangeUserEmail" xml:space="preserve">
+    <value>Не удалось изменить адрес электронной почты пользователя.</value>
+  </data>
+  <data name="CannotChangeUserProfile" xml:space="preserve">
+    <value>Не удалось изменить профиль пользователя.</value>
+  </data>
+  <data name="CannotChangeUserRole" xml:space="preserve">
+    <value>Не удалось изменить роль пользователя. </value>
+  </data>
+  <data name="CannotDeleteUser" xml:space="preserve">
+    <value>Не удалось удалить пользователя. </value>
+  </data>
+  <data name="CannotGetUserEmail" xml:space="preserve">
+    <value>Не удалось получить адрес электронной почты пользователя.</value>
+  </data>
+  <data name="CannotGetUserProfile" xml:space="preserve">
+    <value>Не удалось получить профиль пользователя.</value>
+  </data>
+  <data name="CannotGetUserRole" xml:space="preserve">
+    <value>Не удалось получить роль пользователя. </value>
+  </data>
+  <data name="CannotRemoveUserRoles" xml:space="preserve">
+    <value>Не удалось удалить роли пользователя.</value>
+  </data>
+  <data name="CannotSetUserProfile" xml:space="preserve">
+    <value>Не удалось добавить информацию пользователя в профиль. </value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Пользователь с данным адресом электронной почты существует. Пожалуйста, введите другой адрес электронной почты.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>Пользователь с таким именем существует. Пожалуйста, введите другое имя пользователя.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Адрес электронной почты является некорректным. Пожалуйста, проверьте значение и повторите попытку.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Пароль является некорректным. Пожалуйста, введите корректное значение пароля.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>Имя пользователя является некорректным. Пожалуйста, проверьте значение и повторите попытку.</value>
+  </data>
+  <data name="MembershipCreateUserFailed" xml:space="preserve">
+    <value>Элемент Membership не может создать пользователя. </value>
+  </data>
+  <data name="ProviderError" xml:space="preserve">
+    <value>Провайдер аутентификации возвратил ошибку. Пожалуйста, проверьте введенные данные и повторите попытку. Если проблема не устранится, обратитесь к системному администратору.</value>
+  </data>
+  <data name="UknownError" xml:space="preserve">
+    <value>Произошла непредвиденная ошибка. Пожалуйста, проверьте введенные данные и повторите попытку. Если проблема не устранится, обратитесь к системному администратору.</value>
+  </data>
+  <data name="UserDeleteFail" xml:space="preserve">
+    <value>Пользователь не был удален.</value>
+  </data>
+  <data name="UserDeleteSuccess" xml:space="preserve">
+    <value>Пользователь удален успешно.</value>
+  </data>
+  <data name="UserDeletionRejection" xml:space="preserve">
+    <value>Запрос удаления пользователя был отменен. Пожалуйста, проверьте введенные данные и повторите попытку. Если проблема не устранится, обратитесь к системному администратору.</value>
+  </data>
+  <data name="UserEditionRejection" xml:space="preserve">
+    <value>Запрос изменения пользователя был отменен. Пожалуйста, проверьте введенные данные и повторите попытку. Если проблема не устранится, обратитесь к системному администратору.</value>
+  </data>
+  <data name="UserRejected" xml:space="preserve">
+    <value>Запрос создания пользователя был отменен. Пожалуйста, проверьте введенные данные и повторите попытку. Если проблема не устранится, обратитесь к системному администратору.</value>
+  </data>
+  <data name="ChangeCommentSelectedGroup" xml:space="preserve">
+    <value>Изменить комментарий выбранной группы</value>
+  </data>
+  <data name="ChangeComment" xml:space="preserve">
+    <value>Изменить комментарий</value>
+  </data>
+  <data name="ConfirmRewriteFilter" xml:space="preserve">
+    <value>Фильтр с таким именем уже существует. Перезаписать?</value>
+  </data>
+  <data name="ErrorFilterNameEmpty" xml:space="preserve">
+    <value>Нельзя сохранить фильтр: имя пустое.</value>
+  </data>
+  <data name="RangeError" xml:space="preserve">
+    <value>Конец диапазона не может быть меньше начала.</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>менее</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>более</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>лет</value>
+  </data>
+  <data name="CorrectFormat" xml:space="preserve">
+    <value>Правильный формат</value>
+  </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>дд.мм.гггг</value>
+  </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>чч.мм</value>
+  </data>
+  <data name="ValueBetween" xml:space="preserve">
+    <value>Значение должно быть между {0} и {1}</value>
+  </data>
+  <data name="RequestingDataFromServer" xml:space="preserve">
+    <value>Получение данных с сервера</value>
+  </data>
+  <data name="ErrorRequestingDataFromServer" xml:space="preserve">
+    <value>Ошибка при получении данных с сервера</value>
+  </data>
+  <data name="IpAddressInIncorrectFormat" xml:space="preserve">
+    <value>IP адрес, диапазон или маска в некорректном формате. (Примеры: 192.168.1.1, 192.168.1.1-192.168.1.5, 192.168.*)</value>
+  </data>
+  <data name="IpAddressRequired" xml:space="preserve">
+    <value>Введите IP адрес, диапазон или маску.</value>
+  </data>
+  <data name="IpAddressFilterInIncorrectFormat" xml:space="preserve">
+    <value>Фильтр IP-адреса в некорректном формате. Воспользуйтесь помощником для исправления.</value>
+  </data>
+  <data name="MemorySizeInKb" xml:space="preserve">
+    <value>Память (Кб)</value>
+  </data>
+  <data name="IpAddressExamplesLiteral" xml:space="preserve">
+    <value>Примеры корректного задания IP:&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;IP адрес: 192.168.1.1&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;IP адрес с маской: 192.168.*&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;IP диапазон: 192.168.1.1-192.168.1.15&lt;br/&gt;</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Удаление</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Соединение</value>
+  </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Копирование</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Неуспешно</value>
+  </data>
+  <data name="Initializing" xml:space="preserve">
+    <value>Инициализация</value>
+  </data>
+  <data name="Parsing" xml:space="preserve">
+    <value>Анализ</value>
+  </data>
+  <data name="Processing" xml:space="preserve">
+    <value>Выполнение</value>
+  </data>
+  <data name="SuccessStatus" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Загрузка...</value>
+  </data>
+  <data name="MessageBuyAdditionalFeatures" xml:space="preserve">
+    <value>Данный функционал не входит в текущую комплектацию Центра управления. Для приобретения данного функционала обратитесь по телефону +375 17 2948429 или свяжитесь по электронной почте &lt;a href='mailto:info@anti-virus.by'&gt;info@anti-virus.by&lt;/a&gt;.</value>
+  </data>
+  <data name="CPU_MHz" xml:space="preserve">
+    <value>ЦПУ (МГц)</value>
+  </data>
+  <data name="RAM_MB" xml:space="preserve">
+    <value>ОЗУ (МБ)</value>
+  </data>
+  <data name="CompWithoutGroup" xml:space="preserve">
+    <value>Компьютеры без группы</value>
+  </data>
+  <data name="NoGroup" xml:space="preserve">
+    <value>Без группы</value>
+  </data>
+  <data name="AssignTask" xml:space="preserve">
+    <value>Выдать задачу</value>
+  </data>
+  <data name="AssignTaskToAll" xml:space="preserve">
+    <value>Выдать задачу всем компьютерам</value>
+  </data>
+  <data name="TemporaryTask" xml:space="preserve">
+    <value>Временная задача</value>
+  </data>
+  <data name="ErrorFilterNameRestricted" xml:space="preserve">
+    <value>Нельзя сохранить фильтр с данным именем.</value>
+  </data>
+  <data name="ConfirmRewriteTask" xml:space="preserve">
+    <value>Задание с таким именем уже существует. Перезаписать?</value>
+  </data>
+  <data name="ErrorTaskNameEmpty" xml:space="preserve">
+    <value>Нельзя сохранить задание: имя пустое.</value>
+  </data>
+  <data name="ErrorTaskNameRestricted" xml:space="preserve">
+    <value>Нельзя сохранить задание с данным именем.</value>
+  </data>
+  <data name="MoreInfo" xml:space="preserve">
+    <value>Подробнее...</value>
+  </data>
+  <data name="Collapse" xml:space="preserve">
+    <value>Свернуть</value>
+  </data>
+  <data name="CollapseAllGroups" xml:space="preserve">
+    <value>Свернуть все группы.</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Развернуть</value>
+  </data>
+  <data name="ExpandAllGroups" xml:space="preserve">
+    <value>Развернуть все группы.</value>
+  </data>
+  <data name="SelectAllComputers" xml:space="preserve">
+    <value>Выбрать все компьютеры.</value>
+  </data>
+  <data name="UnselectAllComputers" xml:space="preserve">
+    <value>Снять выделение со всех компьютеров.</value>
+  </data>
+  <data name="Antivirus" xml:space="preserve">
+    <value>КАНОЭ клиент</value>
+  </data>
+  <data name="ErrorOfNestingLavel" xml:space="preserve">
+    <value>Превышен уровень вложенности</value>
+  </data>
+  <data name="LimitedAllowLength" xml:space="preserve">
+    <value>Превышена допустимая длина имени.</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Родитель</value>
+  </data>
+  <data name="RemoteConsoleScanner" xml:space="preserve">
+    <value>Консольный сканнер</value>
+  </data>
+  <data name="UpdateForRemoteConsoleScanner" xml:space="preserve">
+    <value>Произвести обновление перед сканированием (ТОЛЬКО ДЛЯ REMOTE CONSOLE SCANNER)</value>
+  </data>
+  <data name="RequestPacketCount" xml:space="preserve">
+    <value>Количество отправляемых пакетов</value>
+  </data>
+  <data name="RequestPacketCountRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется количество отправляемых пакетов</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Таймаут (сек)</value>
+  </data>
+  <data name="TimeoutRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется значение таймаута</value>
+  </data>
+  <data name="AddOrEditComment" xml:space="preserve">
+    <value>Добавить/редактировать комментарий</value>
+  </data>
+  <data name="HeaderDay" xml:space="preserve">
+    <value>День</value>
+  </data>
+  <data name="UseDailyProtect" xml:space="preserve">
+    <value>Использовать ежедневную защиту</value>
+  </data>
+  <data name="TaskDailyDeviceProtect" xml:space="preserve">
+    <value>Защита USB по расписанию</value>
+  </data>
+  <data name="FileUploaded" xml:space="preserve">
+    <value>Файл загружен.</value>
+  </data>
+  <data name="ConfigureAgent" xml:space="preserve">
+    <value>Сконфигурировать агент</value>
+  </data>
+  <data name="TaskStateInQueue" xml:space="preserve">
+    <value>В очереди</value>
+  </data>
+  <data name="TaskStateSended" xml:space="preserve">
+    <value>Отправлена</value>
+  </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Подключить</value>
+  </data>
+  <data name="DetachAgent" xml:space="preserve">
+    <value>Отсоединить агент</value>
+  </data>
+  <data name="LoggedAs" xml:space="preserve">
+    <value>Вы вошли как</value>
+  </data>
+  <data name="NullName" xml:space="preserve">
+    <value>Имя папки не может быть пустым</value>
+  </data>
+  <data name="DeviceComment" xml:space="preserve">
+    <value>Комментарий для устройства</value>
+  </data>
+  <data name="DeviceCanNotAdded" xml:space="preserve">
+    <value>Устройство не может быть добавлено</value>
+  </data>
+  <data name="SavePasswordInformation" xml:space="preserve">
+    <value>запомнить пароль</value>
+  </data>
+  <data name="AdditionalSettings" xml:space="preserve">
+    <value>Дополнительные настройки</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Аргументы</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
+  <data name="AreYouSureDevice" xml:space="preserve">
+    <value>Вы действительно хотите удалить устройство?</value>
+  </data>
+  <data name="GroupHasNotComps" xml:space="preserve">
+    <value>Группа не содержит компьютеров</value>
+  </data>
+  <data name="LastSuccessUpdate" xml:space="preserve">
+    <value>Последнее успешное обновление</value>
+  </data>
+  <data name="IPAddressRegexErrorMessage" xml:space="preserve">
+    <value>IP-адрес должен быть в формате x.x.x.x (Пример: 10.172.25.3)</value>
+  </data>
+  <data name="SenderRequired" xml:space="preserve">
+    <value>Требуется отправитель</value>
+  </data>
+  <data name="ServerRequired" xml:space="preserve">
+    <value>Требуется сервер</value>
+  </data>
+  <data name="ValueRequired" xml:space="preserve">
+    <value>Требуется значение</value>
+  </data>
+  <data name="ErrorEmptySettings" xml:space="preserve">
+    <value>Настройки отсутствуют.</value>
+  </data>
+  <data name="ErrorGetSettings" xml:space="preserve">
+    <value>Невозможно получить настройки  {0} ({1}).</value>
+  </data>
+  <data name="ErrorIncorrectValue" xml:space="preserve">
+    <value>Неправильное значение {0}.</value>
+  </data>
+  <data name="ErrorLoad" xml:space="preserve">
+    <value>Невозможно загрузить {0} ({1}).</value>
+  </data>
+  <data name="ErrorTaskTypeConflict" xml:space="preserve">
+    <value>Тип не относится к ITask ({0}).</value>
+  </data>
+  <data name="NoDataChartDisplayed" xml:space="preserve">
+    <value>Данные пусты и не могут быть отображены</value>
+  </data>
+  <data name="SetDiagramCriteria" xml:space="preserve">
+    <value>Задайте критерии для диаграммы</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>График</value>
+  </data>
+  <data name="CongLdrScanUSB" xml:space="preserve">
+    <value>Сканировать USB устройства</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Директории</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Ключи</value>
+  </data>
+  <data name="Protected" xml:space="preserve">
+    <value>Защищенные</value>
+  </data>
+  <data name="ReadOnly" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="Trusted" xml:space="preserve">
+    <value>Доверенные</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Значения</value>
+  </data>
+  <data name="Excluded" xml:space="preserve">
+    <value>Исключения</value>
+  </data>
+  <data name="ChangeComponentSettings" xml:space="preserve">
+    <value>Изменить настройки компонента</value>
+  </data>
+  <data name="PoollingTimeInterval" xml:space="preserve">
+    <value>Интервал опроса</value>
+  </data>
+  <data name="TaskAgentSettings" xml:space="preserve">
+    <value>Изменить настройки агента</value>
+  </data>
+  <data name="TaskNameConfigureScanner" xml:space="preserve">
+    <value>Настроить Cканер</value>
+  </data>
+  <data name="ScanMemory" xml:space="preserve">
+    <value>Сканировать память</value>
+  </data>
+  <data name="AntivirusVirtualization" xml:space="preserve">
+    <value>AntivirusVirtualization</value>
+  </data>
+  <data name="ComputersDaysToDelete" xml:space="preserve">
+    <value>Удалять компьютеры с активностью старше (дней)</value>
+  </data>
+  <data name="CongScannerAuthenticode" xml:space="preserve">
+    <value>Включить детект для подписанных файлов</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Клиент</value>
+  </data>
+  <data name="CongScannerRemote" xml:space="preserve">
+    <value>Сервер сканирования</value>
+  </data>
+  <data name="ShowAdditionalInfo" xml:space="preserve">
+    <value>Показать дополнительную информацию о компьютере</value>
+  </data>
+  <data name="TotallySelected" xml:space="preserve">
+    <value>Всего выбрано</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Поле должно быть заполнено.</value>
+  </data>
+  <data name="AttachTasks" xml:space="preserve">
+    <value>Задачи подключения</value>
+  </data>
+  <data name="AttachTasksFilters" xml:space="preserve">
+    <value>Фильтры для задач подключения</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Установлен</value>
+  </data>
+  <data name="InstallGived" xml:space="preserve">
+    <value>Поставлено в очередь на подключение. Подробности на странице "Задачи подключения".</value>
+  </data>
+  <data name="BlockWrite" xml:space="preserve">
+    <value>Запрещена запись</value>
+  </data>
+  <data name="InputUID" xml:space="preserve">
+    <value>Введите UID</value>
+  </data>
+  <data name="ApplyNotForAll" xml:space="preserve">
+    <value>Применено не для всех</value>
+  </data>
+  <data name="NoFoundUID" xml:space="preserve">
+    <value>UID не найден</value>
+  </data>
+  <data name="DeviceClassManagment" xml:space="preserve">
+    <value>Управление классами устройств</value>
+  </data>
+  <data name="ClassName" xml:space="preserve">
+    <value>Имя класса</value>
+  </data>
+  <data name="IndicatesRequiredField" xml:space="preserve">
+    <value>поля, обязательные для заполнения</value>
+  </data>
+  <data name="AddNewDeviceClass" xml:space="preserve">
+    <value>Добавить новый класс устройств</value>
+  </data>
+  <data name="DeviceClassComment" xml:space="preserve">
+    <value>Комментарий для класса устройств</value>
+  </data>
+  <data name="ErrorFieldIsEmpty" xml:space="preserve">
+    <value>поле пустое</value>
+  </data>
+  <data name="GuidRegexErrorMessage" xml:space="preserve">
+    <value>UID должен быть в формате {00cd27b6-f21b-11df-a7c8-806e6f6e6963}</value>
+  </data>
+  <data name="ErrorExistPolicy" xml:space="preserve">
+    <value>Политика уже существует</value>
+  </data>
+  <data name="ChangeRule" xml:space="preserve">
+    <value>Изменить правило</value>
+  </data>
+  <data name="DestinationIP" xml:space="preserve">
+    <value>IP назначения</value>
+  </data>
+  <data name="LocalIP" xml:space="preserve">
+    <value>Локальный IP</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Добавить правило</value>
+  </data>
+  <data name="AddTcpUdpRule" xml:space="preserve">
+    <value>Добавить TCP/UDP правило</value>
+  </data>
+  <data name="AllowReceive" xml:space="preserve">
+    <value>Разрешить получение</value>
+  </data>
+  <data name="AllowReceiveSend" xml:space="preserve">
+    <value>Разрешить отправку/получение</value>
+  </data>
+  <data name="AllowSend" xml:space="preserve">
+    <value>Разрешить отправку</value>
+  </data>
+  <data name="DenyAll" xml:space="preserve">
+    <value>Запретить все</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Аудит</value>
+  </data>
+  <data name="DestinationAddress" xml:space="preserve">
+    <value>Адрес назначения</value>
+  </data>
+  <data name="KeepStatistics" xml:space="preserve">
+    <value>Держать статистику</value>
+  </data>
+  <data name="LocalAddress" xml:space="preserve">
+    <value>Локальный адрес</value>
+  </data>
+  <data name="pn3PC" xml:space="preserve">
+    <value>Протокол подключения третьей партии</value>
+  </data>
+  <data name="pnANY_DISTRIBUTED" xml:space="preserve">
+    <value>Любая распределенная файловая система</value>
+  </data>
+  <data name="pnANY_HOST" xml:space="preserve">
+    <value>Любой хост внутреннего протокола</value>
+  </data>
+  <data name="pnANY_LOCAL" xml:space="preserve">
+    <value>Любая локальная сеть</value>
+  </data>
+  <data name="pnANY_PRIVATE" xml:space="preserve">
+    <value>Любая частная схема шифрования</value>
+  </data>
+  <data name="pnARGUS" xml:space="preserve">
+    <value>ARGUS</value>
+  </data>
+  <data name="pnAX_25" xml:space="preserve">
+    <value>AX.25 Кадры</value>
+  </data>
+  <data name="pnBBN_RCC_MON" xml:space="preserve">
+    <value>BBN RCC Мониторинг</value>
+  </data>
+  <data name="pnBNA" xml:space="preserve">
+    <value>BNA</value>
+  </data>
+  <data name="pnBR_SAT_MON" xml:space="preserve">
+    <value>Backroom SATNET Мониторинг</value>
+  </data>
+  <data name="pnCFTP" xml:space="preserve">
+    <value>CFTP</value>
+  </data>
+  <data name="pnCHAOS" xml:space="preserve">
+    <value>Chaos</value>
+  </data>
+  <data name="pnCPHB" xml:space="preserve">
+    <value>Компьютерный протокол Heart Beat</value>
+  </data>
+  <data name="pnCPNX" xml:space="preserve">
+    <value>Исполнительный сетевой протокол компьтера</value>
+  </data>
+  <data name="pnDCN_MEAS" xml:space="preserve">
+    <value>DCN Подсистемы измерения</value>
+  </data>
+  <data name="pnDDP" xml:space="preserve">
+    <value>Протокол доставки дейтаграмм</value>
+  </data>
+  <data name="pnDGP" xml:space="preserve">
+    <value>Разнородный протокол шлюза</value>
+  </data>
+  <data name="pnEGP" xml:space="preserve">
+    <value>Протокол внешней маршрутизации</value>
+  </data>
+  <data name="pnEMCON" xml:space="preserve">
+    <value>EMCON</value>
+  </data>
+  <data name="pnENCAP" xml:space="preserve">
+    <value>Заголовок Инкапсуляции</value>
+  </data>
+  <data name="pnGGP" xml:space="preserve">
+    <value>шлюз-шлюз</value>
+  </data>
+  <data name="pnGMTP" xml:space="preserve">
+    <value>GMTP</value>
+  </data>
+  <data name="pnGRE" xml:space="preserve">
+    <value>Инкапсуляция главной маршрутизации</value>
+  </data>
+  <data name="pnHMP" xml:space="preserve">
+    <value>Мониторинг хоста</value>
+  </data>
+  <data name="pnICMP" xml:space="preserve">
+    <value>Сообщение управления интернетом</value>
+  </data>
+  <data name="pnIDPR" xml:space="preserve">
+    <value>Междоменная политика протоколов маршрутизации</value>
+  </data>
+  <data name="pnIDPR_CMTP" xml:space="preserve">
+    <value>IDPR Транспортный протокол управления сообщениями</value>
+  </data>
+  <data name="pnIDRP" xml:space="preserve">
+    <value>Междоменный протокол маршрутизации</value>
+  </data>
+  <data name="pnIGMP" xml:space="preserve">
+    <value>Управление группами интернета</value>
+  </data>
+  <data name="pnIGP" xml:space="preserve">
+    <value>любой частный внутренний шлюз</value>
+  </data>
+  <data name="pnIGRP" xml:space="preserve">
+    <value>IGRP</value>
+  </data>
+  <data name="pnIL" xml:space="preserve">
+    <value>IL  Транспортный протокол</value>
+  </data>
+  <data name="pnIP" xml:space="preserve">
+    <value>IP в IP(инкапсуляция)</value>
+  </data>
+  <data name="pnIPCV" xml:space="preserve">
+    <value>Интернет утилита Packet Core</value>
+  </data>
+  <data name="pnIPIP" xml:space="preserve">
+    <value>IP-within-IP Протокол Инкапсуляции</value>
+  </data>
+  <data name="pnIPPC" xml:space="preserve">
+    <value>Internet Pluribus Packet Core</value>
+  </data>
+  <data name="pnIRTP" xml:space="preserve">
+    <value>Надежная интернет транзакция</value>
+  </data>
+  <data name="pnISO_IP" xml:space="preserve">
+    <value>ISO Интернет Протокол</value>
+  </data>
+  <data name="pnISO_TP4" xml:space="preserve">
+    <value>Класс транспортного протокола 4</value>
+  </data>
+  <data name="pnI_NLSP" xml:space="preserve">
+    <value>Объединенный сетевой уровень безопасности  TUBA</value>
+  </data>
+  <data name="pnKRYPTOLAN" xml:space="preserve">
+    <value>Kryptolan</value>
+  </data>
+  <data name="pnLARP" xml:space="preserve">
+    <value>Locus Протокол Разрешения Адресов</value>
+  </data>
+  <data name="pnLEAF_1" xml:space="preserve">
+    <value>Leaf-1</value>
+  </data>
+  <data name="pnLEAF_2" xml:space="preserve">
+    <value>Leaf-2</value>
+  </data>
+  <data name="pnMERIT_INP" xml:space="preserve">
+    <value>MERIT Межузловой протокол</value>
+  </data>
+  <data name="pnMFE_NSP" xml:space="preserve">
+    <value>MFE Протокол сетевых служб</value>
+  </data>
+  <data name="pnMHRP" xml:space="preserve">
+    <value>Протокол маршрутизации мобильного хоста</value>
+  </data>
+  <data name="pnMICP" xml:space="preserve">
+    <value>Мобильное Межсетевое управление Pro.</value>
+  </data>
+  <data name="pnMTP" xml:space="preserve">
+    <value>Многоадресный Транспортный Протокол</value>
+  </data>
+  <data name="pnMUX" xml:space="preserve">
+    <value>Мультиплексирование</value>
+  </data>
+  <data name="pnNETBLT" xml:space="preserve">
+    <value>Массовый протокол передачи данных</value>
+  </data>
+  <data name="pnNHRP" xml:space="preserve">
+    <value>NBMA Протокол разрешения следующего хопа</value>
+  </data>
+  <data name="pnNSFNET_IGP" xml:space="preserve">
+    <value>NSFNET-IGP</value>
+  </data>
+  <data name="pnNVP_II" xml:space="preserve">
+    <value>Протокол голосовой сети</value>
+  </data>
+  <data name="pnOSPFIGP" xml:space="preserve">
+    <value>OSPFIGP</value>
+  </data>
+  <data name="pnPRM" xml:space="preserve">
+    <value>Измерение пакетной передачи</value>
+  </data>
+  <data name="pnPUP" xml:space="preserve">
+    <value>PUP</value>
+  </data>
+  <data name="pnPVP" xml:space="preserve">
+    <value>Протокол пакетного видео</value>
+  </data>
+  <data name="pnRDP" xml:space="preserve">
+    <value>Надежный протокол данных</value>
+  </data>
+  <data name="pnRSVP" xml:space="preserve">
+    <value>Протокол резервирования</value>
+  </data>
+  <data name="pnRVD" xml:space="preserve">
+    <value>MIT Протокол удаленного виртуального диска</value>
+  </data>
+  <data name="pnSAT_EXPAK" xml:space="preserve">
+    <value>SATNET and Backroom EXPAK</value>
+  </data>
+  <data name="pnSAT_MON" xml:space="preserve">
+    <value>SATNET Мониторинг</value>
+  </data>
+  <data name="pnSCC_SP" xml:space="preserve">
+    <value>Semaphore Communications Sec. Pro</value>
+  </data>
+  <data name="pnSDRP" xml:space="preserve">
+    <value>Протокол маршрутизации источника спроса</value>
+  </data>
+  <data name="pnSECURE_VMTP" xml:space="preserve">
+    <value>SECURE-VMTP</value>
+  </data>
+  <data name="pnSEP" xml:space="preserve">
+    <value>Последовательный протокол обмена</value>
+  </data>
+  <data name="pnSIP" xml:space="preserve">
+    <value>Простой интернет протокол</value>
+  </data>
+  <data name="pnSIPP_AH" xml:space="preserve">
+    <value>SIPP Заголовок аутентификации</value>
+  </data>
+  <data name="pnSIPP_ESP" xml:space="preserve">
+    <value>SIPP Encap Security Payload</value>
+  </data>
+  <data name="pnSIP_FRAG" xml:space="preserve">
+    <value>SIP Фрагмент</value>
+  </data>
+  <data name="pnSIP_SR" xml:space="preserve">
+    <value>SIP Источник маршрута</value>
+  </data>
+  <data name="pnSprite_RPC" xml:space="preserve">
+    <value>Sprite RPC Протокол</value>
+  </data>
+  <data name="pnST" xml:space="preserve">
+    <value>Поток</value>
+  </data>
+  <data name="pnSUN_ND" xml:space="preserve">
+    <value>SUN ND PROTOCOL-Temporary</value>
+  </data>
+  <data name="pnSWIPE" xml:space="preserve">
+    <value>IP с Шифрованием</value>
+  </data>
+  <data name="pnTCF" xml:space="preserve">
+    <value>TCF</value>
+  </data>
+  <data name="pnTCP" xml:space="preserve">
+    <value>Управление передачей</value>
+  </data>
+  <data name="pnTP" xml:space="preserve">
+    <value>TP++ Транспортный протокол</value>
+  </data>
+  <data name="pnTRUNK_1" xml:space="preserve">
+    <value>Trunk-1</value>
+  </data>
+  <data name="pnTRUNK_2" xml:space="preserve">
+    <value>Trunk-2</value>
+  </data>
+  <data name="pnTTP" xml:space="preserve">
+    <value>TTP</value>
+  </data>
+  <data name="pnUCL" xml:space="preserve">
+    <value>UCL</value>
+  </data>
+  <data name="pnUDP" xml:space="preserve">
+    <value>Дейтаграмма пользователя</value>
+  </data>
+  <data name="pnVINES" xml:space="preserve">
+    <value>VINES</value>
+  </data>
+  <data name="pnVISA" xml:space="preserve">
+    <value>VISA Протокол</value>
+  </data>
+  <data name="pnVMTP" xml:space="preserve">
+    <value>VMTP</value>
+  </data>
+  <data name="pnWB_EXPAK" xml:space="preserve">
+    <value>WIDEBAND EXPAK</value>
+  </data>
+  <data name="pnWB_MON" xml:space="preserve">
+    <value>WIDEBAND Мониторинг</value>
+  </data>
+  <data name="pnWSN" xml:space="preserve">
+    <value>Wang Span Сеть</value>
+  </data>
+  <data name="pnXNET" xml:space="preserve">
+    <value>Межсетевой отладчик</value>
+  </data>
+  <data name="pnXNS_IDP" xml:space="preserve">
+    <value>XEROX NS IDP</value>
+  </data>
+  <data name="pnXTP" xml:space="preserve">
+    <value>XTP</value>
+  </data>
+  <data name="pnETHERIP" xml:space="preserve">
+    <value>Ethernet-within-IP Инкапсуляция</value>
+  </data>
+  <data name="pnUNASSIGNED" xml:space="preserve">
+    <value>Неназначенный</value>
+  </data>
+  <data name="OtherProtocols" xml:space="preserve">
+    <value>Другие протоколы</value>
+  </data>
+  <data name="ProtocolsInIncorrectFormat" xml:space="preserve">
+    <value>Список протоколов задан неверно</value>
+  </data>
+  <data name="Ip6AddressInIncorrectFormat" xml:space="preserve">
+    <value>IP адрес или диапазон  в некорректном формате.  (Примеры: ABCD:EF01:2345:6789:0:0:0:0, ABCD:EF01:2345:6789:0:0:0:0-ABCD:EF01:2345:6789:0:0:0:8, *)</value>
+  </data>
+  <data name="ProtocolsAreNotSelected" xml:space="preserve">
+    <value>Протоколы не выбраны</value>
+  </data>
+  <data name="JournalEvents" xml:space="preserve">
+    <value>События журнала</value>
+  </data>
+  <data name="CCJournal" xml:space="preserve">
+    <value>Журнал ЦУ</value>
+  </data>
+  <data name="LocalJournal" xml:space="preserve">
+    <value>Локальный журнал</value>
+  </data>
+  <data name="WindowsJournal" xml:space="preserve">
+    <value>Журнал Windows</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="CheckState" xml:space="preserve">
+    <value>Проверить состояние</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>Сохранить состояние</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="TaskNameIntegrityCheck" xml:space="preserve">
+    <value>Настроить Проверка целостности</value>
+  </data>
+  <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
+    <value>Настроить Удаление файлов</value>
+  </data>
+  <data name="CongScannerCases" xml:space="preserve">
+    <value>В случае</value>
+  </data>
+  <data name="CongScannerDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="CongScannerPotential" xml:space="preserve">
+    <value>Обнаружить потенциально опасные</value>
+  </data>
+  <data name="CongScannerScanFileList" xml:space="preserve">
+    <value>Наборы файлов для сканирования</value>
+  </data>
+  <data name="CongScannerTrustAuthCode" xml:space="preserve">
+    <value>Доверять коду аутентификации</value>
+  </data>
+  <data name="ScanningObjects" xml:space="preserve">
+    <value>Объекты сканирования</value>
+  </data>
+  <data name="WrongExtensionValidator" xml:space="preserve">
+    <value>Расширения заданы неправильно.</value>
+  </data>
+  <data name="WrongArchivesSize" xml:space="preserve">
+    <value>Неправильно задан размер архива</value>
+  </data>
+  <data name="VAS" xml:space="preserve">
+    <value>Антивирусный сканер</value>
+  </data>
+  <data name="VDD" xml:space="preserve">
+    <value>Модуль управления доступом</value>
+  </data>
+  <data name="VFC" xml:space="preserve">
+    <value>Модуль удаления</value>
+  </data>
+  <data name="VGI" xml:space="preserve">
+    <value>Графический интерфейс пользователя</value>
+  </data>
+  <data name="VIC" xml:space="preserve">
+    <value>Модуль проверки целостности</value>
+  </data>
+  <data name="VMT" xml:space="preserve">
+    <value>Монитор</value>
+  </data>
+  <data name="VND" xml:space="preserve">
+    <value>Сетевой модуль</value>
+  </data>
+  <data name="VPP" xml:space="preserve">
+    <value>Проактивная защита</value>
+  </data>
+  <data name="VQTN" xml:space="preserve">
+    <value>Карантин</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Общие</value>
+  </data>
+  <data name="DuplicateValue" xml:space="preserve">
+    <value>Запись с таким значением уже содержится. Пожалуйста, введите другое значение.</value>
+  </data>
+  <data name="NoDeleteDefault" xml:space="preserve">
+    <value>Пользователя по-умолчанию удалить нельзя.</value>
+  </data>
+  <data name="CongMonitorActionFirst" xml:space="preserve">
+    <value>Первое действие</value>
+  </data>
+  <data name="CongMonitorActionSecond" xml:space="preserve">
+    <value>Второе действие</value>
+  </data>
+  <data name="CongMonitorActionThird" xml:space="preserve">
+    <value>Третье действие</value>
+  </data>
+  <data name="CongLdrProxyServerType" xml:space="preserve">
+    <value>Тип прокси</value>
+  </data>
+  <data name="AtSystemStartUp" xml:space="preserve">
+    <value>При загрузке системы</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Дата и время</value>
+  </data>
+  <data name="EveryDayOfMonth" xml:space="preserve">
+    <value>Каждый день месяца</value>
+  </data>
+  <data name="EveryDayOfWeek" xml:space="preserve">
+    <value>Каждый день недели</value>
+  </data>
+  <data name="EveryHour" xml:space="preserve">
+    <value>Каждый час</value>
+  </data>
+  <data name="SomeDateTime" xml:space="preserve">
+    <value>Определенная дата/время</value>
+  </data>
+  <data name="FirewallIsOn" xml:space="preserve">
+    <value>Файрвол включен</value>
+  </data>
+  <data name="NetworkType" xml:space="preserve">
+    <value>Тип сети</value>
+  </data>
+  <data name="OpenNetwork" xml:space="preserve">
+    <value>Открытая</value>
+  </data>
+  <data name="PrivateNetwork" xml:space="preserve">
+    <value>Частная</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Настройки не применены</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Настройки применены</value>
+  </data>
+  <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
+    <value>Действие удаление: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
+    <value>Действие выполнение: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
+    <value>Действие открытие(чтение): %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
+    <value>Дейсвтие открытие(запись): %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
+    <value>Действие чтение: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
+    <value>Дейсвтие запись: %1% \%2% -&gt; %3%, процесс: %4%, результат: %5%</value>
+  </data>
+  <data name="JE_VPP_START" xml:space="preserve">
+    <value>Проактивная защита запущена</value>
+  </data>
+  <data name="JE_VPP_STOP" xml:space="preserve">
+    <value>Проактивная защита остановлена</value>
+  </data>
+  <data name="JE_QTN_ADD" xml:space="preserve">
+    <value>Добавлен объект %1%</value>
+  </data>
+  <data name="JE_QTN_DELETE" xml:space="preserve">
+    <value>Удален объект %1%</value>
+  </data>
+  <data name="JE_QTN_RESTORE" xml:space="preserve">
+    <value>Восстановлен объект %1%</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек классов устройств.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки классов устройств применены.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек usb-классов.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки usb-классов применены.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Ошибка применения настроек usb-устройств.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки usb-устройств применены.</value>
+  </data>
+  <data name="JE_VDD_START" xml:space="preserve">
+    <value>Модуль управления доступом запущен.</value>
+  </data>
+  <data name="JE_VDD_STOP" xml:space="preserve">
+    <value>Модуль управления доступом остановлен.</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Правила не применены</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Правила применены</value>
+  </data>
+  <data name="JE_VND_AUIDIT_OTHER" xml:space="preserve">
+    <value>Аудит other: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_TCP" xml:space="preserve">
+    <value>Аудит tcp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_UDP" xml:space="preserve">
+    <value>Аудит udp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_START" xml:space="preserve">
+    <value>Файервол запущен</value>
+  </data>
+  <data name="JE_VND_STOP" xml:space="preserve">
+    <value>Файервол остановлен</value>
+  </data>
+  <data name="JE_VAS_ACTION_BLOCK" xml:space="preserve">
+    <value>Заблокирован %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_CURE" xml:space="preserve">
+    <value>Вылечен %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_DELETE" xml:space="preserve">
+    <value>Удален %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_NONE" xml:space="preserve">
+    <value>Пропущен %1%</value>
+  </data>
+  <data name="JE_VAS_INFECTED" xml:space="preserve">
+    <value>Объект %1% инфицирован %2%</value>
+  </data>
+  <data name="JE_VAS_START" xml:space="preserve">
+    <value>Начало сканирования: %1%</value>
+  </data>
+  <data name="JE_VAS_STOP" xml:space="preserve">
+    <value>Сканирование завершено: %1%</value>
+  </data>
+  <data name="JE_VAS_SUSPICIOUS" xml:space="preserve">
+    <value>Объект %1% подозрение на %2%</value>
+  </data>
+  <data name="JE_VMT_ACTION_BLOCK" xml:space="preserve">
+    <value>Заблокирован %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_CURE" xml:space="preserve">
+    <value>Вылечен %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_DELETE" xml:space="preserve">
+    <value>Удален %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_NONE" xml:space="preserve">
+    <value>Пропущен %1%</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Настройки монитора не применены</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки монитора применены</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_INFECTED" xml:space="preserve">
+    <value>Объект %1% инфицирован %2%</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_SUSPECTED" xml:space="preserve">
+    <value>Объект %1% подозрение на %2%</value>
+  </data>
+  <data name="JE_VMT_START" xml:space="preserve">
+    <value>Монитор запущен</value>
+  </data>
+  <data name="JE_VMT_STOP" xml:space="preserve">
+    <value>Монитор остановлен</value>
+  </data>
+  <data name="TaskSaveIntegrityCheck" xml:space="preserve">
+    <value>Сохранение/проверка целостности</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Команда</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Проверить</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности устройств</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CAN_NOT_READ" xml:space="preserve">
+    <value>Невозможно получить информацию об устройстве %1%</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CHANGED" xml:space="preserve">
+    <value>Устройство %1%(%2%) %3%</value>
+  </data>
+  <data name="JE_VIC_FILES_CAN_NOT_OPEN" xml:space="preserve">
+    <value>Невозможно прочитать файл %1%</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности файлов</value>
+  </data>
+  <data name="JE_VIC_FILE_CHANGED" xml:space="preserve">
+    <value>Файл %1% %2%:хэш старой версии - %3%, хэш новой версии - %4%, размер старой версии - %5%, размер новой версии - %6%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CAN_NOT_OPEN_KEY" xml:space="preserve">
+    <value>Невозможно прочитать ветку реестра %1%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CHANGED" xml:space="preserve">
+    <value>%2% реестра %1%: старое значение - %3%(%4%), новое значение - %5%(%6%)</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Конец проверки целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_START" xml:space="preserve">
+    <value>Начало проверки целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Конец сохрания информациия о целостности реестра</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_START" xml:space="preserve">
+    <value>Начало сохрания информациия о целостности реестра</value>
+  </data>
+  <data name="DeviceClass" xml:space="preserve">
+    <value>Классы устройств</value>
+  </data>
+  <data name="TaskNameRunFileCleaner" xml:space="preserve">
+    <value>Удаление файлов: очистить</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Настройки не применены</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Настройки применены</value>
+  </data>
+  <data name="JE_VFC_REMOVED" xml:space="preserve">
+    <value>Объект %1% удален</value>
+  </data>
+  <data name="JE_VFC_START" xml:space="preserve">
+    <value>Модуль удаления запущен</value>
+  </data>
+  <data name="JE_VFC_STOP" xml:space="preserve">
+    <value>Модуль удаления остановлен</value>
+  </data>
+  <data name="JE_VPP_PRINTER_DENIED" xml:space="preserve">
+    <value>Снято с печати: машина %1%, пользователь %2%, документ %3%, принтер %4%</value>
+  </data>
+  <data name="JE_VPP_PRINTER_GRANTED" xml:space="preserve">
+    <value>Отправлено на печать: машина %1%, пользователь %2%, документ %3%, принтер %4%</value>
+  </data>
+  <data name="CloseNetwork" xml:space="preserve">
+    <value>Закрытая</value>
+  </data>
+  <data name="JE_UPDATE_PRODUCTS_CORRUPTED" xml:space="preserve">
+    <value>Продукт(ы) %1 поврежден(ы) (%2)</value>
+  </data>
+  <data name="JE_SERVICE_START" xml:space="preserve">
+    <value>Сервис запущен</value>
+  </data>
+  <data name="JE_SERVICE_STOP" xml:space="preserve">
+    <value>Сервис остановлен</value>
+  </data>
+  <data name="AuditOn" xml:space="preserve">
+    <value>Аудит включен</value>
+  </data>
+  <data name="ProcessedFileTypes" xml:space="preserve">
+    <value>Обрабатываемые типы файлов</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Принтеры</value>
+  </data>
+  <data name="VPP_General_On" xml:space="preserve">
+    <value>Защита объектов включена</value>
+  </data>
+  <data name="VPP_Printers_On" xml:space="preserve">
+    <value>Контроль принтеров включен</value>
+  </data>
+  <data name="VPP_Users_On" xml:space="preserve">
+    <value>Фильтрация действий пользователя включена</value>
+  </data>
+  <data name="ConsideringSystemLoad" xml:space="preserve">
+    <value>Учитывая загруженность системы</value>
+  </data>
+  <data name="Action_check_devices" xml:space="preserve">
+    <value>Проверка состояния устройств</value>
+  </data>
+  <data name="Action_check_files" xml:space="preserve">
+    <value>Проверка состояния файлов</value>
+  </data>
+  <data name="Action_check_registry" xml:space="preserve">
+    <value>Проверка состояния реестра</value>
+  </data>
+  <data name="Action_save_devices" xml:space="preserve">
+    <value>Сохранение состояние устройств</value>
+  </data>
+  <data name="Action_save_files" xml:space="preserve">
+    <value>Сохранение состояние файлов</value>
+  </data>
+  <data name="Action_save_registry" xml:space="preserve">
+    <value>Сохранение состояние реестра</value>
+  </data>
+  <data name="Action_SCHD_CLEANING" xml:space="preserve">
+    <value>Очистка</value>
+  </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
+  <data name="EnableSsl" xml:space="preserve">
+    <value>Включить TLS/SSL</value>
+  </data>
+  <data name="FullAccess" xml:space="preserve">
+    <value>Полный доступ</value>
+  </data>
+  <data name="NothingIsAdded" xml:space="preserve">
+    <value>Ничего не добавлено</value>
+  </data>
+  <data name="SystemIdleProcess" xml:space="preserve">
+    <value>% бездействия системы</value>
+  </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>Тип устройств</value>
+  </data>
+  <data name="JE_VDD_DEVICE" xml:space="preserve">
+    <value>Устройство %4% %2% %3%.</value>
+  </data>
+</root>

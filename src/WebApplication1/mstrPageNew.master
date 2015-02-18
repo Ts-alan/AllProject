@@ -1,0 +1,60 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="MasterPage" Codebehind="mstrPageNew.master.cs" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="x-ua-compatible" content="IE=10"/>
+    <title></title>        
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (/msie/.test(navigator.userAgent.toLowerCase())) {
+                $('input[type=text]').each(function () {
+                    //work around for ie10 clipping text
+                    $(this).val($(this).val());
+                });
+            }
+        });
+    </script>
+    <form id="form1" runat="server" style="height: 100%" autocomplete="off">
+    <div class="all">    
+        <div class="Header">
+            <div class="Logo"></div>        
+            <div class="TitleHeader"></div>
+            <div class="TitleContinue"></div>
+                <div id="UserInfo">
+                    <b><%=Resources.Resource.LoggedAs %>,<i> <%=Profile.UserName%></i>&nbsp;</b>
+                    <a title="Выход" runat="server" id="LogoutButton" class="LogoutButton"><div style="height:100%;width:100%" title="<%=Resources.Resource.Logout %>"></div></a>
+                </div>
+        </div>
+        <div class="UnderHeader"></div>
+        <div class="HeaderMenu">
+            <asp:Menu runat="server" ID="Menu1" DataSourceID="smdsMenu" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="2" 
+            Orientation="Horizontal" StaticEnableDefaultPopOutImage="false" >
+            <DynamicMenuStyle CssClass="HeaderMenuStyle" />
+            <StaticMenuItemStyle CssClass="HeaderMenuItem" />
+            <StaticHoverStyle CssClass="HeaderMenuItemHover" />
+            <DynamicMenuItemStyle CssClass="HeaderMenuSubItem" />
+            <DynamicHoverStyle CssClass="HeaderMenuSubItemHover" />
+            </asp:Menu>
+            <asp:SiteMapDataSource runat="server" ID="smdsMenu" ShowStartingNode="false" />
+        </div>
+        <div class="container">
+            <asp:ContentPlaceHolder id="cphMainContainer" runat="server"></asp:ContentPlaceHolder>        
+        </div>
+	    <br style="clear:both">
+	    <div class="empty">&nbsp;</div>
+	    <div class="footer">
+	        <table width="100%" class="copyright">
+              <tr>
+                <td align="center"><%=Resources.Resource.Vba32ControlCenterTitle%>, <%=Resources.Resource.Version%>&nbsp;<asp:Label ID="lblVersion" runat="server"></asp:Label></td>
+                </tr>
+                <tr>
+                <td align="center">Copyright (c) 2008-<%=DateTime.Now.Year%> VirusBlokAda Ltd.</td>
+              </tr>
+            </table>
+	    </div>
+    </div>
+    </form>
+</body>
+</html>

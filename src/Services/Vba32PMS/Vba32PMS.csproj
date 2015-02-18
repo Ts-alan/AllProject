@@ -122,8 +122,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
-      <Project>{92AE384B-3F82-42AB-872F-98636FD00B12}</Project>
+    <ProjectReference Include="..\..\..\..\..\TestProject\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92ae384b-3f82-42ab-872f-98636fd00b12}</Project>
       <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Common\Common.csproj">

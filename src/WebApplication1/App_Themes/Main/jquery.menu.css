@@ -1,0 +1,41 @@
+﻿.Menu {
+	position: absolute;
+	width: 170px;
+	border: solid 1px #CCC;
+	background: #EEE;
+	padding: 0px;
+	margin: 0px;
+	display: none;
+}
+
+.Menu.active {
+	display: block;
+}
+
+
+.Menu .MenuItem {
+	color: #333;
+	text-decoration: none;
+	display: block;	
+	height: 10px;
+	background-position: 6px center;
+	background-repeat: no-repeat;
+	outline: none;
+	margin: 2px;
+	padding: 5px;	
+	font-size: 10px;
+	cursor: default;
+}
+
+.Menu .MenuItem.active.disabled {
+	background-color: #c3c7ce;
+}
+
+.Menu .MenuItem.active {
+	background-color: #bdd2f9;
+}
+
+.Menu .MenuItem.disabled {
+	background-color: #c3c7ce;
+	color: White;
+}

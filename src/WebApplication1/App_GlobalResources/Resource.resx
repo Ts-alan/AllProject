@@ -1,0 +1,3735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcountCreate" xml:space="preserve">
+    <value>New account successfully created</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ActionName" xml:space="preserve">
+    <value>Action name</value>
+  </data>
+  <data name="ActionProcess" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="ActionScan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="ActionType" xml:space="preserve">
+    <value>Action type</value>
+  </data>
+  <data name="ActionUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="ActivateRule" xml:space="preserve">
+    <value>Activate rule</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddAllFromPage" xml:space="preserve">
+    <value>Add from all pages</value>
+  </data>
+  <data name="AddFromPage" xml:space="preserve">
+    <value>Add from page</value>
+  </data>
+  <data name="AddNewGroup" xml:space="preserve">
+    <value>Add a new group</value>
+  </data>
+  <data name="Addresses" xml:space="preserve">
+    <value>Recipients</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="AllowRead" xml:space="preserve">
+    <value>Allow read</value>
+  </data>
+  <data name="AND" xml:space="preserve">
+    <value>AND</value>
+  </data>
+  <data name="AntivirusMonitoring" xml:space="preserve">
+    <value>Antivirus monitoring</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="Applications" xml:space="preserve">
+    <value>Applications</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="ApplyPolicy" xml:space="preserve">
+    <value>Apply policy</value>
+  </data>
+  <data name="AppointmentPolicy" xml:space="preserve">
+    <value>Appointment</value>
+  </data>
+  <data name="AreYouSureComp" xml:space="preserve">
+    <value>Are you sure you want to delete selected computers?</value>
+  </data>
+  <data name="AreYouSureFilter" xml:space="preserve">
+    <value>Are you sure you want to remove filter?</value>
+  </data>
+  <data name="AreYouSurePolicy" xml:space="preserve">
+    <value>Are you sure you want to delete selected policy?</value>
+  </data>
+  <data name="AreYouSureSelected" xml:space="preserve">
+    <value>Are you sure you want to remove selected items?</value>
+  </data>
+  <data name="AreYouSureTask" xml:space="preserve">
+    <value>Are you sure you want to remove task?</value>
+  </data>
+  <data name="AreYouSureUser" xml:space="preserve">
+    <value>Are you sure you want to remove user?</value>
+  </data>
+  <data name="Ask" xml:space="preserve">
+    <value>Additional request</value>
+  </data>
+  <data name="AsScanFinished" xml:space="preserve">
+    <value>Scanning finished</value>
+  </data>
+  <data name="AsScanStarted" xml:space="preserve">
+    <value>Scanning is running</value>
+  </data>
+  <data name="AsScanStopped" xml:space="preserve">
+    <value>Scanning was stopped</value>
+  </data>
+  <data name="Assignment" xml:space="preserve">
+    <value>Assignment</value>
+  </data>
+  <data name="Authentification" xml:space="preserve">
+    <value>Authentification</value>
+  </data>
+  <data name="Authorization" xml:space="preserve">
+    <value>Authorization</value>
+  </data>
+  <data name="AuthorizationNTLMEnabled" xml:space="preserve">
+    <value>Enable NTLM authorization</value>
+  </data>
+  <data name="BackgroundScanning" xml:space="preserve">
+    <value>Background scanning</value>
+  </data>
+  <data name="BadKey" xml:space="preserve">
+    <value>Bad key</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>Bar chart</value>
+  </data>
+  <data name="Bases" xml:space="preserve">
+    <value>Search bases at run in</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="BlockAutorunUSB" xml:space="preserve">
+    <value>Block autorun of USB devices</value>
+  </data>
+  <data name="Body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="Bool" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="BrowserType" xml:space="preserve">
+    <value>Browser type</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelEditing" xml:space="preserve">
+    <value>Cancel editing</value>
+  </data>
+  <data name="CancelTask" xml:space="preserve">
+    <value>Cancel task</value>
+  </data>
+  <data name="ChangePasswordButtonText" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="ChangePasswordFailureText" xml:space="preserve">
+    <value>Invalid password</value>
+  </data>
+  <data name="ChangePasswordTitleText" xml:space="preserve">
+    <value>Changing Password</value>
+  </data>
+  <data name="CleanFilesToReport" xml:space="preserve">
+    <value>Clean files to report</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ColorMap" xml:space="preserve">
+    <value>Color map</value>
+  </data>
+  <data name="ColorSettings" xml:space="preserve">
+    <value>Color settings</value>
+  </data>
+  <data name="CommandLine" xml:space="preserve">
+    <value>Command line</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Component" xml:space="preserve">
+    <value>Component</value>
+  </data>
+  <data name="ComponentName" xml:space="preserve">
+    <value>Component name</value>
+  </data>
+  <data name="ComponentNotInstalled" xml:space="preserve">
+    <value>Not installed</value>
+  </data>
+  <data name="ComponentOff" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ComponentOn" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="ComponentState" xml:space="preserve">
+    <value>Component state</value>
+  </data>
+  <data name="ComputerInfo" xml:space="preserve">
+    <value>Computer info</value>
+  </data>
+  <data name="ComputerLimit" xml:space="preserve">
+    <value>Computer limit</value>
+  </data>
+  <data name="ComputerName" xml:space="preserve">
+    <value>Computer Name</value>
+  </data>
+  <data name="Computers" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="ComputersCount" xml:space="preserve">
+    <value>Computers</value>
+  </data>
+  <data name="ComputersMap" xml:space="preserve">
+    <value>Map of computers</value>
+  </data>
+  <data name="ComputersWithGroups" xml:space="preserve">
+    <value>Computers with groups</value>
+  </data>
+  <data name="ComputersWithoutGroups" xml:space="preserve">
+    <value>Computers without groups</value>
+  </data>
+  <data name="ComSpec" xml:space="preserve">
+    <value>Run via command line</value>
+  </data>
+  <data name="ConfigureScheduler" xml:space="preserve">
+    <value>Configure Scheduler</value>
+  </data>
+  <data name="ConfigureSettings" xml:space="preserve">
+    <value>Configure settings</value>
+  </data>
+  <data name="ConfirmNewPasswordLabelText" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="ConfirmPasswordCompareErrorMessage" xml:space="preserve">
+    <value>Password confirmation has failed</value>
+  </data>
+  <data name="ConfirmPasswordLabelText" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Password confirmation required</value>
+  </data>
+  <data name="CongLdrAccessToUpdate" xml:space="preserve">
+    <value>Access to update resources</value>
+  </data>
+  <data name="CongLdrAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CongLdrAddress" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="CongLdrConfigureLoader" xml:space="preserve">
+    <value>Configure Loader</value>
+  </data>
+  <data name="CongLdrConfigureMonitor" xml:space="preserve">
+    <value>Configure Monitor</value>
+  </data>
+  <data name="CongLdrDisplayLoadingProgress" xml:space="preserve">
+    <value>Display loading progress</value>
+  </data>
+  <data name="CongLdrEnableMonitorAtStart" xml:space="preserve">
+    <value>Enable Monitor at Loader startup</value>
+  </data>
+  <data name="CongLdrInitialization" xml:space="preserve">
+    <value>Initialization</value>
+  </data>
+  <data name="CongLdrInteractive" xml:space="preserve">
+    <value>Interactive</value>
+  </data>
+  <data name="CongLdrKeep" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="CongLdrLanguage" xml:space="preserve">
+    <value>Interface language</value>
+  </data>
+  <data name="CongLdrLaunchLoaderAtStart" xml:space="preserve">
+    <value>Launch Loader at Windows startup</value>
+  </data>
+  <data name="CongLdrLoaderStartup" xml:space="preserve">
+    <value>Loader startup</value>
+  </data>
+  <data name="CongLdrMaximumSizeLog" xml:space="preserve">
+    <value>Maximum size, Kb</value>
+  </data>
+  <data name="CongLdrPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="CongLdrPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="CongLdrPort" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="CongLdrProtectProcess" xml:space="preserve">
+    <value>Protect Loader process</value>
+  </data>
+  <data name="CongLdrReportFile" xml:space="preserve">
+    <value>Report file</value>
+  </data>
+  <data name="CongLdrScanBoot" xml:space="preserve">
+    <value>Scan boot sectors</value>
+  </data>
+  <data name="CongLdrScanBootFloppy" xml:space="preserve">
+    <value>Scan floppy boot sectors</value>
+  </data>
+  <data name="CongLdrScanMemory" xml:space="preserve">
+    <value>Scan memory and files launched at system startup</value>
+  </data>
+  <data name="CongLdrScanMemoryModeExcessive" xml:space="preserve">
+    <value>Excessive mode</value>
+  </data>
+  <data name="CongLdrScanMemoryModeFast" xml:space="preserve">
+    <value>Fast mode</value>
+  </data>
+  <data name="CongLdrScanMemoryModeFull" xml:space="preserve">
+    <value>Full mode</value>
+  </data>
+  <data name="CongLdrScanStartupFiles" xml:space="preserve">
+    <value>Scan files launched at system startup</value>
+  </data>
+  <data name="CongLdrSoundWarning" xml:space="preserve">
+    <value>Sound warning</value>
+  </data>
+  <data name="CongLdrTimeIntervals" xml:space="preserve">
+    <value>Time intervals, hrs</value>
+  </data>
+  <data name="CongLdrTrayIcon" xml:space="preserve">
+    <value>Tray icon animation</value>
+  </data>
+  <data name="CongLdrUpdate" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="CongLdrUseAccount" xml:space="preserve">
+    <value>Use this account to access update resource</value>
+  </data>
+  <data name="CongLdrUseProxyServer" xml:space="preserve">
+    <value>Use proxy-server</value>
+  </data>
+  <data name="CongLdrUserName" xml:space="preserve">
+    <value>User name</value>
+  </data>
+  <data name="CongMonitorDetectWare" xml:space="preserve">
+    <value>Detect Spyware, Adware, Riskware</value>
+  </data>
+  <data name="CongMonitorExcluding" xml:space="preserve">
+    <value>Excluding</value>
+  </data>
+  <data name="CongMonitorExcludingFoldersAndFiles" xml:space="preserve">
+    <value>Folders and files excluded from Monitor scanning</value>
+  </data>
+  <data name="CongMonitorFuncConditions" xml:space="preserve">
+    <value>Functioning conditions</value>
+  </data>
+  <data name="CongMonitorHeuristicAnalysis" xml:space="preserve">
+    <value>Heuristic analysis</value>
+  </data>
+  <data name="CongMonitorIfPreviousFails" xml:space="preserve">
+    <value>If previous action fails</value>
+  </data>
+  <data name="CongMonitorIncludingSubFolders" xml:space="preserve">
+    <value>Including subfolders</value>
+  </data>
+  <data name="CongMonitorInfected" xml:space="preserve">
+    <value>Infected</value>
+  </data>
+  <data name="CongMonitorInformationAboutCleanFiles" xml:space="preserve">
+    <value>Information about "clean" files</value>
+  </data>
+  <data name="CongMonitorListOfPathToScan" xml:space="preserve">
+    <value>List of paths to scan</value>
+  </data>
+  <data name="CongMonitorMaximumCPUUsege" xml:space="preserve">
+    <value>Maximum CPU usage, %</value>
+  </data>
+  <data name="CongMonitorMaximumDiskActivity" xml:space="preserve">
+    <value>Maximum disk activity, %</value>
+  </data>
+  <data name="CongMonitorMaximumDisplacement" xml:space="preserve">
+    <value>Maximum displacement of mouse pointer, px/s</value>
+  </data>
+  <data name="CongMonitorMinimumBattery" xml:space="preserve">
+    <value>Minimum battery charge, %</value>
+  </data>
+  <data name="CongMonitorNotifyOfMonitor" xml:space="preserve">
+    <value>Notify of Monitor actions</value>
+  </data>
+  <data name="CongMonitorObjects" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="CongMonitorReport" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="CongMonitorSaveCopyQuarantine" xml:space="preserve">
+    <value>Save copy to Quarantine</value>
+  </data>
+  <data name="CongMonitorScanAllTypes" xml:space="preserve">
+    <value>Scan all file types</value>
+  </data>
+  <data name="CongMonitorScanFilesByUser" xml:space="preserve">
+    <value>Scan files frequently launched by user</value>
+  </data>
+  <data name="CongMonitorScanInBackGround" xml:space="preserve">
+    <value>Scan files in background mode</value>
+  </data>
+  <data name="CongMonitorScanOnlyNew" xml:space="preserve">
+    <value>Scan only new files</value>
+  </data>
+  <data name="CongMonitorScanSelectedTypes" xml:space="preserve">
+    <value>Scan selected file types</value>
+  </data>
+  <data name="CongMonitorScanStandartSet" xml:space="preserve">
+    <value>Scan standart file types set</value>
+  </data>
+  <data name="CongMonitorScanStartupFiles" xml:space="preserve">
+    <value>Scan files launched at system startup</value>
+  </data>
+  <data name="CongMonitorSuspicious" xml:space="preserve">
+    <value>Suspicious</value>
+  </data>
+  <data name="CongQtnAutomaticallySendSuspiciousObject" xml:space="preserve">
+    <value>Send suspicious objects automatically</value>
+  </data>
+  <data name="CongQtnGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="CongQtnInteractiveMaintenance" xml:space="preserve">
+    <value>Interactive maintenance</value>
+  </data>
+  <data name="CongQtnMaintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="CongQtnMaintenancePeriod" xml:space="preserve">
+    <value>Maintenance period, hours</value>
+  </data>
+  <data name="CongQtnMaximumQuarantineSize" xml:space="preserve">
+    <value>Maximum Quarantine size, Mb</value>
+  </data>
+  <data name="CongQtnMaximumStorageTime" xml:space="preserve">
+    <value>Maximum storage time, days</value>
+  </data>
+  <data name="CongQtnRemoteStorage" xml:space="preserve">
+    <value>Remote storage</value>
+  </data>
+  <data name="CongScannerAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CongScannerAdditional" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="CongScannerArchivesSize" xml:space="preserve">
+    <value>Maximum archive size</value>
+  </data>
+  <data name="CongScannerCheckArchives" xml:space="preserve">
+    <value>Scan archives</value>
+  </data>
+  <data name="CongScannerCheckMacros" xml:space="preserve">
+    <value>Scan macros</value>
+  </data>
+  <data name="CongScannerCheckMail" xml:space="preserve">
+    <value>Scan mail</value>
+  </data>
+  <data name="CongScannerCheckMemory" xml:space="preserve">
+    <value>Scan memory</value>
+  </data>
+  <data name="CongScannerCheckObjects" xml:space="preserve">
+    <value>Objects to scan</value>
+  </data>
+  <data name="CongScannerCleanFiles" xml:space="preserve">
+    <value>Information about "clean" files</value>
+  </data>
+  <data name="CongScannerCure" xml:space="preserve">
+    <value>Cure</value>
+  </data>
+  <data name="CongScannerCureBoot" xml:space="preserve">
+    <value>Cure boot sectors</value>
+  </data>
+  <data name="CongScannerDeleteArchives" xml:space="preserve">
+    <value>Delete infected archives</value>
+  </data>
+  <data name="CongScannerDeleteMail" xml:space="preserve">
+    <value>Delete infected mail messages</value>
+  </data>
+  <data name="CongScannerDetectAdware" xml:space="preserve">
+    <value>Detect Adware</value>
+  </data>
+  <data name="CongScannerEnableCache" xml:space="preserve">
+    <value>Enable cache when scanning objects</value>
+  </data>
+  <data name="CongScannerExclude" xml:space="preserve">
+    <value>Exclude</value>
+  </data>
+  <data name="CongScannerExtension" xml:space="preserve">
+    <value>Extensions</value>
+  </data>
+  <data name="CongScannerHeuristic" xml:space="preserve">
+    <value>Scanning mode</value>
+  </data>
+  <data name="CongScannerHeuristicAnalysis" xml:space="preserve">
+    <value>Heuristic analysis</value>
+  </data>
+  <data name="CongScannerInfected" xml:space="preserve">
+    <value>Infected files</value>
+  </data>
+  <data name="CongScannerKeep" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="CongScannerPathToScanner" xml:space="preserve">
+    <value>Scanner path</value>
+  </data>
+  <data name="CongScannerRemovePathToInfected" xml:space="preserve">
+    <value>Location where infected files will be placed</value>
+  </data>
+  <data name="CongScannerSaveCopyToQuarantine" xml:space="preserve">
+    <value>Save copy to Quarantine</value>
+  </data>
+  <data name="CongScannerSaveInfectedToReport" xml:space="preserve">
+    <value>Add list of infected objects to scanning report</value>
+  </data>
+  <data name="CongScannerSaveSusToQuarantine" xml:space="preserve">
+    <value>Save copy of suspicious object to Quarantine</value>
+  </data>
+  <data name="CongScannerScanBootSectors" xml:space="preserve">
+    <value>Scan boot sectors</value>
+  </data>
+  <data name="CongScannerScanStartup" xml:space="preserve">
+    <value>Scan files launched at system startup</value>
+  </data>
+  <data name="CongScannerSet" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="CongScannerSFX" xml:space="preserve">
+    <value>Detect installers of malware</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="ContainComputersFromBase" xml:space="preserve">
+    <value>Include computers from database</value>
+  </data>
+  <data name="ContainNoPingComputers" xml:space="preserve">
+    <value>Include unavailable computers</value>
+  </data>
+  <data name="ContainWithAgentComputers" xml:space="preserve">
+    <value>Include computers with Agent running</value>
+  </data>
+  <data name="ContinueButtonText" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="ControlCenter" xml:space="preserve">
+    <value>Control center</value>
+  </data>
+  <data name="CountOfCompActiveToday" xml:space="preserve">
+    <value>Active computers for today</value>
+  </data>
+  <data name="CountOfCompRegistred" xml:space="preserve">
+    <value>Registered computers</value>
+  </data>
+  <data name="CountOfEventRegistred" xml:space="preserve">
+    <value>Registered events</value>
+  </data>
+  <data name="CountOfEventToday" xml:space="preserve">
+    <value>Events for today</value>
+  </data>
+  <data name="CountOfTaskRegistred" xml:space="preserve">
+    <value>Registered tasks</value>
+  </data>
+  <data name="CountOfTaskTodayCompleted" xml:space="preserve">
+    <value>Completed tasks for today</value>
+  </data>
+  <data name="CountOfTaskTodayIssued" xml:space="preserve">
+    <value>Assigned tasks for today</value>
+  </data>
+  <data name="CountOfTaskTodayUpdated" xml:space="preserve">
+    <value>Updated tasks for today</value>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreatePolicy" xml:space="preserve">
+    <value>Create Policy</value>
+  </data>
+  <data name="CreatePrivateRule" xml:space="preserve">
+    <value>Create private rule</value>
+  </data>
+  <data name="CreateProcess" xml:space="preserve">
+    <value>Create process</value>
+  </data>
+  <data name="CreateTask" xml:space="preserve">
+    <value>Create task</value>
+  </data>
+  <data name="CreateUserButtonText" xml:space="preserve">
+    <value>Create user</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Credentials</value>
+  </data>
+  <data name="Cure" xml:space="preserve">
+    <value>Cure</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="CustomAction" xml:space="preserve">
+    <value>Custom action</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer name</value>
+  </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="DataBaseServer" xml:space="preserve">
+    <value>Database server</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DateComplete" xml:space="preserve">
+    <value>Completion date</value>
+  </data>
+  <data name="DateIssued" xml:space="preserve">
+    <value>Assignment date</value>
+  </data>
+  <data name="DateUpdated" xml:space="preserve">
+    <value>Update date</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>day</value>
+  </data>
+  <data name="Day2" xml:space="preserve">
+    <value>day</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="Days2" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="DaysOfMonth" xml:space="preserve">
+    <value>Days of month</value>
+  </data>
+  <data name="DaysToDelete" xml:space="preserve">
+    <value>Delete events older (days)</value>
+  </data>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="DefaultFiles" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="DefaultPolicy" xml:space="preserve">
+    <value>Default Policy</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteArchive" xml:space="preserve">
+    <value>Delete archive</value>
+  </data>
+  <data name="DeleteComputers" xml:space="preserve">
+    <value>Delete computers</value>
+  </data>
+  <data name="DeleteMail" xml:space="preserve">
+    <value>Delete mail</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Design" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="DestinationFile" xml:space="preserve">
+    <value>Destination file</value>
+  </data>
+  <data name="DetectInstallers" xml:space="preserve">
+    <value>Detect installers of malware</value>
+  </data>
+  <data name="DeviceInsertedDate" xml:space="preserve">
+    <value>Inserted</value>
+  </data>
+  <data name="DeviceManagment" xml:space="preserve">
+    <value>Device managment</value>
+  </data>
+  <data name="DeviceProtect" xml:space="preserve">
+    <value>Enable/disable USB protection</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="Diagram" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="DiagramType" xml:space="preserve">
+    <value>Diagram type</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="DisableAll" xml:space="preserve">
+    <value>Disable all</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="DisabledDevice" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="DisplayTabChanges" xml:space="preserve">
+    <value>To display the changes on all tabs, refresh the page</value>
+  </data>
+  <data name="DistrustedApplications" xml:space="preserve">
+    <value>Non trusted applications</value>
+  </data>
+  <data name="DomainName" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditComment" xml:space="preserve">
+    <value>Edit comment</value>
+  </data>
+  <data name="EditPolicy" xml:space="preserve">
+    <value>Edit policy</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="EnableAJAX" xml:space="preserve">
+    <value>Enable asynchronous refresh</value>
+  </data>
+  <data name="EnableAll" xml:space="preserve">
+    <value>Enable all</value>
+  </data>
+  <data name="EnableAutoUpdate" xml:space="preserve">
+    <value>Enable automatic update</value>
+  </data>
+  <data name="EnableCache" xml:space="preserve">
+    <value>Enable cache</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Epidemy" xml:space="preserve">
+    <value>Epidemy</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorAccessDenied" xml:space="preserve">
+    <value>Access denied</value>
+  </data>
+  <data name="ErrorChangeAdmin" xml:space="preserve">
+    <value>This user shouldn't be modified</value>
+  </data>
+  <data name="ErrorClearSession" xml:space="preserve">
+    <value>If the error occurs again try to clear some session variables </value>
+  </data>
+  <data name="ErrorCompNameNotExist" xml:space="preserve">
+    <value>Database doesn't contain this computer name</value>
+  </data>
+  <data name="ErrorCreateTaskWithBaseName" xml:space="preserve">
+    <value>The name specified coincides with the name of a basic task in a language used by the system</value>
+  </data>
+  <data name="ErrorCreateUser" xml:space="preserve">
+    <value>Error creating user</value>
+  </data>
+  <data name="ErrorCriticalError" xml:space="preserve">
+    <value>Critical error</value>
+  </data>
+  <data name="ErrorDescription" xml:space="preserve">
+    <value>Description error</value>
+  </data>
+  <data name="ErrorExistingFilter" xml:space="preserve">
+    <value>Filter with this name already exists!</value>
+  </data>
+  <data name="ErrorHere" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="ErrorIncorrectFilterName" xml:space="preserve">
+    <value>Invalid filter name</value>
+  </data>
+  <data name="ErrorInvalidCompName" xml:space="preserve">
+    <value>Invalid computer name</value>
+  </data>
+  <data name="ErrorInvalidDate" xml:space="preserve">
+    <value>Invalid date</value>
+  </data>
+  <data name="ErrorInvalidEmail" xml:space="preserve">
+    <value>Invalid e-mail</value>
+  </data>
+  <data name="ErrorInvalidFirstName" xml:space="preserve">
+    <value>Invalid user first name</value>
+  </data>
+  <data name="ErrorInvalidIP" xml:space="preserve">
+    <value>Invalid IP address</value>
+  </data>
+  <data name="ErrorInvalidLastName" xml:space="preserve">
+    <value>Invalid user surname</value>
+  </data>
+  <data name="ErrorInvalidTaskType" xml:space="preserve">
+    <value>Invalid task type</value>
+  </data>
+  <data name="ErrorInvalidUserName" xml:space="preserve">
+    <value>Invalid user name</value>
+  </data>
+  <data name="ErrorInvalidValue" xml:space="preserve">
+    <value>Invalid value</value>
+  </data>
+  <data name="ErrorMessageError" xml:space="preserve">
+    <value>Error message</value>
+  </data>
+  <data name="ErrorNotSelectProfile" xml:space="preserve">
+    <value>No select profile</value>
+  </data>
+  <data name="ErrorPolicyExistInCollection" xml:space="preserve">
+    <value>Policy with this name already exists in the collection</value>
+  </data>
+  <data name="ErrorPolicyName" xml:space="preserve">
+    <value>Incorrect policy name.</value>
+  </data>
+  <data name="ErrorRunTime" xml:space="preserve">
+    <value>Runtime error</value>
+  </data>
+  <data name="ErrorSelectTaskToEdit" xml:space="preserve">
+    <value>No task to edit is selected</value>
+  </data>
+  <data name="ErrorService" xml:space="preserve">
+    <value>Check service VbaTaskAssignment. It may be unavailable</value>
+  </data>
+  <data name="ErrorSql" xml:space="preserve">
+    <value>Error! Please, update database scheme and Sql-scripts.</value>
+  </data>
+  <data name="ErrorTaskExistInCollection" xml:space="preserve">
+    <value>Task with this name already exists in the collection</value>
+  </data>
+  <data name="ErrorTryAgain" xml:space="preserve">
+    <value>To try again, press</value>
+  </data>
+  <data name="ErrorWrongXmlFile" xml:space="preserve">
+    <value>Corrupted xml-file</value>
+  </data>
+  <data name="EventARM" xml:space="preserve">
+    <value>Event ARM</value>
+  </data>
+  <data name="EventColorTableTitle" xml:space="preserve">
+    <value>Event color</value>
+  </data>
+  <data name="EventFlow" xml:space="preserve">
+    <value>Event flow</value>
+  </data>
+  <data name="EventName" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="EventsCount" xml:space="preserve">
+    <value>Count of events</value>
+  </data>
+  <data name="EventSendTableTitle" xml:space="preserve">
+    <value>Events to send</value>
+  </data>
+  <data name="EventTime" xml:space="preserve">
+    <value>Event time</value>
+  </data>
+  <data name="Excel" xml:space="preserve">
+    <value>Excel</value>
+  </data>
+  <data name="Excessive" xml:space="preserve">
+    <value>Excessive</value>
+  </data>
+  <data name="ExcessMode" xml:space="preserve">
+    <value>Excess mode</value>
+  </data>
+  <data name="Excluding" xml:space="preserve">
+    <value>Excluding</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Expiration date</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Export data to Excel</value>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="FastMode" xml:space="preserve">
+    <value>Fast mode</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>File system</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterDelete" xml:space="preserve">
+    <value>Filter removed</value>
+  </data>
+  <data name="FilterSave" xml:space="preserve">
+    <value>Filter saved</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="Fix" xml:space="preserve">
+    <value>Enable automatic update of content</value>
+  </data>
+  <data name="FlowAnalysis" xml:space="preserve">
+    <value>Flow analysis</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>for</value>
+  </data>
+  <data name="Found" xml:space="preserve">
+    <value>Found</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="GiveTask" xml:space="preserve">
+    <value>Assign task</value>
+  </data>
+  <data name="GoodState" xml:space="preserve">
+    <value>Good state</value>
+  </data>
+  <data name="GroupManagment" xml:space="preserve">
+    <value>Group managment</value>
+  </data>
+  <data name="GroupNameRequired" xml:space="preserve">
+    <value>Group name is required</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="Herz" xml:space="preserve">
+    <value>MHz</value>
+  </data>
+  <data name="Heuristic" xml:space="preserve">
+    <value>Heuristic level</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="HideScaning" xml:space="preserve">
+    <value>Hide scaning window</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="HighDate" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="HomePaging" xml:space="preserve">
+    <value>&lt;&lt;</value>
+  </data>
+  <data name="HostAddress" xml:space="preserve">
+    <value>Host address</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="Hour2" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Identifier</value>
+  </data>
+  <data name="IDText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Impersonation" xml:space="preserve">
+    <value>Use impersonation</value>
+  </data>
+  <data name="Impersonations" xml:space="preserve">
+    <value>Impersonation</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="In" xml:space="preserve">
+    <value>in</value>
+  </data>
+  <data name="IncludeSubdirectories" xml:space="preserve">
+    <value>Include subdirectories</value>
+  </data>
+  <data name="IncludeSubkeys" xml:space="preserve">
+    <value>Include subkeys</value>
+  </data>
+  <data name="Including" xml:space="preserve">
+    <value>Including</value>
+  </data>
+  <data name="InfectedFiles" xml:space="preserve">
+    <value>Infected files</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="InitialCatalog" xml:space="preserve">
+    <value>Initial catalog</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Integrity" xml:space="preserve">
+    <value>Integrity</value>
+  </data>
+  <data name="InterruptProgram" xml:space="preserve">
+    <value>Interrupt the program</value>
+  </data>
+  <data name="InvalidPasswordErrorMessage" xml:space="preserve">
+    <value>Minimum password length - 7. Number of characters different from digits and letters - 1.</value>
+  </data>
+  <data name="InvalidTime" xml:space="preserve">
+    <value>Invalid time</value>
+  </data>
+  <data name="Invert" xml:space="preserve">
+    <value>Invert</value>
+  </data>
+  <data name="InvisibilityMode" xml:space="preserve">
+    <value>Invisibility mode</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="IPRange" xml:space="preserve">
+    <value>IP range</value>
+  </data>
+  <data name="Jabber" xml:space="preserve">
+    <value>Jabber</value>
+  </data>
+  <data name="JabberFrom" xml:space="preserve">
+    <value>Jabber from</value>
+  </data>
+  <data name="JabberPassword" xml:space="preserve">
+    <value>Jabber password</value>
+  </data>
+  <data name="JabberServer" xml:space="preserve">
+    <value>Jabber server</value>
+  </data>
+  <data name="JabberSettings" xml:space="preserve">
+    <value>Jabber settings</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyNotFound" xml:space="preserve">
+    <value>Key not found.</value>
+  </data>
+  <data name="KeyNoValid" xml:space="preserve">
+    <value>Key is not valid.</value>
+  </data>
+  <data name="KeyState" xml:space="preserve">
+    <value>Key state</value>
+  </data>
+  <data name="Kilobyte" xml:space="preserve">
+    <value>Kb</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanScan" xml:space="preserve">
+    <value>Scanning</value>
+  </data>
+  <data name="LanScanSettings" xml:space="preserve">
+    <value>Scanning Settings</value>
+  </data>
+  <data name="LastActive" xml:space="preserve">
+    <value>Last active</value>
+  </data>
+  <data name="LastInfected" xml:space="preserve">
+    <value>Last infection</value>
+  </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Latest login</value>
+  </data>
+  <data name="LastLoginDate" xml:space="preserve">
+    <value>Latest login date</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="LastPaging" xml:space="preserve">
+    <value>&gt;&gt;</value>
+  </data>
+  <data name="LastSelect" xml:space="preserve">
+    <value>Latest selection from database</value>
+  </data>
+  <data name="LastSend" xml:space="preserve">
+    <value>Latest sending to server</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Last update</value>
+  </data>
+  <data name="LatestInfected" xml:space="preserve">
+    <value>Latest infection</value>
+  </data>
+  <data name="LatestMalware" xml:space="preserve">
+    <value>Latest malware</value>
+  </data>
+  <data name="LatestUpdate" xml:space="preserve">
+    <value>Latest update</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Less than</value>
+  </data>
+  <data name="LicenseKey" xml:space="preserve">
+    <value>License key</value>
+  </data>
+  <data name="LicenseNumber" xml:space="preserve">
+    <value>License number</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="ListInfected" xml:space="preserve">
+    <value>List of infected files into file</value>
+  </data>
+  <data name="ListInfectedAdd" xml:space="preserve">
+    <value>List of infected files add to file</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="Loader" xml:space="preserve">
+    <value>Loader</value>
+  </data>
+  <data name="LoaderLoaded" xml:space="preserve">
+    <value>Loader loaded</value>
+  </data>
+  <data name="LocalHearth" xml:space="preserve">
+    <value>Local hearth</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="LogEvents" xml:space="preserve">
+    <value>Log events</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="LoginFailureText" xml:space="preserve">
+    <value>Invalid login or password. Please try again.</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="LowDate" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="MailDisplayName" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="MailFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="MailServer" xml:space="preserve">
+    <value>Mail server</value>
+  </data>
+  <data name="MailSettings" xml:space="preserve">
+    <value>Mail settings</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="MainControlCenterIP" xml:space="preserve">
+    <value>Parent Control Center IP</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
+  <data name="MaintenanceEnable" xml:space="preserve">
+    <value>Send events to parent Control Center periodically</value>
+  </data>
+  <data name="MaintenanceInterval" xml:space="preserve">
+    <value>Maintenance interval (seconds)</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="MasterPage" xml:space="preserve">
+    <value>Page template</value>
+  </data>
+  <data name="MaxArchiveSize" xml:space="preserve">
+    <value>Maximum archive aize</value>
+  </data>
+  <data name="Maximum" xml:space="preserve">
+    <value>Maximum</value>
+  </data>
+  <data name="Megabyte" xml:space="preserve">
+    <value>Mb</value>
+  </data>
+  <data name="Memory" xml:space="preserve">
+    <value>Scan memory</value>
+  </data>
+  <data name="MemorySize" xml:space="preserve">
+    <value>Memory size</value>
+  </data>
+  <data name="MenuSystemInfo" xml:space="preserve">
+    <value>Get system information</value>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>minute</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="MonitorEnabled" xml:space="preserve">
+    <value>Monitor enabled</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>month</value>
+  </data>
+  <data name="Month2" xml:space="preserve">
+    <value>month</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>months</value>
+  </data>
+  <data name="Months2" xml:space="preserve">
+    <value>months</value>
+  </data>
+  <data name="MoreThan" xml:space="preserve">
+    <value>More than</value>
+  </data>
+  <data name="MSIPathes" xml:space="preserve">
+    <value>MSI pathes</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NameProfile" xml:space="preserve">
+    <value>Name profile</value>
+  </data>
+  <data name="NetApiProvider" xml:space="preserve">
+    <value>NetApi</value>
+  </data>
+  <data name="NeutralApplications" xml:space="preserve">
+    <value>Neutral applications</value>
+  </data>
+  <data name="NewPasswordLabelText" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="NewPasswordRegularExpressionErrorMessage" xml:space="preserve">
+    <value>The password is weak. Please specify more complex password</value>
+  </data>
+  <data name="NewPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>New password required.</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="NextSend" xml:space="preserve">
+    <value>Next sending</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoDelete" xml:space="preserve">
+    <value>Do not delete</value>
+  </data>
+  <data name="NoIntegrity" xml:space="preserve">
+    <value>Program corrupted.</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="NoSection" xml:space="preserve">
+    <value>No section</value>
+  </data>
+  <data name="NoSelected" xml:space="preserve">
+    <value>No selected items</value>
+  </data>
+  <data name="NoSelectedComputers" xml:space="preserve">
+    <value>No selected computers</value>
+  </data>
+  <data name="NoSelectFile" xml:space="preserve">
+    <value>First select a file to upload...</value>
+  </data>
+  <data name="NOT" xml:space="preserve">
+    <value>NOT</value>
+  </data>
+  <data name="NotAssignedExplicitly" xml:space="preserve">
+    <value>Not assigned explicitly</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Notify" xml:space="preserve">
+    <value>Notify</value>
+  </data>
+  <data name="Object" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="Once" xml:space="preserve">
+    <value>Every</value>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="Optimal" xml:space="preserve">
+    <value>Optimal</value>
+  </data>
+  <data name="Option" xml:space="preserve">
+    <value>Execution settings</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>OR</value>
+  </data>
+  <data name="OSType" xml:space="preserve">
+    <value>Operating system type</value>
+  </data>
+  <data name="Overwrite" xml:space="preserve">
+    <value>Overwrite</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="PageCompInfoTitle" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="PageComponentsFilterTitle" xml:space="preserve">
+    <value>Component filters</value>
+  </data>
+  <data name="PageComponentsTitle" xml:space="preserve">
+    <value>List of components</value>
+  </data>
+  <data name="PageComputersFilterTitle" xml:space="preserve">
+    <value>Computer filters</value>
+  </data>
+  <data name="PageComputersTitle" xml:space="preserve">
+    <value>List of computers</value>
+  </data>
+  <data name="PageControlCenterSettings" xml:space="preserve">
+    <value>Control Center settings</value>
+  </data>
+  <data name="PageDefaultTitle" xml:space="preserve">
+    <value>Main page</value>
+  </data>
+  <data name="PageDiagramTitle" xml:space="preserve">
+    <value>Diagrams</value>
+  </data>
+  <data name="PageEventsFilterTitle" xml:space="preserve">
+    <value>Event filters</value>
+  </data>
+  <data name="PageEventsTitle" xml:space="preserve">
+    <value>List of events</value>
+  </data>
+  <data name="PageLanScanTitle" xml:space="preserve">
+    <value>Scanning Local Network</value>
+  </data>
+  <data name="PageLoginTitle" xml:space="preserve">
+    <value>Control Center: login</value>
+  </data>
+  <data name="PagePortableTitle" xml:space="preserve">
+    <value>Export/Import</value>
+  </data>
+  <data name="PageProcessFiltersTitle" xml:space="preserve">
+    <value>Process filters</value>
+  </data>
+  <data name="PageProcessTitle" xml:space="preserve">
+    <value>List of processes</value>
+  </data>
+  <data name="PageRegistrationTitle" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="PageSettingsExtraTitle" xml:space="preserve">
+    <value>Additional Settings</value>
+  </data>
+  <data name="PageSettingsMainTitle" xml:space="preserve">
+    <value>Main Settings</value>
+  </data>
+  <data name="PageSize" xml:space="preserve">
+    <value>Page size</value>
+  </data>
+  <data name="PageStatisticTitle" xml:space="preserve">
+    <value>Statistic</value>
+  </data>
+  <data name="PageTaskCreateTitle" xml:space="preserve">
+    <value>Creating task</value>
+  </data>
+  <data name="PageTasksFilterTitle" xml:space="preserve">
+    <value>Task filters</value>
+  </data>
+  <data name="PageTaskTitle" xml:space="preserve">
+    <value>List of assigned tasks</value>
+  </data>
+  <data name="PageUpdateTitle" xml:space="preserve">
+    <value>Control Center Update Settings</value>
+  </data>
+  <data name="PageUserManaging" xml:space="preserve">
+    <value>User management</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="PasswordLabelText" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Password required.</value>
+  </data>
+  <data name="PasswordSuccessText" xml:space="preserve">
+    <value>Your password changed!</value>
+  </data>
+  <data name="PasswordSuccessTitleText" xml:space="preserve">
+    <value>Password successfully changed</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="PathRegistry" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="PeriodicalUpdateInterval" xml:space="preserve">
+    <value>Time interval, min</value>
+  </data>
+  <data name="PeriodicityDays" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="PeriodicityFixedDate" xml:space="preserve">
+    <value>Fixed Date</value>
+  </data>
+  <data name="PeriodicityHours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="PeriodicityMinutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="PeriodicityMonths" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="PeriodicityType" xml:space="preserve">
+    <value>Periodicity type</value>
+  </data>
+  <data name="PeriodicityWeeks" xml:space="preserve">
+    <value>Weeks</value>
+  </data>
+  <data name="Pie" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="Policies" xml:space="preserve">
+    <value>Policies</value>
+  </data>
+  <data name="Policy" xml:space="preserve">
+    <value>Policy</value>
+  </data>
+  <data name="PolicyApplied" xml:space="preserve">
+    <value>Policy applied.</value>
+  </data>
+  <data name="PolicyEmpty" xml:space="preserve">
+    <value>You have selected an empty policy</value>
+  </data>
+  <data name="PolicySaved" xml:space="preserve">
+    <value>Policy saved</value>
+  </data>
+  <data name="PolicySettings" xml:space="preserve">
+    <value>Policy settings</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="PortableDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PortableSuccess" xml:space="preserve">
+    <value>Export/Import completed</value>
+  </data>
+  <data name="PortsAndProtocols" xml:space="preserve">
+    <value>Ports and protocols</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="PrivateInformation" xml:space="preserve">
+    <value>Private information</value>
+  </data>
+  <data name="PrivateRule" xml:space="preserve">
+    <value>Private rule</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Create Process</value>
+  </data>
+  <data name="Processes" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Process name</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="ProfileManagement" xml:space="preserve">
+    <value>Profile Management</value>
+  </data>
+  <data name="ProfileOptions" xml:space="preserve">
+    <value>Profile Options</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="PromtForAddDevice" xml:space="preserve">
+    <value>To add a device, click on the row with the name of the computer</value>
+  </data>
+  <data name="PromtForInputComputerName" xml:space="preserve">
+    <value>Input computer name</value>
+  </data>
+  <data name="PromtForInputSerialNumber" xml:space="preserve">
+    <value>Input the serial number</value>
+  </data>
+  <data name="Protocol" xml:space="preserve">
+    <value>Protocol</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="QtnFilePath" xml:space="preserve">
+    <value>Full path to file in Quarantine</value>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="RebootAfterInstall" xml:space="preserve">
+    <value>Reboot after Install</value>
+  </data>
+  <data name="RecentActive" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="RegisteredEvents" xml:space="preserve">
+    <value>Registered events</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="RegistrationNewUser" xml:space="preserve">
+    <value>Registering new user</value>
+  </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="ReloadInfoFromServer" xml:space="preserve">
+    <value>Reload info from server</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveSelectedGroup" xml:space="preserve">
+    <value>Remove the selected group</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="RenameSelectedGroup" xml:space="preserve">
+    <value>Rename the selected group</value>
+  </data>
+  <data name="ReplaceAllFromPage" xml:space="preserve">
+    <value>Replace from all pages</value>
+  </data>
+  <data name="ReplaceFromPage" xml:space="preserve">
+    <value>Replace from page</value>
+  </data>
+  <data name="ReportAddToFile" xml:space="preserve">
+    <value>Report add to file</value>
+  </data>
+  <data name="ReportIntoFile" xml:space="preserve">
+    <value>Report into file</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="RolledBackTime" xml:space="preserve">
+    <value>Rolled back time</value>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="RunAnytime" xml:space="preserve">
+    <value>run anytime</value>
+  </data>
+  <data name="RunAt" xml:space="preserve">
+    <value>run at</value>
+  </data>
+  <data name="RuningEvery" xml:space="preserve">
+    <value>runing every</value>
+  </data>
+  <data name="RunMissedAction" xml:space="preserve">
+    <value>run missed action</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Safe</value>
+  </data>
+  <data name="SafeMode" xml:space="preserve">
+    <value>Safe mode</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="SaveInfoToServer" xml:space="preserve">
+    <value>Save info to server</value>
+  </data>
+  <data name="SaveToQtn" xml:space="preserve">
+    <value>Save copy to quarantine</value>
+  </data>
+  <data name="ScanArchives" xml:space="preserve">
+    <value>Scan archives</value>
+  </data>
+  <data name="ScanBoot" xml:space="preserve">
+    <value>Scan boot sectors</value>
+  </data>
+  <data name="ScaningFiles" xml:space="preserve">
+    <value>Scaning files</value>
+  </data>
+  <data name="ScanMail" xml:space="preserve">
+    <value>Scan mail</value>
+  </data>
+  <data name="ScanMode" xml:space="preserve">
+    <value>Scan mode</value>
+  </data>
+  <data name="ScanPath" xml:space="preserve">
+    <value>Scan path</value>
+  </data>
+  <data name="ScanStartup" xml:space="preserve">
+    <value>Scan files launched at system startup</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="SelectedComputers" xml:space="preserve">
+    <value>Selected computers</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Select file</value>
+  </data>
+  <data name="SelectText" xml:space="preserve">
+    <value>+</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SendDataInterval" xml:space="preserve">
+    <value>Data sending interval</value>
+  </data>
+  <data name="SendFile" xml:space="preserve">
+    <value>Send file</value>
+  </data>
+  <data name="SendFileUploadFileInfo" xml:space="preserve">
+    <value>Uploaded file:&lt;b&gt; {0}&lt;/b&gt;&lt;br /&gt;  File size (in bytes):&lt;b&gt; {1:N0}&lt;/b&gt;&lt;br /&gt;  Content-
+
+type:&lt;b&gt;{2}&lt;/b&gt;</value>
+  </data>
+  <data name="SendingDataToServer" xml:space="preserve">
+    <value>Sending data to server</value>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>Serial No</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="SetLoaderSettings" xml:space="preserve">
+    <value>Set Loader settings</value>
+  </data>
+  <data name="SetMonitorSettings" xml:space="preserve">
+    <value>Set Monitor settings</value>
+  </data>
+  <data name="SetQtnSettings" xml:space="preserve">
+    <value>Set Quarantine settings</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsForMaintenanceService" xml:space="preserve">
+    <value>Maintenance service settings</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ShowComputers" xml:space="preserve">
+    <value>Show computers</value>
+  </data>
+  <data name="ShowComputerTableFieldsText" xml:space="preserve">
+    <value>Display fields in computer list</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Enable sound</value>
+  </data>
+  <data name="SourceFile" xml:space="preserve">
+    <value>Source file</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartupOptionsLoaderAndMonitor" xml:space="preserve">
+    <value>Options Loader, Monitor and Device protect</value>
+  </data>
+  <data name="StatCountEvent" xml:space="preserve">
+    <value>Event count</value>
+  </data>
+  <data name="StatCountEventToday" xml:space="preserve">
+    <value>Event count for today</value>
+  </data>
+  <data name="StatCountVirus" xml:space="preserve">
+    <value>Virus count</value>
+  </data>
+  <data name="StatCountVirusToday" xml:space="preserve">
+    <value>Virus count for today</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatVirusTopMonth" xml:space="preserve">
+    <value>Virus prevalence per month</value>
+  </data>
+  <data name="StatVirusTopToDay" xml:space="preserve">
+    <value>Virus prevalence per day</value>
+  </data>
+  <data name="StatVirusTotalTop" xml:space="preserve">
+    <value>Total virus prevalence</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Subdirs" xml:space="preserve">
+    <value>Subdirs</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Subkeys" xml:space="preserve">
+    <value>Subkeys</value>
+  </data>
+  <data name="Subnetwork" xml:space="preserve">
+    <value>Subnetwork</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="SuspiciousFiles" xml:space="preserve">
+    <value>Suspicious files</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="TaskChangeDeviceProtect" xml:space="preserve">
+    <value>Set device protect</value>
+  </data>
+  <data name="TaskCreate" xml:space="preserve">
+    <value>Creating task</value>
+  </data>
+  <data name="TaskDaysToDelete" xml:space="preserve">
+    <value>Delete tasks older (days)</value>
+  </data>
+  <data name="TaskDeleted" xml:space="preserve">
+    <value>Task deleted</value>
+  </data>
+  <data name="TaskGiveAll" xml:space="preserve">
+    <value>Assign the task to all computers that match current filter</value>
+  </data>
+  <data name="TaskGived" xml:space="preserve">
+    <value>Task assigned</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Task name</value>
+  </data>
+  <data name="TaskNameCancelTask" xml:space="preserve">
+    <value>Cancel task</value>
+  </data>
+  <data name="TaskNameComponentState" xml:space="preserve">
+    <value>Get components state</value>
+  </data>
+  <data name="TaskNameConfigureFirewall" xml:space="preserve">
+    <value>Configure Firewall</value>
+  </data>
+  <data name="TaskNameConfigurePassword" xml:space="preserve">
+    <value>Set password</value>
+  </data>
+  <data name="TaskNameConfigureProactiveProtection" xml:space="preserve">
+    <value>Configure Proactive protection</value>
+  </data>
+  <data name="TaskNameConfigureQuarantine" xml:space="preserve">
+    <value>Configure Quarantine</value>
+  </data>
+  <data name="TaskNameListProcesses" xml:space="preserve">
+    <value>Get list of processes</value>
+  </data>
+  <data name="TaskNameRestoreFileFromQtn" xml:space="preserve">
+    <value>Restore file from Quarantine</value>
+  </data>
+  <data name="TaskNameRunScanner" xml:space="preserve">
+    <value>Run Scanner</value>
+  </data>
+  <data name="TaskNameSystemInfo" xml:space="preserve">
+    <value>System Information</value>
+  </data>
+  <data name="TaskNameVba32LoaderDisable" xml:space="preserve">
+    <value>Loader - exit</value>
+  </data>
+  <data name="TaskNameVba32LoaderEnable" xml:space="preserve">
+    <value>Loader - launch</value>
+  </data>
+  <data name="TaskNameVba32MonitorDisable" xml:space="preserve">
+    <value>Monitor - disable</value>
+  </data>
+  <data name="TaskNameVba32MonitorEnable" xml:space="preserve">
+    <value>Monitor - enable</value>
+  </data>
+  <data name="TaskNameVba32ProgramAndDataBaseUpdate" xml:space="preserve">
+    <value>Update antivirus and its databases</value>
+  </data>
+  <data name="TaskParams" xml:space="preserve">
+    <value>Task parameters</value>
+  </data>
+  <data name="TaskRequestPolicy" xml:space="preserve">
+    <value>Request policy</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="TaskSaved" xml:space="preserve">
+    <value>Task saved</value>
+  </data>
+  <data name="TaskSeparator" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="TaskState" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="TaskStateCompletedSuccessfully" xml:space="preserve">
+    <value>Completed successfully</value>
+  </data>
+  <data name="TaskStateDelivery" xml:space="preserve">
+    <value>Assignment</value>
+  </data>
+  <data name="TaskStateDeliveryTimeout" xml:space="preserve">
+    <value>Assignment timeout</value>
+  </data>
+  <data name="TaskStateExecution" xml:space="preserve">
+    <value>Execution</value>
+  </data>
+  <data name="TaskStateExecutionError" xml:space="preserve">
+    <value>Execution error</value>
+  </data>
+  <data name="TaskStateExecutionTimeout" xml:space="preserve">
+    <value>Execution timeout</value>
+  </data>
+  <data name="TaskStateStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="TaskType" xml:space="preserve">
+    <value>Task type</value>
+  </data>
+  <data name="TaskUninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="TemporaryFileSize" xml:space="preserve">
+    <value>Temporary file size(Kb)</value>
+  </data>
+  <data name="TemporaryFilter" xml:space="preserve">
+    <value>Temporary filter</value>
+  </data>
+  <data name="TemporaryGroup" xml:space="preserve">
+    <value>Temporary group</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ThoroughSearch" xml:space="preserve">
+    <value>Thorough search</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="TimeInterval" xml:space="preserve">
+    <value>Time interval (min)</value>
+  </data>
+  <data name="TimerSettings" xml:space="preserve">
+    <value>Automatic self-refresh settings</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="TrustedApplications" xml:space="preserve">
+    <value>Trusted applications</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TypeApplications" xml:space="preserve">
+    <value>Type applications</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="UpdateButtonText" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateCC" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateInfo" xml:space="preserve">
+    <value>Update info</value>
+  </data>
+  <data name="UpdatePath" xml:space="preserve">
+    <value>Update path</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="UseAuthorization" xml:space="preserve">
+    <value>Use authorization</value>
+  </data>
+  <data name="UseComputersFromList" xml:space="preserve">
+    <value>Use computers from list only</value>
+  </data>
+  <data name="UseFlowAnalysis" xml:space="preserve">
+    <value>Use flow analysis</value>
+  </data>
+  <data name="UseJabber" xml:space="preserve">
+    <value>Use Jabber</value>
+  </data>
+  <data name="UseMail" xml:space="preserve">
+    <value>Use mail</value>
+  </data>
+  <data name="UseNetSend" xml:space="preserve">
+    <value>Use NetSend</value>
+  </data>
+  <data name="UseProxy" xml:space="preserve">
+    <value>Use proxy</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserIdentityName" xml:space="preserve">
+    <value>User identity name</value>
+  </data>
+  <data name="UserLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="UserManaging" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UserNameRequiredErrorMessage" xml:space="preserve">
+    <value>User name required.</value>
+  </data>
+  <data name="UsersTasks" xml:space="preserve">
+    <value>User tasks</value>
+  </data>
+  <data name="UseStartupOptionsLoaderAndMonitor" xml:space="preserve">
+    <value>Use Options Loader, Monitor</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Vba32CCServicesState" xml:space="preserve">
+    <value>State of Control Center services</value>
+  </data>
+  <data name="Vba32ControlCenterTitle" xml:space="preserve">
+    <value>Control Center Web Interface</value>
+  </data>
+  <data name="VBA32Integrity" xml:space="preserve">
+    <value>Integrity</value>
+  </data>
+  <data name="VBA32KeyValid" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Vba32NSSettings" xml:space="preserve">
+    <value>Notification service settings</value>
+  </data>
+  <data name="Vba32SSUnavailable" xml:space="preserve">
+    <value>The error may occur when calling Settings Service. Check whether it is started or not.</value>
+  </data>
+  <data name="VBA32Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Viewer" xml:space="preserve">
+    <value>Observer</value>
+  </data>
+  <data name="Ware" xml:space="preserve">
+    <value>Detect Spyware, Adware, Riskware</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="Week" xml:space="preserve">
+    <value>week</value>
+  </data>
+  <data name="Week2" xml:space="preserve">
+    <value>week</value>
+  </data>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Weekdays</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>weeks</value>
+  </data>
+  <data name="Weeks2" xml:space="preserve">
+    <value>weeks</value>
+  </data>
+  <data name="WMI" xml:space="preserve">
+    <value>WMI</value>
+  </data>
+  <data name="WMISettings" xml:space="preserve">
+    <value>WMI settings</value>
+  </data>
+  <data name="WriteReport" xml:space="preserve">
+    <value>Write report</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>year</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Yes/No</value>
+  </data>
+  <data name="ZoneFriendlyIP" xml:space="preserve">
+    <value>Zone of friendly IP addresses</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Аctivate</value>
+  </data>
+  <data name="ChoiseEvent" xml:space="preserve">
+    <value>Select event</value>
+  </data>
+  <data name="PageGroupsTitle" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="ActiveCount" xml:space="preserve">
+    <value>Active Count</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Group Name</value>
+  </data>
+  <data name="TotalCount" xml:space="preserve">
+    <value>Total Count</value>
+  </data>
+  <data name="TaskGiveAllGroups" xml:space="preserve">
+    <value>Assign the task to all computers that match current filter</value>
+  </data>
+  <data name="PageGroupsFilterTitle" xml:space="preserve">
+    <value>Groups Filter</value>
+  </data>
+  <data name="NoSelectedGroups" xml:space="preserve">
+    <value>No selected groups</value>
+  </data>
+  <data name="CopyToFilter" xml:space="preserve">
+    <value>Copy to filter</value>
+  </data>
+  <data name="DisplayMessage" xml:space="preserve">
+    <value>Showing {0}-{1} of {2}</value>
+  </data>
+  <data name="EmptyMessage" xml:space="preserve">
+    <value>No items to display</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="ItemsPerPageMessage" xml:space="preserve">
+    <value>Items per Page</value>
+  </data>
+  <data name="TotalMessage" xml:space="preserve">
+    <value>of {0}</value>
+  </data>
+  <data name="EnableDisableMultithreading" xml:space="preserve">
+    <value>Enable\disable multithreading</value>
+  </data>
+  <data name="Multithreading" xml:space="preserve">
+    <value>Multithreading</value>
+  </data>
+  <data name="ThreadsCount" xml:space="preserve">
+    <value>Threads count</value>
+  </data>
+  <data name="ShowProgressScan" xml:space="preserve">
+    <value>Show scan progress</value>
+  </data>
+  <data name="NoCorrectName" xml:space="preserve">
+    <value>No correct name!</value>
+  </data>
+  <data name="NoCorrectPath" xml:space="preserve">
+    <value>No correct path!</value>
+  </data>
+  <data name="Date2" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="CorrectOnlyMSI" xml:space="preserve">
+    <value>Select file with .msi extension</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="SelectAllOnPage" xml:space="preserve">
+    <value>All on page</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="UnselectAllOnPage" xml:space="preserve">
+    <value>None on page</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="DateIncorrect" xml:space="preserve">
+    <value>Incorrect value in date.</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>Date is required.</value>
+  </data>
+  <data name="DaysIncorrect" xml:space="preserve">
+    <value>Incorrect value in days.</value>
+  </data>
+  <data name="DaysRequired" xml:space="preserve">
+    <value>Days are required.</value>
+  </data>
+  <data name="HoursIncorrect" xml:space="preserve">
+    <value>Incorrect value in hours.</value>
+  </data>
+  <data name="HoursRequired" xml:space="preserve">
+    <value>Hours are required.</value>
+  </data>
+  <data name="MinutesIncorrect" xml:space="preserve">
+    <value>Incorrect value in minutes.</value>
+  </data>
+  <data name="MinutesRequired" xml:space="preserve">
+    <value>Minutes are required.</value>
+  </data>
+  <data name="TimeIncorrect" xml:space="preserve">
+    <value>Incorrect value in time.</value>
+  </data>
+  <data name="TimeRequired" xml:space="preserve">
+    <value>Time is required.</value>
+  </data>
+  <data name="DaysSequenceIncorrect" xml:space="preserve">
+    <value>Days of the month must be in format day1,day2... or day.</value>
+  </data>
+  <data name="DaysSequenceRequired" xml:space="preserve">
+    <value>Input days of the month.</value>
+  </data>
+  <data name="RemoteService" xml:space="preserve">
+    <value>Remote service</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="DomainRequiredErrorMessage" xml:space="preserve">
+    <value>Domain required</value>
+  </data>
+  <data name="LoginRequiredErrorMessage" xml:space="preserve">
+    <value>Login required</value>
+  </data>
+  <data name="CheckCredentials" xml:space="preserve">
+    <value>Check credentials</value>
+  </data>
+  <data name="EmptyIPListAfterExclusion" xml:space="preserve">
+    <value>After exclusion ip address list is empty</value>
+  </data>
+  <data name="DefaultSorting" xml:space="preserve">
+    <value>Default sorting</value>
+  </data>
+  <data name="IPRangeRegexErrorMessage" xml:space="preserve">
+    <value>IP addresses must be in format x.x.x.x-y.y.y.y or x.x.x.x</value>
+  </data>
+  <data name="NewCompRequiredErrorMessage" xml:space="preserve">
+    <value>IP address required</value>
+  </data>
+  <data name="ProfileName" xml:space="preserve">
+    <value>Profile name</value>
+  </data>
+  <data name="ProfileSaved" xml:space="preserve">
+    <value>Profile saved</value>
+  </data>
+  <data name="CanNotRename" xml:space="preserve">
+    <value>Can not rename </value>
+  </data>
+  <data name="ErrorRenamingGroup" xml:space="preserve">
+    <value>Error renaming group.</value>
+  </data>
+  <data name="GroupAllreadyExists" xml:space="preserve">
+    <value>. Group with this name allready exists. Specify another name.</value>
+  </data>
+  <data name="LoadOnlyMSI" xml:space="preserve">
+    <value>Allow loading files only with msi extension.</value>
+  </data>
+  <data name="ErrorSettingsAutoUpdateIntervalRange" xml:space="preserve">
+    <value>Autoupdate period between 30 and 1800 seconds.</value>
+  </data>
+  <data name="AreYouSureProfile" xml:space="preserve">
+    <value>Are you sure you want to remove profile?</value>
+  </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>Invalid value </value>
+  </data>
+  <data name="NotDefined" xml:space="preserve">
+    <value>Not Defined</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Email required</value>
+  </data>
+  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
+    <value>First name required</value>
+  </data>
+  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
+    <value>Last name required</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="AcountEdit" xml:space="preserve">
+    <value>Account successfully edited</value>
+  </data>
+  <data name="CannotAddUserToRole" xml:space="preserve">
+    <value>Can't add user to role. </value>
+  </data>
+  <data name="CannotChangeUserEmail" xml:space="preserve">
+    <value>Can't change user email.</value>
+  </data>
+  <data name="CannotChangeUserProfile" xml:space="preserve">
+    <value>Can't change user profile information.</value>
+  </data>
+  <data name="CannotChangeUserRole" xml:space="preserve">
+    <value>Can't change user role.</value>
+  </data>
+  <data name="CannotDeleteUser" xml:space="preserve">
+    <value>Can't delete user. </value>
+  </data>
+  <data name="CannotGetUserEmail" xml:space="preserve">
+    <value>Can't get user email.</value>
+  </data>
+  <data name="CannotGetUserProfile" xml:space="preserve">
+    <value>Can't get user profile information.</value>
+  </data>
+  <data name="CannotGetUserRole" xml:space="preserve">
+    <value>Can't get user role. </value>
+  </data>
+  <data name="CannotRemoveUserRoles" xml:space="preserve">
+    <value>Can't remove user roles. </value>
+  </data>
+  <data name="CannotSetUserProfile" xml:space="preserve">
+    <value>Can't set user profile information.</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>A username for that e-mail address already exists. Please enter a different e-mail address.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>Username already exists. Please enter a different user name.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>The e-mail address provided is invalid. Please check the value and try again.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>The password provided is invalid. Please enter a valid password value.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>The user name provided is invalid. Please check the value and try again.</value>
+  </data>
+  <data name="MembershipCreateUserFailed" xml:space="preserve">
+    <value>Membership can't create user. </value>
+  </data>
+  <data name="ProviderError" xml:space="preserve">
+    <value>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact 
+
+your system administrator.</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system 
+
+administrator.</value>
+  </data>
+  <data name="UserDeleteFail" xml:space="preserve">
+    <value>Failed to delete user.</value>
+  </data>
+  <data name="UserDeleteSuccess" xml:space="preserve">
+    <value>User deleted successfully.</value>
+  </data>
+  <data name="UserDeletionRejection" xml:space="preserve">
+    <value>The user deletion request has been canceled. If the problem persists, please contact your system administrator.</value>
+  </data>
+  <data name="UserEditionRejection" xml:space="preserve">
+    <value>The user edition request has been canceled. Please verify your entry and try again. If the problem persists, please contact your 
+
+system administrator.</value>
+  </data>
+  <data name="UserRejected" xml:space="preserve">
+    <value>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your 
+
+system administrator.</value>
+  </data>
+  <data name="ChangeCommentSelectedGroup" xml:space="preserve">
+    <value>Change comment of the selected group</value>
+  </data>
+  <data name="ChangeComment" xml:space="preserve">
+    <value>Change comment</value>
+  </data>
+  <data name="ConfirmRewriteFilter" xml:space="preserve">
+    <value>Filter with this name allready exists. Rewrite?</value>
+  </data>
+  <data name="ErrorFilterNameEmpty" xml:space="preserve">
+    <value>Can not save filter: name is empty.</value>
+  </data>
+  <data name="RangeError" xml:space="preserve">
+    <value>Range stop can't be less than start.</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>years</value>
+  </data>
+  <data name="Less" xml:space="preserve">
+    <value>less</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>more</value>
+  </data>
+  <data name="CorrectFormat" xml:space="preserve">
+    <value>Correct format</value>
+  </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>dd/mm/yyyy</value>
+  </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>hh:mm</value>
+  </data>
+  <data name="ValueBetween" xml:space="preserve">
+    <value>Value must be between {0} and {1}</value>
+  </data>
+  <data name="RequestingDataFromServer" xml:space="preserve">
+    <value>Requesting data from server</value>
+  </data>
+  <data name="ErrorRequestingDataFromServer" xml:space="preserve">
+    <value>Error requesting data from server</value>
+  </data>
+  <data name="IpAddressInIncorrectFormat" xml:space="preserve">
+    <value>Incorrect ip address, range or mask. (Examples: 192.168.1.1, 192.168.1.1-192.168.1.5, 192.168.*)</value>
+  </data>
+  <data name="IpAddressRequired" xml:space="preserve">
+    <value>Ip address, range or mask required</value>
+  </data>
+  <data name="IpAddressFilterInIncorrectFormat" xml:space="preserve">
+    <value>Ip address filter is in incorrect format. Try using helper to correct.</value>
+  </data>
+  <data name="MemorySizeInKb" xml:space="preserve">
+    <value>Memory size (Kb)</value>
+  </data>
+  <data name="IpAddressExamplesLiteral" xml:space="preserve">
+    <value>Correct IP address examples:&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;IP address: 192.168.1.1&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;Masked IP address: 192.168.*&lt;br/&gt;
+&amp;nbsp;&amp;nbsp;IP range: 192.168.1.1-192.168.1.15&lt;br/&gt;</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="Copying" xml:space="preserve">
+    <value>Copying</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Fail</value>
+  </data>
+  <data name="Initializing" xml:space="preserve">
+    <value>Initializing</value>
+  </data>
+  <data name="Parsing" xml:space="preserve">
+    <value>Parsing</value>
+  </data>
+  <data name="Processing" xml:space="preserve">
+    <value>Processing</value>
+  </data>
+  <data name="SuccessStatus" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="MessageBuyAdditionalFeatures" xml:space="preserve">
+    <value>This functionality is not included into current Control Center complete set. To purchase this functionality please call +375 17 
+
+2948429 or contact by e-mail: &lt;a href='mailto:info@anti-virus.by'&gt;info@anti-virus.by&lt;/a&gt;.</value>
+  </data>
+  <data name="CPU_MHz" xml:space="preserve">
+    <value>CPU (MHz)</value>
+  </data>
+  <data name="RAM_MB" xml:space="preserve">
+    <value>RAM (MB)</value>
+  </data>
+  <data name="CompWithoutGroup" xml:space="preserve">
+    <value>Computers without group</value>
+  </data>
+  <data name="NoGroup" xml:space="preserve">
+    <value>No group</value>
+  </data>
+  <data name="AssignTask" xml:space="preserve">
+    <value>Assign task</value>
+  </data>
+  <data name="AssignTaskToAll" xml:space="preserve">
+    <value>Assign task to all computers</value>
+  </data>
+  <data name="TemporaryTask" xml:space="preserve">
+    <value>Temporary task</value>
+  </data>
+  <data name="ErrorFilterNameRestricted" xml:space="preserve">
+    <value>Can not save filter with given name.</value>
+  </data>
+  <data name="ConfirmRewriteTask" xml:space="preserve">
+    <value>Task with this name allready exists. Rewrite?</value>
+  </data>
+  <data name="ErrorTaskNameEmpty" xml:space="preserve">
+    <value>Can not save task: name is empty.</value>
+  </data>
+  <data name="ErrorTaskNameRestricted" xml:space="preserve">
+    <value>Can not save task with given name.</value>
+  </data>
+  <data name="MoreInfo" xml:space="preserve">
+    <value>More info...</value>
+  </data>
+  <data name="Collapse" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="CollapseAllGroups" xml:space="preserve">
+    <value>Collapse all groups.</value>
+  </data>
+  <data name="Expand" xml:space="preserve">
+    <value>Expand</value>
+  </data>
+  <data name="ExpandAllGroups" xml:space="preserve">
+    <value>Expand all groups.</value>
+  </data>
+  <data name="SelectAllComputers" xml:space="preserve">
+    <value>Select all computers.</value>
+  </data>
+  <data name="UnselectAllComputers" xml:space="preserve">
+    <value>Unselect all computers.</value>
+  </data>
+  <data name="Antivirus" xml:space="preserve">
+    <value>KANOE Client</value>
+  </data>
+  <data name="ErrorOfNestingLavel" xml:space="preserve">
+    <value>Nesting level exceeded</value>
+  </data>
+  <data name="LimitedAllowLength" xml:space="preserve">
+    <value>Exceeded the permissible length of the name.</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="RemoteConsoleScanner" xml:space="preserve">
+    <value>Console scanner</value>
+  </data>
+  <data name="UpdateForRemoteConsoleScanner" xml:space="preserve">
+    <value>Update before scanning (ONLY FOR REMOTE CONSOLE SCANNER)</value>
+  </data>
+  <data name="RequestPacketCount" xml:space="preserve">
+    <value>Request packet count</value>
+  </data>
+  <data name="RequestPacketCountRequiredErrorMessage" xml:space="preserve">
+    <value>Request packet count required</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout (sec)</value>
+  </data>
+  <data name="TimeoutRequiredErrorMessage" xml:space="preserve">
+    <value>Timeout required</value>
+  </data>
+  <data name="AddOrEditComment" xml:space="preserve">
+    <value>Add/edit comment</value>
+  </data>
+  <data name="HeaderDay" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="UseDailyProtect" xml:space="preserve">
+    <value>Use daily protect</value>
+  </data>
+  <data name="TaskDailyDeviceProtect" xml:space="preserve">
+    <value>Daily device protect</value>
+  </data>
+  <data name="FileUploaded" xml:space="preserve">
+    <value>File is uploaded.</value>
+  </data>
+  <data name="ConfigureAgent" xml:space="preserve">
+    <value>Configure agent</value>
+  </data>
+  <data name="TaskStateInQueue" xml:space="preserve">
+    <value>In queue</value>
+  </data>
+  <data name="TaskStateSended" xml:space="preserve">
+    <value>Sended</value>
+  </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Attach</value>
+  </data>
+  <data name="DetachAgent" xml:space="preserve">
+    <value>Detach agent</value>
+  </data>
+  <data name="LoggedAs" xml:space="preserve">
+    <value>You are logged as</value>
+  </data>
+  <data name="NullName" xml:space="preserve">
+    <value>The name can`t be null</value>
+  </data>
+  <data name="DeviceComment" xml:space="preserve">
+    <value>Comment for device</value>
+  </data>
+  <data name="DeviceCanNotAdded" xml:space="preserve">
+    <value>Device can not be added</value>
+  </data>
+  <data name="SavePasswordInformation" xml:space="preserve">
+    <value>remember password</value>
+  </data>
+  <data name="AdditionalSettings" xml:space="preserve">
+    <value>Additional settings</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="AreYouSureDevice" xml:space="preserve">
+    <value>Are you sure you want to remove device?</value>
+  </data>
+  <data name="GroupHasNotComps" xml:space="preserve">
+    <value>Group hasn`t computers</value>
+  </data>
+  <data name="LastSuccessUpdate" xml:space="preserve">
+    <value>Last success update</value>
+  </data>
+  <data name="IPAddressRegexErrorMessage" xml:space="preserve">
+    <value>IP address must be in format x.x.x.x (Example: 10.172.25.3)</value>
+  </data>
+  <data name="SenderRequired" xml:space="preserve">
+    <value>Sender is required</value>
+  </data>
+  <data name="ServerRequired" xml:space="preserve">
+    <value>Server is required</value>
+  </data>
+  <data name="ValueRequired" xml:space="preserve">
+    <value>Value is required</value>
+  </data>
+  <data name="ErrorEmptySettings" xml:space="preserve">
+    <value>Settings are empty.</value>
+  </data>
+  <data name="ErrorGetSettings" xml:space="preserve">
+    <value>Can't get {0} setttings ({1}).</value>
+  </data>
+  <data name="ErrorIncorrectValue" xml:space="preserve">
+    <value>Incorrect {0}.</value>
+  </data>
+  <data name="ErrorLoad" xml:space="preserve">
+    <value>Can't load {0} ({1}).</value>
+  </data>
+  <data name="ErrorTaskTypeConflict" xml:space="preserve">
+    <value>Type isn't ITask ({0}).</value>
+  </data>
+  <data name="NoDataChartDisplayed" xml:space="preserve">
+    <value>Data is null</value>
+  </data>
+  <data name="SetDiagramCriteria" xml:space="preserve">
+    <value>Set criteria for diagram</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="CongLdrScanUSB" xml:space="preserve">
+    <value>Scan USB devices</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Folders" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Keys</value>
+  </data>
+  <data name="Protected" xml:space="preserve">
+    <value>Protected</value>
+  </data>
+  <data name="ReadOnly" xml:space="preserve">
+    <value>Read only</value>
+  </data>
+  <data name="Trusted" xml:space="preserve">
+    <value>Trusted</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Values</value>
+  </data>
+  <data name="Excluded" xml:space="preserve">
+    <value>Excluded</value>
+  </data>
+  <data name="ChangeComponentSettings" xml:space="preserve">
+    <value>Change component settings</value>
+  </data>
+  <data name="PoollingTimeInterval" xml:space="preserve">
+    <value>Pooling interval</value>
+  </data>
+  <data name="TaskAgentSettings" xml:space="preserve">
+    <value>Change agent settings</value>
+  </data>
+  <data name="TaskNameConfigureScanner" xml:space="preserve">
+    <value>Configure Scanner</value>
+  </data>
+  <data name="ScanMemory" xml:space="preserve">
+    <value>Scan memory</value>
+  </data>
+  <data name="AntivirusVirtualization" xml:space="preserve">
+    <value>AntivirusVirtualization</value>
+  </data>
+  <data name="ComputersDaysToDelete" xml:space="preserve">
+    <value>Delete computers with activity older (days)</value>
+  </data>
+  <data name="CongScannerAuthenticode" xml:space="preserve">
+    <value>Enable detection for signed files</value>
+  </data>
+  <data name="CongScannerRemote" xml:space="preserve">
+    <value>Scan server</value>
+  </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="ShowAdditionalInfo" xml:space="preserve">
+    <value>Show additional info about computer</value>
+  </data>
+  <data name="TotallySelected" xml:space="preserve">
+    <value>Totally Selected</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field.</value>
+  </data>
+  <data name="AttachTasks" xml:space="preserve">
+    <value>Attach tasks</value>
+  </data>
+  <data name="AttachTasksFilters" xml:space="preserve">
+    <value>Attach task filters</value>
+  </data>
+  <data name="Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="InstallGived" xml:space="preserve">
+    <value>Enqueued for attaching. Details on the page "Attach tasks".</value>
+  </data>
+  <data name="BlockWrite" xml:space="preserve">
+    <value>Block write</value>
+  </data>
+  <data name="InputUID" xml:space="preserve">
+    <value>Input UID</value>
+  </data>
+  <data name="ApplyNotForAll" xml:space="preserve">
+    <value>Applied not for all</value>
+  </data>
+  <data name="NoFoundUID" xml:space="preserve">
+    <value>UID isn't found</value>
+  </data>
+  <data name="DeviceClassManagment" xml:space="preserve">
+    <value>Device class managment</value>
+  </data>
+  <data name="ClassName" xml:space="preserve">
+    <value>Class name</value>
+  </data>
+  <data name="AddNewDeviceClass" xml:space="preserve">
+    <value>Add a new device class</value>
+  </data>
+  <data name="DeviceClassComment" xml:space="preserve">
+    <value>Comment for device class</value>
+  </data>
+  <data name="ErrorFieldIsEmpty" xml:space="preserve">
+    <value>field is empty</value>
+  </data>
+  <data name="GuidRegexErrorMessage" xml:space="preserve">
+    <value>UID must be in format {00cd27b6-f21b-11df-a7c8-806e6f6e6963}</value>
+  </data>
+  <data name="IndicatesRequiredField" xml:space="preserve">
+    <value>indicates a required field</value>
+  </data>
+  <data name="ErrorExistPolicy" xml:space="preserve">
+    <value>Policy already exists</value>
+  </data>
+  <data name="ChangeRule" xml:space="preserve">
+    <value>Change rule</value>
+  </data>
+  <data name="DestinationIP" xml:space="preserve">
+    <value>Destination IP</value>
+  </data>
+  <data name="LocalIP" xml:space="preserve">
+    <value>Local IP</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Add Rule</value>
+  </data>
+  <data name="AddTcpUdpRule" xml:space="preserve">
+    <value>Add TCP/UDP Rule</value>
+  </data>
+  <data name="AllowReceive" xml:space="preserve">
+    <value>Allow receive</value>
+  </data>
+  <data name="AllowReceiveSend" xml:space="preserve">
+    <value>Allow receive/send</value>
+  </data>
+  <data name="AllowSend" xml:space="preserve">
+    <value>Allow send</value>
+  </data>
+  <data name="DenyAll" xml:space="preserve">
+    <value>Deny All</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="DestinationAddress" xml:space="preserve">
+    <value>Destination address</value>
+  </data>
+  <data name="KeepStatistics" xml:space="preserve">
+    <value>Keep Statistics</value>
+  </data>
+  <data name="LocalAddress" xml:space="preserve">
+    <value>Local address</value>
+  </data>
+  <data name="pn3PC" xml:space="preserve">
+    <value>Third Party Connect Protocol</value>
+  </data>
+  <data name="pnANY_DISTRIBUTED" xml:space="preserve">
+    <value>any distributed file system</value>
+  </data>
+  <data name="pnANY_HOST" xml:space="preserve">
+    <value>Any host Internal protocol</value>
+  </data>
+  <data name="pnANY_LOCAL" xml:space="preserve">
+    <value>any local network</value>
+  </data>
+  <data name="pnANY_PRIVATE" xml:space="preserve">
+    <value>any Private encryption scheme</value>
+  </data>
+  <data name="pnARGUS" xml:space="preserve">
+    <value>ARGUS</value>
+  </data>
+  <data name="pnAX_25" xml:space="preserve">
+    <value>AX.25 Frames</value>
+  </data>
+  <data name="pnBBN_RCC_MON" xml:space="preserve">
+    <value>BBN RCC Monitoring</value>
+  </data>
+  <data name="pnBNA" xml:space="preserve">
+    <value>BNA</value>
+  </data>
+  <data name="pnBR_SAT_MON" xml:space="preserve">
+    <value>Backroom SATNET Monitoring</value>
+  </data>
+  <data name="pnCFTP" xml:space="preserve">
+    <value>CFTP</value>
+  </data>
+  <data name="pnCHAOS" xml:space="preserve">
+    <value>Chaos</value>
+  </data>
+  <data name="pnCPHB" xml:space="preserve">
+    <value>Computer Protocol Heart Beat</value>
+  </data>
+  <data name="pnCPNX" xml:space="preserve">
+    <value>Computer Protocol Network Executive</value>
+  </data>
+  <data name="pnDCN_MEAS" xml:space="preserve">
+    <value>DCN Measurement Subsystems</value>
+  </data>
+  <data name="pnDDP" xml:space="preserve">
+    <value>Datagram Delivery Protocol</value>
+  </data>
+  <data name="pnDGP" xml:space="preserve">
+    <value>Dissimilar Gateway Protocol</value>
+  </data>
+  <data name="pnEGP" xml:space="preserve">
+    <value>Exterior Gateway Protocol</value>
+  </data>
+  <data name="pnEMCON" xml:space="preserve">
+    <value>EMCON</value>
+  </data>
+  <data name="pnENCAP" xml:space="preserve">
+    <value>Encapsulation Header</value>
+  </data>
+  <data name="pnGGP" xml:space="preserve">
+    <value>Gateway-to-Gateway</value>
+  </data>
+  <data name="pnGMTP" xml:space="preserve">
+    <value>GMTP</value>
+  </data>
+  <data name="pnGRE" xml:space="preserve">
+    <value>General Routing Encapsulation</value>
+  </data>
+  <data name="pnHMP" xml:space="preserve">
+    <value>Host Monitoring</value>
+  </data>
+  <data name="pnICMP" xml:space="preserve">
+    <value>Internet Control Message</value>
+  </data>
+  <data name="pnIDPR" xml:space="preserve">
+    <value>Inter-Domain Policy Routing Protocol</value>
+  </data>
+  <data name="pnIDPR_CMTP" xml:space="preserve">
+    <value>IDPR Control Message Transport Protocol</value>
+  </data>
+  <data name="pnIDRP" xml:space="preserve">
+    <value>Inter-Domain Routing Protocol</value>
+  </data>
+  <data name="pnIGMP" xml:space="preserve">
+    <value>Internet Group Management</value>
+  </data>
+  <data name="pnIGP" xml:space="preserve">
+    <value>any Private interior gateway</value>
+  </data>
+  <data name="pnIGRP" xml:space="preserve">
+    <value>IGRP</value>
+  </data>
+  <data name="pnIL" xml:space="preserve">
+    <value>IL Transport Protocol</value>
+  </data>
+  <data name="pnIP" xml:space="preserve">
+    <value>IP in IP(encapsulation)</value>
+  </data>
+  <data name="pnIPCV" xml:space="preserve">
+    <value>Internet Packet Core Utility</value>
+  </data>
+  <data name="pnIPIP" xml:space="preserve">
+    <value>IP-within-IP Encapsulation Protocol</value>
+  </data>
+  <data name="pnIPPC" xml:space="preserve">
+    <value>Internet Pluribus Packet Core</value>
+  </data>
+  <data name="pnIRTP" xml:space="preserve">
+    <value>Internet Reliable Transaction</value>
+  </data>
+  <data name="pnISO_IP" xml:space="preserve">
+    <value>ISO Internet Protocol</value>
+  </data>
+  <data name="pnISO_TP4" xml:space="preserve">
+    <value>ISO Transport Protocol Class 4</value>
+  </data>
+  <data name="pnI_NLSP" xml:space="preserve">
+    <value>Integrated Net Layer Security TUBA</value>
+  </data>
+  <data name="pnKRYPTOLAN" xml:space="preserve">
+    <value>Kryptolan</value>
+  </data>
+  <data name="pnLARP" xml:space="preserve">
+    <value>Locus Address Resolution Protocol</value>
+  </data>
+  <data name="pnLEAF_1" xml:space="preserve">
+    <value>Leaf-1</value>
+  </data>
+  <data name="pnLEAF_2" xml:space="preserve">
+    <value>Leaf-2</value>
+  </data>
+  <data name="pnMERIT_INP" xml:space="preserve">
+    <value>MERIT Internodal Protocol</value>
+  </data>
+  <data name="pnMFE_NSP" xml:space="preserve">
+    <value>MFE Network Services Protocol</value>
+  </data>
+  <data name="pnMHRP" xml:space="preserve">
+    <value>Mobile Host Routing Protocol</value>
+  </data>
+  <data name="pnMICP" xml:space="preserve">
+    <value>Mobile Interworking Control Pro.</value>
+  </data>
+  <data name="pnMTP" xml:space="preserve">
+    <value>Multicast Transport Protocol</value>
+  </data>
+  <data name="pnMUX" xml:space="preserve">
+    <value>Multiplexing</value>
+  </data>
+  <data name="pnNETBLT" xml:space="preserve">
+    <value>Bulk Data Transfer Protocol</value>
+  </data>
+  <data name="pnNHRP" xml:space="preserve">
+    <value>NBMA Next Hop Resolution Protocol </value>
+  </data>
+  <data name="pnNSFNET_IGP" xml:space="preserve">
+    <value>NSFNET-IGP</value>
+  </data>
+  <data name="pnNVP_II" xml:space="preserve">
+    <value>Network Voice Protocol</value>
+  </data>
+  <data name="pnOSPFIGP" xml:space="preserve">
+    <value>OSPFIGP</value>
+  </data>
+  <data name="pnPRM" xml:space="preserve">
+    <value>Packet Radio Measurement</value>
+  </data>
+  <data name="pnPUP" xml:space="preserve">
+    <value>PUP</value>
+  </data>
+  <data name="pnPVP" xml:space="preserve">
+    <value>Packet Video Protocol</value>
+  </data>
+  <data name="pnRDP" xml:space="preserve">
+    <value>Reliable Data Protocol</value>
+  </data>
+  <data name="pnRSVP" xml:space="preserve">
+    <value>Reservation Protocol</value>
+  </data>
+  <data name="pnRVD" xml:space="preserve">
+    <value>MIT Remote Virtual Disk Protocol</value>
+  </data>
+  <data name="pnSAT_EXPAK" xml:space="preserve">
+    <value>SATNET and Backroom EXPAK</value>
+  </data>
+  <data name="pnSAT_MON" xml:space="preserve">
+    <value>SATNET Monitoring</value>
+  </data>
+  <data name="pnSCC_SP" xml:space="preserve">
+    <value>Semaphore Communications Sec. Pro</value>
+  </data>
+  <data name="pnSDRP" xml:space="preserve">
+    <value>Source Demand Routing Protocol</value>
+  </data>
+  <data name="pnSECURE_VMTP" xml:space="preserve">
+    <value>SECURE-VMTP</value>
+  </data>
+  <data name="pnSEP" xml:space="preserve">
+    <value>Sequential Exchange Protocol</value>
+  </data>
+  <data name="pnSIP" xml:space="preserve">
+    <value>Simple Transport Protocol</value>
+  </data>
+  <data name="pnSIPP_AH" xml:space="preserve">
+    <value>SIPP Authentication Header</value>
+  </data>
+  <data name="pnSIPP_ESP" xml:space="preserve">
+    <value>SIPP Encap Security Payload</value>
+  </data>
+  <data name="pnSIP_FRAG" xml:space="preserve">
+    <value>SIP Fragment</value>
+  </data>
+  <data name="pnSIP_SR" xml:space="preserve">
+    <value>SIP Source Route</value>
+  </data>
+  <data name="pnSprite_RPC" xml:space="preserve">
+    <value>Sprite RPC Protocol</value>
+  </data>
+  <data name="pnST" xml:space="preserve">
+    <value>Stream</value>
+  </data>
+  <data name="pnSUN_ND" xml:space="preserve">
+    <value>SUN ND PROTOCOL-Temporary</value>
+  </data>
+  <data name="pnSWIPE" xml:space="preserve">
+    <value>IP with Encryption</value>
+  </data>
+  <data name="pnTCF" xml:space="preserve">
+    <value>TCF</value>
+  </data>
+  <data name="pnTCP" xml:space="preserve">
+    <value>Transmission Control</value>
+  </data>
+  <data name="pnTP" xml:space="preserve">
+    <value>TP++ Transport Protocol</value>
+  </data>
+  <data name="pnTRUNK_1" xml:space="preserve">
+    <value>Trunk-1</value>
+  </data>
+  <data name="pnTRUNK_2" xml:space="preserve">
+    <value>Trunk-2</value>
+  </data>
+  <data name="pnTTP" xml:space="preserve">
+    <value>TTP</value>
+  </data>
+  <data name="pnUCL" xml:space="preserve">
+    <value>UCL</value>
+  </data>
+  <data name="pnUDP" xml:space="preserve">
+    <value>User Datagram</value>
+  </data>
+  <data name="pnVINES" xml:space="preserve">
+    <value>VINES</value>
+  </data>
+  <data name="pnVISA" xml:space="preserve">
+    <value>VISA Protocol</value>
+  </data>
+  <data name="pnVMTP" xml:space="preserve">
+    <value>VMTP</value>
+  </data>
+  <data name="pnWB_EXPAK" xml:space="preserve">
+    <value>WIDEBAND EXPAK</value>
+  </data>
+  <data name="pnWB_MON" xml:space="preserve">
+    <value>WIDEBAND Monitoring</value>
+  </data>
+  <data name="pnWSN" xml:space="preserve">
+    <value>Wang Span Network</value>
+  </data>
+  <data name="pnXNET" xml:space="preserve">
+    <value>Cross Net Debugger</value>
+  </data>
+  <data name="pnXNS_IDP" xml:space="preserve">
+    <value>XEROX NS IDP</value>
+  </data>
+  <data name="pnXTP" xml:space="preserve">
+    <value>XTP</value>
+  </data>
+  <data name="pnETHERIP" xml:space="preserve">
+    <value>Ethernet-within-IP Encapsulation</value>
+  </data>
+  <data name="pnUNASSIGNED" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="OtherProtocols" xml:space="preserve">
+    <value>Other protocols</value>
+  </data>
+  <data name="ProtocolsInIncorrectFormat" xml:space="preserve">
+    <value>Inccorrect format for protocols</value>
+  </data>
+  <data name="Ip6AddressInIncorrectFormat" xml:space="preserve">
+    <value>Incorrect ipv6 address, range  (Examples: ABCD:EF01:2345:6789:0:0:0:0, ABCD:EF01:2345:6789:0:0:0:0-ABCD:EF01:2345:6789:0:0:0:8, *)</value>
+  </data>
+  <data name="ProtocolsAreNotSelected" xml:space="preserve">
+    <value>Protocols are not selected</value>
+  </data>
+  <data name="JournalEvents" xml:space="preserve">
+    <value>Journal events</value>
+  </data>
+  <data name="CCJournal" xml:space="preserve">
+    <value>CC journal</value>
+  </data>
+  <data name="LocalJournal" xml:space="preserve">
+    <value>Local journal</value>
+  </data>
+  <data name="WindowsJournal" xml:space="preserve">
+    <value>Windows journal</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CheckState" xml:space="preserve">
+    <value>Check State</value>
+  </data>
+  <data name="SaveState" xml:space="preserve">
+    <value>Save State</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="TaskNameIntegrityCheck" xml:space="preserve">
+    <value>Configure Check integrity</value>
+  </data>
+  <data name="TaskNameConfigureFileCleaner" xml:space="preserve">
+    <value>Configure File cleaner</value>
+  </data>
+  <data name="CongScannerCases" xml:space="preserve">
+    <value>In case</value>
+  </data>
+  <data name="CongScannerDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CongScannerPotential" xml:space="preserve">
+    <value>Detect RiskWare</value>
+  </data>
+  <data name="CongScannerScanFileList" xml:space="preserve">
+    <value>File`s list for scanning</value>
+  </data>
+  <data name="CongScannerTrustAuthCode" xml:space="preserve">
+    <value>Trust to authentification code</value>
+  </data>
+  <data name="ScanningObjects" xml:space="preserve">
+    <value>Objects for scanning</value>
+  </data>
+  <data name="WrongExtensionValidator" xml:space="preserve">
+    <value>Extensions are not set correctly</value>
+  </data>
+  <data name="WrongArchivesSize" xml:space="preserve">
+    <value>Archive`s size is not set correctly</value>
+  </data>
+  <data name="VAS" xml:space="preserve">
+    <value>Antivirus scanner</value>
+  </data>
+  <data name="VDD" xml:space="preserve">
+    <value>Access control module</value>
+  </data>
+  <data name="VFC" xml:space="preserve">
+    <value>Cleaning module</value>
+  </data>
+  <data name="VGI" xml:space="preserve">
+    <value>Graphical User Interface</value>
+  </data>
+  <data name="VIC" xml:space="preserve">
+    <value>Check integrity module</value>
+  </data>
+  <data name="VMT" xml:space="preserve">
+    <value>Monitor</value>
+  </data>
+  <data name="VND" xml:space="preserve">
+    <value>Network module</value>
+  </data>
+  <data name="VPP" xml:space="preserve">
+    <value>Proactive protection</value>
+  </data>
+  <data name="VQTN" xml:space="preserve">
+    <value>Quarantine</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="DuplicateValue" xml:space="preserve">
+    <value>Value already exists. Please enter a different value.</value>
+  </data>
+  <data name="NoDeleteDefault" xml:space="preserve">
+    <value>No delete default user.</value>
+  </data>
+  <data name="CongMonitorActionFirst" xml:space="preserve">
+    <value>First action</value>
+  </data>
+  <data name="CongMonitorActionSecond" xml:space="preserve">
+    <value>Second action</value>
+  </data>
+  <data name="CongMonitorActionThird" xml:space="preserve">
+    <value>Third action</value>
+  </data>
+  <data name="CongLdrProxyServerType" xml:space="preserve">
+    <value>Proxy type</value>
+  </data>
+  <data name="AtSystemStartUp" xml:space="preserve">
+    <value>At system startup</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Date and time</value>
+  </data>
+  <data name="EveryDayOfMonth" xml:space="preserve">
+    <value>Every day of month</value>
+  </data>
+  <data name="EveryDayOfWeek" xml:space="preserve">
+    <value>Every day of week</value>
+  </data>
+  <data name="EveryHour" xml:space="preserve">
+    <value>Every hour</value>
+  </data>
+  <data name="SomeDateTime" xml:space="preserve">
+    <value>Some date/time</value>
+  </data>
+  <data name="FirewallIsOn" xml:space="preserve">
+    <value>Firewall is on</value>
+  </data>
+  <data name="NetworkType" xml:space="preserve">
+    <value>Network type</value>
+  </data>
+  <data name="OpenNetwork" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PrivateNetwork" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="JE_QTN_ADD" xml:space="preserve">
+    <value>Added object %1%</value>
+  </data>
+  <data name="JE_QTN_DELETE" xml:space="preserve">
+    <value>Deleted object %1%</value>
+  </data>
+  <data name="JE_QTN_RESTORE" xml:space="preserve">
+    <value>Restored object %1%</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying classes devices settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_CLASSES_RULES_SETTINGS_OK" xml:space="preserve">
+    <value>Classes devices settings applied.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying usb classes settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_CLASSES_SETTINGS_OK" xml:space="preserve">
+    <value>Usb classes settings applied.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_FAILED" xml:space="preserve">
+    <value>Error applying usb devices settings.</value>
+  </data>
+  <data name="JE_VDD_APPLIED_USB_DEVICES_SETTINGS_OK" xml:space="preserve">
+    <value>Usb devices settings applied.</value>
+  </data>
+  <data name="JE_VDD_START" xml:space="preserve">
+    <value>Access control module started.</value>
+  </data>
+  <data name="JE_VDD_STOP" xml:space="preserve">
+    <value>Access control module stoped.</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Rules is not applied</value>
+  </data>
+  <data name="JE_VND_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Rules is applied</value>
+  </data>
+  <data name="JE_VND_AUIDIT_OTHER" xml:space="preserve">
+    <value>Audit other: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_TCP" xml:space="preserve">
+    <value>Audit tcp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_AUIDIT_UDP" xml:space="preserve">
+    <value>Audit udp: %1% -&gt; %2%</value>
+  </data>
+  <data name="JE_VND_START" xml:space="preserve">
+    <value>Firewall started</value>
+  </data>
+  <data name="JE_VND_STOP" xml:space="preserve">
+    <value>Firewall stoped</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_FAILED" xml:space="preserve">
+    <value>Settings is not applied</value>
+  </data>
+  <data name="JE_VPP_APPLIED_RULES_OK" xml:space="preserve">
+    <value>Settings is applied</value>
+  </data>
+  <data name="JE_VPP_AUDIT_DELETE" xml:space="preserve">
+    <value>Action delete: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_EXECUTE" xml:space="preserve">
+    <value>Action execute: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_READ" xml:space="preserve">
+    <value>Action open(read): %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_OPEN_WRITE" xml:space="preserve">
+    <value>Action open(write): %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_READ" xml:space="preserve">
+    <value>Action read: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_AUDIT_WRITE" xml:space="preserve">
+    <value>Action write: %1% \%2% -&gt; %3%, process: %4%, result: %5%</value>
+  </data>
+  <data name="JE_VPP_START" xml:space="preserve">
+    <value>Proactive protection started</value>
+  </data>
+  <data name="JE_VPP_STOP" xml:space="preserve">
+    <value>Proactive protection stoped</value>
+  </data>
+  <data name="JE_VAS_ACTION_BLOCK" xml:space="preserve">
+    <value>Blocked %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_CURE" xml:space="preserve">
+    <value>Cured %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_DELETE" xml:space="preserve">
+    <value>Deleted %1%</value>
+  </data>
+  <data name="JE_VAS_ACTION_NONE" xml:space="preserve">
+    <value>Skipped %1%</value>
+  </data>
+  <data name="JE_VAS_INFECTED" xml:space="preserve">
+    <value>Infected object %1% with %2%</value>
+  </data>
+  <data name="JE_VAS_START" xml:space="preserve">
+    <value>Start scanning: %1%</value>
+  </data>
+  <data name="JE_VAS_STOP" xml:space="preserve">
+    <value>Stop scanning: %1%</value>
+  </data>
+  <data name="JE_VAS_SUSPICIOUS" xml:space="preserve">
+    <value>Suspected object %1% of %2%</value>
+  </data>
+  <data name="JE_VMT_ACTION_BLOCK" xml:space="preserve">
+    <value>Blocked %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_CURE" xml:space="preserve">
+    <value>Cured %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_DELETE" xml:space="preserve">
+    <value>Deleted %1%</value>
+  </data>
+  <data name="JE_VMT_ACTION_NONE" xml:space="preserve">
+    <value>Skipped %1%</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Monitor settings is not applied</value>
+  </data>
+  <data name="JE_VMT_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Monitor settings is applied</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_INFECTED" xml:space="preserve">
+    <value>Infected object %1% with %2%</value>
+  </data>
+  <data name="JE_VMT_CHECK_RESULT_SUSPECTED" xml:space="preserve">
+    <value>Suspected object %1% of %2%</value>
+  </data>
+  <data name="JE_VMT_START" xml:space="preserve">
+    <value>Monitor started</value>
+  </data>
+  <data name="JE_VMT_STOP" xml:space="preserve">
+    <value>Monitor stoped</value>
+  </data>
+  <data name="TaskSaveIntegrityCheck" xml:space="preserve">
+    <value>Save/Check integrity</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Checking devices integrity finished</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_CHECK_START" xml:space="preserve">
+    <value>Checking devices integrity began</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about devices integrity finished</value>
+  </data>
+  <data name="JE_VIC_DEVICES_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about devices integrity began</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CAN_NOT_READ" xml:space="preserve">
+    <value>Can not to get info about device %1%</value>
+  </data>
+  <data name="JE_VIC_DEVICE_CHANGED" xml:space="preserve">
+    <value>Device %1%(%2%) %3%</value>
+  </data>
+  <data name="JE_VIC_FILES_CAN_NOT_OPEN" xml:space="preserve">
+    <value>Can not to read a file %1%</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Check files integrity finished</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_CHECK_START" xml:space="preserve">
+    <value>Check files integrity begin</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about files integrity finished</value>
+  </data>
+  <data name="JE_VIC_FILES_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about files integrity began</value>
+  </data>
+  <data name="JE_VIC_FILE_CHANGED" xml:space="preserve">
+    <value>File %1% %2%: old version hash - %3%, new version hash - %4%, old versrion size - %5%, new versrion size - %6%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CAN_NOT_OPEN_KEY" xml:space="preserve">
+    <value>Can not to read a key %1%</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_CHANGED" xml:space="preserve">
+    <value>Registry %2% %1%: old value - %3%(%4%), new value - %5%(%6%)</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_FINISHED" xml:space="preserve">
+    <value>Checking registry integrity finished</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_CHECK_START" xml:space="preserve">
+    <value>Checking registry integrity began</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_FINISHED" xml:space="preserve">
+    <value>Saving info about registry integrity finished</value>
+  </data>
+  <data name="JE_VIC_REGISTRY_STATE_SAVE_START" xml:space="preserve">
+    <value>Saving info about registry integrity began</value>
+  </data>
+  <data name="DeviceClass" xml:space="preserve">
+    <value>Device classes</value>
+  </data>
+  <data name="TaskNameRunFileCleaner" xml:space="preserve">
+    <value>File cleaner: clean</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_FAILED" xml:space="preserve">
+    <value>Settings is not applied</value>
+  </data>
+  <data name="JE_VFC_APPLIED_SETTINGS_OK" xml:space="preserve">
+    <value>Settings is applied</value>
+  </data>
+  <data name="JE_VFC_REMOVED" xml:space="preserve">
+    <value>Object %1% deleted</value>
+  </data>
+  <data name="JE_VFC_START" xml:space="preserve">
+    <value>Cleaning module started</value>
+  </data>
+  <data name="JE_VFC_STOP" xml:space="preserve">
+    <value>Cleaning module stopped</value>
+  </data>
+  <data name="JE_VPP_PRINTER_DENIED" xml:space="preserve">
+    <value>Removed from print: machine %1%, user %2%, document %3%, printer %4%</value>
+  </data>
+  <data name="JE_VPP_PRINTER_GRANTED" xml:space="preserve">
+    <value>Sent to print: machine %1%, user %2%, document %3%, printer %4%</value>
+  </data>
+  <data name="CloseNetwork" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="JE_UPDATE_PRODUCTS_CORRUPTED" xml:space="preserve">
+    <value>Product(s) %1 corrupted (%2)</value>
+  </data>
+  <data name="JE_SERVICE_START" xml:space="preserve">
+    <value>Service started</value>
+  </data>
+  <data name="JE_SERVICE_STOP" xml:space="preserve">
+    <value>Service stopped</value>
+  </data>
+  <data name="AuditOn" xml:space="preserve">
+    <value>Audit is on</value>
+  </data>
+  <data name="ProcessedFileTypes" xml:space="preserve">
+    <value>Processed file types</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Printers</value>
+  </data>
+  <data name="VPP_General_On" xml:space="preserve">
+    <value>Protection of objects is on</value>
+  </data>
+  <data name="VPP_Printers_On" xml:space="preserve">
+    <value>Printer control enable</value>
+  </data>
+  <data name="VPP_Users_On" xml:space="preserve">
+    <value>Filtering users action is on</value>
+  </data>
+  <data name="ConsideringSystemLoad" xml:space="preserve">
+    <value>Considering system load</value>
+  </data>
+  <data name="Action_check_devices" xml:space="preserve">
+    <value>Check devices state</value>
+  </data>
+  <data name="Action_check_files" xml:space="preserve">
+    <value>Check files state</value>
+  </data>
+  <data name="Action_check_registry" xml:space="preserve">
+    <value>Check registry state</value>
+  </data>
+  <data name="Action_save_devices" xml:space="preserve">
+    <value>Save devices state</value>
+  </data>
+  <data name="Action_save_files" xml:space="preserve">
+    <value>Save files state</value>
+  </data>
+  <data name="Action_save_registry" xml:space="preserve">
+    <value>Save registry state</value>
+  </data>
+  <data name="Action_SCHD_CLEANING" xml:space="preserve">
+    <value>Cleaning</value>
+  </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>Terminate</value>
+  </data>
+  <data name="EnableSsl" xml:space="preserve">
+    <value>Enable TLS/SSL</value>
+  </data>
+  <data name="FullAccess" xml:space="preserve">
+    <value>Full access</value>
+  </data>
+  <data name="NothingIsAdded" xml:space="preserve">
+    <value>Nothing is added</value>
+  </data>
+  <data name="SystemIdleProcess" xml:space="preserve">
+    <value>% system idle process</value>
+  </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>Devices type</value>
+  </data>
+  <data name="JE_VDD_DEVICE" xml:space="preserve">
+    <value>Device %4% %2% %3%.</value>
+  </data>
+</root>
