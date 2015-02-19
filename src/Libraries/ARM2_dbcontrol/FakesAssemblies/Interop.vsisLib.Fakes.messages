@@ -1,100 +1,100 @@
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.PairString: type is a value type.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_OnChangedModuleEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_OnChangedParameterEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_OnChangedParametersEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.KeyInfo: type is a value type.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_OnKeyExpiredEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_OnKeyStateChangeEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadStartEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadFinishEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadProgressEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnReactionOnUpdateEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyStartEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnReserveProgressEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyProgressEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyFinishEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnErrorEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnInfoMessageEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnNeedStopEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnTryRollbackEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnUpdateStartEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnPreUpdateFinishedEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_OnPlugStatusEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_OnCommandEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.JournalRecord: type is a value type.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_OnEventEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_OnEventEventHandler: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_SinkHelper: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_EventProvider: type is sealed.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IService: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Service: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IPlug: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ICommand: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ISettings: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Settings: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IKeyLicense: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.KeyLicense: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IUpdate: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Update: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ILanguages: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.languages: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IJournal: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_Event: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Journal: type is an interface.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_OnChangedModuleEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_OnChangedParameterEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_OnChangedParametersEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_OnKeyExpiredEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_OnKeyStateChangeEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadStartEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadFinishEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadProgressEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnReactionOnUpdateEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyStartEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnReserveProgressEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyProgressEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyFinishEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnErrorEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnInfoMessageEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnNeedStopEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnTryRollbackEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnUpdateStartEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnPreUpdateFinishedEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_OnPlugStatusEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_OnCommandEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_OnEventEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_OnEventEventHandler: type is a delegate.
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
-D:\TestProject\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.PairString: type is a value type.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_OnChangedModuleEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_OnChangedParameterEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_OnChangedParametersEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.KeyInfo: type is a value type.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_OnKeyExpiredEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_OnKeyStateChangeEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadStartEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadFinishEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnDownloadProgressEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnReactionOnUpdateEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyStartEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnReserveProgressEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyProgressEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnApplyFinishEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnErrorEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnInfoMessageEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnNeedStopEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnTryRollbackEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnUpdateStartEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_OnPreUpdateFinishedEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_OnPlugStatusEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_OnCommandEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib.JournalRecord: type is a value type.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_OnEventEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_OnEventEventHandler: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IServiceEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IPlugEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ICommandEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._ISettingsEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IKeyLicenseEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IUpdateEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_SinkHelper: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate stub for Interop.vsisLib._IJournalEvents_EventProvider: type is sealed.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IService: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Service: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IPlug: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ICommand: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ISettings: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Settings: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IKeyLicense: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.KeyLicense: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IUpdate: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Update: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.ILanguages: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.languages: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.IJournal: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_Event: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib.Journal: type is an interface.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_OnChangedModuleEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_OnChangedParameterEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_OnChangedParametersEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_OnKeyExpiredEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_OnKeyStateChangeEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadStartEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadFinishEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnDownloadProgressEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnReactionOnUpdateEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyStartEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnReserveProgressEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyProgressEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnApplyFinishEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnErrorEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnInfoMessageEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnNeedStopReasonEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnNeedStopEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnTryRollbackEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnUpdateStartEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_OnPreUpdateFinishedEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_OnPlugStatusEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_OnCommandEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_OnEventEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_OnEventEventHandler: type is a delegate.
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IServiceEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IPlugEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ICommandEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._ISettingsEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IKeyLicenseEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IUpdateEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
+D:\Projects\Vba32ControlCenter\src\Libraries\ARM2_dbcontrol\Fakes\Interop.vsisLib.fakes : warning : Cannot generate shim for Interop.vsisLib._IJournalEvents_EventProvider: type is not visible to exported or assembly(Interop.vsisLib.Fakes).
