@@ -1,0 +1,1619 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Interop.vsisLib.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Interop.vsisLib.Fakes.ShimJournalClass">
+            <summary>Shim type of Interop.vsisLib.JournalClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.#ctor(Interop.vsisLib.JournalClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.Bind(Interop.vsisLib.IJournal)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.Bind(Interop.vsisLib.IPlug)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.Bind(Interop.vsisLib.Journal)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.Bind(Interop.vsisLib._IJournalEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalClass.Bind(Interop.vsisLib._IPlugEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimJournalClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimJournalClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimJournalRecord">
+            <summary>Shim type of Interop.vsisLib.JournalRecord</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalRecord.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalRecord.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimJournalRecord.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimJournalRecord.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimJournalRecord.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimKeyInfo">
+            <summary>Shim type of Interop.vsisLib.KeyInfo</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyInfo.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyInfo.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyInfo.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimKeyInfo.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimKeyInfo.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimKeyLicenseClass">
+            <summary>Shim type of Interop.vsisLib.KeyLicenseClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.#ctor(Interop.vsisLib.KeyLicenseClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.Bind(Interop.vsisLib.IKeyLicense)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.Bind(Interop.vsisLib.KeyLicense)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimKeyLicenseClass.Bind(Interop.vsisLib._IKeyLicenseEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimKeyLicenseClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimKeyLicenseClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimPairString">
+            <summary>Shim type of Interop.vsisLib.PairString</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimPairString.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimPairString.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimPairString.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimPairString.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimPairString.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimServiceClass">
+            <summary>Shim type of Interop.vsisLib.ServiceClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.#ctor(Interop.vsisLib.ServiceClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib.ICommand)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib.IPlug)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib.IService)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib.Service)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib._ICommandEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib._IPlugEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimServiceClass.Bind(Interop.vsisLib._IServiceEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimServiceClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimServiceClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimSettingsClass">
+            <summary>Shim type of Interop.vsisLib.SettingsClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.#ctor(Interop.vsisLib.SettingsClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.Bind(Interop.vsisLib.IPlug)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.Bind(Interop.vsisLib.ISettings)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.Bind(Interop.vsisLib.Settings)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.Bind(Interop.vsisLib._IPlugEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimSettingsClass.Bind(Interop.vsisLib._ISettingsEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimSettingsClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimSettingsClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimUpdateClass">
+            <summary>Shim type of Interop.vsisLib.UpdateClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.#ctor(Interop.vsisLib.UpdateClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.Bind(Interop.vsisLib.IUpdate)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.Bind(Interop.vsisLib.Update)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimUpdateClass.Bind(Interop.vsisLib._IUpdateEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimUpdateClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimUpdateClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._ICommandEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.#ctor(Interop.vsisLib._ICommandEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.Bind(Interop.vsisLib._ICommandEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _ICommandEvents_SinkHelper._ICommandEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.OnEventUInt64StringUInt32">
+            <summary>Sets the shim of _ICommandEvents_SinkHelper.OnEvent(UInt64 , String , UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ICommandEvents_SinkHelper.AllInstances.OnEventUInt64StringUInt32">
+            <summary>Sets the shim of _ICommandEvents_SinkHelper.OnEvent(UInt64 , String , UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._IJournalEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.#ctor(Interop.vsisLib._IJournalEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.Bind(Interop.vsisLib._IJournalEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _IJournalEvents_SinkHelper._IJournalEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.OnEventString">
+            <summary>Sets the shim of _IJournalEvents_SinkHelper.OnEvent(String )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IJournalEvents_SinkHelper.AllInstances.OnEventString">
+            <summary>Sets the shim of _IJournalEvents_SinkHelper.OnEvent(String )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._IKeyLicenseEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.#ctor(Interop.vsisLib._IKeyLicenseEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.Bind(Interop.vsisLib._IKeyLicenseEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _IKeyLicenseEvents_SinkHelper._IKeyLicenseEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.OnKeyExpired">
+            <summary>Sets the shim of _IKeyLicenseEvents_SinkHelper.OnKeyExpired()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.OnKeyStateChange">
+            <summary>Sets the shim of _IKeyLicenseEvents_SinkHelper.OnKeyStateChange()</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.AllInstances.OnKeyExpired">
+            <summary>Sets the shim of _IKeyLicenseEvents_SinkHelper.OnKeyExpired()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IKeyLicenseEvents_SinkHelper.AllInstances.OnKeyStateChange">
+            <summary>Sets the shim of _IKeyLicenseEvents_SinkHelper.OnKeyStateChange()</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._IPlugEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.#ctor(Interop.vsisLib._IPlugEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.Bind(Interop.vsisLib._IPlugEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _IPlugEvents_SinkHelper._IPlugEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.OnCommandStringArrayStringArrayRef">
+            <summary>Sets the shim of _IPlugEvents_SinkHelper.OnCommand(String[] , String[]&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.OnPlugStatusUInt32">
+            <summary>Sets the shim of _IPlugEvents_SinkHelper.OnPlugStatus(UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.AllInstances.OnCommandStringArrayStringArrayRef">
+            <summary>Sets the shim of _IPlugEvents_SinkHelper.OnCommand(String[] , String[]&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IPlugEvents_SinkHelper.AllInstances.OnPlugStatusUInt32">
+            <summary>Sets the shim of _IPlugEvents_SinkHelper.OnPlugStatus(UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._IServiceEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.#ctor(Interop.vsisLib._IServiceEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.Bind(Interop.vsisLib._IServiceEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _IServiceEvents_SinkHelper._IServiceEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.OnChangedModuleStringUInt32">
+            <summary>Sets the shim of _IServiceEvents_SinkHelper.OnChangedModule(String , UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IServiceEvents_SinkHelper.AllInstances.OnChangedModuleStringUInt32">
+            <summary>Sets the shim of _IServiceEvents_SinkHelper.OnChangedModule(String , UInt32 )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._ISettingsEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.#ctor(Interop.vsisLib._ISettingsEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.Bind(Interop.vsisLib._ISettingsEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _ISettingsEvents_SinkHelper._ISettingsEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.OnChangedParameterStringString">
+            <summary>Sets the shim of _ISettingsEvents_SinkHelper.OnChangedParameter(String , String )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.OnChangedParametersStringStringArray">
+            <summary>Sets the shim of _ISettingsEvents_SinkHelper.OnChangedParameters(String , String[] )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.AllInstances.OnChangedParameterStringString">
+            <summary>Sets the shim of _ISettingsEvents_SinkHelper.OnChangedParameter(String , String )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_ISettingsEvents_SinkHelper.AllInstances.OnChangedParametersStringStringArray">
+            <summary>Sets the shim of _ISettingsEvents_SinkHelper.OnChangedParameters(String , String[] )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper">
+            <summary>Shim type of Interop.vsisLib._IUpdateEvents_SinkHelper</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.#ctor(Interop.vsisLib._IUpdateEvents_SinkHelper)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.Bind(Interop.vsisLib._IUpdateEvents)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.Constructor">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper._IUpdateEvents_SinkHelper()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnApplyFinishInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyFinish(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnApplyProgressStringUInt32UInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyProgress(String , UInt32 , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnApplyStart">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyStart()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnDownloadFinishInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadFinish(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnDownloadProgressStringInt32Int32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadProgress(String , Int32 , Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnDownloadStart">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadStart()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnErrorStringUInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnError(String , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnInfoMessageString">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnInfoMessage(String )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnNeedStopInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnNeedStop(Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnNeedStopReasonStringInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnNeedStopReason(String , Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnPreUpdateFinishedInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnPreUpdateFinished(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnReactionOnUpdatePairStringArray">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnReactionOnUpdate(PairString[] )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnReserveProgressStringUInt32UInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnReserveProgress(String , UInt32 , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnTryRollbackInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnTryRollback(Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.OnUpdateStartStringArray">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnUpdateStart(String[] )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnApplyFinishInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyFinish(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnApplyProgressStringUInt32UInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyProgress(String , UInt32 , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnApplyStart">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnApplyStart()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnDownloadFinishInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadFinish(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnDownloadProgressStringInt32Int32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadProgress(String , Int32 , Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnDownloadStart">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnDownloadStart()</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnErrorStringUInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnError(String , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnInfoMessageString">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnInfoMessage(String )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnNeedStopInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnNeedStop(Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnNeedStopReasonStringInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnNeedStopReason(String , Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnPreUpdateFinishedInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnPreUpdateFinished(Int32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnReactionOnUpdatePairStringArray">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnReactionOnUpdate(PairString[] )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnReserveProgressStringUInt32UInt32">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnReserveProgress(String , UInt32 , UInt32 )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnTryRollbackInt32Ref">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnTryRollback(Int32&amp; )</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.Shim_IUpdateEvents_SinkHelper.AllInstances.OnUpdateStartStringArray">
+            <summary>Sets the shim of _IUpdateEvents_SinkHelper.OnUpdateStart(String[] )</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimlanguagesClass">
+            <summary>Shim type of Interop.vsisLib.languagesClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.#ctor(Interop.vsisLib.languagesClass)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.Bind(Interop.vsisLib.ILanguages)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.Bind(Interop.vsisLib.IPlug)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.Bind(Interop.vsisLib._IPlugEvents_Event)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.ShimlanguagesClass.Bind(Interop.vsisLib.languages)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.ShimlanguagesClass.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.ShimlanguagesClass.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubICommand">
+            <summary>Stub type of Interop.vsisLib.ICommand</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubICommand.#ctor">
+            <summary>Initializes a new instance of type StubICommand</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubICommand.AsyncCommandStringString">
+            <summary>Sets the stub of ICommand.AsyncCommand(String args, String _id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubICommand.CommandString">
+            <summary>Sets the stub of ICommand.Command(String args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubICommand.il::Interop#vsisLib#ICommand#AsyncCommand(System.String,System.String)">
+            <summary>Sets the stub of ICommand.AsyncCommand(String args, String _id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubICommand.il::Interop#vsisLib#ICommand#Command(System.String)">
+            <summary>Sets the stub of ICommand.Command(String args)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubIJournal">
+            <summary>Stub type of Interop.vsisLib.IJournal</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIJournal.#ctor">
+            <summary>Initializes a new instance of type StubIJournal</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIJournal.DeleteRecordsUInt64">
+            <summary>Sets the stub of IJournal.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIJournal.GetModuleJournalStringUInt64UInt64">
+            <summary>Sets the stub of IJournal.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIJournal.il::Interop#vsisLib#IJournal#DeleteRecords(System.UInt64)">
+            <summary>Sets the stub of IJournal.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIJournal.il::Interop#vsisLib#IJournal#GetModuleJournal(System.String,System.UInt64,System.UInt64)">
+            <summary>Sets the stub of IJournal.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIJournal.il::Interop#vsisLib#IJournal#Write(Interop.vsisLib.JournalRecord@,System.UInt32)">
+            <summary>Sets the stub of IJournal.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIJournal.WriteJournalRecordRefUInt32">
+            <summary>Sets the stub of IJournal.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubIKeyLicense">
+            <summary>Stub type of Interop.vsisLib.IKeyLicense</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIKeyLicense.#ctor">
+            <summary>Initializes a new instance of type StubIKeyLicense</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIKeyLicense.GetKeyInfo">
+            <summary>Sets the stub of IKeyLicense.GetKeyInfo()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIKeyLicense.il::Interop#vsisLib#IKeyLicense#GetKeyInfo">
+            <summary>Sets the stub of IKeyLicense.GetKeyInfo()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIKeyLicense.il::Interop#vsisLib#IKeyLicense#IsValidKey(System.String)">
+            <summary>Sets the stub of IKeyLicense.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIKeyLicense.IsValidKeyString">
+            <summary>Sets the stub of IKeyLicense.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubILanguages">
+            <summary>Stub type of Interop.vsisLib.ILanguages</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubILanguages.#ctor">
+            <summary>Initializes a new instance of type StubILanguages</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubILanguages.GetLanguageInfoString">
+            <summary>Sets the stub of ILanguages.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubILanguages.GetLanguages">
+            <summary>Sets the stub of ILanguages.GetLanguages()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubILanguages.GetStringStringStringString">
+            <summary>Sets the stub of ILanguages.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubILanguages.GetStringsStringStringStringArray">
+            <summary>Sets the stub of ILanguages.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubILanguages.il::Interop#vsisLib#ILanguages#GetLanguageInfo(System.String)">
+            <summary>Sets the stub of ILanguages.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubILanguages.il::Interop#vsisLib#ILanguages#GetLanguages">
+            <summary>Sets the stub of ILanguages.GetLanguages()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubILanguages.il::Interop#vsisLib#ILanguages#GetString(System.String,System.String,System.String)">
+            <summary>Sets the stub of ILanguages.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubILanguages.il::Interop#vsisLib#ILanguages#GetStrings(System.String,System.String,System.String[])">
+            <summary>Sets the stub of ILanguages.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubIPlug">
+            <summary>Stub type of Interop.vsisLib.IPlug</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.#ctor">
+            <summary>Initializes a new instance of type StubIPlug</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.CommandStringArray">
+            <summary>Sets the stub of IPlug.Command(String[] args)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.GetPlugStatusUInt32Out">
+            <summary>Sets the stub of IPlug.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.GetRealizedInterfaceStringObjectOut">
+            <summary>Sets the stub of IPlug.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.GetRealizedInterfacesStringArrayOut">
+            <summary>Sets the stub of IPlug.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.InitializeService">
+            <summary>Sets the stub of IPlug.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#Command(System.String[])">
+            <summary>Sets the stub of IPlug.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#GetPlugStatus(System.UInt32@)">
+            <summary>Sets the stub of IPlug.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#GetRealizedInterface(System.String,System.Object@)">
+            <summary>Sets the stub of IPlug.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#GetRealizedInterfaces(System.String[]@)">
+            <summary>Sets the stub of IPlug.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#Initialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of IPlug.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#PlugInfo(System.String@,System.UInt32@)">
+            <summary>Sets the stub of IPlug.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIPlug.il::Interop#vsisLib#IPlug#Uninitialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of IPlug.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.PlugInfoStringOutUInt32Out">
+            <summary>Sets the stub of IPlug.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIPlug.UninitializeService">
+            <summary>Sets the stub of IPlug.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubIService">
+            <summary>Stub type of Interop.vsisLib.IService</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIService.#ctor">
+            <summary>Initializes a new instance of type StubIService</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIService.CommandPairStringArray">
+            <summary>Sets the stub of IService.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIService.GetInterfaceStringString">
+            <summary>Sets the stub of IService.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIService.GetModulesId">
+            <summary>Sets the stub of IService.GetModulesId()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIService.il::Interop#vsisLib#IService#Command(Interop.vsisLib.PairString[])">
+            <summary>Sets the stub of IService.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIService.il::Interop#vsisLib#IService#GetInterface(System.String,System.String)">
+            <summary>Sets the stub of IService.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIService.il::Interop#vsisLib#IService#GetModulesId">
+            <summary>Sets the stub of IService.GetModulesId()</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubISettings">
+            <summary>Stub type of Interop.vsisLib.ISettings</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubISettings.#ctor">
+            <summary>Initializes a new instance of type StubISettings</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubISettings.DelParameterStringString">
+            <summary>Sets the stub of ISettings.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubISettings.GetParameterStringStringObjectOutUInt32Out">
+            <summary>Sets the stub of ISettings.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubISettings.GetParametersString">
+            <summary>Sets the stub of ISettings.GetParameters(String module_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubISettings.il::Interop#vsisLib#ISettings#DelParameter(System.String,System.String)">
+            <summary>Sets the stub of ISettings.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubISettings.il::Interop#vsisLib#ISettings#GetParameter(System.String,System.String,System.Object@,System.UInt32@)">
+            <summary>Sets the stub of ISettings.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubISettings.il::Interop#vsisLib#ISettings#GetParameters(System.String)">
+            <summary>Sets the stub of ISettings.GetParameters(String module_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubISettings.il::Interop#vsisLib#ISettings#SetParameter(System.String,System.String,System.Object,System.UInt32)">
+            <summary>Sets the stub of ISettings.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubISettings.SetParameterStringStringObjectUInt32">
+            <summary>Sets the stub of ISettings.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubIUpdate">
+            <summary>Stub type of Interop.vsisLib.IUpdate</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIUpdate.#ctor">
+            <summary>Initializes a new instance of type StubIUpdate</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIUpdate.il::Interop#vsisLib#IUpdate#RepairNow(System.String[])">
+            <summary>Sets the stub of IUpdate.RepairNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIUpdate.il::Interop#vsisLib#IUpdate#ReserveNow(System.String[])">
+            <summary>Sets the stub of IUpdate.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIUpdate.il::Interop#vsisLib#IUpdate#RollbackNow(System.String[])">
+            <summary>Sets the stub of IUpdate.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubIUpdate.il::Interop#vsisLib#IUpdate#UpdateNow(System.String[])">
+            <summary>Sets the stub of IUpdate.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIUpdate.RepairNowStringArray">
+            <summary>Sets the stub of IUpdate.RepairNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIUpdate.ReserveNowStringArray">
+            <summary>Sets the stub of IUpdate.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIUpdate.RollbackNowStringArray">
+            <summary>Sets the stub of IUpdate.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubIUpdate.UpdateNowStringArray">
+            <summary>Sets the stub of IUpdate.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubJournal">
+            <summary>Stub type of Interop.vsisLib.Journal</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournal.#ctor">
+            <summary>Initializes a new instance of type StubJournal</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournal.DeleteRecordsUInt64">
+            <summary>Sets the stub of IJournal.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournal.GetModuleJournalStringUInt64UInt64">
+            <summary>Sets the stub of IJournal.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournal.il::Interop#vsisLib#IJournal#DeleteRecords(System.UInt64)">
+            <summary>Sets the stub of IJournal.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournal.il::Interop#vsisLib#IJournal#GetModuleJournal(System.String,System.UInt64,System.UInt64)">
+            <summary>Sets the stub of IJournal.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournal.il::Interop#vsisLib#IJournal#Write(Interop.vsisLib.JournalRecord@,System.UInt32)">
+            <summary>Sets the stub of IJournal.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournal.WriteJournalRecordRefUInt32">
+            <summary>Sets the stub of IJournal.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubJournalClass">
+            <summary>Stub type of Interop.vsisLib.JournalClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.Command(System.String[])">
+            <summary>Sets the stub of JournalClass.Command(String[] args)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.CommandStringArray">
+            <summary>Sets the stub of JournalClass.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.DeleteRecords(System.UInt64)">
+            <summary>Sets the stub of JournalClass.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.DeleteRecordsUInt64">
+            <summary>Sets the stub of JournalClass.DeleteRecords(UInt64 time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.GetModuleJournal(System.String,System.UInt64,System.UInt64)">
+            <summary>Sets the stub of JournalClass.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.GetModuleJournalStringUInt64UInt64">
+            <summary>Sets the stub of JournalClass.GetModuleJournal(String module_id, UInt64 start_time, UInt64 finish_time)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.GetPlugStatus(System.UInt32@)">
+            <summary>Sets the stub of JournalClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.GetPlugStatusUInt32Out">
+            <summary>Sets the stub of JournalClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.GetRealizedInterface(System.String,System.Object@)">
+            <summary>Sets the stub of JournalClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.GetRealizedInterfaceStringObjectOut">
+            <summary>Sets the stub of JournalClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.GetRealizedInterfaces(System.String[]@)">
+            <summary>Sets the stub of JournalClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.GetRealizedInterfacesStringArrayOut">
+            <summary>Sets the stub of JournalClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.Initialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of JournalClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.InitializeService">
+            <summary>Sets the stub of JournalClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.InitializeStub">
+            <summary>Initializes a new instance of type StubJournalClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.PlugInfo(System.String@,System.UInt32@)">
+            <summary>Sets the stub of JournalClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.PlugInfoStringOutUInt32Out">
+            <summary>Sets the stub of JournalClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.Uninitialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of JournalClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.UninitializeService">
+            <summary>Sets the stub of JournalClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubJournalClass.Write(Interop.vsisLib.JournalRecord@,System.UInt32)">
+            <summary>Sets the stub of JournalClass.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubJournalClass.WriteJournalRecordRefUInt32">
+            <summary>Sets the stub of JournalClass.Write(JournalRecord&amp; record, UInt32 journal_type)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubJournalClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubJournalClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubJournalClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubKeyLicense">
+            <summary>Stub type of Interop.vsisLib.KeyLicense</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicense.#ctor">
+            <summary>Initializes a new instance of type StubKeyLicense</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubKeyLicense.GetKeyInfo">
+            <summary>Sets the stub of IKeyLicense.GetKeyInfo()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicense.il::Interop#vsisLib#IKeyLicense#GetKeyInfo">
+            <summary>Sets the stub of IKeyLicense.GetKeyInfo()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicense.il::Interop#vsisLib#IKeyLicense#IsValidKey(System.String)">
+            <summary>Sets the stub of IKeyLicense.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubKeyLicense.IsValidKeyString">
+            <summary>Sets the stub of IKeyLicense.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubKeyLicenseClass">
+            <summary>Stub type of Interop.vsisLib.KeyLicenseClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicenseClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicenseClass.GetKeyInfo">
+            <summary>Sets the stub of KeyLicenseClass.GetKeyInfo()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubKeyLicenseClass.GetKeyInfo01">
+            <summary>Sets the stub of KeyLicenseClass.GetKeyInfo()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicenseClass.InitializeStub">
+            <summary>Initializes a new instance of type StubKeyLicenseClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubKeyLicenseClass.IsValidKey(System.String)">
+            <summary>Sets the stub of KeyLicenseClass.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubKeyLicenseClass.IsValidKeyString">
+            <summary>Sets the stub of KeyLicenseClass.IsValidKey(String complectation)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubKeyLicenseClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubKeyLicenseClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubKeyLicenseClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubService">
+            <summary>Stub type of Interop.vsisLib.Service</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubService.#ctor">
+            <summary>Initializes a new instance of type StubService</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubService.CommandPairStringArray">
+            <summary>Sets the stub of IService.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubService.GetInterfaceStringString">
+            <summary>Sets the stub of IService.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubService.GetModulesId">
+            <summary>Sets the stub of IService.GetModulesId()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubService.il::Interop#vsisLib#IService#Command(Interop.vsisLib.PairString[])">
+            <summary>Sets the stub of IService.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubService.il::Interop#vsisLib#IService#GetInterface(System.String,System.String)">
+            <summary>Sets the stub of IService.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubService.il::Interop#vsisLib#IService#GetModulesId">
+            <summary>Sets the stub of IService.GetModulesId()</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubServiceClass">
+            <summary>Stub type of Interop.vsisLib.ServiceClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.AsyncCommand(System.String,System.String)">
+            <summary>Sets the stub of ServiceClass.AsyncCommand(String args, String _id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.AsyncCommandStringString">
+            <summary>Sets the stub of ServiceClass.AsyncCommand(String args, String _id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.Command(System.String[])">
+            <summary>Sets the stub of ServiceClass.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.Command(System.String)">
+            <summary>Sets the stub of ServiceClass.Command(String args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.Command(Interop.vsisLib.PairString[])">
+            <summary>Sets the stub of ServiceClass.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.CommandPairStringArray">
+            <summary>Sets the stub of ServiceClass.Command(PairString[] parameters)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.CommandString">
+            <summary>Sets the stub of ServiceClass.Command(String args)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.CommandStringArray">
+            <summary>Sets the stub of ServiceClass.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.GetInterface(System.String,System.String)">
+            <summary>Sets the stub of ServiceClass.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.GetInterfaceStringString">
+            <summary>Sets the stub of ServiceClass.GetInterface(String modules_id, String interfce_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.GetModulesId">
+            <summary>Sets the stub of ServiceClass.GetModulesId()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.GetModulesId01">
+            <summary>Sets the stub of ServiceClass.GetModulesId()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.GetPlugStatus(System.UInt32@)">
+            <summary>Sets the stub of ServiceClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.GetPlugStatusUInt32Out">
+            <summary>Sets the stub of ServiceClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.GetRealizedInterface(System.String,System.Object@)">
+            <summary>Sets the stub of ServiceClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.GetRealizedInterfaceStringObjectOut">
+            <summary>Sets the stub of ServiceClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.GetRealizedInterfaces(System.String[]@)">
+            <summary>Sets the stub of ServiceClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.GetRealizedInterfacesStringArrayOut">
+            <summary>Sets the stub of ServiceClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.Initialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of ServiceClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.InitializeService">
+            <summary>Sets the stub of ServiceClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.InitializeStub">
+            <summary>Initializes a new instance of type StubServiceClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.PlugInfo(System.String@,System.UInt32@)">
+            <summary>Sets the stub of ServiceClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.PlugInfoStringOutUInt32Out">
+            <summary>Sets the stub of ServiceClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubServiceClass.Uninitialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of ServiceClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubServiceClass.UninitializeService">
+            <summary>Sets the stub of ServiceClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubServiceClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubServiceClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubServiceClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubSettings">
+            <summary>Stub type of Interop.vsisLib.Settings</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettings.#ctor">
+            <summary>Initializes a new instance of type StubSettings</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettings.DelParameterStringString">
+            <summary>Sets the stub of ISettings.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettings.GetParameterStringStringObjectOutUInt32Out">
+            <summary>Sets the stub of ISettings.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettings.GetParametersString">
+            <summary>Sets the stub of ISettings.GetParameters(String module_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettings.il::Interop#vsisLib#ISettings#DelParameter(System.String,System.String)">
+            <summary>Sets the stub of ISettings.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettings.il::Interop#vsisLib#ISettings#GetParameter(System.String,System.String,System.Object@,System.UInt32@)">
+            <summary>Sets the stub of ISettings.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettings.il::Interop#vsisLib#ISettings#GetParameters(System.String)">
+            <summary>Sets the stub of ISettings.GetParameters(String module_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettings.il::Interop#vsisLib#ISettings#SetParameter(System.String,System.String,System.Object,System.UInt32)">
+            <summary>Sets the stub of ISettings.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettings.SetParameterStringStringObjectUInt32">
+            <summary>Sets the stub of ISettings.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubSettingsClass">
+            <summary>Stub type of Interop.vsisLib.SettingsClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.Command(System.String[])">
+            <summary>Sets the stub of SettingsClass.Command(String[] args)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.CommandStringArray">
+            <summary>Sets the stub of SettingsClass.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.DelParameter(System.String,System.String)">
+            <summary>Sets the stub of SettingsClass.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.DelParameterStringString">
+            <summary>Sets the stub of SettingsClass.DelParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.GetParameter(System.String,System.String,System.Object@,System.UInt32@)">
+            <summary>Sets the stub of SettingsClass.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.GetParameterStringStringObjectOutUInt32Out">
+            <summary>Sets the stub of SettingsClass.GetParameter(String module_id, String parameter_id, Object&amp; parameter, UInt32&amp; SettingsTypes)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.GetParameters(System.String)">
+            <summary>Sets the stub of SettingsClass.GetParameters(String module_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.GetParametersString">
+            <summary>Sets the stub of SettingsClass.GetParameters(String module_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.GetPlugStatus(System.UInt32@)">
+            <summary>Sets the stub of SettingsClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.GetPlugStatusUInt32Out">
+            <summary>Sets the stub of SettingsClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.GetRealizedInterface(System.String,System.Object@)">
+            <summary>Sets the stub of SettingsClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.GetRealizedInterfaceStringObjectOut">
+            <summary>Sets the stub of SettingsClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.GetRealizedInterfaces(System.String[]@)">
+            <summary>Sets the stub of SettingsClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.GetRealizedInterfacesStringArrayOut">
+            <summary>Sets the stub of SettingsClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.Initialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of SettingsClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.InitializeService">
+            <summary>Sets the stub of SettingsClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.InitializeStub">
+            <summary>Initializes a new instance of type StubSettingsClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.PlugInfo(System.String@,System.UInt32@)">
+            <summary>Sets the stub of SettingsClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.PlugInfoStringOutUInt32Out">
+            <summary>Sets the stub of SettingsClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.SetParameter(System.String,System.String,System.Object,System.UInt32)">
+            <summary>Sets the stub of SettingsClass.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.SetParameterStringStringObjectUInt32">
+            <summary>Sets the stub of SettingsClass.SetParameter(String module_id, String parameter_id, Object parameter, UInt32 SettingsTypes)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubSettingsClass.Uninitialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of SettingsClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubSettingsClass.UninitializeService">
+            <summary>Sets the stub of SettingsClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubSettingsClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubSettingsClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubSettingsClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubUpdate">
+            <summary>Stub type of Interop.vsisLib.Update</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdate.#ctor">
+            <summary>Initializes a new instance of type StubUpdate</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdate.il::Interop#vsisLib#IUpdate#RepairNow(System.String[])">
+            <summary>Sets the stub of IUpdate.RepairNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdate.il::Interop#vsisLib#IUpdate#ReserveNow(System.String[])">
+            <summary>Sets the stub of IUpdate.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdate.il::Interop#vsisLib#IUpdate#RollbackNow(System.String[])">
+            <summary>Sets the stub of IUpdate.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdate.il::Interop#vsisLib#IUpdate#UpdateNow(System.String[])">
+            <summary>Sets the stub of IUpdate.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdate.RepairNowStringArray">
+            <summary>Sets the stub of IUpdate.RepairNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdate.ReserveNowStringArray">
+            <summary>Sets the stub of IUpdate.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdate.RollbackNowStringArray">
+            <summary>Sets the stub of IUpdate.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdate.UpdateNowStringArray">
+            <summary>Sets the stub of IUpdate.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StubUpdateClass">
+            <summary>Stub type of Interop.vsisLib.UpdateClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.InitializeStub">
+            <summary>Initializes a new instance of type StubUpdateClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.RepairNow(System.String[])">
+            <summary>Sets the stub of UpdateClass.RepairNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdateClass.RepairNowStringArray">
+            <summary>Sets the stub of UpdateClass.RepairNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.ReserveNow(System.String[])">
+            <summary>Sets the stub of UpdateClass.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdateClass.ReserveNowStringArray">
+            <summary>Sets the stub of UpdateClass.ReserveNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.RollbackNow(System.String[])">
+            <summary>Sets the stub of UpdateClass.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdateClass.RollbackNowStringArray">
+            <summary>Sets the stub of UpdateClass.RollbackNow(String[] params)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StubUpdateClass.UpdateNow(System.String[])">
+            <summary>Sets the stub of UpdateClass.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StubUpdateClass.UpdateNowStringArray">
+            <summary>Sets the stub of UpdateClass.UpdateNow(String[] params)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubUpdateClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubUpdateClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StubUpdateClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_ICommandEvents">
+            <summary>Stub type of Interop.vsisLib._ICommandEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ICommandEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_ICommandEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ICommandEvents.il::Interop#vsisLib#_ICommandEvents#OnEvent(System.UInt64,System.String,System.UInt32)">
+            <summary>Sets the stub of _ICommandEvents.OnEvent(UInt64 _id, String result, UInt32 status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_ICommandEvents.OnEventUInt64StringUInt32">
+            <summary>Sets the stub of _ICommandEvents.OnEvent(UInt64 _id, String result, UInt32 status)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_ICommandEvents_Event">
+            <summary>Stub type of Interop.vsisLib._ICommandEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ICommandEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_ICommandEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IJournalEvents">
+            <summary>Stub type of Interop.vsisLib._IJournalEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IJournalEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_IJournalEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IJournalEvents.il::Interop#vsisLib#_IJournalEvents#OnEvent(System.String)">
+            <summary>Sets the stub of _IJournalEvents.OnEvent(String module_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IJournalEvents.OnEventString">
+            <summary>Sets the stub of _IJournalEvents.OnEvent(String module_id)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IJournalEvents_Event">
+            <summary>Stub type of Interop.vsisLib._IJournalEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IJournalEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_IJournalEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents">
+            <summary>Stub type of Interop.vsisLib._IKeyLicenseEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_IKeyLicenseEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents.il::Interop#vsisLib#_IKeyLicenseEvents#OnKeyExpired">
+            <summary>Sets the stub of _IKeyLicenseEvents.OnKeyExpired()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents.il::Interop#vsisLib#_IKeyLicenseEvents#OnKeyStateChange">
+            <summary>Sets the stub of _IKeyLicenseEvents.OnKeyStateChange()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents.OnKeyExpired">
+            <summary>Sets the stub of _IKeyLicenseEvents.OnKeyExpired()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents.OnKeyStateChange">
+            <summary>Sets the stub of _IKeyLicenseEvents.OnKeyStateChange()</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents_Event">
+            <summary>Stub type of Interop.vsisLib._IKeyLicenseEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IKeyLicenseEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_IKeyLicenseEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IPlugEvents">
+            <summary>Stub type of Interop.vsisLib._IPlugEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IPlugEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_IPlugEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IPlugEvents.il::Interop#vsisLib#_IPlugEvents#OnCommand(System.String[],System.String[]@)">
+            <summary>Sets the stub of _IPlugEvents.OnCommand(String[] args, String[]&amp; results)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IPlugEvents.il::Interop#vsisLib#_IPlugEvents#OnPlugStatus(System.UInt32)">
+            <summary>Sets the stub of _IPlugEvents.OnPlugStatus(UInt32 status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IPlugEvents.OnCommandStringArrayStringArrayOut">
+            <summary>Sets the stub of _IPlugEvents.OnCommand(String[] args, String[]&amp; results)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IPlugEvents.OnPlugStatusUInt32">
+            <summary>Sets the stub of _IPlugEvents.OnPlugStatus(UInt32 status)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IPlugEvents_Event">
+            <summary>Stub type of Interop.vsisLib._IPlugEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IPlugEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_IPlugEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IServiceEvents">
+            <summary>Stub type of Interop.vsisLib._IServiceEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IServiceEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_IServiceEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IServiceEvents.il::Interop#vsisLib#_IServiceEvents#OnChangedModule(System.String,System.UInt32)">
+            <summary>Sets the stub of _IServiceEvents.OnChangedModule(String module_id, UInt32 status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IServiceEvents.OnChangedModuleStringUInt32">
+            <summary>Sets the stub of _IServiceEvents.OnChangedModule(String module_id, UInt32 status)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IServiceEvents_Event">
+            <summary>Stub type of Interop.vsisLib._IServiceEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IServiceEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_IServiceEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_ISettingsEvents">
+            <summary>Stub type of Interop.vsisLib._ISettingsEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ISettingsEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_ISettingsEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ISettingsEvents.il::Interop#vsisLib#_ISettingsEvents#OnChangedParameter(System.String,System.String)">
+            <summary>Sets the stub of _ISettingsEvents.OnChangedParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ISettingsEvents.il::Interop#vsisLib#_ISettingsEvents#OnChangedParameters(System.String,System.String[])">
+            <summary>Sets the stub of _ISettingsEvents.OnChangedParameters(String module_id, String[] parameter_ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_ISettingsEvents.OnChangedParameterStringString">
+            <summary>Sets the stub of _ISettingsEvents.OnChangedParameter(String module_id, String parameter_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_ISettingsEvents.OnChangedParametersStringStringArray">
+            <summary>Sets the stub of _ISettingsEvents.OnChangedParameters(String module_id, String[] parameter_ids)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_ISettingsEvents_Event">
+            <summary>Stub type of Interop.vsisLib._ISettingsEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_ISettingsEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_ISettingsEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IUpdateEvents">
+            <summary>Stub type of Interop.vsisLib._IUpdateEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.#ctor">
+            <summary>Initializes a new instance of type Stub_IUpdateEvents</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnApplyFinish(System.Int32)">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyFinish(Int32 success)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnApplyProgress(System.String,System.UInt32,System.UInt32)">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyProgress(String file_name, UInt32 curent_size, UInt32 total_size)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnApplyStart">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyStart()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnDownloadFinish(System.Int32)">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadFinish(Int32 success)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnDownloadProgress(System.String,System.Int32,System.Int32)">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadProgress(String file_name, Int32 curent_size, Int32 total_size)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnDownloadStart">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadStart()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnError(System.String,System.UInt32)">
+            <summary>Sets the stub of _IUpdateEvents.OnError(String error_message, UInt32 error_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnInfoMessage(System.String)">
+            <summary>Sets the stub of _IUpdateEvents.OnInfoMessage(String info_message)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnNeedStop(System.Int32@)">
+            <summary>Sets the stub of _IUpdateEvents.OnNeedStop(Int32&amp; stop)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnNeedStopReason(System.String,System.Int32@)">
+            <summary>Sets the stub of _IUpdateEvents.OnNeedStopReason(String info_message, Int32&amp; stop)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnPreUpdateFinished(System.Int32)">
+            <summary>Sets the stub of _IUpdateEvents.OnPreUpdateFinished(Int32 success)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnReactionOnUpdate(Interop.vsisLib.PairString[])">
+            <summary>Sets the stub of _IUpdateEvents.OnReactionOnUpdate(PairString[] reactions)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnReserveProgress(System.String,System.UInt32,System.UInt32)">
+            <summary>Sets the stub of _IUpdateEvents.OnReserveProgress(String file_name, UInt32 curent_size, UInt32 total_size)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnTryRollback(System.Int32@)">
+            <summary>Sets the stub of _IUpdateEvents.OnTryRollback(Int32&amp; try_roll_back)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents.il::Interop#vsisLib#_IUpdateEvents#OnUpdateStart(System.String[])">
+            <summary>Sets the stub of _IUpdateEvents.OnUpdateStart(String[] products)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnApplyFinishInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyFinish(Int32 success)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnApplyProgressStringUInt32UInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyProgress(String file_name, UInt32 curent_size, UInt32 total_size)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnApplyStart">
+            <summary>Sets the stub of _IUpdateEvents.OnApplyStart()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnDownloadFinishInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadFinish(Int32 success)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnDownloadProgressStringInt32Int32">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadProgress(String file_name, Int32 curent_size, Int32 total_size)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnDownloadStart">
+            <summary>Sets the stub of _IUpdateEvents.OnDownloadStart()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnErrorStringUInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnError(String error_message, UInt32 error_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnInfoMessageString">
+            <summary>Sets the stub of _IUpdateEvents.OnInfoMessage(String info_message)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnNeedStopInt32Out">
+            <summary>Sets the stub of _IUpdateEvents.OnNeedStop(Int32&amp; stop)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnNeedStopReasonStringInt32Out">
+            <summary>Sets the stub of _IUpdateEvents.OnNeedStopReason(String info_message, Int32&amp; stop)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnPreUpdateFinishedInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnPreUpdateFinished(Int32 success)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnReactionOnUpdatePairStringArray">
+            <summary>Sets the stub of _IUpdateEvents.OnReactionOnUpdate(PairString[] reactions)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnReserveProgressStringUInt32UInt32">
+            <summary>Sets the stub of _IUpdateEvents.OnReserveProgress(String file_name, UInt32 curent_size, UInt32 total_size)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnTryRollbackInt32Out">
+            <summary>Sets the stub of _IUpdateEvents.OnTryRollback(Int32&amp; try_roll_back)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stub_IUpdateEvents.OnUpdateStartStringArray">
+            <summary>Sets the stub of _IUpdateEvents.OnUpdateStart(String[] products)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stub_IUpdateEvents_Event">
+            <summary>Stub type of Interop.vsisLib._IUpdateEvents_Event</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stub_IUpdateEvents_Event.#ctor">
+            <summary>Initializes a new instance of type Stub_IUpdateEvents_Event</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.Stublanguages">
+            <summary>Stub type of Interop.vsisLib.languages</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stublanguages.#ctor">
+            <summary>Initializes a new instance of type Stublanguages</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stublanguages.GetLanguageInfoString">
+            <summary>Sets the stub of ILanguages.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stublanguages.GetLanguages">
+            <summary>Sets the stub of ILanguages.GetLanguages()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stublanguages.GetStringStringStringString">
+            <summary>Sets the stub of ILanguages.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.Stublanguages.GetStringsStringStringStringArray">
+            <summary>Sets the stub of ILanguages.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stublanguages.il::Interop#vsisLib#ILanguages#GetLanguageInfo(System.String)">
+            <summary>Sets the stub of ILanguages.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stublanguages.il::Interop#vsisLib#ILanguages#GetLanguages">
+            <summary>Sets the stub of ILanguages.GetLanguages()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stublanguages.il::Interop#vsisLib#ILanguages#GetString(System.String,System.String,System.String)">
+            <summary>Sets the stub of ILanguages.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.Stublanguages.il::Interop#vsisLib#ILanguages#GetStrings(System.String,System.String,System.String[])">
+            <summary>Sets the stub of ILanguages.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="T:Interop.vsisLib.Fakes.StublanguagesClass">
+            <summary>Stub type of Interop.vsisLib.languagesClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.Command(System.String[])">
+            <summary>Sets the stub of languagesClass.Command(String[] args)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.CommandStringArray">
+            <summary>Sets the stub of languagesClass.Command(String[] args)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetLanguageInfo(System.String)">
+            <summary>Sets the stub of languagesClass.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetLanguageInfoString">
+            <summary>Sets the stub of languagesClass.GetLanguageInfo(String language)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetLanguages">
+            <summary>Sets the stub of languagesClass.GetLanguages()</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetLanguages01">
+            <summary>Sets the stub of languagesClass.GetLanguages()</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetPlugStatus(System.UInt32@)">
+            <summary>Sets the stub of languagesClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetPlugStatusUInt32Out">
+            <summary>Sets the stub of languagesClass.GetPlugStatus(UInt32&amp; status)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetRealizedInterface(System.String,System.Object@)">
+            <summary>Sets the stub of languagesClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetRealizedInterfaceStringObjectOut">
+            <summary>Sets the stub of languagesClass.GetRealizedInterface(String id_, Object&amp; pp_object)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetRealizedInterfaces(System.String[]@)">
+            <summary>Sets the stub of languagesClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetRealizedInterfacesStringArrayOut">
+            <summary>Sets the stub of languagesClass.GetRealizedInterfaces(String[]&amp; ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetString(System.String,System.String,System.String)">
+            <summary>Sets the stub of languagesClass.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetStringStringStringString">
+            <summary>Sets the stub of languagesClass.GetString(String module_id, String language, String string_id)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.GetStrings(System.String,System.String,System.String[])">
+            <summary>Sets the stub of languagesClass.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.GetStringsStringStringStringArray">
+            <summary>Sets the stub of languagesClass.GetStrings(String module_id, String language, String[] string_ids)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.Initialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of languagesClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.InitializeService">
+            <summary>Sets the stub of languagesClass.Initialize(Service p_service)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.InitializeStub">
+            <summary>Initializes a new instance of type StublanguagesClass</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.PlugInfo(System.String@,System.UInt32@)">
+            <summary>Sets the stub of languagesClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.PlugInfoStringOutUInt32Out">
+            <summary>Sets the stub of languagesClass.PlugInfo(String&amp; module_id, UInt32&amp; load_level)</summary>
+        </member>
+        <member name="M:Interop.vsisLib.Fakes.StublanguagesClass.Uninitialize(Interop.vsisLib.Service)">
+            <summary>Sets the stub of languagesClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="F:Interop.vsisLib.Fakes.StublanguagesClass.UninitializeService">
+            <summary>Sets the stub of languagesClass.Uninitialize(Service p_service)</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StublanguagesClass.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StublanguagesClass.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Interop.vsisLib.Fakes.StublanguagesClass.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Microsoft.QualityTools.Testing.Fakes.Delegates.InteropvsisLibDelegates">
+            <summary>Contains custom delegates used for the stubs and shims of Interop.vsisLib</summary>
+        </member>
+    </members>
+</doc>
