@@ -96,3 +96,5 @@
 /src/WebConsole/bin/zh-Hant/Microsoft.Data.Edm.resources.dll
 /src/WebConsole/bin/zh-Hant/Microsoft.Data.OData.resources.dll
 /src/WebConsole/bin/zh-Hant/System.Spatial.resources.dll
+/make/packages
+/src/WebApplication1/obj

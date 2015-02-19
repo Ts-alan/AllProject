@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AjaxControlToolkit">
-      <HintPath>..\packages\AjaxControlToolkit.7.1213\lib\40\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\..\make\packages\AjaxControlToolkit.7.1213\lib\40\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="AjaxMin">
       <HintPath>..\packages\AjaxMin.4.97.4951.28483\lib\net40\AjaxMin.dll</HintPath>
@@ -1316,10 +1316,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\TestProject\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
-      <Project>{92ae384b-3f82-42ab-872f-98636fd00b12}</Project>
-      <Name>ARM2_dbcontrol</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Libraries\CustomControls\CustomControls.csproj">
       <Project>{F3A2BFE1-2C76-4828-94B2-607CE9C12E34}</Project>
       <Name>CustomControls</Name>
@@ -1339,6 +1335,10 @@
     <ProjectReference Include="..\..\src\Libraries\Tasks\Tasks.csproj">
       <Project>{96854EC3-AEBB-4A36-B84F-C5B4FEC76371}</Project>
       <Name>Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj">
+      <Project>{92ae384b-3f82-42ab-872f-98636fd00b12}</Project>
+      <Name>ARM2_dbcontrol</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

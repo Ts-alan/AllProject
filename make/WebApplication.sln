@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "..\src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol.UnitTests", "..\src\Tests\Unit\ARM2_dbcontrol.UnitTests\ARM2_dbcontrol.UnitTests.csproj", "{6ED3869F-31ED-4FA1-9C8A-5A4DD4E4E2E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\..\..\TestProject\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM2_dbcontrol", "..\src\Libraries\ARM2_dbcontrol\ARM2_dbcontrol.csproj", "{92AE384B-3F82-42AB-872F-98636FD00B12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
