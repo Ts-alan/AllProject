@@ -1276,7 +1276,9 @@
     <Content Include="App_Themes\Main\SkinFile.skin" />
     <Content Include="App_Themes\Patriotic\Menu.ContextMenu.skin" />
     <Content Include="App_Themes\Patriotic\SkinFile.skin" />
-    <Content Include="ConnectionStrings.config" />
+    <Content Include="ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Handlers\CheckedComputerTreeHandler.ashx" />
     <Content Include="Handlers\CheckedInstallComputerTreeHandler.ashx" />
     <Content Include="Handlers\ComputerPageHandler.ashx" />

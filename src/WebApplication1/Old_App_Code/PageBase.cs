@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Globalization;
 using System.Threading;
 using System.Text;
+using GreateProfile;
 
 //using VirusBlokAda.Vba32CC.Policies;
 
@@ -70,8 +71,8 @@ public abstract class PageBase : PackViewState.Page
 
     protected void Page_PreInit(object sender, EventArgs e)
     {
-        Page.MasterPageFile = (String) HttpContext.Current.Profile.GetPropertyValue("MasterPage");
-        Page.Theme = (String)HttpContext.Current.Profile.GetPropertyValue("Theme");
+        Page.MasterPageFile = ProfileCommon.CurrentUser.MasterPage;//(String) HttpContext.Current.Profile.GetPropertyValue("MasterPage")!=""?(String) HttpContext.Current.Profile.GetPropertyValue("MasterPage"):"mstrPageMain.master";
+        Page.Theme = ProfileCommon.CurrentUser.Theme; //(String)HttpContext.Current.Profile.GetPropertyValue("Theme");
     }
 
     protected void Page_Init(object sender, EventArgs e)

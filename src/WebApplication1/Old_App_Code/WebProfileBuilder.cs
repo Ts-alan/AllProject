@@ -47,7 +47,10 @@ namespace GreateProfile
 
         public virtual string Theme
         {
-            get { return ((string) (this.GetPropertyValue("Theme"))); }
+            get { return
+                (((string)(this.GetPropertyValue("Theme"))) != "") ?
+                ((string) (this.GetPropertyValue("Theme"))):
+                "Main"; }
             set { this.SetPropertyValue("Theme", value); }
         }
 
@@ -131,8 +134,19 @@ namespace GreateProfile
 
         public virtual string MasterPage
         {
-            get { return ((string) (this.GetPropertyValue("MasterPage"))); }
-            set { this.SetPropertyValue("MasterPage", value); }
+            get
+            {
+                return
+
+                (((string)(HttpContext.Current.Profile.GetPropertyValue("MasterPage"))) != "") ?
+                (string) (this.GetPropertyValue("MasterPage")):
+                "mstrPageMain.master";
+            }
+            set
+            {
+                this.SetPropertyValue("MasterPage", value);
+                HttpContext.Current.Profile.SetPropertyValue("MasterPage", value);
+            }
         }
 
         public virtual string EventFilters
