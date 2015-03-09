@@ -88,12 +88,12 @@ public partial class Controls_PrimitiveFilterComputers : System.Web.UI.UserContr
             switch (this.mode)
             {
                 case PrimitiveFilterComputerTypes.Computers:
-                    return Request.ApplicationPath + "/Handlers/CheckedComputerTreeHandler.ashx";
+                    return "/Handlers/CheckedComputerTreeHandler.ashx";
                 case PrimitiveFilterComputerTypes.InstallComputers:
-                    return Request.ApplicationPath + "/Handlers/CheckedInstallComputerTreeHandler.ashx";
+                    return "/Handlers/CheckedInstallComputerTreeHandler.ashx";
 
                 default:
-                    return Request.ApplicationPath + "/Handlers/CheckedComputerTreeHandler.ashx";
+                    return "/Handlers/CheckedComputerTreeHandler.ashx";
             }
         }
     }

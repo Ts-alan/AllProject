@@ -78,11 +78,13 @@
                     d = data;
                 },
                 error: function (e) {
+                    //alert(e);
                     alert('<%= Resources.Resource.ErrorRequestingDataFromServer%>');
                 }
             });
             return d;
         };
+        
         function ShowComputerTreeDialog() {
 
             var dOpt = {
