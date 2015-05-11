@@ -138,33 +138,6 @@ public partial class Events {
     protected global::VirusBlokAda.CC.CustomControls.GridViewExtended GridView1;
     
     /// <summary>
-    /// lblEventName control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Label lblEventName;
-    
-    /// <summary>
-    /// lblComponentName control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Label lblComponentName;
-    
-    /// <summary>
-    /// Paging1 control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::Controls_PagerUserControl Paging1;
-    
-    /// <summary>
     /// AutoUpdateControl1 control.
     /// </summary>
     /// <remarks>

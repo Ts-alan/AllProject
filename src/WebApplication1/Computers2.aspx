@@ -7,7 +7,7 @@
 <%@ Register Src="~/Controls/PrimitiveFilterDateTime.ascx" TagName="FilterDate" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterRange.ascx" TagName="FilterRange" TagPrefix="flt" %>
 <%@ Register Src="~/Controls/PrimitiveFilterIpAddress.ascx" TagName="FilterIPAddress" TagPrefix="flt" %>
-
+<%@ Register TagPrefix="custom" Namespace="VirusBlokAda.CC.CustomControls" Assembly="CustomControls" %>
 <%@ Register Src="~/Controls/TaskPanel.ascx" TagName="TaskPanel" TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/SimpleTask.ascx" TagName="SimpleTask" TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/CustomizableTask.ascx" TagName="CustomizableTask" TagPrefix="tsk" %>
@@ -27,7 +27,9 @@
     TagPrefix="tsk" %>
 <%@ Register Src="~/Controls/TaskOptionsDialog.ascx" TagName="TaskOptionsDialog"
     TagPrefix="tsk" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="cphMainContainer" Runat="Server">
+<custom:Tree runat="server"/>
     <script type="text/javascript">
 
         var IPAddress = "<%=Resources.Resource.IPAddress %>";
@@ -273,6 +275,7 @@
         };
 
     </script>
+  
     <ajaxToolkit:ToolkitScriptManager  ID="ScriptManager1" runat="server" EnableScriptGlobalization="true" >
         <Scripts>
             <asp:ScriptReference Path="~/js/Safari3AjaxHack.js" />
@@ -367,7 +370,7 @@
             </tsk:TaskPanel>
         </ContentTemplate>
     </asp:UpdatePanel>
-
+  
     <div id="treePanel" class="tree-panel-body" style="z-index: 0; width: 400px; height: 432px; left: 0px; top: 0px;float:left">
         <div id="divTreePanel" class="x-panel x-box-item " style="width: 400px; height: 430px; margin: 0px; top: 0px;">
             <div id="divTreePanelHeader" class="x-docked x-panel-header-default" style="width: 400px; left: 0px; top: 0px;">
@@ -405,7 +408,7 @@
             </div>
         </div>
     </div>
-
+        
     <div id="AdditionalInfoPanel" style="width: 300px; min-height: 150px; padding: 8px; margin: 5px 20px; background-color: Gray; float: left;display: none;"></div>
 
     <input runat="server" id="btnReload" type="button" value="Reload" style="display: none;" />

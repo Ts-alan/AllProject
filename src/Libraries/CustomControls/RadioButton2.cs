@@ -41,7 +41,7 @@ namespace VirusBlokAda.CC.CustomControls
 
         private void RenderInputTag(HtmlTextWriter htw)
         {
-            htw.AddAttribute(HtmlTextWriterAttribute.Id, ClientID);
+            htw.AddAttribute(HtmlTextWriterAttribute.Id, "111");
             htw.AddAttribute(HtmlTextWriterAttribute.Type, "radio");
             htw.AddAttribute(HtmlTextWriterAttribute.Name, GroupName);
             htw.AddAttribute(HtmlTextWriterAttribute.Value, Value);

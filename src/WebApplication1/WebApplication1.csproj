@@ -433,6 +433,7 @@
     <Content Include="Controls\TaskSystemInfo.ascx" />
     <Content Include="Controls\TemporaryGroupFilter.ascx" />
     <Content Include="Controls\TestTaskOptions.ascx" />
+    <Content Include="Controls\TreeJavascript.ascx" />
     <Content Include="Controls\UninstallTaskOptions.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="DeviceClass.aspx" />
@@ -719,6 +720,13 @@
     </Compile>
     <Compile Include="Controls\TestTaskOptions.ascx.designer.cs">
       <DependentUpon>TestTaskOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TreeJavascript.ascx.cs">
+      <DependentUpon>TreeJavascript.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeJavascript.ascx.designer.cs">
+      <DependentUpon>TreeJavascript.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\UninstallTaskOptions.ascx.designer.cs">
       <DependentUpon>UninstallTaskOptions.ascx</DependentUpon>

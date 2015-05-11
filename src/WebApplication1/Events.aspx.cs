@@ -11,6 +11,7 @@ using VirusBlokAda.CC.Common;
 
 public partial class Events : PageBase
 {
+
     protected void Page_Init(object sender, EventArgs e)
     {
         base.Page_Init(sender, e);

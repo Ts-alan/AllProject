@@ -15,7 +15,7 @@ namespace VirusBlokAda.CC.CustomControls
         DefaultProperty("ID"),
         ToolboxData("<{0}:StorageControl runat=server></{0}:StorageControl>")
     ]
-    public class StorageControl : Control
+    public class StorageControl : Control   
     {
         #region LifeCycle
         protected override void OnInit(EventArgs e)
