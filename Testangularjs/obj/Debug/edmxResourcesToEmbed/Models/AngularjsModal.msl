@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AngularjsDatabaseModelStoreContainer" CdmEntityContainer="AngularjsDatabaseEntities">
+    <EntitySetMapping Name="TableModals">
+      <EntityTypeMapping TypeName="AngularjsDatabaseModel.TableModal">
+        <MappingFragment StoreEntitySet="TableModal">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DateGreate" ColumnName="DateGreate" />
+          <ScalarProperty Name="DateChange" ColumnName="DateChange" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
