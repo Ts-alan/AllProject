@@ -1,0 +1,42 @@
+﻿@model  IEnumerable<GoldBullion.Models.ListOfMetal>
+@{
+    ViewBag.Title = "Home Page";
+    
+}
+
+<script type="text/javascript">
+    var $obj;
+    $(document).ready(function () {
+        $("tbody tr").click(function () {
+                if (typeof $obj != 'undefined') {
+                    $obj.css("background-color", "white");
+                }
+                $obj = $(this);
+                $obj.css("background", "#ADDEFF");
+                var value = $(this).attr("class");
+                $.get('@Url.Action("SetId","Service")',{id:value});
+            }
+        );
+    
+    });
+</script>
+
+<h3 style="margin-left: 27px">Выберете металл</h3>
+<table style="width: 200px;margin-left: 30px" class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Список металлов</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@item.Id">
+                <td style="width: 32px">@item.Name_Metal</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Выбрать металл", "Date", null, new { @class = "btn btn-primary" })

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GoldBullionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ListOfMetal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name_Metal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PriceOfMetal" Relationship="GoldBullionModel.FK_PriceOfMetal_ListOfMetal" FromRole="ListOfMetal" ToRole="PriceOfMetal" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityContainer Name="GoldBullionData" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ListOfMetal" EntityType="Self.ListOfMetal" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="PriceOfMetal" EntityType="GoldBullionModel.PriceOfMetal" />
+    <AssociationSet Name="FK_PriceOfMetal_ListOfMetal" Association="GoldBullionModel.FK_PriceOfMetal_ListOfMetal">
+      <End Role="ListOfMetal" EntitySet="ListOfMetal" />
+      <End Role="PriceOfMetal" EntitySet="PriceOfMetal" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PriceOfMetal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Value" Type="Double" Nullable="false" />
+    <Property Name="ListOfMetaL_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ListOfMetal" Relationship="GoldBullionModel.FK_PriceOfMetal_ListOfMetal" FromRole="PriceOfMetal" ToRole="ListOfMetal" />
+  </EntityType>
+  <Association Name="FK_PriceOfMetal_ListOfMetal">
+    <End Type="GoldBullionModel.ListOfMetal" Role="ListOfMetal" Multiplicity="1" />
+    <End Type="GoldBullionModel.PriceOfMetal" Role="PriceOfMetal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ListOfMetal">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceOfMetal">
+        <PropertyRef Name="ListOfMetaL_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,275 @@
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\GoldBullion.dll.config
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\GoldBullion.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\GoldBullion.pdb
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Antlr3.Runtime.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\EntityFramework.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\EntityFramework.SqlServer.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Google.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Web.Infrastructure.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Newtonsoft.Json.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Owin.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Helpers.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Mvc.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Optimization.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Razor.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.Deployment.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.Razor.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\WebGrease.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Helpers.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Mvc.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Optimization.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.Razor.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.Deployment.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\System.Web.WebPages.Razor.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Newtonsoft.Json.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Antlr3.Runtime.pdb
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\EntityFramework.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\EntityFramework.SqlServer.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Google.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Тестовое задание\GoldBullion\GoldBullion\obj\Debug\GoldBullion.csprojResolveAssemblyReference.cache
+D:\Тестовое задание\GoldBullion\GoldBullion\obj\Debug\GoldBullion.dll
+D:\Тестовое задание\GoldBullion\GoldBullion\obj\Debug\GoldBullion.pdb
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\GoldBullion.dll.config
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\GoldBullion.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\GoldBullion.pdb
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Antlr3.Runtime.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\EntityFramework.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\EntityFramework.SqlServer.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Google.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Web.Infrastructure.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Newtonsoft.Json.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Owin.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Helpers.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Mvc.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Optimization.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Razor.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.Deployment.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.Razor.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\WebGrease.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\EntityFramework.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\EntityFramework.SqlServer.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Helpers.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Mvc.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Optimization.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.Razor.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.Deployment.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\System.Web.WebPages.Razor.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Newtonsoft.Json.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Antlr3.Runtime.pdb
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Google.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Тестовое задание\GoldBullion2\GoldBullion\obj\Debug\GoldBullion.csprojResolveAssemblyReference.cache
+D:\Тестовое задание\GoldBullion2\GoldBullion\obj\Debug\GoldBullion.dll
+D:\Тестовое задание\GoldBullion2\GoldBullion\obj\Debug\GoldBullion.pdb
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\GoldBullion.dll.config
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\GoldBullion.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\GoldBullion.pdb
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Antlr3.Runtime.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\EntityFramework.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\EntityFramework.SqlServer.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Google.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Web.Infrastructure.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Newtonsoft.Json.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Owin.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Helpers.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Mvc.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Optimization.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Razor.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.Deployment.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.Razor.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\WebGrease.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\EntityFramework.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\EntityFramework.SqlServer.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Helpers.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Mvc.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Optimization.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.Razor.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.Deployment.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\System.Web.WebPages.Razor.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Newtonsoft.Json.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Antlr3.Runtime.pdb
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Google.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Тестовое задание\GoldBullion3\GoldBullion\obj\Debug\GoldBullion.csprojResolveAssemblyReference.cache
+D:\Тестовое задание\GoldBullion3\GoldBullion\obj\Debug\GoldBullion.dll
+D:\Тестовое задание\GoldBullion3\GoldBullion\obj\Debug\GoldBullion.pdb
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\GoldBullion.dll.config
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\GoldBullion.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\GoldBullion.pdb
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Antlr3.Runtime.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\EntityFramework.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\EntityFramework.SqlServer.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Core.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Cookies.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Facebook.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Google.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.OAuth.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Twitter.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Web.Infrastructure.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Newtonsoft.Json.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Owin.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Helpers.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Mvc.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Optimization.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Razor.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Deployment.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Razor.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\WebGrease.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\EntityFramework.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\EntityFramework.SqlServer.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Helpers.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Mvc.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Optimization.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.Razor.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Deployment.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Razor.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Newtonsoft.Json.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Antlr3.Runtime.pdb
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Core.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Facebook.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Cookies.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.OAuth.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Google.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Twitter.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.csprojResolveAssemblyReference.cache
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.dll
+H:\Тестовое задание\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.pdb
+D:\job\ColdBullion(Last)\GoldBullion\bin\GoldBullion.dll.config
+D:\job\ColdBullion(Last)\GoldBullion\bin\GoldBullion.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\GoldBullion.pdb
+D:\job\ColdBullion(Last)\GoldBullion\bin\Antlr3.Runtime.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\EntityFramework.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\EntityFramework.SqlServer.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Core.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Cookies.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Facebook.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Google.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.OAuth.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Twitter.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Web.Infrastructure.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Newtonsoft.Json.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\Owin.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Helpers.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Mvc.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Optimization.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Razor.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Deployment.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Razor.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\WebGrease.dll
+D:\job\ColdBullion(Last)\GoldBullion\bin\EntityFramework.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\EntityFramework.SqlServer.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Helpers.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Mvc.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Optimization.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.Razor.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Deployment.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\System.Web.WebPages.Razor.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Newtonsoft.Json.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Antlr3.Runtime.pdb
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Core.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Facebook.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Cookies.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.OAuth.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Google.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.Twitter.xml
+D:\job\ColdBullion(Last)\GoldBullion\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\job\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.csprojResolveAssemblyReference.cache
+D:\job\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.dll
+D:\job\ColdBullion(Last)\GoldBullion\obj\Debug\GoldBullion.pdb

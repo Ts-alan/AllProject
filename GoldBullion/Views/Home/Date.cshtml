@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Price";
+}
+
+<h3 >Выберете дату</h3>
+
+
+<input id="data" >
+<script type="text/javascript">
+    $(document).ready(function () {
+        var checkin = $('#data').datepicker({
+        }).on("changeDate",function(ev) {
+            checkin.datepicker("hide");
+            $.get('@Url.Action("SetDate","Service")', { date: checkin.val() });
+        });
+      
+        
+    });
+</script>
+@Html.ActionLink("Верниться к выбору Металлов", "Index", new { refresh =true}, new { @class = "btn btn-primary" })
+@Html.ActionLink("Построить график", "Graph", new { refresh = true }, new { @class = "btn btn-primary" })

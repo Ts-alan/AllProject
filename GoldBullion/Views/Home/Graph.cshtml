@@ -1,0 +1,47 @@
+﻿@model  IEnumerable<GoldBullion.Models.PriceOfMetal>
+@{
+    ViewBag.Title = "Graph";
+ }
+<script type="text/javascript">
+    $(document).ready(function() {
+        var line = [];
+     
+        var content = $.parseJSON('@Html.Raw(ViewBag.Json)');
+        $.each(content, function(index, item) {
+            line.push([item.Date.substring(0, 10),item.Value ]);
+        });
+        console.log(line);
+        $.jqplot('chartdiv', [line], {
+            title: 'График Цены-Даты',
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.DateAxisRenderer,
+                
+                },
+                yaxis: {
+               
+                }
+            },
+            highlighter: {
+                show: true,
+                sizeAdjust: 7.5
+            },
+            cursor: {
+                show: false
+            }
+        });
+    });
+</script>
+@Html.ActionLink("Вернуться к Дате", "Date", new { refresh = true }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Вернуться к выбору металлов", "Index", new { refresh = true }, new { @class = "btn btn-primary" })
+
+@if (ViewBag.Price != null)
+{
+    <div id="chartdiv" style="height: 320px; width: 400px; margin-left: 20px"></div>
+    <text>Цена</text>
+    @ViewBag.Price.Value
+}
+else
+{
+    <h1>Не установлена цена на  данную дату</h1>
+}
