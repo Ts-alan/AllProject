@@ -1,0 +1,27 @@
+﻿<nav id="navbar-main" class="navbar navbar-default shadow " role="navigation" >
+    <div class="container">
+        <div class="" id="nav">
+            <div class="pull-left">
+                <ul class="nav navbar-nav">
+                    <li ><img src="~/Content/images/logo.png" class="navbar-brand" alt="logo" /></li>
+                    <li ng-class="{active : manageTab.active}" ui-sref="{{manageTab.state}}" ng-show="manageTab.isVisible" ng-repeat=" manageTab in manageTabs">
+                        <span ng-if="$index == 0" class="vertical-divider"></span>
+                        <a>
+                            {{manageTab.label}}
+                        </a>
+                        <span class="vertical-divider"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="pull-right">
+                <div @*ng-controller="authCtrl"*@ id="user-name">
+                    User: {{firstName}} {{lastName}}
+                </div>
+                <button class="navbar-btn logout-btn" ng-click="logOut()">
+                    Log Out
+                    <span class="glyphicon glyphicon-log-out"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

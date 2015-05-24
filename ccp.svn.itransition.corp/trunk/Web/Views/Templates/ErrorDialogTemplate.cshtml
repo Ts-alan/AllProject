@@ -1,0 +1,93 @@
+﻿
+<script type="text/ng-template" id="userModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Manage User</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" novalidate name="userForm" role="form">
+            <div class="form-group">
+                <label for="inputFirstName" class="col-sm-4 control-label">FirstName</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputFirstName" id="inputFirstName" required ng-model="user.FirstName">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="userForm.inputFirstName.$error.required">
+                    Required!
+                </span><br>
+            </div>
+            <div class="form-group">
+                <label for="inputLastName" class="col-sm-4 control-label">LastName</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputLastName" id="inputLastName" required ng-model="user.LastName">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="userForm.inputLastName.$error.required">
+                    Required!
+                </span><br>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-4 control-label">Email</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-pattern="/^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/" class="form-control" name="inputEmail" id="inputEmail" required ng-model="user.Email">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="userForm.inputEmail.$error.required">
+                    Required!
+                </span><br>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="userForm.inputEmail.$error.pattern">That is not a valid email. Please input a valid email.</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputRole" class="col-sm-4 control-label">Role</label>
+                <div class="col-sm-4 select2">
+                    <input type="hidden" ui-select2="roleOptions" name="inputRole" ng-model="user.Role" required />
+                </div>
+                <span class="control-label error col-md-2" ng-show="userForm.inputRole.$error.required">
+                    Required!
+                </span><br>
+            </div>
+            <div class="form-group">
+                <label for="inputInternalUserId" class="col-sm-4 control-label">ID</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="inputInternalUserId" id="inputInternalUserId" required ng-model="user.InternalUserId">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="userForm.inputInternalUserId.$error.required">
+                    Required!
+                </span><br>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="userForm.inputInternalUserId.$error.number">That is not a valid number. Please enter a number.</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="isSalesPerson" class="col-sm-4 control-label">Is Sales Person</label>
+                <div class="col-sm-4">
+                    <input type="checkbox" name="isSalesPerson" ng-model="user.isSalesPerson" ng-checked="user.isSalesPerson" />
+                </div>
+            </div>
+            <div class="ng-hide" ng-show="user.isSalesPerson">
+                <hr />
+                @*Tier 1 approver*@
+                <div class="form-group" ng-repeat="approver in user.approvers">
+                    @*<pre>{{approver|json}}</pre>*@
+                    <label for="inputApprover" class="col-sm-4 control-label">Tier {{$index+1}} approver</label>
+                    <div class="col-sm-4 select2">
+                        <input class="select2" type="hidden" ui-select2="approverOptions" name="inputApprover" ng-model="approver.model" ng-required="user.isSalesPerson" />
+                    </div>
+                    <span class="control-label error col-md-2" ng-show="userForm.inputApprover.$error.required">
+                        Required!
+                    </span><br>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-8">
+            <span class="control-label error text-center" ng-show="error">
+                {{error}}
+            </span>
+        </div>
+        <button id="addButton" class="btn btn-default" ng-disabled="userForm.$invalid" ng-click="save(user)">Save</button>
+        <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+

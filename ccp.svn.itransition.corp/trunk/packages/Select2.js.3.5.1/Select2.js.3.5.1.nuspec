@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Select2.js</id>
+    <version>3.5.1</version>
+    <authors>Igor Vaynberg (Packaged by Jeremy Howard and Stefan Plattner)</authors>
+    <owners>Igor Vaynberg (Packaged by Jeremy Howard and Stefan Plattner)</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>http://ivaynberg.github.com/select2/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results.</description>
+    <releaseNotes>Changelog from 3.5.0
+
+#2482 handling keydown keyCode 229
+#2434 Tagging support allows creation of tags that are only whitespace
+#2278 Dynamically set language
+
+Changelog from 3.4.8
+
+#2444 Fix error: Cannot read property 'top' of undefined
+#2377 Handling mousemove more delicately
+#2366 Calling destroy when still open results in an exception
+#2363 query as third parameter to ajax results callback
+#2361 Better support for RTL languages
+#2358 SyncCssClasses
+#2340 "select2-selecting" event returning with bad parameters.
+#2339 IE8 does not support Array.prototype.forEach
+#2332 Unbind onpropertychange event handler on destroy for IE8-10
+#2329 formatMatches makes no sense if there is only one result
+#2278 Dynamically set language
+#2084 Cant loose focus when select-input has placeholder. [IE11]</releaseNotes>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="jQuery" version="1.7" />
+    </dependencies>
+  </metadata>
+</package>

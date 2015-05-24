@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CCPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ApproverTier">
+    <Key>
+      <PropertyRef Name="ApproverTierId" />
+    </Key>
+    <Property Name="ApproverTierId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesPersonId" Type="bigint" Nullable="false" />
+    <Property Name="ApproverId" Type="bigint" Nullable="false" />
+    <Property Name="TierId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ApproveStatus">
+    <Key>
+      <PropertyRef Name="ApproverStatusId" />
+    </Key>
+    <Property Name="ApproverStatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContractId" Type="bigint" Nullable="false" />
+    <Property Name="ApproverTierId" Type="bigint" />
+    <Property Name="StatusId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="ApproveStatusType">
+    <Key>
+      <PropertyRef Name="ApproverStatusId" />
+    </Key>
+    <Property Name="ApproverStatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApproverStatusName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ApproverStatusTag" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="AreaId" />
+    </Key>
+    <Property Name="AreaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AreaRole">
+    <Key>
+      <PropertyRef Name="AreaRoleId" />
+    </Key>
+    <Property Name="AreaRoleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaId" Type="bigint" Nullable="false" />
+    <Property Name="RoleId" Type="bigint" Nullable="false" />
+    <Property Name="PermissionId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Secret" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ApplicationType" Type="int" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="RefreshTokenLifeTime" Type="int" Nullable="false" />
+    <Property Name="AllowedOrigin" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Contract">
+    <Key>
+      <PropertyRef Name="ContractId" />
+    </Key>
+    <Property Name="ContractId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CPRNumber" Type="nvarchar(max)" />
+    <Property Name="Summary" Type="nvarchar(max)" />
+    <Property Name="TDGA" Type="int" />
+    <Property Name="StartDate" Type="datetime2" Precision="7" />
+    <Property Name="EndDate" Type="datetime2" Precision="7" />
+    <Property Name="CustomerId" Type="bigint" />
+    <Property Name="EndUserId" Type="bigint" />
+    <Property Name="SalesPersonId" Type="bigint" />
+    <Property Name="StatusId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="ContractStatusType">
+    <Key>
+      <PropertyRef Name="ContractStatusId" />
+    </Key>
+    <Property Name="ContractStatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContractStatusName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContractStatusTag" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar(max)" />
+    <Property Name="InternalCustomerId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="EndUser">
+    <Key>
+      <PropertyRef Name="EndUserId" />
+    </Key>
+    <Property Name="EndUserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EndUserName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RecipientId" Type="bigint" Nullable="false" />
+    <Property Name="SalesPersonId" Type="bigint" />
+    <Property Name="ActionAuthorId" Type="bigint" />
+    <Property Name="PreviousContractStatusId" Type="bigint" />
+    <Property Name="CurrentContractStatusId" Type="bigint" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PermissionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PermissionTag" Type="nchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RefreshToken">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IssuedUtc" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="ExpiresUtc" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="ProtectedTicket" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tier">
+    <Key>
+      <PropertyRef Name="TierId" />
+    </Key>
+    <Property Name="TierId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApproverLevel" Type="bigint" Nullable="false" />
+    <Property Name="TDGAMinValue" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="RoleId" Type="bigint" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="InternalUserId" Type="bigint" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'CCPDb-dev.dbo.AreaRoleView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AreaRoleView">
+    <Key>
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="AreaName" />
+    </Key>
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AreaName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ApproverTier_Approver">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ApproverTier" Type="Self.ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="ApproverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproverTier_SalesPerson">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ApproverTier" Type="Self.ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproverTier_Tier">
+    <End Role="Tier" Type="Self.Tier" Multiplicity="1" />
+    <End Role="ApproverTier" Type="Self.ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tier">
+        <PropertyRef Name="TierId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="TierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_ApproverTier">
+    <End Role="ApproverTier" Type="Self.ApproverTier" Multiplicity="0..1" />
+    <End Role="ApproveStatus" Type="Self.ApproveStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproverTier">
+        <PropertyRef Name="ApproverTierId" />
+      </Principal>
+      <Dependent Role="ApproveStatus">
+        <PropertyRef Name="ApproverTierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_ApproveStatusType">
+    <End Role="ApproveStatusType" Type="Self.ApproveStatusType" Multiplicity="0..1" />
+    <End Role="ApproveStatus" Type="Self.ApproveStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproveStatusType">
+        <PropertyRef Name="ApproverStatusId" />
+      </Principal>
+      <Dependent Role="ApproveStatus">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_Contract">
+    <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
+    <End Role="ApproveStatus" Type="Self.ApproveStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="ContractId" />
+      </Principal>
+      <Dependent Role="ApproveStatus">
+        <PropertyRef Name="ContractId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AreaRole_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="AreaRole" Type="Self.AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="AreaId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AreaRole_Permission">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
+    <End Role="AreaRole" Type="Self.AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="PermissionId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="PermissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AreaRole_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="AreaRole" Type="Self.AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contract_Status">
+    <End Role="ContractStatusType" Type="Self.ContractStatusType" Multiplicity="0..1" />
+    <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contract_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Contracts_dbo_Customers_Customer_Id">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Contracts_dbo_EndUsers_EndUser_Id">
+    <End Role="EndUser" Type="Self.EndUser" Multiplicity="0..1" />
+    <End Role="Contract" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EndUser">
+        <PropertyRef Name="EndUserId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="EndUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_ActionAuthor">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="ActionAuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_CurrentContractStatus">
+    <End Role="ContractStatusType" Type="Self.ContractStatusType" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="CurrentContractStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_PreviousContractStatus">
+    <End Role="ContractStatusType" Type="Self.ContractStatusType" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="PreviousContractStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_Recipient">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="RecipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_SalesPerson">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CCPModelStoreContainer">
+    <EntitySet Name="ApproverTier" EntityType="Self.ApproverTier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApproveStatus" EntityType="Self.ApproveStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApproveStatusType" EntityType="Self.ApproveStatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AreaRole" EntityType="Self.AreaRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contract" EntityType="Self.Contract" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContractStatusType" EntityType="Self.ContractStatusType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EndUser" EntityType="Self.EndUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RefreshToken" EntityType="Self.RefreshToken" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tier" EntityType="Self.Tier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AreaRoleView" EntityType="Self.AreaRoleView" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AreaRoleView].[RoleName] AS [RoleName], 
+    [AreaRoleView].[AreaName] AS [AreaName]
+    FROM [dbo].[AreaRoleView] AS [AreaRoleView]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_ApproverTier_Approver" Association="Self.FK_ApproverTier_Approver">
+      <End Role="User" EntitySet="User" />
+      <End Role="ApproverTier" EntitySet="ApproverTier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproverTier_SalesPerson" Association="Self.FK_ApproverTier_SalesPerson">
+      <End Role="User" EntitySet="User" />
+      <End Role="ApproverTier" EntitySet="ApproverTier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproverTier_Tier" Association="Self.FK_ApproverTier_Tier">
+      <End Role="Tier" EntitySet="Tier" />
+      <End Role="ApproverTier" EntitySet="ApproverTier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_ApproverTier" Association="Self.FK_ApproveStatus_ApproverTier">
+      <End Role="ApproverTier" EntitySet="ApproverTier" />
+      <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_ApproveStatusType" Association="Self.FK_ApproveStatus_ApproveStatusType">
+      <End Role="ApproveStatusType" EntitySet="ApproveStatusType" />
+      <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_Contract" Association="Self.FK_ApproveStatus_Contract">
+      <End Role="Contract" EntitySet="Contract" />
+      <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AreaRole_Area" Association="Self.FK_AreaRole_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="AreaRole" EntitySet="AreaRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AreaRole_Permission" Association="Self.FK_AreaRole_Permission">
+      <End Role="Permission" EntitySet="Permission" />
+      <End Role="AreaRole" EntitySet="AreaRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AreaRole_Role" Association="Self.FK_AreaRole_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="AreaRole" EntitySet="AreaRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contract_Status" Association="Self.FK_Contract_Status">
+      <End Role="ContractStatusType" EntitySet="ContractStatusType" />
+      <End Role="Contract" EntitySet="Contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contract_User" Association="Self.FK_Contract_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Contract" EntitySet="Contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Contracts_dbo_Customers_Customer_Id" Association="Self.FK_dbo_Contracts_dbo_Customers_Customer_Id">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Contract" EntitySet="Contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Contracts_dbo_EndUsers_EndUser_Id" Association="Self.FK_dbo_Contracts_dbo_EndUsers_EndUser_Id">
+      <End Role="EndUser" EntitySet="EndUser" />
+      <End Role="Contract" EntitySet="Contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_ActionAuthor" Association="Self.FK_Message_ActionAuthor">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_CurrentContractStatus" Association="Self.FK_Message_CurrentContractStatus">
+      <End Role="ContractStatusType" EntitySet="ContractStatusType" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_PreviousContractStatus" Association="Self.FK_Message_PreviousContractStatus">
+      <End Role="ContractStatusType" EntitySet="ContractStatusType" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_Recipient" Association="Self.FK_Message_Recipient">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_SalesPerson" Association="Self.FK_Message_SalesPerson">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

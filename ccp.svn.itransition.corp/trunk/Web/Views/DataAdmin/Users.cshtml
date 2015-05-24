@@ -1,0 +1,33 @@
+﻿
+<div ng-controller="usersCtrl">
+    <button id="addButton" ng-click="open()" class="btn btn-default col-md-2 control">Add New User</button>
+    <br />
+    <br />
+    @{
+        Html.RenderPartial("User");
+    }
+    <div class="row">
+        <div class="col-md-4">
+            <label>Search</label>
+            <div class="input-group">
+                <div class="input-group-addon "><span class="glyphicon glyphicon-search"></span></div>
+                <input class="form-control" ng-model="freeText">
+            </div>
+        </div>
+        <div class="pull-right col-md-2">
+            <label>Per page</label>
+            <select ui-select2="{minimumResultsForSearch: -1}" ng-model="pagingOptions.pageSize">
+                <option ng-repeat="size in pagingOptions.pageSizes">{{size}}</option>'
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="grid-well">
+        <div id="grid" class="gridStyle" ng-grid="gridOptions"></div>
+    </div>
+</div>
+
+@*<div id="loader" ng-controller="usersCtrl" class="text-center container" ng-show="!loaded">
+        <img src="~/Content/images/ajax-loader.gif" class="size">
+    </div>
+*@

@@ -1,0 +1,33 @@
+﻿<div  class="container" ng-controller="approvalCtrl">
+    <h2>Approval Dashboard</h2>
+    <div ng-repeat="cpr in contracts" ng-show="loaded">
+        <div class="custom-collapse" ng-click="cpr.opened = !cpr.opened">
+            <div>
+                <span class="glyphicon glyphicon-chevron-right" ng-click="cpr.opened = true" ng-show="!cpr.opened"></span>
+                <span class="glyphicon glyphicon-chevron-down" ng-click="cpr.opened = false" ng-show="cpr.opened"></span>
+                <a ng-click="open(cpr.ContractId)"> {{cpr.CPRNumber}}</a>
+                <span class="glyphicon glyphicon-chevron-right pull-right" ng-click="cpr.opened = true" ng-show="!cpr.opened"></span>
+                <span class="glyphicon glyphicon-chevron-down pull-right" ng-click="cpr.opened = false" ng-show="cpr.opened"></span>
+            </div>
+        </div>
+        <div class="custom-collapsing" ng-show="cpr.opened">
+            <div class="tiers-panel">
+                <div ng-repeat="approver in cpr.ApproveStatuses">
+                    <span>
+                        <div class="tier">
+                            <span class="glyphicon glyphicon-ok-circle" ng-show="{{approver.showApproveIcon;}}"></span>
+                            <span class="glyphicon glyphicon-ban-circle" ng-show="{{approver.showRejectIcon;}}"></span>
+                            <span class="glyphicon glyphicon-repeat" ng-show="{{approver.showIcon;}}"></span>
+                            Tier {{approver.number}}
+                        </div>
+                    </span>
+                    ({{approver.Name}}) - <strong>{{approver.Status}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center container" ng-show="!loaded">
+        <img src="~/Content/images/ajax-loader3.gif" style="margin-top:25%; margin-bottom:30%">
+    </div>
+</div>
+

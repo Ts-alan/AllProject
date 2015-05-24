@@ -1,0 +1,65 @@
+﻿
+<div class="container">
+    <h3>Competitive Price Requests</h3>
+</div>
+<hr />
+<div ng-controller="contractsCtrl" class="container">
+    <div class="row" style="margin-left: 0; margin-right: 0;">
+
+        <button id="addButton" ng-show="canCreate" ng-click="open()" class="btn btn-default col-md-2 control">New Request</button>
+        <br />
+        <br />
+        <br />
+        <accordion>
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    <strong>Filter <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i></strong>
+                </accordion-heading>
+                <div class="row  form-inline" id="cpr-controls">
+                    <div class="col-xs-2">
+                        <label>Search</label>
+                        <div class="input-group">
+                            <div class="input-group-addon "><span class="glyphicon glyphicon-search"></span></div>
+                            <input class="form-control" ng-model="filter.freeText">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <label>SalesPerson</label>
+                        <input type="hidden" ui-select2="salesPersonOptions" ng-model="filter.selectedSalesPerson" />
+                    </div>
+                    <div class="col-xs-2">
+                        <label>Start Date</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" show-button-bar="false" ng-model="filter.startDate" is-open="datePicker.opened" @*min-date="minDate"*@ max-date="endDate" datepicker-options="{showWeeks: false}" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="startDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-xs-2">
+                        <label>End Date</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" show-button-bar="false" ng-model="filter.endDate" is-open="datePicker.opened2" min-date="startDate" max-date="'2015-06-22'" datepicker-options="{showWeeks: false}" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="endDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-xs-2 ">
+                        <label>Status</label>
+                        <input type="hidden" ui-select2="statusOptions" ng-model="filter.selectedStatus" />
+                    </div>
+                    <div class="col-xs-2">
+                        <label>Per page</label>
+                        <select ui-select2="{minimumResultsForSearch: -1}" ng-model="pagingOptions.pageSize">
+                            <option ng-repeat="size in pagingOptions.pageSizes">{{size}}</option>'
+                        </select>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+        <div class="grid-well">
+            <div id="grid" class="gridStyle" ng-grid="gridOptions"></div>
+        </div>
+    </div>
+</div>

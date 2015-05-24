@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CCPModelStoreContainer" CdmEntityContainer="CCPEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="CCPModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="InternalCustomerId" ColumnName="InternalCustomerId" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EndUsers">
+      <EntityTypeMapping TypeName="CCPModel.EndUser">
+        <MappingFragment StoreEntitySet="EndUser">
+          <ScalarProperty Name="EndUserName" ColumnName="EndUserName" />
+          <ScalarProperty Name="EndUserId" ColumnName="EndUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="CCPModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="CCPModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="AllowedOrigin" ColumnName="AllowedOrigin" />
+          <ScalarProperty Name="RefreshTokenLifeTime" ColumnName="RefreshTokenLifeTime" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ApplicationType" ColumnName="ApplicationType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Secret" ColumnName="Secret" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RefreshTokens">
+      <EntityTypeMapping TypeName="CCPModel.RefreshToken">
+        <MappingFragment StoreEntitySet="RefreshToken">
+          <ScalarProperty Name="ProtectedTicket" ColumnName="ProtectedTicket" />
+          <ScalarProperty Name="ExpiresUtc" ColumnName="ExpiresUtc" />
+          <ScalarProperty Name="IssuedUtc" ColumnName="IssuedUtc" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApproveStatusTypes">
+      <EntityTypeMapping TypeName="CCPModel.ApproveStatusType">
+        <MappingFragment StoreEntitySet="ApproveStatusType">
+          <ScalarProperty Name="ApproverStatusTag" ColumnName="ApproverStatusTag" />
+          <ScalarProperty Name="ApproverStatusName" ColumnName="ApproverStatusName" />
+          <ScalarProperty Name="ApproverStatusId" ColumnName="ApproverStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContractStatusTypes">
+      <EntityTypeMapping TypeName="CCPModel.ContractStatusType">
+        <MappingFragment StoreEntitySet="ContractStatusType">
+          <ScalarProperty Name="ContractStatusTag" ColumnName="ContractStatusTag" />
+          <ScalarProperty Name="ContractStatusName" ColumnName="ContractStatusName" />
+          <ScalarProperty Name="ContractStatusId" ColumnName="ContractStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tiers">
+      <EntityTypeMapping TypeName="CCPModel.Tier">
+        <MappingFragment StoreEntitySet="Tier">
+          <ScalarProperty Name="TDGAMinValue" ColumnName="TDGAMinValue" />
+          <ScalarProperty Name="ApproverLevel" ColumnName="ApproverLevel" />
+          <ScalarProperty Name="TierId" ColumnName="TierId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApproverTiers">
+      <EntityTypeMapping TypeName="CCPModel.ApproverTier">
+        <MappingFragment StoreEntitySet="ApproverTier">
+          <ScalarProperty Name="TierId" ColumnName="TierId" />
+          <ScalarProperty Name="ApproverId" ColumnName="ApproverId" />
+          <ScalarProperty Name="SalesPersonId" ColumnName="SalesPersonId" />
+          <ScalarProperty Name="ApproverTierId" ColumnName="ApproverTierId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApproveStatus1">
+      <EntityTypeMapping TypeName="CCPModel.ApproveStatus">
+        <MappingFragment StoreEntitySet="ApproveStatus">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="ApproverTierId" ColumnName="ApproverTierId" />
+          <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+          <ScalarProperty Name="ApproverStatusId" ColumnName="ApproverStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="CCPModel.Area">
+        <MappingFragment StoreEntitySet="Area">
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AreaRoles">
+      <EntityTypeMapping TypeName="CCPModel.AreaRole">
+        <MappingFragment StoreEntitySet="AreaRole">
+          <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+          <ScalarProperty Name="AreaRoleId" ColumnName="AreaRoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Permissions">
+      <EntityTypeMapping TypeName="CCPModel.Permission">
+        <MappingFragment StoreEntitySet="Permission">
+          <ScalarProperty Name="PermissionTag" ColumnName="PermissionTag" />
+          <ScalarProperty Name="PermissionName" ColumnName="PermissionName" />
+          <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AreaRoleViews">
+      <EntityTypeMapping TypeName="CCPModel.AreaRoleView">
+        <MappingFragment StoreEntitySet="AreaRoleView">
+          <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contracts">
+      <EntityTypeMapping TypeName="CCPModel.Contract">
+        <MappingFragment StoreEntitySet="Contract">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="SalesPersonId" ColumnName="SalesPersonId" />
+          <ScalarProperty Name="EndUserId" ColumnName="EndUserId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="TDGA" ColumnName="TDGA" />
+          <ScalarProperty Name="Summary" ColumnName="Summary" />
+          <ScalarProperty Name="CPRNumber" ColumnName="CPRNumber" />
+          <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="CCPModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="InternalUserId" ColumnName="InternalUserId" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="CCPModel.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="CurrentContractStatusId" ColumnName="CurrentContractStatusId" />
+          <ScalarProperty Name="PreviousContractStatusId" ColumnName="PreviousContractStatusId" />
+          <ScalarProperty Name="ActionAuthorId" ColumnName="ActionAuthorId" />
+          <ScalarProperty Name="SalesPersonId" ColumnName="SalesPersonId" />
+          <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+          <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

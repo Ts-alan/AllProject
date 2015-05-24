@@ -1,0 +1,529 @@
+﻿@btn-font-color: #0858fc;
+@footer-btn-font-color: #0066cc;
+@gray-color: #edeef0;
+
+.container > .navbar-collapse {
+    padding-left: 20px;
+}
+
+.form-control {
+    /*height:28px;*/
+}
+
+.control {
+    color: @btn-font-color;
+    height: 34px;
+    background-image: -moz-linear-gradient( 90deg, rgb(227,227,227) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(227,227,227) 0%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient( 90deg, rgb(227,227,227) 0%, rgb(255,255,255) 100%);
+}
+
+.control:hover {
+    color: @btn-font-color;
+    background-image: -moz-linear-gradient( 90deg, rgb(212, 212, 212) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(212, 212, 212) 0%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient( 90deg, rgb(212, 212, 212) 0%, rgb(255,255,255) 100%);
+}
+
+.container {
+    width: 90%;
+    min-width: 1280px;
+}
+
+.panel-heading {
+    background-image: -moz-linear-gradient( 90deg, rgb(173,173,173) 0, rgb(214,214,214) 100%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(173,173,173) 0, rgb(214,214,214) 100%);
+    background-image: -ms-linear-gradient( 90deg, rgb(173,173,173) 0, rgb(214,214,214) 100%);
+}
+
+.panel-title {
+    color: white;
+}
+
+.navbar {
+    border: 0;
+    margin-bottom: 45px;
+}
+
+span.vertical-divider {
+    height: 10px;
+    margin: 0 11px;
+    border-right: 1px solid #bfbfbf;
+    display: inline-block;
+}
+
+.shadow {
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+}
+
+#user-name {
+    display: inline-block;
+}
+
+.logout-btn {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #ffffff;
+    background-color: #0858fc;
+    border: 1px solid #0841fc;
+    border-radius: 4px;
+}
+
+.nav > li > a {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:hover {
+    background: #f8f8f8;
+    color: @btn-font-color;
+}
+
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../Content/fonts/glyphicons-halflings-regular.eot');
+    src: url('../Content/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../Content/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../Content/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../Content/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+/*#navbar-main .nav-tabs li a {
+    color: #fff;
+    height: 60px;
+    width: 90px;
+    max-width: 100px;
+    text-align: center;
+    max-height: 50%;
+    position: relative;
+}
+
+    #navbar-main .nav-tabs li a:hover,
+    #navbar-main .nav-tabs li a:focus {
+        color: #000;
+    }
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url('../Content/fonts/glyphicons-halflings-regular.eot');
+    src: url('../Content/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../Content/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../Content/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../Content/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+#navbar-main .nav-tabs {
+    border-bottom: 0;
+}
+
+    #navbar-main .nav-tabs .active a {
+        background: @active-tab;
+        color: @active-tab-font;
+
+    }
+
+#dataAdminTabs .active a {
+    background-color: white;
+}
+
+#dataAdminTabs a {
+    color: black;
+}*/
+
+#footer {
+    margin-top: 20px;
+}
+
+.headerDivider {
+    border-left: 1px solid #38546d;
+    border-right: 1px solid #16222c;
+    height: 80px;
+    position: absolute;
+    right: 249px;
+    top: 10px;
+}
+
+
+.navbar .divider-vertical {
+    height: 40px;
+    margin: 0 9px;
+    border-left: 1px solid #0B0B0B;
+    border-right: 1px solid #0B0B0B;
+}
+
+#dataAdminTabs {
+    background-color: #f2f2f2;
+    border-radius: 5px 5px 0 0;
+    border-left: 2px solid #dadada;
+    border-right: 2px solid #dadada;
+    border-top: 2px solid #dadada;
+    padding: 0 0 0 0;
+}
+
+#dataAdminTabs .nav-tabs {
+    border-bottom: 0;
+}
+
+
+.linked-tabset {
+    cursor: pointer;
+}
+
+.navbar-logout {
+    margin-top: 8px;
+}
+
+#navbar-main .nav-tabs li a strong {
+    position: absolute;
+    bottom: 5%;
+    left: 10%;
+    right: 10%;
+}
+
+.nav-tabs-header {
+    border-bottom: 0;
+    margin-top: 10px;
+}
+
+#dataAdminContent {
+    background-color: #f9f9f9;
+    border-right: 2px solid #dadada;
+    border-left: 2px solid #dadada;
+    border-bottom: 2px solid #dadada;
+    border-radius: 0 0 5px 5px;
+    padding: 20px 20px 20px 20px;
+}
+
+#dataAdminTabs > ul > li > a {
+    background-color: #f9f9f9;
+    border-right: 2px solid #dadada;
+    /*border-left: 2px solid #dadada;*/
+}
+
+#dataAdminTabs > ul > li.active > a {
+    border-radius: 0;
+}
+
+#viewSelect {
+    width: 70%;
+}
+
+#divider {
+    background-color: black;
+    height: 3px;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+
+.right-inner-addon input {
+    padding-right: 30px;
+}
+
+.right-inner-addon i {
+    position: absolute;
+    right: 0;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.left-inner-addon {
+    position: relative;
+}
+
+.left-inner-addon input {
+    padding-left: 25px;
+}
+
+.left-inner-addon i {
+    position: absolute;
+    padding: 6px 6px;
+    pointer-events: none;
+}
+
+
+#controlsDataAdminTable {
+    margin: 20px 0;
+}
+
+#page-btn {
+    width: 40px;
+}
+
+.error {
+    color: rgb(169, 68, 66);
+    ;
+}
+
+.login-box {
+    border-radius: 20px;
+    position: absolute;
+    left: 38%;
+    right: 38%;
+    top: 30%;
+    bottom: 35%;
+    height: 280px;
+    width: 400px;
+}
+
+.select2-container {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+}
+
+
+/*div#cpr-controls > div {
+    padding-right: 0;
+    padding-left: 0;
+}*/
+
+.select2-container .select2-choice {
+    height: 34px;
+    line-height: 32px;
+    margin-right: 1px;
+    color: #555;
+}
+/* ==-- begin ng-grid styles --== */
+
+#grid {
+    /*margin-top: 20px;*/
+}
+
+.grid-well {
+    min-height: 20px;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    background-color: @gray-color;
+    border: 1px solid @gray-color;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+
+#grid > div.ngViewport.ng-scope {
+    margin-bottom: 2px;
+}
+
+.gridStyle {
+    width: 100%;
+    height: 350px;
+    display: block;
+}
+
+.ngTopPanel {
+    background-color: @gray-color;
+    /*color: #777777;*/
+}
+
+.ngHeaderContainer {
+    /*height: 60px !important;*/
+}
+
+.ngRow.odd {
+    background-color: #f8f8f8;
+}
+
+.ngRow.even {
+    background-color: #ffffff;
+}
+
+.ngHeaderSortColumn.ngSorted {
+    background-color: #d4d5d6;
+}
+
+.ngRow.selected {
+    background-color: #9ac9f8;
+}
+
+.headerTop {
+    height: 30px;
+    width: 100%;
+    /*border-bottom: 1px solid #ccc;*/
+    /*background-color: #FFD700;*/
+    padding: 0 0 0 6px;
+}
+
+.headerTop .content {
+    padding: 6px;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    color: #fff;
+}
+
+.ngHeaderCell {
+    /*top: 30px;*/
+}
+
+.ngSortButtonUp {
+    border-color: #8c8c8c transparent;
+    left: 80%;
+    top: 40%;
+}
+
+.ngSortButtonDown {
+    border-color: #8c8c8c transparent;
+    left: 80%;
+    top: 40%;
+}
+
+.ngPagerControl,
+.ngPagerControl > .btn-group > .btn-default {
+    color: @footer-btn-font-color;
+}
+
+.ngPagerControl > .btn-group > .btn-default:disabled {
+    color: gray;
+}
+
+.pager {
+    background-color: white;
+    display: inline-block;
+    margin: 0;
+    height: 28px;
+    border: 1px solid lighten(@gray-color,-10%);
+    vertical-align: middle;
+    line-height: 26px;
+    min-width: 44px;
+}
+
+.btn-group > .btn-default.btn-xs {
+    height: 28px;
+}
+
+.ngFooterPanel {
+    background-color: @gray-color;
+}
+/* ==-- end ng-grid styles --== */
+
+/* ==-- start scrollbar improvement --== */
+body {
+    overflow-y: auto;
+    font-family: 'Verdana';
+    color: #777777;
+}
+
+body.modal-open {
+    overflow-y: auto;
+    margin: 0;
+}
+
+.modal {
+    overflow: auto;
+}
+
+.modal-open .modal {
+    overflow-y: hidden;
+}
+
+div.modal-body {
+    overflow-y: auto;
+    max-height: 500px;
+}
+/* ==-- end scrollbar improvement --== */
+
+
+textarea {
+    resize: vertical;
+}
+
+.dialog-header-error {
+    background-color: #ff1f00;
+    color: white;
+}
+
+.popover {
+    width: 200px;
+}
+
+.popover ul {
+    margin-bottom: 0;
+}
+
+.has-error .select2-choice,
+.has-error .select2-drop,
+.has-error .input-group-btn {
+    color: #a94442;
+    border-color: #a94442;
+}
+
+.select2 .popover {
+}
+
+.loader {
+    background-image: url(/Content/images/ajax-loader3.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.nav-pills li {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@font-face {
+    font-family: 'Custom';
+    src: url('fonts/helveticaneuecyr-roman.eot');
+}
+
+.tiers-panel {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb( 218, 218, 218 );
+    border-radius: 4px;
+    background-color: rgb( 250, 250, 250 );
+    padding: 15px;
+}
+
+
+
+.btn-link {
+    font-family: "Verdana";
+    color: rgb( 94, 94, 94 );
+    text-decoration: underline;
+    line-height: 1.636;
+}
+
+hr {
+    border-top: 1px solid rgb( 218, 218, 218 );
+}
+
+input[type=checkbox] {
+    /* All browsers except webkit*/
+    transform: scale(1.2);
+    /* Webkit browsers*/
+    -webkit-transform: scale(1.2);
+}
+
+
+#endDate + .popover, #startDate + .popover {
+    margin-left: 50px;
+}
+
+.tier {
+    width: 13%;
+    float: left;
+}
+
+.custom-collapse {
+    background-image: -moz-linear-gradient( 90deg, @gray-color 0, lighten(@gray-color,3%) 100%);
+    background-image: -webkit-linear-gradient( 90deg, @gray-color 0, lighten(@gray-color,3%) 100%);
+    background-image: -ms-linear-gradient( 90deg, @gray-color 0, lighten(@gray-color,3%) 100%);
+    /*background: @gray-color;*/
+    margin-top: 30px;
+    height: 40px;
+}
+
+.custom-collapsing {
+    /*border: 1px solid lighten(@gray-color,10%);*/
+    background-color: lighten(@gray-color,3%);
+    border: 3px solid @gray-color;
+}
+
+.custom-collapse > div {
+    padding: 10px;
+}
+
+.custom-collapse > div:hover {
+    cursor:pointer;
+}

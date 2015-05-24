@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="216dd188691c41efbf6fc326d030df77" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="CCPModel.Customer" Width="1.5" PointX="6" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCPModel.EndUser" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCPModel.Role" PointX="0.75" PointY="5" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCPModel.Client" Width="1.5" PointX="0.75" PointY="9" />
+        <EntityTypeShape EntityType="CCPModel.RefreshToken" Width="1.5" PointX="2.75" PointY="9" />
+        <EntityTypeShape EntityType="CCPModel.ApproveStatusType" Width="1.875" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="CCPModel.ContractStatusType" Width="1.5" PointX="6" PointY="1.625" />
+        <EntityTypeShape EntityType="CCPModel.Tier" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="CCPModel.ApproverTier" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="CCPModel.ApproveStatus" Width="2.125" PointX="10.5" PointY="4.75" />
+        <AssociationConnector Association="CCPModel.FK_ApproverTier_Tier" />
+        <AssociationConnector Association="CCPModel.FK_ApproveStatus_ApproverTier" />
+        <AssociationConnector Association="CCPModel.FK_ApproveStatus_ApproveStatusType" />
+        <EntityTypeShape EntityType="CCPModel.Area" Width="1.5" PointX="6.75" PointY="13.875" />
+        <EntityTypeShape EntityType="CCPModel.AreaRole" Width="1.5" PointX="9" PointY="8.75" />
+        <EntityTypeShape EntityType="CCPModel.Permission" Width="1.5" PointX="6.75" PointY="16.125" />
+        <EntityTypeShape EntityType="CCPModel.AreaRoleView" Width="1.5" PointX="11.375" PointY="0.75" />
+        <AssociationConnector Association="CCPModel.FK_AreaRole_Area" />
+        <AssociationConnector Association="CCPModel.FK_AreaRole_Permission" />
+        <AssociationConnector Association="CCPModel.FK_AreaRole_Role" />
+        <EntityTypeShape EntityType="CCPModel.Contract" Width="1.5" PointX="8.25" PointY="4" />
+        <EntityTypeShape EntityType="CCPModel.User" Width="1.5" PointX="3" PointY="4.375" />
+        <AssociationConnector Association="CCPModel.FK_ApproverTier_Approver" />
+        <AssociationConnector Association="CCPModel.FK_ApproverTier_SalesPerson" />
+        <AssociationConnector Association="CCPModel.FK_ApproveStatus_Contract" />
+        <AssociationConnector Association="CCPModel.FK_Contract_Status" />
+        <AssociationConnector Association="CCPModel.FK_Contract_User" />
+        <AssociationConnector Association="CCPModel.FK_dbo_Contracts_dbo_Customers_Customer_Id" />
+        <AssociationConnector Association="CCPModel.FK_dbo_Contracts_dbo_EndUsers_EndUser_Id" />
+        <AssociationConnector Association="CCPModel.FK_User_Role" />
+        <EntityTypeShape EntityType="CCPModel.Message" Width="1.5" PointX="11.25" PointY="8.25" />
+        <AssociationConnector Association="CCPModel.FK_Message_CurrentContractStatus" />
+        <AssociationConnector Association="CCPModel.FK_Message_PreviousContractStatus" />
+        <AssociationConnector Association="CCPModel.FK_Message_ActionAuthor" />
+        <AssociationConnector Association="CCPModel.FK_Message_Recipient" />
+        <AssociationConnector Association="CCPModel.FK_Message_SalesPerson" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

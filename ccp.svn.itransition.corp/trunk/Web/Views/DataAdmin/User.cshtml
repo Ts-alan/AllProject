@@ -1,0 +1,90 @@
+﻿
+<script type="text/ng-template" id="userModal">
+    <div class="modal-header col-sm-12">
+        <h3 class="col-sm-offset-1">Manage User</h3>
+    </div>
+    <div class="modal-body" ng-class="[loaderstyle]">
+        <form class="form-horizontal" novalidate name="userForm" role="form" ng-show="loaded">
+            <div class="form-group" ng-class="{'has-error': userForm['User.FirstName'].$invalid}">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <label for="User.FirstName" class="control-label">First Name</label>
+                    <input type="text" class="form-control" name="User.FirstName" id="inputFirstName" @*required*@ popover-placement="right" popover-trigger="focus" popover="{{userForm['User.FirstName'].$error.errorContent}}" server-errors="dataErrors" ng-model="user.FirstName">
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': userForm['User.LastName'].$invalid}">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <label for="inputLastName" class="control-label">Last Name</label>
+                    <input type="text" class="form-control" name="User.LastName" id="inputLastName" @*required*@ popover-placement="right" popover-trigger="focus" popover="{{userForm['User.LastName'].$error.errorContent}}" server-errors="dataErrors" ng-model="user.LastName">
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': userForm['User.Email'].$invalid}">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <label for="inputEmail" class="control-label">Email</label>
+                    <input type="text" class="form-control col-sm-4" name="User.Email" id="inputEmail" @*required*@ popover-placement="right" popover-trigger="focus" popover="{{userForm['User.Email'].$error.errorContent}}" server-errors="dataErrors" ng-model="user.Email">
+                </div>
+                @*<span class="control-label error col-md-2 ng-hide" ng-show="userForm.inputEmail.$error.required">
+                    Required!
+                </span><br>*@
+                @*<div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="userForm.inputEmail.$error.pattern">That is not a valid email. Please input a valid email.</small>
+                </div>*@
+            </div>
+            <div class="form-group" ng-class="{'has-error': userForm['User.RoleId'].$invalid}">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <label for="inputRole" class="control-label">Role</label>
+                    <div popover-placement="right" popover-trigger="mouseenter" popover="{{userForm['User.RoleId'].$error.errorContent}}">
+                        <div class=" select2">
+                            <input type="hidden" ui-select2="roleOptions" name="User.RoleId" server-errors="dataErrors" ng-model="user.Role" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            @*<div class="form-group" ng-class="{'has-error': userForm['User.InternalUserId'].$invalid}">
+                <label for="inputInternalUserId" class="col-sm-4 control-label">ID</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="User.InternalUserId" id="inputInternalUserId" popover-placement="right" popover-trigger="click" popover="{{userForm['User.InternalUserId'].$error.errorContent}}" server-errors="dataErrors" ng-model="user.InternalUserId">
+                </div>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="userForm.inputInternalUserId.$error.number">That is not a valid number. Please enter a number.</small>
+                </div>
+            </div>*@
+            <div class="form-group ng-hide" ng-show="user.Role.id == 1">
+                <div class="col-sm-6 col-sm-offset-1">
+                    <label for="isSalesPerson" class="control-label">Is Sales Person</label>
+                    <input type="checkbox" name="isSalesPerson" ng-model="user.isSalesPerson" ng-checked="user.isSalesPerson" />
+                </div>
+            </div>
+            <div class="ng-hide" ng-show="user.isSalesPerson">
+                <hr />
+                @*Tier 1 approver*@
+                <div class="form-group" ng-repeat="approver in user.approvers">
+                    @*<pre>{{approver|json}}</pre>*@
+                    <div class="col-sm-6 col-sm-offset-1 select2">
+                        <label for="inputApprover" class="control-label">Tier {{$index+1}} approver</label>
+                        <input class="select2" type="hidden" ui-select2="approverOptions" name="inputApprover" ng-model="approver.model" />
+                    </div>
+                    @*<span class="control-label error col-md-2" ng-show="userForm.inputApprover.$error.required">
+                        Required!
+                    </span><br>*@
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-8  pull-right">
+            <span class="control-label error" ng-show="error">
+                {{error}}
+            </span>
+        </div>
+        <button id="addButton" class="btn btn-default control" ng-disabled="userForm.$invalid" ng-click="save(user)">Save</button>
+        <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+@*<div id="loader" ng-controller="userCtrl" class="text-center container" ng-show="!loaded">
+    <img src="~/Content/images/ajax-loader.gif" class="size">
+</div>
+
+*@

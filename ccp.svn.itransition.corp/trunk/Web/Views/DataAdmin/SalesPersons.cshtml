@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "SalesPersons";
+}
+
+<div ng-controller="salesPersonsCtrl">
+    <div class="row">
+        <button id="addButton" ng-click="open()" class="btn btn-default col-md-2">New Sales Rep</button>
+    </div>
+    @{
+        Html.RenderPartial("SalesPerson");
+    }
+    <div class="row">
+        <div class="col-md-4">
+            <label>Search</label>
+            <div class="input-group">
+                <div class="input-group-addon "><span class="glyphicon glyphicon-search"></span></div>
+                <input class="form-control" ng-model="freeText">
+            </div>
+        </div>
+        <div class="pull-right col-md-2">
+            <label>Per page</label>
+            <select class="form-control" ng-model="pagingOptions.pageSize" style="display: block">
+                <option ng-repeat="size in pagingOptions.pageSizes">{{size}}</option>'
+            </select>
+        </div>
+    </div>
+
+    <div id="grid" class="gridStyle" ng-grid="gridOptions"></div>
+</div>

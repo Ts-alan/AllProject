@@ -1,0 +1,186 @@
+﻿
+<div ng-controller="contractCtrl">
+    <div ng-show ="loaded">
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <button class="btn btn-link" ng-click="back()"><u>&lt;&lt;&lt;Back</u></button>
+                </div>
+                <div class="pull-right">
+
+                    <ul class="nav nav-pills">
+                        <li>
+                            <div class="btn-group" dropdown ng-show="(canApprove || canReject || canCancel)">
+                                <button type="button" class="btn btn-default dropdown-toggle control">
+                                    Workflow
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-show="(canApprove)" ng-click="approve()"><a href="">Approve</a></li>
+                                    <li ng-show="(canReject)" ng-click="reject()"><a href="">Reject</a></li>
+                                    <li ng-show="(canApprove)" ng-click="return()"><a href="">Return</a></li>
+                                    <li ng-show="(canCancel)" ng-click="cancel()"><a href="">Cancel CPR</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <button class="btn btn-default control" @*ng-disabled="cprForm.$invalid"*@ ng-hide=" !canEdit" ng-click="submit()">Save&Submit</button>
+                        </li>
+                        <li>
+                            <button class="btn btn-default control" ng-hide=" !canEdit" ng-click="save()">Save</button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link" ng-hide="!canEdit" ng-click="back()"><u>Cancel</u></button>
+                        </li>
+                    </ul>
+
+
+
+
+
+                    
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="container">
+
+
+            <h2>CPR number: {{cpr.CPRNumber}}</h2>
+            <h3>{{cpr.ContractStatusType.ContractStatusName}} CPR</h3>
+
+
+            <form class="form-horizontal" novalidate name="cprForm" role="form">
+
+                <div class="form-group ">
+                    <label class=" col-xs-12" for="Summary">
+                        <h4><strong>Summary</strong></h4>
+                    </label>
+                    <div class="col-xs-6" ng-class="{'has-error': cprForm.Summary.$invalid}">
+                        <textarea class="form-control" name="Summary" rows="5" popover-placement="right" popover-trigger="focus" popover="{{cprForm.Summary.$error.errorContent}}" server-errors="dataErrors" id="summary" ng-model="cpr.Summary" ng-disabled="!canEdit" @*required*@></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-xs-1" for="TDGA">
+                        <h4><strong>TDGA</strong></h4>
+                    </label>
+                    <div class="col-xs-3" ng-class="{'has-error': cprForm.TDGA.$invalid}">
+                        <input @*type="number"*@ class="form-control" name="TDGA" id="TDGA" popover-trigger="focus" popover-placement="right" popover="{{cprForm.TDGA.$error.errorContent}}" server-errors="dataErrors" ng-model="cpr.TDGA" ng-disabled="!canEdit" @*required*@>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-xs-1" for="StartDate">
+                        <h4><strong>Start</strong> </h4>
+                    </label>
+                    <div class="col-xs-3" ng-class="{'has-error': cprForm.StartDate.$invalid}">
+                        <div ng-model="cpr.StartDate" datepicker-popup="{{format}}" show-button-bar="false"  is-open="opened" max-date="cpr.EndDate" datepicker-options="dateOptions" close-text="Close">
+                            <div class="input-group">
+                                <input type="text" name="StartDate" popover-placement="right" popover-trigger="focus" server-errors="dataErrors" popover="{{cprForm.StartDate.$error.errorContent}}" id="startDate" class="form-control" ng-model="cpr.StartDate" ng-disabled="!canEdit" @*required*@ />
+                                <span class="input-group-btn">
+                                    <button ng-disabled="!canEdit" type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-xs-1" for="EndDate">
+                        <h4><strong>End</strong> </h4>
+                    </label>
+                    <div class="col-xs-3" ng-class="{'has-error': cprForm.EndDate.$invalid}">
+                        <div ng-model="cpr.EndDate"  is-open="opened2" min-date="cpr.StartDate" datepicker-popup="{{format}}" show-button-bar="false" datepicker-options="dateOptions" close-text="Close">
+                            <div class="input-group">
+                                <input type="text" name="EndDate" ng-focus="opened2 = true" server-errors="dataErrors" popover-placement="right" popover-trigger="focus" popover="{{cprForm.EndDate.$error.errorContent}}" id="endDate" ng-model="cpr.EndDate" class="form-control" ng-disabled="!canEdit" @*required*@ />
+                                <span class="input-group-btn">
+                                    <button ng-disabled="!canEdit" type="button" class="btn btn-default" ng-click="open2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-xs-1" for="SalesPersonId">
+                        <h4><strong>Sales</strong></h4>
+                    </label>
+                    <div class="col-xs-3" ng-class="{'has-error': cprForm.SalesPersonId.$invalid}">
+                        <div popover-placement="right" popover-trigger="select2-open" popover="{{cprForm['SalesPersonId'].$error.errorContent}}">
+                            <div class=" select2">
+                                <input type="hidden" ui-select2="initiatorOptions" name="SalesPersonId" server-errors="dataErrors" ng-model="cpr.initiator" ng-disabled="!canEdit" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <div class=" tiers-panel" ng-show="cpr.isInitiatorSelected">
+                            <div ng-repeat="approver in Approvers">
+                                <span>
+                                    <div class="tier">
+                                        <span class="glyphicon glyphicon-ok-circle" ng-show="{{approver.showApproveIcon;}}"></span>
+                                        <span class="glyphicon glyphicon-ban-circle" ng-show="{{approver.showRejectIcon;}}"></span>
+                                        <span class="glyphicon glyphicon-repeat" ng-show="{{approver.showIcon;}}"></span>
+                                        Tier {{approver.number}}
+                                    </div>
+                                </span>
+                                ({{approver.Name}}) - <strong>{{approver.Status}}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*<div class="text-center">
+                        <span class="error " ng-show="error">
+                            {{error}}
+                        </span>
+                    </div>*@
+            </form>
+        </div>
+        <hr/>
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <button class="btn btn-link" ng-click="back()"><u>&lt;&lt;&lt;Back</u></button>
+                </div>
+                <div class="pull-right">
+
+                    <ul class="nav nav-pills">
+                        <li>
+                            <div class="btn-group" dropdown ng-show="(canApprove || canReject || canCancel)">
+                                <button type="button" class="btn btn-default dropdown-toggle control">
+                                    Workflow
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-show="(canApprove)" ng-click="approve()"><a href="">Approve</a></li>
+                                    <li ng-show="(canReject)" ng-click="reject()"><a href="">Reject</a></li>
+                                    <li ng-show="(canApprove)" ng-click="return()"><a href="">Return</a></li>
+                                    <li ng-show="(canCancel)" ng-click="cancel()"><a href="">Cancel CPR</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="active">
+                            <button class="btn btn-default control" @*ng-disabled="cprForm.$invalid"*@ ng-hide=" !canEdit" ng-click="submit()">Save&Submit</button>
+                        </li>
+                        <li>
+                            <button class="btn btn-default control" ng-hide=" !canEdit" ng-click="save()">Save</button>
+                        </li>
+                        <li>
+                            <button class="btn btn-link" ng-hide="!canEdit" ng-click="back()"><u>Cancel</u></button>
+                        </li>
+                    </ul>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loader" class="text-center container" ng-show="!loaded">
+        <img src="~/Content/images/ajax-loader3.gif" style="margin-top:25%; margin-bottom:30%">
+    </div>
+
+</div>

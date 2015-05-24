@@ -1,0 +1,11 @@
+﻿<div class =" container">
+<h2>Data Management</h2>
+<tabset id="dataAdminTabs" class="linked-tabset">
+    <tab ng-repeat="dataAdminTab in dataAdminTabs" ui-sref="{{dataAdminTab.state}}" active="dataAdminTab.active">
+        <tab-heading>
+            {{dataAdminTab.label}}
+        </tab-heading>
+    </tab>
+</tabset>
+<div id="dataAdminContent" ui-view></div>
+</div>

@@ -1,0 +1,38 @@
+﻿<div class="container">
+    <h3>MyCPRs</h3>
+</div>
+<hr />
+<div class="container" ng-controller="myContractsCtrl">
+    <div class="row">
+        <div class="col-xs-2 ">
+            <label>Status</label>
+            <input type="hidden" ui-select2="statusOptions" ng-model="filter.selectedStatus" />
+        </div>
+    </div>
+    <div ng-repeat="cpr in contracts">
+        <div class="custom-collapse" ng-click="cpr.opened = !cpr.opened">
+            <div>
+                <span class="glyphicon glyphicon-chevron-right" ng-click="cpr.opened = true" ng-show="!cpr.opened"></span>
+                <span class="glyphicon glyphicon-chevron-down" ng-click="cpr.opened = false" ng-show="cpr.opened"></span>
+                <a ng-click="open(cpr.ContractId)"> {{cpr.CPRNumber}} - {{ cpr.ContractStatusType.ContractStatusName}}  {{cpr.pendingTier}}</a>
+                <span class="glyphicon glyphicon-chevron-right pull-right" ng-click="cpr.opened = true" ng-show="!cpr.opened"></span>
+                <span class="glyphicon glyphicon-chevron-down pull-right" ng-click="cpr.opened = false" ng-show="cpr.opened"></span>
+            </div>
+        </div>
+        <div class="custom-collapsing" ng-show="cpr.opened">
+            <div class="tiers-panel">
+                <div ng-repeat="approver in cpr.ApproveStatuses">
+                    <span>
+                        <div class="tier">
+                            <span class="glyphicon glyphicon-ok-circle" ng-show="{{approver.showApproveIcon;}}"></span>
+                            <span class="glyphicon glyphicon-ban-circle" ng-show="{{approver.showRejectIcon;}}"></span>
+                            <span class="glyphicon glyphicon-repeat" ng-show="{{approver.showIcon;}}"></span>
+                            Tier {{approver.number}}
+                        </div>
+                    </span>
+                    ({{approver.Name}}) - <strong>{{approver.Status}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

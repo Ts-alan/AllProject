@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CCPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CCPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="CCPModel.Customer" />
+    <EntitySet Name="EndUsers" EntityType="CCPModel.EndUser" />
+    <EntitySet Name="Roles" EntityType="CCPModel.Role" />
+    <EntitySet Name="Clients" EntityType="CCPModel.Client" />
+    <EntitySet Name="RefreshTokens" EntityType="CCPModel.RefreshToken" />
+    <EntitySet Name="ApproveStatusTypes" EntityType="CCPModel.ApproveStatusType" />
+    <EntitySet Name="ContractStatusTypes" EntityType="CCPModel.ContractStatusType" />
+    <EntitySet Name="Tiers" EntityType="CCPModel.Tier" />
+    <EntitySet Name="ApproverTiers" EntityType="CCPModel.ApproverTier" />
+    <EntitySet Name="ApproveStatus1" EntityType="CCPModel.ApproveStatus" />
+    <AssociationSet Name="FK_ApproverTier_Tier" Association="CCPModel.FK_ApproverTier_Tier">
+      <End Role="Tier" EntitySet="Tiers" />
+      <End Role="ApproverTier" EntitySet="ApproverTiers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_ApproverTier" Association="CCPModel.FK_ApproveStatus_ApproverTier">
+      <End Role="ApproverTier" EntitySet="ApproverTiers" />
+      <End Role="ApproveStatu" EntitySet="ApproveStatus1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_ApproveStatusType" Association="CCPModel.FK_ApproveStatus_ApproveStatusType">
+      <End Role="ApproveStatusType" EntitySet="ApproveStatusTypes" />
+      <End Role="ApproveStatu" EntitySet="ApproveStatus1" />
+    </AssociationSet>
+    <EntitySet Name="Areas" EntityType="CCPModel.Area" />
+    <EntitySet Name="AreaRoles" EntityType="CCPModel.AreaRole" />
+    <EntitySet Name="Permissions" EntityType="CCPModel.Permission" />
+    <EntitySet Name="AreaRoleViews" EntityType="CCPModel.AreaRoleView" />
+    <AssociationSet Name="FK_AreaRole_Area" Association="CCPModel.FK_AreaRole_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="AreaRole" EntitySet="AreaRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AreaRole_Permission" Association="CCPModel.FK_AreaRole_Permission">
+      <End Role="Permission" EntitySet="Permissions" />
+      <End Role="AreaRole" EntitySet="AreaRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AreaRole_Role" Association="CCPModel.FK_AreaRole_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="AreaRole" EntitySet="AreaRoles" />
+    </AssociationSet>
+    <EntitySet Name="Contracts" EntityType="CCPModel.Contract" />
+    <EntitySet Name="Users" EntityType="CCPModel.User" />
+    <AssociationSet Name="FK_ApproverTier_Approver" Association="CCPModel.FK_ApproverTier_Approver">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ApproverTier" EntitySet="ApproverTiers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproverTier_SalesPerson" Association="CCPModel.FK_ApproverTier_SalesPerson">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ApproverTier" EntitySet="ApproverTiers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ApproveStatus_Contract" Association="CCPModel.FK_ApproveStatus_Contract">
+      <End Role="Contract" EntitySet="Contracts" />
+      <End Role="ApproveStatus" EntitySet="ApproveStatus1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contract_Status" Association="CCPModel.FK_Contract_Status">
+      <End Role="ContractStatusType" EntitySet="ContractStatusTypes" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contract_User" Association="CCPModel.FK_Contract_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Contracts_dbo_Customers_Customer_Id" Association="CCPModel.FK_dbo_Contracts_dbo_Customers_Customer_Id">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Contracts_dbo_EndUsers_EndUser_Id" Association="CCPModel.FK_dbo_Contracts_dbo_EndUsers_EndUser_Id">
+      <End Role="EndUser" EntitySet="EndUsers" />
+      <End Role="Contract" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="CCPModel.FK_User_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="Messages" EntityType="CCPModel.Message" />
+    <AssociationSet Name="FK_Message_CurrentContractStatus" Association="CCPModel.FK_Message_CurrentContractStatus">
+      <End Role="ContractStatusType" EntitySet="ContractStatusTypes" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_PreviousContractStatus" Association="CCPModel.FK_Message_PreviousContractStatus">
+      <End Role="ContractStatusType" EntitySet="ContractStatusTypes" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_ActionAuthor" Association="CCPModel.FK_Message_ActionAuthor">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_Recipient" Association="CCPModel.FK_Message_Recipient">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_SalesPerson" Association="CCPModel.FK_Message_SalesPerson">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int64" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InternalCustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Contracts" Relationship="CCPModel.FK_dbo_Contracts_dbo_Customers_Customer_Id" FromRole="Customer" ToRole="Contract" />
+  </EntityType>
+  <EntityType Name="EndUser">
+    <Key>
+      <PropertyRef Name="EndUserId" />
+    </Key>
+    <Property Name="EndUserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EndUserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Contracts" Relationship="CCPModel.FK_dbo_Contracts_dbo_EndUsers_EndUser_Id" FromRole="EndUser" ToRole="Contract" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int64" />
+    <Property Name="RoleName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+    <NavigationProperty Name="AreaRoles" Relationship="CCPModel.FK_AreaRole_Role" FromRole="Role" ToRole="AreaRole" />
+    <NavigationProperty Name="Users" Relationship="CCPModel.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Secret" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ApplicationType" Type="CCPModel.ApplicationTypes" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="RefreshTokenLifeTime" Type="Int32" Nullable="false" />
+    <Property Name="AllowedOrigin" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="RefreshToken">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ClientId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IssuedUtc" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ExpiresUtc" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ProtectedTicket" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ApproveStatusType">
+    <Key>
+      <PropertyRef Name="ApproverStatusId" />
+    </Key>
+    <Property Name="ApproverStatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApproverStatusName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ApproverStatusTag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ApproveStatus" Relationship="CCPModel.FK_ApproveStatus_ApproveStatusType" FromRole="ApproveStatusType" ToRole="ApproveStatu" />
+  </EntityType>
+  <EntityType Name="ContractStatusType">
+    <Key>
+      <PropertyRef Name="ContractStatusId" />
+    </Key>
+    <Property Name="ContractStatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContractStatusName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContractStatusTag" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Contracts" Relationship="CCPModel.FK_Contract_Status" FromRole="ContractStatusType" ToRole="Contract" />
+    <NavigationProperty Name="Messages" Relationship="CCPModel.FK_Message_CurrentContractStatus" FromRole="ContractStatusType" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="CCPModel.FK_Message_PreviousContractStatus" FromRole="ContractStatusType" ToRole="Message" />
+  </EntityType>
+  <EntityType Name="Tier">
+    <Key>
+      <PropertyRef Name="TierId" />
+    </Key>
+    <Property Name="TierId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApproverLevel" Type="Int64" Nullable="false" />
+    <Property Name="TDGAMinValue" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="ApproverTiers" Relationship="CCPModel.FK_ApproverTier_Tier" FromRole="Tier" ToRole="ApproverTier" />
+  </EntityType>
+  <EntityType Name="ApproverTier">
+    <Key>
+      <PropertyRef Name="ApproverTierId" />
+    </Key>
+    <Property Name="ApproverTierId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesPersonId" Type="Int64" Nullable="false" />
+    <Property Name="ApproverId" Type="Int64" Nullable="false" />
+    <Property Name="TierId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Tier" Relationship="CCPModel.FK_ApproverTier_Tier" FromRole="ApproverTier" ToRole="Tier" />
+    <NavigationProperty Name="ApproveStatus" Relationship="CCPModel.FK_ApproveStatus_ApproverTier" FromRole="ApproverTier" ToRole="ApproveStatu" />
+    <NavigationProperty Name="Approver" Relationship="CCPModel.FK_ApproverTier_Approver" FromRole="ApproverTier" ToRole="User" />
+    <NavigationProperty Name="SalesPerson" Relationship="CCPModel.FK_ApproverTier_SalesPerson" FromRole="ApproverTier" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ApproveStatus">
+    <Key>
+      <PropertyRef Name="ApproverStatusId" />
+    </Key>
+    <Property Name="ApproverStatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContractId" Type="Int64" Nullable="false" />
+    <Property Name="ApproverTierId" Type="Int64" />
+    <Property Name="StatusId" Type="Int64" />
+    <NavigationProperty Name="ApproverTier" Relationship="CCPModel.FK_ApproveStatus_ApproverTier" FromRole="ApproveStatu" ToRole="ApproverTier" />
+    <NavigationProperty Name="ApproveStatusType" Relationship="CCPModel.FK_ApproveStatus_ApproveStatusType" FromRole="ApproveStatu" ToRole="ApproveStatusType" />
+    <NavigationProperty Name="Contract" Relationship="CCPModel.FK_ApproveStatus_Contract" FromRole="ApproveStatus" ToRole="Contract" />
+  </EntityType>
+  <Association Name="FK_ApproverTier_Tier">
+    <End Type="CCPModel.Tier" Role="Tier" Multiplicity="1" />
+    <End Type="CCPModel.ApproverTier" Role="ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tier">
+        <PropertyRef Name="TierId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="TierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_ApproverTier">
+    <End Type="CCPModel.ApproverTier" Role="ApproverTier" Multiplicity="0..1" />
+    <End Type="CCPModel.ApproveStatus" Role="ApproveStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproverTier">
+        <PropertyRef Name="ApproverTierId" />
+      </Principal>
+      <Dependent Role="ApproveStatu">
+        <PropertyRef Name="ApproverTierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_ApproveStatusType">
+    <End Type="CCPModel.ApproveStatusType" Role="ApproveStatusType" Multiplicity="0..1" />
+    <End Type="CCPModel.ApproveStatus" Role="ApproveStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproveStatusType">
+        <PropertyRef Name="ApproverStatusId" />
+      </Principal>
+      <Dependent Role="ApproveStatu">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EnumType Name="ApplicationTypes" a:ExternalTypeName="ApplicationTypes" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="AreaId" />
+    </Key>
+    <Property Name="AreaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AreaName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AreaRoles" Relationship="CCPModel.FK_AreaRole_Area" FromRole="Area" ToRole="AreaRole" />
+  </EntityType>
+  <EntityType Name="AreaRole">
+    <Key>
+      <PropertyRef Name="AreaRoleId" />
+    </Key>
+    <Property Name="AreaRoleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AreaId" Type="Int64" Nullable="false" />
+    <Property Name="RoleId" Type="Int64" Nullable="false" />
+    <Property Name="PermissionId" Type="Int64" />
+    <NavigationProperty Name="Area" Relationship="CCPModel.FK_AreaRole_Area" FromRole="AreaRole" ToRole="Area" />
+    <NavigationProperty Name="Permission" Relationship="CCPModel.FK_AreaRole_Permission" FromRole="AreaRole" ToRole="Permission" />
+    <NavigationProperty Name="Role" Relationship="CCPModel.FK_AreaRole_Role" FromRole="AreaRole" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PermissionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PermissionTag" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="AreaRoles" Relationship="CCPModel.FK_AreaRole_Permission" FromRole="Permission" ToRole="AreaRole" />
+  </EntityType>
+  <EntityType Name="AreaRoleView">
+    <Key>
+      <PropertyRef Name="RoleName" />
+      <PropertyRef Name="AreaName" />
+    </Key>
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AreaName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_AreaRole_Area">
+    <End Type="CCPModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="CCPModel.AreaRole" Role="AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="AreaId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AreaRole_Permission">
+    <End Type="CCPModel.Permission" Role="Permission" Multiplicity="0..1" />
+    <End Type="CCPModel.AreaRole" Role="AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="PermissionId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="PermissionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AreaRole_Role">
+    <End Type="CCPModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="CCPModel.AreaRole" Role="AreaRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="AreaRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Contract">
+    <Key>
+      <PropertyRef Name="ContractId" />
+    </Key>
+    <Property Name="ContractId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CPRNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TDGA" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="7" />
+    <Property Name="EndDate" Type="DateTime" Precision="7" />
+    <Property Name="CustomerId" Type="Int64" />
+    <Property Name="EndUserId" Type="Int64" />
+    <Property Name="SalesPersonId" Type="Int64" />
+    <Property Name="StatusId" Type="Int64" />
+    <NavigationProperty Name="ApproveStatuses" Relationship="CCPModel.FK_ApproveStatus_Contract" FromRole="Contract" ToRole="ApproveStatus" />
+    <NavigationProperty Name="ContractStatusType" Relationship="CCPModel.FK_Contract_Status" FromRole="Contract" ToRole="ContractStatusType" />
+    <NavigationProperty Name="SalesPerson" Relationship="CCPModel.FK_Contract_User" FromRole="Contract" ToRole="User" />
+    <NavigationProperty Name="Customer" Relationship="CCPModel.FK_dbo_Contracts_dbo_Customers_Customer_Id" FromRole="Contract" ToRole="Customer" />
+    <NavigationProperty Name="EndUser" Relationship="CCPModel.FK_dbo_Contracts_dbo_EndUsers_EndUser_Id" FromRole="Contract" ToRole="EndUser" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int64" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InternalUserId" Type="Int64" />
+    <NavigationProperty Name="SalesPersons" Relationship="CCPModel.FK_ApproverTier_Approver" FromRole="User" ToRole="ApproverTier" />
+    <NavigationProperty Name="Approvers" Relationship="CCPModel.FK_ApproverTier_SalesPerson" FromRole="User" ToRole="ApproverTier" />
+    <NavigationProperty Name="Contracts" Relationship="CCPModel.FK_Contract_User" FromRole="User" ToRole="Contract" />
+    <NavigationProperty Name="Role" Relationship="CCPModel.FK_User_Role" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_ApproverTier_Approver">
+    <End Type="CCPModel.User" Role="User" Multiplicity="1" />
+    <End Type="CCPModel.ApproverTier" Role="ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="ApproverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproverTier_SalesPerson">
+    <End Type="CCPModel.User" Role="User" Multiplicity="1" />
+    <End Type="CCPModel.ApproverTier" Role="ApproverTier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="ApproverTier">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ApproveStatus_Contract">
+    <End Type="CCPModel.Contract" Role="Contract" Multiplicity="1" />
+    <End Type="CCPModel.ApproveStatus" Role="ApproveStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="ContractId" />
+      </Principal>
+      <Dependent Role="ApproveStatus">
+        <PropertyRef Name="ContractId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contract_Status">
+    <End Type="CCPModel.ContractStatusType" Role="ContractStatusType" Multiplicity="0..1" />
+    <End Type="CCPModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contract_User">
+    <End Type="CCPModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CCPModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Contracts_dbo_Customers_Customer_Id">
+    <End Type="CCPModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="CCPModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Contracts_dbo_EndUsers_EndUser_Id">
+    <End Type="CCPModel.EndUser" Role="EndUser" Multiplicity="0..1" />
+    <End Type="CCPModel.Contract" Role="Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EndUser">
+        <PropertyRef Name="EndUserId" />
+      </Principal>
+      <Dependent Role="Contract">
+        <PropertyRef Name="EndUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Type="CCPModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="CCPModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageId" />
+    </Key>
+    <Property Name="MessageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecipientId" Type="Int64" Nullable="false" />
+    <Property Name="SalesPersonId" Type="Int64" />
+    <Property Name="ActionAuthorId" Type="Int64" />
+    <Property Name="PreviousContractStatusId" Type="Int64" />
+    <Property Name="CurrentContractStatusId" Type="Int64" />
+    <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CurrentContractStatus" Relationship="CCPModel.FK_Message_CurrentContractStatus" FromRole="Message" ToRole="ContractStatusType" />
+    <NavigationProperty Name="PreviousContractStatus" Relationship="CCPModel.FK_Message_PreviousContractStatus" FromRole="Message" ToRole="ContractStatusType" />
+    <NavigationProperty Name="ActionAuthor" Relationship="CCPModel.FK_Message_ActionAuthor" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="Recipient" Relationship="CCPModel.FK_Message_Recipient" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="SalesPerson" Relationship="CCPModel.FK_Message_SalesPerson" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Message_CurrentContractStatus">
+    <End Type="CCPModel.ContractStatusType" Role="ContractStatusType" Multiplicity="0..1" />
+    <End Type="CCPModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="CurrentContractStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_PreviousContractStatus">
+    <End Type="CCPModel.ContractStatusType" Role="ContractStatusType" Multiplicity="0..1" />
+    <End Type="CCPModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContractStatusType">
+        <PropertyRef Name="ContractStatusId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="PreviousContractStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_ActionAuthor">
+    <End Type="CCPModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CCPModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="ActionAuthorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_Recipient">
+    <End Type="CCPModel.User" Role="User" Multiplicity="1" />
+    <End Type="CCPModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="RecipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_SalesPerson">
+    <End Type="CCPModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CCPModel.Message" Role="Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

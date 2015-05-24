@@ -1,0 +1,101 @@
+﻿<script type="text/ng-template" id="salesPerson">
+    <div class="modal-header">
+        <h3 class="modal-title">Manage Sales Rep</h3>
+    </div>
+    <div class="modal-body" ng-class="[loaderstyle]">
+        <form class="form-horizontal" novalidate name="salesPersonForm" role="form" ng-show="loaded">
+            <div class="form-group">
+                <label for="inputName" class="col-sm-4 control-label">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputName" id="inputName" required ng-model="salesPerson.SalesPersonName">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputName.$error.required">
+                    Required!
+                </span><br>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-4 control-label">Email</label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" name="inputEmail" id="inputEmail" required ng-model="salesPerson.Email">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputEmail.$error.required">
+                    Required!
+                </span><br>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="salesPersonForm.inputEmail.$error.email">That is not a valid email. Please enter valid email.</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">User</label>
+                <div class="col-sm-4" id="select2">
+                    <input type="hidden" ui-select2="options" ng-model="salesPerson.selectedUser" />
+                </div>
+                <span class="control-label error col-md-2" ng-show="salesPersonForm.inputUser.$error.required">
+                    Required!
+                </span><br>
+            </div>
+            <div class="form-group">
+                <label for="inputContractPrefix" class="col-sm-4 control-label">ContractPrefix</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputContractPrefix" id="inputContractPrefix" required ng-model="salesPerson.ContractPrefix">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputContractPrefix.$error.required">
+                    Required!
+                </span><br>
+            </div>
+
+            <div class="form-group">
+                <label for="inputInternalSalesPersonId" class="col-sm-4 control-label">ID</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="inputInternalSalesPersonId" id="inputInternalSalesPersonId" required ng-model="salesPerson.InternalSalesPersonId">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputInternalSalesPersonId.$error.required">
+                    Required!
+                </span><br>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="salesPersonForm.inputInternalSalesPersonId.$error.number">That is not a valid number. Please enter a number.</small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputNumber" class="col-sm-4 control-label">Number</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" name="inputNumber" id="inputNumber" required ng-model="salesPerson.SalesPersonNumber">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputNumber.$error.required">
+                    Required!
+                </span><br>
+                <div>
+                    <small class="control-label error col-sm-offset-4 ng-hide" ng-show="salesPersonForm.inputNumber.$error.number">That is not a valid number. Please enter a number.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputRegion" class="col-sm-4 control-label">Region</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputRegion" id="inputRegion" required ng-model="salesPerson.Region">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputRegion.$error.required">
+                    Required!
+                </span><br>
+            </div>
+
+            <div class="form-group">
+                <label for="inputStatus" class="col-sm-4 control-label">Status</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="inputStatus" id="inputStatus" required ng-model="salesPerson.Status">
+                </div>
+                <span class="control-label error col-md-2 ng-hide" ng-show="salesPersonForm.inputStatus.$error.required">
+                    Required!
+                </span><br>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button id="addButton" class="btn btn-default" ng-disabled="salesPersonForm.$invalid" ng-click="save()">Save</button>
+        <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

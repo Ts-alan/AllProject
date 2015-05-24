@@ -1,0 +1,38 @@
+﻿<form class="well login-box">
+    <div style="position:relative">
+        <div class="row" style="margin:0;">
+            <h4 style="position: relative;">Login</h4>
+            <div class="input-group" ng-class="{'has-error': message || emailRequired}" style="display: inherit;">
+                <input type="text" class="form-control" style="display: inherit" placeholder="Login" ng-pattern="/^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@("@")[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/" data-ng-model="loginData.Email" data-ng-valid="false" popover-placement="right" popover-trigger="focus" popover="{{emailRequired}}">
+                @*<span style="color:crimson" ng-show="emailRequired">{{emailRequired}}</span>*@
+            </div>
+        </div>
+        <div class="row" style="margin:0;">
+            <h4 style="position: relative;">Password</h4>
+            <div class="input-group" ng-class="{'has-error': message || passwordRequired}" style="display: inherit;">
+                <input type="password" class="form-control" style="display: inherit" placeholder="Password" data-ng-model="loginData.Password" popover-placement="right" popover-trigger="focus" popover="{{passwordRequired}}">
+                @*<span style="color:crimson" ng-show="passwordRequired">{{passwordRequired}}</span>*@
+
+            </div>
+        </div>
+
+        @*<a href="/#/Login">Forgot Your Password?</a>*@
+        <br/>
+        <span style="color:crimson" ng-show="message">{{message}}</span>
+
+    </div>
+    @*<div style="border-bottom-left-radius: 20px; position: absolute; left:0%; bottom: 0%; background: #6e6e6e; width: 72%; height: 18%;">
+        <div class="pull-right">
+
+        </div>
+    </div>*@
+    
+    
+    <div style="position: absolute; left: 5%; bottom: 5%;">
+        <button style="width:358px;" class="btn btn-primary" value="" ng-disabled="disableLogin" data-ng-click="login()">Login</button>
+    </div>
+    
+    
+</form>
+
+

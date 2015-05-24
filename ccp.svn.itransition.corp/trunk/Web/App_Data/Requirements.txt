@@ -1,0 +1,2 @@
+﻿1. При обновлении файла Scripts/angular-ui/ui-bootstrap-tpls.js на новую версию в модуле "template/popover/popover.html" нужно будет
+поменять строчку "      <div class=\"popover-content\" ng-bind=\"content\"></div>\n" на "      <div class=\"popover-content\" bind-html-unsafe=\"content\"></div>\n"
