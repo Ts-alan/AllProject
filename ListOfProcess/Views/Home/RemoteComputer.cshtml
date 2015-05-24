@@ -1,0 +1,41 @@
+﻿@model IEnumerable<object>
+@{
+    ViewBag.Title = "RemoteComputer";
+}
+<script type="text/javascript">
+    function StartProcess() {
+        var text = $("#text").val();
+        $.get('@Url.Action("StartProcess", "Home")', { startprocess: text });
+    };
+
+</script>
+<h2>Удаленный компьютер</h2>
+
+@if (ViewBag.Error == null)
+{
+    <div style="float: left; margin-right: 10px" id="table_wrapper">
+        <div id="header">
+            <div id="head1">Список процессов</div>
+        </div>
+        <div id="tbody">
+            <table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="td1">@item</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div>
+        <label for="text"><h4>Укажите запукаемый процесс или путь к процессу</h4></label>
+        <input type="text" id="text">
+        <input type="button" value="Запустить" onclick="StartProcess()" class="btn btn-info">
+    </div>
+}
+else
+{
+    <h5>Описание ошибки</h5>
+    @ViewBag.Error;
+}

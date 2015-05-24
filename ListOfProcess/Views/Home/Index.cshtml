@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div style="text-align: center; vertical-align: middle; margin-top: 200px ">
+    <h1>Выберите компьютер</h1>
+    @Html.ActionLink("Локальный компьютер", "LocalComputer", null, new { @class = "btn btn-info" })
+
+    <a href="#myModal" role="button" class="btn btn-info" data-toggle="modal">Удаленный компьютер</a>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+        <h3>Введите данные </h3>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("RemoteComputer", "Home"))
+        {
+            <label for="ip">IP адрес</label>
+            <input id="ip" name="Ip" type="text" />
+            <label for="login">Login</label>
+            <input id="login" name="Login" type="text" />
+            <label for="password">Password</label>
+            <input id="password" name="Password" type="text" />
+            <input type="submit" value="Подключиться" class="btn" style="margin-bottom:10px" />
+        }
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</a>
+    </div>
+</div>

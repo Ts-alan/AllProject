@@ -1,0 +1,12 @@
+﻿  #table_wrapper{background:tomato;border:1px solid olive;float:left;width: 270px;height:400px}
+  #tbody{height:400px;overflow-y:auto;width:270px;background:yellow;}
+  table{border-collapse:collapse; width:100%;}
+  td{padding:1px 5px; 
+      border-right:1px solid red; 
+      border-left: 1px solid red; 
+      border-bottom:1px solid red;
+      } 
+  .td1{width:270px ;}
+  #header{width:270px;background:DodgerBlue;border-bottom:1px solid red;}
+  #header div{padding:1px 5px;float:left;}
+  #header #head1{width:270px;} 
