@@ -1,0 +1,14 @@
+﻿  #table_wrapper{background:tomato;border:1px solid olive;width: 600px;}
+  #tbody{height:200px;overflow-y:auto;width:600px;background:yellow;}
+  table{border-collapse:collapse; width:100%;}
+  td{padding:1px 5px; /* pixels */
+      border-right:1px solid red; /* to avoid the hacks for the padding */
+      border-bottom:1px solid red;} 
+  .td1{width:199px;}
+  .td2{width:140px;}
+  .td3{border-right-width:0;}
+  #header{width:600px;background:DodgerBlue;border-bottom:1px solid red;}
+  #header div{padding:1px 5px;float:left;border-right:1px solid orange;}
+  #header #head1{width:200px;} /* the same as td1 */
+  #header #head2{width:140px;} /* the same as td2 */
+  #header #head3{ float:none;border-right-width:0}

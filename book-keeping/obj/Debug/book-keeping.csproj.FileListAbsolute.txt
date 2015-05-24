@@ -1,0 +1,64 @@
+D:\Тестовое задание\book-keeping\book-keeping\bin\book-keeping.dll.config
+D:\Тестовое задание\book-keeping\book-keeping\bin\book-keeping.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\book-keeping.pdb
+D:\Тестовое задание\book-keeping\book-keeping\bin\Antlr3.Runtime.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\EntityFramework.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\Microsoft.Web.Infrastructure.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\Newtonsoft.Json.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Net.Http.Formatting.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Http.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Http.WebHost.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Mvc.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Optimization.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Providers.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Razor.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.Deployment.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.Razor.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\WebGrease.dll
+D:\Тестовое задание\book-keeping\book-keeping\bin\EntityFramework.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\Newtonsoft.Json.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Net.Http.Formatting.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Http.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Http.WebHost.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Mvc.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.Razor.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.Deployment.xml
+D:\Тестовое задание\book-keeping\book-keeping\bin\System.Web.WebPages.Razor.xml
+D:\Тестовое задание\book-keeping\book-keeping\obj\Debug\book-keeping.csprojResolveAssemblyReference.cache
+D:\Тестовое задание\book-keeping\book-keeping\obj\Debug\book-keeping.dll
+D:\Тестовое задание\book-keeping\book-keeping\obj\Debug\book-keeping.pdb
+D:\job\book-keeping\book-keeping\bin\book-keeping.dll.config
+D:\job\book-keeping\book-keeping\bin\book-keeping.dll
+D:\job\book-keeping\book-keeping\bin\book-keeping.pdb
+D:\job\book-keeping\book-keeping\bin\Antlr3.Runtime.dll
+D:\job\book-keeping\book-keeping\bin\EntityFramework.dll
+D:\job\book-keeping\book-keeping\bin\Microsoft.Web.Infrastructure.dll
+D:\job\book-keeping\book-keeping\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\job\book-keeping\book-keeping\bin\Newtonsoft.Json.dll
+D:\job\book-keeping\book-keeping\bin\System.Net.Http.Formatting.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Http.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Http.WebHost.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Mvc.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Optimization.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Providers.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.Razor.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.Deployment.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.dll
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.Razor.dll
+D:\job\book-keeping\book-keeping\bin\WebGrease.dll
+D:\job\book-keeping\book-keeping\bin\EntityFramework.xml
+D:\job\book-keeping\book-keeping\bin\Newtonsoft.Json.xml
+D:\job\book-keeping\book-keeping\bin\System.Net.Http.Formatting.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.Http.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.Http.WebHost.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.Mvc.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.Razor.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.Deployment.xml
+D:\job\book-keeping\book-keeping\bin\System.Web.WebPages.Razor.xml
+D:\job\book-keeping\book-keeping\obj\Debug\book-keeping.csprojResolveAssemblyReference.cache
+D:\job\book-keeping\book-keeping\obj\Debug\book-keeping.dll
+D:\job\book-keeping\book-keeping\obj\Debug\book-keeping.pdb

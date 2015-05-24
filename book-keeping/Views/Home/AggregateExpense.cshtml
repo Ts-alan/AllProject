@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "AggregateExpense";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#click").click(function() {
+            var sel1 = document.getElementById("month"); // Получаем наш список
+            var month = sel1.options[sel1.selectedIndex].value;
+
+            var sel2 = document.getElementById("category"); // Получаем наш список
+            var category = sel2.options[sel2.selectedIndex].value;
+            $.get('@Url.Action("AggregateBy", "Home")', {
+                month: month, category: category
+            }).success(function (e) {
+            $("#result").text("Расходы составляют     "+e);
+            }).error(function () {
+                $("#result").text("Нет данных");});
+
+        });
+    });
+</script>
+<div style="margin-left: 500px; margin-top: 250px; width: 357px;background-color:#777343;  border: 1px solid black;">
+    <div style="float: left">
+        <label style="display: block" for="month">Выбирете месяц</label>
+        <select id="month" name="Category" style="width: 174px; height: 26px">
+            <option value="1">Январь</option>
+            <option value="2">Февраль</option>
+            <option value="3">Март</option>
+            <option value="4">Апрель</option>
+            <option value="5">Май</option>
+            <option value="6">Июнь</option>
+            <option value="7">Июль</option>
+            <option value="8">Август</option>
+            <option value="9">Сентябрь</option>
+            <option value="10">Октябрь</option>
+            <option value="11">Ноябрь</option>
+            <option value="12">Декабрь</option>
+           
+        </select>
+    </div>
+    <div>
+        <label style="display: block" for="category">Выбирете категорию</label>
+        <select id="category" name="Category" style="width: 174px; height: 26px">
+            <option>food</option>
+            <option>bills</option>
+            <option>taxi</option>
+            <option>entertainment</option>
+        </select>
+    </div>
+    <button id="click" class="btn btn-success" style="margin-left: 90px; margin-top: 10px" type="submit">Суммарные расходы</button>
+    <div id="result" style="height: 20px;color:#F6933E;"></div>
+</div>
+@Html.ActionLink("Назад", "Index", new { refresh = true }, new { @class = "btn btn-danger",style="margin-left: 30px"})
