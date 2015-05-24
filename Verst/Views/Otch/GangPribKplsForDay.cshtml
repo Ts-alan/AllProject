@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Verst.Models.GangPribKplsForDay>
+
+@{
+    ViewBag.Title = "GangPribKplsForDay";
+}
+
+<div class="container-fluid lighttable center" style="float: left">
+    <div style="float:left">
+        <div style="width: 200px;height: 41px" >
+        <table class="table table-bordered table-condensed center" style="table-layout:fixed">
+            <thead >
+                <tr>
+                    <th style="width: 60px">Номер операции</th>
+                    <th style="width: 94px">Наименование операции</th>
+                    <th style="width: 80px">Количество передач </th>
+                </tr>
+
+            </thead>
+               </table> 
+        </div> 
+        <div class="scrollable" style="width: 238px;height: 300px">
+       <table class="table table-bordered table-condensed"style="table-layout:fixed; ">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width: 60px;">@item.Nop</td>
+                        <td style="width: 94px;">@item.Naop</td>
+                        <td style="width: 80px;">@item.KplsForNop</td>
+                    </tr>
+            
+                }
+            </tbody>
+        </table>
+       </div>
+    </div>
+</div>

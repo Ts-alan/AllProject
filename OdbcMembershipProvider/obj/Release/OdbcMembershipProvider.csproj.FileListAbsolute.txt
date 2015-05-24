@@ -1,0 +1,5 @@
+D:\AistN\OdbcMembershipProvider\bin\Release\OdbcMembershipProvider.dll
+D:\AistN\OdbcMembershipProvider\bin\Release\OdbcMembershipProvider.pdb
+D:\AistN\OdbcMembershipProvider\obj\Release\ResolveAssemblyReference.cache
+D:\AistN\OdbcMembershipProvider\obj\Release\OdbcMembershipProvider.dll
+D:\AistN\OdbcMembershipProvider\obj\Release\OdbcMembershipProvider.pdb

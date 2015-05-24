@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Verst.Models.DefectsDistributionOperations>
+
+@{
+    Layout = null;
+}
+
+<div class="noprint" style="width:251px; height: 41px">
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th style="width: 54px">Номер операции</th>
+                <th style="width: 149px">Наименование операции</th>
+                <th style="width: 44px">Брак</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div class="scrollable"style="width:269px;height: 400px">
+    <table class="table table-bordered table-condensed" style="table-layout:fixed; width: 251px;">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.Nop">
+                    <td style="width: 55px">@item.Nop</td>
+                    <td style="width: 148px">@item.Naop</td>
+                    <td style="width: 44px">@Ajax.ActionLink(item.Nzp, "DefectsDistrData", new { nop = item.Nop, kmk = ViewBag.Kmk, kpr = ViewBag.Kpr }, new AjaxOptions { UpdateTargetId = "Otch_Defects_Data3", InsertionMode = InsertionMode.Replace, OnBegin = "load(3)", OnSuccess = "Success(3)", OnFailure = "AjaxError" }, new {@class="DefectsDistrOperations" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

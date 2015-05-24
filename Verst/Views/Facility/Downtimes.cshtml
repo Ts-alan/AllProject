@@ -1,0 +1,44 @@
+﻿@using Verst.Models
+@model dynamic
+
+@{
+    ViewBag.Title = "Простои";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Простои установки")
+
+<h1>Простои оборудования</h1>
+<div class=" lighttable center ">
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Установка</th>
+            <th>Дата начала простоя</th>
+            <th>Время начала простоя</th>
+            <th>Идентификатор оператора начала</th>
+            <th>Причина</th>
+            <th>Часы</th>
+            <th>Дата завершения простоя</th>
+            <th>Время завершения простоя</th>
+            <th>Идентификатор оператора завершения</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<Downtimes>)ViewBag.results)
+        {
+            <tr>
+                <td>@item.Nobr</td>
+                <td>@item.Dnp</td>
+                <td>@item.Tnp</td>
+                <td>@item.Iopn</td>
+                <td>@item.Napr</td>
+                <td>@item.Hrs</td>
+                <td>@item.Dop</td>
+                <td>@item.Top</td>
+                <td>@item.Iopo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

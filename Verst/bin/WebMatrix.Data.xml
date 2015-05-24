@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>WebMatrix.Data</name>
+  </assembly>
+  <members>
+    <member name="T:WebMatrix.Data.ConnectionEventArgs"></member>
+    <member name="M:WebMatrix.Data.ConnectionEventArgs.#ctor(System.Data.Common.DbConnection)"></member>
+    <member name="P:WebMatrix.Data.ConnectionEventArgs.Connection"></member>
+    <member name="T:WebMatrix.Data.Database">
+      <summary>Представляет открытую базу данных.</summary>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Close">
+      <summary>Закрывает открытую базу данных.</summary>
+    </member>
+    <member name="P:WebMatrix.Data.Database.Connection">
+      <summary>Получает подключение к базе данных.</summary>
+      <returns>Возвращает <see cref="T:System.Data.Common.DbConnection" />.</returns>
+    </member>
+    <member name="E:WebMatrix.Data.Database.ConnectionOpened">
+      <summary>Происходит при открытии подключения базы данных экземпляром <see cref="T:WebMatrix.Data.Database" />. </summary>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Dispose">
+      <summary>Освобождает все ресурсы, используемые перечислителем <see cref="T:WebMatrix.Data.Database" />.</summary>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Dispose(System.Boolean)">
+      <summary>Освобождает неуправляемые ресурсы, используемые <see cref="T:WebMatrix.Data.Database" /> (при необходимости освобождает и управляемые ресурсы).</summary>
+      <param name="disposing">Значение true, чтобы освободить все ресурсы (управляемые и неуправляемые); значение false, чтобы освободить только неуправляемые ресурсы.</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Execute(System.String,System.Object[])">
+      <summary>Выполняет инструкцию SQL (с необязательными параметрами), такую как INSERT, DELETE или UPDATE, и возвращает количество затронутых записей.</summary>
+      <returns>Возвращает значение <see cref="T:System.Int32" />.</returns>
+      <param name="commandText">Инструкция SQL.</param>
+      <param name="args">Параметр, используемый для передачи значений в инструкцию SQL (необязательно).</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.GetLastInsertId">
+      <summary>Возвращает столбец идентификаторов из последней вставленной строки.</summary>
+      <returns>Возвращает <see cref="T:System.Object" />.</returns>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Open(System.String)">
+      <summary>Открывает указанный файл базы данных или базу данных, заданную с помощью именованной строки подключения из файла Web.config.</summary>
+      <returns>Возвращает <see cref="T:WebMatrix.Data.Database" />.</returns>
+      <param name="name">Имя или строка подключения базы данных.</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.OpenConnectionString(System.String)"></member>
+    <member name="M:WebMatrix.Data.Database.OpenConnectionString(System.String,System.String)">
+      <summary>Открывает базу данных с использованием строки подключения.</summary>
+      <returns>Возвращает <see cref="T:WebMatrix.Data.Database" />.</returns>
+      <param name="connectionString">Сведения о подключении к базе данных.</param>
+      <param name="providerName">Имя поставщика данных .NET Framework, используемого для подключения к источнику данных (необязательно).</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.Query(System.String,System.Object[])">
+      <summary>Запрашивает базу данных с помощью инструкции SQL (иногда с передаваемыми параметрами) и возвращает результаты. </summary>
+      <returns>Возвращает <see cref="T:System.Collections.Generic.IEnumerable`1" />.</returns>
+      <param name="commandText">Представляет инструкцию SQL, применяемую к источнику данных.</param>
+      <param name="parameters">Параметр, используемый для передачи значений в инструкцию SQL (необязательно).</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.QuerySingle(System.String,System.Object[])">
+      <summary>Выполняет инструкцию SQL (с необязательными параметрами) и возвращает одну запись.</summary>
+      <returns>Возвращает <see cref="T:System.Object" />.</returns>
+      <param name="commandText">Представляет инструкцию SQL, применяемую к источнику данных.</param>
+      <param name="args">Параметр, используемый для передачи значений в инструкцию SQL (необязательно).</param>
+    </member>
+    <member name="M:WebMatrix.Data.Database.QueryValue(System.String,System.Object[])">
+      <summary>Выполняет инструкцию SQL (с необязательными параметрами) и возвращает одно значение.</summary>
+      <returns>Возвращает <see cref="T:System.Object" />.</returns>
+      <param name="commandText">Представляет инструкцию SQL, применяемую к источнику данных.</param>
+      <param name="args">Параметр, используемый для передачи значений в инструкцию SQL (необязательно).</param>
+    </member>
+    <member name="T:WebMatrix.Data.DynamicRecord"></member>
+    <member name="P:WebMatrix.Data.DynamicRecord.Columns"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.GetDynamicMemberNames"></member>
+    <member name="P:WebMatrix.Data.DynamicRecord.Item(System.Int32)"></member>
+    <member name="P:WebMatrix.Data.DynamicRecord.Item(System.String)"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetAttributes"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetClassName"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetComponentName"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetConverter"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetDefaultEvent"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetDefaultProperty"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetEditor(System.Type)"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetEvents"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetEvents(System.Attribute[])"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetProperties"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetProperties(System.Attribute[])"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.System#ComponentModel#ICustomTypeDescriptor#GetPropertyOwner(System.ComponentModel.PropertyDescriptor)"></member>
+    <member name="M:WebMatrix.Data.DynamicRecord.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)"></member>
+  </members>
+</doc>

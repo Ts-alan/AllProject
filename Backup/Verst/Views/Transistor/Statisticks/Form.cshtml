@@ -1,0 +1,185 @@
+﻿@using MvcApplication.Models
+@{
+    ViewBag.Title = "Form";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    DateTime now = DateTime.Now;
+    string prN = FoxRepo.GetProductionNumber();
+     string[] monthNames =  new string []{"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+    int[] item = new int[4];
+    for(int i=now.Year,j=0;i>=now.Year-3 && j<item.Length;i--,j++)
+    {
+        item[j]=i;
+    }
+}
+@Html.Hidden("PageTitle", "Анализ движения")
+<link href="@Url.Content("~/Content/jquery-ui-1.9.1.custom.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/DatePickerRus.js")" type="text/javascript"></script> 
+
+<script type="text/javascript">
+     $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+    var date1, date2, fullDate1, fullDate2,n;
+    $(document).ready(function () {     
+        $.datepicker.setDefaults(
+            $.extend($.datepicker.regional['ru'])
+        );
+        $("#dat1").datepicker({ changeMonth: true, changeYear: true});
+        $("#dat2").datepicker({ changeMonth: true, changeYear: true });
+        $("#dat3").datepicker({ changeMonth: true, changeYear: true });
+        $('#dat1').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1,'@now.Day'));
+        $('#dat2').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1, 01));
+        $('#dat3').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1, '@now.Day'));
+        var takem = document.getElementById("Month_change");
+        
+        takem.selectedIndex = '@now.Month'-1;
+    });
+    function byinterval() {
+        var day1 = $("#dat2").datepicker('getDate').getDate();
+        var month1 = $("#dat2").datepicker('getDate').getMonth() + 1;
+        var year1 = $("#dat2").datepicker('getDate').getFullYear();
+        fullDate1 = day1 + "." + month1 + "." + year1;
+        var day2 = $("#dat3").datepicker('getDate').getDate();
+        var month2 = $("#dat3").datepicker('getDate').getMonth() + 1;
+        var year2 = $("#dat3").datepicker('getDate').getFullYear();
+        fullDate2 = day2 + "." + month2 + "." + year2;
+        $('#brak').html("Брак производства №" + '@prN'+ " c " + fullDate1 + " по " + fullDate2);
+        ajax();
+    };
+    function bydate() {
+        var day1 = $("#dat1").datepicker('getDate').getDate();
+        var month1 = $("#dat1").datepicker('getDate').getMonth() + 1;
+        var year1 = $("#dat1").datepicker('getDate').getFullYear();
+        fullDate1 = day1 + "." + month1 + "." + year1;
+        fullDate2 = fullDate1;
+         $('#brak').html("Брак производства №" + '@prN'+ " за " + fullDate1 );
+        ajax();
+    };
+    function bymonth() {
+        
+        var takey = document.getElementById("Year_change");
+        var ytake = takey.options[takey.selectedIndex].text;
+        console.log(ytake);
+        var takem = document.getElementById("Month_change");
+        var mtake = takem.options[takem.selectedIndex].value;
+        var index = takem.selectedIndex+1;
+        var date = new Date(ytake,index,0);
+        var dayinMonth = date.getDate();       
+         fullDate1 = "01" + "." + index + "." + ytake;     
+        fullDate2 = dayinMonth.toString() + "." + index.toString() + "." + ytake.toString();
+        $('#brak').html("Брак производства №" + '@prN' + " за " + mtake);
+        ajax();
+    };
+
+    function bykvartal() {
+     
+        var takey = document.getElementById("Year_change1");
+        var ytake = takey.options[takey.selectedIndex].text;
+        var takem = document.getElementById("kvartal_change");
+        var mtake = takem.options[takem.selectedIndex].value;
+        var ind = takem.selectedIndex.toString();
+        if (ind==0) {
+            fullDate1 = "01" + "." + "01" + "." + ytake.toString();
+            fullDate2 = "31" + "." + "03" + "." + ytake.toString();
+        }
+        if (ind==1) {
+            fullDate1 = "01" + "." + "04" + "." + ytake.toString();
+            fullDate2 = "30" + "." + "06"+ "." + ytake.toString();
+        }
+        if (ind==2) {
+            fullDate1 = "01" + "." + "07" + "." + ytake.toString();
+            fullDate2 = "30" + "." + "09" + "." + ytake.toString();
+        }
+        if (ind==3) {
+            fullDate1 = "01" + "." + "10" + "." + ytake.toString();
+            fullDate2 = "30" + "." + "12" + "." + ytake.toString();
+        }
+         $('#brak').html("Брак производства №" + '@prN' + " за " + mtake);
+        ajax();
+    }
+    function ajax() {
+         $.ajax({
+            url: '@Url.Action("GetAnalysis","Statisticks")',
+            type: 'POST',
+            data: { fdate: fullDate1, sdate: fullDate2 },
+            beforeSend: function () { $('#PribData1').hide();$("#PribStatus1").show(); },
+            success: function (result) { $('#PribData1').show();$("#PribData1").html(result); $("#PribStatus1").hide(); },
+            error: function () { $("#PribStatus1").hide(); $("#PribData1").html("Возникла непредвиденная ошибка!!!"); }
+        });
+         $.datepicker.setDefaults(
+            $.extend($.datepicker.regional["ru"])
+        );
+    }
+    function ChangeCaption1() {
+        $('#tab1').show(); $('#tab2').hide(); $('#tab3').hide(); $('#tab4').hide();
+    }
+    function ChangeCaption2() {
+        $('#tab2').show(); $('#tab1').hide(); $('#tab3').hide();$('#tab4').hide();
+    }
+    function ChangeCaption3() {
+        $('#tab3').show(); $('#tab1').hide(); $('#tab2').hide();$('#tab4').hide();
+    }     
+    function ChangeCaption4() {
+        $('#tab4').show(); $('#tab1').hide(); $('#tab2').hide();$('#tab3').hide();
+    }  
+   
+</script>
+
+
+
+
+<div id="22" style="width: 600px;border-style: solid;border-width: 1px;text-align: center;background: url(/Content/images/градиент-серый.jpg);margin-left: 300px;margin-top: 10px ">
+    <ul class="nav nav-tabs" style="horiz-align: center" id="Tabs">
+        <li ><a href="/#tab1" data-toggle="tab" onclick="ChangeCaption1()">по дате</a></li>
+        <li><a href="/#tab2" data-toggle="tab" onclick="ChangeCaption2()">Интервал</a></li>
+        <li class="active"><a href="/#tab3" data-toggle="tab" onclick="ChangeCaption3()">за месяц</a></li>
+        <li><a href="/#tab4" data-toggle="tab" onclick="ChangeCaption4()">за квартал</a></li>
+    </ul>
+    <div>
+        <div id="tab1" style="margin-top: 15px;display: none">   
+            <span style="color:white">Выберите дату:<input  id="dat1" type="text" style="height: 16px; width: 90px;"/>
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="bydate()" style="margin-left: 5px; margin-bottom: 7px;"/></span>
+        </div>
+        <div id="tab2" style="margin-top: 15px;display:none; ">   
+            <span style="color:white">C:<input  id="dat2" type="text" style="height: 16px; width: 90px;"/> По:<input  id="dat3" type="text" style="height: 16px; width: 90px"/>
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary"  onclick="byinterval()" style="margin-left: 5px; margin-bottom: 7px;"/></span>
+        </div> 
+        <div id="tab3" style="margin-top: 15px;"> 
+            <span>
+                <select id="Month_change">
+                          @foreach (var n in monthNames)
+                          {
+                              <option>@n</option>
+                          }
+                      </select>  
+                <select id="Year_change">
+                    @foreach (var n in item)
+                    {
+                        <option >@n</option>
+                    }
+                </select>  
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="bymonth()" style="margin-left: 5px; margin-bottom: 7px;"/>
+            </span>  
+        </div>   
+        <div id="tab4" style="margin-top: 15px;display: none "> 
+            <span>
+                <select id="kvartal_change">
+                    <option >Первый квартал</option>
+                    <option >Второй квартал</option> 
+                    <option >Третий квартал</option> 
+                    <option >Четвертый квартал</option>     
+                </select>      
+                <select id="Year_change1">
+                    @foreach (var n in item)
+                    {
+                        <option >@n</option>
+                    }
+                </select>      
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="bykvartal()" style="margin-left: 5px; margin-bottom: 7px;"/>
+            </span>  
+        </div>   
+    </div>
+</div>
+<br/>
+<h1> </h1>
+<div id="PribStatus1" style="display: none; color: red; font-weight: bold" class="loader"></div>
+<div id="PribData1"></div>

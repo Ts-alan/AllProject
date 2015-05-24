@@ -1,0 +1,113 @@
+﻿
+@model IEnumerable<Verst.Models.CycleInfo>
+
+@{
+    Layout = null;
+}
+@Html.Hidden("PageTitle", "Циклы")
+<table class="table table-bordered table-condensed ">
+    <thead>
+        <tr>
+            <th colspan="2" style="text-align:">Прибор</th>
+            <th>Кол-во годных пластин</th>
+            <th>Кол-во брака</th>
+            <th>% выхода годных</th>          
+            <th>Наим-ние нач.опер.</th>
+            <th>Наим-ние кон.опер.</th>
+            <th colspan="6" style="text-align: center">Производственный цикл</th>            
+        </tr>
+        <tr> 
+            <th>Код</th>
+            <th>Наименование</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>до ф/к(в днях)</th>
+            <th>Плановый</th>
+            <th>Полный</th>    
+            <th>Плановый на ф/л</th>     
+            <th>Фактический на ф/л</th>    
+            <th>Кол-во ф/л</th>  
+        </tr >
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                @if (item.Kpls != "0")
+                {
+                    <td> @Html.ActionLink(@item.Kpls, "ShowGodn", new { kpr = item.Kpr }, new { target = "_blank", onclick= @Html.Raw("\"getDevBrakInfo($(this)); return false;\"") }) </td>
+      @*              <a href="@Url.Action("ShowGodn", "Cycles", new { kpr = item.Kpr })" onclick="getDevBrakInfo($(this)); return false;"></a>
+                      @Html.ActionLink(@item.Nprt, "PartInfo", new { Nprt = item.Nprt }, new { target = "_blank" })*@
+                }
+                else
+                {
+                    <td>@item.Kpls</td>
+                }
+                @if (item.Brk != "0")
+                {
+                    <td> @Html.ActionLink(@item.Brk, "ShowDefects", new { kpr = item.Kpr }, new { target = "_blank", onclick = @Html.Raw("\"getDevBrakInfo($(this)); return false;\"") }) </td>
+                    // <td><a href="@Url.Action("ShowDefects", "Cycles", new { kpr = item.Kpr })" onclick="getDevBrakInfo($(this)); return false;">@item.Brk</a></td>
+                }
+                else
+                {
+                    <td>@item.Brk</td>
+                }
+                <td>@item.Proc</td>
+                <td>@item.NachOpr</td>
+                <td>@item.KonOpr</td>
+                <td>@item.PrCycl</td>
+                <td>@item.PlCycl</td>
+                <td>@item.FCycl</td>
+                <td>@item.PlCyclfl</td>
+                <td>@item.PrCyclfl</td>
+                <td>@item.Nfl</td>
+            </tr>
+            
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td>@ViewBag.SumKpls</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>@ViewBag.Ex</td>
+            <td>@ViewBag.Ez</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tbody>tr").hover(
+            function() {
+                $(this).css("background-color", "#ADDEFF");
+            },
+            function() {
+                $(this).css("background-color", "white");
+            }
+        );
+    });
+    function getDevBrakInfo($elem) {
+        $.ajax({
+            url: $elem.attr('href'),
+            type: 'GET',
+            beforeSend: function () { $("#PribStatus").show(); },
+            success: function (result) { $("#PribData").html(result); $("#PribStatus").hide();  },
+            traditional: true
+        });
+        return false;
+    }
+</script>
+
+

@@ -1,0 +1,165 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using DotNet.Highcharts;
+using DotNet.Highcharts.Enums;
+using DotNet.Highcharts.Helpers;
+using DotNet.Highcharts.Options;
+using MvcApplication.Models;
+using Verst.Models;
+
+
+namespace Verst.Controllers
+{
+    public class TestController : Controller
+    {
+        public ActionResult Defects()
+        {
+            return View();
+        }
+
+        public ActionResult Graph()
+        {
+            var result = new List<Graph>();
+            result.Add(new Graph { Date = "10.01.2012", PlVal = "5500" });
+            result.Add(new Graph { Date = "10.02.2012", PlVal = "4000" });
+            result.Add(new Graph { Date = "10.03.2012", PlVal = "7500" });
+            result.Add(new Graph { Date = "10.04.2012", PlVal = "8000" });
+            result.Add(new Graph { Date = "10.05.2012", PlVal = "3200" });
+            result.Add(new Graph { Date = "10.06.2012", PlVal = "5700" });
+            result.Add(new Graph { Date = "10.07.2012", PlVal = "6800" });
+            result.Add(new Graph { Date = "10.08.2012", PlVal = "2500" });
+            result.Add(new Graph { Date = "10.09.2012", PlVal = "4400" });
+
+
+            Highcharts chart = new Highcharts("chart")
+            .SetTitle(new Title
+                {
+                    Text = "TestGraph",
+                    X = -20
+                })
+            .SetXAxis(new XAxis
+        {
+            Title = new XAxisTitle{Text = "Установки"},
+            Categories = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
+        })
+            .SetYAxis(new YAxis
+            {
+                Title = new YAxisTitle{Text = "НЗП"}
+                
+            })
+            .SetSeries(new Series
+        {
+            Data = new Data(new object[] { 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4 })
+        });
+
+            return View(chart);
+
+        }
+
+        public ActionResult Consignments()
+        {
+            return View();
+        }
+
+        public ActionResult Graph1()
+        {
+            var result = new List<Graph>();
+            result.Add(new Graph { Date = "10.01.2012", PlVal = "5500" });
+            result.Add(new Graph { Date = "10.02.2012", PlVal = "4000" });
+            result.Add(new Graph { Date = "10.03.2012", PlVal = "7500" });
+            result.Add(new Graph { Date = "10.04.2012", PlVal = "8000" });
+            result.Add(new Graph { Date = "10.05.2012", PlVal = "3200" });
+            result.Add(new Graph { Date = "10.06.2012", PlVal = "5700" });
+            result.Add(new Graph { Date = "10.07.2012", PlVal = "6800" });
+            result.Add(new Graph { Date = "10.08.2012", PlVal = "2500" });
+            result.Add(new Graph { Date = "10.09.2012", PlVal = "4400" });
+            ViewData.Model = result;
+            return View();
+        }
+
+        public ActionResult TEntry(string KGT, string KUS)
+        {
+            ViewBag.kgt = KGT;
+            ViewBag.kus = KUS;
+            return View();
+        }
+
+        public ActionResult T1(string KGT, string KUS)
+        {
+            Equipment eq = new Equipment() { kgt = KGT, kus = KUS };
+            ViewBag.Equipment = eq.equipment;
+            var data = from part in eq.GetStartedParts()//.Union(eq.GetWaitingParts())
+                               join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                                  on part.kpr equals asspr.kpr
+                               join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                                  on new { part.kmk, part.nop } equals new { astmr.kmk, astmr.nop }
+                               join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                                  on astmr.kop equals assop.kop
+                               join asabon in FoxRepo.GetTable<Crystal.asabonRow>()
+                                  on part.owner equals asabon.tbn into part_abon
+                               select new OnOperation
+                               {
+                                   Kpr = part.kpr,
+                                   Napr = asspr.napr,
+                                   Nprt = part.nprt,
+                                   Dato = part.dato.getFoxDate(), // part.
+                                   Nop = part.nop,
+                                   Naop = assop.naop,
+                                   Dath = part.dath.getFoxDate(),
+                                   Kpls = double.Parse(part.kpls.ToString()),
+                                   Fio = part_abon.First().fio
+                               };
+            return View(data);
+        }
+
+        public ActionResult T2(string KGT, string KUS)
+        {
+            Equipment eq = new Equipment() { kgt = KGT, kus = KUS };
+
+            var data = from part in eq.GetWaitingParts()
+                                join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                                   on part.kpr equals asspr.kpr
+                                join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                                   on new { part.kmk, part.nop } equals new { astmr.kmk, astmr.nop }
+                                join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                                   on astmr.kop equals assop.kop
+                                join asabon in FoxRepo.GetTable<Crystal.asabonRow>()
+                                   on part.owner equals asabon.tbn into part_abon
+                                select new OnLaunch
+                                {
+                                    Kpr = part.kpr,
+                                    Napr = asspr.napr,
+                                    Nprt = part.nprt,
+                                    Dato = part.dato.getFoxDate(), // part.
+                                    Nop = part.nop,
+                                    Naop = assop.naop,
+                                    Kpls = double.Parse(part.kpls.ToString())
+                                };
+            return View(data);
+        }
+
+         public ActionResult T3(string KGT, string KUS)
+        {
+            Equipment eq = new Equipment() { kgt = KGT, kus = KUS };
+
+            var data =
+               from part in eq.GetNearParts()
+               join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                   on part.batch.kpr equals asspr.kpr
+               select new Approaching
+               {
+                   Kpr = part.batch.kpr,
+                   Napr = asspr.napr,
+                   Nprt = part.nprt,
+                   Kpls = part.batch.kpls.ToString(),
+                   From = part.batch.nop,
+                   To = part.nop,
+                   Distance = part.distance.ToString()
+               };
+
+            return View(data);
+        }
+    }
+}

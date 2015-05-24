@@ -1,0 +1,28 @@
+﻿
+@using Verst.Models
+@model IEnumerable<Verst.Models.GetAnalysisDiag>
+
+@{
+    ViewBag.Title = "GetAnalysisDiagTable";
+    Layout = null;
+}
+<h4>Отчет о передаче пластин  за период @ViewBag.period1-@ViewBag.period2</h4>
+<div  id="switchTable" style=" width: 30%; height: 360px;margin-left: 150px;overflow-y: auto"  >
+    
+    <table class="table table-bordered table-condensed" >
+        <tr>
+            <th>Дата</th>
+            <th>Количество пластин</th>
+            <th>Коффициент оборачивоемости</th>
+        </tr>
+         @foreach (var item in (IEnumerable<GetAnalysisDiag>)Model)
+                    {
+                        <tr>
+                            <td>@item.Dato.Substring(0,10)</td>
+                            <td style="text-align: center">@item.Kpls</td>
+                            <td style="text-align: center">@item.Kob</td>
+                        </tr>
+                    }
+              
+    </table>
+</div>

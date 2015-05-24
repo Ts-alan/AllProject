@@ -1,0 +1,113 @@
+﻿@using Verst.Models
+@model EditUser
+
+@{
+    ViewBag.Title = "Учётные данные пользователя";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Редактирование пользователя")
+
+<script type="text/javascript">
+    function addUserRole() {
+        //var selRoleId = $('select[name="MenuRoles"] option:selected').val();
+        var selRole = $('select[name="MenuRoles"] option:selected').text();
+        $.ajax({
+            url: '@Url.Action("AddRoleToUser")',
+            type: 'POST',
+            data: { userName: '@Model.Username', roleName: selRole },
+            success: function (result) {
+                $('#Admin_EditUser_RolesForUser').html(result);},
+            error: function () { alert("Ошибка!!!"); },
+            traditional: true
+        });
+    }
+    function delUserRole(roleId) {
+        $.ajax({
+            url: '@Url.Action("DeleteUserRole")',
+            type: 'POST',
+            data: { userName: '@Model.Username', roleName: roleId },
+            success: function (result) {
+                $('#Admin_EditUser_RolesForUser').html(result);
+            },
+            error: function () { alert("Ошибка!!!"); },
+            traditional: true
+        });
+    }
+</script>
+<h2>Пользователь: @ViewBag.UserLogin</h2>
+<div class="row-fluid">
+    <div id="Admin_UserEditForm"></div>
+    <div style="width: 400px; float: left">
+        @using (Ajax.BeginForm("EditUser","Admin",new { enctype = "multipart/form-data" }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "Admin_UserEditForm",
+                OnSuccess = ""
+            }))
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+
+            <p>Id Пользователя: @Html.DisplayFor(x => x.UserId)</p>
+                
+            @Html.Label("ФИО пользователя: ")
+            @Html.TextBox("Fio", ViewBag.UserFIO as object)
+
+            @Html.Label("Подразделение: ")
+            @Html.TextBox("Unit", ViewBag.UserUnit as object)
+
+            <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+            </div>
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+            </fieldset>
+            <p>
+                <input type="submit" value="Принять" class="btn btn-primary"/>
+            </p>
+        }
+    </div>
+    <div style="width: 150px">
+        <p>Роли данного пользователя</p>
+        <a href="#AddRole" role="button" class="btn" data-toggle="modal">Добавить роль</a>
+        <table class="table table-bordered table-condensed" style="padding-top: 15px" id="Admin_EditUser_RolesForUser">
+            <thead>
+                <tr>
+                    <th>Роль</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<Role>)ViewBag.RolesForUser)
+                {
+                    <tr>
+                        <td>@item.RoleName</td>
+                        <td><a data-ajax="true" data-ajax-complete="delUserRole('@item.RoleName')" href="#">Удалить</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal hide fade" id="AddRole">
+    <div class="modal-header">
+        <h3>Добавление роли пользователю</h3>
+    </div>
+    <div class="modal-body">
+        <p>Выберите роль:</p>
+        <select name="MenuRoles" size="1">
+            @foreach (var role in (IEnumerable<Role>)ViewBag.Roles)
+            {
+                <option value="@role.RoleId">@role.RoleName</option>
+            }
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" name="CreateRoleBtn" onclick="addUserRole()">Добавить</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+    </div>
+</div>
+
+@Html.ActionLink("Назад", "UsersManagment", null, new { Class = "navigator btn" })

@@ -1,0 +1,104 @@
+﻿@model string
+@{
+    Layout = null;
+}
+
+<link href="@Url.Content("~/Content/jquery.jqplot.min.css")" rel="stylesheet" type="text/css" />
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]--> 
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jqplot.min.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.barRenderer.min.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.logAxisRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.canvasTextRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.canvasAxisLabelRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.canvasAxisTickRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.dateAxisRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.categoryAxisRenderer.min.js")"></script>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.pointLabels.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.highlighter.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.cursor.min.js")"></script>
+
+<script type="text/javascript">
+var plot;
+var plotOptions;
+
+$(document).ready(function () {
+    $.jqplot.config.catchErrors = true;
+    $.jqplot.config.errorBackground = '#fbeddf';
+    $.jqplot.config.errorBorder = '2px solid #aaaaaa';
+    $.jqplot.config.errorFontFamily = 'Courier New';
+    $.jqplot.config.errorFontSize = '16pt';
+
+
+    if ('@Model'.length > 0) {
+        $.jqplot.config.errorMessage = 'Отсутствует информация о браке на заданном участке.';
+    } else {
+        $.jqplot.config.errorMessage = 'Вы ничего не выбрали!';
+    }
+
+    $.ajax({
+        url: '@Model',
+        type: 'GET',
+        success: function (result) {
+            $('#ParetoDiag').removeClass("loader");
+            testJqPlot(result.Naprb, result.Brk, result.Accum);
+        },
+        error: function () { $('#ParetoDiag').removeClass("loader"); alert("Ошибка! Перепроверьте вводимые данные и поробуйте ещё раз!"); }
+    });
+    
+
+    $('#ParetoDiag').resizable({ delay: 20 });
+
+    $('#ParetoDiag').bind('resize', function (event, ui) {
+        plot.replot();
+    });
+
+    function testJqPlot(Naprb, Brk, Accum) {
+        plotOptions = {
+            animate: true,
+            animateReplot: true,
+            title: '@TempData["Message"]',
+            legend: { show: true, location: 'se' },
+            series: [{ label: "Брак", renderer: $.jqplot.BarRenderer }, { label: "Проценты", xaxis: 'x2axis', yaxis: 'y2axis'}],
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    label: 'Типы брака',
+                    ticks: Naprb,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    tickOptions: { angle: 90 }
+                },
+                x2axis: { renderer: $.jqplot.CategoryAxisRenderer,
+                    tickNumbers: 11
+                },
+                yaxis: {
+                    max: '@TempData.Peek("Max")',
+                    min: 0,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    tickOptions: {formatString: '%d'}
+                },
+                y2axis: {
+                    max: 100,
+                    min: 0,
+                    autoscale: true,
+                    label: "%",
+                    tickOptions: {formatString: '%d'}
+                }
+            },
+            highlighter: {
+                show: true,
+                showLabel: true,
+                tooltipAxes: 'y',
+                sizeAdjust: 7.5,
+                tooltipLocation: 'ne'
+            }
+        };
+        plot = $.jqplot('ParetoDiag', [Brk, Accum], plotOptions);
+    }
+});
+</script>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")"></script>
+<div id="ParetoDiag" class="jqplot-target ui-resizable loader" style="width: 800px; height: 500px; position: relative;">     
+</div>

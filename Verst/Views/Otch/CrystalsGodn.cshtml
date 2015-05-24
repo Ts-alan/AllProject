@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Verst.Models.CrystalsSecond>
+
+@{
+    
+    Layout = null;
+}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Поступило кристалов</th>
+            <th>Годных кристалов</th>
+            <th>% выхода годных</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Fio</td>
+                <td>@item.Pkrist</td>
+                <td>@item.Godn</td>
+                <td>@item.ProcVux</td>
+            </tr>
+        }
+    </tbody>
+</table>

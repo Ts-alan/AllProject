@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Verst.Models.SimplePribList>
+
+@{
+    ViewBag.Title = "Список приборов на производстве";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Список приборов на производстве")
+
+<h1>Список приборов на производстве</h1>
+<div class="progress progress-striped" id="ProgressBar" style="width: 100%">
+    <div class="bar" style="width: 100%;"></div>
+</div>
+<div style="width: 300px; float: left; margin-bottom: 5px; margin-right: 5px;">
+    <div style="width: 281px;height: 29px" >
+        <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th style="width: 40px">Код</th>
+                    <th style="width: 100px">Наименование прибора</th>
+                </tr>
+            </thead>
+        </table> 
+    </div>        
+    <div class="scrollable" style="width: 300px;*width: 230px;height: 500px"> 
+        <table class="table table-bordered table-condensed"style="table-layout:fixed;*width: 280px">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width: 40px; *width: 22px;">@item.Kpr</td>
+                        <td style="width: 100px; *width: 65px">@Ajax.ActionLink(item.Napr, "DevBatchesList", new { kpr = item.Kpr}, new AjaxOptions { UpdateTargetId = "DevBatches", InsertionMode = InsertionMode.Replace, OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" },new{Class = "NzpPribListClick"})</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div> 
+</div>
+<div id="DevBatches"></div>
+<script type="text/javascript">
+    var url, $objKpr, $objNop;
+
+    $('td').on("click", '.NzpPribListClick', function () {
+        if (typeof $objKpr != 'undefined') {
+            $objKpr.closest('tr').css("background-color", "white");
+        }
+        $objKpr = $(this);
+        $objKpr.closest('tr').css("background", "yellow");
+        SetHash($(this).attr('href'));
+    });
+    function SetHash(href) {
+        url = href;
+        $('#ProgressBar').removeClass("progress-danger").addClass("active");
+    }
+    function GetPrib(data) {
+        $("h1").replaceWith("<h1>Список партий по прибору: " + data + "</h1>");
+        $('#ProgressBar').removeClass("active");
+        ManualSave(url);
+    }
+    function AjaxError() {
+        $('#ProgressBar').removeClass("active").addClass("progress-danger");
+    }
+</script>

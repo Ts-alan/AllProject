@@ -1,0 +1,115 @@
+﻿@model Verst.Models.ShowLogsModel
+           
+@{
+    ViewBag.Title = "Просмотр логов системы Crystall";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Просмотр логов")
+
+<script type="text/javascript">
+    var $prevElements;
+
+    $(document).ready(function () {
+        $('input[name=SearchFor]').keypress(function (e) {
+            if (e.which == 13) {
+                SearchInLogs();
+            }
+        });
+    });
+
+    function ReadSelectedLog(fn) {
+        $.ajax({
+            url: '@Url.Action("ReadSelectedLog")',
+            type: 'GET',
+            data: { fn: fn },
+            success: function (result) {
+                $("h3 :eq(1)").html("Просмотр файла " + fn);
+                Json2Table(result);
+            },
+            error: function () { $('#Admin_ActionsStatus').html("При выполнении запроса произошла ошибка!"); },
+            traditional: true
+        });
+    }
+
+    function Json2Table(data) {
+        var html = "";
+        $('#AdminTableBody_LogData').html("");
+        $.each(data, function (key, value) {
+            $.each(value, function (key, value) {
+                html += "<td>" + value + "</td>";
+            });
+            $('#AdminTableBody_LogData').append("<tr>" + html + "</tr>");
+            html = "";
+        });
+    }
+    //Создаём метод icontains для независимого поиска
+    jQuery.expr[':'].icontains = function (a, i, m) {
+        return jQuery(a).text().toUpperCase()
+      .indexOf(m[3].toUpperCase()) >= 0;
+    };
+
+    function SearchInLogs() {
+        var srch = $("input[name=SearchFor]").val();
+        var $elements = $("#AdminTableBody_LogData > tr:icontains('" + srch + "')");
+        var couner = $elements.length;
+        if (typeof $prevElements != 'undefined') {
+            $prevElements.css("backgroundColor", "");
+        }
+        $elements.css("backgroundColor", "yellow");
+        $("#Admin_ActionsStatus").html("Поиск по -> " + srch + ". Найдено ->" + couner);
+        $prevElements = $elements;
+    }
+</script>
+
+<div class="form-actions" id="Admin_LogsActionsPanel">
+    <h3>Возможные действия:</h3>
+    <span id="Admin_ActionsStatus"></span><br/>
+    @Html.ActionLink("Назад к управлению пользователями", "UsersManagment", "Admin", null, new { Class = "navigator btn", @role = "button"})
+    <input type="search" style="margin-bottom: 0;" name="SearchFor" onkeyup="SearchInLogs()"/><input type="button" title="Поиск" value="Поиск" onclick="SearchInLogs()" class="btn btn-primary" style="margin-left: 3px;"/>
+</div>
+
+
+<div class="row-fluid">
+    <div style="float: left;">
+        <h3>Логи за сегодняшний день</h3>
+        <table class="table table-bordered table-condensed" style="width: 550px;">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Сообщение</th>
+                </tr>
+            </thead>
+            <tbody id="AdminTableBody_LogData">
+                @foreach (var item in Model.LatestLogData)
+                {
+                    <tr>
+                        <td>@item.Date</td>
+                        <td>@item.Time</td>
+                        <td>@item.Message</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div style="margin-left: 25px; width: 380px;float: left;">
+        <h3>Список файлов логгирования</h3>
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Список файлов</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FindedLogFiles)
+                {
+                    <tr>
+                        <td><i class="icon-file"></i><a href="#" onclick="ReadSelectedLog('@item.Name')" title="Просмотреть выбранный лог">@item.Name</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

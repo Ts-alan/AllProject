@@ -1,0 +1,116 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Verst.Models;
+using MvcApplication.Models;
+
+namespace Verst.Controllers
+{
+    public class OtchController : Controller
+    {
+        public ActionResult NzpPrib() //Формируем список приборов
+        {
+            var pribList = new List<NzpPribList>();
+            pribList.AddRange(from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                       join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                        on mpartt.kpr equals asspr.kpr
+                       group mpartt by new {mpartt.kpr, asspr.napr} into g_mpartt
+                       select new NzpPribList
+                       {
+                           Kpr = g_mpartt.Key.kpr,
+                           Napr = g_mpartt.Key.napr
+                       });
+            ViewBag.PribList = pribList.OrderBy(a=>a.Kpr);
+            return View();
+        }
+
+        public ViewResult GetNzpPrib(string kpr) //Выводим данные по запросу из списка
+        {
+            var data = from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                       where mpartt.kpr == kpr
+                       join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                        on new{mpartt.kmk, mpartt.nop} equals new{astmr.kmk, astmr.nop}
+                       join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                        on astmr.kop equals assop.kop
+                       group mpartt by new{ mpartt.nop, assop.naop} into g_mpartt 
+                       select new NzpPrib
+                       {
+                           Nop = g_mpartt.Key.nop,
+                           Naop = g_mpartt.Key.naop,
+                           Nzp = g_mpartt.Sum(a=> a.kpls).ToString()
+                       };
+            ViewBag.kpr = kpr;
+            return View(data.OrderBy(a=>a.Nop));
+        }
+
+        public ViewResult GetFromNzp(string kpr, string nop)//Раскрываем НЗП
+        {
+            var data = from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                       where mpartt.kpr == kpr && mpartt.nop == nop
+                       select new Par
+                       {
+                           Nprt = mpartt.nprt,
+                           Dato = mpartt.dato.getFoxDate(),
+                           Timo = FoxRepo.getFoxTime(mpartt.timo),
+                           Datf = "",
+                           Kpls = mpartt.kpls.ToString(),
+                           Abon = FoxRepo.GetFIOByTabNumber(mpartt.owner)
+                       };
+            return View(data);
+        }
+
+        public ActionResult NzpFlit() //Список приборов на фотолитографию
+        {
+            var flitList = new List<NzpFLitList>();
+            flitList.AddRange(from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                              join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                               on mpartt.kpr equals asspr.kpr
+                              group mpartt by new { mpartt.kpr, asspr.napr } into g_mpartt
+                              select new NzpFLitList
+                              {
+                                  Kpr = g_mpartt.Key.kpr,
+                                  Napr = g_mpartt.Key.napr
+                              });
+            ViewBag.FlitList = flitList.OrderBy(a => a.Kpr);
+            return View();
+        }
+
+        public ViewResult GetNzpFLit(string kpr) //Выводим данные по запросу из списка
+        {
+            IEnumerable<NzpFLit> data = new[]
+                {
+                    new NzpFLit {Nfl = "114", Nop = "546", Naop = "hgfgfh", KolPr = "3", Nzp = "2"},
+                    new NzpFLit {Nfl = "214", Nop = "546", Naop = "hgfgfh", KolPr = "3", Nzp = "2"},
+                    new NzpFLit {Nfl = "134", Nop = "546", Naop = "hgfgfh", KolPr = "3", Nzp = "2"},
+                    new NzpFLit {Nfl = "165", Nop = "546", Naop = "hgfgfh", KolPr = "3", Nzp = "2"},
+                    new NzpFLit {Nfl = "224", Nop = "546", Naop = "hgfgfh", KolPr = "3", Nzp = "2"}
+                };
+            // data = data.Where(x => x.Kpr == kpr); //Условие выборки
+            return View(data);
+        }
+
+        public ViewResult GetFromNzp2()
+        {
+            IEnumerable<Control1> data = new[]
+                {
+                    new Control1{ Nprt = "3243_66123", Nop = "203", Naop = "fgdgdfg", Dato = "22.11.2012", Timo = "14:55", Nzp = "3"},
+                    new Control1{ Nprt = "3243_66123", Nop = "203", Naop = "fgdgdfg", Dato = "22.11.2012", Timo = "14:55", Nzp = "3"},
+                    new Control1{ Nprt = "3243_66123", Nop = "203", Naop = "fgdgdfg", Dato = "22.11.2012", Timo = "14:55", Nzp = "3"},
+                    new Control1{ Nprt = "3243_66123", Nop = "203", Naop = "fgdgdfg", Dato = "22.11.2012", Timo = "14:55", Nzp = "3"},
+                    new Control1{ Nprt = "3243_66123", Nop = "203", Naop = "fgdgdfg", Dato = "22.11.2012", Timo = "14:55", Nzp = "3"},
+                };
+            return View(data);
+        }
+
+        public ActionResult BlockOp()
+        {
+            IEnumerable<BlockOperations> data = new[]
+                {
+                    new BlockOperations {BlockN = "test1", FNop = "test2", LNop = "test3"},
+                    new BlockOperations {BlockN = "test1_2", FNop = "test2_2", LNop = "test3_2"},
+                    new BlockOperations {BlockN = "test1_3", FNop = "test2_3", LNop = "test3_3"}
+                };
+            return View(data);
+        }
+    }
+}

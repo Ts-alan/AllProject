@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Verst.Models.NzpPrib>
+           
+@{
+    Layout = null;
+}
+
+<div style="width: 216px;height: 41px">
+  <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+    <thead>
+        <tr>
+            <th style="width: 59px"> Номер операции </th>
+            <th style="width: 114px"> Наименование операции</th>
+            <th style="width: 39px"> НЗП </th>
+        </tr>
+    </thead> 
+ </table>
+</div> 
+ 
+<div class="scrollable" style="width: 233px;height: 400px">     
+<table class="table table-bordered table-condensed" style="table-layout:fixed;width: 216px">
+    @foreach (var item in Model)
+    {
+        <tr id="@item.Nop">
+            <td style="width: 59px">@item.Nop</td>
+            <td style="width: 114px">@item.Naop</td>
+            <td style="width: 39px">@Ajax.ActionLink(item.Nzp, "GetFromNzp", new { kpr = ViewBag.kpr, nop = item.Nop }, new AjaxOptions { UpdateTargetId = "Prib_Table3", InsertionMode = InsertionMode.Replace, OnBegin = "load(3)", OnSuccess = "toTable", OnFailure = "AjaxError" }, new { Class = "OperationNzpClick" })</td>
+        </tr>
+    }
+</table>
+</div> 

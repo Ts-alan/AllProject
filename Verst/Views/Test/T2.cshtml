@@ -1,0 +1,35 @@
+﻿@using Verst.Models
+@model System.Collections.Generic.IEnumerable<Verst.Models.OnLaunch>
+
+@{
+    Layout = null;
+}
+
+<h2>Ожидают запуска</h2>
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Партия</th>
+            <th>Код изделия</th>
+            <th>Изделие</th>
+            <th>Код операции</th>
+            <th>Операция</th>
+            <th>Дата передачи</th>
+            <th>Кол-во пластин</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(@item.Nprt, "PartInfo", "Facility",new { Nprt = item.Nprt }, null)</td>
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                <td>@item.Nop</td>
+                <td>@item.Naop</td>
+                <td>@item.Dato</td>
+                <td>@item.Kpls</td>
+            </tr>
+        }
+    </tbody>
+</table>

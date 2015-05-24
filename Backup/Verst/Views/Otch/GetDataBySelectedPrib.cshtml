@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Verst.Models.MonthReportData>
+           
+@{
+    Layout = null;
+}
+
+<div style="height: 21px; width: 441px;*width: 610px;"  >
+    <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+        <thead>
+          <tr>
+            <th style="width: 170px;">Технологическая операция</th>
+            <th style="width: 65px;">Поступило</th>
+            <th style="width: 50px;">Сдано</th>
+            <th style="width: 40px;">Брак</th>
+            <th style="width: 70px;">% Выхода</th>
+            <th style="width: 40px;">НЗПФ</th>
+          </tr>
+        </thead>
+    </table>
+</div>
+<div class="scrollable" style="width: 459px;height: 500px;*width: 627px;">
+    <table class="table table-bordered table-condensed " style="table-layout:fixed;width: 441px;*width: 610px;" >
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 40px;  ">@item.Nop</td>
+                    <td style="width: 129px; ">@item.Naop</td>
+                    <td style="width: 65px;  ">@item.In</td>
+                    <td style="width: 50px;  ">@item.Out</td>
+                    <td style="width: 40px;  ">@if (item.Brk == "0")
+                        {
+                            @item.Brk
+                        }
+                        else
+                        {
+                            @Ajax.ActionLink(item.Brk, "PribMounthRepordBrak", new { nop = item.Nop }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "GET", UpdateTargetId = "PribMounthRepordData3", OnBegin = "load(3)", OnSuccess = "AjaxSuccessEnd(3)" }, new { @class = "GetDataBySelectedPrib" })
+                        }
+                    </td>
+                    <td style="width: 70px;">@item.OutPer</td>
+                    <td style="width: 40px;">@if (item.Nzpf == "0")
+                        {
+                            @item.Nzpf
+                        }
+                        else
+                        {
+                            @Ajax.ActionLink(item.Nzpf, "PribMounthRepordNzp", new { nop = item.Nop }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "GET", UpdateTargetId = "PribMounthRepordData3", OnBegin = "load(3)", OnSuccess = "AjaxSuccessEnd(3)" },new { @class = "GetDataBySelectedPrib" })
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

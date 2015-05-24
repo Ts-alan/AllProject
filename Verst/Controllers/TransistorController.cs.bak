@@ -1,0 +1,152 @@
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Verst.Models;
+using System.Linq;
+
+using MvcApplication.Models;
+using System;
+
+namespace Verst.Controllers
+{
+    [PlantAuthorization]
+    public class TransistorController : Controller
+    {
+        public ActionResult Zavod3()
+        {
+            DateTime d1, d2;
+            TimeSpan d3;
+            d2 = DateTime.Now;
+            d3 = d2.TimeOfDay;
+            var result = new List<AllNzp>();
+            var sort = new List<AllNzp>();
+            string x1 = null, x2 = null;
+
+            var data = FoxRepo.GetTable<Crystal.asmnpRow>();
+            decimal nzpoNM = 0, sform = 0, nzpoALL = 0, brak = 0;
+            nzpoNM = data.Sum(a => a.nzpo);
+            sform = data.Where(a => a.nop == "0001").Sum(a => a.pso3);
+            nzpoALL = data.Sum(a => a.pso3 + a.nzpo - a.sdo3 - a.brk3);
+            brak = data.Sum(a => a.brk3);
+            result.Add(new AllNzp { Nzp = nzpoNM.ToString(), Sform = sform.ToString(), NowNzp = nzpoALL.ToString(), Kpls = brak.ToString() });
+
+            var data1 = from asmpn in FoxRepo.GetTable<Crystal.asmnpRow>()
+                        join astmr in FoxRepo.GetTable<Crystal.astmrRow>() on new { asmpn.nop, asmpn.kmk } equals new { astmr.nop, astmr.kmk }
+                        join assop in FoxRepo.GetTable<Crystal.assopRow>() on astmr.kop equals assop.kop
+                        where assop.pfl == "5"
+                        group asmpn by new { assop.pfl } into gg
+                        select new { Nzp = gg.Sum(a => a.nzpo), Nzp2tek = gg.Sum(a => a.nzpo) + gg.Sum(a => a.pso3) - gg.Sum(a => a.sdo3) - gg.Sum(a => a.brk3), Brk3 = gg.Sum(a => a.brk3) };
+
+            var xx = from asparam in FoxRepo.GetTable<Crystal.asparamRow>()//Формируем дату отсчёта
+                     where asparam.identp == "start_ms"
+                     select new { ds = asparam.valp };
+
+            foreach (var tab in xx)
+            {
+                x1 = tab.ds.Substring(0, 10);
+                x2 = tab.ds.Substring(11, 4);
+            }
+            d1 = DateTime.Parse(x1);
+            var data2 = FoxRepo.GetTable<Crystal.mparttRow>();
+            var data3 = FoxRepo.GetTable<Crystal.amparttRow>();
+            decimal sum = 0, sum1 = 0;
+            sum = data2.Where(a => a.nop == "0000").Sum(a => a.kpls);
+            sum1 = data3.Where(a => (d2 > FoxRepo.OneColDateTime(a.dato, a.timo) && d1 < FoxRepo.OneColDateTime(a.dato, a.timo))).Sum(b => b.kpls);
+            sort.Add(new AllNzp { Sdo = (sum + sum1).ToString() });
+
+            //var dd = from a in result //Формируем конечные данные
+            //         from b in data1
+            //         from c in sort
+            //         select new AllNzp
+            //         {
+            //             Nzp = (int.Parse(a.Nzp) - b.Nzp).ToString(),
+            //             NzpPr2 = b.Nzp.ToString(),
+            //             Sform = a.Sform,
+            //             NowNzp = (int.Parse(a.NowNzp) - b.Nzp2tek).ToString(),
+            //             NowNzpPr2 = b.Nzp2tek.ToString(),
+            //             KplsPr2 = b.Brk3.ToString(),
+            //             Kpls = (int.Parse(a.Kpls) - b.Brk3).ToString(),
+            //             Sdo = c.Sdo
+            //         };
+
+            var z2_data = data1.FirstOrDefault();
+
+            var dd = new List<AllNzp>();
+            dd.Add(
+                new AllNzp { 
+                Nzp = (Decimal.Parse(result.First().Nzp) - (z2_data!=null?z2_data.Nzp:0)).ToString(),
+                NzpPr2 = (z2_data != null ? z2_data.Nzp : 0).ToString(),
+                Sform = result.First().Sform,
+                NowNzp = (Decimal.Parse(result.First().NowNzp) - (z2_data != null ? z2_data.Nzp2tek : 0)).ToString(),
+                NowNzpPr2 = (z2_data != null ? z2_data.Nzp2tek : 0).ToString(),
+                KplsPr2 = (z2_data != null ? z2_data.Brk3 : 0).ToString(),
+                Kpls = (Decimal.Parse(result.First().Kpls) - (z2_data != null ? z2_data.Brk3 : 0)).ToString(),
+                Sdo = sort.First().Sdo
+            });
+
+            ViewBag.model1 = dd;
+
+            var t_mpartt1 = FoxRepo.GetTableFiltered<Crystal.mparttDataTable>("Where !EMPTY(dath)");//.Where(a => !a.Dath.isNullDate());
+            var t_mpartt2 = FoxRepo.GetTableFiltered<Crystal.mparttDataTable>("Where !EMPTY(dato)");//.Where(a => !a.Dath.isNullDate());
+            var t_astob = FoxRepo.GetTableNew<Crystal.astobDataTable>();
+            var t_askor = FoxRepo.GetTableNew<Crystal.askorDataTable>();
+
+            var t_astmr = FoxRepo.GetTableNew<Crystal.astmrDataTable>();
+            var t_as_wop = FoxRepo.GetTableNew<Crystal.as_wopDataTable>();
+
+            var t_assufl = FoxRepo.GetTableNew<Crystal.assuflDataTable>();
+
+            // посчитаем партии готовые к запуску
+
+            var lnch_ready = (from mpartt in t_mpartt2
+                              join astob in t_astob
+                                 on mpartt.kgt equals astob.kgt
+                              join astmr in t_astmr
+                                 on new { kmk = mpartt.kmk, nop = mpartt.nop } equals new { kmk = astmr.kmk, nop = astmr.nop }
+                              join as_wop in t_as_wop
+                                 on new { kgt = mpartt.kgt, kus = astob.kus, kop = astmr.kop } equals new { kgt = as_wop.kgt, kus = as_wop.kus, kop = as_wop.kop }
+                              let nuf = t_assufl.SingleOrDefault(a => a.kgt == as_wop.kgt && a.kus == as_wop.kus) //FoxRepo.GetTableNew<Crystal.assuflDataTable>(filter: "WHERE kgt == ? AND kus == ? ", parameters: new[] { kgt, kus }).SingleOrDefault()
+                              where ((nuf == null) || (nuf.nuf == mpartt.nprt.Substring(0, 2)))
+                              select new
+                              {
+                                  part = mpartt,
+                                  eq = astob
+                              }).ToList();
+
+            ViewBag.model2 = (from askor in t_askor
+                              join astob in t_astob
+                                 on askor.kkor equals astob.kkor into g_astob
+                              select new ModuleMap
+                              {
+                                  Kkor = askor.kkor,
+                                  Nakor = askor.nakor,
+                                  obor = //(from ast in g_astob select new FacilityData { astob_data = ast })
+                                  (from ast in g_astob
+                                   join mpartt in t_mpartt1
+                                      on new { kgt = ast.kgt, kus = ast.kus } equals new { kgt = mpartt.kgt, kus = mpartt.kus } into j_mpartt
+                                   join mpartt2 in lnch_ready
+                                      on new { kgt = ast.kgt, kus = ast.kus } equals new { kgt = mpartt2.eq.kgt, kus = mpartt2.eq.kus } into j_mpartt2
+                                   //let have_nzp = j_mpartt.Count()>0
+                                   select new FacilityData2
+                                   {
+                                       astob_data = ast,
+                                       Nzp = j_mpartt.Count() > 0 ? j_mpartt.Sum(a => a.kpls) : 0,
+                                       Wait = j_mpartt2.Count() > 0 ? j_mpartt2.Sum(a => a.part.kpls) : 0
+
+                                   })// g_astob//,
+                                  ////Nzp = null
+                                  //(from astob in g_astob
+
+                                  //select Convert.ToInt32(
+                                  //        t_asmnp.Where(b => b.nuf == t_assufl.Single(a => a.kgt == astob.kgt && a.kus == astob.kus).nuf).Sum(a => a.pso3 + a.nzpo - a.sdo3 - a.brk3)
+                                  //        )
+                                  //       ).ToArray()
+
+                              });
+
+            ViewBag.PrN = (from asparam in FoxRepo.GetTable<Crystal.asparamRow>()
+                          where asparam.identp.Trim() == "FACTORY"
+                          select asparam.valp).First().Trim();
+            return View();
+        }
+    }
+}

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Verst.Models.NzpFLit>
+
+@{
+    Layout = null;
+}
+
+<table id ="Flit_table_1" class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>№ фотолитографии</th>
+            <th>№ операции</th>
+            <th>Наименование тех операции</th>
+            <th>Кол-во партий</th>
+            <th>НЗП</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Nfl">
+                <td>@item.Nfl</td>
+                <td>@item.Nop</td>
+                <td>@item.Naop</td>
+                <td>@item.KolPr</td>
+                <td>@Ajax.ActionLink(item.Nzp, "GetFromNzpFlit", new { nfl = item.Nfl, kpr = item.Kpr, kmk = item.Kmk }, new AjaxOptions { UpdateTargetId = "Flit_Table3", InsertionMode = InsertionMode.Replace, OnBegin = "load(3)", OnSuccess = "FillTable1()", OnFailure = "AjaxError" }, new { Class = "NflBlockClick" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

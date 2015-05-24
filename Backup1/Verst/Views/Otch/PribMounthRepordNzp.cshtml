@@ -1,0 +1,41 @@
+﻿@using MvcApplication.Models
+@using Verst.Models
+@model IEnumerable<Verst.Models.MonthReportDataNzp>
+
+@{
+    Layout = null;
+    string prodN = FoxRepo.GetProductionNumber();
+    string userName = HttpContext.Current.User.Identity.Name;
+}
+<script src="@Url.Content("~/Scripts/Tooltip.js")" type="text/javascript"></script>
+<div style="height: 41px" >
+    <table class="table table-condensed table-bordered " style="width: 381px;table-layout:fixed">
+        <thead>
+            <tr>
+                <th style="width: 19px"></th>
+                <th style="width: 99px">Номер партии</th>
+                <th style="width: 119px">Дата поступления</th>
+                <th style="width: 59px">Годные</th>
+                <th style="width: 79px">Кол-во суток на операции</th>
+            </tr>
+    </thead>
+    </table>   
+</div>
+<div class="scrollable" style="width:400px;*width:500px;height:480px">
+    <table class="table table-bordered table-condensed " style="width:381px;table-layout:fixed">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width: 19px">@Html.TrackThisBatch(item.Nprt,prodN,userName)</td>
+                    <td style="width: 99px">@Html.ActionLink(item.Nprt,"PartInfo","Facility", new { NPRT = item.Nprt}, new {target="_blank"})</td> @*Сдесь условия выборки*@
+                    <td style="width: 119px">@item.Date</td>
+                    <td style="width: 59px">@item.Kpls</td>
+                    <td style="width: 79px">@item.DaysOnOp</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+     @Html.TrackThisBatchScript(prodN,userName)
+</div>
+<div style="width:540px;margin-left:-70px">Постановка/снятие партии на кантроль по клику на символ <img src='../../Content/images/star_active.png'></img>/<img src='../../Content/images/star_passive.png'></div>

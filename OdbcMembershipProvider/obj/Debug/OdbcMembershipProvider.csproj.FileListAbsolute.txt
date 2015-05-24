@@ -1,0 +1,4 @@
+D:\AistN\OdbcMembershipProvider\bin\Debug\OdbcMembershipProvider.dll
+D:\AistN\OdbcMembershipProvider\bin\Debug\OdbcMembershipProvider.pdb
+D:\AistN\OdbcMembershipProvider\obj\Debug\OdbcMembershipProvider.dll
+D:\AistN\OdbcMembershipProvider\obj\Debug\OdbcMembershipProvider.pdb

@@ -1,0 +1,111 @@
+﻿@using Verst.Models
+
+@{
+    ViewBag.Title = "Нзп по приборам";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    AjaxOptions options = new AjaxOptions
+    {/*
+        UpdateTargetId = "d1",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "_Loading_",
+        LoadingElementDuration = 2000,
+       // OnSuccess = "GetPrib"*/
+    };
+}
+
+<script type="text/javascript">
+    var NopID; //="0190";
+    var counter = 0;
+    function GetPrib(data) {
+        $("h1").replaceWith("<h1>НЗП по прибору: " + data + "</h1>");
+        $("#Prib_Table3_Container").hide();
+
+        history.pushState(null, null, this.href);
+    }
+
+    function toTable(nop) {
+        $("#Prib_Table3_Container").show();
+        NopID = nop;
+        var element = '#Pr_table_3';
+        element = $(element);
+        element.stop(false, false); // останавливает анимацию если уже идет
+        $('html,body').animate({ scrollTop: element.offset().top }, 'slow');
+
+        history.pushState(null, null, this.href);
+    }
+
+    function BackToNop() {
+        var element = ("#"+NopID);
+        alert(element);
+        element = $(element);
+        element.stop(false, false);
+        $('html,body').animate({ scrollTop: element.offset().top }, 'slow');
+    }
+
+    window.onpopstate = function(e) {
+
+        // получаем нормальный объект Location
+
+        var returnLocation = history.location || document.location;
+
+
+        // тут можете вызвать подгрузку данных и т.п.
+
+
+        // просто сообщение
+        alert("Мы вернулись на страницу со ссылкой: " + returnLocation.href);
+    };
+</script>
+
+<h1>НЗП по приборам</h1>
+<div class="container-fluid">
+    <div class="row-fluid">
+    <div class="List noprint">
+        @using (Ajax.BeginForm(options))
+        {
+
+            <table class="">
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Наименование прибора</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<NzpPribList>) ViewBag.PribList)
+                    {
+                        <tr>
+                            <td>@item.Kpr</td>
+                            <td>@Ajax.ActionLink(item.Napr, "GetNzpPrib", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Pr_table_2", InsertionMode = InsertionMode.Replace, OnSuccess = "GetPrib('" + @item.Napr + "')" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+        <div id="Prib_Table2" class="span8">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Номер операции</th>
+                        <th>Наименование операции</th>
+                        <th>НЗП</th>
+                    </tr>
+                </thead>
+                <tbody id="Pr_table_2">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="row-fluid" id="Prib_Table3_Container">
+        <div style="width: 200px; float: left;">
+            <input type="button" class="btn" value="Назад к операции" onclick="BackToNop()"/>
+        </div>
+
+        <div id="Prib_Table3" class="span8">
+        
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿@model IOrderedEnumerable<Verst.Models.DefectsDistributionPrib>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Код</th>
+            <th>Наименование прибора</th>
+            <th>Брак</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Kpr">
+                <td>@item.Kpr</td>
+                <td>@Ajax.ActionLink(item.Napr, "DefectsDistrOperations", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Otch_Defects_operations", InsertionMode = InsertionMode.Replace, OnBegin = "AjaxBegin()", OnSuccess = "AjaxSuccess('" + @item.Napr + "')", OnComplete = "LightUpKpr('" + @item.Kpr + "')", OnFailure = "AjaxError" })</td>
+                <td>@item.Nzp</td>
+            </tr>
+        }
+    </tbody>
+</table>

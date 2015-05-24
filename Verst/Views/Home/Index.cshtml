@@ -1,0 +1,10 @@
+﻿@model IEnumerable<MembershipUser>
+
+@{
+    ViewBag.Title = "Crystall";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Crystal")
+
+<div><img src="@Url.Content("~/Content/images/fon_new.jpg")" style="width: 100%;height:690px" alt=""/></div>

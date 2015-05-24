@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Verst.Models.Reasons>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Причина</th>
+            <th>Кол-во отказов</th>
+            <th>Часы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var it in Model)
+        {
+            <tr>
+                <td>@it.Napr</td>
+                <td>@it.SumN</td>
+                <td>@it.Hrs</td>
+            </tr>
+        }
+    </tbody>
+</table>

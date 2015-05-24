@@ -1,0 +1,224 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Verst.Models;
+using System;
+using MvcApplication.Models;
+
+namespace Verst.Controllers
+{
+    public class CyclesController : Controller
+    {
+        /// <summary>
+        /// Циклы/Код прибора
+        /// Расширяемая форма, с возможность выбора интервала для просмотра((на пример за три месяца)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Prib()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult CycleData(string fdate, string sdate) //Получаем данные по запросу
+        {
+            IEnumerable<PrCode> data;
+            DateTime d1, d2;
+            d1 = DateTime.Parse(fdate);
+            d2 = DateTime.Parse(sdate);
+            //var c_tmp_mpartt = (from ampartt in FoxRepo.GetTable<Crystal.amparttRow>()
+            //                    where ampartt.dato >= d1 && ampartt.dato <= d2
+            //                    select new { ampartt.nprt }
+            //                    ).Union(
+            //                   from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+            //                   where mpartt.nop == "0000" && (mpartt.dato >= d1 && mpartt.dato <= d2)
+            //                   select new { mpartt.nprt }
+            //                   )
+            //                   //.ToArray()
+            //                   ;
+
+
+            ////////////////////////////////////////////////////////////
+            var t_mpartn = FoxRepo.GetTable<Crystal.mpartnRow>();
+            var t_ampartn = FoxRepo.GetTable<Crystal.ampartnRow>();
+
+
+            var c_tmp_mprxop = (from ampartt in FoxRepo.GetTable<Crystal.amparttRow>()
+                                where ampartt.dato >= d1 && ampartt.dato <= d2
+                                join amprxop in FoxRepo.GetTable<Crystal.amprxopRow>()
+                                    on new { ampartt.kpr, ampartt.nprt } equals new { amprxop.kpr, amprxop.nprt }// into j_amprxop
+                                //from mpartt in c_tmp_mpartt
+                                //join amprxop in FoxRepo.GetTable<Crystal.amprxopRow>()
+                                // on mpartt.nprt equals amprxop.nprt
+                                group amprxop by new { amprxop.kpr, amprxop.nprt, amprxop.nop } into g_amprxop
+                                let s_amprxop = g_amprxop.OrderBy(a => a.dath).Last()
+                                //let brak = t_ampartn.Where(a => a.nprt == s_amprxop.nprt && a.nop == s_amprxop.nop).Count()
+                                select new
+                                {
+                                    s_amprxop.kpr,
+                                    s_amprxop.nprt,
+                                    s_amprxop.nop,
+                                    dath = s_amprxop.dath,
+                                    dato = s_amprxop.dato,
+                                    kpls = s_amprxop.kpls
+                                    //,                                    brk = t_ampartn.Where(a => a.nprt == s_amprxop.nprt && a.nop == s_amprxop.nop).Count()
+                                }).Union(
+                   from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                   where mpartt.nop == "0000" && (mpartt.dato >= d1 && mpartt.dato <= d2)
+                   join mprxop in FoxRepo.GetTable<Crystal.mprxopRow>()
+                       on new { mpartt.kpr, mpartt.nprt } equals new { mprxop.kpr, mprxop.nprt }// into j_amprxop
+                   //join mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                   //    on new { mprxop.nprt, mprxop.nop } equals new { mpartn.nprt, mpartn.nop } into j_mpartn
+
+                   group mprxop by new { mprxop.kpr, mprxop.nprt, mprxop.nop } into g_mprxop
+                   let s_mprxop = g_mprxop.OrderBy(a => a.dath).Last()
+                   //let brak = t_mpartn.Where(a=>a.nprt == s_mprxop.nprt  && a.nop == s_mprxop.nop).Count()
+                   select new
+                   {
+                       s_mprxop.kpr,
+                       s_mprxop.nprt,
+                       s_mprxop.nop,
+                       dath = s_mprxop.dath,
+                       dato = s_mprxop.dato,
+                       kpls = s_mprxop.kpls
+                       //,                      brk = t_mpartn.Where(a => a.nprt == s_mprxop.nprt && a.nop == s_mprxop.nop).Count()
+                   }
+                   )
+                //.ToArray()
+                   ;
+            ////////////////////////////////////////////////////////////
+
+            //var c_tmp_mprxop = (
+            //                    from mpartt in c_tmp_mpartt
+            //                    join amprxop in FoxRepo.GetTable<Crystal.amprxopRow>()
+            //                     on mpartt.nprt equals amprxop.nprt
+            //                    group amprxop by new { amprxop.kpr, amprxop.nprt, amprxop.nop } into g_amprxop
+            //                    select new
+            //                    {
+            //                        g_amprxop.Key.kpr,
+            //                        g_amprxop.Key.nprt,
+            //                        g_amprxop.Key.nop,
+            //                        dath = g_amprxop.Min(a => a.dath),
+            //                        dato = g_amprxop.Max(a => a.dato)
+            //                    }).Union(
+            //                   from mpartt in c_tmp_mpartt
+            //                   join mprxop in FoxRepo.GetTable<Crystal.mprxopRow>()
+            //                    on  mpartt.nprt equals mprxop.nprt
+            //                   group mprxop by new { mprxop.kpr, mprxop.nprt, mprxop.nop } into g_mprxop
+            //                   select new
+            //                   {
+            //                       g_mprxop.Key.kpr,
+            //                       g_mprxop.Key.nprt,
+            //                       g_mprxop.Key.nop,
+            //                       dath = g_mprxop.Min(a => a.dath),
+            //                       dato = g_mprxop.Max(a => a.dato)
+            //                   }
+            //                   )
+            //                   //.ToArray()
+            //                   ;
+
+
+            var vr_astmr = from asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                           join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                             on asspr.kmk equals astmr.kmk into j_astmr
+                           //group astmr by new { asspr.kpr, astmr.kmk } into g_astmr
+                           select new
+                           {
+                               kpr = asspr.kpr,
+                               //max_nop = g_astmr.Max(a => a.nop).ToString(),
+                               max_nop = j_astmr.Max(a => a.nop).ToString()//.Last().nop.ToString()
+
+                           };
+
+            var cycle_data_poln = (from e_mprxop in c_tmp_mprxop
+                                   join astmr in vr_astmr
+                                      on new { kpr = e_mprxop.kpr, nop = e_mprxop.nop } equals new { kpr = astmr.kpr, nop = astmr.max_nop }
+                                   join s_mprxop in c_tmp_mprxop
+                                      on e_mprxop.nprt equals s_mprxop.nprt
+                                   where s_mprxop.nop == "0001"
+                                   select new
+                                   {
+                                       s_mprxop.kpr,
+                                       s_mprxop.nprt,
+                                       s_mprxop.dath,
+                                       e_mprxop.dato,
+                                   })
+                //.ToArray()
+                                   ;
+
+            var cycle_data_sredn = (from e_mprxop in c_tmp_mprxop
+                                    join asscp in FoxRepo.GetTable<Crystal.asscpRow>()
+                                       on new { kpr = e_mprxop.kpr, nop = e_mprxop.nop } equals new { kpr = asscp.kpr, nop = asscp.knop }
+                                    join s_mprxop in c_tmp_mprxop
+                                       on e_mprxop.nprt equals s_mprxop.nprt
+                                    where s_mprxop.nop == asscp.nnop
+                                    select new
+                                    {
+                                        s_mprxop.kpr,
+                                        s_mprxop.nprt,
+                                        s_mprxop.dath,
+                                        e_mprxop.dato,
+                                    })
+                //.ToArray()
+                                   ;
+
+
+            var t_askrm = FoxRepo.GetTable<Crystal.askrmRow>();
+
+            var cycles_poln = from cd in cycle_data_poln
+                              group cd by cd.kpr into g_cd
+                              select new { kpr = g_cd.Key, cycle_poln = g_cd.Average(a => FoxRepo.WorkDaysBetween(a.dath, a.dato, t_askrm)) };
+
+            var cycles_sredn = from cd in cycle_data_sredn
+                               group cd by cd.kpr into g_cd
+                               select new { kpr = g_cd.Key, cycle_sredn = g_cd.Average(a => FoxRepo.WorkDaysBetween(a.dath, a.dato, t_askrm)) };
+
+            var kprs1 = (from mprxop in c_tmp_mprxop
+                         orderby mprxop.nop
+                         group mprxop by new { mprxop.kpr, mprxop.nprt } into g_mprxop
+                         select new
+                         {
+                             g_mprxop.Key.kpr,
+                             g_mprxop.Key.nprt,
+                             sdano = g_mprxop.Last().kpls,
+                             brak = t_ampartn.Where(a => a.kpr == g_mprxop.Key.kpr && a.nprt == g_mprxop.Key.nprt).Count()//g_mprxop.Sum(a=>a.brk)
+                         }
+                            );
+            var kprs = (from mprxop in kprs1
+                        group mprxop by mprxop.kpr into g_mprxop
+                        select new
+                        {
+                            kpr = g_mprxop.Key,
+                            sd = g_mprxop.Sum(a => a.sdano),
+                            brk = g_mprxop.Sum(a => a.brak)
+                        }
+                );
+            //cycles_poln.Select(a => a.kpr).Union(cycles_sredn.Select(a => a.kpr));
+
+            data = from prib in kprs
+                   join cp in cycles_poln
+                     on prib.kpr equals cp.kpr into g_cp
+                   join cs in cycles_sredn
+                     on prib.kpr equals cs.kpr into g_cs
+                   join asscp in FoxRepo.GetTable<Crystal.asscpRow>()
+                     on prib.kpr equals asscp.kpr
+                   select new PrCode
+                   {
+                       Kpr = prib.kpr,
+                       Kpls = prib.sd.ToString(),
+                       Brk = prib.brk.ToString(),
+                       Proc = ((prib.sd + prib.brk) != 0 ? prib.sd / (prib.sd + prib.brk) : 1).ToString("P"),
+                       Nop1 = asscp.nnop,
+                       Nop2 = asscp.knop,
+                       PlCycl = asscp.pl_cykl,
+                       NachOpr = asscp.nnaop,
+                       KonOpr = asscp.knaop,
+                       PrCycl = g_cs.Count() > 0 ? g_cs.First().cycle_sredn.ToString() : "n/a",
+                       FCycl = g_cp.Count() > 0 ? g_cp.First().cycle_poln.ToString() : "n/a"
+                   };
+
+            return View(data);
+        }
+
+    }
+}

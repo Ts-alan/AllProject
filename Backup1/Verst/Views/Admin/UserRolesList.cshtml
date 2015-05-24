@@ -1,0 +1,21 @@
+﻿@using Verst.Models
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-condensed" style="padding-top: 10px">
+            <thead>
+                <tr>
+                    <th>Роль</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in (IEnumerable<Role>)ViewBag.RolesForUser)
+                {
+                    <tr>
+                        <td>@item.RoleName</td>
+                        <td><a data-ajax="true" data-ajax-complete="delUserRole('@item.RoleName')" href="#">Удалить</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>

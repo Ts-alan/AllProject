@@ -1,0 +1,68 @@
+﻿@using System.Collections
+@using Verst.Models
+@{
+    ViewBag.Title = "GetAnalysis";
+    Layout = null;
+    
+}
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]--> 
+<script type="text/javascript">
+
+    function selectAllPrib() {
+        $("input[name=kpr]").each(function () {
+            this.checked = true;
+
+        });
+    };
+
+    function selectNullPrib() {
+        $("input[name=kpr]").each(function () {
+
+            this.checked = false;
+
+        });
+    };
+    function load() {
+    $("#references").html("");
+    $("#references").addClass("loader1");
+    }
+
+    function onsuccess() {
+      
+        $("#references").removeClass("loader1");
+    }
+  
+</script>
+@using (Ajax.BeginForm("GetAnalysisDiag", "Statisticks", new AjaxOptions { UpdateTargetId = "references" ,OnBegin="load()",OnSuccess="onsuccess()"}))
+{
+    <div  style="float: left;*float: left">
+        
+        <div style="height:400px;width:50%;overflow-y: auto;*width: 200px" > 
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">Код</th>
+                        <th style="text-align: center">Прибор</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<GetAnalysis1>) ViewBag.Mprox)
+                    {
+                        <tr>
+                            <td>@item.Kpr</td>
+                            <td><input type="checkbox" name="kpr" value="@item.Kpr" />@item.Napr </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+       <input type="button" class="btn" value="Выбрать все приборы" onclick=" selectAllPrib() "style= "margin-bottom: 5px;"/>
+       <input type="button" class="btn" value="Отменить приборы" onclick=" selectNullPrib() "style= "margin-bottom: 5px;"/>
+        <div class="row-fluid" style=" margin-bottom: 5px;">
+            <input type="submit" name="input"  value="" title="Построить диаграмму" style="width:154px;height:55px; border: solid 1px rosybrown; border-radius: 40px 5px; background-image:url(/Content/images/Plotsmale2.png);font-weight: 600;"/>
+            <input type="submit" class="btn" name="input" value="Отчет" style= "margin-bottom: 5px;"/>
+        </div>
+        </div>
+    
+}
+<div id="references" style="width: 100%; height: 400px;*width: 75%;*height: 100px"></div>

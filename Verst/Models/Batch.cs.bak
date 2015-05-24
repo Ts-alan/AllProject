@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using MvcApplication.Models.CrystalTableAdapters;
+
+
+namespace MvcApplication.Models
+{
+    /// <summary>
+    /// Представляет собой партию и информацию по ней
+    /// </summary>
+    public class Batch
+    {
+        public string nprt { get; set; }
+
+        public Batch() { }
+
+        public Batch(Crystal.mparttRow ba) {
+            batch = ba;
+            nprt = ba.nprt;
+        }
+
+        private Crystal.mparttRow _batch;
+
+        /// <summary>
+        /// Информация из MPARTT
+        /// </summary>
+        public Crystal.mparttRow batch
+        {
+            get
+            {
+                if (_batch == null)
+                    _batch = FoxRepo.GetTable<Crystal.mparttRow>().Single(a => a.nprt == nprt);
+                return _batch;
+            }
+            set { _batch = value; }
+        }
+
+        /// <summary>
+        /// Сопроводительный лист партии
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.mprxopRow> GetRouteSheet() {
+            return (from mprxop in FoxRepo.GetTable<Crystal.mprxopRow>()
+                    where mprxop.nprt == nprt
+                    orderby mprxop.nop
+                    select mprxop);
+        }
+
+
+
+    }
+}

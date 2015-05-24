@@ -1,0 +1,66 @@
+﻿@using Verst.Models
+@model PrCode
+           
+@{
+    ViewBag.Title = "Код прибора";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime now = DateTime.Now;
+}
+
+<link href="@Url.Content("~/Content/jquery-ui-1.9.1.custom.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/DatePickerRus.js")" type="text/javascript"></script> @*Локализация для календаря*@
+
+@*-----------Привязка плагина--------------------*@
+<script type="text/javascript">
+    var date1, date2;
+//Подключаем первый DatePicker и обрабатываем
+    $(function () {
+        $("#datepicker1").datepicker({
+            changeYear: true,
+            regional:"ru"
+        });
+    });
+//Подключаем второй DatePicker и обрабатываем
+    $(function () {
+        $("#datepicker2").datepicker({
+            changeYear: true,
+            regional: "ru"
+        });
+    });
+    //Отправляем данные в контроллер по щелчку на кнопке
+    $(document).ready(function () {
+        $('input[name="Get"]').click(function () {
+            var day1 = $("#datepicker1").datepicker('getDate').getDate();
+            var month1 = $("#datepicker1").datepicker('getDate').getMonth() + 1;
+            var year1 = $("#datepicker1").datepicker('getDate').getFullYear();
+            var fullDate1 = day1 + "." + month1 + "." + year1;
+            var day2 = $("#datepicker2").datepicker('getDate').getDate();
+            var month2 = $("#datepicker2").datepicker('getDate').getMonth() + 1;
+            var year2 = $("#datepicker2").datepicker('getDate').getFullYear();
+            var fullDate2 = day2 + "." + month2 + "." + year2;
+            $.ajax({
+                url: '@Url.Action("CycleData")',
+                type: 'POST',
+                data: { fdate: fullDate1, sdate: fullDate2 },
+                beforeSend:function (){$("#PribStatus").show();},
+                success: function (result) {$("#PribData").html(result); $("#PribStatus").hide();},
+                error: function (){$("#Loading_Prib").html("Возникла непредвиденная ошибка!!!").show("Slow");},
+                traditional: true
+            });
+        });
+        $('#datepicker1').datepicker("setDate", new Date('@now.Year','@now.Month'-1,01) );
+        $('#datepicker2').datepicker("setDate", new Date('@now.Year','@now.Month'-1,'@now.Day') );
+    });
+</script>
+
+<h2>Производственный цикл</h2>
+
+<p class="noprint">Выберите период:</p>
+<div>C:<input  id="datepicker1" type="text" /> По:<input  id="datepicker2" type="text" />
+    <label><input type="submit" id="GetData_Prib" value="Получить данные" class="btn noprint" name="Get"/></label>
+</div>
+
+<div id="PribStatus" style="display: none; color: red; font-weight: bold;" class="loader"></div>
+
+<div id="PribData"></div>

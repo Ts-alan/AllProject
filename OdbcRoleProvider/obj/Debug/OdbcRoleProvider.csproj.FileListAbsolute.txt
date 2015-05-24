@@ -1,0 +1,5 @@
+D:\AistN\OdbcRoleProvider\bin\Debug\OdbcRoleProvider.dll
+D:\AistN\OdbcRoleProvider\bin\Debug\OdbcRoleProvider.pdb
+D:\AistN\OdbcRoleProvider\obj\Debug\ResolveAssemblyReference.cache
+D:\AistN\OdbcRoleProvider\obj\Debug\OdbcRoleProvider.dll
+D:\AistN\OdbcRoleProvider\obj\Debug\OdbcRoleProvider.pdb

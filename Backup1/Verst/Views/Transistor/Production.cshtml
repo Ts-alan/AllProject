@@ -1,0 +1,176 @@
+﻿@model Verst.Models.TransistorViewModel
+
+@{
+    ViewBag.Title = "Данные по производству №" + Model.Prn;//Сработает при "прямом" запросе
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    const int rowCount = 10;
+    DateTime now = DateTime.Now;
+    int t = MvcApplication.Models.FoxRepo.GetTable<Verst.Models.Crystal.astobRow>().Where(a=>a.ks=="r").Count();
+    string number = MvcApplication.Models.FoxRepo.GetProductionNumber();
+    
+}
+
+@Html.Hidden("PageTitle", "Данные по производству №" + Model.Prn)
+
+<h1>Производство №@Model.Prn</h1>
+<table class="table table-bordered table-condensed center ">
+    <thead >
+        @if (number == "3" || number == "4")
+        {
+            <tr>
+                <th>НЗП(на начало месяца)</th>
+                <th>НЗП(на начало месяца)[Производство №2]</th>
+                <th>Сформировано</th>
+                <th>НЗП(текущее)</th>
+                <th>Кол.-во передач за сутки</th>
+                <th>Кол.-во передач за месяц</th>
+                <th>НЗП(текущее)[Производство №2]</th>
+                <th>Брак</th>
+                <th>Брак[Производство №2]</th>
+                <th>Сдано</th>
+            </tr>
+        }
+        else
+        {
+        <tr>
+                <th>НЗП(на начало месяца)</th>
+                <th>Сформировано</th>
+                <th>НЗП(текущее)</th>
+                <th>Кол.-во передач за сутки</th>
+                <th>Кол.-во передач за месяц</th>
+                <th>Брак</th>
+                <th>Сдано</th>
+            </tr>
+        }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AllNzps)
+        {
+            if (number == "3" || number == "4")
+            {
+                <tr>
+                    <td>@item.Nzp</td>
+                    <td>@item.NzpPr2</td>
+                    <td>@item.Sform</td>
+                    <td>@Html.ActionLink(item.NowNzp, "NzpPrib", "Otch", null, new {Class = "navigator"})</td>
+                    
+                    <td>@Html.ActionLink(item.KplsForDay, "PribKplsForDay", "Otch", null, new { Class = "navigator" })</td>
+                    <td>@Html.ActionLink(item.KplsForMount, "PribKplsForMount", "Otch", null, new { Class = "navigator" })</td>
+                    
+                    <td>@Html.ActionLink(item.NowNzpPr2, "NZPFor2Plant", "Otch", null, new { Class = "navigator" })</td>
+                    <td>@Html.ActionLink(item.Kpls, "DefectsDistr", "Otch", new {fdate = "01" + "." + now.Month.ToString() + "." + now.Year.ToString(), sdate = now.ToString()}, new {Class = "navigator"})</td>    
+                    <td>@Html.ActionLink(item.KplsPr2, "DefectsDistrFor2Plant", "Otch", new {fdate = "01" + "." + now.Month.ToString() + "." + now.Year.ToString(), sdate = now.ToString()}, new {Class = "navigator"})</td>
+                    <td>@Html.ActionLink(item.Sdo, "GetCycle", "Cycles", new {fdate = "01" + "." + now.Month.ToString() + "." + now.Year.ToString(), sdate = now.ToString()}, new {Class = "navigator"})</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                <td>@item.Nzp</td>
+                <td>@item.Sform</td>
+                <td>@Html.ActionLink(item.NowNzp, "NzpPrib", "Otch", null, new { Class = "navigator" })</td>
+                 <td>@Html.ActionLink(item.KplsForDay, "PribKplsForDay", "Otch", null, new { Class = "navigator" })</td>
+                <td>@Html.ActionLink(item.KplsForMount, "PribKplsForMount", "Otch", null, new { Class = "navigator" })</td>
+                <td>@Html.ActionLink(item.Kpls, "DefectsDistr", "Otch", new { fdate = "01" + "." + now.Month.ToString() + "." + now.Year.ToString(), sdate = now.ToString() }, new { Class = "navigator" })</td>
+                <td>@Html.ActionLink(item.Sdo, "GetCycle", "Cycles", new { fdate = "01" + "." + now.Month.ToString() + "." + now.Year.ToString(), sdate = now.ToString() }, new { Class = "navigator" })</td>   
+                 </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu", "Home")').success(function (result) { $('#SideMenu').html(result); });
+    $('#SideMenu').show();
+
+    $(document).ready(function () {
+        
+        $("[rel=tooltip]").tooltip({
+            html:true
+        });
+    });
+    
+</script>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th >Коридор</th>
+            @if (t > 0)
+            {
+                <th colspan="@rowCount" style="text-align: center">@Html.ActionLink("Простой оборудования", "StandEquipment", "Facility", null, new { style = " background-color:#ff9900;border-radius:100px", Class = "navigator", rel = "tooltip", title = "В ремонте " + t + " установок" })</th>
+            }
+            else
+            {
+             <th colspan="@rowCount" style="text-align: center">Простой оборудования</th>   
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ModuleMaps)
+        {
+            int count = item.obor.Count();
+            int cnt = count % rowCount == 0 ? count / rowCount : count / rowCount + 1;
+            int j = 0;
+            for (int i = 0; i < cnt; i++)
+            {
+                <tr>
+                    @if (i == 0)
+                    {
+                        <td style="width: 9%" rowspan="@cnt" align="center">@item.Nakor</td>
+                    }
+                    @for (int k = j; k < j + rowCount; k++)
+                    {
+                        string s = k < count ? item.obor.ElementAt(k).astob_data.snaobor : "";
+                        string divStyle = "";
+                        if (k < count)
+                        {
+                            switch (item.obor.ElementAt(k).astob_data.ks)
+                            {
+                                case "z":
+                                    divStyle = "InWork";
+                                    break;
+                                case "r":
+                                    divStyle = "InRepair";
+                                    break;
+                                case "p":
+                                    if (item.obor.ElementAt(k).Wait > 0 && item.obor.ElementAt(k).Nzp <= 0)
+                                    {
+                                        divStyle = "InRestWithWork";
+                                    }
+                                    else
+                                    {
+                                        divStyle = "InRest";
+                                    }
+                                    break;
+                                default: divStyle = "";
+                                    break;
+                            }
+                        }
+
+                        <td align="center" style="width: 9%">
+                            @if (s != "")
+                            {
+                                <div class="stateDiv @divStyle"></div>
+                                @Html.ActionLink(item.obor.ElementAt(k).astob_data.snaobor, "Details", "Facility", new
+                           {
+                               KUS = item.obor.ElementAt(k).astob_data.kus,
+                               KGT = (item.obor.ElementAt(k).astob_data.kgt)
+                           }, new
+                           {
+                               rel = "tooltip",
+                               title = "НЗП по установке: " + item.obor.ElementAt(k).Nzp.ToString()
+                               + "<br>" + " Ждут: " + item.obor.ElementAt(k).Wait.ToString(),
+                               Class = "navigator"
+                           });
+                            }
+                        </td>
+                    }
+                </tr>
+                j = j + rowCount;
+            }
+        }
+    </tbody>
+</table>

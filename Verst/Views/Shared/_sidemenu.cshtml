@@ -1,0 +1,47 @@
+﻿<div class="navbar navbar-static" style="z-index: 1">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-book"></i> Отчёты<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("НЗП по прибору", "NzpPrib", "Otch", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("НЗП по фотолитографии", "NzpFlit", "Otch", null, new { Class = "navigator" })</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Отчёт по приборам за месяц", "PribMountReport", "Otch", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Отчёт по браку за месяц", "Defect", "Otch", null, new { Class = "navigator" })</li>
+                    <li class="divider"></li>
+                    <!-- <li>@Html.ActionLink("Отчёт за сутки/смену", "DayReports", "Otch", null, new { Class = "navigator" })</li>-->
+                    <li>@Html.ActionLink("Отчёт по кристаллам", "CrystalForm", "Otch", null, new { Class = "navigator" })</li>
+                </ul></li>
+
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-retweet"></i> Циклы<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Код прибора", "Cycle", "Cycles", null, new { Class = "navigator" })</li>
+                </ul></li>
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-tasks"></i> Статистика<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Распределение брака", "ParetoDiag", "Statisticks", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Анализ движения", "Form", "Statisticks", null, new { Class = "navigator" })</li>
+                </ul></li>
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-hdd" ></i> Оборудование<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Месячная загрузка", "MZagrs", "Facility", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Динамика загрузки", "Dynamics", "Equipment", null, new { Class = "navigator" })</li>
+                     <li>@Html.ActionLink("Отчет о работе по бригадам", "MZagrsBrig", "Facility", null, new { Class = "navigator" })</li>
+                </ul></li>
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-asterisk"></i> Участки<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("НЗП по участкам", "AreaNzp", "Facility", new { pr = "производство(завод/филиал)" }, new { Class = "navigator" })</li>
+                </ul></li>
+            <li><a href="@Url.Action("PrtSearch","Facility")" style="color:black" class="navigator"><i class="icon-search"></i>Поиск</a></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    #Content {
+        margin-top: 0;@*Выравнивания для страниц где есть меню*@
+    }
+</style>

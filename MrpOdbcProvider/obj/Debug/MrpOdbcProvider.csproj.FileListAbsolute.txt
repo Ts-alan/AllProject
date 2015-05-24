@@ -1,0 +1,5 @@
+E:\downland\NowProject\MrpOdbcProvider\bin\Debug\MrpOdbcProvider.dll
+E:\downland\NowProject\MrpOdbcProvider\bin\Debug\MrpOdbcProvider.pdb
+E:\downland\NowProject\MrpOdbcProvider\obj\Debug\ResolveAssemblyReference.cache
+E:\downland\NowProject\MrpOdbcProvider\obj\Debug\MrpOdbcProvider.dll
+E:\downland\NowProject\MrpOdbcProvider\obj\Debug\MrpOdbcProvider.pdb

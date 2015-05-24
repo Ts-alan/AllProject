@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+<script src="@Url.Content("~/Scripts/lighttable.js")" type="text/javascript"></script>
+<div class="row-fluid lighttable " id="MZagrData">
+    <div style="width: 411px;">
+        <table class="table table-bordered table-condensed  center" style="table-layout: fixed">
+            <thead>
+                <tr>                               
+                   <th style="width: 99px">Сдано пластин</th>
+                   <th style="width: 139px">Ремонт в часах</th>
+                   <th style="width: 169px">Коэф. раб. оборудования</th>
+                </tr>
+            </thead>
+        </table>
+        </div>
+    <div style="width: 429px;height: 450px; float: left;margin-top: -21px" class="scrollable">
+        <table class="table table-bordered table-condensed center" style="table-layout: fixed;width: 411px">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                       
+                        <td style="width: 99px">@item.Kpls</td>
+                        <td style="width: 139px">@item.RepH                         
+                        </td>
+                        <td style="width: 169px">@item.KrObr</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    </div>

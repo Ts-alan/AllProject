@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Verst.Models.FlitOprNzp>
+
+@{
+    Layout = null;
+}
+<div class="span4">
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Номер операции</th>
+                <th>Наименование операции</th>
+                <th>НЗП</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.Nop">
+                    <td>@item.Nop</td>
+                    <td>@item.Naop</td>
+                    <td>@Ajax.ActionLink(item.Nzp, "GetFromNzpFlit2", new { nop = item.Nop }, new AjaxOptions { UpdateTargetId = "Flit_Table4", InsertionMode = InsertionMode.Replace, OnBegin = "load(4)", OnSuccess = "FillTableByNop", OnFailure = "AjaxError" }, new { Class = "NopNzpClick" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,414 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using Verst.Models;
+using System.Linq;
+
+using MvcApplication.Models;
+
+
+namespace Verst.Controllers
+{
+    [PlantAuthorization]
+    public class FacilityController : Controller
+    {
+        public ActionResult Details(string KGT, string KUS)
+        {
+            ViewBag.kgt = KGT;
+            ViewBag.kus = KUS;
+            Equipment eq = new Equipment { kgt = KGT, kus = KUS };
+            ViewBag.Equipment = eq.equipment;
+            ViewData["OnOp"] = (from part in eq.GetStartedParts()//.Union(eq.GetWaitingParts())
+                               join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                                  on part.kpr equals asspr.kpr
+                               join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                                  on new { part.kmk, part.nop } equals new { astmr.kmk, astmr.nop }
+                               join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                                  on astmr.kop equals assop.kop
+                               join asabon in FoxRepo.GetTable<Crystal.asabonRow>()
+                                  on part.owner equals asabon.tbn into part_abon
+                               select new OnOperation
+                               {
+                                   Kpr = part.kpr,
+                                   Napr = asspr.napr,
+                                   Nprt = part.nprt,
+                                   Dato = part.dato.getFoxDate(), // part.
+                                   Nop = part.nop,
+                                   Naop = assop.naop,
+                                   Dath = part.dath.getFoxDate(),
+                                   Kpls = double.Parse(part.kpls.ToString()),
+                                   Fio = part_abon.First().fio
+                               }).OrderBy(x=>x.Kpr);
+
+            ViewData["OnLch"] = (from part in eq.GetWaitingParts()
+                                join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                                   on part.kpr equals asspr.kpr
+                                join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                                   on new { part.kmk, part.nop } equals new { astmr.kmk, astmr.nop }
+                                join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                                   on astmr.kop equals assop.kop
+                                join asabon in FoxRepo.GetTable<Crystal.asabonRow>()
+                                   on part.owner equals asabon.tbn into part_abon
+                                select new OnLaunch
+                                {
+                                    Kpr = part.kpr,
+                                    Napr = asspr.napr,
+                                    Nprt = part.nprt,
+                                    Dato = part.dato.getFoxDate(), // part.
+                                    Nop = part.nop,
+                                    Naop = assop.naop,
+                                    Kpls = double.Parse(part.kpls.ToString())
+                                }).OrderBy(x=>x.Kpr);
+            return View();
+        }
+
+        public ActionResult GetPrib(string KGT, string KUS, int Depth)
+        {
+            Equipment eq = new Equipment { kgt = KGT, kus = KUS };
+            var data =
+               (from part in eq.GetNearParts()
+               join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                   on part.batch.kpr equals asspr.kpr
+               select new Approaching
+               {
+                   Kpr = part.batch.kpr,
+                   Napr = asspr.napr,
+                   Nprt = part.nprt,
+                   Kpls = part.batch.kpls.ToString(),
+                   From = part.batch.nop,
+                   To = part.nop,
+                   Distance = part.distance
+               }).OrderBy(x=>x.Distance);
+
+            if (Depth >= 0)
+            {
+               var data2 = data.Where(x => x.Distance <= Depth);
+                return View(data2);
+            }
+
+            return View(data);
+        }
+
+        public ActionResult AreaNzp()
+        {
+            var result = (from astob in FoxRepo.GetTable<Crystal.astobRow>()
+                          //where astob.kuch == kuch
+                          join as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+                              on new { astob.kgt, astob.kus } equals new { as_wop.kgt, as_wop.kus }
+                          join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                              on as_wop.kop equals astmr.kop
+                          join asmnp in FoxRepo.GetTable<Crystal.asmnpRow>()
+                              on new { astmr.kmk, astmr.nop } equals new { asmnp.kmk, asmnp.nop }
+                          group asmnp by astob.kuch into asnmp_data1
+                          let asmnp_data = asnmp_data1.Distinct()
+                          let Pso = asmnp_data.Sum(a => a.pso3)
+                          let Sdo = asmnp_data.Sum(a => a.sdo3)
+                          let Brk = asmnp_data.Sum(a => a.brk3)
+                          let Kpls = Pso + asmnp_data.Sum(a => a.nzpo) - Sdo - Brk 
+                          select new NzpUch
+                               {
+                                   Kuch = new Area() { kuch = asnmp_data1.Key }.area.nauch,
+                                   Pso = Pso.ToString(),
+                                   Sdo = Sdo.ToString(),
+                                   Brk = Brk.ToString(),
+                                   Kpls = Kpls.ToString(),// + ":" + new Area() { kuch = asnmp_data.Key }.GetNZP().Sum(a => a.kpls).ToString()
+                                   Percs = (Sdo+Brk)!=0?(100*Sdo/(Sdo+Brk)).ToString("F2"):"100"
+                               }); 
+
+            ViewBag.results = result;
+            return View();
+        }
+
+        public ActionResult PartInfo(string NPRT)
+        {
+            var t_asabon = FoxRepo.GetTable<Crystal.asabonRow>();
+
+            var t_mpartt = FoxRepo.GetTableNew<Crystal.mprxopDataTable>(filter: "WHERE nprt == ? ORDER BY nop", parameters: new[] { NPRT });
+
+            if (t_mpartt.Count < 1)
+            {
+                t_mpartt = FoxRepo.GetTableNew<Crystal.mprxopDataTable>(isArchived: true, filter: "WHERE nprt == ? ORDER BY nop", parameters: new[] { NPRT });
+            }
+
+            var result = (from part in t_mpartt
+                             join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                                on part.kpr equals asspr.kpr
+                             join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                                on new { part.kmk, part.nop } equals new { astmr.kmk, astmr.nop }
+                             join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                                on astmr.kop equals assop.kop
+                             join astob in FoxRepo.GetTable<Crystal.astobRow>()
+                                on new { part.kgt, part.kus } equals new { astob.kgt, astob.kus }
+                             join mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                                on new { nprt = part.nprt, nop = part.nop } equals new { nprt = mpartn.nprt, nop = mpartn.nop }
+                                into part_brak
+                             //where !(part.kgt == "00" && part.kus == "00")
+                             select new PartInfo
+                             {
+                                 Nop = part.nop,
+                                 Nprt = part.nprt,
+                                 Napr = asspr.napr,
+                                 Kop = astmr.kop,
+                                 Naop = assop.naop,
+                                 Naobor = astob.naobor,
+                                 Dath = part.dath.getFoxDate(),
+                                 Timh = FoxRepo.getFoxTime(part.timh),
+                                 Dato = part.dato.getFoxDate(),
+                                 Timo = FoxRepo.getFoxTime(part.timo),
+                                 Brak = part_brak.Count().ToString(), 
+                                 Fio = FoxRepo.GetFIOByTabNumber(part.owner, t_asabon)
+                             }).ToList();
+
+                var p_i = result.FirstOrDefault();
+            if (p_i != null)
+            {
+                ViewBag.Nprt = p_i.Nprt;
+                ViewBag.Izd = p_i.Napr;
+                ViewBag.result = result;
+            }
+            else
+            {
+                ViewBag.Nprt = "";
+                ViewBag.Izd = "";
+                ViewBag.result = new List<PartInfo>();
+            }
+            
+            return View();
+        }
+
+        public ActionResult Downtimes(string KGT, string KUS)
+        {
+            var t_asabon = FoxRepo.GetTable<Crystal.asabonRow>();
+            var eq = new Equipment { kgt = KGT, kus = KUS };
+            var result = from asmbn in eq.GetDowntimes()
+                         join askprob in FoxRepo.GetTable<Crystal.askprobRow>()
+                            on asmbn.kpp equals askprob.kpp into svar
+                         from myvar in svar.DefaultIfEmpty()
+                         select new Downtimes
+                         {
+                             Nobr = eq.equipment.snaobor,
+                             Dnp = asmbn.dnp.getFoxDate(),
+                             Tnp = FoxRepo.getFoxTime(asmbn.tnp),
+                             Dop = asmbn.dop.getFoxDate(),
+                             Top = FoxRepo.getFoxTime(asmbn.top),
+                             Napr = myvar == null ? "" : myvar.napr,
+                             Iopn = FoxRepo.GetFIOByTabNumber(asmbn.iopn, t_asabon),
+                             Iopo = FoxRepo.GetFIOByTabNumber(asmbn.iopo, t_asabon),
+                             Hrs = FoxRepo.HoursBetween(asmbn.dop, asmbn.top, asmbn.dnp, asmbn.tnp).ToString("F2")
+                         };
+            ViewBag.results = result;
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetBrak(string nop, string nprt)
+        {
+            var result = from mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                      where mpartn.nop == nop && mpartn.nprt == nprt
+                      join asbrak in FoxRepo.GetTable<Crystal.asbrakRow>()
+                          on mpartn.kprb equals asbrak.kprb
+                      select new Defects
+                          {
+                              Npls = mpartn.npls.Substring(11),
+                              Naprb = asbrak.naprb
+                          };
+            return View(result.OrderBy(x=>x.Npls));
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult MZagr()
+        {
+            string x1 = null, x2 = null;
+            DateTime d1, d2 = DateTime.Now;
+            var xx = from asparam in FoxRepo.GetTable<Crystal.asparamRow>()//Формируем дату отсчёта
+                     where asparam.identp == "start_ms"
+                     select new { ds = asparam.valp };
+            foreach (var tab in xx)
+            {
+                x1 = tab.ds.Substring(0, 10);
+                x2 = tab.ds.Substring(11, 4);
+            }
+            d1 = DateTime.Parse(x1);
+            object date1 = d1, date2 = d2;
+            TempData["Date1"] = d1;
+            TempData["Date2"] = d2;
+
+            int hrsMonth = FoxRepo.WorkDaysInMonth(System.DateTime.Now) * 24;
+
+            var t_mprxop = FoxRepo.GetTableNew<Crystal.mprxopDataTable>(filter: "WHERE BETWEEN(dath,?,?)", parameters: new[] { date1, date2 }).ToList();
+
+            var t_asmbn = FoxRepo.GetTable<Crystal.asmbnRow>().Where(a => a.dop >= d1 && a.dop <= d2).ToList();
+
+            ViewBag.Result = (from astob in FoxRepo.GetTable<Crystal.astobRow>()
+                              join askuch in FoxRepo.GetTable<Crystal.askuchRow>()
+                                  on astob.kuch equals askuch.kuch
+                              join mprxop in t_mprxop
+                                 on new { astob.kgt, astob.kus } equals new { mprxop.kgt, mprxop.kus } into proc_parts
+                              join mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                                 on new { astob.kgt, astob.kus } equals new { mpartn.kgt, mpartn.kus } into proc_brak
+                              join asmbn in t_asmbn
+                                on new { astob.kgt, astob.kus } equals new { asmbn.kgt, asmbn.kus } into eq_repairs
+                              let reps = eq_repairs.Sum(asmbn => FoxRepo.HoursBetweenForMZagr(asmbn.dop, asmbn.top, asmbn.dnp, asmbn.tnp))
+                              select new LoadMth
+                              {
+                                  Kuch = askuch.nauch,
+                                  Nobr = astob.snaobor,
+                                  Kpls = proc_parts.Sum(a => a.kpls).ToString(),
+                                  Brk = proc_brak.Count().ToString(),
+                                  Nprt = proc_parts.Count().ToString(),
+                                  RepH = reps.ToString("F2"),
+                                  KrObr = ((hrsMonth - reps) / hrsMonth).ToString("F2")
+                              }).OrderBy(x => x.Kuch);
+
+            var reas = from askprob in FoxRepo.GetTable<Crystal.askprobRow>()
+                       join asmbn in FoxRepo.GetTable<Crystal.asmbnRow>()
+                       on askprob.kpp equals asmbn.kpp
+                       where asmbn.dop <= d2 && asmbn.dop >= d1 //&& int.Parse(asmbn.tnp) > int.Parse(x2)  
+                       group asmbn by new { askprob.napr } into zapr
+                       let reps = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp))
+                       select new Reasons
+                       {
+                           Napr = zapr.Key.napr,
+                           SumN = zapr.Select(a => a.kpp).Count().ToString(),
+                           Hrs = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp)).ToString("F2"),
+                           KrObr = ((hrsMonth - reps) / hrsMonth).ToString("F2"),
+                       };
+
+            ViewBag.Result2 = reas.OrderByDescending(a => a.Hrs);
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ViewResult MzagrFor(string Month, string Year)
+        {
+            DateTime d1, d2;
+            d1 = DateTime.Parse("1."+Month+"."+Year);
+            d2 = DateTime.Parse( DateTime.DaysInMonth(int.Parse(Year),int.Parse(Month)).ToString()+"."+Month+"."+Year);
+            TempData["Date1"] = d1;
+            TempData["Date2"] = d2;
+            int WorkHrsMonth = FoxRepo.WorkDaysInMonth(d1) * 24;
+
+            var t_mprxop = FoxRepo.GetTableNew<Crystal.mprxopDataTable>(filter: "WHERE mprxop.dath BETWEEN {" + d1.ToShortDateString() + "} AND {"+d2.ToShortDateString()+"} ").ToList();
+
+            var t_asmbn = FoxRepo.GetTable<Crystal.asmbnRow>().Where(a => a.dop >= d1 && a.dop <= d2).ToList();
+
+            ViewBag.Result = (from astob in FoxRepo.GetTable<Crystal.astobRow>()
+                              join askuch in FoxRepo.GetTable<Crystal.askuchRow>()
+                                  on astob.kuch equals askuch.kuch
+                              join mprxop in t_mprxop
+                                 on new { astob.kgt, astob.kus } equals new { mprxop.kgt, mprxop.kus } into proc_parts
+                              join mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                                 on new { astob.kgt, astob.kus } equals new { mpartn.kgt, mpartn.kus } into proc_brak
+                              join asmbn in t_asmbn
+                                on new { astob.kgt, astob.kus } equals new { asmbn.kgt, asmbn.kus } into eq_repairs
+                              let reps = eq_repairs.Sum(asmbn => FoxRepo.HoursBetweenForMZagr(asmbn.dop, asmbn.top, asmbn.dnp, asmbn.tnp))
+                              select new LoadMth
+                              {
+                                  Kuch = askuch.nauch,
+                                  Nobr = astob.snaobor,
+                                  Kpls = proc_parts.Sum(a => a.kpls).ToString(),
+                                  Brk = proc_brak.Count().ToString(),
+                                  Nprt = proc_parts.Count().ToString(),
+                                  RepH = reps.ToString("F2"),
+                                  KrObr = ((WorkHrsMonth - reps) / WorkHrsMonth).ToString("F2")
+                              }).OrderBy(x => x.Kuch);
+
+            var reas = from askprob in FoxRepo.GetTable<Crystal.askprobRow>()
+                       join asmbn in FoxRepo.GetTable<Crystal.asmbnRow>()
+                       on askprob.kpp equals asmbn.kpp
+                       where asmbn.dop <= d2 && asmbn.dop >= d1
+                       group asmbn by new { askprob.napr } into zapr
+                       let reps = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp))
+                       select new Reasons
+                       {
+                           Napr = zapr.Key.napr,
+                           SumN = zapr.Select(a => a.kpp).Count().ToString(),
+                           Hrs = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp)).ToString("F2"),
+                           KrObr = ((WorkHrsMonth - reps) / WorkHrsMonth).ToString("F2"),
+                       };
+
+            ViewBag.Result2 = reas.OrderByDescending(a => a.Hrs);
+            return View();
+        }
+
+        public ViewResult ReasonsByUst(string Nobr)
+        {
+            var d1 = (DateTime)TempData.Peek("Date1");
+            var d2 = (DateTime)TempData.Peek("Date2");
+            int hrsMonth = FoxRepo.WorkDaysInMonth(d1) * 24;
+
+            var reas = from askprob in FoxRepo.GetTable<Crystal.askprobRow>()
+                       join asmbn in FoxRepo.GetTable<Crystal.asmbnRow>()
+                       on askprob.kpp equals asmbn.kpp
+                       where asmbn.dop <= d2 && asmbn.dop >= d1
+                       join astob in FoxRepo.GetTable<Crystal.astobRow>()
+                       on new { asmbn.kus, asmbn.kgt } equals new { astob.kus, astob.kgt }
+                       where astob.snaobor == Nobr
+                       group asmbn by new { askprob.napr } into zapr
+                       let reps = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp))
+                       select new Reasons
+                       {
+                           Napr = zapr.Key.napr,
+                           SumN = zapr.Select(a => a.kpp).Count().ToString(),
+                           Hrs = zapr.Sum(a => FoxRepo.HoursBetweenForMZagr(a.dop, a.top, a.dnp, a.tnp)).ToString("F2"),
+                           KrObr = ((hrsMonth - reps) / hrsMonth).ToString("F2"),
+                       };
+            return View(reas);
+        }
+
+        [HttpPost]
+        public ActionResult PrtSearch(string Nprt)
+        {
+            if (Nprt.Length < 4 || Nprt.Length > 7)
+            {
+                return View();
+            }
+
+            ViewBag.Nprt = Nprt.PadRight(6);
+            var data = from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                       where mpartt.nprt.Substring(0, 6) == Nprt.PadRight(6)
+                       join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                       on new { mpartt.kmk, mpartt.nop } equals new { astmr.kmk, astmr.nop }
+                       join as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+                       on new { astmr.kop, mpartt.kgt } equals new { as_wop.kop, as_wop.kgt }
+                       join astob in FoxRepo.GetTable<Crystal.astobRow>()
+                       on new { as_wop.kgt, as_wop.kus } equals new { astob.kgt, astob.kus }
+                       select new { kus1 = mpartt.kus.Trim() != "00" ? mpartt.kus : astob.kus };
+
+
+            var result = from xx in data
+                         from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                         where mpartt.nprt.Substring(0, 6) == Nprt.PadRight(6)
+                         join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                         on new { mpartt.kmk, mpartt.nop } equals new { astmr.kmk, astmr.nop }
+                         join assop in FoxRepo.GetTable<Crystal.assopRow>()
+                         on astmr.kop equals assop.kop
+                         join asspr in FoxRepo.GetTable<Crystal.assprRow>()
+                         on new { mpartt.kmk, mpartt.kpr } equals new { asspr.kmk, asspr.kpr }
+                         join as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+                         on new { astmr.kop, mpartt.kgt } equals new { as_wop.kop, as_wop.kgt }
+                         join astob in FoxRepo.GetTable<Crystal.astobRow>()
+                         on new { as_wop.kgt, as_wop.kus } equals new { astob.kgt, astob.kus }
+                         where as_wop.kus == xx.kus1
+                         group mpartt by new { mpartt.nop, assop.naop, mpartt.kpr, mpartt.kpls, asspr.napr, mpartt.kgt, astmr.kop, mpartt.timo, mpartt.dato, mpartt.dath, mpartt.timh, astob.kkor, as_wop.kus, astob.snaobor, mpartt.nprt } into g_mpartt
+                         select new PartSearch
+                         {
+                             Nprt = g_mpartt.Key.nprt,
+                             Kpr = g_mpartt.Key.kpr,
+                             Napr = g_mpartt.Key.napr,
+                             Nop = g_mpartt.Key.nop,
+                             Naop = g_mpartt.Key.naop,
+                             Kpls = g_mpartt.Key.kpls.ToString(),
+                             Dato = g_mpartt.Key.dato.getFoxDate(),
+                             Timo = g_mpartt.Key.timo.getFoxTime(),
+                             Dath = g_mpartt.Key.dath.getFoxDate(),
+                             Timh = g_mpartt.Key.timh.getFoxTime(),
+                             Nobr = g_mpartt.Key.snaobor,
+                             Kus = g_mpartt.Key.kus,
+                             Kgt = g_mpartt.Key.kgt,
+                             Kkor = g_mpartt.Key.kkor
+                         };
+            return View(result);
+        }
+    }
+}

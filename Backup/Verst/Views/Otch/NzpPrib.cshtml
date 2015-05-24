@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Verst.Models.NzpPribList>
+
+@{
+    ViewBag.Title = "Нзп по приборам";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Нзп по приборам")
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+
+    var url, $objKpr, $objNop;
+
+    $(document).ready(function () {
+        $("[rel=tooltip]").tooltip({
+            html: true
+        });
+        
+       
+        $('.NzpPribListClick').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+
+        });
+        $('.OperationNzpClick').live("click", function () {
+            if (typeof $objNop != 'undefined') {
+                $objNop.closest('tr').css("background-color", "white");
+            }
+            $objNop = $(this);
+            $objNop.closest('tr').css("background", "#ADDEFF");
+
+        });
+    });
+
+    function GetPrib(data) {
+        $('#Prib_Table2').removeClass("loader1");
+        $("h4").replaceWith("<h4>НЗП по прибору:<span class='font'>" + data + "</span></h4>");
+        $("span").css("color", "#3019FF");
+     
+    }
+    function toTable() {
+        $('#Prib_Table3').removeClass("loader1");
+    }
+
+    function load(n) {
+        for (var i = n; i <= 4; i++) {
+            $("#Prib_Table" + i).html("");
+        }
+        $("#Prib_Table" + n).addClass("loader1");    
+    }
+   
+</script>
+@if (ViewBag.timer == "GetNZPFor2Plant")
+{
+    <h4>НЗП производства №2 по приборам</h4>
+}
+else
+{
+    <h4>НЗП производства №@MvcApplication.Models.FoxRepo.GetProductionNumber() по приборам</h4>
+}
+<div class="container-fluid lighttable center">
+    <div style="float:left">
+        <div style="width: 162px;height: 41px" >
+            <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+                <thead>
+                    <tr>
+                        <th style="width: 32px">Код</th>
+                        <th style="width: 94px">Наименование прибора</th>
+                        <th style="width: 32px">НЗП</th>
+                    </tr>
+                </thead>
+            </table> 
+        </div>        
+        <div class="scrollable" style="width: 182px;height: 400px"> 
+            <table class="table table-bordered table-condensed"style="table-layout:fixed;width:162px; ">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="@item.Kpr">
+                            <td style="width: 32px; ">@item.Kpr</td>
+                            <td style="width: 94px; ">@item.Napr</td>
+                            @if (ViewBag.timer == "GetNZPFor2Plant")
+                            {
+                                <td style="width: 32px; ">@Ajax.ActionLink(item.Nzp.ToString(), "GetNZPFor2Plant", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpPribListClick" })</td>
+                            }
+                            else
+                            {
+                                <td style="width: 32px; ">@Ajax.ActionLink(item.Nzp.ToString(), "GetNzpPrib", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpPribListClick" })</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div> 
+    </div>
+
+    <div id="Prib_Table2" class="Print-Content" style="width: 230px;height: 400px; float: left; margin-left: 10px;">
+    </div>
+
+   <div id="Prib_Table3" class="Print-Content" style="height: 400px;width:240px; float: left; margin-left: 5px;*float: left">
+    
+       </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Verst.Models.PribKplsForDay>
+
+@{
+    ViewBag.Title = "PribKpls";
+}
+@Html.Hidden("PageTitle", "Кол-во передач за месяц")
+<script type="text/javascript">
+    var $objKpr;
+    $('.PribKplsForDay2').live("click", function () {
+        if (typeof $objKpr != 'undefined') {
+            $objKpr.closest('tr').css("background-color", "white");
+        }
+        $objKpr = $(this);
+        $objKpr.closest('tr').css("background", "#ADDEFF");
+
+    });
+
+    function GetPrib() {
+        $('#Prib_Table2').removeClass("loader1");
+        
+       
+    }
+    function load(n) {
+       $("#Prib_Table" + n).html("");
+       $("#Prib_Table" + n).addClass("loader1");
+    }
+</script>
+<h4>Кол-во передач за месяц</h4>
+<div class="container-fluid lighttable center" style="float: left">
+    <div style="float:left">
+        <div style="width: 200px;height: 41px" >
+        <table class="table table-bordered table-condensed center" style="table-layout:fixed">
+            <thead >
+                <tr>
+                    <th style="width: 50px">Код прибора</th>
+                    <th style="width: 94px">Наименование прибора</th>
+                    <th style="width: 80px">Количество передач </th>
+                </tr>
+
+            </thead>
+               </table> 
+        </div> 
+        <div class="scrollable" style="width: 243px;height: 300px">
+       <table class="table table-bordered table-condensed"style="table-layout:fixed; ">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width: 50px;">@item.Kpr</td>
+                        <td style="width: 94px;">@item.Napr</td>
+                        <td style="width: 80px;">@Ajax.ActionLink(item.KplsForDay, "GangPribKplsForDay", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", OnBegin = "load(2)", OnSuccess = "GetPrib()" }, new { Class = "PribKplsForDay2" })</td>
+                    </tr>
+            
+                }
+            </tbody>
+        </table>
+       </div>
+    </div>
+</div>
+<div id="Prib_Table2" class="Print-Content" style="width: 230px;height: 400px; float: left; margin-left: 10px;">
+    </div>

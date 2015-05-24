@@ -1,0 +1,71 @@
+﻿@using Verst.Models
+@using MvcApplication.Models
+@model Verst.Controllers.UserController.PersonalCabinetModel
+           
+@{
+    ViewBag.Title = "Cabinet";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+
+}
+
+@Html.Hidden("PageTitle", "Личный кабинет")
+@Html.TrackThisBatchScript(User.Identity.Name)
+
+<h3>Мой профиль</h3>
+<div class="font">
+<p>Я вошёл как @Model.UserName</p>
+<p>Меня зовут:@Model.Fio</p>
+<p>Место работы:@Model.Unit</p>
+</div>
+
+
+
+
+<div id="WasDeleted">
+    @if (Model.DeletedBatches.Count()!=0)
+    {
+
+        <h2>Ушедшие с маршрута партии:</h2>
+        foreach (var batch in Model.DeletedBatches)
+         {
+             <p>Партия №@batch.BatchNum ушла c маршрута</p>
+         }
+    }
+</div>
+
+<h3>Отслеживыемые партии</h3>
+@if (Model.ObservedBatches.Count()!=0)
+{
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th style="width: 20px"></th>
+                <th>Номер партии</th>
+                <th>Прибор</th>
+                <th>Наименование оп</th>
+                <th>Кол-во пластин</th>
+                <th>Дата</th>
+                <th>Пр-во</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var batch in Model.ObservedBatches)
+            {
+                <tr>
+
+                    <td> @Html.TrackThisBatch(batch.Nprt, batch.ProdNumber, User.Identity.Name)</td>
+                    <td>@Html.ActionLink(batch.Nprt, "PartInfo", "Facility", new { nprt = batch.Nprt, plant = FoxRepo.GetPlantFromNumber(batch.ProdNumber).ToString() }, new { Class = "navigator" })</td>
+                    <td>@batch.Napr</td>
+                    <td>@batch.Naop</td>
+                    <td>@batch.Nzp</td>
+                    <td>@batch.Date</td>
+                    <td>№@batch.ProdNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>У вас нет наблюдаемых партий!</h4>
+}

@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Verst.Models.NzpFLitList>
+           
+@{
+    ViewBag.Title = "Нзп по фотолитографии";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Нзп по фотолитографии")
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+
+    var url, $objKpr, $objNfl, $objNop;
+
+    $(document).ready(function () {
+
+     
+        $('.NzpFlitListClick').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+
+            /*$(window).bind('beforeunload', function () {
+            return '>>>>>Внимание!<<<<<<<< \n Обновление страницы не требуется. Достаточно заново выбрать интерисующий вас пункт.';
+            });*/
+        });
+        $('.NflBlockClick').live("click", function () {
+            if (typeof $objNfl != 'undefined') {
+                $objNfl.closest('tr').css("background-color", "white");
+            }
+            $objNfl = $(this);
+            $objNfl.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+        });
+        $('.NopNzpClick').live("click", function () {
+            if (typeof $objNop != 'undefined') {
+                $objNop.closest('tr').css("background-color", "white");
+            }
+            $objNop = $(this);
+            $objNop.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+        });
+    });
+
+    function SetHref(href) {
+        url = href;
+       
+    }
+    function AjaxError() {
+        $('#Flit_Progress').addClass("progress-danger");
+        $('#Flit_Progress').removeClass("active");
+    }
+    function GetPrib(data) {
+        $("#Flit_Table2").removeClass("loader1");
+        $("h4").replaceWith("<h4>НЗП по фотолитографии. Прибор:<span class='font'>" + data + "</span></h4>");
+        $("span").css("color", "#3019FF");
+        ManualSave(url);
+    }
+
+    function FillTable1() {
+        $("#Flit_Table3").removeClass("loader1");
+       
+      
+       
+    }
+    function FillTableByNop() {
+        $("#Flit_Table4").removeClass("loader1");
+     
+      
+    }
+    function load(n) {    
+        for (var i=n;i<=4; i++) {
+            $("#Flit_Table"+i).html("");
+        }
+        $("#Flit_Table" + n).addClass("loader1");
+    }
+</script>
+
+<h4>НЗП производства №@MvcApplication.Models.FoxRepo.GetProductionNumber() по фотолитографии</h4>
+<div class="container-fluid lighttable center">
+    <div style="float:left">
+        <div style="width: 162px;height: 41px" >
+            <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+                <thead>
+                    <tr>
+                        <th style="width: 32px">Код</th>
+                        <th style="width: 94px">Наименование прибора</th>
+                        <th style="width: 32px">НЗП</th>
+                    </tr>
+                </thead>
+            </table> 
+        </div>        
+        <div class="scrollable" style="width: 179px;height: 400px"> 
+            <table class="table table-bordered table-condensed"style="table-layout:fixed;width:162px; ">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="@item.Kpr">
+                                <td style="width: 32px">@item.Kpr</td>
+                                <td style="width: 94px">@item.Napr</td>
+                                <td style="width: 32px">@Ajax.ActionLink(item.Nzp.ToString(), "GetNzpFLit", new { kmk = item.Kmk, kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Flit_Table2", InsertionMode = InsertionMode.Replace,OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpFlitListClick" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="height: 100px" id="Flit_Table2" class="span7">
+    
+        </div>
+    </div>
+
+      <div class="row-fluid center" style="margin-top: 15px;height: 100px" id="Flit_Tables">
+           <div id="Flit_Table3">     
+            </div>
+            <div id="Flit_Table4">       
+            </div>
+      </div>

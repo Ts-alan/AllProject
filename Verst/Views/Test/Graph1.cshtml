@@ -1,0 +1,22 @@
+﻿@using System.Collections
+@using Verst.Models
+           
+@{
+    ArrayList xValue = new ArrayList();
+    ArrayList yValue = new ArrayList();
+    foreach (var item in (IEnumerable<Graph>)ViewData.Model)
+    {
+        xValue.Add(item.Date);
+        yValue.Add(item.PlVal);
+    }
+    
+    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Blue)
+        .AddTitle("Загрузка оборудования по месяцам")
+        .AddSeries( chartType: "Line",
+            name: "Chart1",
+            xValue: xValue,
+            yValues: yValue)
+            .SetXAxis( title: "Дата")
+            .SetYAxis( title: "Кол-во")
+        .Write("png");
+}

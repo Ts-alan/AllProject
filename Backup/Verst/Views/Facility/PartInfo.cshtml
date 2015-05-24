@@ -1,0 +1,89 @@
+﻿@using MvcApplication.Models
+@using Verst.Models
+@{
+    ViewBag.Title = "Сопроводительный лист";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+  <script src="@Url.Content("~/Scripts/lighttable.js")" type="text/javascript"></script>
+@Html.Hidden("PageTitle", "Сопроводительный лист")
+
+<h3>Сопроводительный лист партии №&nbsp <span style="color: #3019FF">@ViewBag.Nprt @Html.TrackThisBatch((string)ViewBag.Nprt,FoxRepo.GetProductionNumber(),HttpContext.Current.User.Identity.Name)</span></h3>
+<h4>Изделие: <span style="color: #3019FF">@ViewBag.Izd</span> Кол-во дней на маршруте: <span style="color: #3019FF">@ViewBag.OnRoute</span></h4>
+@Html.TrackThisBatchScript(FoxRepo.GetProductionNumber(),HttpContext.Current.User.Identity.Name)
+
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>№ операции</th>
+            <th>Операция</th>
+            <th>Оборудование</th>
+            <th>Дата запуска</th>
+            <th>Время запуска</th>
+            <th>Дата завершения</th>
+            <th>Время завершения</th>
+            <th>Кол-во пластин</th>
+            <th>Брак</th>
+            <th>Оператор</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (IEnumerable<PartInfo>)ViewBag.result)
+        {
+            <tr>
+                <td>@item.Nop</td>
+                <td>@item.Naop</td>
+                <td>@item.SNaobor</td>
+                <td>@item.Dath</td>
+                <td>@item.Timh</td>
+                <td>@item.Dato</td>
+                <td>@item.Timo</td>
+                <td>@item.Kpls</td>
+                <td> @if (item.Brak == "0")
+                     {
+                         @null;
+                     }
+                     else
+                     {
+                         @Ajax.ActionLink(item.Brak, "GetBrak", null, new AjaxOptions { Url = Url.Action("GetBrak", new { nop = item.Nop, nprt = ViewBag.Nprt }), OnSuccess = "GetBrak('" + @item.Nop + "')", UpdateTargetId = "TableBody", InsertionMode = InsertionMode.Replace }, new { style = "color:#3019FF" })
+                     }
+                 </td >
+                <td>@item.Fio</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    function GetBrak(nop) {
+        $('#BrakNop').replaceWith("<p>Номер операции: "+nop+"</p>");
+        $('#myModal').modal({
+            keyboard: true
+        });
+        
+    }
+
+</script>
+
+<div class="modal" id="myModal" style="display: none">
+  <div class="modal-header">
+    <h3>Данные по браку изделия @ViewBag.Izd</h3>
+  </div>
+  <div class="modal-body">
+      <p id="BrakNop"></p>
+      <table class="table table-bordered table-condensed">
+          <thead>
+              <tr>
+                  <th>Номер пластины</th>
+                  <th>Причина брака</th>
+              </tr>
+          </thead>
+          <tbody id="TableBody">
+          </tbody>
+      </table>
+  </div>
+  <div class="modal-footer">
+    <button class="close" data-dismiss="modal">Закрыть</button>
+  </div>
+</div>

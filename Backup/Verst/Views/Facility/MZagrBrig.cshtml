@@ -1,0 +1,85 @@
+﻿@using Verst.Models
+
+@{
+    ViewBag.Title = "Загрузка по месяцам";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    DateTime Now = DateTime.Now.ToUniversalTime();
+}
+
+
+@Html.Hidden("PageTitle", "Загрузка по месяцам")
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/lighttable.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+    var Month, Year, monthCounter, yearCounter;
+    //var url, $objKpr, $objNop;
+    $(document).ready(function () {
+        var fullDate = new Date();
+        Month = fullDate.getMonth();
+        Year = fullDate.getFullYear();
+        monthCounter = Month;
+        yearCounter = Year;
+        $('input[type=button]').eq(1).attr('disabled', true);
+    });
+
+
+
+    function GetData(month, year) {
+        $.ajax({
+            url: '@Url.Action("MzagrFor")',
+            type: 'GET',
+            data: { Month: (month + 1), Year: year },
+            beforeSend: function () { AjaxBegin(); },
+            success: function (result) {
+                $("#MZagrData").html(result);
+                AjaxSuccessEnd();
+            },
+            error: function () { AjaxError(); }
+        });
+    }
+
+</script>
+
+<div class="row-fluid lighttable" id="MZagrData">
+    <div style="width: 551px;">
+        <table class="table table-bordered table-condensed center" style="table-layout: fixed">
+            <thead>
+                <tr>
+                    <th style="width: 119px">Бригада</th>
+                 
+                    <th style="width: 129px">Сдано пластин</th>
+                   <th style="width: 139px">Ремонт в часах</th>
+                    <th style="width: 159px">Коэф. раб. оборудования</th>
+            </thead>
+        </table>
+        </div>
+    <div style="width: 569px;height: 450px; float: left;margin-top: -21px" class="scrollable">
+        <table class="table table-bordered table-condensed center" style="table-layout: fixed;width: 551px">
+            <tbody>
+                @foreach (var item in (IEnumerable<LoadMth>)ViewBag.result)
+                {
+                    <tr>
+                        <td style="width: 119px">@Ajax.ActionLink(item.Kuch, "MZagrBrigNumb", "Facility", new { Numb = item.Numb }, new AjaxOptions() { UpdateTargetId = "Numb" }, new { Class = "table-focus-color" }) </td>
+                   
+                        <td style="width: 129px">@item.Kpls</td>
+                        <td style="width: 139px">@item.RepH                         
+                        </td>
+                        <td style="width: 159px">@item.KrObr</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+          <div class="span3"  style="margin-top: -42px;margin-left: 15px" id="Numb">
+            </div>
+        
+   @* else
+    {
+            <h2>Нету данных для отображения!!!</h2>
+    }
+    }*@
+</div>

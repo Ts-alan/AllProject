@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Verst.Models.LdPlot>
+
+@{
+    Layout = null;
+    var jdata = Html.Raw(Json.Encode(Model));
+}
+
+<script type="text/javascript">
+    var prevkpr, prevnop;
+    var Month, Year, monthCounter, yearCounter;
+    var monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+    var data = [], labels = [];
+    var jsonR1 = $.parseJSON('@jdata');
+
+
+    function PlotFirstChart() {
+        $.each(jsonR1, function (i, el) {
+            labels.push(el.Ust);
+            data.push(el.Kpls);
+        });
+    }
+
+    $(document).ready(function () {
+        PlotFirstChart();
+
+        var plot = $.jqplot('LoadDynamicsDiagrMonth', [data], {
+            animate: true,
+            animateReplot: true,
+            seriesDefaults: {
+                label: "Брак",
+                renderer: $.jqplot.BarRenderer,
+                pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                shadowAngle: 135,
+                rendererOptions: {
+                    barDirection: 'horizontal',
+                    highlightMouseDown: true
+                }
+            },
+            axes: {
+                yaxis: {
+                    label: "Установки",
+                    ticks: labels,
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                }
+            }
+        });
+
+    });
+   
+
+</script>

@@ -1,0 +1,105 @@
+﻿@using MvcApplication.Models
+@model IEnumerable<Verst.Models.DefectsDistributionPrib>
+           
+@{
+    ViewBag.Title = "Брак за месяц";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    string prN = FoxRepo.GetProductionNumber();
+}
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+@Html.Hidden("PageTitle", "Брак за месяц")
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+    var $objKpr, $objNfl;
+    $(document).ready(function () {
+        
+        $('.DefectsDistr').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+
+        });
+        $('.DefectsDistrOperations').live("click", function () {
+            if (typeof $objNfl != 'undefined') {
+                $objNfl.closest('tr').css("background-color", "white");
+            }
+            $objNfl = $(this);
+            $objNfl.closest('tr').css("background", "#ADDEFF");
+
+        });
+    });
+    $('#SideMenu').show();
+    function load(n) {
+        for (var i = n; i <= 4; i++) {
+            $("#Otch_Defects_Data" + i).html("");
+        }
+        $("#Otch_Defects_Data" + n).addClass("loader1");
+    }
+    function Success(n, data) {
+        console.log(data);
+        console.log(n);
+        if (n == 2)
+          
+            $("#re").html(" по прибору <span class='font' id='re'> " + data + "</span>");
+        
+        $("#Otch_Defects_Data"+n).removeClass("loader1");
+    }  
+</script>
+
+@if (ViewBag.task != "DefectsDistrFor2Plant")
+{
+    <h4>Брак Производства №@MvcApplication.Models.FoxRepo.GetProductionNumber()</h4>
+}
+else
+{
+    <h4>Брак Производства №2</h4>
+}
+   
+<div class="container-fluid lighttable center">
+<div style="float:left;margin-top: 10px">
+        <div style="width: 162px;height: 41px" >
+            <table class="table table-bordered table-condensed" style="table-layout:fixed;">
+                <thead>
+                    <tr>
+                        <th style="width: 32px">Код</th>
+                        <th style="width: 94px">Наименование прибора</th>
+                        <th style="width: 32px">Брак</th>
+                    </tr>
+                </thead>
+            </table> 
+        </div>        
+        <div class="scrollable" style="width: 179px;;height: 400px"> 
+            <table class="table table-bordered table-condensed"style="table-layout:fixed;width:162px; ">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr id="@item.Kpr">
+                        <td style="width: 32px">@item.Kpr</td>
+                        <td style="width: 94px">@item.Napr</td>
+                        @if (ViewBag.task != "DefectsDistrFor2Plant")
+                        {
+                            <td style="width: 32px">@Ajax.ActionLink(item.Nzp.ToString(), "DefectsDistrOperations", new {kpr = item.Kpr}, new AjaxOptions {UpdateTargetId = "Otch_Defects_Data2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "Success(2,'" + @item.Napr + "')", OnComplete = "LightUpKpr('" + @item.Kpr + "')", OnFailure = "AjaxError"}, new {@class = "DefectsDistr"})</td>
+                        }
+                        else
+                        {
+                           <td style="width: 32px">@Ajax.ActionLink(item.Nzp.ToString(), "DefectsDistrOperationsFor2Plant", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Otch_Defects_Data2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "Success(2,'" + @item.Napr + "')", OnComplete = "LightUpKpr('" + @item.Kpr + "')", OnFailure = "AjaxError" }, new { @class = "DefectsDistr" })</td> 
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="Otch_Defects_Data2"  class="Print-Content lighttable" style="float: left;height:300px;  margin-left: 20px;margin-top: 10px; width: 280px;">
+</div>
+
+<div id="Otch_Defects_Data3" class="Print-Content lighttable" style="width: 410px;height:300px; margin-top: 10px;float: left;">
+</div>
+</div>
+
+

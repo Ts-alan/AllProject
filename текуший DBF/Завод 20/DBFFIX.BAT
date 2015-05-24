@@ -1,0 +1,1 @@
+DBFFIX.EXE *.dbf /a 

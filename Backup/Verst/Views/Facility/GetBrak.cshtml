@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Verst.Models.Defects>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.Npls</td>
+        <td>@item.Naprb</td>
+    </tr>
+}

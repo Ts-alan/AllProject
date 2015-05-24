@@ -1,0 +1,9 @@
+﻿@model Verst.Models.PrtToSearch
+
+@{
+    Layout = null;
+    ViewBag.Title = "PrtSearchBag";
+}
+
+ @Html.ValidationSummary(true, "Не удалось выполнить поиск. Исправте ошибки!")
+ @Html.ValidationMessageFor(model => model.Nprt)

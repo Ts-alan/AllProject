@@ -1,0 +1,14 @@
+2012/11/09-08:30:44.113 e3c Recovering log #124
+2012/11/09-08:30:44.113 e3c Level-0 table #126: started
+2012/11/09-08:30:44.144 e3c Level-0 table #126: 4644 bytes OK
+2012/11/09-08:30:44.196 e3c Delete type=0 #124
+2012/11/09-08:30:44.197 e3c Delete type=3 #122
+2012/11/09-08:30:44.198 b08 Compacting 4@0 + 1@1 files
+2012/11/09-08:30:44.485 b08 Generated table #128: 522 keys, 201975 bytes
+2012/11/09-08:30:44.485 b08 Compacted 4@0 + 1@1 files => 201975 bytes
+2012/11/09-08:30:44.503 b08 Delete type=2 #115
+2012/11/09-08:30:44.503 b08 Delete type=2 #117
+2012/11/09-08:30:44.504 b08 Delete type=2 #120
+2012/11/09-08:30:44.505 b08 Delete type=2 #123
+2012/11/09-08:30:44.505 b08 Delete type=2 #126
+2012/11/09-08:30:44.506 b08 compacted to: files[ 0 1 0 0 0 0 0 ]

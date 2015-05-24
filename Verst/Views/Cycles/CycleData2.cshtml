@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+
+<p>@ViewBag.m2</p>
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Код прибора</th>
+            <th>Наименование прибора</th>
+            <th>Кол-во годных пластин</th>
+            <th>Кол-во брака</th>
+            <th>% выхода годных</th>
+            <th>Нач. операция</th>
+            <th>Наим-ние нач.опер.</th>
+            <th>Кон. операция</th>
+            <th>Наим-ние кон.опер.</th>
+            <th>Произв.цикл до ф/к(в днях)</th>
+            <th>Плановый произв. цикл</th>
+            <th>Полный произв. цикл</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Verst.Models.PrCode item in ViewBag.m1)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x=>item.Kpr)</td>
+                <td>@Html.DisplayFor(x => item.Napr)</td>
+                <td>@Html.DisplayFor(x => item.Kpls)</td>
+                <td>@Html.DisplayFor(x => item.Brk)</td>
+                <td>@Html.DisplayFor(x => item.Proc)</td>
+                <td>@Html.DisplayFor(x => item.Nop1)</td>
+                <td>@Html.DisplayFor(x => item.NachOpr)</td>
+                <td>@Html.DisplayFor(x => item.Nop2)</td>
+                <td>@Html.DisplayFor(x => item.KonOpr)</td>
+                <td>@Html.DisplayFor(x => item.PrCycl)</td>
+                <td>@Html.DisplayFor(x => item.PlCycl)</td>
+                <td>@Html.DisplayFor(x => item.FCycl)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

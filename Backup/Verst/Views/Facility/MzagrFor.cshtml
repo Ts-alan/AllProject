@@ -1,0 +1,78 @@
+﻿@using Verst.Models
+
+@{
+    Layout = null;
+}
+    <div style="width: 608px;">
+        <table class="table table-bordered table-condensed" style="table-layout: fixed">
+            <thead>
+                <tr>
+                    <th style="width: 85px">Участок</th>
+                    <th style="width: 85px">Оборудование</th>
+                    <th style="width: 85px">Количество пластин</th>
+                    <th style="width: 85px">Брак</th>
+                    <th style="width: 85px">Количество партий</th>
+                    <th style="width: 85px">Ремонт в часах</th>
+                    <th style="width: 90px">Коэф. раб. оборудования</th>
+                </tr>
+            </thead>
+        </table>
+        </div>
+    <div style="width: 625px;height: 450px; float: left;margin-top: -21px" class="scrollable">
+        <table class="table table-bordered table-condensed" style="table-layout: fixed;width: 608px">
+            <tbody>
+                @foreach (var item in (IEnumerable<LoadMth>)ViewBag.result)
+                {
+                    <tr>
+                        <td style="width: 85px">@item.Kuch</td>
+                        <td style="width: 85px">@item.Nobr</td>
+                        <td style="width: 85px">@item.Kpls</td>
+                        <td style="width: 85px">@item.Brk</td>
+                        <td style="width: 85px">@item.Nprt</td>
+                        <td style="width: 85px">@if(item.RepH != "0,00")
+                            {
+                                @Ajax.ActionLink(item.RepH, "ReasonsByUst", new {Nobr = item.Nobr}, new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ReasonsContainer"})
+                            }
+                            else
+                            {
+                                @item.RepH
+                            }
+                        </td>
+                        <td style="width: 90px">@item.KrObr</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @{
+        if ((IEnumerable<Reasons>) ViewBag.result2 != null)
+        {
+            <div class="span4" id="ReasonsContainer">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Причина</th>
+                            <th>Кол-во отказов</th>
+                            <th>Часы</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var it in (IEnumerable<Reasons>)ViewBag.result2)
+                        {
+                            <tr>
+                                <td>@it.Napr</td>
+                                <td>@it.SumN</td>
+                                <td>@it.Hrs</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <h5>Коэфициент работы оборудования по заводу =@ViewBag.reas</h5>
+            </div>
+        }
+   @* else
+    {
+            <h2>Нету данных для отображения!!!</h2>
+    }*@
+    }
+

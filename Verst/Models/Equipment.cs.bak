@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using MvcApplication.Models.CrystalTableAdapters;
+
+namespace MvcApplication.Models
+{
+    /// <summary>
+    /// Представлякт собой оборудование и информацию по нему
+    /// </summary>
+    public class Equipment
+    {
+        public string kgt { get; set; }
+        public string kus { get; set; }
+
+        public Equipment() { _nuf = "empty"; }
+        public Equipment(Crystal.astobRow eq):this() {
+            equipment = eq;
+            kgt = eq.kgt;
+            kus = eq.kus;
+        }
+
+        private Crystal.astobRow _equipment;
+        
+        /// <summary>
+        /// Информация из ASTOB
+        /// </summary>
+        public Crystal.astobRow equipment {
+            get
+            {
+                if (_equipment==null)
+                    _equipment = FoxRepo.GetTable<Crystal.astobRow>().Single(a => a.kgt == kgt && a.kus == kus);
+                return _equipment;
+            }
+            set { _equipment = value; }
+        }
+
+
+        private IEnumerable<Crystal.mparttRow> GetParts()
+        {
+            
+            return (from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                    where mpartt.kgt == kgt /*&& mpartt.kus == kus*/
+                    select mpartt);
+        }
+
+
+        private string _nuf;
+        public string nuf {
+            get 
+            { 
+                if (_nuf.Equals("empty"))
+                {
+                    var t = FoxRepo.GetTable<Crystal.assuflRow>().SingleOrDefault(a => a.kgt == kgt && a.kus == kus);
+                    _nuf = t == null ? string.Empty : t.nuf;
+                }
+                return _nuf;
+            }
+            set { _nuf = value; }
+        }
+
+
+        /// <summary>
+        /// Партии, которые уже прошли через оборудование
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.mprxopRow> ProcessedParts()
+        {
+            return (from mprxop in FoxRepo.GetTable<Crystal.mprxopRow>()
+                    where mprxop.kgt == kgt && mprxop.kus == kus
+                    select mprxop);
+        }
+
+        /// <summary>
+        /// Пластины, забракованные на данном оборудовании
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.mpartnRow> DefectedPlates() {
+             return (from mpartn in FoxRepo.GetTable<Crystal.mpartnRow>()
+                    where mpartn.kgt == kgt && mpartn.kus == kus
+                    select mpartn);
+        }
+
+        
+        /// <summary>
+        /// Список запущенных в работу партий
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.mparttRow> GetStartedParts() { 
+            return (from mpartt in GetParts()
+                    where !mpartt.dath.isNullDate() && mpartt.kus == kus
+                    select mpartt);
+        }
+
+        /// <summary>
+        /// Список ожидаюших запуска в работу партий
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.mparttRow> GetWaitingParts()
+        {
+
+            //var r1 = from as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+            //         join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+            //            on as_wop.kop equals astmr.kop
+            //         select new { as_wop.kgt, astmr.nop };
+                        
+            return (from mpartt in GetParts()
+                    join astmr in FoxRepo.GetTable<Crystal.astmrRow>()
+                        on new { kmk = mpartt.kmk, nop = mpartt.nop } equals new { kmk = astmr.kmk, nop = astmr.nop }
+                    join as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+                        on new { kgt = mpartt.kgt, kop = astmr.kop } equals new { kgt = as_wop.kgt, kop = as_wop.kop }
+                    where /*as_wop.kus == kus &&*/ !mpartt.dato.isNullDate()
+                        && ((nuf.Length == 0) || (nuf == mpartt.nprt.Substring(0, 2))) 
+                        && as_wop.kus == kus
+                        //&& r1.Any(a=> a.kgt == mpartt.kgt && a.nop == mpartt.nop)  
+                    select mpartt);
+        }
+
+        /// <summary>
+        /// История простоев оборудования
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Crystal.asmbnRow> GetDowntimes() {
+            return (from asmbn in FoxRepo.GetTable<Crystal.asmbnRow>()
+                        where asmbn.kgt == kgt && asmbn.kus == kus
+                        select asmbn);
+        }
+
+        /// <summary>
+        /// Партии на подходе к оборудованию 
+        /// </summary>
+        /// <param name="ops">На сколько операций смотреть</param>
+        /// <returns></returns>
+        public IEnumerable<BatchNear> GetNearParts(int ops = 10)
+        {
+            var t_astmr = FoxRepo.GetTable<Crystal.astmrRow>();
+
+            //var res = from as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+            //          where
+            //            (as_wop.kgt == kgt && as_wop.kus == kus)
+            //          join astmr in t_astmr
+            //            on as_wop.kop equals astmr.kop
+            //          join mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+            //            on new { astmr.kmk } equals new { mpartt.kmk }
+
+            //          where
+            //             int.Parse(mpartt.nop) < int.Parse(astmr.nop)
+            //            && ((nuf.Length == 0) || (nuf == mpartt.nprt.Substring(0, 2)))
+            //          select new BatchNear(mpartt)
+            //          {
+            //              distance = t_astmr.Count(a => a.kmk == mpartt.kmk && int.Parse(a.nop) > int.Parse(mpartt.nop) && int.Parse(a.nop) <= int.Parse(astmr.nop)),
+            //              nop = astmr.nop
+            //          }; 
+
+
+
+            var res = from mpartt in FoxRepo.GetTable<Crystal.mparttRow>()
+                      join astmr in t_astmr
+                        on mpartt.kmk equals astmr.kmk
+                      join as_wop in FoxRepo.GetTable<Crystal.as_wopRow>()
+                        on astmr.kop equals as_wop.kop
+
+                      //join astmr in t1 on mpartt.kmk equals astmr.kmk
+
+                      where
+                        (as_wop.kgt == kgt && as_wop.kus == kus)
+                        && int.Parse(mpartt.nop) < int.Parse(astmr.nop)
+                        && ((nuf.Length == 0) || (nuf == mpartt.nprt.Substring(0, 2)))
+                      select new BatchNear(mpartt)
+                      {
+                          distance = t_astmr.Count(a => a.kmk == mpartt.kmk && int.Parse(a.nop) > int.Parse(mpartt.nop) && int.Parse(a.nop) <= int.Parse(astmr.nop)),
+                          nop = astmr.nop
+                      }; 
+                      
+            return (from batchNear in res
+                    where batchNear.distance <= ops
+                    select batchNear);
+        }
+
+        public Area GetArea() { return new Area() { kuch = equipment.kuch }; }
+    }
+
+
+}

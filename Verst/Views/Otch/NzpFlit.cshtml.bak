@@ -1,0 +1,67 @@
+﻿@using Verst.Models
+
+@{
+    ViewBag.Title = "Нзп по приборам";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    function GetPrib(data) {
+        $("h1").replaceWith("<h1>НЗП по фотолитографии. Прибор:" + data + "</h1>");
+        $("#Prib_Table3_Container").hide();
+
+        history.pushState(null, null, this.href);
+    }
+</script>
+
+<h1>НЗП по фотолитографии</h1>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="List noprint">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Наименование прибора</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<NzpFLitList>)ViewBag.FLitList)
+                    {
+                        <tr>
+                            <td>@item.Kpr</td>
+                            <td>@Ajax.ActionLink(item.Napr, "GetNzpFLit", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Fl_table_2", InsertionMode = InsertionMode.Replace, OnSuccess = ""})</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    <div id="Flit_Table2" class="span8">
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Номер фотолитографии</th>
+                    <th>Код операции</th>
+                    <th>Наименование тех операции</th>
+                    <th>Кол-во партий</th>
+                    <th>НЗП</th>
+                </tr>
+            </thead>
+            <tbody id="Fl_table_2">
+            </tbody>
+        </table>
+        
+
+        <div class="row-fluid" id="Prib_Table3_Container">
+
+            <div id="Flit_Table3" class="span8">
+        
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Verst.Models
+{
+    public class Role
+    {
+        public int RoleId;
+        public string RoleName;
+    }
+
+    public class UserRole
+    {
+        public int RoleId;
+        public int UserId;
+    }
+
+    public class User
+    {
+        public int UserId;
+        public string Username;
+    }
+
+    public class EditUser
+    {
+        public int UserId;
+        public string Username;
+        [MinLength(5)]
+        public string Password;
+    }
+
+    public class LogOn
+    {
+        [Required]
+        [Display(Name = "Имя пользователя")]
+        public string Login { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Пароль")]
+        public string Passw { get; set; }
+    }
+}

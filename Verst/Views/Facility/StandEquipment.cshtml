@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Verst.Models.StandEquipment>
+
+@{
+    ViewBag.Title = "StandEquipment";
+    Layout = null;
+    
+}
+@Html.Hidden("PageTitle", "Простой оборудования")
+<h2>Простой оборудования</h2>
+<table class="table table-bordered table-condensed center" style="width: 90%">
+    <thead>
+        <tr>
+            <th>Коридор</th>
+            <th>Участок</th>
+            <th>Наименование оборудования</th>
+            <th>Дата/Время начала простоя</th>
+            <th>Ф.И.О оператора</th>
+            <th>Часы простоя</th>
+            <th>Часы простоя за месяц</th>
+            <th>Количество простоев</th>
+            <th>Коэфф. раб. оборудования</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var item in Model)
+         {
+             <tr>
+                 <td>@item.Nakor </td>
+                 <td>@item.Nauch </td>
+                 <td>@item.Snaobor </td>
+                 <td>@item.Dnp/@item.Tnp </td>
+                 <td>@item.Fio </td>
+                 <td>@item.StandHour </td>
+                 <td>@item.StandHourMount </td>
+                 <td>@Ajax.ActionLink(item.StandCount, "OutputStand",new {kgt=item.Kgt,kus=item.Kus},new AjaxOptions{UpdateTargetId="TableBody" , OnSuccess="GetTable()"})</td>
+                 <td>@item.KrObr </td>
+             </tr>
+         }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    function GetTable() {
+        $('#myModal').modal({
+            keyboard: true
+        });
+    }; 
+
+</script>
+<div class="modal  " id="myModal" style="display: none;  ">
+  
+      <div class="modal-header">
+       
+        <h4 class="modal-title" id="myModalLabel">Наименование простоя</h4>
+      </div>
+      <div class="modal-body" id="TableBody" style="height: 250px">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+
+</div>

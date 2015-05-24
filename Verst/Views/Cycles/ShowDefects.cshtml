@@ -1,0 +1,37 @@
+﻿@using MvcApplication.Models
+@using Verst.Models
+@model IEnumerable<Verst.Models.CyclesDefectsInfo>
+
+@{
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    string prodN = FoxRepo.GetProductionNumber();
+    string userName = HttpContext.Current.User.Identity.Name;
+}
+@Html.Hidden("PageTitle", "Раскрытие брака")
+
+
+
+<h3 class="font" >Просмотр брака по прибору: @Model.First().Napr</h3>
+<table class="table table-bordered table-condensed center">
+    <thead>
+        <tr>
+            <th>Номер партии</th>
+            <th>Номер операции</th>
+            <th>Кол-во пластин</th>
+            <th>Дата брака</th>
+            <th>Ф.И.О.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nprt</td>
+                <td>@item.Nop</td>
+                <td>@item.Kpls</td>
+                <td>@item.Datbr.Substring(0,10) @item.Timtbr.Substring(0,2):@item.Timtbr.Substring(1,2) </td>
+                <td>@item.Fio</td>
+            </tr>
+        }
+    </tbody>
+</table>

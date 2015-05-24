@@ -1,0 +1,39 @@
+﻿@using Verst.Models
+@model IEnumerable<Verst.Models.OnOperation>
+
+@{
+    Layout = null;
+}
+
+<h2>На выполнении</h2>
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Партия</th>
+            <th>Код изделия</th>
+            <th>Изделие</th>
+            <th>Дата формирования</th>
+            <th>Код операции</th>
+            <th>Операция</th>
+            <th>Дата запуска</th>
+            <th>Нзп</th>
+            <th>Оператор</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(@item.Nprt, "PartInfo","Facility" ,new { Nprt = item.Nprt }, null)</td>
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                <td>@item.Dath</td>
+                <td>@item.Nop</td>
+                <td>@item.Naop</td>
+                <td>@item.Dato</td>
+                <td>@item.Kpls</td>
+                <td>@item.Fio</td>
+            </tr>
+        }
+    </tbody>
+</table>

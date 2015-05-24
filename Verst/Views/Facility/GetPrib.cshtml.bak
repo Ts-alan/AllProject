@@ -1,0 +1,32 @@
+﻿@using Verst.Models
+@model System.Collections.Generic.IEnumerable<Verst.Models.Approaching>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Партия</th>
+            <th>Код изделия</th>
+            <th>Изделие</th>
+            <th>С операции</th>
+            <th>На операцию</th>
+            <th>Незавершёнка</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(@item.Nprt, "PartInfo","Facility", new { Nprt = item.Nprt}, null)</td>
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                <td>@item.From</td>
+                <td>@item.To</td>
+                <td>@item.Kpls</td>
+            </tr>
+        }
+    </tbody>
+</table>

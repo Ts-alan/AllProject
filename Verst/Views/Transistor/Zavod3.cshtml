@@ -1,0 +1,124 @@
+﻿@using Verst.Models
+
+@{
+    ViewBag.Title = "Данные по производству";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    const int rowCount = 10;
+    TempData["Fac"] = ViewBag.PrN;
+}
+
+    <h1>Производство №@ViewBag.PrN</h1>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>НЗП(н.м.)</th>
+                <th>НЗП(н.м.)[Пр№2]</th>
+                <th>Сформировано</th>
+                <th>НЗП(текущее)</th>
+                <th>НЗП(текущее)[Пр№2]</th>
+                <th>Брак</th>
+                <th>Брак[Пр№2]</th>
+                <th>Сдано</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in (IEnumerable<AllNzp>)ViewBag.model1)
+            {
+                <tr>
+                    <td>@item.Nzp</td>
+                    <td>@item.NzpPr2</td>
+                    <td>@item.Sform</td>
+                    <td>@Html.ActionLink(item.NowNzp,"NzpPrib","Otch")</td>
+                    <td>@item.NowNzpPr2</td>
+                    <td>@Html.ActionLink(item.Kpls,"DefectsDistr","Otch")</td>
+                    <td>@item.KplsPr2</td>
+                    <td>@item.Sdo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.tooltips').tooltip({
+                selector: 'a',
+                placement: "top",
+                html: true
+            });
+            $('#SideMenu').show();
+        });
+    </script>
+
+<table class="tooltips table table-bordered table-condensed" style="margin-top: 5px;">
+    <thead>
+        <tr>
+            <th>Корридор</th>
+            <th colspan="@rowCount" style="text-align: center">Оборудование</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in (IEnumerable<ModuleMap>)ViewBag.model2)
+        {
+            int count = item.obor.Count();
+            int cnt = count % rowCount == 0 ? count / rowCount : count / rowCount + 1;
+            int j = 0;
+            for (int i = 0; i < cnt; i++)
+            {
+                <tr>
+                    @if (i == 0)
+                    {
+                        <td style="width: 9%" rowspan="@cnt" align="center">@item.Nakor</td>
+                    }
+                    @for (int k = j; k < j + rowCount; k++)
+                    {
+                        string s = k < count ? item.obor.ElementAt(k).astob_data.snaobor : "";
+                        string divStyle = "";
+                        if (k < count)
+                        {
+                            switch (item.obor.ElementAt(k).astob_data.ks)
+                            {
+                                case "z":
+                                    divStyle = "InWork";
+                                    break;
+                                case "r":
+                                    divStyle = "InRepair";
+                                    break;
+                               case "p":
+                                    if (item.obor.ElementAt(k).Wait > 0 && item.obor.ElementAt(k).Nzp<=0)
+                                    {
+                                        divStyle = "InRestWithWork";
+                                    }
+                                    else
+                                    {
+                                        divStyle = "InRest";
+                                    }
+                                    break;
+                              default: divStyle = "";
+                                    break;
+                            }
+                        }
+
+                        <td align="center" style="width: 9%">
+                            @if (s != "")
+                            {
+                                <div class="stateDiv @divStyle"></div>
+                                @Html.ActionLink(item.obor.ElementAt(k).astob_data.snaobor, "Details", "Facility", new
+                                    {
+                                        KUS = item.obor.ElementAt(k).astob_data.kus,
+                                        KGT = (item.obor.ElementAt(k).astob_data.kgt)
+                                    }, new
+                                        {
+                                            title = "НЗП по установке: " + item.obor.ElementAt(k).Nzp.ToString() 
+                                            +"<br>"+ " Ждут: " + item.obor.ElementAt(k).Wait.ToString()
+                                        });
+                            }
+                        </td>
+                    }
+                </tr>
+                j = j + rowCount;
+            }
+        }
+    </tbody>
+</table>

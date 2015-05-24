@@ -1,0 +1,36 @@
+﻿@using MvcApplication.Models
+@using Verst.Models
+@model IEnumerable<Verst.Models.cycle_period>
+
+@{
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    string prodN = FoxRepo.GetProductionNumber();
+    string userName = HttpContext.Current.User.Identity.Name;
+ 
+}
+@Html.Hidden("PageTitle", "Раскрытие годных")
+<h3 style="color: blue;font-size: 22.5px">Просмотр годных партий прибора:@Model.First().Napr </h3>
+
+<table class="table table-bordered table-condensed center">
+    <thead>
+        <tr>
+            <th>Номер партии</th>
+            <th>Кол-во годных</th>
+            <th>Кол-во брака</th>
+            <th>Произв. цикл</th>
+            <th>Полный произв. цикл</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nprt</td>
+                <td>@item.kpls</td>
+                <td>@item.Npls</td>
+                <td>@item.cycle_sredn</td>
+                <td>@item.cycle_pln</td>
+            </tr>
+        }
+    </tbody>
+</table>

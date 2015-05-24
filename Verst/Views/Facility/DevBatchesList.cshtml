@@ -1,0 +1,30 @@
+﻿@using MvcApplication.Models
+@using Verst.Models
+@model IEnumerable<string>
+
+@{
+    Layout = null;
+    string prodN = FoxRepo.GetProductionNumber();
+    string userName = HttpContext.Current.User.Identity.Name;
+}
+
+
+<table class="table table-bordered table-condensed" style="width: 74%;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Номер партии</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (string batch in Model)
+        {
+            <tr>
+                <td style="width:20px">@Html.TrackThisBatch(batch,prodN,userName)</td>
+                <td>@batch</td>
+               
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.TrackThisBatchScript(prodN,userName)
