@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form Name="Должности сотрудников" RecordSet="[SELECT [Сотрудники].[ФИО], [Должности].[Наименование], [Сотрудники].[Адрес], [Сотрудники].[Телефон], [Сотрудники].[Оклад] FROM Должности INNER JOIN Сотрудники ON [Должности].[Код должности] =[Сотрудники].[Должность]; ]" FormType="0">
+	<Var Name="ФИО" Type="109" Top="19" Left="102" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[ФИО]" />
+	</Var>
+	<Var Name="Надпись0" Type="100" Top="19" Left="19" Right="82" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Наименование" Type="109" Top="57" Left="102" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Наименование]" />
+	</Var>
+	<Var Name="Надпись3" Type="100" Top="57" Left="19" Right="82" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Адрес" Type="109" Top="95" Left="102" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Адрес]" />
+	</Var>
+	<Var Name="Надпись6" Type="100" Top="95" Left="19" Right="82" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Телефон" Type="109" Top="134" Left="102" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Телефон]" />
+	</Var>
+	<Var Name="Надпись9" Type="100" Top="134" Left="19" Right="82" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Оклад" Type="109" Top="172" Left="102" Right="493" Bottom="20">
+		<Field SourceType="1" Name="[Оклад]" />
+	</Var>
+	<Var Name="Надпись12" Type="100" Top="172" Left="19" Right="82" Bottom="20">
+		<Field  />
+	</Var>
+	<Var Name="Авто_Заголовок0" Type="100" Top="5" Left="54" Right="455" Bottom="25">
+		<Field  />
+	</Var>
+</Form>
