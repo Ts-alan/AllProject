@@ -1,0 +1,1338 @@
+DBF Structure Fixer v3.2 started on 25/09/2013, 16:45:10.
+Copyright(C) by Igor Kozachenko '96-99
+e-mail: wilde@mail.ru   FIDO-net: 2:5020/1124.18
+WEB Site: http://www.wilde.da.ru  ICQ:36856973
+şAUTOREPAIR MODE
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AASMBN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 2/9/13
+Data allocation pointer.....Correct (513)
+Record length value.....Correct (80 bytes)
+Record count.....Correct (1648 records)
+File length.....Correct (132354 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AASMNB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 12/11/12
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (47 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (257 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AASMNK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 30/1/13
+Data allocation pointer.....Correct (321)
+Record length value.....Correct (55 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (321 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMCOMPL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/9/13
+Data allocation pointer.....Correct (353)
+Record length value.....Correct (77 bytes)
+Record count.....Correct (391 records)
+File length.....Correct (30461 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMKRIST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 30/1/13
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (54 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (289 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMPARAM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (41 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMPARTN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (513)
+Record length value.....Correct (63 bytes)
+Record count.....Correct (3899 records)
+File length.....Correct (246151 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMPARTT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (577)
+Record length value.....Correct (69 bytes)
+Record count.....Correct (900 records)
+File length.....Correct (62678 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMPLAST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/9/13
+Data allocation pointer.....Correct (353)
+Record length value.....Correct (58 bytes)
+Record count.....Correct (21224 records)
+File length.....Correct (1231346 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMPRXOP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (577)
+Record length value.....Correct (76 bytes)
+Record count.....Correct (131429 records)
+File length.....Correct (9989182 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMREGN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (43 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (257 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AMREST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/9/13
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (67 bytes)
+Record count.....Correct (470 records)
+File length.....Correct (31780 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ARJSTAT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (353)
+Record length value.....Correct (134 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (353 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS52F5~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/11/12
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (21730 records)
+File length.....Correct (2760480 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS5405~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/10/12
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (19116 records)
+File length.....Correct (2428502 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS54F5~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 3/12/12
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (22471 records)
+File length.....Correct (2854587 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS5605~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 2/9/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (22974 records)
+File length.....Correct (2918468 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS58F4~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/2/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (16870 records)
+File length.....Correct (2143260 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS5AF4~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/3/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (16626 records)
+File length.....Correct (2112272 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS5CF4~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/4/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (18502 records)
+File length.....Correct (2350524 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASABON.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 3/9/13
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (57 bytes)
+Record count.....Correct (740 records)
+File length.....Correct (42374 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASABON_O.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (57 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (193 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASBRAK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 23/3/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (18 bytes)
+Record count.....Correct (99 records)
+File length.....Correct (1880 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASGRBR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 23/3/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (10 records)
+File length.....Correct (328 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASGROUP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 13/1/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (39 bytes)
+Record count.....Correct (8 records)
+File length.....Correct (410 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASGROUPO.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (39 bytes)
+Record count.....Correct (5 records)
+File length.....Correct (293 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASGSM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (14 bytes)
+Record count.....Correct (2 records)
+File length.....Correct (190 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASIBLM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 22/9/13
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (39 bytes)
+Record count.....Correct (54112 records)
+File length.....Correct (2110594 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKED.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (26 bytes)
+Record count.....Correct (17 records)
+File length.....Correct (636 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKGED.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (9 records)
+File length.....Correct (305 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKOR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (20 records)
+File length.....Correct (558 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKPMKT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (17 bytes)
+Record count.....Correct (3 records)
+File length.....Correct (149 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKPRB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (22 bytes)
+Record count.....Correct (433 records)
+File length.....Correct (9688 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKPROB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 13/7/12
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (25 bytes)
+Record count.....Correct (95 records)
+File length.....Correct (2505 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKRM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (13 bytes)
+Record count.....Correct (768 records)
+File length.....Correct (10114 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKS.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (22 bytes)
+Record count.....Correct (3 records)
+File length.....Correct (164 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKTOB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (37 records)
+File length.....Correct (949 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKUCH.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (10 records)
+File length.....Correct (328 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASKUCHT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (23 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (97 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMBN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (513)
+Record length value.....Correct (80 bytes)
+Record count.....Bad! (listed: 1094, counted: 1093)
+File length.....Correct (87954 bytes)
+Structure...Correct
+Trying to fix file without header...
+Successfully Completed!
+Source file renamed to ASMBN.bak
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 1; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMKT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 17/9/13
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (61 bytes)
+Record count.....Correct (475 records)
+File length.....Correct (29201 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (46 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (257 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 30/1/13
+Data allocation pointer.....Correct (321)
+Record length value.....Correct (55 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (321 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (21773 records)
+File length.....Correct (2765941 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP0~1.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/8/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (22281 records)
+File length.....Correct (2830457 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP0~2.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 1/7/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (20116 records)
+File length.....Correct (2555502 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP0~3.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 3/6/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (19169 records)
+File length.....Correct (2435233 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP0~4.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 2/5/13
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (18106 records)
+File length.....Correct (2300232 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNP1~4.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 29/12/12
+Data allocation pointer.....Correct (769)
+Record length value.....Correct (127 bytes)
+Record count.....Correct (19716 records)
+File length.....Correct (2504702 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASMNPERR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (481)
+Record length value.....Correct (73 bytes)
+Record count.....Correct (2213 records)
+File length.....Correct (162031 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASOB_NAL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (13 bytes)
+Record count.....Correct (169 records)
+File length.....Correct (2359 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASOB_PR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (8 bytes)
+Record count.....Correct (5871 records)
+File length.....Correct (47098 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASOPGR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (24 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (97 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPARAM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (59 bytes)
+Record count.....Correct (6 records)
+File length.....Correct (484 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPARREG.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (67 bytes)
+Record count.....Correct (71 records)
+File length.....Correct (5015 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPASSW.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (13 bytes)
+Record count.....Correct (447 records)
+File length.....Correct (5909 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPBR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (17 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (129 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPDPK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (28 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPDPL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (32 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPG.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (10 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (129 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (35 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (97 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPPM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (8 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (97 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPRM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (32 bytes)
+Record count.....Correct (26 records)
+File length.....Correct (994 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPROB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (8 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (129 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPROC.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (12 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (161 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASPRS.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (22 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASRES.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (16 bytes)
+Record count.....Correct (98 records)
+File length.....Correct (1762 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSBRN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (33 bytes)
+Record count.....Correct (9 records)
+File length.....Correct (459 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSCP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 22/9/13
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (57 bytes)
+Record count.....Correct (675 records)
+File length.....Correct (38733 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSOP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (51 bytes)
+Record count.....Correct (502 records)
+File length.....Correct (25828 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSPR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 19/9/13
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (57 bytes)
+Record count.....Correct (674 records)
+File length.....Correct (38612 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSTA.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 14/4/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (55 bytes)
+Record count.....Correct (2 records)
+File length.....Correct (240 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASSUFL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (7 bytes)
+Record count.....Correct (25 records)
+File length.....Correct (305 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTMR.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 22/9/13
+Data allocation pointer.....Correct (385)
+Record length value.....Correct (35 bytes)
+Record count.....Correct (84784 records)
+File length.....Correct (2967826 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTOB.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (321)
+Record length value.....Correct (59 bytes)
+Record count.....Correct (182 records)
+File length.....Correct (11060 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTPARAM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (40 bytes)
+Record count.....Correct (25 records)
+File length.....Correct (1194 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTPARO.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (417)
+Record length value.....Correct (110 bytes)
+Record count.....Correct (19 records)
+File length.....Correct (2508 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTPATH.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (121 bytes)
+Record count.....Correct (8 records)
+File length.....Correct (1130 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTPRM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (385)
+Record length value.....Correct (74 bytes)
+Record count.....Correct (117 records)
+File length.....Correct (9044 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - ASTREGO.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (32 bytes)
+Record count.....Correct (681 records)
+File length.....Correct (22018 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS_MNK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (481)
+Record length value.....Correct (97 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (481 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - AS_WOP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 8/8/13
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (9 bytes)
+Record count.....Correct (4566 records)
+File length.....Correct (41224 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - DISABLE.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (65)
+Record length value.....Correct (2 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (65 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - FOXUSER.DBF
+Header file.....Not found!
+Database type - FoxPro with memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (74 bytes)
+Record count.....Correct (592 records)
+File length.....Correct (44066 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - IDENTUSE.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 22/9/13
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (57 bytes)
+Record count.....Correct (4980 records)
+File length.....Correct (284054 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - JTRANS.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (67 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (289 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - J_BRAK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (385)
+Record length value.....Correct (132 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (385 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MCOMPL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/9/13
+Data allocation pointer.....Correct (353)
+Record length value.....Correct (77 bytes)
+Record count.....Correct (86 records)
+File length.....Correct (6976 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MKRIST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 30/1/13
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (54 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (289 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MNOMER.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (161)
+Record length value.....Correct (18 bytes)
+Record count.....Correct (2500 records)
+File length.....Correct (45162 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MNOMERL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (97)
+Record length value.....Correct (6 bytes)
+Record count.....Correct (26 records)
+File length.....Correct (254 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPARAM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (41 bytes)
+Record count.....Correct (194 records)
+File length.....Correct (8180 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPARTN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (513)
+Record length value.....Correct (63 bytes)
+Record count.....Correct (160 records)
+File length.....Correct (10594 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPARTT.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (577)
+Record length value.....Correct (69 bytes)
+Record count.....Correct (241 records)
+File length.....Correct (17207 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPLAST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (353)
+Record length value.....Correct (58 bytes)
+Record count.....Correct (4277 records)
+File length.....Correct (248420 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPROC.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (30 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (193 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MPRXOP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 25/9/13
+Data allocation pointer.....Correct (577)
+Record length value.....Correct (76 bytes)
+Record count.....Correct (23991 records)
+File length.....Correct (1823894 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MREGN.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (257)
+Record length value.....Correct (43 bytes)
+Record count.....Correct (1710 records)
+File length.....Correct (73788 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MREST.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/9/13
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (67 bytes)
+Record count.....Correct (118 records)
+File length.....Correct (8196 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MZNACH.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (38 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (289 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - MZNAP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (193)
+Record length value.....Correct (33 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (193 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - OBORNAL.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 11/1/11
+Data allocation pointer.....Correct (129)
+Record length value.....Correct (7 bytes)
+Record count.....Correct (190 records)
+File length.....Correct (1460 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - OTKDVZ.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 23/9/13
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (32 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - OTKNZP.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 23/9/13
+Data allocation pointer.....Correct (449)
+Record length value.....Correct (99 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (449 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - PARTIA.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (449)
+Record length value.....Correct (98 bytes)
+Record count.....Correct (97 records)
+File length.....Correct (9956 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - PROM.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (65)
+Record length value.....Correct (11 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (65 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - SPISOK.DBF
+Header file.....Not found!
+Database type - FoxPro with memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (225)
+Record length value.....Correct (59 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (225 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - STR_ASU.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 24/2/11
+Data allocation pointer.....Correct (417)
+Record length value.....Correct (350 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (417 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - TR_BRAK.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 31/10/12
+Data allocation pointer.....Correct (289)
+Record length value.....Correct (67 bytes)
+Record count.....Correct (4 records)
+File length.....Correct (558 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Processing file - _3NL0OQ7.DBF
+Header file.....Not found!
+Database type - FoxBASE+/FoxPro/dBASE III+/dBASE IV without memo
+Date of last change (DD/MM/YY) - 28/11/12
+Data allocation pointer.....Correct (65)
+Record length value.....Correct (18 bytes)
+Record count.....Correct (0 records)
+File length.....Correct (65 bytes)
+Structure...Correct
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Errors - 0; Warnings - 0
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÃFiles processed - 110
+ÃFiles checked - 110
+ÃFiles tried to fix - 1
+ÃTotal errors found - 1
+ÃNo saved headers - 110
+ÃTotal warnings - 0
+ÃUnrecovered files - 0
+ÀWarning! Some work incompleted!
+DBF Structure Fixer v3.2 finished on 25/09/2013, 16:45:12.
