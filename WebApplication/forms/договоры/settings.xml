@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form Name="договоры" RecordSet="[договоры, заключенные сотрудниками]" FormType="0">
+	<Var Name="ФИО" Type="109" Top="19" Left="203" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[ФИО]" />
+	</Var>
+	<Var Name="Надпись0" Type="100" Top="19" Left="19" Right="183" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Должности.Наименование" Type="109" Top="57" Left="203" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Должности.Наименование]" />
+	</Var>
+	<Var Name="Надпись3" Type="100" Top="57" Left="19" Right="183" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Типыответственных.Наименование" Type="109" Top="95" Left="203" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Типы ответственных].Наименовани]" />
+	</Var>
+	<Var Name="Надпись6" Type="100" Top="95" Left="19" Right="183" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Договора.Наименование" Type="109" Top="134" Left="203" Right="493" Bottom="31">
+		<Field SourceType="1" Name="[Договора.Наименование]" />
+	</Var>
+	<Var Name="Надпись9" Type="100" Top="134" Left="19" Right="183" Bottom="31">
+		<Field  />
+	</Var>
+	<Var Name="Датазаключения" Type="109" Top="172" Left="203" Right="493" Bottom="20">
+		<Field SourceType="1" Name="[Дата заключения]" />
+	</Var>
+	<Var Name="Надпись12" Type="100" Top="172" Left="19" Right="183" Bottom="20">
+		<Field  />
+	</Var>
+	<Var Name="Примечание" Type="109" Top="199" Left="203" Right="493" Bottom="42">
+		<Field SourceType="1" Name="[Примечание]" />
+	</Var>
+	<Var Name="Надпись15" Type="100" Top="199" Left="19" Right="183" Bottom="42">
+		<Field  />
+	</Var>
+	<Var Name="Сумма" Type="109" Top="248" Left="203" Right="493" Bottom="20">
+		<Field SourceType="1" Name="[Сумма]" />
+	</Var>
+	<Var Name="Надпись18" Type="100" Top="248" Left="19" Right="183" Bottom="20">
+		<Field  />
+	</Var>
+	<Var Name="Авто_Заголовок0" Type="100" Top="5" Left="54" Right="557" Bottom="25">
+		<Field  />
+	</Var>
+</Form>

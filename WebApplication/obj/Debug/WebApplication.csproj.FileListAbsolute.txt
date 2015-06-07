@@ -1,0 +1,42 @@
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\WebApplication.dll.config
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\WebApplication.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\WebApplication.pdb
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Antlr3.Runtime.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\AspNet.ScriptManager.bootstrap.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\AspNet.ScriptManager.jQuery.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.ScriptManager.WebForms.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.Web.Infrastructure.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Newtonsoft.Json.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\System.Web.Optimization.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\WebGrease.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\System.Web.Optimization.xml
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Antlr3.Runtime.pdb
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Newtonsoft.Json.xml
+D:\Downloads\WebAplication\WebApplication\WebApplication\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\Downloads\WebAplication\WebApplication\WebApplication\obj\Debug\WebApplication.dll
+D:\Downloads\WebAplication\WebApplication\WebApplication\obj\Debug\WebApplication.pdb
+D:\Downloads\WebAplication\WebApplication\WebApplication\obj\Debug\WebApplication.csprojResolveAssemblyReference.cache
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\WebApplication.dll.config
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\WebApplication.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\WebApplication.pdb
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Antlr3.Runtime.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\AspNet.ScriptManager.bootstrap.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\AspNet.ScriptManager.jQuery.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.ScriptManager.WebForms.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.Web.Infrastructure.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Newtonsoft.Json.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\System.Web.Optimization.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\WebGrease.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\System.Web.Optimization.xml
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Antlr3.Runtime.pdb
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Newtonsoft.Json.xml
+D:\job\Антивирус блокада\WebApplication\WebApplication\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\job\Антивирус блокада\WebApplication\WebApplication\obj\Debug\WebApplication.csprojResolveAssemblyReference.cache
+D:\job\Антивирус блокада\WebApplication\WebApplication\obj\Debug\WebApplication.dll
+D:\job\Антивирус блокада\WebApplication\WebApplication\obj\Debug\WebApplication.pdb

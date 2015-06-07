@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form Name="Организация" RecordSet="" FormType="0">
+	<Var Name="Авто_Заголовок0" Type="100" Top="3" Left="13" Right="335" Bottom="47">
+		<Field  />
+	</Var>
+</Form>
