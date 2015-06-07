@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Вы были заблокированы!</title>
+        <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css"/>
+        <link href="@Url.Content("~/Content/Main.css")" rel="stylesheet" type="text/css"/>
+
+    </head>
+    <body style="text-align: center; width: 100%;">
+        <div style="margin-top: 125px;">
+            <h1 style="color: red">Ваша учётная запись была заблокирована!</h1>
+            <p>Для разблокировки учётной записи вам необходимо обратититься к Администратору <b>сайта</b> и назвать вашу учётную запись!</p>
+            <p>Контактный телефон УИТ: 26-01</p>
+            <div>@Html.ActionLink("Назад к странице регистрации","SiteEntry")</div>
+        </div>
+    </body>
+</html>

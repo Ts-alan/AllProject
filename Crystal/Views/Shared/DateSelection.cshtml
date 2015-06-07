@@ -1,0 +1,168 @@
+﻿@using MvcApplication.Models
+@model string
+@{
+    ViewBag.Title = "Анализ движения";
+    Layout = null;
+    DateTime now = DateTime.Now;
+    string[] monthNames = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+    int[] item = new int[4];
+    for (int i = now.Year, j = 0; i >= now.Year - 3 && j < item.Length; i--, j++)
+    {
+        item[j] = i;
+    }
+   
+        
+}
+
+<link href="@Url.Content("~/Content/jquery-ui-1.9.1.custom.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/DatePickerRus.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu", "Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+    var date1, date2, fullDate1 = "", fullDate2 = "", n, IntervalModel, indnumb, numb;
+    var date = new Date();
+
+    $(document).ready(function () {
+        $.datepicker.setDefaults(
+            $.extend($.datepicker.regional['ru'])
+        );
+        $("#@Model.ToString()datepicker").datepicker();
+        $("#@Model.ToString()dat1").datepicker({ changeMonth: true, changeYear: true });
+        $("#@Model.ToString()dat2").datepicker({ changeMonth: true, changeYear: true });
+        $("#@Model.ToString()dat3").datepicker({ changeMonth: true, changeYear: true });
+        $('#@Model.ToString()dat1').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1, '@now.Day'));
+        $('#@Model.ToString()dat2').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1, 01));
+        $('#@Model.ToString()dat3').datepicker("setDate", new Date('@now.Year', '@now.Month' - 1, '@now.Day'));
+            var takem = document.getElementById("Month_change");
+            takem.selectedIndex = '@now.Month' - 1;
+        });
+
+    function DateToMyJson(date) {
+        return date.toDateString();
+    };
+    
+    var @Model = new MyApp();
+
+    function MyApp() {
+      
+        this.bydate = function (el) {
+
+            var sd = $(el).closest('div').find("input:text").datepicker('getDate');
+            var day1 = sd.getDate();
+            var month1 = sd.getMonth();
+            var year1 = sd.getFullYear();
+            date = new Date(year1, month1, day1);
+            this.fullDate1 = DateToMyJson(date);
+            this.fullDate2 = this.fullDate1;
+            this.getInterval("1");
+        }
+
+        this.byinterval = function (el) {
+            var dat1 = $(el).closest('div').find("input:text").eq(0).datepicker('getDate');
+            var day1 = dat1.getDate();
+            var month1 = dat1.getMonth();
+            var year1 = dat1.getFullYear();
+            date = new Date(year1, month1, day1);
+            this.fullDate1 = DateToMyJson(date);
+            var dat2 = $(el).closest('div').find("input:text").eq(1).datepicker('getDate');
+            var day2 = dat2.getDate();
+            var month2 = dat2.getMonth();
+            var year2 = dat2.getFullYear();
+            date = new Date(year2, month2, day2);
+            this.fullDate2 = DateToMyJson(date);
+            this.getInterval("2");
+        }
+
+        this.bymonth = function (el) {
+            var ytake = $(el).closest('div').find("#Year_change1").get(0);
+                var mtake = $(el).closest('div').find("#Month_change").get(0);
+                var year = ytake.options[ytake.selectedIndex].text;
+                var month = mtake.options[mtake.selectedIndex].text;
+                var monthInd =  mtake.selectedIndex;
+                var date = new Date(year, monthInd + 1, 0);
+                var daysInMonth = date.getDate();
+                date = new Date(year, monthInd, 1);
+                this.fullDate1 = DateToMyJson(date)
+                date = new Date(year, monthInd, daysInMonth);
+                this.fullDate2 = DateToMyJson(date)
+                this.getInterval("3");
+        }
+       
+        this.byQuarter = function (el) {
+            var ind = document.getElementById("quarter").selectedIndex; // 0..3
+            // получим границы квартала
+            //var quarterStartDate = Date(year, 3 * ind, 1);
+            //var quarterEndDate = Date(year, 3 * ind + 3, 0);
+            var quarterYear = document.getElementById("quarterYear").value;
+            this.fullDate1 = DateToMyJson(new Date(quarterYear, 3 * ind, 1));
+            this.fullDate2 = DateToMyJson(new Date(quarterYear, 3 * ind + 3, 0));
+
+            this.getInterval("4");
+        }
+
+        this.getInterval = function(numb) {
+            @Html.Log("this");
+            var IntervalModel = { fdate: this.fullDate1, sdate: this.fullDate2, indnumb: numb };
+     
+        @Html.Raw(Model + ".run(IntervalModel)")
+        }
+    }
+       
+    
+</script>
+<div id="21" class="dateMenu">
+    <ul class="nav nav-tabs" style="horiz-align: center" id="Tabs">
+        <li><a id="tt" href="/#@Model.ToString()tab1" data-toggle="tab"  >по дате</a></li>
+        <li><a href="#@Model.ToString()tab2" data-toggle="tab">Интервал</a></li>
+        <li id="ss" class="active"><a href="#@Model.ToString()tab3" data-toggle="tab">за месяц</a></li>
+        <li><a href="/#@Model.ToString()tab4" data-toggle="tab">за квартал</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="@Model.ToString()tab1" class="tab-pane" style="margin-top: 15px;">
+            <span style="color: white">Выберите дату:<input  id="@Model.ToString()dat1" type="text" style="height: 16px; width: 90px;"/>
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="@Html.Raw(Model + ".bydate(this)")" style="margin-left: 5px; margin-bottom: 7px;"/></span>
+        </div>
+        <div id="@Model.ToString()tab2" class="tab-pane" style="margin-top: 15px; ">
+            <span style="color: white">C:<input  id="@Model.ToString()dat2" type="text" style="height: 16px; width: 90px;"/>
+                По:<input  id="@Model.ToString()dat3" type="text" style="height: 16px; width: 90px"/>
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="@Html.Raw(Model + ".byinterval(this)")" style="margin-left: 5px; margin-bottom: 7px;" /></span>
+        </div>
+        <div id="@Model.ToString()tab3" class="tab-pane active" style="margin-top: 15px;">
+            <span>
+                <select id="Month_change">
+                    @foreach (var n in monthNames)
+                    {
+                        <option>@n</option>
+                    }
+                </select>
+                <select id="Year_change1">
+                    @foreach (var n in item)
+                    {
+                        <option>@n</option>
+                    }
+                </select>
+                <input type="submit" id="res" value="Получить данные" class="btn noprint btn-primary" onclick="@Html.Raw(Model + ".bymonth(this)")" style="margin-left: 5px; margin-bottom: 7px;"/>
+            </span>
+        </div>
+        <div id="@Model.ToString()tab4" class="tab-pane" style="margin-top: 15px">
+            <span>
+                <select id="quarter">
+                    <option>Первый квартал</option>
+                    <option>Второй квартал</option>
+                    <option>Третий квартал</option>
+                    <option>Четвертый квартал</option>
+                </select>
+                <select id="quarterYear">
+                    @foreach (var n in item)
+                    {
+                        <option>@n</option>
+                    }
+                </select>
+                <input type="submit" value="Получить данные" class="btn noprint btn-primary" onclick="@Html.Raw(Model + ".byQuarter(this)")" style="margin-left: 5px; margin-bottom: 7px;" />
+            </span>
+        </div>
+    </div>
+</div>
+
+

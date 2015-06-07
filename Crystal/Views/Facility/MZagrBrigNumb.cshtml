@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Crystal.DomainModel.LoadMth>
+@{
+    Layout = null;
+}
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js?version19.11.2013")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.freezetable.js?version19.11.2013")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.tabify.min.js?version19.11.2013")" type="text/javascript"></script>
+
+<div >
+    <table style="width: auto" class="table table-bordered table-condensed  center freez1 ">
+        <colgroup>
+            <col style="width:160px" />
+            <col style="width: 60px" />
+            <col style="width: 60px" />  
+            <col style="width: 90px" />      
+        </colgroup>
+        <thead>
+            <tr>
+                <th >Оборудование</th>
+                <th>Сдано пластин</th>
+                <th>Ремонт в часах</th>
+                <th>Коэф. раб. оборудования</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nobr</td>
+                    <td>@item.Kpls</td>
+                    <td>@item.RepH</td>
+                    <td>@item.KrObr.ToString("F3")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+ $(document).ready(function () {
+        $(".freez1").freezeTable({
+            'height': 300,
+            'autoHeight': false
+   
+    });
+});
+</script>

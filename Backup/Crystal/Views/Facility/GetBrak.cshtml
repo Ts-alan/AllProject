@@ -1,0 +1,36 @@
+﻿@using Crystal.VFPOleDBLogic
+@model IEnumerable<Crystal.DomainModel.BrakInfo>
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>
+                Номер пластины
+            </th>
+            <th>
+                Причина брака
+            </th>
+            <th>
+                Дата брака
+            </th>
+            <th>
+                Оператор
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Npls.ToString().Substring(11,2)
+            </td>
+            <td>@item.Naprb
+            </td>
+            <td>@FoxProExtensions.FullDateTime(item.Datbr, item.Timbr)
+            </td>
+            <td>@item.Fio
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,34 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.loader
+{
+    position: absolute;
+    z-index: 800;
+    background-image: url('/Content/Images/ajax-loader.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width:  80%;
+    height: 80%;
+    
+    background-color: #f8f8ff;
+} 
+
+/*---------------------Состояния оборудования---------------------*/
+.InWork {
+    background-image: url('/Content/Images/work.gif');
+}
+
+.InRepair {
+    background-image: url('/Content/Images/Ремонт.png');
+}
+
+.InRest {
+    background-image: url('/Content/Images/sand_timer.png');
+}
+
+.InRestWithWork {
+    background-image: url('/Content/Images/timer.png');
+}

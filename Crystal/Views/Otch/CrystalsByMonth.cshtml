@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Crystal.DomainModel.Crystals>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Код прибора</th>
+            <th>Прибор</th>
+            <th>Поступило кристалов</th>
+            <th>Годных кристалов</th>
+            <th>% выхода годных</th>
+        </tr>
+    </thead>
+    <tbody id="CrystalsTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                <td>@item.Pkrist</td>
+                <td>@item.Godn</td>
+                <td>@item.ProcVux</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Поступившие кристалы за месяц</h2>
+<table class="table table-bordered table-condensed" style="width: 500px">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Поступило кристалов</th>
+            <th>Годных кристалов</th>
+            <th>% выхода годных</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.proc_godn)
+        {
+            <tr>
+                <td>@item.Fio</td>
+                <td>@item.Pkrist</td>
+                <td>@item.Godn</td>
+                <td>@item.ProcVux</td>
+            </tr>
+        }
+    </tbody>
+</table>

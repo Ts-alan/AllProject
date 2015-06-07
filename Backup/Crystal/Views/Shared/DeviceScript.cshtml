@@ -1,0 +1,18 @@
+﻿<script type="text/javascript">
+    function Device($elem, kpr, prodn) {
+        var url ='@Url.Action("StartDevice","BackEndServices")';
+        if ($elem.hasClass('Tracked')) {
+            url = '@Url.Action("StopDevice","BackEndServices")';
+           
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { prodN: prodn, kpr: kpr },
+            success: function (result) {
+                $elem.closest('span').replaceWith(result); $("[rel=tooltip]").tooltip({ html: true });
+            },
+
+        });
+    }
+ </script>

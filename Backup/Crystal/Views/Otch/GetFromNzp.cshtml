@@ -1,0 +1,76 @@
+﻿@using System.Drawing
+@using Crystal.Models
+@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.NzpBatchInfo>
+@{
+    
+
+    Layout = null;
+    string prodN = ViewBag.prodN;
+    string userName = HttpContext.Current.User.Identity.Name;
+    int userId = ViewBag.userId;
+   
+   }
+<script src="@Url.Content("~/Scripts/Tooltip.js")" type="text/javascript"></script>
+@Html.Partial("Freeztable")
+<div>
+    
+    <table id="getfromnzp" class="table table-bordered table-condensed freeztable" style="width: auto">
+        <colgroup>
+            <col style="width: 22px" />
+            <col style="width: 80px" />
+            <col style="width: 105px" />
+            <col style="width: 70px" />
+            <col style="width: 105px" />
+            <col style="width: 100px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    № партии
+                </th>
+                <th>
+                    Дата и время операции
+                </th>
+                <th>
+                    Кол-во пластин
+                </th>
+                <th>
+                    Кол-во суток на операции
+                </th>
+                <th>
+                    Оператор
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var daysOnNop = item.TimeProc > 3 ? "daysOnNop" : "";
+                <tr class="@daysOnNop">
+                    <td>@Html.TrackThisBatch(item.Nprt, prodN, userId)
+                    </td>
+                    <td>@Html.ActionLink(item.Nprt, "PartInfo", "Facility", new { NPRT = item.Nprt }, new { target = "_blank" })
+                    </td>@*Сдесь условия выборки*@
+                    <td>@Html.DisplayFor(m=> item.Dato)
+                    </td>
+                    <td>@item.Kpls
+                    </td>
+                    <td>@item.TimeProc.ToString()
+                    </td>
+                    <td>@item.Abon
+                    </td>                   
+                </tr>
+             
+            
+            }
+        </tbody>
+    </table>
+    
+</div>
+<label style="display: inline" class="daysOnNop">Простаивающие партии (более 3 суток)</label>
+<div style="width: 540px">
+    Постановка/снятие партии на кантроль по клику на символ
+    <img src='../../Content/images/star_active.png'></img>/<img src='../../Content/images/star_passive.png'></div>

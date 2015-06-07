@@ -1,0 +1,14 @@
+﻿@using MvcApplication.Models
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".freeztable").each(function () {
+            var freez_height = $(this).attr("data-freez-height");
+            $(this).removeClass("freeztable");
+            @Html.Log("freez_height")
+            if (freez_height)
+                $(this).freezeTable({ height: freez_height });
+            else $(this).freezeTable();
+        });
+    }); 
+</script>

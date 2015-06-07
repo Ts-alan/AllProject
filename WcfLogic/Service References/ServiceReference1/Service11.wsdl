@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://MyCompany.com" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://MyCompany.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://MyCompany.com/Imports">
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd0" namespace="http://MyCompany.com" />
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" />
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IData_PartInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:PartInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_PartInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PartInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProductionNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductionNumber" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProductionNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductionNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetMonthStartDate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMonthStartDate" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetMonthStartDate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMonthStartDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_Production_InputMessage">
+    <wsdl:part name="parameters" element="tns:Production" />
+  </wsdl:message>
+  <wsdl:message name="IData_Production_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProductionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NzpPrib_InputMessage">
+    <wsdl:part name="parameters" element="tns:NzpPrib" />
+  </wsdl:message>
+  <wsdl:message name="IData_NzpPrib_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NzpPribResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NZPFor2Plant_InputMessage">
+    <wsdl:part name="parameters" element="tns:NZPFor2Plant" />
+  </wsdl:message>
+  <wsdl:message name="IData_NZPFor2Plant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NZPFor2PlantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNzpPrib_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNzpPrib" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNzpPrib_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNzpPribResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNZPFor2Plant_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNZPFor2Plant" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNZPFor2Plant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNZPFor2PlantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzp_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzp" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzpResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_NzpFlit_InputMessage">
+    <wsdl:part name="parameters" element="tns:NzpFlit" />
+  </wsdl:message>
+  <wsdl:message name="IData_NzpFlit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NzpFlitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNzpFLit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNzpFLit" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetNzpFLit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNzpFLitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProductionSummary_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductionSummary" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProductionSummary_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductionSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzpFlit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzpFlit" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzpFlit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzpFlitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzpFlit2_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzpFlit2" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetFromNzpFlit2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFromNzpFlit2Response" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetCycle_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCycle" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetCycle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCycleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ShowDefects_InputMessage">
+    <wsdl:part name="parameters" element="tns:ShowDefects" />
+  </wsdl:message>
+  <wsdl:message name="IData_ShowDefects_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ShowDefectsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ShowGodn_InputMessage">
+    <wsdl:part name="parameters" element="tns:ShowGodn" />
+  </wsdl:message>
+  <wsdl:message name="IData_ShowGodn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ShowGodnResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetEquipmentLoads_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEquipmentLoads" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetEquipmentLoads_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEquipmentLoadsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribKplsForDay_InputMessage">
+    <wsdl:part name="parameters" element="tns:PribKplsForDay" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribKplsForDay_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PribKplsForDayResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GangPribKplsForDay_InputMessage">
+    <wsdl:part name="parameters" element="tns:GangPribKplsForDay" />
+  </wsdl:message>
+  <wsdl:message name="IData_GangPribKplsForDay_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GangPribKplsForDayResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribKplsForMonth_InputMessage">
+    <wsdl:part name="parameters" element="tns:PribKplsForMonth" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribKplsForMonth_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PribKplsForMonthResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistr_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistr" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistr_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrOperations_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrOperations" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrOperations_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrOperationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrData_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrData" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrFor2Plant_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrFor2Plant" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrFor2Plant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrFor2PlantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrOperationsFor2Plant_InputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrOperationsFor2Plant" />
+  </wsdl:message>
+  <wsdl:message name="IData_DefectsDistrOperationsFor2Plant_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DefectsDistrOperationsFor2PlantResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetEquipmentDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEquipmentDetail" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetEquipmentDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEquipmentDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_SearchRes_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchRes" />
+  </wsdl:message>
+  <wsdl:message name="IData_SearchRes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchResResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_PrtSearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrtSearch" />
+  </wsdl:message>
+  <wsdl:message name="IData_PrtSearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrtSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_Downtimes_InputMessage">
+    <wsdl:part name="parameters" element="tns:Downtimes" />
+  </wsdl:message>
+  <wsdl:message name="IData_Downtimes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DowntimesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetTrackedDevicesDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedDevicesDetail" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetTrackedDevicesDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedDevicesDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetTrackedBatchesDetail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedBatchesDetail" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetTrackedBatchesDetail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedBatchesDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribMonthReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:PribMonthReport" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribMonthReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PribMonthReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDataBySelectedPrib_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataBySelectedPrib" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDataBySelectedPrib_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataBySelectedPribResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribMonthRepordBrak_InputMessage">
+    <wsdl:part name="parameters" element="tns:PribMonthRepordBrak" />
+  </wsdl:message>
+  <wsdl:message name="IData_PribMonthRepordBrak_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PribMonthRepordBrakResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetPrib_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPrib" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetPrib_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPribResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetAnalysis_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAnalysis" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetAnalysis_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAnalysisResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetAnalysisDiag_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAnalysisDiag" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetAnalysisDiag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAnalysisDiagResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetParetoData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParetoData" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetParetoData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParetoDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetParetoDiag_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParetoDiag" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetParetoDiag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParetoDiagResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IData">
+    <wsdl:operation name="PartInfo">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PartInfo" message="tns:IData_PartInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PartInfoResponse" message="tns:IData_PartInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductionNumber">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetProductionNumber" message="tns:IData_GetProductionNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetProductionNumberResponse" message="tns:IData_GetProductionNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMonthStartDate">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetMonthStartDate" message="tns:IData_GetMonthStartDate_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetMonthStartDateResponse" message="tns:IData_GetMonthStartDate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Production">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/Production" message="tns:IData_Production_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/ProductionResponse" message="tns:IData_Production_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NzpPrib">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/NzpPrib" message="tns:IData_NzpPrib_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/NzpPribResponse" message="tns:IData_NzpPrib_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NZPFor2Plant">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/NZPFor2Plant" message="tns:IData_NZPFor2Plant_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/NZPFor2PlantResponse" message="tns:IData_NZPFor2Plant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNzpPrib">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetNzpPrib" message="tns:IData_GetNzpPrib_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetNzpPribResponse" message="tns:IData_GetNzpPrib_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNZPFor2Plant">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetNZPFor2Plant" message="tns:IData_GetNZPFor2Plant_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetNZPFor2PlantResponse" message="tns:IData_GetNZPFor2Plant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFromNzp">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetFromNzp" message="tns:IData_GetFromNzp_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetFromNzpResponse" message="tns:IData_GetFromNzp_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NzpFlit">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/NzpFlit" message="tns:IData_NzpFlit_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/NzpFlitResponse" message="tns:IData_NzpFlit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNzpFLit">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetNzpFLit" message="tns:IData_GetNzpFLit_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetNzpFLitResponse" message="tns:IData_GetNzpFLit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductionSummary">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetProductionSummary" message="tns:IData_GetProductionSummary_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetProductionSummaryResponse" message="tns:IData_GetProductionSummary_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFromNzpFlit">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetFromNzpFlit" message="tns:IData_GetFromNzpFlit_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetFromNzpFlitResponse" message="tns:IData_GetFromNzpFlit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFromNzpFlit2">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetFromNzpFlit2" message="tns:IData_GetFromNzpFlit2_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetFromNzpFlit2Response" message="tns:IData_GetFromNzpFlit2_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCycle">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetCycle" message="tns:IData_GetCycle_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetCycleResponse" message="tns:IData_GetCycle_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ShowDefects">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/ShowDefects" message="tns:IData_ShowDefects_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/ShowDefectsResponse" message="tns:IData_ShowDefects_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ShowGodn">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/ShowGodn" message="tns:IData_ShowGodn_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/ShowGodnResponse" message="tns:IData_ShowGodn_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEquipmentLoads">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetEquipmentLoads" message="tns:IData_GetEquipmentLoads_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetEquipmentLoadsResponse" message="tns:IData_GetEquipmentLoads_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PribKplsForDay">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PribKplsForDay" message="tns:IData_PribKplsForDay_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PribKplsForDayResponse" message="tns:IData_PribKplsForDay_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GangPribKplsForDay">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GangPribKplsForDay" message="tns:IData_GangPribKplsForDay_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GangPribKplsForDayResponse" message="tns:IData_GangPribKplsForDay_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PribKplsForMonth">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PribKplsForMonth" message="tns:IData_PribKplsForMonth_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PribKplsForMonthResponse" message="tns:IData_PribKplsForMonth_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefectsDistr">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/DefectsDistr" message="tns:IData_DefectsDistr_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DefectsDistrResponse" message="tns:IData_DefectsDistr_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefectsDistrOperations">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/DefectsDistrOperations" message="tns:IData_DefectsDistrOperations_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DefectsDistrOperationsResponse" message="tns:IData_DefectsDistrOperations_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefectsDistrData">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/DefectsDistrData" message="tns:IData_DefectsDistrData_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DefectsDistrDataResponse" message="tns:IData_DefectsDistrData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefectsDistrFor2Plant">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/DefectsDistrFor2Plant" message="tns:IData_DefectsDistrFor2Plant_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DefectsDistrFor2PlantResponse" message="tns:IData_DefectsDistrFor2Plant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DefectsDistrOperationsFor2Plant">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/DefectsDistrOperationsFor2Plant" message="tns:IData_DefectsDistrOperationsFor2Plant_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DefectsDistrOperationsFor2PlantResponse" message="tns:IData_DefectsDistrOperationsFor2Plant_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEquipmentDetail">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetEquipmentDetail" message="tns:IData_GetEquipmentDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetEquipmentDetailResponse" message="tns:IData_GetEquipmentDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchRes">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/SearchRes" message="tns:IData_SearchRes_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/SearchResResponse" message="tns:IData_SearchRes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrtSearch">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PrtSearch" message="tns:IData_PrtSearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PrtSearchResponse" message="tns:IData_PrtSearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Downtimes">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/Downtimes" message="tns:IData_Downtimes_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/DowntimesResponse" message="tns:IData_Downtimes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedDevicesDetail">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetTrackedDevicesDetail" message="tns:IData_GetTrackedDevicesDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetTrackedDevicesDetailResponse" message="tns:IData_GetTrackedDevicesDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedBatchesDetail">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetTrackedBatchesDetail" message="tns:IData_GetTrackedBatchesDetail_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetTrackedBatchesDetailResponse" message="tns:IData_GetTrackedBatchesDetail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PribMonthReport">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PribMonthReport" message="tns:IData_PribMonthReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PribMonthReportResponse" message="tns:IData_PribMonthReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataBySelectedPrib">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetDataBySelectedPrib" message="tns:IData_GetDataBySelectedPrib_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetDataBySelectedPribResponse" message="tns:IData_GetDataBySelectedPrib_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PribMonthRepordBrak">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/PribMonthRepordBrak" message="tns:IData_PribMonthRepordBrak_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/PribMonthRepordBrakResponse" message="tns:IData_PribMonthRepordBrak_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPrib">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetPrib" message="tns:IData_GetPrib_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetPribResponse" message="tns:IData_GetPrib_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAnalysis">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetAnalysis" message="tns:IData_GetAnalysis_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetAnalysisResponse" message="tns:IData_GetAnalysis_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAnalysisDiag">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetAnalysisDiag" message="tns:IData_GetAnalysisDiag_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetAnalysisDiagResponse" message="tns:IData_GetAnalysisDiag_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParetoData">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetParetoData" message="tns:IData_GetParetoData_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetParetoDataResponse" message="tns:IData_GetParetoData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParetoDiag">
+      <wsdl:input wsaw:Action="http://MyCompany.com/IData/GetParetoDiag" message="tns:IData_GetParetoDiag_InputMessage" />
+      <wsdl:output wsaw:Action="http://MyCompany.com/IData/GetParetoDiagResponse" message="tns:IData_GetParetoDiag_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

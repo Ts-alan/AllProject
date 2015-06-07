@@ -1,0 +1,126 @@
+﻿
+@using Crystal.DomainModel
+@using Crystal.Models
+@using MvcApplication.Models
+@model  Crystal.DomainModel.ParetoData
+@{
+    Layout = null;
+}
+@Html.Partial("Freeztable")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".supercheck").click(function () {
+
+            if ($(this).attr('checked')) { // проверяем его значение
+                $(this).closest(".freezetable").find('.check').attr('checked', true); // если чекбокс отмечен, отмечаем все чекбоксы
+            } else {
+                $(this).closest(".freezetable").find('.check').attr('checked', false); // если чекбокс не отмечен, снимаем отметку со всех чекбоксов
+            }
+        });
+
+    });
+    function ValidateData(el) {
+        var mes = "";
+        if ($("input.check[name='kpr']").filter(":checkbox:checked").size() == 0)
+            mes += "Не выбраны приборы для отчёта!!!";
+
+        if ($("input.check[name='kuch']").filter(":checkbox:checked").size() == 0)
+            mes += "\nНе выбраны участки для отчёта!!!";
+
+        if (mes.length > 0) {
+            alert(mes);
+            event.returnValue = false;
+        };
+
+
+    }
+
+    function GetBrak() {
+
+        $('#myModal').modal({
+            keyboard: true
+        });
+    }
+</script>
+<h3>Отчет о распределении брака производства №@ViewBag.Period</h3>
+@using (Ajax.BeginForm("GetParetoDiag", "Statisticks", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "AreaNzpDiagramm", OnSuccess = "GetBrak()" }, new { style = "width: auto;" }))
+{
+  
+    <div>
+        <div style="float: left">
+            <table class="table table-bordered table-condensed freeztable" style="width: auto">
+                <colgroup>
+                    <col style="width: 30px" />
+                    <col style="width: 140px" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            Код
+                        </th>
+                        <th>
+                            <input type="checkbox" class="supercheck" />
+                            Прибор
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<PribList>)ViewBag.PribList)
+                    {
+                        <tr>
+                            <td>@item.Kpr
+                            </td>
+                            <td>
+                                <input type="checkbox" name="kpr" class="check"  value="@item.Kpr"/>
+                                @item.Napr
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div style="margin-top: 5px;">
+                <table class="table table-bordered table-condensed freeztable" style="width: auto">
+                    <colgroup>
+                        <col style="width: 165px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="supercheck" />
+                                Участок
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (IEnumerable<UchList>)ViewBag.UchList)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="kuch" class="check" value="@item.Kuch"/>
+                                    @item.Nauch
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <input type="submit" value="" title="Построить диаграмму" onclick="ValidateData(this)"
+            class="buildDiagram" style="margin-left: 80px;" />
+    </div>
+    
+}
+<div class="modal1" id="myModal" style="display: none; text-align: center">
+    <div class="modal-body">
+        <div id="AreaNzpDiagramm">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="close" data-dismiss="modal">
+            Закрыть</button>
+    </div>
+</div>

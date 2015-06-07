@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WcfTrackService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service2.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service2.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:6655/DataServices/Service2.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITrackingDataManagers_AddDeviceItemTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddDeviceItemTo" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_AddDeviceItemTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddDeviceItemToResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_RemoveDeviceItemFrom_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDeviceItemFrom" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_RemoveDeviceItemFrom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDeviceItemFromResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_GetTrackedDeviceItemsByUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedDeviceItemsByUser" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_GetTrackedDeviceItemsByUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedDeviceItemsByUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_AddBatchItemTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBatchItemTo" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_AddBatchItemTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBatchItemToResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_RemoveBatchItemFrom_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBatchItemFrom" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_RemoveBatchItemFrom_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveBatchItemFromResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_GetTrackedBatchItemsByUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedBatchItemsByUser" />
+  </wsdl:message>
+  <wsdl:message name="ITrackingDataManagers_GetTrackedBatchItemsByUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrackedBatchItemsByUserResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ITrackingDataManagers">
+    <wsdl:operation name="AddDeviceItemTo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/AddDeviceItemTo" message="tns:ITrackingDataManagers_AddDeviceItemTo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/AddDeviceItemToResponse" message="tns:ITrackingDataManagers_AddDeviceItemTo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDeviceItemFrom">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/RemoveDeviceItemFrom" message="tns:ITrackingDataManagers_RemoveDeviceItemFrom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/RemoveDeviceItemFromResponse" message="tns:ITrackingDataManagers_RemoveDeviceItemFrom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedDeviceItemsByUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/GetTrackedDeviceItemsByUser" message="tns:ITrackingDataManagers_GetTrackedDeviceItemsByUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/GetTrackedDeviceItemsByUserResponse" message="tns:ITrackingDataManagers_GetTrackedDeviceItemsByUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBatchItemTo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/AddBatchItemTo" message="tns:ITrackingDataManagers_AddBatchItemTo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/AddBatchItemToResponse" message="tns:ITrackingDataManagers_AddBatchItemTo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBatchItemFrom">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/RemoveBatchItemFrom" message="tns:ITrackingDataManagers_RemoveBatchItemFrom_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/RemoveBatchItemFromResponse" message="tns:ITrackingDataManagers_RemoveBatchItemFrom_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedBatchItemsByUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITrackingDataManagers/GetTrackedBatchItemsByUser" message="tns:ITrackingDataManagers_GetTrackedBatchItemsByUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITrackingDataManagers/GetTrackedBatchItemsByUserResponse" message="tns:ITrackingDataManagers_GetTrackedBatchItemsByUser_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ITrackingDataManagers" type="tns:ITrackingDataManagers">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddDeviceItemTo">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/AddDeviceItemTo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDeviceItemFrom">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/RemoveDeviceItemFrom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedDeviceItemsByUser">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/GetTrackedDeviceItemsByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBatchItemTo">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/AddBatchItemTo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveBatchItemFrom">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/RemoveBatchItemFrom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrackedBatchItemsByUser">
+      <soap:operation soapAction="http://tempuri.org/ITrackingDataManagers/GetTrackedBatchItemsByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WcfTrackService">
+    <wsdl:port name="BasicHttpBinding_ITrackingDataManagers" binding="tns:BasicHttpBinding_ITrackingDataManagers">
+      <soap:address location="http://localhost:6655/DataServices/Service2.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

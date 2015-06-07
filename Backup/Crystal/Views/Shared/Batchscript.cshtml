@@ -1,0 +1,16 @@
+﻿<script type="text/javascript">
+    function Tracker($elem, prodn) {
+        var url = '@Url.Action("StartTracking", "BackEndServices")';
+        if ($elem.hasClass('Tracked')) {
+            url = '@Url.Action("StopTracking", "BackEndServices")';
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: { prodN: prodn, nprt: $elem.attr('nprt') },
+            success: function (result) { $elem.closest('span').replaceWith(result); $("[rel=tooltip]").tooltip({ html: true }); },
+
+        });
+
+    }
+</script>

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Crystal.DomainModel.Crystals>
+
+@{
+    ViewBag.Title = "Отчёт по кристаллам";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    DateTime Now = DateTime.Now.ToUniversalTime();
+}
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+    var Month, Year, monthCounter, yearCounter;
+
+    $(document).ready(function () {
+        var fullDate = new Date();
+        Month = fullDate.getMonth();
+        Year = fullDate.getFullYear();
+        monthCounter = Month;
+        yearCounter = Year;
+        $('input[type=button]').eq(1).attr('disabled', true);
+
+        $(document).on("click", '.CrystalsTable1Row', function () {
+            $('tr').css("background-color", "white");
+            $(this).css('background', '#ADDEFF');
+            GetJsonForTable2();
+        });
+    });
+
+    function GetJsonForTable2() {
+        $.ajax({
+            url: '@Url.Action("CrystalsByMonth2")',
+            type: 'GET',
+            beforeSend: function () { AjaxBegin(); },
+            success: function (result) {
+                $('#CrystalsTable2').show();
+                $('h2').eq(0).html("Раскрытие кристалов");
+                CrystalsTableUpdateJson2(result);
+                AjaxSuccessEnd();
+            },
+            error: function () { AjaxError(); }
+        });
+    }
+
+    function CrystalsTableUpdateJson2(data) {
+        var html="";
+        $('#CrystalsTableData2').html("");
+        $.each(data, function (key, value) {
+            $.each(value, function (key, value) {
+                html += "<td>" + value + "</td>";
+            });
+            $('#CrystalsTableData2').append("<tr>" + html + "</tr>");
+            html = "";
+        });
+    }
+</script>
+
+@Html.Hidden("PageTitle", "Отчёт по кристаллам")
+<table class="table table-bordered table-condensed lighttable center" style="width: 960px;">
+    <thead>
+        <tr>
+            <th>Код прибора</th>
+            <th>Прибор</th>
+            <th>Поступило кристалов</th>
+            <th>Годных кристалов</th>
+            <th>% выхода годных</th>
+        </tr>
+    </thead>
+    <tbody id="CrystalsTable">
+        @foreach (var item in Model)
+        {
+            <tr class="CrystalsTable1Row">
+                <td>@item.Kpr</td>
+                <td>@item.Napr</td>
+                <td>@item.Pkrist</td>
+                <td>@item.Godn</td>
+                <td>@item.ProcVux</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="CrystalsTable2" style="display: none;">
+    <h2></h2>
+    <table class="table table-bordered table-condensed lighttable center" style="width: 500px">
+        <thead>
+            <tr>
+                <th>Поступило кристалов</th>
+                <th>Годных кристалов</th>
+                <th>% выхода годных</th>
+                <th>ФИО</th>
+            </tr>
+        </thead>
+        <tbody id="CrystalsTableData2">
+            @if (ViewBag.proc_godn != null)
+            {
+                foreach (var item in ViewBag.proc_godn)
+                {
+                <tr>
+                    <td>@item.Fio</td>
+                    <td>@item.Pkrist</td>
+                    <td>@item.Godn</td>
+                    <td>@item.ProcVux</td>
+                </tr>
+                }
+            } else{<tr><td>Данные отсутствуют</td></tr>}
+        </tbody>
+    </table>
+</div>

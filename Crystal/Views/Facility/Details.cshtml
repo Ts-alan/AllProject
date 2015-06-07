@@ -1,0 +1,148 @@
+﻿@model Crystal.DomainModel.EquipmentDetailModel
+           
+@{
+    ViewBag.Title = string.Format("{0}", Model.ShortName);
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+<script src="@Url.Content("~/Scripts/lighttable.js")" type="text/javascript"></script>
+@Html.Hidden("PageTitle", "Информация по установке")
+
+<script type="text/javascript">
+    var href = window.location.href;
+    
+    function getPribPart(value) {
+        $.ajax({
+            url: '@Url.Action("GetPrib")',
+            type: 'POST',
+            data: { KGT: '@Model.TechGroupCode', KUS: '@Model.Code', Depth: value },
+            beforeSend: function () { $('#PribPart').html(""); $('#PribPart').addClass("loader1"); },
+            success: function (result) {
+                $('#PribPart').removeClass("loader1"); $("#PribPart").html(result);
+            },
+            error: function (xhr) {
+                if (xhr.status == 0) {
+                    alert("Aborted");
+                }
+                else {
+                    $('#myModal').show(); $('#myModal').modal({ keyboard: true }); $("#PribStatus").hide();
+                }
+            },
+            complete: function () { ManualSave(href+"#"+value); }
+        });
+        return false;
+    }
+</script>
+
+<h1>Производство №@ViewBag.prodN</h1>
+<h2>Установка @Model.ShortName</h2>
+<label>@Html.ActionLink("Простои установки", "Downtimes", new { Kgt = Model.TechGroupCode, Kus = Model.Code }, new { Class = "navigator" })</label>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs" id="Tabs">
+    <li class="active"><a href="/#tab1" data-toggle="tab">На выполнении/Ожидают запуска</a></li>
+      <li><a href="/#tab2" data-toggle="tab">Приближающиеся партии</a></li>
+  </ul>
+  <div class="tab-content lighttable">
+      <div class="tab-pane active" id="tab1">
+          <h2>На выполнении</h2>
+          <table class="table table-bordered table-condensed">
+              <thead>
+                  <tr>
+                      <th>Партия</th>
+                      <th>Код изделия</th>
+                      <th>Изделие</th>
+                      <th>Дата формирования</th>
+                      <th>№ операции</th>
+                      <th>Операция</th>
+                      <th>Дата запуска</th>
+                      <th>Нзп</th>
+                      <th>Оператор</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach (var item in Model.BatchesOnOperation)
+                  {
+                      <tr>
+                          <td>@Html.ActionLink(@item.BatchNumber, "PartInfo", new { Nprt = item.BatchNumber }, new { target = "_blank" })</td>
+                          <td>@item.DeviceCode</td>
+                          <td>@item.DeviceName</td>
+                          <td>@item.BatchNumber.Substring(5)</td>
+                          <td>@item.OperationNumber</td>
+                          <td>@item.OperationName</td>
+                          <td>@Html.DisplayFor(m=>item.LaunchDate)</td>
+                          <td>@item.PlateCount</td>
+                          <td>@item.OperatorFullName</td>
+                      </tr>
+                  }
+              </tbody>
+          </table>
+          <h2>Ожидают запуска</h2>
+          <table class="table table-bordered table-condensed">
+              <thead>
+                  <tr>
+                      <th>Партия</th>
+                      <th>Код изделия</th>
+                      <th>Изделие</th>
+                      <th>№ операции</th>
+                      <th>Операция</th>
+                      <th>Дата передачи</th>
+                      <th>Кол-во пластин</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach (var item in Model.BatchesForLaunch)
+                  {
+                      <tr>
+                          <td>@Html.ActionLink(@item.BatchNumber, "PartInfo", new { Nprt = item.BatchNumber }, new { target = "_blank" })</td>
+                          <td>@item.DeviceCode</td>
+                          <td>@item.DeviceName</td>
+                          <td>@item.OperationNumber</td>
+                          <td>@item.OperationName</td>
+                          <td>@Html.DisplayFor(m=>item.ArriveDate)</td>
+                          <td>@item.PlateCount</td>
+                      </tr>
+                  }
+              </tbody>
+          </table>
+      </div>
+      <div class="tab-pane" id="tab2">
+          <label>Выберите количество вложений:</label>
+          <div class="pagination">
+              <ul>
+                  @for(int i=1; i<=12; i++)
+                  {
+                      @Html.Raw(string.Format("<li><a href=\"#{0}\" onclick=\"getPribPart({0}); return false;\">{0}</a></li>", i)) 
+                       
+                  }
+@*                  <li><a href="#1" onclick="getPribPart(1); return false;">1</a></li>
+                  <li><a href="#2" onclick="getPribPart(2); return false;">2</a></li>
+                  <li><a href="#3" onclick="getPribPart(3); return false;">3</a></li>
+                  <li><a href="#4" onclick="getPribPart(4); return false;">4</a></li>
+                  <li><a href="#5" onclick="getPribPart(5); return false;">5</a></li>
+                  <li><a href="#6" onclick="getPribPart(6); return false;">6</a></li>
+                  <li><a href="#7" onclick="getPribPart(7); return false;">7</a></li>
+                  <li><a href="#8" onclick="getPribPart(8); return false;">8</a></li>
+                  <li><a href="#9" onclick="getPribPart(9); return false;">9</a></li>
+                  <li><a href="#10" onclick="getPribPart(10); return false;">10</a></li>*@
+              </ul>
+          </div>
+          <div id="PribPart"></div>
+        
+
+      </div>
+  </div>
+</div>
+
+<div class="modal" id="myModal" style="display: none">
+    <div class="modal-header">
+        <h3 style="color: red">!!!Ошибка!!!</h3>
+    </div>
+    <div class="modal-body">
+        <p>При выполнении данного запроса произошла ошибка,
+            <strong>проверьте вводимые данные</strong>, если ошибка продолжает возникать
+            сообщите о ней сетевому администратору.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="close" data-dismiss="modal">Закрыть</button>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@model Crystal.DomainModel.PrtToSearch
+
+@{
+    ViewBag.Title = "Поиск партии по её номеру";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" :null;
+}
+@Html.Hidden("PageTitle", "Поиск партии по номеру")
+<link href="@Url.Content("~/Content/jquery-ui-1.9.1.custom.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function(result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+  
+    function load() {
+        $('#Loading').show(); $('#PrtSearchResult').hide();
+    }
+    function Complete() {
+        $('#PrtSearchResult').show(); $('#Loading').hide();
+    }
+</script>
+<div id="Loading" style="display:none;height: 350px; color: red; font-weight: bold;" class="loader"></div>
+<div id="PrtSearchResult">
+    
+</div>
+

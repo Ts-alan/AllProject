@@ -1,0 +1,68 @@
+﻿@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.ComplData>
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-condensed">
+    @if (Model.Select(a => a.Pcompl).First() == "R")
+    {
+        <thead>
+            <tr>
+                <th>
+                    Кол-во пластин в разукомплектовываемой партии
+                </th>
+                <th>
+                    Номер разукомплектованной партии
+                </th>
+                <th>
+                    Кол-во пластин в разукомплектованной партии
+                </th>
+                <th>
+                    Дата разукомплектования
+                </th>
+                <th>
+                    Абонент
+                </th>
+            </tr>
+        </thead>
+    }
+    else
+    {
+        <thead>
+            <tr>
+                <th>
+                    Кол-во пластин в доукомплектовываемой партии
+                </th>
+                <th>
+                    Номер доукомплектованной партии
+                </th>
+                <th>
+                    Кол-во пластин в доукомплектованной партии
+                </th>
+                <th>
+                    Дата доукомплектования
+                </th>
+                <th>
+                    Абонент
+                </th>
+            </tr>
+        </thead>
+    }
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>@item.Kpls
+                </td>
+                <td>@item.Nprtr
+                </td>
+                <td>@item.Kplr
+                </td>
+                <td>@item.Datr
+                </td>
+                <td>@item.Fio
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>

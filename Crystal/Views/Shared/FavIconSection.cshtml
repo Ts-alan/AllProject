@@ -1,0 +1,7 @@
+﻿@{
+    var plantString = Request.RequestContext.RouteData.Values["plant"] as string;
+}
+@if (plantString != null)
+{
+    <link rel="shortcut icon" href="@Url.Content("~/Content/images/icons/Plant_" + ((int)MvcApplication.Models.FoxRepo.GetPlantFromNumber(plantString)).ToString() + ".png")" type="image/png" />
+}

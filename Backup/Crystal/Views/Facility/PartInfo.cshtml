@@ -1,0 +1,111 @@
+﻿@using Crystal.Models
+@using MvcApplication.Models
+@model Crystal.DomainModel.BatchInfo
+@{
+    ViewBag.Title = string.Format("№{0} ({1})", @Model.Nprt, @Model.Napr);
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
+    string prodN = ViewBag.prodN;
+    int userId = ViewBag.userId;
+}
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+
+    var url, $objKpr, $objNop;
+
+
+    $('.lagting').live("click", function () {
+        if (typeof $objKpr != 'undefined') {
+            $objKpr.closest('tr').css("background-color", "white");
+        }
+        $objKpr = $(this);
+        $objKpr.closest('tr').css("background", "#ADDEFF");
+
+    });
+</script>
+
+
+<h3>Сопроводительный лист партии №&nbsp <span style="color: #3019FF">@Model.Nprt @Html.TrackThisBatch(Model.Nprt, prodN, userId)</span></h3>
+<h4>Изделие: <span style="color: #3019FF">@Model.Napr</span> Кол-во дней на маршруте:@Model.DaysInRoute <span style="color: #3019FF"></span></h4>
+
+
+
+<table class="table table-bordered table-condensed lighttable">
+    <thead>
+        <tr>
+            <th>№ операции</th>
+            <th>Операция</th>
+            <th>Оборудование</th>
+            <th>Дата запуска</th>
+            <th>Дата завершения</th>
+            <th>Кол-во пластин(Брак/Разкомплектация/Докомплектация)</th>
+            <th>Оператор</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RouteData)
+        {
+            var ss = item.BrakInfo.Count();
+            <tr>
+                <td>@item.Nop</td>
+                <td>@item.Naop</td>
+                <td>@item.SNaobor</td>
+                <td>@Html.DisplayFor(m=> item.Dath)</td>
+                <td>@Html.DisplayFor(m=> item.Dato)</td>
+                <td>@item.Kpls (
+                    @if (item.BrakInfo.Count() == 0)
+                    {
+                        @item.BrakInfo.Count();
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink(item.BrakInfo.Count().ToString(), "GetBrak", null, new AjaxOptions { Url = Url.Action("GetBrak", new { nop = item.Nop, nprt = Model.Nprt,id = item.Id }), OnSuccess = "GetBrak('" + @item.Nop + "')", UpdateTargetId = "TableBody", InsertionMode = InsertionMode.Replace }, new { style = "color:#3019FF" ,@class="lagting"})
+                    }
+                    / @if (item.SumKplsR == 0)
+                      {
+                        @item.SumKplsR;
+                      }
+                      else
+                      {
+                        @Ajax.ActionLink(item.SumKplsR.ToString(), "McomplInfo", null, new AjaxOptions { Url = Url.Action("McomplInfo", new { nop = item.Nop, nprt = Model.Nprt, id = item.Id, mcompl = "R" }), OnSuccess = "GetBrak('" + @item.Nop + "')", UpdateTargetId = "TableBody", InsertionMode = InsertionMode.Replace }, new { style = "color:#3019FF",@class="lagting" })
+                      }
+                    /  @if (item.SumKplsD == 0)
+                       {
+                        @item.SumKplsD;
+                       }
+                       else
+                       {
+                        @Ajax.ActionLink(item.SumKplsD.ToString(), "McomplInfo", null, new AjaxOptions { Url = Url.Action("McomplInfo", new { nop = item.Nop, nprt = Model.Nprt, id = item.Id, mcompl = "D" }), OnSuccess = "GetBrak('" + @item.Nop + "')", UpdateTargetId = "TableBody", InsertionMode = InsertionMode.Replace }, new { style = "color:#3019FF",@class="lagting" })
+                       }
+                    )
+                </td>
+                <td>@item.Fio</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    function GetBrak(nop) {
+        //        $('#BrakNop').replaceWith("<p>Номер операции: "+nop+"</p>");
+        $('#myModal').modal({
+            keyboard: true
+        });
+
+    }
+
+</script>
+
+<div class="modal" id="myModal" style="display: none; width: 750px">
+    <div class="modal-header">
+        @*<h3>Данные по браку изделия @ViewBag.Izd</h3>*@
+    </div>
+    <div class="modal-body">
+        <p id="BrakNop"></p>
+        <div style="width: 700px" id="TableBody">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="close" data-dismiss="modal">Закрыть</button>
+    </div>
+</div>

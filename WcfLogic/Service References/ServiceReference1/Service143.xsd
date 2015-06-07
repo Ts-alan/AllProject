@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" />
+  <xs:import schemaLocation="http://localhost:6655/DataServices/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="PartInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="NPRT" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PartInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PartInfoResult" nillable="true" type="q1:BatchInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductionNumber">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductionNumberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetProductionNumberResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMonthStartDate">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMonthStartDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetMonthStartDateResult" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Production">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProductionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="ProductionResult" nillable="true" type="q2:TransistorViewModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NzpPrib">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NzpPribResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="NzpPribResult" nillable="true" type="q3:ArrayOfNzpPribList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NZPFor2Plant">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NZPFor2PlantResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="NZPFor2PlantResult" nillable="true" type="q4:ArrayOfNzpPribList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNzpPrib">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNzpPribResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetNzpPribResult" nillable="true" type="q5:ArrayOfNzpPrib" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNZPFor2Plant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNZPFor2PlantResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetNZPFor2PlantResult" nillable="true" type="q6:ArrayOfNzpPrib" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nop" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzpResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetFromNzpResult" nillable="true" type="q7:ArrayOfNzpBatchInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NzpFlit">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NzpFlitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="NzpFlitResult" nillable="true" type="q8:ArrayOfNzpFLitList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNzpFLit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="kmk" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetNzpFLitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetNzpFLitResult" nillable="true" type="q9:ArrayOfNzpFLit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductionSummary">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductionSummaryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetProductionSummaryResult" nillable="true" type="q10:ProductionInfoModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzpFlit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nfl" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="kmk" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzpFlitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetFromNzpFlitResult" nillable="true" type="q11:ArrayOfFlitOprNzp" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzpFlit2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nop" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFromNzpFlit2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetFromNzpFlit2Result" nillable="true" type="q12:ArrayOfFlitPartNzp" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCycle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="indnumb" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCycleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetCycleResult" nillable="true" type="q13:ArrayOfCycleInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShowDefects">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShowDefectsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="ShowDefectsResult" nillable="true" type="q14:ArrayOfCyclesDefectsInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShowGodn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShowGodnResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="ShowGodnResult" nillable="true" type="q15:ArrayOfcycle_period" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEquipmentLoads">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEquipmentLoadsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetEquipmentLoadsResult" nillable="true" type="q16:ArrayOfEquipmentLoad" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribKplsForDay">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribKplsForDayResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PribKplsForDayResult" nillable="true" type="q17:ArrayOfPribKplsForDay" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GangPribKplsForDay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GangPribKplsForDayResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GangPribKplsForDayResult" nillable="true" type="q18:ArrayOfGangPribKplsForDay" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribKplsForMonth">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribKplsForMonthResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PribKplsForMonthResult" nillable="true" type="q19:ArrayOfPribKplsForMonth" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="indnumb" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DefectsDistrResult" nillable="true" type="q20:ArrayOfDefectsDistributionPrib" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrOperations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrOperationsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DefectsDistrOperationsResult" nillable="true" type="q21:ArrayOfDefectsDistributionOperations" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nop" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="kmk" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DefectsDistrDataResult" nillable="true" type="q22:ArrayOfDefDistrData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrFor2Plant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="head" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrFor2PlantResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DefectsDistrFor2PlantResult" nillable="true" type="q23:ArrayOfDefectsDistributionPrib" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrOperationsFor2Plant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kpr" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DefectsDistrOperationsFor2PlantResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DefectsDistrOperationsFor2PlantResult" nillable="true" type="q24:ArrayOfDefectsDistributionOperations" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEquipmentDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="techGroupCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="equipmentCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetEquipmentDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetEquipmentDetailResult" nillable="true" type="q25:EquipmentDetailModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchRes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="query" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchResResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SearchResResult" nillable="true" type="q26:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrtSearch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="query" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrtSearchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PrtSearchResult" nillable="true" type="q27:ArrayOfPartSearch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Downtimes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KGT" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="KUS" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DowntimesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="DowntimesResult" nillable="true" type="q28:ArrayOfDowntimes" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackedDevicesDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="devices" nillable="true" type="q29:ArrayOfTrackedDevice" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackedDevicesDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetTrackedDevicesDetailResult" nillable="true" type="q30:ArrayOfObservedDevice" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackedBatchesDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="batches" nillable="true" type="q31:ArrayOfTrackedBatch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackedBatchesDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetTrackedBatchesDetailResult" nillable="true" type="q32:ArrayOfObservedBatch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribMonthReport">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribMonthReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PribMonthReportResult" nillable="true" type="q33:ArrayOfSimplePribList" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataBySelectedPrib">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="selPrib" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataBySelectedPribResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetDataBySelectedPribResult" nillable="true" type="q34:ArrayOfMonthReportData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribMonthRepordBrak">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nop" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PribMonthRepordBrakResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="PribMonthRepordBrakResult" nillable="true" type="q35:ArrayOfMonthReportDataBrak" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPrib">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="techGroupCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="equipmentCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Depth" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPribResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetPribResult" nillable="true" type="q36:ArrayOfApproaching" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAnalysis">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="indnumb" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAnalysisResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetAnalysisResult" nillable="true" type="q37:ArrayOfGetAnalysis1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAnalysisDiag">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="kpr" nillable="true" type="q38:ArrayOfstring" />
+        <xs:element minOccurs="0" name="input" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAnalysisDiagResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetAnalysisDiagResult" nillable="true" type="q39:ArrayOfGetAnalysisDiag" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParetoData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="indnumb" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParetoDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetParetoDataResult" nillable="true" type="q40:ParetoData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParetoDiag">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="kpr" nillable="true" type="q41:ArrayOfstring" />
+        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="kuch" nillable="true" type="q42:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParetoDiagResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="GetParetoDiagResult" nillable="true" type="q43:ArrayOfParetoDiag" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LdPlotByDate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sdate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="indnumb" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LdPlotByDateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="LdPlotByDateResult" nillable="true" type="q44:ArrayOfLdPlot" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AreaNzp">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AreaNzpResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="AreaNzpResult" nillable="true" type="q45:ArrayOfNzpUch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MZagrBrig">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fdate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sdate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MZagrBrigResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="MZagrBrigResult" nillable="true" type="q46:ArrayOfLoadMth" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StandEquipment">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StandEquipmentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/Crystal.DomainModel" minOccurs="0" name="StandEquipmentResult" nillable="true" type="q47:ArrayOfStandEquipment" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

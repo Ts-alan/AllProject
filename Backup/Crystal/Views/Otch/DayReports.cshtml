@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Crystal.DomainModel.UchSelect>
+
+@{
+    ViewBag.Title = "Отчёт за день/Смену";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    int size = 5, count = 0;
+    var comp = (IEnumerable<Crystal.DomainModel.UchSelect>) ViewBag.Kuch;
+}
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+    function GetForAll() {
+        $.ajax({
+            url: '@Url.Action("GetAllUch")',
+            success: function (result) { $('#DayReportsResult').html(result); }
+        });
+    }
+</script>
+
+<h2>Отчёт о производстве:</h2>
+<div class="row-fluid">
+    <div class="form-inline">
+        <label>Выберите интерисующий вас участок:</label>
+        <table class="table table-condensed">
+            @foreach (var item in (IEnumerable<Crystal.DomainModel.UchSelect>)ViewBag.Kuch)
+            {
+                <td>@(Ajax.ActionLink(item.Nauch, "GetByUch", "Otch", new { kuch = item.Kuch }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "DayReportsResult" }))</td>
+                count++;
+                
+                if (count==size)
+                {
+                    <tr></tr>
+                    count = 0;
+                }
+            }
+        </table>
+        <input type="button" value="По всем участкам" style = "float: right" class="btn btn-primary" onclick="GetForAll()"/>
+    </div>
+</div>
+
+<div id="DayReportsResult">
+</div>

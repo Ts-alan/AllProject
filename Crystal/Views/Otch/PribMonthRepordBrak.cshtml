@@ -1,0 +1,64 @@
+﻿@using Crystal.Models
+@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.MonthReportDataBrak>
+
+@{
+    Layout = null;
+    string nplsList = null;
+    string prodN = ViewBag.prodN;
+    int userId = ViewBag.userId;
+}
+<script src="@Url.Content("~/Scripts/Tooltip.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#pribMoounthBrak").freezeTable({
+            'autoHeight': false
+
+        });
+    });
+    </script>
+<div>
+    <table id="pribMoounthBrak" class="table table-condensed table-bordered " style="width: auto">
+        <colgroup>
+                <col style="width: 21px" />
+                <col style="width: 80px" />
+                <col style="width: 39px" />  
+                <col style="width: 99px" />
+                <col style="width: 69px" />      
+                <col style="width: 69px" />
+                <col style="width: 69px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Партия</th>
+                <th>Брак</th>
+                <th>Наименование брака</th>
+                <th>Номер пластины</th>
+                <th>Установка</th>
+                <th >Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.TrackThisBatch(item.Nprt,prodN,userId)</td>
+                    <td>@Html.ActionLink(item.Nprt,"PartInfo","Facility", new { NPRT = item.Nprt}, null)</td> @*Сдесь условия выборки*@
+                    <td>@item.Nzp</td>
+                    <td>@item.Naprb</td>
+                    @foreach (var pl in item.Npls)
+                    {
+                        nplsList += pl+ "</br>";
+                    }
+                    <td><div>@Html.Raw(nplsList)</div></td>
+                    <td>@item.Ust</td>
+                    <td>@item.Date</td>
+                </tr>
+                nplsList = null;
+            }
+        </tbody>
+    </table> 
+        
+</div>
+<div style="width:540px;margin-left:-70px;">Постановка/снятие партии на кантроль по клику на символ <img src='../../Content/images/star_active.png'></img>/<img src='../../Content/images/star_passive.png'></div>

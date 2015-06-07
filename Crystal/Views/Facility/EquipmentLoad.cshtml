@@ -1,0 +1,73 @@
+﻿@using MvcApplication.Models
+@using Crystal.Models
+@model IEnumerable<Crystal.DomainModel.EquipmentLoad>
+
+@{
+    ViewBag.Title = "Загрузка оборудования";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/LightLink.js")" type="text/javascript"></script>
+@Html.Partial("Freeztable")
+<h3>Загрузка оборудования производства №@ViewBag.Prn @ViewBag.Period</h3>
+<div class="lighttable">
+    <div style="float: left" >
+        <table id ="Mzagr" class="table table-bordered table-condensed freeztable" style="width: auto">
+            <colgroup>
+                <col style="width: 120px" />
+                <col style="width: 90px" />
+                <col style="width: 85px" />    
+                <col style="width: 85px" />
+                <col style="width: 85px" />
+                <col style="width: 85px" /> 
+                <col style="width: 90px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Участок</th>
+                    <th>Оборудование</th>
+                    <th>Количество пластин</th>
+                    <th>Брак</th>
+                    <th>Количество партий</th>
+                    <th>Ремонт в часах</th>
+                    <th>Коэф. раб. оборудования</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.AreaName</td>
+                        <td>@item.EquipmentName</td>
+                        <td>@item.PlateCount</td>
+                        <td>@item.BrkCount</td>
+                        <td>@item.BatchCount</td>
+                        <td>
+                            @if(item.RepairDurationH > 0)
+                            {
+                                
+                                @Ajax.ActionLink(item.RepairDurationH.ToString("F3"), "RepairReasons", new { EqupmentName = item.EquipmentName }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ReasonsContainer", Url = Url.Action("RepairReasons", new { EquipmentCode = item.EquipmentUniqCode, ViewCode = ViewBag.ViewCode }) }, new { @class="lagting"})
+                            }
+                            else
+                            {
+                                @item.RepairDurationH
+                            }
+                        </td>
+                        <td>@item.EquipmentEfficiency.ToString("F3")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+         <h5>Коэффициент работы оборудования по заводу = @Ajax.ActionLink((string)ViewBag.AvgEfficient.ToString("F3"), "RepairReasons", new {EqupmentName = "Все"}, new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ReasonsContainer", Url = Url.Action("RepairReasons", new {EquipmentCode = "", ViewCode = ViewBag.ViewCode})})</h5>
+    </div>
+    @{
+            <div style="width: 370px;float: left;margin-left: 10px" id="ReasonsContainer">
+               @{ Html.RenderAction("RepairReasons", new { EquipmentCode = "", ViewCode = ViewBag.ViewCode}); }               
+            </div>
+
+    }
+
+</div>
+

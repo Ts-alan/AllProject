@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Crystal.DomainModel.StandEquipment>
+
+@{
+    ViewBag.Title = "Простой оборудования";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    
+}
+@Html.Hidden("PageTitle", "Простой оборудования")
+<h2>Простой оборудования</h2>
+<table class="table table-bordered table-condensed center lighttable" style="width: 90%">
+    <thead>
+        <tr>
+            <th rowspan="2">Коридор</th>
+            <th rowspan="2">Участок</th>
+            <th rowspan="2">Наименование оборудования</th>
+            <th rowspan="2">Дата/Время начала простоя</th>
+            <th rowspan="2">Ф.И.О оператора</th>
+            <th rowspan="2"> Текущий простой(Часов)</th>
+            <th colspan="2" >Простой за месяц</th>
+            <th rowspan="2">Коэфф. раб. оборудования</th>
+        </tr>
+          <tr>
+          
+            
+            <th>Часы </th>
+            <th>Количество </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var item in Model)
+         {
+             <tr>
+                 <td>@item.Nakor </td>
+                 <td>@item.Nauch </td>
+                 <td>@item.Snaobor </td>
+                 <td>@Html.DisplayFor(m=> item.Dnp)</td>
+                 <td>@item.Fio </td>
+                 <td>@item.StandHour </td>
+                 <td>@item.StandHourMount </td>
+                 <td>@Html.ActionLink(item.StandCount, "Downtimes",new {kgt=item.Kgt,kus=item.Kus},new { target = "_blank" })</td>
+                 <td>@item.KrObr </td>
+             </tr>
+         }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    function GetTable() {
+        $('#myModal').modal({
+            keyboard: true
+        });
+    }; 
+
+</script>
+<div class="modal  " id="myModal" style="display: none;  ">
+  
+      <div class="modal-header">
+       
+        <h4 class="modal-title" id="myModalLabel">Наименование простоя</h4>
+      </div>
+      <div class="modal-body" id="TableBody" style="height: 250px">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+
+</div>

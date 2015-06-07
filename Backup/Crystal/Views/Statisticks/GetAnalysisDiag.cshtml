@@ -1,0 +1,78 @@
+﻿@using System.Collections
+@using System.Diagnostics
+@using System.Reflection
+@using MvcApplication.Models
+@{
+    ViewBag.Title = "GetAnalysisDiag";
+    Layout = null;
+    int[] ss = new []{3,2,1};
+}
+<link href="@Url.Content("~/Content/jquery.jqplot.min.css")" rel="stylesheet" type="text/css" />
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]-->
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jqplot.min.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.barRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.categoryAxisRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.pointLabels.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.highlighter.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.canvasTextRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.canvasAxisTickRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.dateAxisRenderer.min.js")"></script>
+<script type="text/javascript">
+
+    var testar = ["11", "11","33"];
+
+    $(function() {
+        var line = [];
+        var readings = @Html.Raw(Json.Encode(Model));
+        var PlotOptions = {
+            title: "  Суммарное количество пластин по передачам  Завода № @ViewBag.Prn",
+
+            series: [{ renderer: $.jqplot.BarRenderer, rendererOptions: { barWidth: 10 } }],
+            axes: {               
+                xaxis: {
+                    label: "Дни",
+                     renderer: $.jqplot.CategoryAxisRenderer,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    tickOptions: {
+                        angle: 90,
+                        fontSize: '10pt'
+                    }
+                    
+                },
+                yaxis: { label: "Количество пластин" }
+            },
+            highlighter: {
+                show: true,
+                tooltipAxes: 'y'
+            }
+        };
+        for (var i = 0; i < readings.length; i++) {
+      
+            line[i] =new Array (readings[i].Dato.substr(0,10),readings[i].Kpls);
+        };
+
+        
+
+
+
+
+
+       
+
+        if (line.length < 10) {
+            $("#graph").css("width", "30%");
+            $.jqplot("graph", [line], PlotOptions);
+        } else 
+            if (9 < line.length && line.length< 20) {
+            $("#graph").css("width", "60%");
+            $.jqplot("graph", [line], PlotOptions);
+
+        } else  {
+            $("#graph").css("width", "80%");
+            $.jqplot("graph", [line], PlotOptions);
+        }
+    });
+ 
+</script>
+<div id="graph" style="width: 80%; height: 400px; margin-left: 180px; *margin-left: 0px">
+</div>

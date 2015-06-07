@@ -1,0 +1,51 @@
+﻿@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.PribKplsForMonth>
+@{
+    ViewBag.Title = "Передачи за месяц";
+    bool showThirdTour = true;
+}
+@Html.Hidden("PageTitle", "Количество передач за месяц")
+@Html.Partial("Freeztable")
+<h3>Производство № @ViewBag.prodN</h3>
+<h4>Количество передач за месяц</h4>
+<div class="container-fluid lighttable center">
+    <div style="float: left">
+        <div>
+            <table class="table table-bordered table-condensed center freeztable" style="width: auto" data-freez-height="440">
+                <colgroup>
+                    <col style="width: 70px" />
+                    <col style="width: 94px" />
+                    <col style="width: 80px" />
+                    <col style="width: 80px" />
+                    @if(showThirdTour){
+                        <col style="width: 80px" />
+                        }
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Кол-во за сутки</th>
+                        <th>Смена 1</th>
+                        <th>Смена 2</th>
+                        @if(showThirdTour){
+                            <th>Смена 3</th>
+                            }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>@Html.DisplayFor(x=>item.Date)</td>
+                            <td>@item.KplsForDay</td>
+                            <td>@item.KplsForFirstTour</td>
+                            <td>@item.KplsForSecondTour</td>
+                            @if(showThirdTour){
+                                <td>@item.KplsForThirdTour</td>
+                                }
+                        </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

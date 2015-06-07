@@ -1,0 +1,100 @@
+﻿@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.DefectsDistributionPrib>
+           
+@{
+    ViewBag.Title = "Брак за месяц";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+  
+}
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+@Html.Hidden("PageTitle", "Брак за месяц")
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+    var $objKpr, $objNfl;
+    $(document).ready(function () {
+        $("#defDistr").freezeTable({
+            'autoHeight': false
+
+        });
+        if ($("#brak").length < 1) {
+            $("#brak1").show();
+        }
+        $('.DefectsDistr').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+
+        });
+        $('.DefectsDistrOperations').live("click", function () {
+            if (typeof $objNfl != 'undefined') {
+                $objNfl.closest('tr').css("background-color", "white");
+            }
+            $objNfl = $(this);
+            $objNfl.closest('tr').css("background", "#ADDEFF");
+
+        });
+    });
+    $('#SideMenu').show();
+    function load(n) {
+        for (var i = n; i <= 4; i++) {
+            $("#Otch_Defects_Data" + i).html("");
+        }
+        $("#Otch_Defects_Data" + n).addClass("loader1");
+    }
+    function Success(n, data) {
+        if (n == 2)
+        $("#prib").html(" по прибору <span class='font' id='re'> " + data + "</span>");
+        $("#Otch_Defects_Data"+n).removeClass("loader1");
+    }
+   
+</script>
+
+ 
+
+
+<h3>Брак производства №@ViewBag.Prn <span id="prib"></span></h3>
+<div class="container-fluid lighttable center">
+<div style="float:left;margin-top: 35px">
+       <table id="defDistr" class="table table-bordered table-condensed" style="width: auto">
+            <colgroup>
+                    <col style="width: 30px" />
+                    <col style="width: 150px" />
+                    <col style="width: 35px" />      
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование прибора</th>
+                    <th>Брак</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr id="@item.Kpr">
+                        <td >@item.Kpr</td>
+                        <td>@item.Napr</td>
+                        @if (ViewBag.task != "DefectsDistrFor2Plant")
+                        {
+                            <td>@Ajax.ActionLink(item.Nzp.ToString(), "DefectsDistrOperations", new {kpr = item.Kpr}, new AjaxOptions {UpdateTargetId = "Otch_Defects_Data2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "Success(2,'" + @item.Napr + "')", OnComplete = "LightUpKpr('" + @item.Kpr + "')", OnFailure = "AjaxError"}, new {@class = "DefectsDistr"})</td>
+                        }
+                        else
+                        {
+                           <td>@Ajax.ActionLink(item.Nzp.ToString(), "DefectsDistrOperationsFor2Plant", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Otch_Defects_Data2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "Success(2,'" + @item.Napr + "')", OnComplete = "LightUpKpr('" + @item.Kpr + "')", OnFailure = "AjaxError" }, new { @class = "DefectsDistr" })</td> 
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+<div id="Otch_Defects_Data2"  class="Print-Content lighttable" style="width:320px; float: left;height:350px;  margin-left: 20px;margin-top: 10px;"></div>
+
+<div id="Otch_Defects_Data3" class="Print-Content lighttable" style="width: 430px;height:350px; margin-top: 10px;float: left;">
+</div>
+</div>

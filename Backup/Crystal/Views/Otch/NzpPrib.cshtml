@@ -1,0 +1,209 @@
+﻿@model IEnumerable<Crystal.DomainModel.NzpPribList>
+@using System.Net.Mime
+
+@using Crystal.Models
+@using MvcApplication.Models
+@{
+    ViewBag.Title = "Нзп по приборам";
+    Layout = !Request.IsAjaxRequest() ? "~/Views/Shared/_Layout.cshtml" : null;
+    string prodN = ViewBag.prodN;
+    string userName = HttpContext.Current.User.Identity.Name;
+    int userId = ViewBag.userId;
+}
+
+@Html.Partial("DeviceScript")
+@Html.Hidden("PageTitle", "Нзп по приборам")
+@Html.Partial("Freeztable")
+@Html.Partial("TransitionToAjax")
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu", "Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+
+    var url, $objKpr, $objNop;
+
+    $(document).ready(function () {
+
+
+        $("[rel=tooltip]").tooltip({
+            html: true
+        });
+
+        $('.NzpPribListClick').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+
+        });
+        $('.OperationNzpClick').live("click", function () {
+            if (typeof $objNop != 'undefined') {
+                $objNop.closest('tr').css("background-color", "white");
+            }
+            $objNop = $(this);
+            $objNop.closest('tr').css("background", "#ADDEFF");
+
+        });
+    });
+
+    function GetPrib(data) {
+        $('#Prib_Table2').removeClass("loader1");
+        //$("h4").replaceWith("<h4>НЗП по прибору:<span class='font'>" + data + "</span></h4>");
+        $("#re").html(" по прибору <span class='font' id='re'> " + data + "</span>");
+        $("span").css("color", "#3019FF");
+
+    }
+    function toTable() {
+        $('#Prib_Table3').removeClass("loader1");
+    }
+
+    function load(n) {
+        for (var i = n; i <= 4; i++) {
+            $("#Prib_Table" + i).html("");
+        }
+        $("#Prib_Table" + n).addClass("loader1");
+    }
+
+    function ShowMe() {
+        //var sel = document.getElementById("selectvalue");
+        //var txt = sel.options[sel.selectedIndex].text;
+        var rows = $("#showTracked").parent().parent().find("tbody > tr");
+        $("#showTracked").removeAttr("checked");
+        var txt = document.getElementById("selectvalue").selectedIndex;
+        //console.log($(".secondId").parent());
+        if (txt == 0) {
+            rows.show();
+
+
+        }
+        if (txt == 1) {
+            rows.hide();
+
+            var t1 = $(".secondId").filter(function () {
+                return !($(this).parent().attr("class") == "200");
+            });
+            t1.closest("tr").show();
+
+        }
+        if (txt == 2) {
+            rows.hide();
+
+            var t2 = $(".secondId").filter(function () {
+                return ($(this).parent().attr("class") == "200");
+            });
+            t2.closest("tr").show();
+
+        }
+    }
+
+    function ReturnForShowTracked() {
+        //var sel = document.getElementById("selectvalue");
+        //var txt = sel.options[sel.selectedIndex].text;
+        var txt = document.getElementById("selectvalue").selectedIndex;
+        var rows = $("#showTracked").parent().parent().find("tbody > tr");
+
+        if (txt == 0) {
+            return rows;
+
+        }
+        if (txt == 1) {
+
+            var t1 = $(".secondId").filter(function () {
+                return !($(this).parent().attr("class") == "200");
+            });
+            return t1.closest("tr");
+        }
+        if (txt == 2) {
+
+            var t2 = $(".secondId").filter(function () {
+                return ($(this).parent().attr("class") == "200");
+            });
+            return t2.closest("tr");
+        }
+    }
+
+    $(document).ready(function () {
+        $("#showTracked").click(function () {
+
+            var rows = ReturnForShowTracked();
+            if ($(this).attr('checked')) {
+
+                rows.hide();
+                rows.find(".Tracked").closest("tr").show();
+            } else rows.show();
+
+        });
+    });
+</script>
+
+@*@if (ViewBag.timer == "GetNZPFor2Plant")
+{
+    <h4>НЗП производства №2 по приборам</h4>
+}
+else
+{
+    <h4>НЗП производства №@MvcApplication.Models.FoxRepo.GetProductionNumber() по приборам</h4>
+}*@
+<h3 style="display: inline" id="brak">@ViewBag.head</h3>
+<h3 style="display: inline" id="re"></h3>
+
+<div class="container-fluid lighttable center">
+
+    <div style="float: left; margin-top: 20px;">
+        <div style="float: left">
+            <input type="checkbox" id="showTracked" /><label for="showTracked" style="display: inline">Только
+                <img src='../../Content/images/star_active.png'></img>
+            </label>
+        </div>
+        @if (prodN == "12")
+        {
+            @Html.DropDownList("selectvalue", new SelectList(new[] { "Все диаметры", "Диаметр 150", "Диаметр 200" }), new { onChange = "ShowMe()", style = "width:62%;" })
+        }
+        else
+        {
+            @Html.DropDownList("selectvalue", new SelectList(new[] { "Все диаметры", "Диаметр 150", "Диаметр 200" }), new { onChange = "ShowMe()", style = "display: none" })
+        }
+        <table id="nzpPrib" class="table table-bordered table-condensed freeztable" style="width: auto; clear: left" data-freez-height="440">
+            <colgroup>
+                <col style="width: 25px" />
+                <col style="width: 40px" />
+                <col style="width: 140px" />
+                <col style="width: 40px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Код</th>
+                    <th>Наименование прибора</th>
+                    <th>НЗП</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+              
+                    <tr id="@item.Kpr" class="@item.Diameter">
+                        <td>@Html.TrackThisDevice(item.Kpr, prodN, userId)</td>
+                        <td>@item.Kpr</td>
+                        <td class="secondId">@item.Napr</td>
+                        @if (ViewBag.timer == "GetNZPFor2Plant")
+                        {
+                            <td>@Ajax.ActionLink(item.Nzp.ToString(), "GetNZPFor2Plant", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpPribListClick " + item.Kpr })</td>
+                        }
+                        else
+                        {
+                            <td>@Ajax.ActionLink(item.Nzp.ToString(), "GetNzpPrib", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpPribListClick " + item.Kpr })</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <div id="Prib_Table2" class="Print-Content" style="width: 245px; float: left; margin-left: 10px; margin-bottom: 20px">
+    </div>
+
+    <div id="Prib_Table3" class="Print-Content" style="width: 500px; margin-left: 20px; float: left; margin-bottom: 20px">
+    </div>
+</div>
+

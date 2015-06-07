@@ -1,0 +1,163 @@
+﻿@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.NzpFLitList>
+@using System.Net.Mime
+
+@using Crystal.Models
+@using MvcApplication.Models
+@{
+    ViewBag.Title = "Нзп по фотолитографии";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    string prodN = ViewBag.prodN;
+    string userName = HttpContext.Current.User.Identity.Name;
+    int userId = ViewBag.userId;
+
+}
+@Html.Partial("Freeztable")
+@Html.Partial("DeviceScript")
+@Html.Hidden("PageTitle", "Нзп по фотолитографии")
+
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu", "Home")').success(function (result) { $('#SideMenu').html(result); $('#SideMenu').show(); });
+
+    var url, $objKpr, $objNfl, $objNop;
+
+    $(document).ready(function () {
+
+
+
+        
+        $('.NzpFlitListClick').live("click", function () {
+            if (typeof $objKpr != 'undefined') {
+                $objKpr.closest('tr').css("background-color", "white");
+            }
+            $objKpr = $(this);
+            $objKpr.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+
+            /*$(window).bind('beforeunload', function () {
+            return '>>>>>Внимание!<<<<<<<< \n Обновление страницы не требуется. Достаточно заново выбрать интерисующий вас пункт.';
+            });*/
+        });
+        $('.NflBlockClick').live("click", function () {
+            if (typeof $objNfl != 'undefined') {
+                $objNfl.closest('tr').css("background-color", "white");
+            }
+            $objNfl = $(this);
+            $objNfl.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+        });
+        $('.NopNzpClick').live("click", function () {
+            if (typeof $objNop != 'undefined') {
+                $objNop.closest('tr').css("background-color", "white");
+            }
+            $objNop = $(this);
+            $objNop.closest('tr').css("background", "#ADDEFF");
+            SetHref($(this).attr('href'));
+        });
+    });
+
+    function SetHref(href) {
+        url = href;
+
+    }
+    function AjaxError() {
+        $('#Flit_Progress').addClass("progress-danger");
+        $('#Flit_Progress').removeClass("active");
+    }
+    function GetPrib(data) {
+        $("#Flit_Table2").removeClass("loader1");
+        $("h4").replaceWith("<h4>НЗП по фотолитографии. Прибор:<span class='font'>" + data + "</span></h4>");
+        $("span").css("color", "#3019FF");
+        ManualSave(url);
+    }
+
+    function FillTable1() {
+        $("#Flit_Table3").removeClass("loader1");
+
+
+
+    }
+    function FillTableByNop() {
+        $("#Flit_Table4").removeClass("loader1");
+
+
+    }
+    function load(n) {
+        for (var i = n; i <= 4; i++) {
+            $("#Flit_Table" + i).html("");
+        }
+        $("#Flit_Table" + n).addClass("loader1");
+    }
+
+    $(document).ready(function() {
+        $("#showTracked").click(function() {
+
+            var row = $("#showTracked").parent().parent().find("tbody > tr");
+           
+            if ($(this).attr('checked')) {
+          
+                row.hide();
+                row.find(".Tracked").closest("tr").show();
+            } else rowS.show();
+
+        });
+    });
+</script>
+
+<h4>НЗП производства № @ViewBag.prodN по фотолитографии</h4>
+<div class="container-fluid lighttable center">
+
+    <div style="float: left; margin-top: 20px;">
+        <div style="float: left">
+            <input type="checkbox" id="showTracked" /><label for="showTracked" style="display: inline">Только
+                <img src='../../Content/images/star_active.png'></img>
+            </label>
+        </div>
+        @if (prodN == "12")
+        {
+            @Html.DropDownList("selectvalue", new SelectList(new[] { "Все диаметры", "Диаметр 150", "Диаметр 200" }), new { onChange = "ShowMe()", style = "width:62%;" })
+        }
+        else
+        {
+            @Html.DropDownList("selectvalue", new SelectList(new[] { "Все диаметры", "Диаметр 150", "Диаметр 200" }), new { onChange = "ShowMe()", style = "display: none" })
+        }
+        <table id="nzpFlit" class="table table-bordered table-condensed freeztable" style="width: auto; clear: left" >
+            <colgroup>
+                <col style="width: 25px" />
+                <col style="width: 40px" />
+                <col style="width: 140px" />
+                <col style="width: 40px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Код</th>
+                    <th>Наименование прибора</th>
+                    <th>НЗП</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="@item.Kpr" class="@item.Diameter">
+                        <td>@Html.TrackThisDevice(item.Kpr, prodN, userId)</td>
+                        <td>@item.Kpr</td>
+                        <td>@item.Napr</td>
+                        <td>@Ajax.ActionLink(item.Nzp.ToString(), "GetNzpFLit", new { kmk = item.Kmk, kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Flit_Table2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "GetPrib('" + @item.Napr + "')", OnFailure = "AjaxError" }, new { Class = "NzpFlitListClick" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <div style="height: 100px" id="Flit_Table2" class="span7">
+    </div>
+
+</div>
+<div class="container-fluid center lighttable" style="margin-top: 15px; height: 100px" id="Flit_Tables">
+    <div style="float: left; width: 200px; min-height: 100px; margin-top: 20px" id="Flit_Table3">
+    </div>
+    <div style="width: 550px; height: 250px; float: left; margin-left: 10px" id="Flit_Table4">
+    </div>
+</div>

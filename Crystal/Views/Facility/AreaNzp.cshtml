@@ -1,0 +1,109 @@
+﻿@using Crystal.Models
+@using MvcApplication.Models
+
+@{
+    ViewBag.Title = "Нзп по участкам";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+
+}
+
+@Html.Hidden("PageTitle", "НЗП по участкам")
+
+<link href="@Url.Content("~/Content/jquery.jqplot.min.css")" rel="stylesheet" type="text/css" />
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]--> 
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jqplot.min.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.barRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.categoryAxisRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.highlighter.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.pointLabels.min.js")"></script>
+<script src="@Url.Content("~/Scripts/lighttable.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+    var plot, switcher = 0;
+    function ChangeCaption(n) {
+        if (n == 2) {
+            $('h4').html("Диаграмма распределения брака по участкам");
+            if (switcher!=1) {
+                $.ajax({
+                    url: '@Url.Action("AreaNzpBrakGraf")',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#AreaNzpDiagrammChart').removeClass("loader");
+                        jqPlot(result.Nauch, result.Brk);
+                    },
+                    error: function () { alert("Ошибка!"); }
+                });
+                switcher = 1;
+            }
+
+            function jqPlot(nauch, brk) {
+                plot = $.jqplot('AreaNzpDiagrammChart', [brk], {
+                    animate: true,
+                    animateReplot: true,
+                    seriesDefaults: {
+                        label: "Брак",
+                        renderer: $.jqplot.BarRenderer,
+                        pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                        shadowAngle: 135,
+                        rendererOptions: {
+                            barDirection: 'horizontal',
+                            highlightMouseDown: true
+                        }
+                    },
+                    axes: {
+                        yaxis: {
+                            label: "Участки",
+                            ticks: nauch,
+                            renderer: $.jqplot.CategoryAxisRenderer,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                        }
+                    }
+                });
+            }
+        } else {
+            $('h4').html("Нзп по участкам производства №" + '@ViewBag.Prn');
+        }
+    };
+</script>
+
+<h4>Нзп по участкам производства №@ViewBag.Prn</h4> 
+<div class="tabbable lighttable">
+  <ul class="nav nav-tabs" id="Tabs">
+    <li class="active"><a href="/#tab1" data-toggle="tab" onclick="ChangeCaption(1)">Нзп по участкам</a></li>
+    <li><a href="/#tab2" data-toggle="tab" onclick="ChangeCaption(2)">Диаграмма</a></li>
+  </ul>
+  <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+          <table class="table table-bordered table-condensed" style="margin-top: 5px;">
+              <thead>
+                  <tr>
+                      <th>Участок</th>
+                      <th>Поступило</th>
+                      <th>Сдано</th>
+                      <th>Брак</th>
+                      <th>НЗП</th>
+                      <th>Проценты</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach (var item in (IEnumerable<Crystal.DomainModel.NzpUch>)ViewBag.results)
+                  {
+                      <tr>
+                          <td>@item.Kuch</td>
+                          <td>@item.Pso</td>
+                          <td>@item.Sdo</td>
+                          <td>@item.Brk</td>
+                          <td>@item.Kpls</td>
+                          <td>@item.Percs</td>
+                      </tr>
+                  }
+              </tbody>
+          </table>
+      </div>
+      <div class="tab-pane" id="tab2">
+          <div id="AreaNzpDiagrammChart" class="jqplot-target loader" style="width: 960px; height: 500px;"></div>
+      </div>
+  </div>
+</div>

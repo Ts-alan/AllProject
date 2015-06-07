@@ -1,0 +1,44 @@
+﻿<div class="navbar" style="font-size: 16px; height: 40px">
+
+    <ul id="menu_wrap" class="nav l_Blue ">
+
+        @if (HttpContext.Current.User.IsInRole("plant43") || HttpContext.Current.User.IsInRole("plant47"))
+        {
+            <li class="dropdown button" style="border-right: 1px solid #ffffff"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Филиал "Транзистор"<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    @if (HttpContext.Current.User.IsInRole("plant43"))
+                    {<li>@Html.ActionLink("Производство №3", "Production", "Transistor", new { plant = "plant43" }, new { Class = "navigator" })</li>}
+                    @if (HttpContext.Current.User.IsInRole("plant47"))
+                    {<li>@Html.ActionLink("Производство №4", "Production", "Transistor", new { plant = "plant47" }, new { Class = "navigator" })</li>}
+                </ul>
+            </li>
+        }
+        @if (HttpContext.Current.User.IsInRole("plant12") || HttpContext.Current.User.IsInRole("plant20"))
+        {
+            <li class="dropdown button" style="border-right: 1px solid #ffffff"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Филиал "ЗПП"<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    @if (HttpContext.Current.User.IsInRole("plant12"))
+                    {<li>@Html.ActionLink("Производство №12", "Production", "Transistor", new { plant = "plant12" }, new { Class = "navigator" })</li>}
+                    @if (HttpContext.Current.User.IsInRole("plant20"))
+                    {<li>@Html.ActionLink("Производство №20", "Production", "Transistor", new { plant = "plant20" }, new { Class = "navigator" })</li>}
+                </ul>
+            </li>
+        }
+        @if (HttpContext.Current.User.IsInRole("bms"))
+        {
+            <li>@Html.ActionLink("НТЦ Белмикросистемы", "Production", "Transistor", new { plant = "bms" }, new { Class = "navigator" })</li>
+        }
+
+
+        <li class="dropdown button" style="float: right; margin-right: 45px"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="caret"></i>Вы вошли как @Context.User.Identity.Name<b class=""></b></a>
+            <ul class="dropdown-menu">
+                @if (HttpContext.Current.User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("Управление пользователями", "UsersManagment", "Admin", null, new { Class = "navigator" })</li>
+                }
+                <li>@Html.ActionLink("Личный кабинет пользователя", "Cabinet", "User", new { plant = "" }, new { Class = "navigator" })</li>
+                <li>@Html.ActionLink("Выйти из рабочей программы   ", "LogOff", "Home")</li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Crystal.DomainModel.PribKplsForDay>
+
+@{
+    ViewBag.Title = "Кол-во передач за сутки";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+@Html.Hidden("PageTitle", "Кол-во передач за месяц")
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#pribKplsForDay").freezeTable({  
+            'autoHeight': false
+        });
+    });
+    var $objKpr;
+    $('.PribKplsForDay2').live("click", function () {
+        if (typeof $objKpr != 'undefined') {
+            $objKpr.closest('tr').css("background-color", "white");
+        }
+        $objKpr = $(this);
+        $objKpr.closest('tr').css("background", "#ADDEFF");
+
+    });
+
+    function GetPrib() {
+        $('#Prib_Table2').removeClass("loader1");
+        
+       
+    }
+    function load(n) {
+        $("#Prib_Table" + n).html("");
+        $("#Prib_Table" + n).addClass("loader1");
+    }
+</script>
+<h4>Кол-во передач за сутки</h4>
+<div class="container-fluid lighttable center" style="float: left">
+    <div style="float:left">
+        <div>
+            <table id="pribKplsForDay" class="table table-bordered table-condensed center" style="width:auto">
+                <colgroup>
+                    <col style="width: 50px" />
+                    <col style="width: 90px" />
+                    <col style="width: 80px" />      
+            </colgroup>
+                <thead >
+                    <tr>
+                        <th>Код прибора</th>
+                        <th>Наименование прибора</th>
+                        <th>Количество передач </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Kpr</td>
+                            <td>@item.Napr</td>
+                            <td>@Ajax.ActionLink(item.KplsForDay, "GangPribKplsForDay", new { kpr = item.Kpr }, new AjaxOptions { UpdateTargetId = "Prib_Table2", OnBegin = "load(2)", OnSuccess = "GetPrib()" }, new { Class = "PribKplsForDay2" })</td>
+                        </tr>
+            
+                    }
+                </tbody>
+            </table>
+       </div>
+    </div>
+</div>
+<div id="Prib_Table2" class="Print-Content" style=" float: left; margin-left: 10px;">
+    </div>

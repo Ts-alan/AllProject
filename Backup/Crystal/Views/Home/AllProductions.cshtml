@@ -1,0 +1,16 @@
+﻿@model Crystal.Models.View.AllProductions
+<h3>НЗП по производствам: Кол-во партий (кол-во пластин)</h3>
+<ul>
+    @if (@User.IsInRole("plant43")){
+    <li> 3: @Model.nzp43</li>
+    }
+    @if (@User.IsInRole("plant47")){
+    <li> 4: @Model.nzp47</li>
+    }
+    @if (@User.IsInRole("plant12")){
+    <li>12: @Model.nzp12</li>
+    }
+    @if (@User.IsInRole("plant20")){
+    <li>20: @Model.nzp20</li>
+    }
+</ul>

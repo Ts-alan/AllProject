@@ -1,0 +1,59 @@
+﻿<link href="@Url.Content("~/Content/jquery.jqplot.min.css")" rel="stylesheet" type="text/css" />
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]--> 
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jqplot.min.js")" ></script>
+<script src="@Url.Content("~/Scripts/jqPlot_Full.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<div>
+@Html.Partial("DateSelection","MyApp") 
+</div>
+<h3 id="period"></h3>
+<div id="PribStatus1" style="display: none; color: red; font-weight: bold" class="loader"></div>
+
+<div id="PribData1" class="jqplot-target" style="width: 960px; height: 1524px;"/>
+
+<script type="text/javascript">
+    MyApp.run = function (parameters) {
+        $.ajax({
+            url: '@Url.Action(ViewBag.Action, ViewBag.Controller)',
+            type: 'POST',
+            data: { fdate: parameters.fdate, sdate: parameters.sdate, indnumb: parameters.indnumb },
+            beforeSend: function () { $("#PribStatus1").show(); $("#PribData1").html(""); },
+            success: function (result) {
+                $("#PribStatus1").hide();
+                makingPlot(result.Kpls, result.Ust);
+            },
+            error: function () { $("#PribStatus1").hide(); $("#PribData1").html("Возникла непредвиденная ошибка!!!"); }
+        });
+    }
+    function makingPlot(data, labels) {
+        plotOptions = {
+            animate: true,
+            animateReplot: true,
+            seriesDefaults: {
+                label: "Брак",
+                renderer: $.jqplot.BarRenderer,
+                pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                shadowAngle: 135,
+                rendererOptions: {
+                    barDirection: 'horizontal',
+                    highlightMouseDown: true
+                }
+            },
+            axes: {
+                xaxis: {
+                    tickOptions: { angle: 30 }
+                },
+                yaxis: {
+                    label: "Установки",
+                    ticks: labels,
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                }
+            }
+        };
+
+        plot = $.jqplot('PribData1', [data], plotOptions);
+        plot.replot();
+    }
+    
+</script>

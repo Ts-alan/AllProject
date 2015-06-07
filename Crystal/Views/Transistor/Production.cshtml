@@ -1,0 +1,180 @@
+﻿@using Crystal.DomainModel;
+@model Crystal.DomainModel.TransistorViewModel
+@{
+    ViewBag.Title = string.Format("Производство №{0}", Model.PlantNumber); // "Данные по производству №" + Model.PlantNumber;//Сработает при "прямом" запросе
+    //Layout = Request.IsAjaxRequest() == false ? "~/Views/Shared/_Layout.cshtml" : null;
+    const int rowCount = 10;
+    DateTime now = DateTime.Now;
+    int malfunctionCount = Model.ModuleMap.MalfunctionCount;
+    //string number = MvcApplication.Models.FoxRepo.GetProductionNumber();
+    bool ShowProd2Data = Model.ShowProd2Data;
+    
+}
+
+
+
+<h1>@ViewBag.Title</h1>
+<table class="table table-bordered table-condensed center ">
+    <thead>
+            <tr>
+                <th>НЗП(на начало месяца)</th>
+                @if(ShowProd2Data) {
+                <th>НЗП(на начало месяца)[пр-во №2]</th>
+                }
+                <th>Сформировано</th>
+                <th>НЗП(текущее)</th>
+                <th>Кол-во передач за сутки</th>
+                <th>Кол-во передач за месяц</th>
+                @if(ShowProd2Data) {
+                <th>НЗП(текущее)[пр-во №2]</th>
+                }
+                <th>Брак</th>
+                @if(ShowProd2Data) {
+                <th>Брак[пр-во №2]</th>
+                }
+                <th>Сдано</th>
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AllNzps)
+        {
+            <tr>
+                <td>@item.Nzp</td>
+                @if(ShowProd2Data) {
+                <td>@item.NzpPr2</td>
+                }
+                <td>@item.Sform</td>
+                <td>@Html.ActionLink(item.NowNzp.ToString(), "NzpPrib", "Otch", null, new { Class = "navigator" })</td>
+                <td>@Html.ActionLink(item.KplsForDay.ToString(), "PribKplsForDay", "Otch", null, new { Class = "navigator" })</td>
+                <td>@Html.ActionLink(item.KplsForMount.ToString(), "PribKplsForMonth", "Otch", null, new { Class = "navigator" })</td>
+                @if(ShowProd2Data) {
+                <td>@Html.ActionLink(item.NowNzpPr2.ToString(), "NZPFor2Plant", "Otch", null, new { Class = "navigator" })</td>
+                }
+                <td>@Html.ActionLink(item.Kpls.ToString(), "DefectsDistr", "Otch", new { fdate = new DateTime(now.Year, now.Month, 1).ToLongDateString(), sdate = now.ToLongDateString() }, new { Class = "navigator" })</td>
+                @if(ShowProd2Data) {
+                <td>@Html.ActionLink(item.KplsPr2.ToString(), "DefectsDistrFor2Plant", "Otch", new { fdate = new DateTime(now.Year, now.Month, 1).ToLongDateString(), sdate = now.ToLongDateString() }, new { Class = "navigator" })</td>
+                }
+                <td>@Html.ActionLink(item.Sdo.ToString(), "GetCycle", "Cycles", new { fdate = new DateTime(now.Year, now.Month, 1).ToLongDateString(), sdate = now.ToLongDateString() }, new { Class = "navigator" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table style="margin-left: 10px" cellspacing="5">
+    @*   // <tbody>*@
+    <tr>
+        <td>Легенда:</td>
+        <td>
+            <div class="stateDiv InWork"></div>
+            Работает</td>
+        <td>
+            <div class="stateDiv InRepair"></div>
+            В ремонте</td>
+        <td>
+            <div class="stateDiv InRestWithWork"></div>
+            В ожидании запуска</td>
+        <td>
+            <div class="stateDiv InRest"></div>
+            Нечего запускать</td>
+    </tr>
+    @*    //</tbody>*@
+</table>
+
+
+
+
+<script type="text/javascript">
+@*    $.get('@Url.Action("Sidemenu", "Home")').success(function (result) { $('#SideMenu').html(result); });
+    $('#SideMenu').show();*@
+
+    $(document).ready(function () {
+
+        $("[rel=tooltip]").tooltip({
+            html: true
+        });
+    });
+
+</script>
+
+<table class="table table-bordered table-condensed" style="table-layout:fixed">
+    <thead>
+        <tr>
+            <th>Коридор</th>
+            <th colspan="@rowCount" style="text-align: center">Оборудование
+            @if (malfunctionCount > 0)
+            {
+                <span>(@Html.ActionLink("текущие ремонты", "StandEquipment", "Facility", null, new { style = " background-color:#ff9900;border-radius:100px", Class = "navigator", rel = "tooltip", title = "В ремонте " + malfunctionCount + " установок" }))</span>
+            }
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ModuleMap.corridors)
+        {
+            int count = item.equipments.Count();
+            int cnt = count % rowCount == 0 ? count / rowCount : count / rowCount + 1;
+            int j = 0;
+            for (int i = 0; i < cnt; i++)
+            {
+            <tr>
+                @if (i == 0)
+                {
+                    <td style="width: 9%" rowspan="@cnt" align="center">@item.Name</td>
+                }
+                @for (int k = j; k < j + rowCount; k++)
+                {
+                    Equipment currentEquipment =  k < count ? item.equipments.ElementAt(k):null;
+                    string s = k < count ? currentEquipment.ShortName : "";
+                    string divStyle = "";
+                    if (k < count)
+                    {
+                        switch (currentEquipment.StateCode)
+                        {
+                            case "z":
+                                divStyle = "InWork";
+                                break;
+                            case "r":
+                                divStyle = "InRepair";
+                                break;
+                            case "p":
+                                if (currentEquipment.SumInfo.Wait > 0 && currentEquipment.SumInfo.Nzp <= 0)
+                                {
+                                    divStyle = "InRestWithWork";
+                                }
+                                else
+                                {
+                                    divStyle = "InRest";
+                                }
+                                break;
+                            default: divStyle = "";
+                                break;
+                        }
+                    }
+
+                    <td align="center" style="width: 9%">
+                        @if (s != "")
+                        {
+                            <div class="stateDiv @divStyle"></div>
+                            @Html.ActionLink(currentEquipment.ShortName, "Details", "Facility", new
+                           {
+                               KUS = currentEquipment.Code,
+                               KGT = (currentEquipment.TechGroupCode)
+                           }
+                                , new
+                                {
+                                    rel = "tooltip",
+                                    title = "НЗП по установке: " + currentEquipment.SumInfo.Nzp.ToString()
+                                    + "<br>" + " Ждут: " + currentEquipment.SumInfo.Wait.ToString(),
+                                    Class = "navigator"
+                                }
+                           );
+                        }
+                    </td>
+                }
+            </tr>
+                j = j + rowCount;
+            }
+        }
+    </tbody>
+</table>

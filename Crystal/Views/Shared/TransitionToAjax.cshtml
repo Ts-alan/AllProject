@@ -1,0 +1,11 @@
+﻿<script type="text/javascript">
+$(document).ready(function () {
+if (@ViewBag.ind.ToString().ToLower() == true) {
+             $objKpr = $(".@ViewBag.kpr");
+               $objKpr.click();
+               $objKpr.closest('tr').css("background-color", "#ADDEFF");
+               destinationDiv = $(".freezetable-body").offset().top;
+               destinationTr = $objKpr.offset().top;
+               $("Html,body div").animate({ scrollTop: destinationTr - destinationDiv - $(".freezetable-body").height() * 0.4 }, 500);
+}  });
+    </script>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Crystal.DomainModel.NzpPrib>
+@{
+    Layout = !Request.IsAjaxRequest() ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+@Html.Partial("Freeztable")
+<div>
+    <input type="checkbox" id="showAll" /><label for="showAll" style="display: inline">Показать все операции маршрута</label>
+    <table id="getnzp" class="table table-bordered table-condensed freeztable" style="width: auto">
+        <colgroup>
+            <col style="width: 65px" />
+            <col style="width: 115px" />
+            <col style="width: 40px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Номер операции </th>
+                <th>Наименование операции</th>
+                <th>НЗП </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var rowClass = (item.Nzp == 0 ? "class=HidedRow" : "");
+                <tr id="@item.Nop" @rowClass >
+                    <td>@item.Nop</td>
+                    <td>@item.Naop</td>
+                    @if (item.Nzp == 0)
+                    {
+                        <td>@item.Nzp</td>
+                    }
+                    else
+                    {
+                        <td>@Ajax.ActionLink(item.Nzp.ToString(), "GetFromNzp", new { kpr = ViewBag.kpr, nop = item.Nop }, new AjaxOptions { UpdateTargetId = "Prib_Table3", InsertionMode = InsertionMode.Replace, OnBegin = "load(3)", OnSuccess = "toTable", OnFailure = "AjaxError" }, new { Class = "OperationNzpClick" })</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#showAll").click(function () {
+            $(".HidedRow").toggle();
+        });
+    });
+</script>

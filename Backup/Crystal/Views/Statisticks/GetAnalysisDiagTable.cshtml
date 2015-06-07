@@ -1,0 +1,43 @@
+﻿
+@using Crystal.Models
+@model IEnumerable<Crystal.DomainModel.GetAnalysisDiag>
+
+@{
+    ViewBag.Title = "GetAnalysisDiagTable";
+    Layout = null;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#GetAnalysisTable").freezeTable({
+            'autoHeight': false
+        });
+    });
+</script>
+
+<div  id="switchTable"  style="margin-left: 200px" >
+    
+    <table id="GetAnalysisTable" class="table table-bordered table-condensed" style="width: auto" >
+        <colgroup>
+            <col style="width: 70px" />
+            <col style="width: 100px" />
+            <col style="width: 120px" />      
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Количество пластин</th>
+                <th>Коффициент оборачивоемости</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in (IEnumerable<Crystal.DomainModel.GetAnalysisDiag>)Model)
+        {
+            <tr>
+                <td>@item.Dato.Substring(0,10)</td>
+                <td>@item.Kpls</td>
+                <td>@item.Kob</td>
+            </tr>
+        }
+        </tbody>   
+    </table>
+</div>

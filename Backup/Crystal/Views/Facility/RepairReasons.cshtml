@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Crystal.DomainModel.EquipmentLoad.RepairReason>
+@{
+    Layout = null;
+}
+@Html.Partial("Freeztable")
+<table id="failreason" class="table table-bordered table-condensed freeztable" style="width: auto">
+    <colgroup>
+        <col style="width: 150px" />
+        <col style="width: 120px" />
+        <col style="width: 60px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Причина</th>
+            <th>Кол-во отказов</th>
+            <th>Часы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var it in Model)
+        {
+            <tr>
+                <td>@it.ReasonName</td>
+                <td>@it.RepairCount</td>
+                <td>@it.DurationH.ToString("F3")</td>
+            </tr>
+        }
+    </tbody>
+</table>

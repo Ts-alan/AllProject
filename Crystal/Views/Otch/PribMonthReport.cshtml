@@ -1,0 +1,171 @@
+﻿@using Crystal.Models
+@using MvcApplication.Models
+@model IEnumerable<Crystal.DomainModel.SimplePribList>
+
+@{
+    string prodN = ViewBag.prodN;
+
+    int userId = ViewBag.userId;
+    ViewBag.Title = "Отчёт по приборам за месяц";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+@Html.Hidden("PageTitle", "Отчёт по приборам за месяц")
+@Html.Partial("DeviceScript")
+@Html.Partial("Freeztable")
+@Html.Partial("TransitionToAjax")
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+    $('#SideMenu').show();
+     var  $objKpr, $objNfl, $objNop;
+     $(document).ready(function () {
+
+     
+         $('.PribMountPeport').live("click", function() {
+             if (typeof $objKpr != 'undefined') {
+                 $objKpr.closest('tr').css("background-color", "white");
+             }
+             $objKpr = $(this);
+             $objKpr.closest('tr').css("background", "#ADDEFF");
+
+         });
+         $('.GetDataBySelectedPrib').live("click", function () {
+             if (typeof $objNfl != 'undefined') {
+                 $objNfl.closest('tr').css("background-color", "white");
+             }
+             $objNfl = $(this);
+             $objNfl.closest('tr').css("background", "#ADDEFF");
+            
+         });
+ 
+     });
+    function load(n) {
+        for (var i = n; i <= 3; i++) {
+            $("#PribMonthRepordData" + i).html("");
+        }
+        $("#PribMonthRepordData" + n).addClass("loader1");    
+    }
+
+    function ShowMe() {
+        //var sel = document.getElementById("selectvalue");
+        //var txt = sel.options[sel.selectedIndex].text;
+        var rows = $("#showTracked").parent().parent().find("tbody > tr");
+        $("#showTracked").removeAttr("checked");
+        var txt = document.getElementById("selectvalue").selectedIndex;
+        //console.log($(".secondId").parent());
+        if (txt == 0) {
+            rows.show();
+           
+           
+        }
+        if (txt == 1) {
+            rows.hide();
+            
+            var t1= $(".secondId").filter(function () {
+                return !($(this).parent().attr("class") == "200");
+            });
+            t1.closest("tr").show();
+            
+        }
+        if (txt == 2) {
+            rows.hide();
+
+            var t2 = $(".secondId").filter(function () {
+                return ($(this).parent().attr("class") == "200");
+            });
+            t2.closest("tr").show();
+           
+        }
+    }
+
+        function ReturnForShowTracked() {
+            //var sel = document.getElementById("selectvalue");
+            //var txt = sel.options[sel.selectedIndex].text;
+            var txt = document.getElementById("selectvalue").selectedIndex;
+            var rows = $("#showTracked").parent().parent().find("tbody > tr");
+        
+            if (txt == 0) {
+                return rows;
+
+            }
+            if (txt == 1) {
+         
+                var t1 = $(".secondId").filter(function () {
+                    return !($(this).parent().attr("class") == "200");
+                });
+                return t1.closest("tr");
+            }
+            if (txt == 2) {
+          
+                var t2 = $(".secondId").filter(function () {
+                    return ($(this).parent().attr("class") == "200");
+                });
+                return t2.closest("tr");
+            }
+        }
+
+        $(document).ready(function () {
+            $("#showTracked").click(function () {
+
+                var rows = ReturnForShowTracked();
+                if ($(this).attr('checked')) {
+
+                    rows.hide();
+                    rows.find(".Tracked").closest("tr").show();
+                } else rows.show();
+
+            });
+        });
+</script>
+
+<div class="lighttable center">
+    <div >
+        <h4>Отчёт по приборам производства №@prodN<span id="prib"></span></h4>
+    </div>
+    <div style="float:left">
+        <div style="float:left" > <input type="checkbox" id="showTracked"  /><label for="showTracked" style="display: inline">Только <img src='../../Content/images/star_active.png'></img> </label></div>
+                @if (prodN == "12")
+{
+    @Html.DropDownList("selectvalue", new SelectList(new[] {"Все диаметры", "Диаметр 150", "Диаметр 200"}), new {onChange = "ShowMe()",style="width:62%;"})
+}
+else
+{
+    @Html.DropDownList("selectvalue", new SelectList(new[] { "Все диаметры", "Диаметр 150", "Диаметр 200" }), new { onChange = "ShowMe()",style="display: none" })
+}
+        <table id="pribMoounth" class="table table-bordered table-condensed freeztable" style="width: auto;clear: left">
+            <colgroup>
+                <col style="width: 25px" />
+                <col style="width: 30px" />
+                <col style="width: 150px" />
+                <col style="width: 30px" />      
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Код</th>
+                    <th>Наименование прибора</th>
+                    <th>НЗП</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr  class="@item.Diameter">
+                        <td>@Html.TrackThisDevice(item.Kpr, prodN, userId)</td>
+                        <td >@item.Kpr</td>
+                        <td class="secondId">@item.Napr</td>
+                        <td>@Ajax.ActionLink(item.Nzp.ToString(), "GetDataBySelectedPrib", new { selPrib = item.Kpr }, new AjaxOptions { UpdateTargetId = "PribMonthRepordData2", InsertionMode = InsertionMode.Replace, OnBegin = "load(2)", OnSuccess = "AjaxSuccessEnd(2,'" + @item.Napr + "')", OnFailure = "AjaxError()" }, new { @class = "PribMountPeport "+item.Kpr})</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+   
+    
+    <div id="PribMonthRepordData2" style="float: left;width:479px;  padding-left: 9px;*padding-left: 5px;margin-bottom: 20px"></div>
+    <div id="PribMonthRepordData3" style="float: left;width:490px;margin-bottom: 20px"></div>
+
+</div>
+

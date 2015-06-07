@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="row-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="/#tabDay" data-toggle="tab">За сутки</a></li>
+        <li><a href="/#tabShift" data-toggle="tab">За смену</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tabDay">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <td>Название участка</td>
+                        <td>Поступило</td>
+                        <td>Сдано</td>
+                        <td>НЗП</td>
+                        <td>Коэф. передачи</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<Crystal.DomainModel.ReportsDayAll>)ViewBag.forDay)
+                    {
+                        <tr>
+                            <td>@item.Nuch</td>
+                            <td>@item.Income</td>
+                            <td>@item.Processed</td>
+                            <td>@item.Nzp</td>
+                            <td>@item.TrCof</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane" id="tabShift">
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>Название участка</th>
+                    <th>Смена</th>
+                    <th>Поступило</th>
+                    <th>Сдано</th>
+                    <th>НЗП</th>
+                    <th>Коэф. передачи</th>
+                </tr>
+                @foreach (var item in (IEnumerable<Crystal.DomainModel.ReportShiftAll>) ViewBag.forShift)
+                {
+                    <tr>
+                        <td>@item.Nuch</td>
+                        <td>@item.Shift</td>
+                        <td>@item.Income</td>
+                        <td>@item.Processed</td>
+                        <td>@item.Nzp</td>
+                        <td>@item.TrCof</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿<div class="navbar navbar-static" style="z-index: 1">
+    <div>
+        <ul class="nav">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-book"></i> Отчёты<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("НЗП по прибору", "NzpPrib", "Otch", null, new { Class = "navigator" })</li>
+                    @*<li>@Html.ActionLink("НЗП по фотолитографии", "NzpFlit", "Otch", null, new { Class = "navigator" })</li>*@
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Отчёт по приборам за месяц", "PribMonthReport", "Otch", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Отчёт по браку за месяц", "Defect", "Otch", null, new { Class = "navigator" })</li>
+                    <li class="divider"></li>
+                    <!-- <li>@Html.ActionLink("Отчёт за сутки/смену", "DayReports", "Otch", null, new { Class = "navigator" })</li>-->
+                    @*<li>@Html.ActionLink("Отчёт по кристаллам", "CrystalForm", "Otch", null, new { Class = "navigator" })</li>*@
+                </ul></li>
+
+            <li class="dropdown"><a href="@Url.Action("Cycle","Cycles")" class="dropdown-toggle navigator" style="color:black"><span class="icon-retweet"></span> Циклы</a>
+
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-tasks"></i> Статистика<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Распределение брака", "ParetoDiag", "Statisticks", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Анализ движения", "Form", "Statisticks", null, new { Class = "navigator" })</li>
+                </ul></li>
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-hdd" ></i> Оборудование<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Загрузка оборудования", "MZagrs", "Facility", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Динамика загрузки", "Dynamics", "Equipment", null, new { Class = "navigator" })</li>
+                    <li>@Html.ActionLink("Отчет о работе по бригадам", "MZagrsBrig", "Facility", null, new { Class = "navigator" })</li>
+                </ul></li>
+                      
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color:black"><i class="icon-asterisk"></i> Участки<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("НЗП по участкам", "AreaNzp", "Facility", new { pr = "производство(завод/филиал)" }, new { Class = "navigator" })</li>
+                </ul></li>
+        </ul>
+        <div id="PrtSearch" style="padding-left: 10px;float:right; margin-right:45px">
+         @using (Html.BeginForm("PrtSearch", "Facility", FormMethod.Post, new { style = "height: 30px" }))
+         {
+             <div class="ui-widget">
+                 <input id="tags" type="text" placeholder="Поиск партии по №" title="Поиск партии по №" autocomplete="off" name="query" style="margin-top: 5px"/>
+                 <img id="smbt" class="imgOnTexBox" src="@Url.Content("~/Content/images/search_icon1.png")" style="max-width:none" alt=""/>
+             </div>
+         }
+         </div>
+    </div>
+</div>
+
+<style>
+  .ui-autocomplete {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+  }
+  </style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#smbt").click(function () {
+            $("#PrtSearch #tags").focus();
+        });
+        $("#tags").autocomplete({
+            source: function (request, response) {
+                $.post('@Url.Action("SearchRes", "Facility")',
+                                    { "query": request.term },
+                                    function (data) {
+                                        var list = eval("(" + data + ")");
+                                        response(list);
+                                    });
+            },
+            delay: 200,
+            maxHeight: 100,
+            select: function () {
+                setTimeout(function () {
+                    $('#PrtSearch form').get(0).submit();
+                    
+                }, 0);
+            }
+        });
+    });
+    </script>

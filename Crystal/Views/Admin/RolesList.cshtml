@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Crystal.Models.Role>
+           
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-condensed" id="Admin_RolesList">
+    <thead>
+        <tr>
+            <th>Название роли</th>
+            <th>Действия</th>
+        </tr>
+    </thead> 
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.RoleName</td>
+                <td><a data-ajax="true" data-ajax-complete="delRole('@role.RoleName')" href="#">Удалить</a></td> 
+            </tr>
+        }
+    </tbody>
+</table>

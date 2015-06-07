@@ -1,0 +1,3 @@
+﻿<%@ ServiceHost Language="C#"
+    Service="System.Web.ApplicationServices.AuthenticationService"
+    Debug="true" %>

@@ -1,0 +1,98 @@
+﻿@using MvcApplication.Models
+@using Crystal.Models
+
+@{
+    ViewBag.Title = "Загрузка по месяцам";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    DateTime Now = DateTime.Now.ToUniversalTime();
+}
+
+
+@Html.Hidden("PageTitle", "Загрузка по месяцам")
+
+<script src="@Url.Content("~/Scripts/CommonScripts.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/LightLink.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $.get('@Url.Action("Sidemenu","Home")').success(function (result) { $('#SideMenu').html(result); });
+
+    $('#SideMenu').show();
+    var Month, Year, monthCounter, yearCounter;
+    //var url, $objKpr, $objNop;
+    $(document).ready(function () {
+
+        $(".freez11").freezeTable({
+         'height': 300,
+            'autoHeight': false
+
+        });
+
+
+        var fullDate = new Date();
+        Month = fullDate.getMonth();
+        Year = fullDate.getFullYear();
+        monthCounter = Month;
+        yearCounter = Year;
+        $('input[type=button]').eq(1).attr('disabled', true);
+    });
+
+
+
+    function GetData(month, year) {
+        $.ajax({
+            url: '@Url.Action("MzagrFor")',
+            type: 'GET',
+            data: { Month: (month + 1), Year: year },
+            beforeSend: function () { AjaxBegin(); },
+            success: function (result) {
+                $("#MZagrData").html(result);
+                AjaxSuccessEnd();
+            },
+            error: function () { AjaxError(); }
+        });
+    }
+
+</script>
+<h3>Отчет о работе по бригадам производства №@ViewBag.Prn @ViewBag.Period</h3>
+<div  class="container-fluid lighttable " >
+    <div style="float: left">
+        <div>
+            <table  id="MZagrData" style="width: auto" class="table table-bordered table-condensed center freez11" >
+                 <colgroup>
+                        <col style="width:130px" />
+                        <col style="width: 60px" />
+                        <col style="width: 60px" />  
+                        <col style="width: 90px" />      
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Бригада</th>               
+                        <th>Сдано пластин</th>
+                        <th>Ремонт в часах</th>
+                        <th>Коэф. раб. оборудования</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<Crystal.DomainModel.LoadMth>)ViewBag.result)
+                    {
+                        <tr>
+                            <td >@Ajax.ActionLink(item.Kuch, "MZagrBrigNumb", "Facility", new { Numb = item.Numb }, new AjaxOptions() { UpdateTargetId = "Numb" }, new { Class = "MZagrBrig lagting" }) </td>
+                   
+                            <td >@item.Kpls</td>
+                            <td>@item.RepH                  
+                            </td>
+                            <td >@item.KrObr.ToString("F3")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="width: 500px; float: left;margin-left: 10px;"   id="Numb"></div>
+            
+        
+    @* else
+    {
+            <h2>Нету данных для отображения!!!</h2>
+    }
+    }*@
+</div>

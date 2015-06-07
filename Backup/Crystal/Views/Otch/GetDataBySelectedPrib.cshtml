@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Crystal.DomainModel.MonthReportData>
+           
+@{
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+
+}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#getData").freezeTable({
+            'autoHeight': false
+
+        });
+    });
+    </script>
+<div>
+    <table id="getData" class="table table-bordered table-condensed" style="width: auto">
+        <colgroup>
+                <col style="width: 60px" />
+                <col style="width: 120px" />
+                <col style="width: 65px" />  
+                <col style="width: 50px" />
+                <col style="width: 50px" />      
+                <col style="width: 70px" />
+                <col style="width: 40px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="2">Технологическая операция</th>
+                <th></th>
+            </tr>
+            <tr>
+                 
+                <th>Код</th>
+                <th>Наименование</th>
+                <th>Поступило</th>
+                <th>Сдано</th>
+                <th>Брак</th>
+                <th>% Выхода</th>
+                <th>НЗПФ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td >@item.Nop</td>
+                    <td >@item.Naop</td>
+                    <td>@item.In</td>
+                    <td >@item.Out</td>
+                    <td>@if (item.Brk == "0")
+                        {
+                            @item.Brk
+                        }
+                        else
+                        {
+                            @Ajax.ActionLink(item.Brk, "PribMonthRepordBrak", new { nop = item.Nop }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "GET", UpdateTargetId = "PribMonthRepordData3", OnBegin = "load(3)", OnSuccess = "AjaxSuccessEnd(3)" }, new { @class = "GetDataBySelectedPrib" })
+                        }
+                    </td>
+                    <td >@item.OutPer</td>
+                    <td >@if (item.Nzpf == "0")
+                         {
+                             @item.Nzpf
+                         }
+                         else
+                         {
+                             @Ajax.ActionLink(item.Nzpf, "GetFromNzp", new { nop = item.Nop,kpr=TempData.Peek("PribK") }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "GET", UpdateTargetId = "PribMonthRepordData3", OnBegin = "load(3)", OnSuccess = "AjaxSuccessEnd(3)" },new { @class = "GetDataBySelectedPrib" })
+                         }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

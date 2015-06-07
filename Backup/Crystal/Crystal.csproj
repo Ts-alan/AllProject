@@ -1,0 +1,671 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5ACBF771-3FEF-4285-AC6B-CD87F4BC569F}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Crystal</RootNamespace>
+    <AssemblyName>CrystalDataMart</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>true</MvcBuildViews>
+    <BaseIntermediateOutputPath>../build</BaseIntermediateOutputPath>
+    <UseIISExpress>true</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <DeployIisAppPath>R.M.S.</DeployIisAppPath>
+    <DeployEncryptKey>Пароль для шифрования используется только в том случае, если параметры развертывания отмечены как безопасные</DeployEncryptKey>
+    <PublishDatabases>false</PublishDatabases>
+    <DesktopBuildPackageLocation>..\..\Verst.zip</DesktopBuildPackageLocation>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.1\lib\net40\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.3.0.20105.1\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.1.0.20105.408\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BackEndServicesController.cs" />
+    <Compile Include="Controllers\CyclesController.cs" />
+    <Compile Include="Controllers\EquipmentController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FacilityController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OtchController.cs" />
+    <Compile Include="Controllers\StatisticksController.cs" />
+    <Compile Include="Controllers\TransistorController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\LogActionAttribute.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\AccountsProcessing.cs" />
+    <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Batch.cs" />
+    <Compile Include="Models\BatchWatcherService.cs" />
+    <Compile Include="Models\BusinessLogic.cs" />
+    <Compile Include="Models\DeviceService.cs" />
+    <Compile Include="Models\Equipment.cs" />
+    <Compile Include="Models\EquipmentModels.cs" />
+    <Compile Include="Models\FacilityModels.cs" />
+    <Compile Include="Models\models_pr.cs" />
+    <Compile Include="Models\OtchModels.cs" />
+    <Compile Include="Models\TrackingService.cs" />
+    <Compile Include="Models\SiteAccounts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteAccounts.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TableAdapterExtensions.cs" />
+    <Compile Include="Models\TransistorModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\View\AllProductions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\URP_DB.mdb" />
+    <Content Include="Content\AlterCSS.css" />
+    <Content Include="Content\bootstrap-changed.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\font-awesome-ie7.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\fon.jpg" />
+    <Content Include="Content\images\fon_new.jpg" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\grey.jpg" />
+    <Content Include="Content\images\icons\Plant_12.png" />
+    <Content Include="Content\images\icons\Plant_20.png" />
+    <Content Include="Content\images\icons\Plant_3.png" />
+    <Content Include="Content\images\icons\Plant_4.png" />
+    <Content Include="Content\images\icons\targetBlank.png" />
+    <Content Include="Content\images\ie_habr.png" />
+    <Content Include="Content\images\IE_Troll.jpg" />
+    <Content Include="Content\images\SiteEntry\Footer.jpg" />
+    <Content Include="Content\images\loader2.gif" />
+    <Content Include="Content\images\Plotsmale2.png" />
+    <Content Include="Content\images\sand_timer.png" />
+    <Content Include="Content\images\search_icon.png" />
+    <Content Include="Content\images\search_icon1.png" />
+    <Content Include="Content\images\Smenu.jpg" />
+    <Content Include="Content\images\WorkWait.jpg" />
+    <Content Include="Content\images\star_active.png" />
+    <Content Include="Content\images\star_passive.png" />
+    <Content Include="Content\images\timer.png" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\images\work.gif" />
+    <Content Include="Content\images\wrenchs.png" />
+    <Content Include="Content\images\grayfon.jpg" />
+    <Content Include="Content\images\repair.png" />
+    <Content Include="Content\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Content\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Content\jquery.jqplot.min.css" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\Main.css" />
+    <Content Include="Content\print.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\ui.jqgrid.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\accordion.js" />
+    <Content Include="Scripts\bootstrap-collapse.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\CommonScripts.js" />
+    <Content Include="Scripts\DatePickerRus.js" />
+    <Content Include="Scripts\excanvas.js" />
+    <Content Include="Scripts\excanvas.min.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\adapters\mootools-adapter.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\adapters\mootools-adapter.src.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\adapters\prototype-adapter.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\adapters\prototype-adapter.src.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\highcharts.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\highcharts.src.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\modules\canvas-tools.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\modules\exporting.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\modules\exporting.src.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\themes\dark-blue.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\themes\dark-green.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\themes\gray.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\themes\grid.js" />
+    <Content Include="Scripts\Highcharts-2.2.1\js\themes\skies.js" />
+    <Content Include="Scripts\history.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.barRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.barRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.BezierCurveRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.BezierCurveRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.blockRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.blockRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.bubbleRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.bubbleRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasAxisLabelRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasAxisLabelRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasAxisTickRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasAxisTickRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasOverlay.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasOverlay.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasTextRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.canvasTextRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.categoryAxisRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.categoryAxisRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.ciParser.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.ciParser.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.cursor.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.cursor.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.dateAxisRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.dateAxisRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.donutRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.donutRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.dragable.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.dragable.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.enhancedLegendRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.enhancedLegendRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.funnelRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.funnelRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.highlighter.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.highlighter.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.logAxisRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.logAxisRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mekkoAxisRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mekkoAxisRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mekkoRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mekkoRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.meterGaugeRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.meterGaugeRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mobile.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.mobile.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.ohlcRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.ohlcRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pieRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pieRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pointLabels.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pointLabels.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidAxisRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidAxisRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidGridRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidGridRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidRenderer.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.pyramidRenderer.min.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.trendline.js" />
+    <Content Include="Scripts\jqPlotPlugins\jqplot.trendline.min.js" />
+    <Content Include="Scripts\jqPlot_Full.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-ui-i18n.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.freezetable.js" />
+    <Content Include="Scripts\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\jquery.jqplot.min.js" />
+    <Content Include="Scripts\jquery.tabify.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\LightLink.js" />
+    <Content Include="Scripts\lighttable.js" />
+    <Content Include="Scripts\json2.js" />
+    <Content Include="Scripts\modernizr-1.7.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\Navigator.js" />
+    <Content Include="Scripts\ScrolFolow.js" />
+    <Content Include="Scripts\table-focus_color.js" />
+    <Content Include="Scripts\Tooltip.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Facility\GetPrib.cshtml" />
+    <Content Include="Views\Facility\GetBrak.cshtml" />
+    <Content Include="Views\Otch\GetFromNzpFlit2.cshtml" />
+    <Content Include="Views\Otch\DayReports.cshtml" />
+    <Content Include="Views\Otch\GetByUch.cshtml" />
+    <Content Include="Views\Otch\GetAllUch.cshtml" />
+    <Content Include="Views\Facility\ReasonsByUst.cshtml" />
+    <Content Include="Views\Facility\MzagrFor2.cshtml" />
+    <Content Include="Views\Otch\Crystals.cshtml" />
+    <Content Include="Views\Otch\DefectsDistr.cshtml" />
+    <Content Include="Views\Otch\DefectsDistrOperations.cshtml" />
+    <Content Include="Views\Otch\DefectsDistrData.cshtml" />
+    <None Include="Properties\PublishProfiles\Crystall.pubxml" />
+    <None Include="Properties\PublishProfiles\LocalFolder.pubxml" />
+    <Content Include="Views\Shared\DeviceScript.cshtml" />
+    <Content Include="Views\Shared\Batchscript.cshtml" />
+    <Content Include="Views\Facility\EquipmentLoad.cshtml" />
+    <Content Include="Views\Shared\TransitionToAjax.cshtml" />
+    <Content Include="Views\Facility\RepairReasons.cshtml" />
+    <None Include="Properties\PublishProfiles\Local_temp.pubxml" />
+    <Content Include="Views\Shared\DateForm.cshtml" />
+    <None Include="Properties\PublishProfiles\test_1_51.pubxml" />
+    <Content Include="Views\Shared\FavIconSection.cshtml" />
+    <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceer40EN.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlcecompact40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\sqlceca40.dll" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\README_ENU.txt" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\msvcr90.dll" />
+    <None Include="Content\font\fontawesome-webfont.eot" />
+    <None Include="Content\font\fontawesome-webfont.ttf" />
+    <None Include="Content\font\fontawesome-webfont.woff" />
+    <None Include="Content\font\FontAwesome.otf" />
+    <None Include="Models\SiteAccounts.xsc">
+      <DependentUpon>SiteAccounts.xsd</DependentUpon>
+    </None>
+    <None Include="Models\SiteAccounts.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SiteAccounts.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Models\SiteAccounts.xss">
+      <DependentUpon>SiteAccounts.xsd</DependentUpon>
+    </None>
+    <Content Include="Views\Home\SiteEntry.cshtml" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\crystal.pubxml" />
+    <None Include="Properties\PublishProfiles\test.pubxml" />
+    <None Include="Properties\PublishProfiles\testWev.pubxml" />
+    <None Include="Properties\PublishProfiles\test_2003.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Admin\UsersManagment.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\RolesList.cshtml" />
+    <Content Include="Views\Admin\UsersList.cshtml" />
+    <Content Include="Views\Admin\UserRolesList.cshtml" />
+    <Content Include="Views\Statisticks\GetParetoData.cshtml" />
+    <Content Include="Views\Statisticks\GetParetoDiag.cshtml" />
+    <Content Include="Views\Otch\PribMonthReport.cshtml" />
+    <Content Include="Views\Otch\GetDataBySelectedPrib.cshtml" />
+    <Content Include="Views\Otch\PribMonthRepordBrak.cshtml" />
+    <Content Include="Views\Otch\CrystalsByMonth.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Facility\PrtSearchResult.cshtml" />
+    <Content Include="Views\Otch\DefectsDistrByMonth.cshtml" />
+    <Content Include="Views\User\Cabinet.cshtml" />
+    <Content Include="Views\Equipment\LoadDynamics.cshtml" />
+    <Content Include="Views\Admin\ShowLogs.cshtml" />
+    <Content Include="Views\Shared\StError.cshtml" />
+    <Content Include="Views\Home\UserBlockedPage.cshtml" />
+    <Content Include="Views\Cycles\GetCycle.cshtml" />
+    <Content Include="Views\Cycles\ShowDefects.cshtml" />
+    <Content Include="Views\Cycles\ShowGodn.cshtml" />
+    <Content Include="Views\Facility\PrtSearchBag.cshtml" />
+    <Content Include="Views\Equipment\LdPlot1.cshtml" />
+    <Content Include="Views\Equipment\LdPlot1ByMonth.cshtml" />
+    <Content Include="Views\Statisticks\GetAnalysis.cshtml" />
+    <Content Include="Views\Statisticks\GetAnalysisDiag.cshtml" />
+    <Content Include="Views\Statisticks\GetAnalysisDiagTable.cshtml" />
+    <Content Include="Views\Equipment\Dynamics.cshtml" />
+    <Content Include="Views\Facility\StandEquipment.cshtml" />
+    <Content Include="Views\Otch\CrystalForm.cshtml" />
+    <Content Include="Views\Facility\MZagrBrig.cshtml" />
+    <Content Include="Views\Facility\MZagrBrigNumb.cshtml" />
+    <Content Include="Views\Otch\PribKplsForDay.cshtml" />
+    <Content Include="Views\Otch\PribKplsForMonth.cshtml" />
+    <Content Include="Views\Otch\GangPribKplsForDay.cshtml" />
+    <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Shared\IncludeSection.cshtml" />
+    <Content Include="Views\Shared\_SimpleLayout.cshtml" />
+    <Content Include="Views\Shared\OldBrowser.cshtml" />
+    <Content Include="Views\Shared\Freeztable.cshtml" />
+    <Content Include="Views\Shared\DateSelection.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Transistor\FindBadDates.cshtml" />
+    <Content Include="Views\Home\AllProductions.cshtml" />
+    <Content Include="Views\Admin\ShowNovellConnections.cshtml" />
+    <None Include="_bin_deployableAssemblies\amd64\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+    <Content Include="Views\Shared\ServiceError.cshtml" />
+    <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
+    <Content Include="Views\Facility\McomplInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Transistor\Production.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Facility\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_sidemenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Facility\PartInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Facility\Downtimes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Facility\AreaNzp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Facility\MZagr.cshtml" />
+    <Content Include="Views\Cycles\CycleData.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Otch\NzpPrib.cshtml" />
+    <Content Include="Views\Otch\GetNzpPrib.cshtml" />
+    <Content Include="Views\Otch\GetFromNzp.cshtml" />
+    <Content Include="Views\Otch\NzpFlit.cshtml" />
+    <Content Include="Views\Otch\GetNzpFLit.cshtml" />
+    <Content Include="Views\Otch\GetFromNzpFlit.cshtml" />
+    <Content Include="Views\Facility\PrtSearch.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Authentication.Membership\Authentication.Membership.csproj">
+      <Project>{731cf53d-56a6-4fcc-856c-f72be5a5df1f}</Project>
+      <Name>Authentication.Membership</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authentication.WCF\Authentication.WCF.csproj">
+      <Project>{123fd15b-fcf3-46b5-bdef-df50b36b1ec3}</Project>
+      <Name>Authentication.WCF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crystal.Authentication\Crystal.Authentication.csproj">
+      <Project>{499b2606-4bed-43b0-9e49-d38e48bdb16a}</Project>
+      <Name>Crystal.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crystal.BusinessLogic\Crystal.BusinessLogic.csproj">
+      <Project>{f3e7ff62-9b84-4ff6-95c7-de9e47d00632}</Project>
+      <Name>Crystal.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crystal.DomainModel\Crystal.DomainModel.csproj">
+      <Project>{08ceaa3a-af4f-43fa-a065-ae66c1887ed9}</Project>
+      <Name>Crystal.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crystal.VFPOleDBLogic\Crystal.VFPOleDBLogic.csproj">
+      <Project>{5c4e82fa-5aad-4ffc-ad0f-e31c93bb5162}</Project>
+      <Name>Crystal.VFPOleDBLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrystalDataSetLib\CrystalDataSetLib.csproj">
+      <Project>{8C17F0B1-5F57-4E42-9DC1-33C1D8E9F7ED}</Project>
+      <Name>CrystalDataSetLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EfContext\EfContext.csproj">
+      <Project>{7B386BC3-E287-4901-BCA3-A8FD84CCC180}</Project>
+      <Name>EfContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MrpOdbcProvider\MrpOdbcProvider.csproj">
+      <Project>{4FD7C2D6-9BF3-40AA-BE62-ACF2AB3C950E}</Project>
+      <Name>MrpOdbcProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcApi\MVC API Action Filter.csproj">
+      <Project>{9a04abbb-5750-4733-ba5b-54e53b0ee2a3}</Project>
+      <Name>MVC API Action Filter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NovellUtils\NovellUtils.csproj">
+      <Project>{2c0ee215-9466-443f-b17c-c4139082be95}</Project>
+      <Name>NovellUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WcfLogic\WcfLogic.csproj">
+      <Project>{26e8a498-4f5b-4b92-83cb-4b215e4fe32e}</Project>
+      <Name>WcfLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WCF\CrystalServiceLib\CrystalServiceLib.csproj">
+      <Project>{6fb11c3b-cd47-46b6-8505-8a7671ba6dfd}</Project>
+      <Name>CrystalServiceLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18575</DevelopmentServerPort>
+          <DevelopmentServerVPath>/Crystal</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

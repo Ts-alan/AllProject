@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Crystal.DomainModel.GangPribKplsForDay>
+
+@{
+    ViewBag.Title = "GangPribKplsForDay";
+}
+<script type="text/javascript">
+ $(document).ready(function() {
+     $("#GangPribKpls").freezeTable({  
+            'autoHeight': false
+        });
+    });
+ </script>
+<div class="container-fluid lighttable center" style="float: left">
+    <div style="float:left">
+        <div>
+            <table  id="GangPribKpls" class="table table-bordered table-condensed center" style="width: auto">
+                 <colgroup>
+                    <col style="width: 70px" />
+                    <col style="width: 105px" />
+                    <col style="width: 70px" />      
+            </colgroup>
+                <thead >
+                    <tr>
+                        <th>Номер операции</th>
+                        <th>Наименование операции</th>
+                        <th>Количество передач </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Nop</td>
+                            <td>@item.Naop</td>
+                            <td>@item.KplsForNop</td>
+                        </tr>
+            
+                    }
+                </tbody>
+            </table>
+       </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Crystal.Models.UserProf>
+
+@{
+    Layout = null;
+}
+<table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th>Логин пользователя</th>
+            <th>Ф.И.О. пользователя</th>
+            <th>Подразделение</th>
+            <th>Действия</th>
+        </tr>
+    </thead> 
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Fio</td>
+                <td>@user.Unit</td>
+                <td>@Html.ActionLink("Редактировать", "EditUser", new { userId = user.UserId }, new { Class = "navigator" })</td>
+                <td>
+                    @if (!user.Username.Equals("Admin"))
+                        {
+                            if (user.IsBlocked || !user.IsApproved)
+                            {
+                                <a data-ajax="true" data-ajax-complete="UnblockUser('@user.Username')" href="#">Разблокировать</a>
+                            }
+                            else
+                            {
+                                <a data-ajax="true" data-ajax-complete="BlockUser('@user.Username')" href="#">Заблокировать</a>
+                            }
+                            <a data-ajax="true" data-ajax-complete="delUser('@user.Username')" href="#">Удалить</a>
+                        }
+                </td> 
+            </tr>
+        }
+    </tbody>
+</table>

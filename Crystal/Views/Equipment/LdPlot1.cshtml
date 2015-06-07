@@ -1,0 +1,58 @@
+﻿@model  IEnumerable<Crystal.DomainModel.LdPlot>
+      
+@{
+    var jdata =  Html.Raw( Json.Encode(Model) );
+}
+
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>  
+<link href="@Url.Content("~/Content/jquery.jqplot.min.css")" rel="stylesheet" type="text/css" />
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]--> 
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jqplot.min.js")" ></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.barRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.categoryAxisRenderer.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.highlighter.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jqPlotPlugins/jqplot.pointLabels.min.js")"></script>
+         
+<script type="text/javascript">
+    var data = [], labels = [];
+    var jsonR1 = $.parseJSON('@jdata');
+
+    
+    function PlotFirstChart() {
+        $.each(jsonR1, function (i, el) {
+            labels.push(el.Ust);
+            data.push(el.Kpls);
+        });
+    }
+
+    $(document).ready(function () {
+        PlotFirstChart();
+
+        var plot = $.jqplot('LoadDynamicsDiagrMonth', [data], {
+            animate: true,
+            animateReplot: true,
+            seriesDefaults: {
+                label: "Брак",
+                renderer: $.jqplot.BarRenderer,
+                pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
+                shadowAngle: 135,
+                rendererOptions: {
+                    barDirection: 'horizontal',
+                    highlightMouseDown: true
+                }
+            },
+            axes: {
+                yaxis: {
+                    label: "Установки",
+                    ticks: labels,
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                }
+            }
+        });
+
+    });
+</script>
+
+<h3>За текущий месяц:</h3>
+<div id="LoadDynamicsDiagrMonth" class="jqplot-target" style="width: 960px; height: 768px;"></div>

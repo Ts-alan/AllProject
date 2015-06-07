@@ -1,0 +1,91 @@
+﻿@using System.Collections
+@using Crystal.Models
+@using MvcApplication.Models
+@{
+    ViewBag.Title = "GetAnalysis";
+    Layout = null;
+    
+}
+@Html.Partial("Freeztable")
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]-->
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $("#ssss").click(function () {
+
+            if ($('#ssss').attr('checked')) { // проверяем его значение
+                $('.check').attr('checked', true); // если чекбокс отмечен, отмечаем все чекбоксы
+            } else {
+                $('.check').attr('checked', false); // если чекбокс не отмечен, снимаем отметку со всех чекбоксов
+            }
+        });
+
+
+
+
+    });
+
+    function ValidateData(el) {
+        if ($("input.check").filter(":checkbox:checked").size() == 0) {
+            alert("Не выбраны приборы для отчёта!!!");
+            event.returnValue = false;
+        };
+    }
+
+    function load() {
+        $("#references").html("");
+        $("#references").addClass("loader1");
+    }
+
+    function onsuccess() {
+        $("#references").removeClass("loader1");
+    }
+  
+</script>
+@using (Ajax.BeginForm("GetAnalysisDiag", "Statisticks", new AjaxOptions { UpdateTargetId = "references", OnBegin = "load()", OnSuccess = "onsuccess()" }))
+{
+    <h3>Отчет о передаче пластин производства № @ViewBag.Period</h3>
+    <div style="float: left;">
+        <table id="GetAnalysis" class="table table-bordered table-condensed freeztable" style="width: auto">
+            <colgroup>
+                <col style="width: 30px" />
+                <col style="width: 120px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        Код
+                    </th>
+                    <th>
+                        <input type="checkbox" id="ssss" />Прибор
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<Crystal.DomainModel.GetAnalysis1>)ViewBag.Mprox)
+                {
+                    <tr>
+                        <td>@item.Kpr
+                        </td>
+                        <td>
+                            <input type="checkbox" class="check" name="kpr" value="@item.Kpr" />@item.Napr
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div style="width: 170px">
+            <div class="row-fluid" style="margin-bottom: 5px;">
+                <input type="submit" name="input" value="" onclick="ValidateData(this)" title="Построить диаграмму"
+                    class="buildDiagram" style="float: left" /><br />
+                <input type="submit" class="btn" name="input" value="Отчет" onclick="ValidateData(this)"
+                    style="margin-top: 5px; width: 100%" />
+            </div>
+        </div>
+    </div>
+    
+}
+<div id="references" style="width: 100%; height: 400px; *width: 75%; *height: 100px">
+</div>

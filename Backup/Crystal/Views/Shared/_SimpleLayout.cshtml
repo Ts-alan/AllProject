@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("IncludeSection")
+</head>
+    <body>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12" id="Content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

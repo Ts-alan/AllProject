@@ -1,0 +1,20 @@
+﻿@{
+    string versionDate = "?version_" + DateTime.Now.ToString("dd.MM.yyyy");    
+}
+<link href="@Url.Content("~/Content/bootstrap.css" + versionDate)" rel="stylesheet" type="text/css"/>
+<link href="@Url.Content("~/Content/bootstrap-responsive.min.css" + versionDate)" rel="stylesheet" type="text/css"/>
+<link href="@Url.Content("~/Content/bootstrap-changed.css" + versionDate)" rel="stylesheet" type="text/css"/>
+<link href="@Url.Content("~/Content/jquery-ui-1.9.1.custom.min.css")" rel="stylesheet" type="text/css"/>
+<!--[if IE]><script language="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]-->
+@*<link href="@Url.Content("~/Content/print.css")" rel="stylesheet" type="text/css" media="print"/>*@
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.freezetable.js" + versionDate)" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.min.js" + versionDate)" type="text/javascript"></script>
+@Html.Partial("Batchscript")
+<link href="@Url.Content("~/Content/Main.css?version" + versionDate)" rel="stylesheet" type="text/css" />
+@*Ajax navigation scripts*@
+<script src="@Url.Content("~/Scripts/history.min.js" + versionDate)" type="text/javascript"></script>
+@*<script src="@Url.Content("~/Scripts/Navigator.js?version19.11.2013")" type="text/javascript"></script>*@
+<script src="@Url.Content("~/Scripts/jquery.freezetable.js" + versionDate)" type="text/javascript"></script>

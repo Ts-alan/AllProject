@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="8088c5ae-b83f-43f4-9e48-b237fa58be6f" name="UMLComponentDiagram1" linkedPackageId="0dc7eb9f-fb00-41f3-9865-8e9ac4656313" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
+  <ownedCommentsInternal>
+    <comment Id="3f87b2ad-7c97-48e8-ba3b-da4d1527078d">
+      <elementDefinition Id="d713b14d-0ee2-415e-844d-13e086e016e8" />
+      <body>Optional part</body>
+      <annotatedElements>
+        <componentMoniker Id="3c735a16-1f62-4a7c-a7ba-038e1b2b4428" LastKnownName="WCFService" />
+        <componentMoniker Id="da17bc34-55bc-4029-9a6f-75b0c9b9c871" LastKnownName="WCFClient" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="22ad8b80-3004-44a5-bfd7-84045c5515ae">
+      <profileInstance Id="55f0ca7c-a417-4916-b887-9cf0f033cf06" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="d683772f-a30b-4f4d-8c60-4e0188ed3fd3">
+      <profileInstance Id="f025d567-4372-4245-80fa-2ccb2df838fb" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <componentModelHasComponents>
+      <component Id="f7e85311-958c-4860-b726-295d4d48b237" name="MVC" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3f757e66-4cdd-4eb1-bb9e-9479168320f0" />
+        <ownedAttributesInternal>
+          <requiredInterface Id="09a1a414-36df-40db-b6dc-395caab907db" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="eb39eb5a-ec86-421c-8511-75c244a900cc" />
+            <suppliersInternal>
+              <dependency Id="b1966625-c6bc-472f-8707-ad673545b353">
+                <providedInterfaceMoniker Id="855cfee6-5b3c-404d-9aac-ef52c1ad6cab" LastKnownName="Port1" />
+                <elementDefinition Id="3a95d716-bb78-4b29-9718-9c5768b30ece" />
+              </dependency>
+              <dependency Id="44f01409-56e0-4841-9522-5ccb5e7190f4">
+                <providedInterfaceMoniker Id="8063e44b-5af5-4822-8893-567535ca2c5c" LastKnownName="Port1" />
+                <elementDefinition Id="588a472d-7066-4717-8ae2-861e2c898b6b" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="206cf4d0-77f1-4ccf-96ab-fa45f7b68649" LastKnownName="ICrystalLogic" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="206cf4d0-77f1-4ccf-96ab-fa45f7b68649" name="ICrystalLogic" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="742143ac-306d-4b54-b8a2-76b18649298b" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="da17bc34-55bc-4029-9a6f-75b0c9b9c871" name="WCFClient" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="7e299fbe-d41d-403e-b1db-21c422287183" />
+        <ownedAttributesInternal>
+          <providedInterface Id="8063e44b-5af5-4822-8893-567535ca2c5c" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="346bccb2-b87a-4aa9-b328-2863e232ed1a" />
+            <type_NamedElement>
+              <interfaceMoniker Id="aa10b7e1-2be9-42a3-907f-570db8b3a480" LastKnownName="ICrystalLogic" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="ee1ebf64-fc35-454c-9cbe-a5a708529727" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="674a53c1-962b-4f8e-af83-907280c8c036" />
+            <suppliersInternal>
+              <dependency Id="b0041db5-bdd1-41e1-83d9-d6c4301c6383">
+                <providedInterfaceMoniker Id="130467c8-cb98-45cc-96c5-99d674813330" LastKnownName="Port2" />
+                <elementDefinition Id="ad354be7-4d8b-49aa-a3ed-9928f1935aaa" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="5111b6c2-e61e-4bf4-a2e8-1b39639fcb27" LastKnownName="IData" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="aa10b7e1-2be9-42a3-907f-570db8b3a480" name="ICrystalLogic" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f837d975-e4e6-40ff-aeb3-18214c2508e1" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="5111b6c2-e61e-4bf4-a2e8-1b39639fcb27" name="IData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="65a33a26-beab-4010-9746-54efa7e7977b" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="f8e71218-05f8-41f1-8559-39f5139b29e0" name="OLEDBCrystalLogic" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b085f20b-c375-458e-98e5-fb39d4443461" />
+        <ownedAttributesInternal>
+          <providedInterface Id="855cfee6-5b3c-404d-9aac-ef52c1ad6cab" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="0e2c8b37-d9c9-4e85-8048-5db01a388773" />
+            <type_NamedElement>
+              <interfaceMoniker Id="82273c13-2a0d-449e-bf89-1d89b5fe83cd" LastKnownName="ICrystalLogic" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="82273c13-2a0d-449e-bf89-1d89b5fe83cd" name="ICrystalLogic" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c6695bb8-f910-423d-b008-f2717208c61d" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="3c735a16-1f62-4a7c-a7ba-038e1b2b4428" name="WCFService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="41c64c27-ae32-45f9-a249-79c53f8eb671" />
+        <ownedAttributesInternal>
+          <requiredInterface Id="ef6bd6b8-c15b-48bf-9044-f6d65ff8824f" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="513ec507-036f-4471-9547-bc4749bd7c35" />
+            <suppliersInternal>
+              <dependency Id="e967cf5a-1664-4ccf-ad8c-1a25a0d33be6">
+                <providedInterfaceMoniker Id="855cfee6-5b3c-404d-9aac-ef52c1ad6cab" LastKnownName="Port1" />
+                <elementDefinition Id="f017241f-f09b-488f-a49a-adfac583762c" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="4678da21-2084-4da9-88fe-90e2f292aadc" LastKnownName="ICrystalLogic" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="130467c8-cb98-45cc-96c5-99d674813330" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="2b40ef52-c212-4953-ad76-659864c93cc3" />
+            <type_NamedElement>
+              <interfaceMoniker Id="153d16c4-263b-4a7d-8a57-1f114f9b63d6" LastKnownName="IData" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="4678da21-2084-4da9-88fe-90e2f292aadc" name="ICrystalLogic" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="88bb8dde-dc1b-4c6a-980d-fe74f81750fc" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="153d16c4-263b-4a7d-8a57-1f114f9b63d6" name="IData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="507382be-4fed-41b4-b213-36ceb5ec500e" />
+      </Interface>
+    </modelContainsNamedElements>
+  </packagedElements>
+  <package Id="0dc7eb9f-fb00-41f3-9865-8e9ac4656313" name="CrysralModeling">
+    <elementDefinition Id="d3574432-ef39-489e-8a31-3784aae1aaa9" />
+  </package>
+</componentModel>

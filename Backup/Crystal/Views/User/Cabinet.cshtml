@@ -1,0 +1,120 @@
+﻿@using System.Globalization
+@using Crystal.Models
+@using MvcApplication.Models
+@model Crystal.Controllers.UserController.PersonalCabinetModel
+           
+@{
+  
+    ViewBag.Title = "Cabinet";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+    string userName = HttpContext.Current.User.Identity.Name;
+    //ViewBag.userId = System.Web.Security.Membership.GetUser(userName, false).ProviderUserKey.GetHashCode();
+    int userId = ViewBag.userId;
+    }
+
+@Html.Hidden("PageTitle", "Личный кабинет")
+@Html.Partial("DeviceScript")
+
+<h3>Мой профиль</h3>
+<div class="font">
+<p>Я вошёл как @Model.UserName</p>
+<p>Меня зовут:@Model.Fio</p>
+<p>Место работы:@Model.Unit</p>
+</div>
+
+
+
+
+<div id="WasDeleted">
+    @if (Model.DeletedBatches.Count()!=0)
+    {
+
+        <h2>Ушедшие с маршрута партии:</h2>
+        foreach (var batch in Model.DeletedBatches)
+         {
+             <p>Партия №@batch.BatchNum ушла c маршрута</p>
+         }
+    }
+</div>
+
+<h3>Отслеживаемые партии</h3>
+@if (Model.ObservedBatches.Count()!=0)
+{
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th style="width: 20px"></th>
+                <th>Номер партии</th>
+                <th>Прибор</th>
+                <th>Наименование оп</th>
+                <th>Кол-во пластин</th>
+                <th>Дата последней операции</th>
+                <th>Дней на операции</th>
+                <th>Пр-во</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var batch in Model.ObservedBatches)
+            {
+                var daysOnNop = batch.DaysOnOperation > 3 ? "daysOnNop" : "";
+                <tr class="@daysOnNop">
+
+                    <td>@Html.TrackThisBatch(batch.Nprt, batch.ProdNumber, userId)</td>
+                    <td>@Html.ActionLink(batch.Nprt, "PartInfo", "Facility", new { nprt = batch.Nprt, plant = FoxRepo.GetPlantFromNumber(batch.ProdNumber).ToString() }, new { target = "_blank"})</td>
+                    <td>@batch.Napr</td>
+                    <td>@batch.Naop</td>
+                    <td>@batch.Nzp</td>
+                    <td>@Html.DisplayFor(x=>batch.Date)</td>
+                    <td>@Html.DisplayFor(x=>batch.DaysOnOperation)</td>
+                    <td>№@batch.ProdNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <label style="display: inline" class="daysOnNop">Простаивающие партии (более 3 суток)</label>
+}
+else
+{
+    <h4>У вас нет наблюдаемых партий!</h4>
+}
+<h3>Отслеживаемые приборы</h3>
+@if (Model.ObservedDevices.Count() != 0)
+{
+    <table class="table table-bordered table-condensed">
+    <thead>
+        <tr>
+            <th style="width: 20px"></th>
+            <th>Номер прибора</th>
+            <th>Наименование прибора</th>
+            <th>НЗП</th>
+            <th>Количество партий</th>
+            <th>Пр-во</th>
+        </tr>
+    </thead>
+        <tbody>
+            
+            @foreach (var item in Model.ObservedDevices)
+            {
+                <tr>
+                    <td>@Html.TrackThisDevice(item.Kpr, item.ProdNumber, userId)</td>
+                    <td>@Html.ActionLink(item.Kpr, "PribMonthReport", "Otch", new { selPrib = item.Kpr, ind = true, plant = ((Crystal.BusinessLogic.Plants)int.Parse(item.ProdNumber)).ToString() }, new { target = "_blank" })</td>
+                    <td>@item.Napr</td>
+                    <td>
+                        @Html.ActionLink(item.Nzp.ToString(), "NzpPrib", "Otch", new { Kpr = item.Kpr, ind = true, plant = ((Crystal.BusinessLogic.Plants)int.Parse(item.ProdNumber)).ToString() }, new { target = "_blank" })
+                    </td>
+                    <td>@item.Nnprt</td>
+                    <td>№@item.ProdNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>У вас нет наблюдаемых приборов!</h4>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SideMenu').hide();
+    });
+</script>

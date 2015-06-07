@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MembershipUser>
+@{
+    ViewBag.Title = "Crystall";
+    Layout = Request.IsAjaxRequest() != true ? "~/Views/Shared/_Layout.cshtml" : null;
+}
+
+<div>
+    <img src="@Url.Content("~/Content/images/fon_new.jpg")" style="width: 100%;height:690px" alt="" />
+</div>
+
+
+
+@*<div style=" background:url(@Url.Content("~/Content/images/fon_new.jpg")) no-repeat; height:690px">&nbsp</div>*@
+<div id="AllProductionsNZP" style="position:fixed; bottom:0px">
+    @{Html.RenderAction("AllProductions");}
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#SideMenu').hide();
+    });
+</script>

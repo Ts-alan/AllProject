@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("FavIconSection")
+    @Html.Partial("IncludeSection")
+</head>
+<body>
+    @Html.Partial("OldBrowser")
+    <div id="MainMenu">@Html.Partial("MainMenu")</div>
+
+    <div id="SideMenu" class="Sidemenu">@Html.Partial("_sidemenu")</div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12" id="Content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @*        <div>
+        @RenderBody()
+    </div>*@
+</body>
+</html>

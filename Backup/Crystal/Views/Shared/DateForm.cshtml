@@ -1,0 +1,19 @@
+﻿<div>
+@Html.Partial("DateSelection","MyApp") 
+</div>
+<h3 id="period"></h3>
+<div id="PribStatus1" style="display: none; color: red; font-weight: bold" class="loader"></div>
+<div id="PribData1"></div>
+
+<script type="text/javascript">
+    MyApp.run = function (parameters) {
+        $.ajax({
+            url: '@Url.Action(ViewBag.Action, ViewBag.Controller)',
+            type: 'POST',
+            data: { fdate: parameters.fdate, sdate: parameters.sdate, indnumb: parameters.indnumb },
+            beforeSend: function () { $('#PribData1').hide(); $("#PribStatus1").show(); },
+            success: function (result) { $('#PribData1').show(); $("#PribData1").html(result); $("#PribStatus1").hide(); },
+            error: function () { $("#PribStatus1").hide(); $("#PribData1").html("Возникла непредвиденная ошибка!!!"); }
+        });
+    }
+</script>

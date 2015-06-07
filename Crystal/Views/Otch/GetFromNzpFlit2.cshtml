@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Crystal.DomainModel.FlitPartNzp>
+@using Crystal.Models
+@using MvcApplication.Models
+@{
+    Layout = null;
+    string prodN = ViewBag.prodN;
+    int userId = System.Web.Security.Membership.GetUser(HttpContext.Current.User.Identity.Name, false).ProviderUserKey.GetHashCode();
+}
+<script src="@Url.Content("~/Scripts/Tooltip.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+
+        $("#getfromnzp2").freezeTable({
+            'autoHeight': false   
+        });
+    });
+</script>
+<div>
+<span style="width:540px">Постановка/снятие партии на кантроль по клику на символ <img src='../../Content/images/star_active.png'></img>/<img src='../../Content/images/star_passive.png'></span>
+   <table id="getfromnzp2" class="table table-bordered table-condensed" style="width: auto">
+        <colgroup>
+                 <col style="width: 25px" />
+                 <col style="width: 50px" />
+                 <col style="width: 70px" />      
+                 <col style="width: 100px" />
+                 <col style="width: 100px" />
+                 <col style="width: 100px" />  
+        </colgroup>
+        <thead>
+            <tr>
+                <th></th>
+                <th>№ Партии</th>
+                <th>№ Операции</th>
+                <th>Наименование операции</th>
+                <th>Время/Дата поступления</th>
+                <th>Незавершёнка</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.TrackThisBatch(item.Nprt,prodN,userId)</td>
+                    <td>@Html.ActionLink(item.Nprt.Substring(0, 5), "PartInfo", "Facility", new { NPRT = item.Nprt }, new { target = "_blank" })</td>
+                    <td>@item.Nop</td>
+                    <td>@item.Naop</td>
+                    <td>@item.Timo-@item.Dato</td>
+                    <td>@item.Nzp</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+  
+</div>
